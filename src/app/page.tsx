@@ -1,6 +1,15 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
+import TabPanel from './components/TabPanel';
+import { 
+  TripDetailsContent, 
+  ItineraryContent, 
+  PreferencesContent, 
+  BookmarksContent, 
+  WeatherContent,
+  HistoryContent 
+} from './components/TabContents';
 
 interface Message {
   id: string;
@@ -13,6 +22,11 @@ export default function Home() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [rightPanelWidth, setRightPanelWidth] = useState(320); // Default 320px (w-80)
+  const [isResizing, setIsResizing] = useState(false);
+  const [isRightPanelCollapsed, setIsRightPanelCollapsed] = useState(false);
+  const [hasStartedChat, setHasStartedChat] = useState(false); // Track if chat has started
+  const [chatMaxWidth, setChatMaxWidth] = useState('95%'); // Dynamic chat width
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -23,6 +37,34 @@ export default function Home() {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  // Calculate optimal chat width based on available space
+  useEffect(() => {
+    const calculateChatWidth = () => {
+      if (typeof window !== 'undefined') {
+        const availableWidth = window.innerWidth - (isRightPanelCollapsed ? 0 : rightPanelWidth) - 32; // 32px for padding
+        const optimalWidth = Math.min(availableWidth * 0.95, Math.max(600, availableWidth - 100));
+        setChatMaxWidth(`${optimalWidth}px`);
+      }
+    };
+
+    // Use requestAnimationFrame for smoother updates during resize
+    if (isResizing) {
+      requestAnimationFrame(calculateChatWidth);
+    } else {
+      calculateChatWidth();
+    }
+    
+    const handleResize = () => {
+      if (!isResizing) {
+        calculateChatWidth();
+      }
+    };
+    
+    window.addEventListener('resize', handleResize);
+    
+    return () => window.removeEventListener('resize', handleResize);
+  }, [rightPanelWidth, isRightPanelCollapsed, isResizing]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,6 +80,11 @@ export default function Home() {
     setMessages(prev => [...prev, userMessage]);
     setInput('');
     setIsLoading(true);
+    
+    // Mark that chat has started after first message
+    if (!hasStartedChat) {
+      setHasStartedChat(true);
+    }
 
     // Simulate AI response (replace with actual API call)
     setTimeout(() => {
@@ -78,6 +125,55 @@ export default function Home() {
     adjustTextareaHeight();
   }, [input]);
 
+  // Resize handlers
+  const handleResizeStart = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsResizing(true);
+  }, []);
+
+  const handleResizeMove = useCallback((e: MouseEvent) => {
+    if (!isResizing) return;
+    
+    // Use requestAnimationFrame for smoother resize updates
+    requestAnimationFrame(() => {
+      const newWidth = window.innerWidth - e.clientX;
+      const minWidth = 280; // Minimum width
+      const maxWidth = window.innerWidth * 0.6; // Maximum 60% of screen width
+      
+      const clampedWidth = Math.min(Math.max(newWidth, minWidth), maxWidth);
+      setRightPanelWidth(clampedWidth);
+    });
+  }, [isResizing]);
+
+  const handleResizeEnd = useCallback(() => {
+    setIsResizing(false);
+  }, []);
+
+  const toggleRightPanel = () => {
+    setIsRightPanelCollapsed(!isRightPanelCollapsed);
+  };
+
+  useEffect(() => {
+    if (isResizing) {
+      document.addEventListener('mousemove', handleResizeMove);
+      document.addEventListener('mouseup', handleResizeEnd);
+      document.body.style.cursor = 'ew-resize';
+      document.body.style.userSelect = 'none';
+    } else {
+      document.removeEventListener('mousemove', handleResizeMove);
+      document.removeEventListener('mouseup', handleResizeEnd);
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+    }
+
+    return () => {
+      document.removeEventListener('mousemove', handleResizeMove);
+      document.removeEventListener('mouseup', handleResizeEnd);
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+    };
+  }, [isResizing, handleResizeMove, handleResizeEnd]);
+
   const nudges = [
     "Plan a 7-day trip to Japan",
     "Best restaurants in Paris",
@@ -85,16 +181,135 @@ export default function Home() {
     "Family vacation ideas for summer"
   ];
 
+  const initialTabs = [
+    {
+      id: 'trip-details',
+      title: 'Trip Details',
+      content: <TripDetailsContent />
+    },
+    {
+      id: 'itinerary',
+      title: 'Itinerary',
+      content: <ItineraryContent />
+    },
+    {
+      id: 'preferences',
+      title: 'Preferences',
+      content: <PreferencesContent />
+    },
+    {
+      id: 'weather',
+      title: 'Weather',
+      content: <WeatherContent />
+    },
+    {
+      id: 'bookmarks',
+      title: 'Bookmarks',
+      content: <BookmarksContent />
+    },
+    {
+      id: 'history',
+      title: 'History',
+      content: <HistoryContent />
+    }
+  ];
+
   return (
-    <div className="flex flex-col h-screen bg-black">
+    <div className="flex flex-col h-screen max-h-screen bg-black overflow-hidden">
       {/* Header */}
-      <header className="flex items-center justify-center py-3 border-b border-gray-800">
+      <header className="flex items-center justify-between py-3 border-b border-gray-800 flex-shrink-0 px-4">
+        <div className="flex-1"></div>
         <h1 className="text-xl font-medium text-white">ItinerAI</h1>
+        <div className="flex-1 flex justify-end">
+          {/* Panel Toggle Button */}
+          <button
+            onClick={toggleRightPanel}
+            className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-500 transform hover:scale-105 active:scale-95 ${
+              isRightPanelCollapsed 
+                ? 'bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-500/25' 
+                : 'bg-gray-800 hover:bg-gray-700 border border-gray-700 text-gray-300 hover:text-white hover:shadow-lg hover:shadow-gray-700/20'
+            }`}
+            title={isRightPanelCollapsed ? 'Show Sidebar' : 'Hide Sidebar'}
+          >
+            <svg
+              className={`w-4 h-4 transition-all duration-500 ${isRightPanelCollapsed ? 'rotate-180' : 'rotate-0'}`}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            <span className="text-xs transition-all duration-300">{isRightPanelCollapsed ? 'Show Panel' : 'Hide Panel'}</span>
+            <svg
+              className={`w-3 h-3 transition-all duration-500 ${
+                isRightPanelCollapsed ? 'opacity-0 scale-0 rotate-90' : 'opacity-60 scale-100 rotate-0'
+              }`}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
       </header>
 
       {/* Main Content */}
-      <div className="flex-1 flex items-center justify-center px-4 py-2">
-        <div className="w-full max-w-2xl h-full flex flex-col">
+      <div className={`flex-1 flex min-h-0 ${isResizing ? 'resizing-mode' : ''}`}>
+        {/* Chat Area */}
+        <div className={`flex-1 min-h-0 flex ${
+          hasStartedChat ? 'flex-col justify-start' : 'items-center justify-center'
+        } ${
+          isResizing ? '' : 'transition-all duration-500 ease-out'
+        }`}>
+          <div className={`w-full h-full flex flex-col min-h-0 px-4 py-2 mx-auto ${
+            hasStartedChat ? '' : 'max-w-2xl'
+          } ${
+            isResizing ? '' : 'transition-all duration-500 ease-out'
+          }`} style={{
+            maxWidth: hasStartedChat ? chatMaxWidth : '32rem'
+          }}>
+          
+          {/* Input Form - positioned at top when chat has started */}
+          {hasStartedChat && (
+            <div className="border-b border-gray-900 pb-3 mb-4 flex-shrink-0">
+              <form onSubmit={handleSubmit} className="relative">
+                <div className="flex items-end gap-2 bg-gray-900 rounded-lg border border-gray-800 p-2 focus-within:border-gray-700 transition-colors">
+                  <textarea
+                    ref={textareaRef}
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    placeholder="Message ItinerAI..."
+                    className="flex-1 bg-transparent text-white placeholder-gray-500 resize-none outline-none min-h-[20px] max-h-[120px] text-sm leading-relaxed py-1"
+                    rows={1}
+                    disabled={isLoading}
+                  />
+                  <button
+                    type="submit"
+                    disabled={!input.trim() || isLoading}
+                    className="bg-white hover:bg-gray-200 disabled:bg-gray-700 disabled:cursor-not-allowed text-black disabled:text-gray-500 rounded p-1.5 transition-colors flex-shrink-0"
+                  >
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      className="transform rotate-90"
+                    >
+                      <path
+                        d="M7 11L12 6L17 11M12 18V7"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </form>
+            </div>
+          )}
           
           {/* Welcome Screen or Messages */}
           {messages.length === 0 ? (
@@ -108,7 +323,7 @@ export default function Home() {
             </div>
           ) : (
             /* Messages Container */
-            <div className="flex-1 overflow-y-auto space-y-4 py-4">
+            <div className="flex-1 overflow-y-auto space-y-4 py-4 min-h-0">
               {messages.map((message) => (
                 <div key={message.id} className="message-enter-active">
                   <div className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
@@ -157,43 +372,78 @@ export default function Home() {
             </div>
           )}
 
-          {/* Input Form */}
-          <div className="border-t border-gray-900 pt-3">
-            <form onSubmit={handleSubmit} className="relative">
-              <div className="flex items-end gap-2 bg-gray-900 rounded-lg border border-gray-800 p-2 focus-within:border-gray-700 transition-colors">
-                <textarea
-                  ref={textareaRef}
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  placeholder="Message ItinerAI..."
-                  className="flex-1 bg-transparent text-white placeholder-gray-500 resize-none outline-none min-h-[20px] max-h-[120px] text-sm leading-relaxed py-1"
-                  rows={1}
-                  disabled={isLoading}
-                />
-                <button
-                  type="submit"
-                  disabled={!input.trim() || isLoading}
-                  className="bg-white hover:bg-gray-200 disabled:bg-gray-700 disabled:cursor-not-allowed text-black disabled:text-gray-500 rounded p-1.5 transition-colors flex-shrink-0"
-                >
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    className="transform rotate-90"
+          {/* Input Form - positioned at bottom when chat hasn't started */}
+          {!hasStartedChat && (
+            <div className="border-t border-gray-900 pt-3">
+              <form onSubmit={handleSubmit} className="relative">
+                <div className="flex items-end gap-2 bg-gray-900 rounded-lg border border-gray-800 p-2 focus-within:border-gray-700 transition-colors">
+                  <textarea
+                    ref={textareaRef}
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    placeholder="Message ItinerAI..."
+                    className="flex-1 bg-transparent text-white placeholder-gray-500 resize-none outline-none min-h-[20px] max-h-[120px] text-sm leading-relaxed py-1"
+                    rows={1}
+                    disabled={isLoading}
+                  />
+                  <button
+                    type="submit"
+                    disabled={!input.trim() || isLoading}
+                    className="bg-white hover:bg-gray-200 disabled:bg-gray-700 disabled:cursor-not-allowed text-black disabled:text-gray-500 rounded p-1.5 transition-colors flex-shrink-0"
                   >
-                    <path
-                      d="M7 11L12 6L17 11M12 18V7"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </button>
-              </div>
-            </form>
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      className="transform rotate-90"
+                    >
+                      <path
+                        d="M7 11L12 6L17 11M12 18V7"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </form>
+            </div>
+          )}
+          </div>
+        </div>
+
+        {/* Right Panel Container */}
+        <div 
+          className={`flex-shrink-0 min-h-0 relative overflow-hidden ${
+            isRightPanelCollapsed ? 'w-0 opacity-0' : ''
+          } ${
+            isResizing ? 'resize-in-progress' : 'transition-all duration-500 ease-out'
+          }`}
+          style={{ 
+            width: isRightPanelCollapsed ? '0px' : `${rightPanelWidth}px`
+          }}
+        >
+          {/* Right Panel Content */}
+          <div 
+            className={`h-full ${
+              isRightPanelCollapsed ? 'transform translate-x-full' : 'transform translate-x-0'
+            } ${
+              isResizing ? '' : 'transition-transform duration-500 ease-out'
+            }`}
+            style={{ width: `${rightPanelWidth}px` }}
+          >
+            {/* Resize Handle */}
+            <div
+              className={`resize-handle ${isResizing ? 'resizing' : ''} transition-opacity duration-300 ${
+                isRightPanelCollapsed ? 'opacity-0' : 'opacity-100'
+              }`}
+              onMouseDown={handleResizeStart}
+            />
+            
+            <TabPanel initialTabs={initialTabs} />
           </div>
         </div>
       </div>

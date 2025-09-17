@@ -11,12 +11,7 @@
   --button-hover: #e5e5e5;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* Theme variables are handled by Tailwind CSS configuration */
 
 body {
   background: var(--background);
@@ -99,4 +94,425 @@ input:focus {
 /* Button hover effects */
 button {
   transition: all 150ms ease;
+}
+
+/* Accordion-style tab system */
+.accordion-tab {
+  background: #000000;
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.accordion-tab:hover {
+  background: rgba(17, 17, 17, 0.3);
+}
+
+/* Tab header styling */
+.tab-header {
+  background: linear-gradient(135deg, #111111 0%, #0a0a0a 100%);
+  border-bottom: 1px solid #1a1a1a;
+  position: relative;
+}
+
+.tab-header:hover {
+  background: linear-gradient(135deg, #1a1a1a 0%, #111111 100%);
+  border-bottom-color: #333333;
+}
+
+.tab-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.tab-header:hover::before {
+  opacity: 1;
+}
+
+/* Tab content area */
+.tab-content-area {
+  background: #0a0a0a;
+  border-top: 1px solid #1a1a1a;
+}
+
+/* Drag handle styling */
+.drag-handle {
+  cursor: grab;
+  padding: 2px;
+  border-radius: 3px;
+  transition: all 0.2s ease;
+}
+
+.drag-handle:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transform: scale(1.1);
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+  transform: scale(0.95);
+}
+
+/* Tab icon styling */
+.tab-icon {
+  transition: all 0.3s ease;
+}
+
+.tab-header:hover .tab-icon {
+  color: #ffffff;
+  transform: scale(1.05);
+}
+
+/* Minimize button styling */
+.minimize-btn {
+  border-radius: 4px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.minimize-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.05);
+}
+
+.minimize-btn:active {
+  transform: scale(0.95);
+}
+
+/* Enhanced drag and drop styles */
+.tab-dragging {
+  opacity: 0.7;
+  transform: rotate(2deg) scale(0.98);
+  z-index: 1000;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.tab-drag-over {
+  border-left: 3px solid #3b82f6 !important;
+  background: rgba(59, 130, 246, 0.1) !important;
+  transform: translateX(4px);
+}
+
+/* Custom drag preview */
+.drag-preview {
+  background: rgba(17, 17, 17, 0.95);
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 12px;
+  color: white;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Smooth animations */
+.accordion-tab {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Content area height transitions */
+.tab-content-area {
+  transition: max-height 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+              opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              padding 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  overflow: hidden;
+}
+
+/* Smooth panel slide animations - Updated for better performance */
+.right-panel-container {
+  transition: width 0.5s cubic-bezier(0.23, 1, 0.32, 1),
+              opacity 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: width, opacity;
+}
+
+.right-panel-content {
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: transform;
+}
+
+/* Smoother easing curve for natural motion */
+.panel-slide-smooth {
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Optimized panel animations */
+.panel-enter {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.panel-enter-to {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.panel-leave {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.panel-leave-to {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+/* Enhanced tab header animations */
+.tab-header {
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Improved accordion animations */
+.accordion-tab {
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Custom scrollbar for right panel */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #000000;
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #333333;
+  border-radius: 3px;
+  border: 1px solid #222222;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #444444;
+}
+
+/* Scrollbar styling for individual tab content */
+.tab-content-area::-webkit-scrollbar {
+  width: 4px;
+}
+
+.tab-content-area::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+
+.tab-content-area::-webkit-scrollbar-thumb {
+  background: #333333;
+  border-radius: 2px;
+}
+
+.tab-content-area::-webkit-scrollbar-thumb:hover {
+  background: #444444;
+}
+
+/* Ensure proper height constraints */
+.tab-content-area > div {
+  min-height: 0;
+}
+
+/* Subtle glow effects */
+.tab-header:hover {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Icon hover effects */
+.tab-icon svg {
+  transition: all 0.3s ease;
+}
+
+.tab-header:hover .tab-icon svg {
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.3));
+}
+
+/* Resize handle styles */
+.resize-handle {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  cursor: ew-resize;
+  background: transparent;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.resize-handle:hover {
+  background: rgba(59, 130, 246, 0.5);
+}
+
+.resize-handle:active,
+.resize-handle.resizing {
+  background: rgba(59, 130, 246, 1);
+}
+
+/* Prevent text selection during resize */
+.no-select {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Visual feedback during resize */
+.resizing {
+  cursor: ew-resize !important;
+}
+
+.resizing * {
+  cursor: ew-resize !important;
+}
+
+/* Resize handle visual indicator */
+.resize-handle::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 2px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 1px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.resize-handle:hover::before {
+  opacity: 1;
+}
+
+/* Travel Itinerary Styles */
+.travel-itinerary {
+  /* Clean, minimal styles for the new itinerary component */
+}
+
+.itinerary-timeline-dot {
+  transition: all 0.3s ease;
+}
+
+.itinerary-timeline-dot:hover {
+  transform: scale(1.1);
+}
+
+/* Panel Toggle Button Enhancements */
+.panel-toggle-btn {
+  backdrop-filter: blur(8px);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.panel-toggle-btn.active {
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+}
+
+/* Smooth hover effects for interactive elements */
+button, .clickable {
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Hardware acceleration for better performance */
+.right-panel-container,
+.right-panel-content,
+.panel-toggle-btn {
+  backface-visibility: hidden;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+/* Optimized transitions for panel animations */
+.panel-smooth-enter {
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.panel-smooth-leave {
+  transition: all 0.5s cubic-bezier(0.7, 0, 0.84, 0);
+}
+
+/* Enhanced resize handle animations */
+.resize-handle {
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.resize-handle:hover {
+  background: rgba(59, 130, 246, 0.6);
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+}
+
+.resize-handle:active,
+.resize-handle.resizing {
+  background: rgba(59, 130, 246, 1);
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+}
+
+/* Smooth scale animations for interactive elements */
+.scale-on-hover:hover {
+  transform: scale(1.02);
+}
+
+.scale-on-active:active {
+  transform: scale(0.98);
+}
+
+/* Enhanced tab content transitions */
+.tab-content-inner {
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              opacity 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Staggered animation delays for tab items */
+.tab-item:nth-child(1) { animation-delay: 0.05s; }
+.tab-item:nth-child(2) { animation-delay: 0.1s; }
+.tab-item:nth-child(3) { animation-delay: 0.15s; }
+.tab-item:nth-child(4) { animation-delay: 0.2s; }
+.tab-item:nth-child(5) { animation-delay: 0.25s; }
+.tab-item:nth-child(6) { animation-delay: 0.3s; }
+
+/* Chat layout transition animations */
+.chat-container-transition {
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.chatbox-transition {
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Smooth chatbox repositioning */
+.chatbox-move-up {
+  animation: moveToTop 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes moveToTop {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-20px);
+    opacity: 1;
+  }
+}
+
+/* Prevent resize glitches */
+.resizing-mode {
+  pointer-events: none;
+}
+
+.resizing-mode * {
+  transition: none !important;
+}
+
+/* Optimized resize performance */
+.resize-in-progress {
+  will-change: width, transform;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+/* Smooth resize without glitches */
+.panel-resize-smooth {
+  transition: width 0.1s linear;
 }
