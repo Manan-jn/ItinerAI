@@ -1,4 +1,5 @@
 'use client';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { useState, useEffect, useRef } from 'react';
 
@@ -20,6 +21,22 @@ const weatherData = {
     { day: 'Sun', icon: '☀️', high: '9°', low: '2°' }
   ]
 };
+
+// Types for userData
+interface CloudUserData {
+  isRaining: boolean;
+  rainColor: number;
+  originalPosition: THREE.Vector3;
+  bobOffset: number;
+  bobSpeed: number;
+  bobAmount: number;
+  rainGroup?: THREE.Group;
+}
+
+interface RaindropUserData {
+  originalY: number;
+  speed: number;
+}
 
 export default function WeatherWidget() {
   const [currentTime, setCurrentTime] = useState('');
@@ -150,16 +167,16 @@ export default function WeatherWidget() {
         const cloud2 = createDetailedCloud(0.7, -0.1, 0.3, 0.9);
         cloudGroup.add(cloud1, cloud2);
         cloudGroup.position.y = -0.2;
-        let autoRotateSpeed = 0.002;
+        const autoRotateSpeed = 0.002;
 
         // Rain functionality
         const createRaindropsForCloud = (cloud: THREE.Group) => {
           const rainGroup = new THREE.Group();
           cloud.add(rainGroup);
-          (cloud.userData as any).rainGroup = rainGroup;
+          (cloud.userData as CloudUserData).rainGroup = rainGroup;
           
           const raindropMaterial = new THREE.MeshBasicMaterial({
-            color: (cloud.userData as any).rainColor,
+            color: (cloud.userData as CloudUserData).rainColor,
             transparent: true,
             opacity: 0.7,
           });
@@ -209,19 +226,19 @@ export default function WeatherWidget() {
             if (clickedObj.parent === cloudGroup) {
               physicallyClickedCloud = clickedObj;
 
-              const isCloud1Raining = (cloud1.userData as any).isRaining;
-              const isCloud2Raining = (cloud2.userData as any).isRaining;
+              const isCloud1Raining = (cloud1.userData as CloudUserData).isRaining;
+              const isCloud2Raining = (cloud2.userData as CloudUserData).isRaining;
 
               const newGlobalRainState = !(isCloud1Raining && isCloud2Raining);
 
-              (cloud1.userData as any).isRaining = newGlobalRainState;
-              if ((cloud1.userData as any).rainGroup) {
-                (cloud1.userData as any).rainGroup.visible = newGlobalRainState;
+              (cloud1.userData as CloudUserData).isRaining = newGlobalRainState;
+              if ((cloud1.userData as CloudUserData).rainGroup) {
+                (cloud1.userData as CloudUserData).rainGroup!.visible = newGlobalRainState;
               }
 
-              (cloud2.userData as any).isRaining = newGlobalRainState;
-              if ((cloud2.userData as any).rainGroup) {
-                (cloud2.userData as any).rainGroup.visible = newGlobalRainState;
+              (cloud2.userData as CloudUserData).isRaining = newGlobalRainState;
+              if ((cloud2.userData as CloudUserData).rainGroup) {
+                (cloud2.userData as CloudUserData).rainGroup!.visible = newGlobalRainState;
               }
 
               if (physicallyClickedCloud) {
@@ -245,15 +262,17 @@ export default function WeatherWidget() {
 
           [cloud1, cloud2].forEach((cloud) => {
             if (cloud) {
+              const userData = cloud.userData as CloudUserData;
               cloud.position.y =
-                (cloud.userData as any).originalPosition.y +
-                Math.sin(time * (cloud.userData as any).bobSpeed + (cloud.userData as any).bobOffset) *
-                  (cloud.userData as any).bobAmount;
+                userData.originalPosition.y +
+                Math.sin(time * userData.bobSpeed + userData.bobOffset) *
+                  userData.bobAmount;
 
-              if ((cloud.userData as any).isRaining && (cloud.userData as any).rainGroup) {
+              if (userData.isRaining && userData.rainGroup) {
                 const currentRaindrops = cloud === cloud1 ? raindrops1 : raindrops2;
                 currentRaindrops.forEach((raindrop) => {
-                  raindrop.position.y -= (raindrop as any).userData.speed;
+                  const raindropUserData = (raindrop as any).userData as RaindropUserData;
+                  raindrop.position.y -= raindropUserData.speed;
                   if (raindrop.position.y < -5) {
                     raindrop.position.y = -0.8;
                     raindrop.position.x = (Math.random() - 0.5) * 1.8 * cloud.scale.x;

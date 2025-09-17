@@ -128,8 +128,7 @@ const getActivityColor = (type: Activity['type']) => {
 export default function TravelItinerary() {
   const [itinerary, setItinerary] = useState<Day[]>(initialItinerary);
   const [expandedDay, setExpandedDay] = useState<string | null>('day-1'); // Start with first day expanded
-  const [editingActivity, setEditingActivity] = useState<string | null>(null);
-  const [draggedActivity, setDraggedActivity] = useState<string | null>(null);
+  // Removed unused state variables: editingActivity, setEditingActivity, draggedActivity, setDraggedActivity
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const toggleDay = (dayId: string) => {
@@ -194,10 +193,7 @@ export default function TravelItinerary() {
     return itinerary.reduce((total, day) => total + day.activities.length, 0);
   };
 
-  const getDayProgress = (day: Day) => {
-    const completedActivities = day.activities.filter(act => act.type === 'rest').length;
-    return Math.round((completedActivities / day.activities.length) * 100);
-  };
+  // Removed unused function: getDayProgress
 
   return (
     <div className="w-full" ref={scrollRef}>

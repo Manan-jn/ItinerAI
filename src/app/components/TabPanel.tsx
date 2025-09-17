@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 
 interface Tab {
   id: string;
@@ -42,7 +42,7 @@ export default function TabPanel({ initialTabs }: TabPanelProps) {
     }, 0);
   };
 
-  const handleDragEnd = (e: React.DragEvent) => {
+  const handleDragEnd = () => {
     setDraggedTab(null);
     setDragOverTab(null);
     dragCounter.current = 0;
@@ -59,7 +59,7 @@ export default function TabPanel({ initialTabs }: TabPanelProps) {
     setDragOverTab(tabId);
   };
 
-  const handleDragLeave = (e: React.DragEvent) => {
+  const handleDragLeave = () => {
     dragCounter.current--;
     if (dragCounter.current === 0) {
       setDragOverTab(null);
