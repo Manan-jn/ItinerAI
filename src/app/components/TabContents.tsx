@@ -3,6 +3,7 @@
 import WeatherWidget from './WeatherWidget';
 import TravelItinerary from './TravelItinerary';
 import DatePicker from './DatePicker';
+import PeopleSelector from './PeopleSelector';
 
 // Trip Details Tab Content
 export function TripDetailsContent() {
@@ -162,6 +163,19 @@ export function DatesContent() {
       <DatePicker 
         onDateChange={(dates) => {
           console.log('Date selection changed:', dates);
+        }}
+      />
+    </div>
+  );
+}
+
+// People Tab Content
+export function PeopleContent() {
+  return (
+    <div className="p-2">
+      <PeopleSelector 
+        onSelectionChange={(selection) => {
+          console.log('People selection changed:', selection);
         }}
       />
     </div>

@@ -9,7 +9,8 @@ import {
   BookmarksContent, 
   WeatherContent,
   HistoryContent,
-  DatesContent 
+  DatesContent,
+  PeopleContent 
 } from './components/TabContents';
 
 interface Message {
@@ -192,6 +193,11 @@ export default function Home() {
       id: 'dates',
       title: 'Dates',
       content: <DatesContent />
+    },
+    {
+      id: 'people',
+      title: 'People',
+      content: <PeopleContent />
     },
     {
       id: 'itinerary',
