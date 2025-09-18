@@ -2,6 +2,7 @@
 
 import WeatherWidget from './WeatherWidget';
 import TravelItinerary from './TravelItinerary';
+import DatePicker from './DatePicker';
 
 // Trip Details Tab Content
 export function TripDetailsContent() {
@@ -150,6 +151,19 @@ export function HistoryContent() {
           No conversation history
         </div>
       </div>
+    </div>
+  );
+}
+
+// Dates Tab Content
+export function DatesContent() {
+  return (
+    <div className="p-2">
+      <DatePicker 
+        onDateChange={(dates) => {
+          console.log('Date selection changed:', dates);
+        }}
+      />
     </div>
   );
 }

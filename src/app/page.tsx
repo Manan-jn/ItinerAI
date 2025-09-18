@@ -8,7 +8,8 @@ import {
   PreferencesContent, 
   BookmarksContent, 
   WeatherContent,
-  HistoryContent 
+  HistoryContent,
+  DatesContent 
 } from './components/TabContents';
 
 interface Message {
@@ -188,6 +189,11 @@ export default function Home() {
       content: <TripDetailsContent />
     },
     {
+      id: 'dates',
+      title: 'Dates',
+      content: <DatesContent />
+    },
+    {
       id: 'itinerary',
       title: 'Itinerary',
       content: <ItineraryContent />
@@ -257,9 +263,7 @@ export default function Home() {
       {/* Main Content */}
       <div className={`flex-1 flex min-h-0 ${isResizing ? 'resizing-mode' : ''}`}>
         {/* Chat Area */}
-        <div className={`flex-1 min-h-0 flex ${
-          hasStartedChat ? 'flex-col justify-start' : 'items-center justify-center'
-        } ${
+        <div className={`flex-1 min-h-0 flex flex-col ${
           isResizing ? '' : 'transition-all duration-500 ease-out'
         }`}>
           <div className={`w-full h-full flex flex-col min-h-0 px-4 py-2 mx-auto ${
@@ -270,48 +274,7 @@ export default function Home() {
             maxWidth: hasStartedChat ? chatMaxWidth : '32rem'
           }}>
           
-          {/* Input Form - positioned at top when chat has started */}
-          {hasStartedChat && (
-            <div className="border-b border-gray-900 pb-3 mb-4 flex-shrink-0">
-              <form onSubmit={handleSubmit} className="relative">
-                <div className="flex items-end gap-2 bg-gray-900 rounded-lg border border-gray-800 p-2 focus-within:border-gray-700 transition-colors">
-                  <textarea
-                    ref={textareaRef}
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                    placeholder="Message ItinerAI..."
-                    className="flex-1 bg-transparent text-white placeholder-gray-500 resize-none outline-none min-h-[20px] max-h-[120px] text-sm leading-relaxed py-1"
-                    rows={1}
-                    disabled={isLoading}
-                  />
-                  <button
-                    type="submit"
-                    disabled={!input.trim() || isLoading}
-                    className="bg-white hover:bg-gray-200 disabled:bg-gray-700 disabled:cursor-not-allowed text-black disabled:text-gray-500 rounded p-1.5 transition-colors flex-shrink-0"
-                  >
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      className="transform rotate-90"
-                    >
-                      <path
-                        d="M7 11L12 6L17 11M12 18V7"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </button>
-                </div>
-              </form>
-            </div>
-          )}
-          
-          {/* Welcome Screen or Messages */}
+          {/* Welcome Screen or Messages Container */}
           {messages.length === 0 ? (
             <div className="flex-1 flex flex-col items-center justify-center">
               <div className="text-center mb-8">
@@ -323,7 +286,7 @@ export default function Home() {
             </div>
           ) : (
             /* Messages Container */
-            <div className="flex-1 overflow-y-auto space-y-4 py-4 min-h-0">
+            <div className="flex-1 overflow-y-auto space-y-4 py-4 min-h-0 mb-4">
               {messages.map((message) => (
                 <div key={message.id} className="message-enter-active">
                   <div className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
@@ -372,46 +335,44 @@ export default function Home() {
             </div>
           )}
 
-          {/* Input Form - positioned at bottom when chat hasn't started */}
-          {!hasStartedChat && (
-            <div className="border-t border-gray-900 pt-3">
-              <form onSubmit={handleSubmit} className="relative">
-                <div className="flex items-end gap-2 bg-gray-900 rounded-lg border border-gray-800 p-2 focus-within:border-gray-700 transition-colors">
-                  <textarea
-                    ref={textareaRef}
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                    placeholder="Message ItinerAI..."
-                    className="flex-1 bg-transparent text-white placeholder-gray-500 resize-none outline-none min-h-[20px] max-h-[120px] text-sm leading-relaxed py-1"
-                    rows={1}
-                    disabled={isLoading}
-                  />
-                  <button
-                    type="submit"
-                    disabled={!input.trim() || isLoading}
-                    className="bg-white hover:bg-gray-200 disabled:bg-gray-700 disabled:cursor-not-allowed text-black disabled:text-gray-500 rounded p-1.5 transition-colors flex-shrink-0"
+          {/* Input Form - always positioned at bottom with padding */}
+          <div className="flex-shrink-0 pb-4">
+            <form onSubmit={handleSubmit} className="relative">
+              <div className="flex items-end gap-2 bg-gray-900 rounded-lg border border-gray-800 p-2 focus-within:border-gray-700 transition-colors">
+                <textarea
+                  ref={textareaRef}
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  placeholder="Message ItinerAI..."
+                  className="flex-1 bg-transparent text-white placeholder-gray-500 resize-none outline-none min-h-[20px] max-h-[120px] text-sm leading-relaxed py-1"
+                  rows={1}
+                  disabled={isLoading}
+                />
+                <button
+                  type="submit"
+                  disabled={!input.trim() || isLoading}
+                  className="bg-white hover:bg-gray-200 disabled:bg-gray-700 disabled:cursor-not-allowed text-black disabled:text-gray-500 rounded p-1.5 transition-colors flex-shrink-0"
+                >
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    className="transform rotate-90"
                   >
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      className="transform rotate-90"
-                    >
-                      <path
-                        d="M7 11L12 6L17 11M12 18V7"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </button>
-                </div>
-              </form>
-            </div>
-          )}
+                    <path
+                      d="M7 11L12 6L17 11M12 18V7"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </form>
+          </div>
           </div>
         </div>
 
