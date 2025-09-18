@@ -16,11 +16,12 @@ interface CalendarDay {
   isRangeEnd: boolean;
 }
 
-const FLEXIBLE_OPTIONS = [
-  { id: 'weekend', label: 'Weekend', months: ['September', 'October', 'November', 'December', 'January', 'February'] },
-  { id: '1week', label: '1 week', months: ['September', 'October', 'November', 'December', 'January', 'February'] },
-  { id: '2weeks', label: '2 weeks', months: ['September', 'October', 'November', 'December', 'January', 'February'] }
-];
+// Flexible options for future implementation
+// const FLEXIBLE_OPTIONS = [
+//   { id: 'weekend', label: 'Weekend', months: ['September', 'October', 'November', 'December', 'January', 'February'] },
+//   { id: '1week', label: '1 week', months: ['September', 'October', 'November', 'December', 'January', 'February'] },
+//   { id: '2weeks', label: '2 weeks', months: ['September', 'October', 'November', 'December', 'January', 'February'] }
+// ];
 
 const MONTHS = [
   'January', 'February', 'March', 'April', 'May', 'June',
@@ -39,8 +40,8 @@ export default function DatePicker({ onDateChange }: DatePickerProps) {
   const [panelWidth, setPanelWidth] = useState(320);
   const containerRef = useRef<HTMLDivElement>(null);
   
-  // Flexible dates state
-  const [flexibleDuration, setFlexibleDuration] = useState('1week');
+  // Flexible dates state - commented out until implementation
+  // const [flexibleDuration, setFlexibleDuration] = useState('1week');
   const [selectedMonths, setSelectedMonths] = useState<string[]>(['November']);
   const [flexibleType, setFlexibleType] = useState<'weekend' | '1week' | '2weeks'>('1week');
 
@@ -206,14 +207,15 @@ export default function DatePicker({ onDateChange }: DatePickerProps) {
     );
   };
 
-  const formatDateRange = () => {
-    if (!startDate) return 'Select dates';
-    if (!endDate) return startDate.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-    
-    const startStr = startDate.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-    const endStr = endDate.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-    return `${startStr} - ${endStr}`;
-  };
+  // Date range formatting function - commented out until needed
+  // const formatDateRange = () => {
+  //   if (!startDate) return 'Select dates';
+  //   if (!endDate) return startDate.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+  //   
+  //   const startStr = startDate.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+  //   const endStr = endDate.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+  //   return `${startStr} - ${endStr}`;
+  // };
 
   const renderCalendar = (monthOffset: number = 0) => {
     const displayMonth = currentMonth + monthOffset;

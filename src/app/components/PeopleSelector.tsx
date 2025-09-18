@@ -206,7 +206,7 @@ export default function PeopleSelector({ onSelectionChange }: PeopleSelectorProp
           {isFlexible && (
             <div className={`mt-3 p-2 bg-blue-500/10 border border-blue-500/20 rounded-lg transition-all duration-300 ${isSmallPanel ? 'p-2' : 'p-3'}`}>
               <p className={`text-blue-300 ${isSmallPanel ? 'text-xs' : 'text-sm'}`}>
-                ✨ We'll suggest the best room configuration for your group
+                ✨ We&apos;ll suggest the best room configuration for your group
               </p>
             </div>
           )}
