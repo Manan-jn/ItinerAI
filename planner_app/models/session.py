@@ -1,4 +1,4 @@
-from ..schema import State
+from ..travel_agent.shared_libraries import State
 
 from google.adk.sessions import Session, InMemorySessionService
 
@@ -18,6 +18,7 @@ class SessionManager:
         state = State(
             user_id=user_id,
         )
+        
         return await self.session_service.create_session(
             app_name=self.app_name,
             session_id=session_id,
