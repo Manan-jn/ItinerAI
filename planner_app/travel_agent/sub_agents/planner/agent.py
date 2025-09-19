@@ -5,7 +5,7 @@ from google.adk.tools.agent_tool import AgentTool
 
 from . import prompt
 from ...tools.memory import memorize
-from ...shared_libraries import DestinationIdeas, TravelDates, SourceLocation
+from ...shared_libraries import DestinationIdeas, TravelDates, SourceLocation, Itinerary
 
 source_agent = LlmAgent(
     name = "source_agent",
@@ -63,6 +63,29 @@ travel_dates_agent = LlmAgent(
 #     ),
 # )
 
+itinerary_agent = LlmAgent(
+    name = "itinerary_agent",
+    description = "Create and persist a structured JSON representation of the itinerary",
+    model = "gemini-2.5-flash",
+    instruction = prompt.ITINERARY_AGENT_INSTR,
+    output_key = "itinerary",
+    output_schema = Itinerary,
+    disallow_transfer_to_parent=True,
+    disallow_transfer_to_peers=True,
+    generate_content_config = GenerateContentConfig(
+        response_mime_type = "application/json"
+    ),
+)
+
+# stay_agent = LlmAgent(
+#     name = "stay_agent",
+#     description = "An agent that plans the stays for the trip",
+#     model = "gemini-2.5-flash",
+#     instruction = prompt.STAY_AGENT_INSTR,
+#     output_key = "stay_duration",
+#     output_schema = StayDuration,
+# )
+
 
 
 planner_agent = LlmAgent(
@@ -79,6 +102,9 @@ planner_agent = LlmAgent(
         ),
         AgentTool(
             agent=travel_dates_agent
+        ),
+        AgentTool(
+            agent=itinerary_agent
         ),
         memorize
     ],

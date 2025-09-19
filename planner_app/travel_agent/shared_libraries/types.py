@@ -1,4 +1,5 @@
 from typing import List, Optional, Literal
+from typing_extensions import Union
 from pydantic import BaseModel, Field
 from google.genai import types
 
@@ -121,6 +122,77 @@ class DestinationIdeas(BaseModel):
     """ A list of destination ideas """
     places: List[ClusterJourney] = Field(description="A list of destination ideas", default=[])
     
+    
+class AttractionEvent(BaseModel):
+    """An Attraction."""
+    event_type: str = Field(default="visit")
+    description: str = Field(
+        description="A title or description of the activity or the attraction visit"
+    )
+    address: str = Field(description="Full address of the attraction")
+    start_time: str = Field(description="Time in HH:MM format, e.g. 16:00")
+    end_time: str = Field(description="Time in HH:MM format, e.g. 16:00")
+    booking_required: bool = Field(default=False)
+    price: Optional[str] = Field(description="Some events may cost money")
+
+
+class FlightEvent(BaseModel):
+    """A Flight Segment in the itinerary."""
+    event_type: str = Field(default="flight")
+    description: str = Field(description="A title or description of the Flight")
+    booking_required: bool = Field(default=True)
+    departure_airport: str = Field(description="Airport code, i.e. SEA")
+    arrival_airport: str = Field(description="Airport code, i.e. SAN")
+    flight_number: str = Field(description="Flight number, e.g. UA5678")
+    boarding_time: str = Field(description="Time in HH:MM format, e.g. 15:30")
+    seat_number: str = Field(description="Seat Row and Position, e.g. 32A")
+    departure_time: str = Field(description="Time in HH:MM format, e.g. 16:00")
+    arrival_time: str = Field(description="Time in HH:MM format, e.g. 20:00")
+    price: Optional[str] = Field(description="Total air fare")
+    booking_id: Optional[str] = Field(
+        description="Booking Reference ID, e.g LMN-012-STU"
+    )
+
+
+class HotelEvent(BaseModel):
+    """A Hotel Booking in the itinerary."""
+    event_type: str = Field(default="hotel")
+    description: str = Field(description="A name, title or a description of the hotel")
+    address: str = Field(description="Full address of the attraction")
+    check_in_time: str = Field(description="Time in HH:MM format, e.g. 16:00")
+    check_out_time: str = Field(description="Time in HH:MM format, e.g. 15:30")
+    room_selection: str = Field()
+    booking_required: bool = Field(default=True)
+    price: Optional[str] = Field(description="Total hotel price including all nights")
+    booking_id: Optional[str] = Field(
+        description="Booking Reference ID, e.g ABCD12345678"
+    )
+
+
+class ItineraryDay(BaseModel):
+    """A single day of events in the itinerary."""
+    day_number: int = Field(
+        description="Identify which day of the trip this represents, e.g. 1, 2, 3... etc."
+    )
+    date: str = Field(description="The Date this day YYYY-MM-DD format")
+    events: list[Union[FlightEvent, HotelEvent, AttractionEvent]] = Field(
+        default=[], description="The list of events for the day"
+    )
+
+
+class Itinerary(BaseModel):
+    """A multi-day itinerary."""
+    trip_name: str = Field(
+        description="Simple one liner to describe the trip. e.g. 'San Diego to Seattle Getaway'"
+    )
+    start_date: str = Field(description="Trip Start Date in YYYY-MM-DD format")
+    end_date: str = Field(description="Trip End Date in YYYY-MM-DD format")
+    origin: str = Field(description="Trip Origin, e.g. San Diego")
+    destination: str = (Field(description="Trip Destination, e.g. Seattle"),)
+    days: list[ItineraryDay] = Field(
+        default_factory=list, description="The multi-days itinerary"
+    )
+
 class State(BaseModel):
     user_id: str = ''
     user_profile: Optional[UserProfile] = None
