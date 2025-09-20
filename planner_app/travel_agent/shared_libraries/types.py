@@ -31,7 +31,21 @@ class SourceLocation(BaseModel):
     state: str = Field(description="The Origin's State Name", default='')
     country: str = Field(description="The Origin's Country Name", default='')
     maps_url: str = Field(description="Maps URL for the Origin", default='')
-    
+
+class Stay(BaseModel):
+    stay_id: str = Field(description="The stay id", default='')
+    property_name: str = Field(description="The property name", default='')
+    property_address: str = Field(description="The property address", default='')
+    property_location: str = Field(description="The property location", default='')
+    property_city: str = Field(description="The property city", default='')
+    property_state: str = Field(description="The property state", default='')
+    property_country: str = Field(description="The property country", default='')
+    overall_rating: str = Field(description="The overall rating", default='')
+    starting_price: int = Field(description="The starting price", default=0)
+    currency: str = Field(description="The currency", default='')
+
+class StaySuggestions(BaseModel):
+    stays: List[Stay] = Field(description="The stays", default=[])
 
 class Flight(BaseModel):
     airline: str = Field(description="The airline", default='')

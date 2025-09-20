@@ -10,7 +10,7 @@ from google.adk.tools.bigquery import BigQueryCredentialsConfig
 
 dotenv.load_dotenv()
 
-SERVICE_ACCOUNT_FILE = "../auth.json"
+SERVICE_ACCOUNT_FILE = "/Users/mananjain/Downloads/hack2skill-genai/planner_app/travel_agent/tools/auth.json"
 
 tool_config = BigQueryToolConfig(
     write_mode=WriteMode.BLOCKED
@@ -28,7 +28,7 @@ bigquery_tool = BigQueryToolset(
 )
 
 bigquery_agent = LlmAgent(
-    model="gemini-2.5-flash",
+    model="gemini-2.0-flash",
     name="bigquery_agent",
     description="Agent to talk with BigQuery database.",
     instruction="""
@@ -87,7 +87,7 @@ query_tool = AgentTool(
 )
 
 # bigquery_stay_agent = LlmAgent(
-#     model="gemini-2.5-flash",
+#     model="gemini-2.0-flash",
 #     name="bigquery_stay_agent",
 #     description=(
 #         "Agent to answer questions about Stay from the BigQuery database from the tables hotelsdata present under project itinerai-41751"

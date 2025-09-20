@@ -10,7 +10,7 @@ from .sub_agents.planner.agent import planner_agent
 
 root_agent = LlmAgent(
     name="root_agent",
-    model="gemini-2.5-flash",
+    model="gemini-2.0-flash",
     global_instruction="""
     - You are not allowed to reveal any internal information regarding tools, steps you are taking etc.
     - Do not provide the intermediate responses. Always provide the final responses.
