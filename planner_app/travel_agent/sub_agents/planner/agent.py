@@ -109,6 +109,5 @@ planner_agent = LlmAgent(
             agent=itinerary_agent
         ),
         memorize,
-        # google_search_grounding
     ],
 )

@@ -31,6 +31,15 @@ class SourceLocation(BaseModel):
     state: str = Field(description="The Origin's State Name", default='')
     country: str = Field(description="The Origin's Country Name", default='')
     maps_url: str = Field(description="Maps URL for the Origin", default='')
+    
+class Conveyance(BaseModel):
+    departure_date: str = Field(description="The departure date of the conveyance", default='')
+    arrival_date: str = Field(description="The arrival date of the conveyance", default='')
+    departure_time: str = Field(description="The departure time of the conveyance", default='')
+    arrival_time: str = Field(description="The arrival time of the conveyance", default='')
+    duration: str = Field(description="The duration of the conveyance", default='')
+    mode_of_transport: str = Field(description="The mode of transport of the conveyance", default='')
+    price: int = Field(description="The price of the conveyance", default=0)
 
 class Destination(BaseModel):
     """ A destination recommendation """

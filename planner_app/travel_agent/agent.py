@@ -20,7 +20,7 @@ root_agent = LlmAgent(
     instruction=prompt.ROOT_AGENT_INSTR,
     sub_agents=[
         onboarding_agent,
-        planner_agent
+        planner_agent,
     ],
     before_agent_callback=_set_initial_state,
     # planner=BuiltInPlanner(
