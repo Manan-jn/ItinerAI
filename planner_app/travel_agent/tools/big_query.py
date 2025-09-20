@@ -82,7 +82,7 @@ bigquery_agent = LlmAgent(
     tools=[bigquery_tool]
 )
 
-query_agent = AgentTool(
+query_tool = AgentTool(
     agent=bigquery_agent
 )
 

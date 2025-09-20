@@ -6,8 +6,9 @@ from google.adk.tools.agent_tool import AgentTool
 from . import prompt
 from ...tools.memory import memorize
 from ...tools.search import google_search_grounding
+from ...tools.big_query import query_tool
 from ..destination.agent import destination_agent
-from ...shared_libraries import DestinationIdeas, TravelDates, SourceLocation, Itinerary
+from ...shared_libraries import DestinationIdeas, TravelDates, SourceLocation, Itinerary, Conveyances
 
 source_agent = LlmAgent(
     name = "source_agent",
@@ -88,6 +89,24 @@ itinerary_agent = LlmAgent(
 #     output_schema = StayDuration,
 # )
 
+conveyance_agent = LlmAgent(
+    name = "conveyance_agent",
+    description = "An agent that plans the conveyance for the trip",
+    model = "gemini-2.5-flash",
+    instruction = prompt.CONVEYANCE_AGENT_INSTR,
+    output_key = "conveyance",
+    disallow_transfer_to_parent=True,
+    disallow_transfer_to_peers=True,
+    generate_content_config = GenerateContentConfig(
+        response_mime_type = "application/json"
+    ),
+    output_schema = Conveyances,
+    tools=[
+        memorize,
+        query_tool
+    ],
+)
+
 
 
 planner_agent = LlmAgent(
@@ -101,6 +120,9 @@ planner_agent = LlmAgent(
         ),
         AgentTool(
             agent=destination_agent
+        ),
+        AgentTool(
+            agent=conveyance_agent
         ),
         AgentTool(
             agent=travel_dates_agent

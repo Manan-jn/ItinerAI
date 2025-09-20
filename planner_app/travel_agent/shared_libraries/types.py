@@ -32,14 +32,35 @@ class SourceLocation(BaseModel):
     country: str = Field(description="The Origin's Country Name", default='')
     maps_url: str = Field(description="Maps URL for the Origin", default='')
     
-class Conveyance(BaseModel):
-    departure_date: str = Field(description="The departure date of the conveyance", default='')
-    arrival_date: str = Field(description="The arrival date of the conveyance", default='')
-    departure_time: str = Field(description="The departure time of the conveyance", default='')
-    arrival_time: str = Field(description="The arrival time of the conveyance", default='')
-    duration: str = Field(description="The duration of the conveyance", default='')
-    mode_of_transport: str = Field(description="The mode of transport of the conveyance", default='')
-    price: int = Field(description="The price of the conveyance", default=0)
+
+class Flight(BaseModel):
+    airline: str = Field(description="The airline", default='')
+    flight_number: str = Field(description="The flight number", default='')
+    departure_time: str = Field(description="The departure time", default='')
+    arrival_time: str = Field(description="The arrival time", default='')
+    duration: str = Field(description="The duration", default='')
+    price: int = Field(description="The price", default=0)
+    
+class Train(BaseModel):
+    train_name: str = Field(description="The train name", default='')
+    train_number: str = Field(description="The train number", default='')
+    departure_time: str = Field(description="The departure time", default='')
+    arrival_time: str = Field(description="The arrival time", default='')
+    duration: str = Field(description="The duration", default='')
+    price: int = Field(description="The price", default=0)
+    
+class Bus(BaseModel):
+    bus_number: str = Field(description="The bus number", default='')
+    operator: str = Field(description="The operator", default='')
+    departure_time: str = Field(description="The departure time", default='')
+    arrival_time: str = Field(description="The arrival time", default='')
+    duration: str = Field(description="The duration", default='')
+    price: int = Field(description="The price", default=0)
+
+class Conveyances(BaseModel):
+    flights: List[Flight] = Field(description="The flights", default=[])
+    trains: List[Train] = Field(description="The trains", default=[])
+    buses: List[Bus] = Field(description="The buses", default=[])
 
 class Destination(BaseModel):
     """ A destination recommendation """
