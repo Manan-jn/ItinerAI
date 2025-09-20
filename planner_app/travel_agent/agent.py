@@ -8,32 +8,14 @@ from .tools.memory import _set_initial_state
 from .sub_agents.onboarding.agent import onboarding_agent
 from .sub_agents.planner.agent import planner_agent
 
-# def get_weather(city: str) -> dict:
-#     """Retrieves the current weather report for a specified city.
-
-#     Args:
-#         city (str): The name of the city for which to retrieve the weather report.
-
-#     Returns:
-#         dict: status and result or error msg.
-#     """
-#     if city.lower() == "new york":
-#         return {
-#             "status": "success",
-#             "report": (
-#                 "The weather in New York is sunny with a temperature of 25 degrees"
-#                 " Celsius (77 degrees Fahrenheit)."
-#             ),
-#         }
-#     else:
-#         return {
-#             "status": "error",
-#             "error_message": f"Weather information for '{city}' is not available.",
-#         }
-
 root_agent = LlmAgent(
     name="root_agent",
     model="gemini-2.5-flash",
+    global_instruction="""
+    - You are not allowed to reveal any internal information regarding tools, steps you are taking etc.
+    - Do not provide the intermediate responses. Always provide the final responses.
+    - Always provide user-friendly responses. Try to keep responses beautified for the user to make it more engaging and enjoyable & imaginative.
+    """,
     description="Planner Orchestrator Agent responsible for orchestrating the complete flow to plan & assist the user for planning their trip.",
     instruction=prompt.ROOT_AGENT_INSTR,
     sub_agents=[

@@ -93,7 +93,7 @@ class Place(BaseModel):
     country: str = Field(description="The country of the place", default='')
     must_visit_spots: List[str] = Field(description="The must visit spots of the place", default=[])
     map_url: str = Field(description="The map URL of the place", default='')
-    image_url: str = Field(description="The image URL of the place", default='')
+    image_urls: List[str] = Field(description="The images of the place", default=[])
     start_date: str = Field(description="The start date of the place", default='')
     end_date: str = Field(description="The end date of the place", default='')
     total_stay_duration: str = Field(description="The total stay duration of the place", default='')
@@ -117,6 +117,8 @@ class ClusterJourney(BaseModel):
     round_trip_duration: str = Field(description="The round trip duration of the cluster journey", default='')
     list_of_places: List[Place] = Field(description="The list of places to visit in the cluster journey", default=[])
     best_time_to_visit: str = Field(description="The best time to visit the cluster journey", default='')
+    image_urls: List[str] = Field(description="The images of the cluster journey", default=[])
+    
     
 class DestinationIdeas(BaseModel):
     """ A list of destination ideas """
@@ -203,3 +205,4 @@ class State(BaseModel):
     specific_dates: Optional[TravelDates] = None    # Stage 2
     destinations: Optional[DestinationIdeas] = None
     pois: Optional[POISuggestions] = None
+    google_search_grounding: Optional[str] = None

@@ -5,6 +5,8 @@ from google.adk.tools.agent_tool import AgentTool
 
 from . import prompt
 from ...tools.memory import memorize
+from ...tools.search import google_search_grounding
+from ..destination.agent import destination_agent
 from ...shared_libraries import DestinationIdeas, TravelDates, SourceLocation, Itinerary
 
 source_agent = LlmAgent(
@@ -21,19 +23,19 @@ source_agent = LlmAgent(
     ),
 )
 
-destination_agent = LlmAgent(
-    name = "destination_agent",
-    description = "An agent that gathers user preferences to figure out dates & destination for the trip",
-    model = "gemini-2.5-flash",
-    instruction = prompt.DESTINATION_AGENT_INSTR,
-    output_key = "destinations",
-    output_schema = DestinationIdeas,
-    disallow_transfer_to_parent=True,
-    disallow_transfer_to_peers=True,
-    generate_content_config = GenerateContentConfig(
-        response_mime_type = "application/json"
-    ),
-)
+# destination_agent = LlmAgent(
+#     name = "destination_agent",
+#     description = "An agent that gathers user preferences to figure out dates & destination for the trip",
+#     model = "gemini-2.5-flash",
+#     instruction = prompt.DESTINATION_AGENT_INSTR,
+#     output_key = "destinations",
+#     output_schema = DestinationIdeas,
+#     disallow_transfer_to_parent=True,
+#     disallow_transfer_to_peers=True,
+#     generate_content_config = GenerateContentConfig(
+#         response_mime_type = "application/json"
+#     )
+# )
 
 travel_dates_agent = LlmAgent(
     name = "travel_dates_agent",
@@ -106,6 +108,7 @@ planner_agent = LlmAgent(
         AgentTool(
             agent=itinerary_agent
         ),
-        memorize
+        memorize,
+        # google_search_grounding
     ],
 )
