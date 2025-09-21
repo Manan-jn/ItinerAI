@@ -1,11 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: 'export',
+  // Enable API routes with extended timeouts
   trailingSlash: true,
   images: {
     unoptimized: true
-  }
+  },
 };
 
 export default nextConfig;

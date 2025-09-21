@@ -2,6 +2,8 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import TabPanel from "./components/TabPanel";
+import ProcessingIndicator from "./components/ProcessingIndicator";
+import { getSessionId, getUserId } from "./utils/sessionManager";
 import {
   TripDetailsContent,
   ItineraryContent,
@@ -26,17 +28,49 @@ export default function Home() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [pendingResponse, setPendingResponse] = useState<Message | null>(null);
   const [rightPanelWidth, setRightPanelWidth] = useState(320); // Default 320px (w-80)
   const [isResizing, setIsResizing] = useState(false);
   const [isRightPanelCollapsed, setIsRightPanelCollapsed] = useState(false);
   const [hasStartedChat, setHasStartedChat] = useState(false); // Track if chat has started
   const [chatMaxWidth, setChatMaxWidth] = useState("95%"); // Dynamic chat width
+
+  // Session management
+  const [sessionId, setSessionId] = useState<string>("");
+  const [userId, setUserId] = useState<string>("");
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+
+  const handleProcessingComplete = () => {
+    if (pendingResponse) {
+      // Add the pending response to messages with smooth animation
+      setMessages((prev) => [...prev, pendingResponse]);
+      setPendingResponse(null);
+    }
+  };
+
+  // Initialize session IDs on component mount
+  useEffect(() => {
+    const initializeSession = () => {
+      const newSessionId = getSessionId();
+      const newUserId = getUserId();
+
+      setSessionId(newSessionId);
+      setUserId(newUserId);
+
+      console.log("Session initialized:", {
+        sessionId: newSessionId,
+        userId: newUserId,
+      });
+    };
+
+    initializeSession();
+  }, []);
 
   useEffect(() => {
     scrollToBottom();
@@ -80,6 +114,12 @@ export default function Home() {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
 
+    // Ensure session IDs are available before making API call
+    if (!sessionId || !userId) {
+      console.error("Session not initialized yet");
+      return;
+    }
+
     const userMessage: Message = {
       id: Date.now().toString(),
       content: input.trim(),
@@ -88,6 +128,7 @@ export default function Home() {
     };
 
     setMessages((prev) => [...prev, userMessage]);
+    const currentInput = input.trim();
     setInput("");
     setIsLoading(true);
 
@@ -96,18 +137,83 @@ export default function Home() {
       setHasStartedChat(true);
     }
 
-    // Simulate AI response (replace with actual API call)
-    setTimeout(() => {
+    try {
+      // Call local API route to avoid CORS issues
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: userId,
+          session_id: sessionId,
+          message: currentInput,
+        }),
+      });
+
+      console.log("API Request sent:", {
+        userId,
+        sessionId,
+        message: currentInput,
+      });
+      console.log("Response status:", response.status);
+      console.log("Response headers:", response.headers);
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("API Error Response:", errorText);
+        throw new Error(
+          `HTTP error! status: ${response.status}, message: ${errorText}`
+        );
+      }
+
+      const data = await response.json();
+      console.log("API Response:", data);
+
+      // Create assistant message from API response
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         content:
-          "I'd be happy to help you plan your perfect itinerary! Could you tell me more about your destination, travel dates, interests, and budget? This will help me create a personalized travel plan just for you.",
+          data.message ||
+          "Sorry, I couldn't process your request. Please try again.",
         role: "assistant",
         timestamp: new Date(),
       };
-      setMessages((prev) => [...prev, assistantMessage]);
-      setIsLoading(false);
-    }, 1500);
+
+      // Store the pending response for smooth transition
+      setPendingResponse(assistantMessage);
+
+      // Trigger completion of processing indicator
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 100);
+    } catch (error) {
+      console.error("Error calling chat API:", error);
+
+      // More detailed error logging
+      if (error instanceof TypeError && error.message.includes("fetch")) {
+        console.error("Network error - possibly CORS or connectivity issue");
+      }
+
+      // Fallback error message with more specific info
+      const errorMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        content:
+          error instanceof Error
+            ? `Connection error: ${error.message}. Please try again.`
+            : "I'm sorry, I'm having trouble connecting right now. Please check your internet connection and try again.",
+        role: "assistant",
+        timestamp: new Date(),
+      };
+
+      // Store the error message for smooth transition
+      setPendingResponse(errorMessage);
+
+      // Trigger completion of processing indicator
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 100);
+    }
   };
 
   const handleNudgeClick = (nudgeText: string) => {
@@ -337,8 +443,16 @@ export default function Home() {
             ) : (
               /* Messages Container */
               <div className="flex-1 overflow-y-auto space-y-4 py-4 min-h-0 mb-4">
-                {messages.map((message) => (
-                  <div key={message.id} className="message-enter-active">
+                {messages.map((message, index) => (
+                  <div
+                    key={message.id}
+                    className={`message-enter-active ${
+                      index === messages.length - 1 &&
+                      message.role === "assistant"
+                        ? "message-appear"
+                        : ""
+                    }`}
+                  >
                     <div
                       className={`flex ${
                         message.role === "user"
@@ -361,18 +475,11 @@ export default function Home() {
                   </div>
                 ))}
 
-                {/* Loading Indicator */}
-                {isLoading && (
-                  <div className="flex justify-start">
-                    <div className="bg-gray-900 border border-gray-800 rounded-lg px-3 py-2 max-w-[75%]">
-                      <div className="typing-dots">
-                        <div className="typing-dot"></div>
-                        <div className="typing-dot"></div>
-                        <div className="typing-dot"></div>
-                      </div>
-                    </div>
-                  </div>
-                )}
+                {/* Enhanced Processing Indicator */}
+                <ProcessingIndicator
+                  isVisible={isLoading}
+                  onComplete={handleProcessingComplete}
+                />
 
                 <div ref={messagesEndRef} />
               </div>
