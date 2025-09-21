@@ -68,7 +68,7 @@ def _google_search_callback(callback_context: CallbackContext) -> None:
     callback_context.state["google_search_detailed"] = current_state + [google_search]
 
 # _search_engine = LlmAgent(
-#     model="gemini-2.0-flash",
+#     model="gemini-2.5-flash",
 #     name="search_engine",
 #     description="An agent providing Google-search grounding capability",
 #     instruction=""" You are a professional search assistant with Google Search capabilities who uses the `google_search` tool multiple times to gather maximum amount of information. Refer the <CONTEXT/> & <EXAMPLE_FLOW/> for more details.
@@ -135,7 +135,7 @@ def _google_search_callback(callback_context: CallbackContext) -> None:
 
 def create_search_engine(engine_id: int = 1):
     return LlmAgent(
-        model="gemini-2.0-flash",
+        model="gemini-2.5-flash",
         name=f"_search_engine_{engine_id}",
         description="An agent providing Google-search grounding capability",
         instruction=""" You are a professional search assistant with Google Search capabilities who uses the `google_search` tool multiple times to gather maximum amount of information. Refer the <CONTEXT/> & <EXAMPLE_FLOW/> for more details.

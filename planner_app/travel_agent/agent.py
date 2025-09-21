@@ -6,11 +6,11 @@ from google.adk.tools.agent_tool import AgentTool
 from . import prompt
 from .tools.memory import _set_initial_state
 from .sub_agents.onboarding.agent import onboarding_agent
-from .sub_agents.planner.agent import planner_agent
+from .sub_agents.planner.agent import planner_agent, stay_agent, conveyance_agent
 
 root_agent = LlmAgent(
     name="root_agent",
-    model="gemini-2.0-flash",
+    model="gemini-2.5-flash",
     global_instruction="""
     - You are not allowed to reveal any internal information regarding tools, steps you are taking etc.
     - Do not provide the intermediate responses. Always provide the final responses.
@@ -30,3 +30,5 @@ root_agent = LlmAgent(
     #     )
     # )
 )
+
+# root_agent = conveyance_agent

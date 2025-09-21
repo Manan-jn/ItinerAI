@@ -1,3 +1,4 @@
+import json
 import os 
 import dotenv
 from google.adk.agents import LlmAgent
@@ -10,16 +11,23 @@ from google.adk.tools.bigquery import BigQueryCredentialsConfig
 
 dotenv.load_dotenv()
 
-SERVICE_ACCOUNT_FILE = "/Users/mananjain/Downloads/hack2skill-genai/planner_app/travel_agent/tools/auth.json"
+# SERVICE_ACCOUNT_FILE = "./auth.json"
 
 tool_config = BigQueryToolConfig(
     write_mode=WriteMode.BLOCKED
 )
 
-credentials = service_account.Credentials.from_service_account_file(
-    SERVICE_ACCOUNT_FILE,
+key_contents_str = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+key_contents = json.loads(key_contents_str) 
+
+credentials = service_account.Credentials.from_service_account_info(
+    key_contents,
     scopes=["https://www.googleapis.com/auth/bigquery"]
 )
+# credentials = service_account.Credentials.from_service_account_file(
+#     key_path,
+#     scopes=["https://www.googleapis.com/auth/bigquery"]
+# )
 credentials_config = BigQueryCredentialsConfig(credentials=credentials)
 
 
@@ -28,7 +36,7 @@ bigquery_tool = BigQueryToolset(
 )
 
 bigquery_agent = LlmAgent(
-    model="gemini-2.0-flash",
+    model="gemini-2.5-flash",
     name="bigquery_agent",
     description="Agent to talk with BigQuery database.",
     instruction="""
@@ -53,7 +61,7 @@ bigquery_agent = LlmAgent(
             - If the query is for `stay`, then use the `hotels` table.
         - then inspect the relevant table schema(s) using a BigQuery SQL `INFORMATION_SCHEMA` call.
         - use the schema details to compose a precise and efficient SQL query tailored to the user's request, searching for matching buses, trains, or flights.
-        - run the SQL query against the appropriate table(s) to extract the needed transportation options.`
+        - run the SQL query against the appropriate table(s) to extract the needed details/options.`
         - if the user's request is ambiguous or incomplete, request any additional necessary details before running a query.
         
     Return the response as a JSON object formatted like this:
@@ -69,9 +77,10 @@ bigquery_agent = LlmAgent(
     - If the query is for `stay`, then return the response as a JSON object formatted like this:
         <format>
         {{
-        "hotels": [ { ...hotel option details... } ]
+        "stays": [ { ...hotel option details... } ]
         }}
         </format>
+        - Each object should include fields such as `property_name`, `property_address`, `property_location`, `property_city`, `property_state`, `property_country`, `overall_rating`, `starting_price`, `currency`, `property_price`, and any other relevant columns from your tables.
 
     
     - your role is to only answer strictly based on the database contents.
@@ -79,20 +88,10 @@ bigquery_agent = LlmAgent(
     - reference the correct tables for each mode of transport.
     - ensure responses are in valid JSON and can be directly parsed by client code.
     """,
-    tools=[bigquery_tool]
+    tools=[bigquery_tool],
+    output_key="bigquery_response",
 )
 
 query_tool = AgentTool(
     agent=bigquery_agent
 )
-
-# bigquery_stay_agent = LlmAgent(
-#     model="gemini-2.0-flash",
-#     name="bigquery_stay_agent",
-#     description=(
-#         "Agent to answer questions about Stay from the BigQuery database from the tables hotelsdata present under project itinerai-41751"
-#         "SQL queries to get the best options for the stay for the trip."
-#     ),
-#     instruction=prompt.BIG_QUERY_STAY_AGENT_INSTR,
-#     tools=[bigquery_tool],
-# )

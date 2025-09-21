@@ -9,7 +9,7 @@ from ...shared_libraries import DestinationIdeas
 recommendation_agent = LlmAgent(
     name = "recommendation_agent",
     description = "An agent that gathers user preferences to figure out dates & destination for the trip",
-    model = "gemini-2.0-flash",
+    model = "gemini-2.5-flash",
     instruction = prompt.RECOMMENDATION_AGENT_INSTR,
     output_key = "temp_destinations",
     disallow_transfer_to_parent=True,
@@ -23,7 +23,7 @@ recommendation_agent = LlmAgent(
 destination_builder_agent = LlmAgent(
     name = "destination_agent",
     description = "An agent that gathers user preferences to figure out dates & destination for the trip",
-    model = "gemini-2.0-flash",
+    model = "gemini-2.5-flash",
     instruction = prompt.DESTINATION_AGENT_INSTR,
     output_key = "destinations",
     output_schema = DestinationIdeas,

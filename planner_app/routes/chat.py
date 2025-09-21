@@ -30,8 +30,8 @@ async def chat(request: ChatRequest, session_service: SessionManager = Depends(g
                 final_text = event.content.parts[0].text
 
     updated_session = await session_service.get_session(request.session_id, request.user_id)
-    print("inital session: ", session.state['user_profile'], type(session.state['user_profile']))
-    print("updated_session: ", updated_session.state['user_profile'], type(updated_session.state['user_profile']))
+    print("inital session: ", session.state, type(session.state))
+    print("updated_session: ", updated_session.state, type(updated_session.state))
     return ChatResponse(
         user_id=request.user_id,
         session_id=request.session_id,
