@@ -1,11 +1,8 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  // Enable API routes with extended timeouts
-  trailingSlash: true,
-  images: {
-    unoptimized: true
-  },
+// next.config.js
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+  output: 'standalone'
 };
 
-export default nextConfig;
+module.exports = nextConfig;
