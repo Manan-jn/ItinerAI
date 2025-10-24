@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from starlette.responses import JSONResponse
 
-from ..utils import get_session_service
+from ..common import get_session_service
 from ..models import SessionManager
 
 router = APIRouter()

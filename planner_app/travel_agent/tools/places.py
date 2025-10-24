@@ -1,8 +1,13 @@
 import os
-from typing import Dict, List, Any
-
-from google.adk.tools import ToolContext
 import requests
+import dotenv
+from typing import Dict, List, Any
+from google.adk.tools import ToolContext
+from google.adk.agents.callback_context import CallbackContext
+
+# from ..shared_libraries.utils import string_to_json
+
+dotenv.load_dotenv('../../../.env')
 
 class PlacesService:
 
@@ -15,6 +20,7 @@ class PlacesService:
 
     def find_place_from_text(self, query: str) -> Dict[str, str]:
         """Fetches place details using a text query."""
+        print("finding place from text: ", query)
         self._check_key()
         places_url = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json"
         params = {
@@ -28,6 +34,7 @@ class PlacesService:
             response = requests.get(places_url, params=params)
             response.raise_for_status()
             place_data = response.json()
+            
 
             if not place_data.get("candidates"):
                 return {"error": "No places found."}
@@ -43,6 +50,7 @@ class PlacesService:
             lat = str(location["lat"])
             lng = str(location["lng"])
 
+            print("place details: ", place_details)
             return {
                 "place_id": place_id,
                 "place_name": place_name,
@@ -69,38 +77,52 @@ class PlacesService:
         return f"https://www.google.com/maps/place/?q=place_id:{place_id}"
 
 
-# Google Places API
 places_service = PlacesService()
 
 
-def map_tool(key: str, tool_context: ToolContext):
-    """
-    This is going to inspect the pois stored under the specified key in the state.
-    One by one it will retrieve the accurate Lat/Lon from the Map API, if the Map API is available for use.
-
-    Args:
-        key: The key under which the POIs are stored.
-        tool_context: The ADK tool context.
+def _helper(data: Any):
+    if not (isinstance(data, (dict, list))):
+        return data
+    
+    if isinstance(data, list):
+        # print("data is a list: ", data)
+        for i in range(len(data)):
+            data[i] = _helper(data[i])
+    
+    if isinstance(data, dict):
+        # print("data is a dict: ", data)
+        for key, value in data.items():
+            data[key] = _helper(value)
         
-    Returns:
-        The updated state with the full JSON object under the key.
-    """
-    if key not in tool_context.state:
-        tool_context.state[key] = {}
+        if data.get("place_name") or data.get("address"):
+            # Check if map_url is empty or None and we have place info to search with
+            if not data.get("map_url", None) or data.get("map_url") == "":
+                
+                search_query = ""
+                if data.get("place_name"):
+                    search_query += data["place_name"]
+                if data.get("address"):
+                    if search_query:
+                        search_query += ", "
+                    search_query += data["address"]
+                
+                if search_query:
+                    response = places_service.find_place_from_text(search_query)
+                    
 
-    # The pydantic object types.POISuggestions
-    if "places" not in tool_context.state[key]:
-        tool_context.state[key]["places"] = []
+                    if "error" not in response:
+                        data["map_url"] = response.get("map_url", "")
+                        data["lat"] = response.get("lat", 0.0)
+                        data["long"] = response.get("lng", 0.0)
+                        data["photos"] = response.get("photos", [])
+                        if "place_id" in response:
+                            data["place_id"] = response["place_id"]
+                    else:
+                        print(f"Error finding place: {response['error']}")
+        
+    return data
 
-    pois = tool_context.state[key]["places"]
-    for poi in pois:  # The pydantic object types.POI
-        location = poi["place_name"] + ", " + poi["address"]
-        result = places_service.find_place_from_text(location)
-        # Fill the place holders with verified information.
-        poi["place_id"] = result["place_id"] if "place_id" in result else None
-        poi["map_url"] = result["map_url"] if "map_url" in result else None
-        if "lat" in result and "lng" in result:
-            poi["lat"] = result["lat"]
-            poi["long"] = result["lng"]
-
-    return {"places": pois}  # Return the updated pois
+def map_tool(callback_context: CallbackContext):
+    state = callback_context.state.to_dict()
+    state = _helper(state)
+    callback_context.state.update(state)

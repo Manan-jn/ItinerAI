@@ -27,11 +27,10 @@ class GroupDetails(BaseModel):
     group_members: Optional[List[UserProfile]] = Field(description='Details of the group members', default=[])
 
 class SourceLocation(BaseModel):
-    city: str = Field(description="A Origin's City Name", default='')
-    state: str = Field(description="The Origin's State Name", default='')
-    country: str = Field(description="The Origin's Country Name", default='')
-    maps_url: str = Field(description="Maps URL for the Origin", default='')
-
+    """ A source location """
+    response_type: Literal['source_point', 'text'] = Field(description="The type of the response, always 'source_point'", default='source_point')
+    message: str = Field(description="The message to display to the user", default='')
+    place: dict[str, str] = Field(description="The source location", default={})
 class Stay(BaseModel):
     stay_id: str = Field(description="The stay id", default='')
     property_name: str = Field(description="The property name", default='')
@@ -84,23 +83,23 @@ class Destination(BaseModel):
     images: List[str] = Field(description="verified URL to an image of the destination", default=[])
     highlights: str = Field(description="Short description highlighting key features", default='')
     rating: str = Field(description="Numerical rating (e.g., 4.5)", default='')
-    maps_url: str = Field(description="Maps URL for the destination", default='')
+    map_url: str = Field(description="Maps URL for the destination", default='')
     estimated_budget: int = Field(description="Estimated budget for the destination in INR", default=0)
     suggested_days: int = Field(description="Suggested number of days to visit the destination (eg. 2 days, 3 days, 4 days, 5 days, 6 days, 7 days)", default=0)
     best_time_to_visit: str = Field(description="Best time to visit the destination (eg. January, February, March, April, May, June, July, August, September, October, November, December)", default='')
-
-# class DestinationIdeas(BaseModel):
-#     """ A list of destination ideas """
-#     places: List[Destination] = Field(description="A list of destination ideas", default=[])
     
 class POI(BaseModel):
     """ A place of interest """
     place_name: str = Field(description="The name of the place of interest", default='')
-    maps_url: str = Field(description="Maps URL for the place of interest", default='')
-    description: str = Field(description="The description of the place of interest", default='')
-    images: List[str] = Field(description="verified URLs to an image of the place of interest", default=[])
+    address: str = Field(description="The address of the place of interest", default='')
+    poi_type: Literal['attraction', 'restaurant', 'hotel', 'club', 'cafe', 'activity','event'] = Field(description="The type of the place of interest", default='')
+    description: str = Field(description="Short description highlighting key features", default='')
     rating: str = Field(description="Numerical rating (e.g., 4.5)", default='')
-    
+    map_url: str = Field(description="The maps URL of the place of interest", default='')
+    lat: float = Field(description="The latitude of the place of interest", default=0.0)
+    long: float = Field(description="The longitude of the place of interest", default=0.0)
+    photos: List[str] = Field(description="The photos of the place of interest", default=[])
+    theme: List[str] = Field(description="The themes of the place of interest", default=[])
 class POISuggestions(BaseModel):
     points_of_interest: List[POI] = Field(description="A list of place of interest suggestions", default=[])
     
@@ -131,42 +130,40 @@ class Itinerary(BaseModel):
     trip_name: str = Field(description="The name of the trip", default='')
     
 class Place(BaseModel):
-    name: str = Field(description="The name of the place", default='')
-    city: str = Field(description="The city or area or districtof the place", default='')
-    state: str = Field(description="The state of the place", default='')
-    country: str = Field(description="The country of the place", default='')
-    must_visit_spots: List[str] = Field(description="The must visit spots of the place", default=[])
-    map_url: str = Field(description="The map URL of the place", default='')
-    image_urls: List[str] = Field(description="The images of the place", default=[])
-    start_date: str = Field(description="The start date of the place", default='')
-    end_date: str = Field(description="The end date of the place", default='')
-    total_stay_duration: str = Field(description="The total stay duration of the place", default='')
+    place_name: str = Field(description="The name of the place", default='')
+    address: str = Field(description="The address of the place", default='')
+    map_url: str = Field(description="The maps URL of the place", default='')
+    lat: float = Field(description="The latitude of the place", default=0.0)
+    long: float = Field(description="The longitude of the place", default=0.0)
+    photos: List[str] = Field(description="The photos of the place", default=[])
     
-class ClusterJourney(BaseModel):
-    cluster_type: Literal['custom', 'route', 'cluster', "state_level", "country_level", "multiple_countries"] = Field(
-        description="""The type of the cluster journey.
-        - custom: Custom cluster journey
-        - route: Trip from one place to another place, covering multiple places in between.
-        - cluster: Cluster cluster journey. Trip covering multiple places (can have different states, but cities must be close to each other around 80 Kms apart) in a cluster.
-        - state_level: State or Union Territory level cluster journey. Trip covering multiple cities in a same state or Union Territory (eg. Goa, Leh Ladakh..). 
-        - country_level: Country level cluster journey. Trip covering multiple cities in a same country.
-        - multiple_countries: Multiple countries cluster journey. Trip covering multiple cities in multiple countries."""
-    )
-    start_date: str = Field(description="The start date of the cluster journey", default='')
-    end_date: str = Field(description="The end date of the cluster journey", default='')
-    start_destination: str = Field(description="The start destination of the cluster journey", default='')
-    final_destination: str = Field(description="The final destination of the cluster journey", default='')
-    recommended_mode_of_transport: str = Field(description="The recommended modes of transport for the cluster journey", default='')
-    estimated_cost: str = Field(description="The estimated cost of the cluster journey", default='')
-    round_trip_duration: str = Field(description="The round trip duration of the cluster journey", default='')
-    list_of_places: List[Place] = Field(description="The list of places to visit in the cluster journey", default=[])
-    best_time_to_visit: str = Field(description="The best time to visit the cluster journey", default='')
-    image_urls: List[str] = Field(description="The images of the cluster journey", default=[])
+class MustDoActivity(BaseModel):
+    type: Literal['place', 'activity', 'food', 'event', 'shopping', 'wellness', 'transport'] = Field(description="The type of the activity", default='')
+    category: str = Field(description="The sub type of the activity", default='')
+    name: str = Field(description="The specifc name based on the type and category", default='')
+    description: str = Field(description="The one or two line description about what the user should do based on the type and category", default='')
     
     
-class DestinationIdeas(BaseModel):
-    """ A list of destination ideas """
-    places: List[ClusterJourney] = Field(description="A list of destination ideas", default=[])
+class DayPlan(BaseModel):
+    day_number: int = Field(description="The number of the day", default=0)
+    cities: List[Place] = Field(description="The cities to visit in the day", default=[])
+    must_do_activities: List[MustDoActivity] = Field(description="The must do activities in the day", default=[])
+
+class Trip(BaseModel):
+    trip_title: str = Field(description="The title of the trip", default='')
+    # trip_type: Literal['road_trip', 'multi_city', 'regional', 'country_explorer'] = Field(description="The type of the trip")
+    no_of_days: int = Field(description="The estimated number of days in the trip", default=0)
+    estimated_budget: int = Field(description="The estimated budget of the trip per person in INR", default=0)
+    best_time_to_visit: str = Field(description="The best time to visit the trip in the year", default='')
+    theme: List[str] = Field(description="The themes of the trip", default=[])
+    day_wise_plan: List[DayPlan] = Field(description="The day wise plan of the trip", default=[])
+    
+    
+class TripSuggestions(BaseModel):
+    """ A list of recommended trip ideas """
+    response_type: Literal['trip', 'text'] = Field(description="The type of the response, always 'trip'", default='trip')
+    message: str = Field(description="The message to display to the user", default='')
+    trips: List[Trip] = Field(description="A list of recommended trip ideas, keep it [] (empty list) if 'response_type' is 'text'", default=[])
     
     
 class AttractionEvent(BaseModel):
@@ -238,6 +235,10 @@ class Itinerary(BaseModel):
     days: list[ItineraryDay] = Field(
         default_factory=list, description="The multi-days itinerary"
     )
+    
+class OnboardingAgent(BaseModel):
+    response_type: Literal['text'] = Field(description="The type of the response, always 'text'", default='text')
+    message: str = Field(description="The message to display to the user", default='')
 
 class State(BaseModel):
     user_id: str = ''
@@ -247,6 +248,7 @@ class State(BaseModel):
     origin: Optional[str] = ''
     rough_dates: Optional[RoughTravelDates] = None  # Stage 1
     specific_dates: Optional[TravelDates] = None    # Stage 2
-    destinations: Optional[DestinationIdeas] = None
+    # destinations: Optional[DestinationIdeas] = None
+    trips: Optional[TripSuggestions] = None
     pois: Optional[POISuggestions] = None
     google_search_grounding: Optional[str] = None
