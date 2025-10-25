@@ -22,6 +22,11 @@ Here's the optimal flow:
     {{
       "response_type": "start_building_itinerary"
     }}
+  - Once the `origin_agent` handoffs the flow back to you, your work is done now always respond back to the user in the following JSON format:
+  {{
+    "response_type": "end",
+    "message": "flow is ended"
+  }}
   
 <CURRENT_STATE>
   <user_profile> {user_profile?} </user_profile>

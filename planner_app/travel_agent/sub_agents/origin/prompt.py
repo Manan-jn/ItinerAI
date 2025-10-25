@@ -54,9 +54,8 @@ Do not transfer the flow until the following information is present:
 <RESPONSE_FORMAT>
 Return the response as a JSON object formatted like this:
 {{
-  "response_type" ENUM(text, origin): "", (use 'origin' if you are start points; use 'text' when you need to conversate with the user to ask or clarify something)
+  "response_type" ENUM(text): "", (Always use 'text' as your response_type)
   "message" str: "", (Your response to display to the user, keep it empty if 'response_type' is 'origin')
-  "start_points"
 }}
 </RESPONSE_FORMAT>
 """
