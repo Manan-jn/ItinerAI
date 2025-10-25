@@ -4,7 +4,8 @@ from google.adk.events import Event, EventActions
 
 from ..models import SessionManager
 from ..schema.session_schema import SessionSchema, AddMemorySchema, DeleteMemorySchema
-from ..common import get_session_service, merge_dict_intelligently
+from ..common import get_session_service
+from ..shared.post_processor import merge_dict_intelligently
 
 router = APIRouter()
 

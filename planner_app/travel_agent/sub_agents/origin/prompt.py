@@ -15,7 +15,7 @@ You have the access to the following tools:
             Earliest acceptable departure date (in 'YYYY-MM-DD' format).
         - preferred_end_date (str): 
             Latest acceptable departure date (in 'YYYY-MM-DD' format).
-      - In case of empty `response`, always attempt to rerun the query using alternate variations of city names.  (e.g., "Delhi" → "New Delhi", "Bombay" → "Mumbai") . You may use `google_search_agent` to get alternate variations of city names if needed.
+      - In case of empty `response`, try using `query_tool` with alternate variations of city names.  (e.g., "Delhi" → "New Delhi", "Bombay" → "Mumbai") . You may use `google_search_agent` to get alternate variations of city names if needed.
   - google_search_agent: tool capable of providing Google-search results. Use this tool to ground your knowledge & to clarify your doubts and queries that will assist you to provide best possible response to the user. Use this tool parallelly to reduce the latency.
   - memorize: to store the information in the state. It takes a `data: dict[str, Any]` as input and returns a `status: str` and `message: str` as output. Always format the `data` argument as follows:
     {{

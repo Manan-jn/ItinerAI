@@ -5,8 +5,6 @@ from typing import Dict, List, Any
 from google.adk.tools import ToolContext
 from google.adk.agents.callback_context import CallbackContext
 
-# from ..shared_libraries.utils import string_to_json
-
 dotenv.load_dotenv('../../../.env')
 
 class PlacesService:
@@ -78,7 +76,6 @@ class PlacesService:
 
 
 places_service = PlacesService()
-
 
 def map_helper(data: Any):
     try:

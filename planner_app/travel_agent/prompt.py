@@ -12,6 +12,7 @@ ROOT_AGENT_INSTR = """
 
 Here's the optimal flow:
   - Handoff to `onboarding_agent` and continue with the flow once `onboarding_agent` handoff the flow back to you.
+  - Before suggesting the trips to the user, do inform about it to the user.
   - Identify if `trip_agent` is required to recommend trips to the user:
     - Analyse the selected trip details provided in the <final_trip/> in <CURRENT_STATE/> block.
     - If it is empty, then handoff the flow to `trip_agent` to recommend the trips to the user else you can skip the trip recommendation process.

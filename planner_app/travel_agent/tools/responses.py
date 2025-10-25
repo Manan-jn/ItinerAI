@@ -1,15 +1,13 @@
 from google.adk.agents.callback_context import CallbackContext
+from typing import Any
 # from google.genai import types 
-from typing import Optional, Any
 
-# from ..shared_libraries.utils import string_to_json
-from ...common.utils import string_to_json
-
+from planner_app.shared.post_processor import string_to_json
 
 def state_update_helper(data: Any) -> Any:
     try:
-        if isinstance(data, str) and (temp:=string_to_json(data)):
-            data = temp
+        if isinstance(data, str) and (_data:=string_to_json(data)):
+            data = _data
             
         if not (isinstance(data, (dict, list))):
             return data

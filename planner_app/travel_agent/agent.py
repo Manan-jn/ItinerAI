@@ -12,7 +12,7 @@ from .tools.memory import memorize
 from .tools.search import google_search_agent
 from .sub_agents.onboarding.agent import onboarding_agent
 from .sub_agents.inspiration.agent import trip_agent
-from sub_agents.origin.agent import origin_agent
+from .sub_agents.origin.agent import origin_agent
 # from .sub_agents.conveyance.agent import conveyance_agent, source_agent
 # from .sub_agents.planner.agent import planner_agent, stay_agent
 from .tools.responses import modify_state_callback

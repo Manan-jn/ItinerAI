@@ -3,8 +3,7 @@ from google.adk.agents.callback_context import CallbackContext
 from google.adk.tools import ToolContext 
 
 from ..shared_libraries import State
-from ...common.utils import merge_dict_intelligently
-# from ..shared_libraries.utils import merge_dict_intelligently
+from planner_app.shared.post_processor import merge_dict_intelligently
 
 def _set_initial_state(callback_context: CallbackContext):
     items = State.model_fields.items()

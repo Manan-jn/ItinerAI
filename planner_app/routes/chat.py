@@ -1,5 +1,4 @@
-import json 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from starlette.responses import JSONResponse
 from google.adk.runners import Runner
 from google.genai.types import Content, Part
@@ -8,7 +7,7 @@ from ..common import get_session_service
 from ..schema import ChatRequest, ChatResponse
 from ..models import SessionManager
 from ..travel_agent import root_agent, conveyance_agent
-from ..common.utils import string_to_json
+from ..shared.post_processor import string_to_json
 
 router = APIRouter()
 
