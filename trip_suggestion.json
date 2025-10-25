@@ -1,0 +1,1040 @@
+{
+  "user_id": "",
+  "user_profile": {
+    "allergies": [],
+    "budget": 200000,
+    "trip_type": "solo",
+    "general_preferences": [
+      "flexible with dates & timings",
+      "prefer to explore India"
+    ],
+    "age": 25,
+    "group_size": 1,
+    "passport_nationality": "Indian",
+    "name": "Gaurav",
+    "gender": "male"
+  },
+  "group_details": null,
+  "budget": null,
+  "origin": "",
+  "rough_dates": null,
+  "specific_dates": null,
+  "trips": null,
+  "pois": null,
+  "google_search_grounding": null,
+  "response_type": "trip",
+  "trip_suggestions": {
+    "message": "",
+    "trips": [
+      {
+        "trip_title": "Spiritual Journey through the Himalayas",
+        "no_of_days": 6,
+        "estimated_budget": 45000,
+        "best_time_to_visit": "September to November and March to May",
+        "themes": [
+          "spiritual",
+          "adventure",
+          "nature"
+        ],
+        "trip_route": [
+          {
+            "place_name": "Haridwar",
+            "address": "Haridwar, Uttarakhand, India",
+            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJyVfuuA5HCTkR8_VApnaRRE4",
+            "lat": "29.9456906",
+            "long": "78.16424780000001",
+            "photos": [
+              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6PT8AS52Nt4HSVYeoljmFawfE9zOcN3ElTEHiDtFjTVv6GrIPS5TMwQXVujhxyfUxyowrR7T3wc3AJi9zK6P0KVHIneiv06Vr64V0QDeZPLfc3I3M40VkUl-oLgC1x9Blt8Bvdaw3Z76yG4tL1UHd1v09GthvOB8FPcg6qMPASnQHPfFexeEHbDcKdBkXSNokSGG-pgS5b33rfChx2r2VBjetPt0uCvY0rumma0CqgzHtTM5CrV5hxuSTDxE-G7pQP6ahYnSS1L176UMwiC2BuTsaVDaQfIBiXk_HWLXnh4fk9bUmHEVUyRqqHOesUeQl6ScQQ5HqnJxYZh5mDSabFMyMQ79gp6BKcpoB5QXkbG9kpCVKUeOGK7T1Vpe4p3T8ps3ajem65PKnYiL-f8kg5Q4jGGgZ49wG18OG-YOOOCplzQ-PRBnqMT7asSBAtR55nTaOH4vg2EljRr98fIMYXO4-e6kPZ0NGiTHPXEZO4I4OjddOSxJlf4x2eGqGe7AobGRBBMFzgVqNmYRJdxfj7UkGEE-DY60ZBg4p3_1Qu_3Qg5wq_yCevjQA_fJpOERK8OXQ9&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+            ],
+            "place_id": "ChIJyVfuuA5HCTkR8_VApnaRRE4"
+          },
+          {
+            "place_name": "Rishikesh",
+            "address": "Rishikesh, Uttarakhand, India",
+            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJEfGTz2c-CTkR_huUb0qAeMw",
+            "lat": "30.1157619",
+            "long": "78.28530169999999",
+            "photos": [
+              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU5dIrmwW-56ZIJtFXEyxanXtdam17iIyi-21-whhK0CGi8iGtovUofxrQKqTQtwFedJPQq03bdl0WP6FRoiwS2SizzrXkC0gjA9FBXTqUO_A8aP6qor-2KRcpPj-RK5rm5-k0rRFIt0kWdzebTyMGAR_tWiL7Rw0TxYM2rw-HiSTvK4HHp1SwfI7ZWtwedHQeYFISzXhPOqgJWcVJjKMxdxmtJEPHEf8vl4ZdDoyTFKMhOve1Ppv3Ebk4ft-Rn6ORbCIYD5ylaq5Wgxs9Kkkvjq6NTiK7_rc36KU5QJafzzRv_014L3ltkqCUeDEs6YJBHxD53LZnad_Fy7NIqUF0mPJ2l10DWlmp7Z4YFn9-lp2NkC4i-oby3z7G61YcQS66EXmK_eBpjiQ9sYoo0bzUNQbe_epFHS0ybfnvBrpNWMpmIQse0tYtI7LFbD2GJwjnKRm-y2_-pOqu1zVInEvRGb-UGOoPwCYdaRnNHOM6ZF7pYFM4LHNTvtINvX6HtH3o_pX6zN-04Hhk5MSpf0n7ZjFHGGKQH9LFHLmmb1P_Nm8HXsOGKkErplhE01dery_7jlGg&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+            ],
+            "place_id": "ChIJEfGTz2c-CTkR_huUb0qAeMw"
+          }
+        ],
+        "day_wise_plan": [
+          {
+            "day_number": 1,
+            "conveyance_details": {
+              "is_required": true,
+              "travel_timing": "morning",
+              "from_city": "user_location",
+              "to_city": "Haridwar"
+            },
+            "must_do_activities": [
+              {
+                "type": "place",
+                "category": "ghat",
+                "name": "Har Ki Pauri",
+                "description": "Attend the mesmerizing Ganga Aarti in the evening, a spiritual ceremony on the banks of the Ganges."
+              }
+            ]
+          },
+          {
+            "day_number": 2,
+            "conveyance_details": {
+              "is_required": false,
+              "travel_timing": "morning",
+              "from_city": "Haridwar",
+              "to_city": "Haridwar"
+            },
+            "must_do_activities": [
+              {
+                "type": "place",
+                "category": "temple",
+                "name": "Mansa Devi and Chandi Devi Temples",
+                "description": "Visit these hilltop temples via a cable car for panoramic views of Haridwar and spiritual blessings."
+              },
+              {
+                "type": "place",
+                "category": "market",
+                "name": "Bara Bazar",
+                "description": "Explore the bustling main marketplace of Haridwar for religious items and local snacks."
+              }
+            ]
+          },
+          {
+            "day_number": 3,
+            "conveyance_details": {
+              "is_required": true,
+              "travel_timing": "morning",
+              "from_city": "Haridwar",
+              "to_city": "Rishikesh"
+            },
+            "must_do_activities": [
+              {
+                "type": "place",
+                "category": "cultural_site",
+                "name": "Laxman Jhula and Ram Jhula",
+                "description": "Walk across the iconic suspension bridges offering scenic views of the Ganges and the surrounding temples."
+              },
+              {
+                "type": "place",
+                "category": "cafe",
+                "name": "Cafe Hopping in Rishikesh",
+                "description": "Relax in one of the many riverside cafes, enjoying the serene views and international cuisine."
+              }
+            ]
+          },
+          {
+            "day_number": 4,
+            "conveyance_details": {
+              "is_required": false,
+              "travel_timing": "morning",
+              "from_city": "Rishikesh",
+              "to_city": "Rishikesh"
+            },
+            "must_do_activities": [
+              {
+                "type": "activity",
+                "category": "adventure",
+                "name": "White-Water Rafting",
+                "description": "Experience the thrill of rafting in the Ganges, a signature adventure activity of Rishikesh."
+              },
+              {
+                "type": "place",
+                "category": "cultural_site",
+                "name": "The Beatles Ashram",
+                "description": "Explore the tranquil and graffiti-covered ashram where The Beatles once stayed and wrote music."
+              }
+            ]
+          },
+          {
+            "day_number": 5,
+            "conveyance_details": {
+              "is_required": false,
+              "travel_timing": "morning",
+              "from_city": "Rishikesh",
+              "to_city": "Rishikesh"
+            },
+            "must_do_activities": [
+              {
+                "type": "wellness",
+                "category": "yoga",
+                "name": "Morning Yoga Session",
+                "description": "Join a drop-in yoga class at one of the many ashrams to experience the essence of the 'Yoga Capital of the World'."
+              },
+              {
+                "type": "place",
+                "category": "waterfall",
+                "name": "Neer Garh Waterfall",
+                "description": "Take a refreshing dip in the cool waters of this beautiful multi-tiered waterfall."
+              }
+            ]
+          },
+          {
+            "day_number": 6,
+            "conveyance_details": {
+              "is_required": true,
+              "travel_timing": "evening",
+              "from_city": "Rishikesh",
+              "to_city": "user_location"
+            },
+            "must_do_activities": []
+          }
+        ]
+      },
+      {
+        "trip_title": "Royal Rajasthan Expedition",
+        "no_of_days": 7,
+        "estimated_budget": 80000,
+        "best_time_to_visit": "October to March",
+        "themes": [
+          "history",
+          "culture",
+          "architecture"
+        ],
+        "trip_route": [
+          {
+            "place_name": "Udaipur",
+            "address": "Udaipur, Rajasthan, India",
+            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJEUShUGXlZzkRsGi4VYTC2Ns",
+            "lat": "24.585445",
+            "long": "73.712479",
+            "photos": [
+              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU4IiBApiCyCk86UilrT6SpE-FxIkFvmfvXg7Xln5cPyriBe9x4K8bqmJ4INuLqdHWvzxwakHOaQ4AuIPPNHFjn-IyYU9kND4Rj3LxNAXFb478SMPaR1C0tzBtSXpRjwBHVcwFtpSogT-0vs8YKgC2lTTuGM3XM1OXfXmUKp12ybzibi3BmqHDA_W7oCE8RBR1eYuD_fngR9rj8WGzJQBVz0vIPfKWJ45SbnNqRRJOPfn2tvLApfAFNM28xavrkWqA583Aa66Vzja1N-dbU5qThIV6K9ZkZyV0n7xdcAE0VHn2vyO70D47TsR5H2Ipl23cHox7EKN_o79nCrNhtuelWMmQSlTeLGyK7ki_m11zJeRFnEWPsSp3QzwYCe6SR1pbbuAW7HlLFrqmUwLx8tEjntgWFLlCx7IPXcdzw6RiYse-SVZAsDuGsLEsLQlg4Jt850U8rzZEEl3mrGbseYfjbUaJqhrO_x85pHAKjvvRpQ1NnK0o2Pgk2_UdcvFB0R9loGRff40mCiR4iKyrKdK6B3aii73D70nMhMr5vbCHMu4pLzgSHBUEHJx25hjUkXpG-ecesU_ijTYw&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+            ],
+            "place_id": "ChIJEUShUGXlZzkRsGi4VYTC2Ns"
+          },
+          {
+            "place_name": "Jodhpur",
+            "address": "Jodhpur, Rajasthan, India",
+            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJucwGqk6MQTkRuKvhClvqFIE",
+            "lat": "26.2389469",
+            "long": "73.02430939999999",
+            "photos": [
+              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU5-3GPke7dWaA_90MLWzcs39gz-ejaJlMg6_js8lt5PJd1SI3FK2EfElWCvsVQgPecAWW395rmLCIXGj6JCfI_ubaWAKoqsjDGdQjs3RNsY4EfVHIBSDbMq8QKPMKr6d0CNISr5n1SGCnhI3lvcr4rJw6XKTyEQYAvCekkx4DdlaBORES2ks9bvjpR-h1ofb-KQjFsb4c1eHbPSf53taWA5hhdBk5ep1A-PQBNno75ZLq723lPrUHLwyWyfRBCuVdF7jOW-X6P1ujg8KJ7_eKTm3OT-9IcMmt9O82A_XGvoA_fIbPJhP7Wb3xarTEOdXpnTxbci39mYzCkW5qoRLbIZpvffgkWB3cY2LVsEGgfLIDjXjtiYOaQ6OP8y1a5bcmTUARsYSY7jfEUW7_YyN1zMJojdbnIOE_9NzGz3nDL6UHdaWcK528Of8jDpC9luFAlP0e--C1tAMdGElLPXY8z2RIOIVFvstfXNM0BaAhDG6WJ2JTxPbmbrdLXClwpqPHzXisiV49BrvLJLk16qsow2d1uo1dXd87EYP9HzOd2JXLph8lnUe6TnuBaPcWsQy6eJrxvnrn8RFA&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+            ],
+            "place_id": "ChIJucwGqk6MQTkRuKvhClvqFIE"
+          }
+        ],
+        "day_wise_plan": [
+          {
+            "day_number": 1,
+            "conveyance_details": {
+              "is_required": true,
+              "travel_timing": "morning",
+              "from_city": "user_location",
+              "to_city": "Udaipur"
+            },
+            "must_do_activities": [
+              {
+                "type": "activity",
+                "category": "boating",
+                "name": "Sunset Boat Ride on Lake Pichola",
+                "description": "Witness a magical sunset over the lakes and palaces of Udaipur on a serene boat cruise."
+              }
+            ]
+          },
+          {
+            "day_number": 2,
+            "conveyance_details": {
+              "is_required": false,
+              "travel_timing": "morning",
+              "from_city": "Udaipur",
+              "to_city": "Udaipur"
+            },
+            "must_do_activities": [
+              {
+                "type": "place",
+                "category": "palace",
+                "name": "Udaipur City Palace",
+                "description": "Explore the magnificent palace complex, a fusion of Rajasthani and Mughal architecture, offering stunning views of Lake Pichola."
+              },
+              {
+                "type": "place",
+                "category": "temple",
+                "name": "Jagdish Temple",
+                "description": "Visit this large and artistically important Hindu temple dedicated to Lord Vishnu."
+              }
+            ]
+          },
+          {
+            "day_number": 3,
+            "conveyance_details": {
+              "is_required": false,
+              "travel_timing": "morning",
+              "from_city": "Udaipur",
+              "to_city": "Udaipur"
+            },
+            "must_do_activities": [
+              {
+                "type": "place",
+                "category": "garden",
+                "name": "Saheliyon Ki Bari",
+                "description": "Stroll through the beautiful 'Garden of the Maidens' with its fountains, lotus pool, and marble elephants."
+              },
+              {
+                "type": "place",
+                "category": "palace",
+                "name": "Monsoon Palace (Sajjangarh)",
+                "description": "Visit for breathtaking panoramic views of the city's lakes and surrounding countryside."
+              }
+            ]
+          },
+          {
+            "day_number": 4,
+            "conveyance_details": {
+              "is_required": true,
+              "travel_timing": "morning",
+              "from_city": "Udaipur",
+              "to_city": "Jodhpur"
+            },
+            "must_do_activities": [
+              {
+                "type": "place",
+                "category": "museum",
+                "name": "Umaid Bhawan Palace Museum",
+                "description": "Explore a part of this opulent palace, one of the world's largest private residences, and its museum."
+              }
+            ]
+          },
+          {
+            "day_number": 5,
+            "conveyance_details": {
+              "is_required": false,
+              "travel_timing": "morning",
+              "from_city": "Jodhpur",
+              "to_city": "Jodhpur"
+            },
+            "must_do_activities": [
+              {
+                "type": "place",
+                "category": "fort",
+                "name": "Mehrangarh Fort",
+                "description": "Discover one of India's most magnificent forts, towering over the 'Blue City' and housing several beautiful palaces and a museum."
+              },
+              {
+                "type": "place",
+                "category": "memorial",
+                "name": "Jaswant Thada",
+                "description": "Visit this stunning white marble cenotaph known for its intricate carvings and peaceful ambiance."
+              }
+            ]
+          },
+          {
+            "day_number": 6,
+            "conveyance_details": {
+              "is_required": false,
+              "travel_timing": "morning",
+              "from_city": "Jodhpur",
+              "to_city": "Jodhpur"
+            },
+            "must_do_activities": [
+              {
+                "type": "activity",
+                "category": "cultural_site",
+                "name": "Explore the Blue City",
+                "description": "Wander through the narrow lanes of the old city, famous for its blue-painted houses."
+              },
+              {
+                "type": "place",
+                "category": "market",
+                "name": "Sardar Market",
+                "description": "Experience the local culture and shop for spices and handicrafts at the bustling market near the Ghanta Ghar (Clock Tower)."
+              }
+            ]
+          },
+          {
+            "day_number": 7,
+            "conveyance_details": {
+              "is_required": true,
+              "travel_timing": "evening",
+              "from_city": "Jodhpur",
+              "to_city": "user_location"
+            },
+            "must_do_activities": []
+          }
+        ]
+      },
+      {
+        "trip_title": "Kerala's Green Paradise: Hills and Backwaters",
+        "no_of_days": 6,
+        "estimated_budget": 65000,
+        "best_time_to_visit": "October to February",
+        "themes": [
+          "nature",
+          "relaxation",
+          "food"
+        ],
+        "trip_route": [
+          {
+            "place_name": "Munnar",
+            "address": "Munnar, Kerala, India",
+            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJbZoJTXmZBzsRDH48VeVQMgY",
+            "lat": "10.0889333",
+            "long": "77.05952479999999",
+            "photos": [
+              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU4X-RlQIePHyo0kr3bRrm47IHKQcbFrwfzUmeb1wJOrM-Jw-9fEZLNy6N4dnVrc1WGAo1wnyH2NDP7cD7MMKQ1qgPKdeeyLvuxNxnb1tth5tzVQ2oHG2yc4gSsEmVcSujuk8bRO3rdnCWP05_dxXMtPj5V7MWJvYSPozohtWnWTIScoh7EQO9GA0JszRYH6R_91Cm0--1iz6Gw7sPM570lD-tDkuaXw5Feiof1dCN2Du-J6AYZMAWuH6_vmhQDhe6JfM5jWkNkdI2ec98lXinzNcyuNOXRP8FB8I3iIJdTvG7BUp6vdNw0rcEG6400_KcZZyc0FhmAmsUsA0jndXvK2XMY7NQekEnIAMYID7nByZ_RkreKUH8XdQxRXyd7ZNMYql8ZpYW_gp0_RTWNi55Q66tUx9wEvqGsKGQw-be7vCGmHDBlExluc1nuyuQcDyMsjj3Xbihm296etMMQwkKa3zVNk__-S0gVJfTACC3-6yLfPn7GNuZCkX7KayCm4sQoObX8M9Voh4y4XIvSCN2jiedUYgNY_cHfWQZ3lOrW0Bayn7zJpsZ5efuCHa_Cl6XWOnfF_x2Yw8Q&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+            ],
+            "place_id": "ChIJbZoJTXmZBzsRDH48VeVQMgY"
+          },
+          {
+            "place_name": "Alleppey (Alappuzha)",
+            "address": "Alappuzha, Kerala, India",
+            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJYWspqvGECDsRWvhBLFVkR7g",
+            "lat": "9.498066699999999",
+            "long": "76.3388484",
+            "photos": [
+              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU59dVkAWhZ2fwrRzF3wkqk2Aaul1uQiVJT9QcbM1AO26YGFpA26s8d9w1i5C0GPZksidSWc5N_JZxHth7G-wtKUkIopaFpNA2AXdXIRVvKIhdHyOrcRfJc5JgNWlg2J9VP-vAwD56HviXTc-0hhkdN515xSkfPzKJSxHDa4msoacCYfNwRQ3DWLE5x6FtyHSzu5eczLQqnXh95xTwz4jJD8KO5bwG-6ET_Nm21C79vz1O6p07FYSER0dh1J7vrRIvuUHrx_btZxW5tiLDCI4Zu1AkXxQoY_PKoA0QK2HSyyOohX_IvRDOcjXdIgb_PtUmnyQqmlKYAxV_uRPjXspRXP2B8ZDa9eo-jAdKsB1M18rm-J2qKpTuIpMpoBltsgNIhaoDfSqr-rVXMbTD8R86ADDHLp6FjBaGx0E5aqHvSdzmZ_KhZfuSr135ITOAIqWFt0cVloE6vpy178Vwnm385CKhlOnYLb5E0uFucgBUe7crKoGM3HavU3Zd82jCjbIMDHafynHZh-pc1n4X_f1PKCJ9K1PzSjenbvJnxT2GQBQ9XsaJ2xdXo6bKhek6gzylU3XKZS&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+            ],
+            "place_id": "ChIJYWspqvGECDsRWvhBLFVkR7g"
+          }
+        ],
+        "day_wise_plan": [
+          {
+            "day_number": 1,
+            "conveyance_details": {
+              "is_required": true,
+              "travel_timing": "morning",
+              "from_city": "user_location",
+              "to_city": "Munnar"
+            },
+            "must_do_activities": [
+              {
+                "type": "place",
+                "category": "viewpoint",
+                "name": "Pothamedu Viewpoint",
+                "description": "Enjoy your first evening in Munnar with stunning sunset views over the tea, coffee, and cardamom plantations."
+              }
+            ]
+          },
+          {
+            "day_number": 2,
+            "conveyance_details": {
+              "is_required": false,
+              "travel_timing": "morning",
+              "from_city": "Munnar",
+              "to_city": "Munnar"
+            },
+            "must_do_activities": [
+              {
+                "type": "place",
+                "category": "tea_plantation",
+                "name": "Kolukkumalai Tea Estate",
+                "description": "Visit the world's highest organic tea plantation for a guided tour and tea tasting session with breathtaking views."
+              },
+              {
+                "type": "place",
+                "category": "museum",
+                "name": "Tata Tea Museum",
+                "description": "Learn about the history and process of tea cultivation in the region."
+              }
+            ]
+          },
+          {
+            "day_number": 3,
+            "conveyance_details": {
+              "is_required": false,
+              "travel_timing": "morning",
+              "from_city": "Munnar",
+              "to_city": "Munnar"
+            },
+            "must_do_activities": [
+              {
+                "type": "place",
+                "category": "national_park",
+                "name": "Eravikulam National Park",
+                "description": "Spot the endangered Nilgiri Tahr and enjoy the stunning beauty of this UNESCO World Heritage Site."
+              },
+              {
+                "type": "place",
+                "category": "dam",
+                "name": "Mattupetty Dam",
+                "description": "A picturesque spot for boating and enjoying the reflections of the surrounding hills in the water."
+              }
+            ]
+          },
+          {
+            "day_number": 4,
+            "conveyance_details": {
+              "is_required": true,
+              "travel_timing": "morning",
+              "from_city": "Munnar",
+              "to_city": "Alleppey (Alappuzha)"
+            },
+            "must_do_activities": [
+              {
+                "type": "transport",
+                "category": "houseboat",
+                "name": "Check-in to a Houseboat",
+                "description": "Embark on a traditional Kettuvallam (houseboat) for an unforgettable journey through the serene backwaters."
+              }
+            ]
+          },
+          {
+            "day_number": 5,
+            "conveyance_details": {
+              "is_required": false,
+              "travel_timing": "morning",
+              "from_city": "Alleppey (Alappuzha)",
+              "to_city": "Alleppey (Alappuzha)"
+            },
+            "must_do_activities": [
+              {
+                "type": "activity",
+                "category": "boating",
+                "name": "Backwater Cruise",
+                "description": "Spend the day cruising through the network of canals, witnessing local life, paddy fields, and coconut groves."
+              },
+              {
+                "type": "food",
+                "category": "local_street_food",
+                "name": "Taste Karimeen Pollichathu",
+                "description": "Savor the local delicacy, pearl spot fish marinated in spices and baked in a banana leaf, prepared fresh on your houseboat."
+              }
+            ]
+          },
+          {
+            "day_number": 6,
+            "conveyance_details": {
+              "is_required": true,
+              "travel_timing": "evening",
+              "from_city": "Alleppey (Alappuzha)",
+              "to_city": "user_location"
+            },
+            "must_do_activities": []
+          }
+        ]
+      },
+      {
+        "trip_title": "Himalayan Kingdom of Sikkim",
+        "no_of_days": 7,
+        "estimated_budget": 90000,
+        "best_time_to_visit": "March to May and September to December",
+        "themes": [
+          "mountains",
+          "nature",
+          "buddhism"
+        ],
+        "trip_route": [
+          {
+            "place_name": "Gangtok",
+            "address": "Gangtok, Sikkim, India",
+            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJ--oFWGql5jkRII8cUCwT1nM",
+            "lat": "27.3313512",
+            "long": "88.6138113",
+            "photos": [
+              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6AEP02WZvU7mC8jsXFFKRzIKWBgkzakTieq5eP2BKCY7zAim7HL2UynzWMFcp5GYOzBQgBaxxbbVOF2FwHtraBvviCUGF9TdBqKSVvND649jHJm_SgWTbtD8vOGT5a4NaRu3sQj2XMYyF4Ic4Bsj3vVYXTJNnHjJ5SQWzoY9Erc54yWJOgMwQJLYmnGXMnngnMq66ImzNo4A-7mIXUIi20uEdJmvPv6FiptUBYzKfaTWwEHdtu4trx7U4MoMQGmKnRlR23kKya22QVJiuodNp7xmrcCN7tE8bLDkCQ7RT7PWplRrjIM1baURqx0uefAtTryHrV_OjLmpyvhNU6P1kN-lK3Z-3anX9KPXZKaS5nmArUHaAlG9rTFgs5cqG7wMpf0vPP0_ImrpsauqA-TxkAoM95ZTTLnK7jZGGiGTLsorZPpO7tqUE2SNnRDCHPjibsH6yYU-w03GukTcbj_5Z85p1nzVaZQOhMRXn7MhDAG5H1pxiPafaY-W58TJPsgTbCrOvOHnerauhhQWa26IQS52IGeb3xssi2CS8v-93a00NMaUczCo53zJLJVR8CZ817OaSzYub1rQ&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+            ],
+            "place_id": "ChIJ--oFWGql5jkRII8cUCwT1nM"
+          },
+          {
+            "place_name": "Pelling",
+            "address": "Pelling, Sikkim, India",
+            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJy1X5e3GG5jkRoXpp-b317zA",
+            "lat": "27.3197716",
+            "long": "88.2400333",
+            "photos": [
+              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6wndkD3THsJh9QgARbQzAJFqTj2YO2msziGpJTCyEGaM-nnByX2O3Dbq02cwd-LrWIDdEyokdEm6JGAqiKt9wn6hXjnJVMslZLKfjPvzaeQF5n2uZ1lsIye3EMUc2uA3xKqFkra-6w4HMa_salZ1wBpEPdSBn7nBooKBNllWvXiKfLM1p9_BGN-SSWC2a9vct67Cqm-LUOYVxHd6NorSq58g5dhR43354ysnL9Rmz1VgZ_6x75gJYcmE42Z2VCy7CrKP1dpwfAgYbw4cUnkiB4P-0Md5CL-87sGw1UbgbKvFgUqNjej7AS7miTpysfuIFXK0u8dhIOoLJ66C6Ygim6K43ur1wH5a9lEbh7GLUc4Og2YXdriVtoGe-UwkxxWRqPuOctd0EjVnK1bNzxibQuo7aUQPSS6lio57ooVyzzVtRb1hkKzx0TM5RPH6l1s1sKo-4vUh28sVg0Nyg6GFQEkKxPgeFms1rUpyXu8i5wXGP53cvctD5c8j5UQio-YdWMmJcIgrHNx7R8K3GnCeik6v5qeaecqiIcWAuO6aTLBvmsm-cBpblT9THBkWpL3yD2rkbc&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+            ],
+            "place_id": "ChIJy1X5e3GG5jkRoXpp-b317zA"
+          }
+        ],
+        "day_wise_plan": [
+          {
+            "day_number": 1,
+            "conveyance_details": {
+              "is_required": true,
+              "travel_timing": "morning",
+              "from_city": "user_location",
+              "to_city": "Gangtok"
+            },
+            "must_do_activities": [
+              {
+                "type": "place",
+                "category": "market",
+                "name": "MG Marg",
+                "description": "Stroll down the clean, pedestrian-only street in the evening, lined with shops and restaurants."
+              }
+            ]
+          },
+          {
+            "day_number": 2,
+            "conveyance_details": {
+              "is_required": false,
+              "travel_timing": "morning",
+              "from_city": "Gangtok",
+              "to_city": "Gangtok"
+            },
+            "must_do_activities": [
+              {
+                "type": "place",
+                "category": "lake",
+                "name": "Tsomgo Lake",
+                "description": "Take a day trip to this stunning glacial lake located at an altitude of 12,310 feet, surrounded by rugged mountains."
+              },
+              {
+                "type": "place",
+                "category": "temple",
+                "name": "Baba Harbhajan Singh Temple",
+                "description": "Visit the memorial temple dedicated to a soldier of the Indian army, located near Tsomgo Lake."
+              }
+            ]
+          },
+          {
+            "day_number": 3,
+            "conveyance_details": {
+              "is_required": false,
+              "travel_timing": "morning",
+              "from_city": "Gangtok",
+              "to_city": "Gangtok"
+            },
+            "must_do_activities": [
+              {
+                "type": "place",
+                "category": "monastery",
+                "name": "Rumtek Monastery",
+                "description": "Visit one of the largest and most significant monasteries in Sikkim, an important center for Buddhist studies."
+              },
+              {
+                "type": "transport",
+                "category": "cable_car",
+                "name": "Gangtok Ropeway",
+                "description": "Enjoy panoramic views of the city and the surrounding valleys from a cable car."
+              }
+            ]
+          },
+          {
+            "day_number": 4,
+            "conveyance_details": {
+              "is_required": true,
+              "travel_timing": "morning",
+              "from_city": "Gangtok",
+              "to_city": "Pelling"
+            },
+            "must_do_activities": []
+          },
+          {
+            "day_number": 5,
+            "conveyance_details": {
+              "is_required": false,
+              "travel_timing": "morning",
+              "from_city": "Pelling",
+              "to_city": "Pelling"
+            },
+            "must_do_activities": [
+              {
+                "type": "place",
+                "category": "monastery",
+                "name": "Pemayangtse Monastery",
+                "description": "Explore one of the oldest and most important monasteries in Sikkim, housing a remarkable collection of Buddhist art."
+              },
+              {
+                "type": "place",
+                "category": "ruins",
+                "name": "Rabdentse Ruins",
+                "description": "Walk to the ruins of the second capital of Sikkim, offering a glimpse into history and magnificent views."
+              }
+            ]
+          },
+          {
+            "day_number": 6,
+            "conveyance_details": {
+              "is_required": false,
+              "travel_timing": "morning",
+              "from_city": "Pelling",
+              "to_city": "Pelling"
+            },
+            "must_do_activities": [
+              {
+                "type": "place",
+                "category": "lake",
+                "name": "Khecheopalri Lake",
+                "description": "Visit this sacred and serene lake, revered by both Buddhists and Hindus, known for its tranquility."
+              },
+              {
+                "type": "place",
+                "category": "waterfall",
+                "name": "Kanchenjunga Falls",
+                "description": "Witness a stunning perennial waterfall, a major tourist attraction in Pelling."
+              }
+            ]
+          },
+          {
+            "day_number": 7,
+            "conveyance_details": {
+              "is_required": true,
+              "travel_timing": "evening",
+              "from_city": "Pelling",
+              "to_city": "user_location"
+            },
+            "must_do_activities": []
+          }
+        ]
+      },
+      {
+        "trip_title": "Goa Getaway: Parties and Peace",
+        "no_of_days": 7,
+        "estimated_budget": 70000,
+        "best_time_to_visit": "November to February",
+        "themes": [
+          "beach",
+          "nightlife",
+          "relaxation"
+        ],
+        "trip_route": [
+          {
+            "place_name": "North Goa",
+            "address": "North Goa, Goa, India",
+            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJMaD6Uu3AvzsR0E3VfowKzRs",
+            "lat": "15.5163112",
+            "long": "73.98300290000002",
+            "photos": [
+              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6B8MV4ZtAkn94OQ5Vsphrb1CFE55nSiyKaWi-RjEP0kj7TjsD-A47wxshwc-ZZYqoabbfeE32uu6403JbuxJ8cqN26ODHmbtLjg2YGI9X8yeo04viD0nBxrgZRqbdaswkmiEeg-P0QwJh85dpCxoYHYX4HPtypeEIWpaDNVnKXJEEam_K9r2G2WyY-aopoXKHTU1j0ZXVRVXORMUVulY8DjXaxR23opn-UALmHlSbZdSqJpiEuAl7EfIpf0TwCLBZNtROrfKhvG-cr1TRfmB15Lbq3aKoII_ZJZluBBCoRgFmAzA_oblGlnfTNTTRYHvi6Me1hI2PiY4By-bhvCW5AVY-rvS9mem2j87QnXyqYfLKgLl-2KMAJ6gkhY_ySERcm1gvlYKzXAgxLOl2XblMPIc6eIFyzFj-6eNblnrIYASDp1lR0kMU1cAAlF81bUaDhcRGdAmh26W7Ff7WHX28QY1k4uYyUf7BJExtbec9-GFrLIxFzfd3Hbl101hxNJyidBjuAx8c8vivMZx-qew8YDmCDFFaLrxrODahk1sZNdLL8qVp9tFJRce-pCM5gPDSwZZ9E&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+            ],
+            "place_id": "ChIJMaD6Uu3AvzsR0E3VfowKzRs"
+          },
+          {
+            "place_name": "South Goa",
+            "address": "South Goa, Goa, India",
+            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJixLkOu6zvzsRgGFikAr04_w",
+            "lat": "15.11766",
+            "long": "74.12399599999999",
+            "photos": [
+              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU4Ru9qdFYiMec7oTtUtvRD_ylszUC8L-qgc9BLa1n1BasTe5MFICWx_KMFSakInojS1RGI4czYTT-kXpoZ87l_omlTCNG5nTzx5-I4WuLPzZkKnG5S1W6l01C9hPsb3Xdym3QTDz40LgMjW0SnQSLYwwe5zvZQaoBQ699xrZpe2wV7vZYgGAiRDRd4gBdLEQy3zTq3wJiKCDZ1hZn-WidYVCxewdvAixlwjSSo-8ZisQFyefR16khVTC5dAmqhkNZnQWPyiQWcqnVFLgOERXUA-M3LFrqMfjbmxeeA1iVJd6Xya_CqhfRsDayGR5A8v0gkLcJRf67yDXb399rPaCsurscm72iKpN4QksA0X29NSb6YhCzKNnpYQbB2aNaIM-QFglM38vZwK7ixf-ondDjEPOUUNg1L0lLZUdZNtB0aFb9yEnF4Q_aofcaFF4eh2QqKWcPycnS-IoIYpmvY3lP6TDEljDeOioLZZGKA2NDpE_8nlxgR6qiY6eLR23jOxls8GpGIjjiPZg8l8FCwgPqT0c2lIagLkSM3uLfgAK1uPBdC56TpPEalwjKEQKlVl3jgJGFdH7434_A&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+            ],
+            "place_id": "ChIJixLkOu6zvzsRgGFikAr04_w"
+          }
+        ],
+        "day_wise_plan": [
+          {
+            "day_number": 1,
+            "conveyance_details": {
+              "is_required": true,
+              "travel_timing": "morning",
+              "from_city": "user_location",
+              "to_city": "North Goa"
+            },
+            "must_do_activities": [
+              {
+                "type": "place",
+                "category": "beach",
+                "name": "Vagator Beach",
+                "description": "Settle in and explore Vagator Beach, known for its dramatic red cliffs and laid-back shacks."
+              }
+            ]
+          },
+          {
+            "day_number": 2,
+            "conveyance_details": {
+              "is_required": false,
+              "travel_timing": "morning",
+              "from_city": "North Goa",
+              "to_city": "North Goa"
+            },
+            "must_do_activities": [
+              {
+                "type": "shopping",
+                "category": "flea_market",
+                "name": "Anjuna Flea Market",
+                "description": "If it's a Wednesday, dive into the iconic Anjuna Flea Market for souvenirs, clothing, and a vibrant atmosphere."
+              },
+              {
+                "type": "place",
+                "category": "fort",
+                "name": "Chapora Fort",
+                "description": "Hike up to Chapora Fort for stunning sunset views over the coastline, famously featured in the movie 'Dil Chahta Hai'."
+              }
+            ]
+          },
+          {
+            "day_number": 3,
+            "conveyance_details": {
+              "is_required": false,
+              "travel_timing": "morning",
+              "from_city": "North Goa",
+              "to_city": "North Goa"
+            },
+            "must_do_activities": [
+              {
+                "type": "place",
+                "category": "beach",
+                "name": "Arambol Beach",
+                "description": "Spend the day at this bohemian beach, known for its sweet water lake, drum circles, and paragliding."
+              },
+              {
+                "type": "place",
+                "category": "nightlife",
+                "name": "Experience North Goa's Nightlife",
+                "description": "Enjoy the vibrant party scene at one of the famous shacks or clubs in Anjuna or Baga."
+              }
+            ]
+          },
+          {
+            "day_number": 4,
+            "conveyance_details": {
+              "is_required": true,
+              "travel_timing": "morning",
+              "from_city": "North Goa",
+              "to_city": "South Goa"
+            },
+            "must_do_activities": [
+              {
+                "type": "place",
+                "category": "beach",
+                "name": "Palolem Beach",
+                "description": "Check into a beach hut and unwind on the beautiful crescent-shaped Palolem Beach, known for its calm waters."
+              }
+            ]
+          },
+          {
+            "day_number": 5,
+            "conveyance_details": {
+              "is_required": false,
+              "travel_timing": "morning",
+              "from_city": "South Goa",
+              "to_city": "South Goa"
+            },
+            "must_do_activities": [
+              {
+                "type": "activity",
+                "category": "adventure",
+                "name": "Kayaking and Dolphin Spotting",
+                "description": "Rent a kayak to explore the calm waters or take a boat trip to spot dolphins."
+              },
+              {
+                "type": "place",
+                "category": "beach",
+                "name": "Butterfly Beach",
+                "description": "Take a short boat trip to this secluded and beautiful beach, known for butterflies and serene atmosphere."
+              }
+            ]
+          },
+          {
+            "day_number": 6,
+            "conveyance_details": {
+              "is_required": false,
+              "travel_timing": "morning",
+              "from_city": "South Goa",
+              "to_city": "South Goa"
+            },
+            "must_do_activities": [
+              {
+                "type": "place",
+                "category": "beach",
+                "name": "Agonda Beach",
+                "description": "Relax on this quiet and pristine beach, a nesting site for Olive Ridley turtles, perfect for a peaceful day."
+              },
+              {
+                "type": "event",
+                "category": "nightlife",
+                "name": "Silent Noise Party",
+                "description": "Experience the unique headphone party at Palolem Beach for a memorable night."
+              }
+            ]
+          },
+          {
+            "day_number": 7,
+            "conveyance_details": {
+              "is_required": true,
+              "travel_timing": "evening",
+              "from_city": "South Goa",
+              "to_city": "user_location"
+            },
+            "must_do_activities": []
+          }
+        ]
+      }
+    ]
+  },
+  "final_trip": {
+    "trip_title": "Cultural and Urban Discovery: Agra, Delhi & Bangalore",
+    "no_of_days": 5,
+    "estimated_budget": 55000,
+    "best_time_to_visit": "October to March",
+    "themes": [
+      "heritage",
+      "culture",
+      "city_life"
+    ],
+    "trip_route": [
+      {
+        "place_name": "Agra",
+        "address": "Agra, Uttar Pradesh, India",
+        "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJ2Rz9Dju8DDkRZuEjtE5ZaaE",
+        "lat": "27.1766701",
+        "long": "78.00807449999999",
+        "photos": [
+          "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6jYfAgraExamplePhoto1&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+        ],
+        "place_id": "ChIJ2Rz9Dju8DDkRZuEjtE5ZaaE"
+      },
+      {
+        "place_name": "Delhi",
+        "address": "New Delhi, Delhi, India",
+        "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJLbZ-NFv9DDkRQJY4FbcFcgM",
+        "lat": "28.6139391",
+        "long": "77.2090212",
+        "photos": [
+          "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6jYfDelhiExamplePhoto1&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+        ],
+        "place_id": "ChIJLbZ-NFv9DDkRQJY4FbcFcgM"
+      },
+      {
+        "place_name": "Bangalore",
+        "address": "Bengaluru, Karnataka, India",
+        "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJbU60yXAWrjsR4E9-UejD3_g",
+        "lat": "12.9715987",
+        "long": "77.5945627",
+        "photos": [
+          "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6jYfBangaloreExamplePhoto1&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+        ],
+        "place_id": "ChIJbU60yXAWrjsR4E9-UejD3_g"
+      }
+    ],
+    "day_wise_plan": [
+      {
+        "day_number": 1,
+        "conveyance_details": {
+          "is_required": true,
+          "travel_timing": "morning",
+          "from_city": "user_location",
+          "to_city": "Agra"
+        },
+        "must_do_activities": [
+          {
+            "type": "place",
+            "category": "monument",
+            "name": "Taj Mahal",
+            "description": "Visit the iconic Taj Mahal, a UNESCO World Heritage site and one of the Seven Wonders of the World."
+          },
+          {
+            "type": "place",
+            "category": "fort",
+            "name": "Agra Fort",
+            "description": "Explore the red sandstone fort that served as the main residence of Mughal emperors."
+          }
+        ]
+      },
+      {
+        "day_number": 2,
+        "conveyance_details": {
+          "is_required": true,
+          "travel_timing": "afternoon",
+          "from_city": "Agra",
+          "to_city": "Delhi"
+        },
+        "must_do_activities": [
+          {
+            "type": "place",
+            "category": "market",
+            "name": "Chandni Chowk",
+            "description": "Dive into the chaos of Old Delhi’s busiest market for authentic street food and souvenirs."
+          },
+          {
+            "type": "place",
+            "category": "historical_site",
+            "name": "Red Fort",
+            "description": "Visit the grand Mughal fortress that stands as a symbol of India's independence and heritage."
+          }
+        ]
+      },
+      {
+        "day_number": 3,
+        "conveyance_details": {
+          "is_required": false,
+          "travel_timing": "morning",
+          "from_city": "Delhi",
+          "to_city": "Delhi"
+        },
+        "must_do_activities": [
+          {
+            "type": "place",
+            "category": "memorial",
+            "name": "India Gate",
+            "description": "Stroll around this war memorial and enjoy the evening lights and street food."
+          },
+          {
+            "type": "place",
+            "category": "museum",
+            "name": "National Museum",
+            "description": "Discover ancient Indian art, artifacts, and cultural heritage."
+          }
+        ]
+      },
+      {
+        "day_number": 4,
+        "conveyance_details": {
+          "is_required": true,
+          "travel_timing": "morning",
+          "from_city": "Delhi",
+          "to_city": "Bangalore"
+        },
+        "must_do_activities": [
+          {
+            "type": "place",
+            "category": "park",
+            "name": "Cubbon Park",
+            "description": "Enjoy a peaceful walk amid greenery in the heart of Bangalore city."
+          },
+          {
+            "type": "place",
+            "category": "shopping",
+            "name": "Commercial Street",
+            "description": "Shop for clothes, accessories, and handicrafts in one of Bangalore’s busiest markets."
+          }
+        ]
+      },
+      {
+        "day_number": 5,
+        "conveyance_details": {
+          "is_required": true,
+          "travel_timing": "evening",
+          "from_city": "Bangalore",
+          "to_city": "user_location"
+        },
+        "must_do_activities": [
+          {
+            "type": "place",
+            "category": "palace",
+            "name": "Bangalore Palace",
+            "description": "Admire the Tudor-style architecture and explore the royal heritage of Bangalore."
+          },
+          {
+            "type": "food",
+            "category": "local_cuisine",
+            "name": "South Indian Breakfast Trail",
+            "description": "Relish authentic filter coffee, dosas, and idlis at popular local eateries."
+          }
+        ]
+      }
+    ]
+  },
+  "source_agent": {
+    "response_type": "text",
+    "message": "I have set Delhi as your starting point. While I couldn't find immediate bus or train options for your travel dates, I did find several quick 45-minute flights to Dehradun, which is just an hour's drive from Haridwar. \n\nFor instance, there is a flight that departs Delhi at 8:00 AM and arrives in Dehradun at 8:45 AM. You could reach Haridwar before noon. \n\nAlternatively, since you are flexible with your travel dates, we can also look for overnight buses or trains which are generally more budget-friendly and will get you to Haridwar fresh in the morning. \n\nWhat would you prefer?"
+  },
+  "source_point": {
+    "address": "Delhi, India",
+    "place_name": "Delhi"
+  },
+  "preferred_dates": [
+    {
+      "from_city": "Delhi",
+      "to_city": "Agra",
+      "from_date": "2025-01-01",
+      "to_date": "2025-01-03"
+    },
+    {
+      "from_city": "Agra",
+      "to_city": "Bangalore",
+      "from_date": "2025-01-03",
+      "to_date": "2025-01-05"
+    },
+    {
+      "from_city": "Bangalore",
+      "to_city": "Delhi",
+      "from_date": "2025-01-05",
+      "to_date": "2025-01-07"
+    }
+  ]
+}

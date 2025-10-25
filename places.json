@@ -1,0 +1,852 @@
+{
+    "trip_suggestions": {
+        "trips": [
+          {
+            "trip_title": "Winter Wonderland in Himachal: Manali & Kasol Adventure",
+            "no_of_days": 7,
+            "estimated_budget": 65000,
+            "best_time_to_visit": "December - February (for snow and winter sports)",
+            "theme": [
+              "Snow",
+              "Mountains",
+              "Adventure",
+              "Backpacking",
+              "Nature"
+            ],
+            "day_wise_plan": [
+              {
+                "day_number": 1,
+                "cities": [
+                  {
+                    "name": "Manali",
+                    "address": "Manali, Himachal Pradesh, India",
+                    "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJP9A_FgiHBDkRzXZQvg6oKYE",
+                    "lat": "32.2431872",
+                    "long": "77.1891761",
+                    "photos": [
+                      "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AciIO2duj1VF1qWEHinIIcX4V6zt8WIvO1BKTWu1BNEp1Dcld4mOWF_F4EoY_3OOlimDOrIHNNsGJNnQIh6AtHnpFK5MLqirL2SJCRJ-3sEJs-8maK5FS3ayzUmt5RpNoTgCl7ac-xmDpD6FXXPS9v0eeAECFbRPlIdr0w4QcS7kmduVIHonzxEsJSHn2m8VrXMib8GDntW9MNuxP8Z-oA5bNM4P16epO77j2p0TlBTWnMGz7TxCd-aQG_2TcMGC8qUEIx4qTkSss6U-H1DxNV4sJMBi4NAQJGvPovKA8LzhiGAqxPtot8hb6eBIzESxwTm7tpeqdDGXBPoxCsdv3IErwz84iQKFuyOYOYADs4wmz7bOA1OyFp9ZEVT1ctxyJHPuLpmdUd3Z8QOGSQ15RNKqpcPsfyjqWmcwAFOr2omP-EZEOzL3pfec_WF-7J6uXh2ebPoP0fUQuMBzKmTUWQ5pllUi23dsSbv4963UWguxAXOl8v4o81HYq1nhSmC-72SmJe-iwTTrC9h_sHAJAH77Uw2R-fr-8o4zeQUUuHhUSrmQv_1A6cxUDgBzwmf3lPuSKVCiCQ&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                    ],
+                    "place_id": "ChIJP9A_FgiHBDkRzXZQvg6oKYE"
+                  }
+                ],
+                "must_do_activities": [
+                  {
+                    "type": "activity",
+                    "name": "Travel to Manali",
+                    "description": "Arrive in Manali, check into your accommodation, and spend the evening exploring Old Manali and its charming cafes."
+                  }
+                ]
+              },
+              {
+                "day_number": 2,
+                "cities": [
+                  {
+                    "name": "Solang Valley",
+                    "address": "Solang Valley, Manali, Himachal Pradesh, India",
+                    "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJk2oTpiWHBDkRRViZ85OcBJU",
+                    "lat": "32.3161847",
+                    "long": "77.1568471",
+                    "photos": [
+                      "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AciIO2cCULnkuuFNaC5Ee7z9l8hjAzwFWa4mpfX9zwkgRh9eLvPzIBPA4B_GxEnoOjfzSM6ZXE_nLEvl-Ac_ch31uJW6Y55czxQH3_jB9ZZu8oBxa7ZSE6tYdNivSNSnxbddozNuxRhm8efzb53pLLQhLbT0nppf1WTrKLzLPiXMJPGYkLtHpj6IMBpTpL8eAac4JxazCRbnGEsLjFK0JBnbCYLfTcbGEkQgKdijGf1KT-5hoZGi2L0b4mXBzHeKBdct82a6LaKC3ofbMviyVYGlTfwt8M9bLoguryIjEj3twfwWVxVoUFF0kmch2m5Rxc0zjEU9EWkuuymws9HwfWMIDMlpacvpV-SS5Tq3JebV0-2-9aaXhCrlW0NHQC8Rorlnt5zr1IO3ooIkMvZ46FAt3Z2PFGJ8IwQ2SUysoiq9ccyML2ThHjdaxHz3lKXcogL7e5RhqbArKmPh6zJSHaGy2sWi-BUkk7I3w7ehAxYuV4Mxzwu8MT-lsuHp0wAJm8Ek7FdkEEX--oRFLibMQa6Oo1lcKYVc4Hjk76fR_zvswQSkQIIJka5op_AY7IXckCDiN9z-Rg&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                    ],
+                    "place_id": "ChIJk2oTpiWHBDkRRViZ85OcBJU"
+                  }
+                ],
+                "must_do_activities": [
+                  {
+                    "type": "activity",
+                    "name": "Adventure in Solang Valley",
+                    "description": "Enjoy paragliding (if weather permits), zorbing, or simply playing in the snow and taking in the panoramic views."
+                  },
+                  {
+                    "type": "place",
+                    "name": "Hadimba Devi Temple",
+                    "description": "Visit the ancient Hadimba Devi Temple, a unique wooden temple nestled amidst cedar forests."
+                  }
+                ]
+              },
+              {
+                "day_number": 3,
+                "cities": [
+                  {
+                    "name": "Naggar",
+                    "address": "Naggar, Himachal Pradesh, India",
+                    "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJv2yN61uKBDkRzBQTO6m9rA4",
+                    "lat": "32.1139526",
+                    "long": "77.1643337",
+                    "photos": [
+                      "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AciIO2cbgxRd7jp_YsHa00jdxNeOsmj93e-QoPtxO-HnSQwC7-TtEp8k8qBeg8gjiA1dQPhPY_sUTxKO0My9C8_qAlthe-gz8H7xU7BR7NvxeOjnJrHq9s-CLHz7n6QeKI8mnXd_tLTAWwveLj0oOpsqPBnvaz8NcY9fBMfTsPDWiAK6XVMuKNlNnResKKOwF7yLfdHmpMquMcyBPJ0ARhldHMhlWeRbfLfv6cbgR0kGmSafOVtzhxmeYn_HZ6dxhZk3CuYzu8qa5Fi_os4ISOTdpDLFJeZjXXx_vj0m8oTKhRjjJntj78-Xxy0LWfnJ8bZpB_aqVLIwRb-bnbrR6QJB-BZhwANxXNucVSSNwhHoDU2FCIabppbaxFlNTssl-bSAATKqz_pmXAMOqQghu6P0hjPKMVxpLnyQCsofoVaz4YTB0ty-ncqxezrMsngPGN3-mjPiaTu0icQ2CDrhrwKdIZB1z7ywomel13Zv4A25sKETVoyw6bMKuJnRlBwRA_k6gna0aLdnhsy8H-eiE88vCER8YMCmLWEcWGJ-N80Uw-s7epBlYyXachbP1JdxPtUq-vjdwPGb&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                    ],
+                    "place_id": "ChIJv2yN61uKBDkRzBQTO6m9rA4"
+                  },
+                  {
+                    "name": "Manali",
+                    "address": "Manali, Himachal Pradesh, India",
+                    "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJP9A_FgiHBDkRzXZQvg6oKYE",
+                    "lat": "32.2431872",
+                    "long": "77.1891761",
+                    "photos": [
+                      "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AciIO2duj1VF1qWEHinIIcX4V6zt8WIvO1BKTWu1BNEp1Dcld4mOWF_F4EoY_3OOlimDOrIHNNsGJNnQIh6AtHnpFK5MLqirL2SJCRJ-3sEJs-8maK5FS3ayzUmt5RpNoTgCl7ac-xmDpD6FXXPS9v0eeAECFbRPlIdr0w4QcS7kmduVIHonzxEsJSHn2m8VrXMib8GDntW9MNuxP8Z-oA5bNM4P16epO77j2p0TlBTWnMGz7TxCd-aQG_2TcMGC8qUEIx4qTkSss6U-H1DxNV4sJMBi4NAQJGvPovKA8LzhiGAqxPtot8hb6eBIzESxwTm7tpeqdDGXBPoxCsdv3IErwz84iQKFuyOYOYADs4wmz7bOA1OyFp9ZEVT1ctxyJHPuLpmdUd3Z8QOGSQ15RNKqpcPsfyjqWmcwAFOr2omP-EZEOzL3pfec_WF-7J6uXh2ebPoP0fUQuMBzKmTUWQ5pllUi23dsSbv4963UWguxAXOl8v4o81HYq1nhSmC-72SmJe-iwTTrC9h_sHAJAH77Uw2R-fr-8o4zeQUUuHhUSrmQv_1A6cxUDgBzwmf3lPuSKVCiCQ&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                    ],
+                    "place_id": "ChIJP9A_FgiHBDkRzXZQvg6oKYE"
+                  }
+                ],
+                "must_do_activities": [
+                  {
+                    "type": "place",
+                    "name": "Naggar Castle",
+                    "description": "Explore Naggar Castle, a historic structure offering stunning views of the Beas Valley."
+                  },
+                  {
+                    "type": "place",
+                    "name": "Roerich Art Gallery",
+                    "description": "Visit the Roerich Art Gallery in Naggar to admire the works of Russian artist Nicholas Roerich."
+                  },
+                  {
+                    "type": "food",
+                    "name": "Local Himachali Cuisine",
+                    "description": "Savor traditional Himachali dishes at a local eatery in Naggar or Manali."
+                  }
+                ]
+              },
+              {
+                "day_number": 4,
+                "cities": [
+                  {
+                    "name": "Kasol",
+                    "address": "Kasol, Himachal Pradesh, India",
+                    "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJ6TGqdERcBDkRnZRHK-PSEvE",
+                    "lat": "32.0099986",
+                    "long": "77.3149625",
+                    "photos": [
+                      "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AciIO2eO96lsIc1wTb24aoNXJS0O-hEY1RMq_9qJiZGPDBdpygC2o6TdVOuJ0QqDXJYJvbQjDskVV_0ReL367I5Ea50oGTkd6-TsbD4dIPysTnCxuGWPdeRXjDa9dXRqMxe06btclsM9XCk3jMyOn4z7SVFxZ99acza18wlJ1v5MAroe93De2NZG6o78_QPMT9WYhYSglmeYA7p6rsf4Rp-Qx3UTwXqssZEc5nIIFjzOTDnAoi5Q5qF8Q83Uc0oTdKwURxgGk-Z78g0Rp5Qi9GhF1y6L0Kh21zkNZusXGtIYPitaDRI-fSPqfMCMhGj5RK8vjHixFGszx63FAvc5fT3FQ7OR0AHinR--L08EPccFMC1JJf9Ci1xNc-9dln0mNdbrNvYnyKj_2xmzUKt845jXTcSvngdY5hFHpGKkpjKHzdJ21rAlcblAj2ChJIF3DbeIU1y7qoAgTdOw_zxsdtXyDkRmJfbyc5DkW4DKfeeQQIH-ziJOEnUwlmo7KDC3dX3-BKu4cfSSxg024q48vadtgAjXUlw0Mb5YWnQjkBCMr4_DvfcxbATtCtX3VdxoD61Sh_iOBnAT&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                    ],
+                    "place_id": "ChIJ6TGqdERcBDkRnZRHK-PSEvE"
+                  }
+                ],
+                "must_do_activities": [
+                  {
+                    "type": "activity",
+                    "name": "Travel to Kasol",
+                    "description": "Journey to the picturesque village of Kasol in Parvati Valley, known for its serene beauty and hippie culture."
+                  },
+                  {
+                    "type": "activity",
+                    "name": "Explore Kasol Market",
+                    "description": "Stroll through the vibrant Kasol market, soaking in the bohemian vibe and enjoying Israeli cafes."
+                  }
+                ]
+              },
+              {
+                "day_number": 5,
+                "cities": [
+                  {
+                    "name": "Manikaran",
+                    "address": "Manikaran Sahib, Himachal Pradesh, India",
+                    "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJj5QQB-dcBDkRR5r2ZM8lKfU",
+                    "lat": "32.0270084",
+                    "long": "77.3449107",
+                    "photos": [
+                      "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AciIO2cHTLWRDl5LTJpy-RUnQe-sULrw3l3nYcL0qEJckSG_J0VbW9BXHs7YgulMIqVHlQX-pccG1ilaDzYLyYM2nvnKZ4lFwYH01si7zUB-HVxX3xHye9aP8qk-qmxm3HbROe3pSAG_YhfkwImu6-DibdgKXHJFlTY6A7pNHAGniqQ5NW4cMiWfJ_PuVFrsorpEiTJ8qmlnv-vsVOnCGDYCaRY_cI1B1W-Gr8y1kU8ELbcD0GtCBkKTruuN3pozrCj6T94QWl_MNSLh2f7EXY5seNfJQ2bnHSgZqUYgz7c1_cW0E7KgC9sjrUixaDZTq4fdTZoCwgRZAUbNulTqYmk0KUKt7yG_waSgOYqWZZrdvYFdxalhJV-Y_VxxTdbW7fUTDHYyKgXrJ0617tPOb6QFWEVKgg37zJJQ4a7Zo5PglvQS9Mt2BeiBKz-czWwlFqsyOw6gri0HiTWT2ZncAcxRbwOighszK34ez14-NRQdRYYAl0VD7FP0xqA8pX6W5LSfUDP4s4K9KlgWsrxfrHKnMnQOMYCWun4vlTsuhnOGUwtOJ-kaVrF8xhFgR4TB5hfxRHjD1I0ZPLFbUg&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                    ],
+                    "place_id": "ChIJj5QQB-dcBDkRR5r2ZM8lKfU"
+                  }
+                ],
+                "must_do_activities": [
+                  {
+                    "type": "place",
+                    "name": "Manikaran Sahib Gurudwara",
+                    "description": "Visit the sacred Manikaran Sahib Gurudwara and take a dip in its hot springs, believed to have medicinal properties."
+                  },
+                  {
+                    "type": "place",
+                    "name": "Chalal Village Trek",
+                    "description": "Embark on a short, scenic trek to Chalal village from Kasol, enjoying the riverside views."
+                  }
+                ]
+              },
+              {
+                "day_number": 6,
+                "cities": [
+                  {
+                    "name": "Tosh",
+                    "address": "Tosh, Himachal Pradesh, India",
+                    "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJIdjO3-1DBDkRwtUjYjYIesQ",
+                    "lat": "32.0154338",
+                    "long": "77.453704",
+                    "photos": [
+                      "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AciIO2coRGKP4AVgqdjCtVQLNvSzt9M7_DI98ihOja_n3hReVpU9qpORygbI8lJ_pKsA5n9ognexF2T3JkVhX7qaB8biUzAdSV2jPtpve2U82NfQNuVRstvx6aYQY91vM8rasf2Om82nJpjC97d6fwLWaNB_gGJyxGIu3JnzUzQ_c_SvMn3MVuA79mKkoMQLNlvg529aSdZPjm61ktVvFJP4D4ZUD2XiGnbdB7R2FR5E718lSf5agJW2IhLYILqgRCtFo_gx2367zGzYYf2nHYDxoj66fbNgeW21NFN_RCWg9MAtmamyqpC5IPmwJGcWoflTDIwaofN3KR_GVfpUbbFaO5xl6xJ2X9ZJSnH6rKjmlceByY863E3HijUsLx3Ghnfke-4yVHjb-NqtE3tr4M00Ot-1g_2VKcC4FKDjxGQT9nw7yVj9jU5wogXop6iB5QraILnyPB5H1GkOJ4TzbsVwf2VBM3b5cIHVpVgBLDMSP2TIy5zxU_2kLtD1FYcuAAqUM92OKfFB5EgOpNlCFm3VX3Ib1_iXJ7DJmnhYiX4oZ_yqUQ37e-SE0g2j0NzLhTIUDJtjFDo7&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                    ],
+                    "place_id": "ChIJIdjO3-1DBDkRwtUjYjYIesQ"
+                  }
+                ],
+                "must_do_activities": [
+                  {
+                    "type": "activity",
+                    "name": "Day trip to Tosh Village",
+                    "description": "Take a day trip to the enchanting Tosh village, known for its apple orchards and stunning views of the Parvati Valley. Enjoy a peaceful walk and local food."
+                  }
+                ]
+              },
+              {
+                "day_number": 7,
+                "cities": [
+                  {
+                    "name": "Kasol",
+                    "address": "Kasol, Himachal Pradesh, India",
+                    "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJ6TGqdERcBDkRnZRHK-PSEvE",
+                    "lat": "32.0099986",
+                    "long": "77.3149625",
+                    "photos": [
+                      "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AciIO2eO96lsIc1wTb24aoNXJS0O-hEY1RMq_9qJiZGPDBdpygC2o6TdVOuJ0QqDXJYJvbQjDskVV_0ReL367I5Ea50oGTkd6-TsbD4dIPysTnCxuGWPdeRXjDa9dXRqMxe06btclsM9XCk3jMyOn4z7SVFxZ99acza18wlJ1v5MAroe93De2NZG6o78_QPMT9WYhYSglmeYA7p6rsf4Rp-Qx3UTwXqssZEc5nIIFjzOTDnAoi5Q5qF8Q83Uc0oTdKwURxgGk-Z78g0Rp5Qi9GhF1y6L0Kh21zkNZusXGtIYPitaDRI-fSPqfMCMhGj5RK8vjHixFGszx63FAvc5fT3FQ7OR0AHinR--L08EPccFMC1JJf9Ci1xNc-9dln0mNdbrNvYnyKj_2xmzUKt845jXTcSvngdY5hFHpGKkpjKHzdJ21rAlcblAj2ChJIF3DbeIU1y7qoAgTdOw_zxsdtXyDkRmJfbyc5DkW4DKfeeQQIH-ziJOEnUwlmo7KDC3dX3-BKu4cfSSxg024q48vadtgAjXUlw0Mb5YWnQjkBCMr4_DvfcxbATtCtX3VdxoD61Sh_iOBnAT&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                    ],
+                    "place_id": "ChIJ6TGqdERcBDkRnZRHK-PSEvE"
+                  }
+                ],
+                "must_do_activities": [
+                  {
+                    "type": "activity",
+                    "name": "Departure from Kasol",
+                    "description": "Enjoy a final breakfast in Kasol before departing for your onward journey."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "trip_title": "Royal Retreat in Rajasthan: Udaipur & Jaipur",
+            "no_of_days": 7,
+            "estimated_budget": 75000,
+            "best_time_to_visit": "October - March (pleasant weather)",
+            "theme": [
+              "Heritage",
+              "Culture",
+              "Palaces",
+              "Forts",
+              "Shopping"
+            ],
+            "day_wise_plan": [
+              {
+                "day_number": 1,
+                "cities": [
+                  {
+                    "name": "Udaipur",
+                    "address": "Udaipur, Rajasthan, India",
+                    "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJEUShUGXlZzkRsGi4VYTC2Ns",
+                    "lat": "24.585445",
+                    "long": "73.712479",
+                    "photos": [
+                      "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AciIO2eq5y3mXNmk7_83mP0ZDRUBm0R_pm9d09i7RBk1NKS3q3Qr19500xEEQDc3GBDry3pVMxiYemuPhcDxhGGQkoZwuAvJE9-wkHXSgytEojtPmfvLbGw2OBV8_dZ3jxepQiMUMAPdHe_rvhmzmAK5ng-E3qNJyE5MtWkaM-Umwcf6OUCVI7mwUrddOVTsP9xilPE1sEvG1zeX0MZvAt8iqP1sYxll5ONFh48XkvBbyljIFXYCI248GYIw5NFSmindJ-hfYABBQPr2urAWo6ZDpRKy4WT6148fdKLggTYwnQxwQh08p9-lIw2XdF4BV_F40vOZ69DNMxuYewvr3uqDhOi9ypUXP9w-3NIs9etWSJkkH6Am6A0sS6Rv6H9B8ZAH63mE0-pdcJ8e978dXw-RJe8vuASsEzsDK2gLbbn7ukl91GHbumBHXVBY7MV5LTMCDL75T5QG8ufvax1HS2saQGl_8e-DztUan01R3O7oX1BeI99WMa3vpSx79sKyuTpG0hAm_WwIkw3E0IqUhafKjQbJewaPqby7xSHPOx447wh0_1lLvg2zcx0mpBY_gcGIa0PVkw8zU7GjUg&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                    ],
+                    "place_id": "ChIJEUShUGXlZzkRsGi4VYTC2Ns"
+                  }
+                ],
+                "must_do_activities": [
+                  {
+                    "type": "activity",
+                    "name": "Arrive in Udaipur",
+                    "description": "Reach Udaipur, check into your hotel, and spend the evening relaxing by Lake Pichola, enjoying the scenic beauty."
+                  }
+                ]
+              },
+              {
+                "day_number": 2,
+                "cities": [
+                  {
+                    "name": "Udaipur",
+                    "address": "Udaipur, Rajasthan, India",
+                    "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJEUShUGXlZzkRsGi4VYTC2Ns",
+                    "lat": "24.585445",
+                    "long": "73.712479",
+                    "photos": [
+                      "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AciIO2eq5y3mXNmk7_83mP0ZDRUBm0R_pm9d09i7RBk1NKS3q3Qr19500xEEQDc3GBDry3pVMxiYemuPhcDxhGGQkoZwuAvJE9-wkHXSgytEojtPmfvLbGw2OBV8_dZ3jxepQiMUMAPdHe_rvhmzmAK5ng-E3qNJyE5MtWkaM-Umwcf6OUCVI7mwUrddOVTsP9xilPE1sEvG1zeX0MZvAt8iqP1sYxll5ONFh48XkvBbyljIFXYCI248GYIw5NFSmindJ-hfYABBQPr2urAWo6ZDpRKy4WT6148fdKLggTYwnQxwQh08p9-lIw2XdF4BV_F40vOZ69DNMxuYewvr3uqDhOi9ypUXP9w-3NIs9etWSJkkH6Am6A0sS6Rv6H9B8ZAH63mE0-pdcJ8e978dXw-RJe8vuASsEzsDK2gLbbn7ukl91GHbumBHXVBY7MV5LTMCDL75T5QG8ufvax1HS2saQGl_8e-DztUan01R3O7oX1BeI99WMa3vpSx79sKyuTpG0hAm_WwIkw3E0IqUhafKjQbJewaPqby7xSHPOx447wh0_1lLvg2zcx0mpBY_gcGIa0PVkw8zU7GjUg&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                    ],
+                    "place_id": "ChIJEUShUGXlZzkRsGi4VYTC2Ns"
+                  }
+                ],
+                "must_do_activities": [
+                  {
+                    "type": "place",
+                    "name": "City Palace",
+                    "description": "Explore the majestic City Palace, a complex of palaces, courtyards, and gardens offering stunning lake views."
+                  },
+                  {
+                    "type": "activity",
+                    "name": "Boat Ride on Lake Pichola",
+                    "description": "Enjoy a serene boat ride on Lake Pichola, visiting Jag Mandir island."
+                  },
+                  {
+                    "type": "food",
+                    "name": "Rooftop Dinner",
+                    "description": "Have dinner at a rooftop restaurant overlooking Lake Pichola for a magical experience."
+                  }
+                ]
+              },
+              {
+                "day_number": 3,
+                "cities": [
+                  {
+                    "name": "Udaipur",
+                    "address": "Udaipur, Rajasthan, India",
+                    "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJEUShUGXlZzkRsGi4VYTC2Ns",
+                    "lat": "24.585445",
+                    "long": "73.712479",
+                    "photos": [
+                      "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AciIO2eq5y3mXNmk7_83mP0ZDRUBm0R_pm9d09i7RBk1NKS3q3Qr19500xEEQDc3GBDry3pVMxiYemuPhcDxhGGQkoZwuAvJE9-wkHXSgytEojtPmfvLbGw2OBV8_dZ3jxepQiMUMAPdHe_rvhmzmAK5ng-E3qNJyE5MtWkaM-Umwcf6OUCVI7mwUrddOVTsP9xilPE1sEvG1zeX0MZvAt8iqP1sYxll5ONFh48XkvBbyljIFXYCI248GYIw5NFSmindJ-hfYABBQPr2urAWo6ZDpRKy4WT6148fdKLggTYwnQxwQh08p9-lIw2XdF4BV_F40vOZ69DNMxuYewvr3uqDhOi9ypUXP9w-3NIs9etWSJkkH6Am6A0sS6Rv6H9B8ZAH63mE0-pdcJ8e978dXw-RJe8vuASsEzsDK2gLbbn7ukl91GHbumBHXVBY7MV5LTMCDL75T5QG8ufvax1HS2saQGl_8e-DztUan01R3O7oX1BeI99WMa3vpSx79sKyuTpG0hAm_WwIkw3E0IqUhafKjQbJewaPqby7xSHPOx447wh0_1lLvg2zcx0mpBY_gcGIa0PVkw8zU7GjUg&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                    ],
+                    "place_id": "ChIJEUShUGXlZzkRsGi4VYTC2Ns"
+                  }
+                ],
+                "must_do_activities": [
+                  {
+                    "type": "place",
+                    "name": "Saheliyon Ki Bari",
+                    "description": "Visit Saheliyon Ki Bari, the beautiful Garden of Maidens, known for its fountains and kiosks."
+                  },
+                  {
+                    "type": "place",
+                    "name": "Jagdish Temple",
+                    "description": "Explore the grand Indo-Aryan Jagdish Temple, dedicated to Lord Vishnu."
+                  },
+                  {
+                    "type": "activity",
+                    "name": "Shopping in Local Markets",
+                    "description": "Discover local handicrafts, textiles, and traditional Rajasthani items in Udaipur's bustling markets."
+                  }
+                ]
+              },
+              {
+                "day_number": 4,
+                "cities": [
+                  {
+                    "name": "Jaipur",
+                    "address": "Jaipur, Rajasthan, India",
+                    "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJgeJXTN9KbDkRCS7yDDrG4Qw",
+                    "lat": "26.9124336",
+                    "long": "75.7872709",
+                    "photos": [
+                      "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AciIO2d3SukzXMF92mztjno2BPdQ-9GZqdK-x4hsUOWSP-XRcJpPqc4TK28mPWJRF-rpK2UzgNbMxOp6YPsTLabyxrWP8lamxtrL76HVj-KLTPIlTWXs3xMawHhy7btvTmEjMwMY1Fwr9b0B9kC4SZRCdepTKkN2jgzL1mzLfFHl0mmCgf52hHX6rRwTpeQBSztBZ58z6MBC7ks9kvf9KcQoI95DZOIPyWm9hAkku5Hh1KGGsbDVXuzqjTRV_VDY_jOCeGTCCDI9sJgrwqzjva18QUSEq-qXBmACq1XtQymkm8fS8FE7ppPZAEtFW-ssLW5mLiKyigHWPxU8Ldrm01GRu3GD7kKwCq2pojQLFIr9bEZ91kDMpw9IukTqpN57qD3C3QnlmUs9qxE25KE4u88cAKyhXI8G58kxK7SUDJ73KSgsJkzFTEo3VXJUPIPBAs7PRqfDi5TUdJdU2qttiwNGPcYZlNiCtHl7htYkto1DM6c8nxuy8yPVEnx2rtxT_hRArooQ3ruLF2oP0a7ClO8Q_zli_WTbuDIFt9ME1AAXsyqr_PaADY_5z9CJmshshymgYmF5A4UR&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                    ],
+                    "place_id": "ChIJgeJXTN9KbDkRCS7yDDrG4Qw"
+                  }
+                ],
+                "must_do_activities": [
+                  {
+                    "type": "activity",
+                    "name": "Travel to Jaipur",
+                    "description": "Take a train or bus to Jaipur, the Pink City. Check into your hotel and relax."
+                  },
+                  {
+                    "type": "place",
+                    "name": "Johari Bazaar",
+                    "description": "In the evening, take a stroll through Johari Bazaar, famous for its jewelry and gemstones."
+                  }
+                ]
+              },
+              {
+                "day_number": 5,
+                "cities": [
+                  {
+                    "name": "Jaipur",
+                    "address": "Jaipur, Rajasthan, India",
+                    "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJgeJXTN9KbDkRCS7yDDrG4Qw",
+                    "lat": "26.9124336",
+                    "long": "75.7872709",
+                    "photos": [
+                      "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AciIO2d3SukzXMF92mztjno2BPdQ-9GZqdK-x4hsUOWSP-XRcJpPqc4TK28mPWJRF-rpK2UzgNbMxOp6YPsTLabyxrWP8lamxtrL76HVj-KLTPIlTWXs3xMawHhy7btvTmEjMwMY1Fwr9b0B9kC4SZRCdepTKkN2jgzL1mzLfFHl0mmCgf52hHX6rRwTpeQBSztBZ58z6MBC7ks9kvf9KcQoI95DZOIPyWm9hAkku5Hh1KGGsbDVXuzqjTRV_VDY_jOCeGTCCDI9sJgrwqzjva18QUSEq-qXBmACq1XtQymkm8fS8FE7ppPZAEtFW-ssLW5mLiKyigHWPxU8Ldrm01GRu3GD7kKwCq2pojQLFIr9bEZ91kDMpw9IukTqpN57qD3C3QnlmUs9qxE25KE4u88cAKyhXI8G58kxK7SUDJ73KSgsJkzFTEo3VXJUPIPBAs7PRqfDi5TUdJdU2qttiwNGPcYZlNiCtHl7htYkto1DM6c8nxuy8yPVEnx2rtxT_hRArooQ3ruLF2oP0a7ClO8Q_zli_WTbuDIFt9ME1AAXsyqr_PaADY_5z9CJmshshymgYmF5A4UR&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                    ],
+                    "place_id": "ChIJgeJXTN9KbDkRCS7yDDrG4Qw"
+                  }
+                ],
+                "must_do_activities": [
+                  {
+                    "type": "place",
+                    "name": "Amber Fort",
+                    "description": "Visit the magnificent Amber Fort, experiencing an elephant ride or jeep safari up to the fort entrance."
+                  },
+                  {
+                    "type": "place",
+                    "name": "Hawa Mahal",
+                    "description": "Admire the iconic Hawa Mahal (Palace of Winds) from outside for its unique architecture."
+                  },
+                  {
+                    "type": "place",
+                    "name": "City Palace, Jaipur",
+                    "description": "Explore the Jaipur City Palace, a complex of palaces, gardens, and courtyards."
+                  }
+                ]
+              },
+              {
+                "day_number": 6,
+                "cities": [
+                  {
+                    "name": "Jaipur",
+                    "address": "Jaipur, Rajasthan, India",
+                    "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJgeJXTN9KbDkRCS7yDDrG4Qw",
+                    "lat": "26.9124336",
+                    "long": "75.7872709",
+                    "photos": [
+                      "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AciIO2d3SukzXMF92mztjno2BPdQ-9GZqdK-x4hsUOWSP-XRcJpPqc4TK28mPWJRF-rpK2UzgNbMxOp6YPsTLabyxrWP8lamxtrL76HVj-KLTPIlTWXs3xMawHhy7btvTmEjMwMY1Fwr9b0B9kC4SZRCdepTKkN2jgzL1mzLfFHl0mmCgf52hHX6rRwTpeQBSztBZ58z6MBC7ks9kvf9KcQoI95DZOIPyWm9hAkku5Hh1KGGsbDVXuzqjTRV_VDY_jOCeGTCCDI9sJgrwqzjva18QUSEq-qXBmACq1XtQymkm8fS8FE7ppPZAEtFW-ssLW5mLiKyigHWPxU8Ldrm01GRu3GD7kKwCq2pojQLFIr9bEZ91kDMpw9IukTqpN57qD3C3QnlmUs9qxE25KE4u88cAKyhXI8G58kxK7SUDJ73KSgsJkzFTEo3VXJUPIPBAs7PRqfDi5TUdJdU2qttiwNGPcYZlNiCtHl7htYkto1DM6c8nxuy8yPVEnx2rtxT_hRArooQ3ruLF2oP0a7ClO8Q_zli_WTbuDIFt9ME1AAXsyqr_PaADY_5z9CJmshshymgYmF5A4UR&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                    ],
+                    "place_id": "ChIJgeJXTN9KbDkRCS7yDDrG4Qw"
+                  }
+                ],
+                "must_do_activities": [
+                  {
+                    "type": "place",
+                    "name": "Nahargarh Fort",
+                    "description": "Visit Nahargarh Fort, offering breathtaking sunset views over Jaipur."
+                  },
+                  {
+                    "type": "place",
+                    "name": "Jal Mahal",
+                    "description": "View the beautiful Water Palace, Jal Mahal, from the roadside."
+                  },
+                  {
+                    "type": "food",
+                    "name": "Rajasthani Thali",
+                    "description": "Indulge in a traditional Rajasthani Thali for dinner, experiencing the rich flavors of the region."
+                  }
+                ]
+              },
+              {
+                "day_number": 7,
+                "cities": [
+                  {
+                    "name": "Jaipur",
+                    "address": "Jaipur, Rajasthan, India",
+                    "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJgeJXTN9KbDkRCS7yDDrG4Qw",
+                    "lat": "26.9124336",
+                    "long": "75.7872709",
+                    "photos": [
+                      "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AciIO2d3SukzXMF92mztjno2BPdQ-9GZqdK-x4hsUOWSP-XRcJpPqc4TK28mPWJRF-rpK2UzgNbMxOp6YPsTLabyxrWP8lamxtrL76HVj-KLTPIlTWXs3xMawHhy7btvTmEjMwMY1Fwr9b0B9kC4SZRCdepTKkN2jgzL1mzLfFHl0mmCgf52hHX6rRwTpeQBSztBZ58z6MBC7ks9kvf9KcQoI95DZOIPyWm9hAkku5Hh1KGGsbDVXuzqjTRV_VDY_jOCeGTCCDI9sJgrwqzjva18QUSEq-qXBmACq1XtQymkm8fS8FE7ppPZAEtFW-ssLW5mLiKyigHWPxU8Ldrm01GRu3GD7kKwCq2pojQLFIr9bEZ91kDMpw9IukTqpN57qD3C3QnlmUs9qxE25KE4u88cAKyhXI8G58kxK7SUDJ73KSgsJkzFTEo3VXJUPIPBAs7PRqfDi5TUdJdU2qttiwNGPcYZlNiCtHl7htYkto1DM6c8nxuy8yPVEnx2rtxT_hRArooQ3ruLF2oP0a7ClO8Q_zli_WTbuDIFt9ME1AAXsyqr_PaADY_5z9CJmshshymgYmF5A4UR&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                    ],
+                    "place_id": "ChIJgeJXTN9KbDkRCS7yDDrG4Qw"
+                  }
+                ],
+                "must_do_activities": [
+                  {
+                    "type": "activity",
+                    "name": "Departure from Jaipur",
+                    "description": "Enjoy a final breakfast in Jaipur and depart for your onward journey."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "trip_title": "Tropical Escape: Bangkok & Krabi, Thailand",
+            "no_of_days": 7,
+            "estimated_budget": 110000,
+            "best_time_to_visit": "November - February (cool and dry season)",
+            "theme": [
+              "Beaches",
+              "Islands",
+              "Nightlife",
+              "Culture",
+              "Food",
+              "International"
+            ],
+            "day_wise_plan": [
+              {
+                "day_number": 1,
+                "cities": [
+                  {
+                    "name": "Bangkok",
+                    "address": "Bangkok, Thailand",
+                    "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJ82ENKDJgHTERIEjiXbIAAQE",
+                    "lat": "13.7563309",
+                    "long": "100.5017651",
+                    "photos": [
+                      "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AciIO2evg6Tz4qXq2_8WNsP0bh1EUIPNlrjYRljSMIvpswmrhBl9M37AyQ7Aa4qYNWghirIt9STj4dOVhB_pS45_UB8XB67zsk33j8uU76U58vJeOvpYZq6odq59Fyek7_p73rPtdwBeUFJxmVobHzrHN0FH4CW5T-N8qe3j1V2FwGSxa5dxfRLUEWXZj5yFiWPD_yJKmL1RhMkslmT2_QWyvTLE9ThMsDbslX7o8rySvbqq4HI-WzDlY41ZtNpAE7g7hb4kHmAMMio1c-XrQnXy-xBiTUEQLwk-3M3A1Z4hln7otbN78msoeSEkooSUTuhhlR5p9bH4CV0IYgYF847YkePF9AThdwgBbXGMmOzABpH0bXaHOeZWh6wA-dakxfXBRNOvAI06Q6BIZrjgVIzDghFpitQwVskRWcW3Dp2yXyUsdvjEVIE-626KnK5lEbZfxoyJSGW5b0lFV_69RwVaW061CSciYO-B7_5smkg007LZOeU6TiVSvJEIvTYLGBhOOuSrh6gOaT4OsYyoNRFVcBUHbFQbFIxhc3802qfEjUnot3qgUKWDM7qJIsDGS7gSdNbAagg5&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                    ],
+                    "place_id": "ChIJ82ENKDJgHTERIEjiXbIAAQE"
+                  }
+                ],
+                "must_do_activities": [
+                  {
+                    "type": "activity",
+                    "name": "Arrive in Bangkok",
+                    "description": "Arrive at Suvarnabhumi Airport (BKK) or Don Mueang Airport (DMK), transfer to your hotel, and settle in. In the evening, explore the vibrant Sukhumvit area."
+                  }
+                ]
+              },
+              {
+                "day_number": 2,
+                "cities": [
+                  {
+                    "name": "Bangkok",
+                    "address": "Bangkok, Thailand",
+                    "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJ82ENKDJgHTERIEjiXbIAAQE",
+                    "lat": "13.7563309",
+                    "long": "100.5017651",
+                    "photos": [
+                      "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AciIO2evg6Tz4qXq2_8WNsP0bh1EUIPNlrjYRljSMIvpswmrhBl9M37AyQ7Aa4qYNWghirIt9STj4dOVhB_pS45_UB8XB67zsk33j8uU76U58vJeOvpYZq6odq59Fyek7_p73rPtdwBeUFJxmVobHzrHN0FH4CW5T-N8qe3j1V2FwGSxa5dxfRLUEWXZj5yFiWPD_yJKmL1RhMkslmT2_QWyvTLE9ThMsDbslX7o8rySvbqq4HI-WzDlY41ZtNpAE7g7hb4kHmAMMio1c-XrQnXy-xBiTUEQLwk-3M3A1Z4hln7otbN78msoeSEkooSUTuhhlR5p9bH4CV0IYgYF847YkePF9AThdwgBbXGMmOzABpH0bXaHOeZWh6wA-dakxfXBRNOvAI06Q6BIZrjgVIzDghFpitQwVskRWcW3Dp2yXyUsdvjEVIE-626KnK5lEbZfxoyJSGW5b0lFV_69RwVaW061CSciYO-B7_5smkg007LZOeU6TiVSvJEIvTYLGBhOOuSrh6gOaT4OsYyoNRFVcBUHbFQbFIxhc3802qfEjUnot3qgUKWDM7qJIsDGS7gSdNbAagg5&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                    ],
+                    "place_id": "ChIJ82ENKDJgHTERIEjiXbIAAQE"
+                  }
+                ],
+                "must_do_activities": [
+                  {
+                    "type": "place",
+                    "name": "Grand Palace & Wat Phra Kaeo",
+                    "description": "Visit the magnificent Grand Palace and the Temple of the Emerald Buddha (Wat Phra Kaeo)."
+                  },
+                  {
+                    "type": "place",
+                    "name": "Wat Arun",
+                    "description": "Take a ferry across the Chao Phraya River to visit Wat Arun (Temple of Dawn)."
+                  },
+                  {
+                    "type": "food",
+                    "name": "Street Food Tour",
+                    "description": "Experience Bangkok's famous street food scene, perhaps in Yaowarat (Chinatown)."
+                  }
+                ]
+              },
+              {
+                "day_number": 3,
+                "cities": [
+                  {
+                    "name": "Bangkok",
+                    "address": "Bangkok, Thailand",
+                    "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJ82ENKDJgHTERIEjiXbIAAQE",
+                    "lat": "13.7563309",
+                    "long": "100.5017651",
+                    "photos": [
+                      "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AciIO2evg6Tz4qXq2_8WNsP0bh1EUIPNlrjYRljSMIvpswmrhBl9M37AyQ7Aa4qYNWghirIt9STj4dOVhB_pS45_UB8XB67zsk33j8uU76U58vJeOvpYZq6odq59Fyek7_p73rPtdwBeUFJxmVobHzrHN0FH4CW5T-N8qe3j1V2FwGSxa5dxfRLUEWXZj5yFiWPD_yJKmL1RhMkslmT2_QWyvTLE9ThMsDbslX7o8rySvbqq4HI-WzDlY41ZtNpAE7g7hb4kHmAMMio1c-XrQnXy-xBiTUEQLwk-3M3A1Z4hln7otbN78msoeSEkooSUTuhhlR5p9bH4CV0IYgYF847YkePF9AThdwgBbXGMmOzABpH0bXaHOeZWh6wA-dakxfXBRNOvAI06Q6BIZrjgVIzDghFpitQwVskRWcW3Dp2yXyUsdvjEVIE-626KnK5lEbZfxoyJSGW5b0lFV_69RwVaW061CSciYO-B7_5smkg007LZOeU6TiVSvJEIvTYLGBhOOuSrh6gOaT4OsYyoNRFVcBUHbFQbFIxhc3802qfEjUnot3qgUKWDM7qJIsDGS7gSdNbAagg5&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                    ],
+                    "place_id": "ChIJ82ENKDJgHTERIEjiXbIAAQE"
+                  }
+                ],
+                "must_do_activities": [
+                  {
+                    "type": "activity",
+                    "name": "Floating Market",
+                    "description": "Take a half-day trip to Damnoen Saduak or Amphawa Floating Market for a unique cultural experience."
+                  },
+                  {
+                    "type": "activity",
+                    "name": "Shopping at MBK Center or Siam Paragon",
+                    "description": "Spend the afternoon shopping at one of Bangkok's mega malls."
+                  },
+                  {
+                    "type": "activity",
+                    "name": "Chao Phraya River Cruise",
+                    "description": "Enjoy a dinner cruise on the Chao Phraya River in the evening."
+                  }
+                ]
+              },
+              {
+                "day_number": 4,
+                "cities": [
+                  {
+                    "name": "Krabi",
+                    "address": "Krabi, Thailand",
+                    "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJBy8kHpmUUTARV5vJ1-QTjnQ",
+                    "lat": "8.0854803",
+                    "long": "98.9062856",
+                    "photos": [
+                      "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AciIO2fRg3qHon3qFraOIVF8NBoIEIl0Bxb44FZMQ8Jh4Xmn_Y1o5bgvbodMlOTBokaVJ1nbczIBz4HbjbHHmh7J6vHrx-2h7fb4VXBWtIUHBM1V8_XDalL_V2DuwHQjZcjitmZO5JuECOX1MDx2cpIz7lGA9uVZtPpjZVp908oJHK8WScNmV0BtdczbwQiBZTHdTWOM0nH76QeR-K58Qz8zDbWEePfAbVKhLXhviILMWPrKYOaBtFo5nCFT_puKRwLNpqRHc_rbbVLeiu_4VeSWRfKCJBEMlAjFro_tZIImSNuIOmEfLbGYqJUWWTy6Ghx6IR8U-lK0RFinn3E74SrnGiKEpOkYf13CHfOcrCWWuoSGUfntmhrieB6gakT3ziz21gUIcIJt8ujqrZvsFK5N6JkCmy6WHl8ILNK0QqQjMPXktLbIbTTaMWER53O2rV0jgwk6RJzWRuhd6KOQPArfJ6iRYe7DFw7gnHWI3RmBSgy4bmubyuDCldSn4p1vfJnKynreyUA-MdAMiUjnoC2vQb5aHmJLfh17FLr2qi4LMpTVI6KxcjTlxJ3mxEO1AWmBQplpYRFn&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                    ],
+                    "place_id": "ChIJBy8kHpmUUTARV5vJ1-QTjnQ"
+                  }
+                ],
+                "must_do_activities": [
+                  {
+                    "type": "activity",
+                    "name": "Travel to Krabi",
+                    "description": "Take a morning flight from Bangkok to Krabi. Check into your hotel in Ao Nang or Krabi Town."
+                  },
+                  {
+                    "type": "place",
+                    "name": "Ao Nang Beach",
+                    "description": "Spend the afternoon relaxing on Ao Nang Beach and enjoy a sunset dinner by the sea."
+                  }
+                ]
+              },
+              {
+                "day_number": 5,
+                "cities": [
+                  {
+                    "name": "Krabi",
+                    "address": "Krabi, Thailand",
+                    "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJBy8kHpmUUTARV5vJ1-QTjnQ",
+                    "lat": "8.0854803",
+                    "long": "98.9062856",
+                    "photos": [
+                      "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AciIO2fRg3qHon3qFraOIVF8NBoIEIl0Bxb44FZMQ8Jh4Xmn_Y1o5bgvbodMlOTBokaVJ1nbczIBz4HbjbHHmh7J6vHrx-2h7fb4VXBWtIUHBM1V8_XDalL_V2DuwHQjZcjitmZO5JuECOX1MDx2cpIz7lGA9uVZtPpjZVp908oJHK8WScNmV0BtdczbwQiBZTHdTWOM0nH76QeR-K58Qz8zDbWEePfAbVKhLXhviILMWPrKYOaBtFo5nCFT_puKRwLNpqRHc_rbbVLeiu_4VeSWRfKCJBEMlAjFro_tZIImSNuIOmEfLbGYqJUWWTy6Ghx6IR8U-lK0RFinn3E74SrnGiKEpOkYf13CHfOcrCWWuoSGUfntmhrieB6gakT3ziz21gUIcIJt8ujqrZvsFK5N6JkCmy6WHl8ILNK0QqQjMPXktLbIbTTaMWER53O2rV0jgwk6RJzWRuhd6KOQPArfJ6iRYe7DFw7gnHWI3RmBSgy4bmubyuDCldSn4p1vfJnKynreyUA-MdAMiUjnoC2vQb5aHmJLfh17FLr2qi4LMpTVI6KxcjTlxJ3mxEO1AWmBQplpYRFn&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                    ],
+                    "place_id": "ChIJBy8kHpmUUTARV5vJ1-QTjnQ"
+                  }
+                ],
+                "must_do_activities": [
+                  {
+                    "type": "activity",
+                    "name": "Four Island Tour",
+                    "description": "Embark on an island hopping tour to stunning islands like Phra Nang Cave Beach, Chicken Island, Tup Island, and Poda Island."
+                  }
+                ]
+              },
+              {
+                "day_number": 6,
+                "cities": [
+                  {
+                    "name": "Krabi",
+                    "address": "Krabi, Thailand",
+                    "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJBy8kHpmUUTARV5vJ1-QTjnQ",
+                    "lat": "8.0854803",
+                    "long": "98.9062856",
+                    "photos": [
+                      "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AciIO2fRg3qHon3qFraOIVF8NBoIEIl0Bxb44FZMQ8Jh4Xmn_Y1o5bgvbodMlOTBokaVJ1nbczIBz4HbjbHHmh7J6vHrx-2h7fb4VXBWtIUHBM1V8_XDalL_V2DuwHQjZcjitmZO5JuECOX1MDx2cpIz7lGA9uVZtPpjZVp908oJHK8WScNmV0BtdczbwQiBZTHdTWOM0nH76QeR-K58Qz8zDbWEePfAbVKhLXhviILMWPrKYOaBtFo5nCFT_puKRwLNpqRHc_rbbVLeiu_4VeSWRfKCJBEMlAjFro_tZIImSNuIOmEfLbGYqJUWWTy6Ghx6IR8U-lK0RFinn3E74SrnGiKEpOkYf13CHfOcrCWWuoSGUfntmhrieB6gakT3ziz21gUIcIJt8ujqrZvsFK5N6JkCmy6WHl8ILNK0QqQjMPXktLbIbTTaMWER53O2rV0jgwk6RJzWRuhd6KOQPArfJ6iRYe7DFw7gnHWI3RmBSgy4bmubyuDCldSn4p1vfJnKynreyUA-MdAMiUjnoC2vQb5aHmJLfh17FLr2qi4LMpTVI6KxcjTlxJ3mxEO1AWmBQplpYRFn&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                    ],
+                    "place_id": "ChIJBy8kHpmUUTARV5vJ1-QTjnQ"
+                  }
+                ],
+                "must_do_activities": [
+                  {
+                    "type": "activity",
+                    "name": "Railay Beach",
+                    "description": "Take a longtail boat to Railay Beach, known for its dramatic limestone cliffs, rock climbing, and beautiful beaches. Explore Railay East, Railay West, and Phra Nang Cave."
+                  }
+                ]
+              },
+              {
+                "day_number": 7,
+                "cities": [
+                  {
+                    "name": "Krabi",
+                    "address": "Krabi, Thailand",
+                    "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJBy8kHpmUUTARV5vJ1-QTjnQ",
+                    "lat": "8.0854803",
+                    "long": "98.9062856",
+                    "photos": [
+                      "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AciIO2fRg3qHon3qFraOIVF8NBoIEIl0Bxb44FZMQ8Jh4Xmn_Y1o5bgvbodMlOTBokaVJ1nbczIBz4HbjbHHmh7J6vHrx-2h7fb4VXBWtIUHBM1V8_XDalL_V2DuwHQjZcjitmZO5JuECOX1MDx2cpIz7lGA9uVZtPpjZVp908oJHK8WScNmV0BtdczbwQiBZTHdTWOM0nH76QeR-K58Qz8zDbWEePfAbVKhLXhviILMWPrKYOaBtFo5nCFT_puKRwLNpqRHc_rbbVLeiu_4VeSWRfKCJBEMlAjFro_tZIImSNuIOmEfLbGYqJUWWTy6Ghx6IR8U-lK0RFinn3E74SrnGiKEpOkYf13CHfOcrCWWuoSGUfntmhrieB6gakT3ziz21gUIcIJt8ujqrZvsFK5N6JkCmy6WHl8ILNK0QqQjMPXktLbIbTTaMWER53O2rV0jgwk6RJzWRuhd6KOQPArfJ6iRYe7DFw7gnHWI3RmBSgy4bmubyuDCldSn4p1vfJnKynreyUA-MdAMiUjnoC2vQb5aHmJLfh17FLr2qi4LMpTVI6KxcjTlxJ3mxEO1AWmBQplpYRFn&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                    ],
+                    "place_id": "ChIJBy8kHpmUUTARV5vJ1-QTjnQ"
+                  }
+                ],
+                "must_do_activities": [
+                  {
+                    "type": "activity",
+                    "name": "Departure from Krabi",
+                    "description": "Enjoy a final breakfast in Krabi before transferring to Krabi International Airport (KBV) for your flight back home."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "trip_title": "Serene South: Kerala Backwaters & Hill Stations",
+            "no_of_days": 7,
+            "estimated_budget": 70000,
+            "best_time_to_visit": "October - March (pleasant weather)",
+            "theme": [
+              "Nature",
+              "Relaxation",
+              "Backwaters",
+              "Hills",
+              "Culture"
+            ],
+            "day_wise_plan": [
+              {
+                "day_number": 1,
+                "cities": [
+                  {
+                    "name": "Kochi",
+                    "address": "Kochi, Kerala, India",
+                    "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJv8a-SlENCDsRkkGEpcqC1Qs",
+                    "lat": "9.9312328",
+                    "long": "76.26730409999999",
+                    "photos": [
+                      "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AciIO2cL6vqNh_FItwwkEaAHkYzftYWcA_tQ1lX9UpwgWOV1tcyxF871LVpAJ2LVGQzv5l_O7bsxvTQ5tDHsqqHDaqmZY4zt9CF18usBheoKNHI-gqsNuk8o27Ushy6NxPo14GEotj9X9Sfob66f-j_A1GMORN4Z3YMPeQKhczUxYy7jzNsKx6OmBU6I7NIUwKqNUruocdE_M7shgts2K2kHg1DMd9FeQc_M0WXSYw0CruvrUm0TPs7QdXyDVsh7bXtFouHZeluYvrEHqu2ESuWJkijXSPpfr4SSzbNtFCiIGvh3OXkagmAtxr8UPDGWaYeHd-2a9dr8Ju3xZKisOdgimyLBEJ_YbfvaJTSiESmQ19477abqxaxiUd59ee_JWHq2b3eSzWfryhjEgUykutOhZebfOYW2CZ7UGLyggsyIJAHrdjaOHke0D9BlI6YaR3wZBQvslRqtNI8LCBL8Ccb7RuZLODO2OYy_ew-o2T4cphOCRcFc-lTJRqBbV41ll4b1WYQMqzc-8kyDY_PCY9keam_gKZ2WgetLjen8HNOXNaqs3R24hWhbJaNglD9AlHSyT_qfpsjW&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                    ],
+                    "place_id": "ChIJv8a-SlENCDsRkkGEpcqC1Qs"
+                  }
+                ],
+                "must_do_activities": [
+                  {
+                    "type": "activity",
+                    "name": "Arrive in Kochi",
+                    "description": "Arrive at Kochi International Airport (COK), transfer to your accommodation. Explore Fort Kochi in the evening, enjoying the colonial architecture and Chinese Fishing Nets."
+                  }
+                ]
+              },
+              {
+                "day_number": 2,
+                "cities": [
+                  {
+                    "name": "Kochi",
+                    "address": "Kochi, Kerala, India",
+                    "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJv8a-SlENCDsRkkGEpcqC1Qs",
+                    "lat": "9.9312328",
+                    "long": "76.26730409999999",
+                    "photos": [
+                      "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AciIO2cL6vqNh_FItwwkEaAHkYzftYWcA_tQ1lX9UpwgWOV1tcyxF871LVpAJ2LVGQzv5l_O7bsxvTQ5tDHsqqHDaqmZY4zt9CF18usBheoKNHI-gqsNuk8o27Ushy6NxPo14GEotj9X9Sfob66f-j_A1GMORN4Z3YMPeQKhczUxYy7jzNsKx6OmBU6I7NIUwKqNUruocdE_M7shgts2K2kHg1DMd9FeQc_M0WXSYw0CruvrUm0TPs7QdXyDVsh7bXtFouHZeluYvrEHqu2ESuWJkijXSPpfr4SSzbNtFCiIGvh3OXkagmAtxr8UPDGWaYeHd-2a9dr8Ju3xZKisOdgimyLBEJ_YbfvaJTSiESmQ19477abqxaxiUd59ee_JWHq2b3eSzWfryhjEgUykutOhZebfOYW2CZ7UGLyggsyIJAHrdjaOHke0D9BlI6YaR3wZBQvslRqtNI8LCBL8Ccb7RuZLODO2OYy_ew-o2T4cphOCRcFc-lTJRqBbV41ll4b1WYQMqzc-8kyDY_PCY9keam_gKZ2WgetLjen8HNOXNaqs3R24hWhbJaNglD9AlHSyT_qfpsjW&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                    ],
+                    "place_id": "ChIJv8a-SlENCDsRkkGEpcqC1Qs"
+                  }
+                ],
+                "must_do_activities": [
+                  {
+                    "type": "place",
+                    "name": "Mattancherry Palace",
+                    "description": "Visit the Mattancherry Palace (Dutch Palace) and the Jewish Synagogue in Jew Town."
+                  },
+                  {
+                    "type": "activity",
+                    "name": "Kathakali Performance",
+                    "description": "In the evening, witness a traditional Kathakali dance performance."
+                  },
+                  {
+                    "type": "food",
+                    "name": "Seafood in Fort Kochi",
+                    "description": "Relish fresh seafood at one of the many restaurants in Fort Kochi."
+                  }
+                ]
+              },
+              {
+                "day_number": 3,
+                "cities": [
+                  {
+                    "name": "Alleppey",
+                    "address": "Alleppey, Kerala, India",
+                    "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJYWspqvGECDsRWvhBLFVkR7g",
+                    "lat": "9.498066699999999",
+                    "long": "76.3388484",
+                    "photos": [
+                      "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AciIO2cWSEicp6NdBDBL-5mNfBw2XYBgbjsm6rXXg9CNMxbJdwKcqk1eul-KTiIz8qgsS0JdwvmbAZ_At3eer1zBOCiXg5ANi8ervl9xArfCTefEDGe08KkyrjFlJGsh6ux23-tWTbHreGdrJzTQ_m9rD8lBmvRW_j4aKR_b5awhdLNhG8pw50VMSKTiWUe8amShi1Mljf3Xmk6vtjdNBsYqF-JOYHkTWULKrBC-rFkRnVL7Ot0kzoZAiec-rcDPuzv2Tl-QIEb92dAZxMEEw-QXvkFaVIK6OYaNddvhyR75qZRnkiYr01MuLiyapxIkqM7rP9qZkXirwDWYuiPWbPjOAHs4KPSHn8zeyQIzIm2wAs4zM4OhV8z6KrzHpH7ImX2qeF7qz089Onp3FV-TqXwtgPE_OelDGbQkqTFCoBFh5huDMFzQTxQHNQkn7NLq9Tta25T5uTuZg905GpF0EVRrdcLjDYkH-t2dPS8FOOI8pw6m2AgJKKvImP7xktoHvHq_UKqUUxkN3Qb0dYUgwsjuKVKkv4QgTfjnnWmlCIF4LIoDUrc0NiqH5UZIMGyAY4SNj9PyRapm&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                    ],
+                    "place_id": "ChIJYWspqvGECDsRWvhBLFVkR7g"
+                  }
+                ],
+                "must_do_activities": [
+                  {
+                    "type": "activity",
+                    "name": "Travel to Alleppey (Alappuzha)",
+                    "description": "Travel to Alleppey, the 'Venice of the East'. Check into a houseboat for an overnight stay."
+                  },
+                  {
+                    "type": "activity",
+                    "name": "Houseboat Experience",
+                    "description": "Enjoy cruising through the serene backwaters, witnessing local life and lush greenery from your houseboat."
+                  }
+                ]
+              },
+              {
+                "day_number": 4,
+                "cities": [
+                  {
+                    "name": "Munnar",
+                    "address": "Munnar, Kerala, India",
+                    "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJbZoJTXmZBzsRDH48VeVQMgY",
+                    "lat": "10.0889333",
+                    "long": "77.05952479999999",
+                    "photos": [
+                      "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AciIO2fijY1jnV5em-rPFQ_AcKpC1C-_2arKyOGKCiQPrLy5YlKVui4OaQXuGV5Hgcmp_0EQSRhsChj1s-W59yQ0YGk8fwRkfZeFbDbGdX-N7xCQPU_2pUJEulXTyZVv937xQHD1Z4h64Gkvu5aQjKg4yxHijVvxSEwBK5t_h41lDJ1GMK2RZDo5uMUfYwy8OFy4vppVRALJNqTSz1yAZBHSifTavxiBAXQjr982Y43DylF50jeS3KBmQ-4B0LKtLxowv95jgGW0ArQhhHX7KUmzuvUwDcwCsJVTJ78NgW8zRQCVrnWHb4yFMo1C8D_sNFbd9qp5R7pClR3atWIS6kn6zNG4BRuAGF5w9UtayJoLtxPkgxsOsP23Iu0QWCwx4LulOJPAEqCaGjJvVXZDagQM9n3FRPmzTlNGmcYJrYArwWA3K-Umj1Ybonn-O0M0bDePkfORy-78JxMZ1APQLGamk317Yuvw9JcGSRVNVbHP8HrjaujWQK9NLukKhU_8ocNvafyngq0IimyWvHZtwGizx7FHi_i7qE5IpmzThTvDfPu18YQGIo8WoKZzl0DgbnUAHUqJ-AJKYmF7xg&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                    ],
+                    "place_id": "ChIJbZoJTXmZBzsRDH48VeVQMgY"
+                  }
+                ],
+                "must_do_activities": [
+                  {
+                    "type": "activity",
+                    "name": "Travel to Munnar",
+                    "description": "After breakfast on the houseboat, disembark and proceed to the hill station of Munnar, known for its tea plantations."
+                  },
+                  {
+                    "type": "activity",
+                    "name": "Relax and Enjoy Scenery",
+                    "description": "Check into your resort and spend the evening enjoying the cool climate and panoramic views."
+                  }
+                ]
+              },
+              {
+                "day_number": 5,
+                "cities": [
+                  {
+                    "name": "Munnar",
+                    "address": "Munnar, Kerala, India",
+                    "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJbZoJTXmZBzsRDH48VeVQMgY",
+                    "lat": "10.0889333",
+                    "long": "77.05952479999999",
+                    "photos": [
+                      "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AciIO2fijY1jnV5em-rPFQ_AcKpC1C-_2arKyOGKCiQPrLy5YlKVui4OaQXuGV5Hgcmp_0EQSRhsChj1s-W59yQ0YGk8fwRkfZeFbDbGdX-N7xCQPU_2pUJEulXTyZVv937xQHD1Z4h64Gkvu5aQjKg4yxHijVvxSEwBK5t_h41lDJ1GMK2RZDo5uMUfYwy8OFy4vppVRALJNqTSz1yAZBHSifTavxiBAXQjr982Y43DylF50jeS3KBmQ-4B0LKtLxowv95jgGW0ArQhhHX7KUmzuvUwDcwCsJVTJ78NgW8zRQCVrnWHb4yFMo1C8D_sNFbd9qp5R7pClR3atWIS6kn6zNG4BRuAGF5w9UtayJoLtxPkgxsOsP23Iu0QWCwx4LulOJPAEqCaGjJvVXZDagQM9n3FRPmzTlNGmcYJrYArwWA3K-Umj1Ybonn-O0M0bDePkfORy-78JxMZ1APQLGamk317Yuvw9JcGSRVNVbHP8HrjaujWQK9NLukKhU_8ocNvafyngq0IimyWvHZtwGizx7FHi_i7qE5IpmzThTvDfPu18YQGIo8WoKZzl0DgbnUAHUqJ-AJKYmF7xg&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                    ],
+                    "place_id": "ChIJbZoJTXmZBzsRDH48VeVQMgY"
+                  }
+                ],
+                "must_do_activities": [
+                  {
+                    "type": "place",
+                    "name": "Tea Plantations & Museum",
+                    "description": "Explore the lush tea gardens, visit the Tata Tea Museum to learn about tea processing."
+                  },
+                  {
+                    "type": "place",
+                    "name": "Mattupetty Dam",
+                    "description": "Visit Mattupetty Dam, Kundala Lake, and Echo Point for scenic beauty and boating opportunities."
+                  }
+                ]
+              },
+              {
+                "day_number": 6,
+                "cities": [
+                  {
+                    "name": "Munnar",
+                    "address": "Munnar, Kerala, India",
+                    "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJbZoJTXmZBzsRDH48VeVQMgY",
+                    "lat": "10.0889333",
+                    "long": "77.05952479999999",
+                    "photos": [
+                      "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AciIO2fijY1jnV5em-rPFQ_AcKpC1C-_2arKyOGKCiQPrLy5YlKVui4OaQXuGV5Hgcmp_0EQSRhsChj1s-W59yQ0YGk8fwRkfZeFbDbGdX-N7xCQPU_2pUJEulXTyZVv937xQHD1Z4h64Gkvu5aQjKg4yxHijVvxSEwBK5t_h41lDJ1GMK2RZDo5uMUfYwy8OFy4vppVRALJNqTSz1yAZBHSifTavxiBAXQjr982Y43DylF50jeS3KBmQ-4B0LKtLxowv95jgGW0ArQhhHX7KUmzuvUwDcwCsJVTJ78NgW8zRQCVrnWHb4yFMo1C8D_sNFbd9qp5R7pClR3atWIS6kn6zNG4BRuAGF5w9UtayJoLtxPkgxsOsP23Iu0QWCwx4LulOJPAEqCaGjJvVXZDagQM9n3FRPmzTlNGmcYJrYArwWA3K-Umj1Ybonn-O0M0bDePkfORy-78JxMZ1APQLGamk317Yuvw9JcGSRVNVbHP8HrjaujWQK9NLukKhU_8ocNvafyngq0IimyWvHZtwGizx7FHi_i7qE5IpmzThTvDfPu18YQGIo8WoKZzl0DgbnUAHUqJ-AJKYmF7xg&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                    ],
+                    "place_id": "ChIJbZoJTXmZBzsRDH48VeVQMgY"
+                  }
+                ],
+                "must_do_activities": [
+                  {
+                    "type": "place",
+                    "name": "Eravikulam National Park",
+                    "description": "Visit Eravikulam National Park (if open and accessible during winter), home to the endangered Nilgiri Tahr."
+                  },
+                  {
+                    "type": "place",
+                    "name": "Anamudi Peak Viewpoint",
+                    "description": "Enjoy views of Anamudi Peak, the highest peak in South India."
+                  },
+                  {
+                    "type": "activity",
+                    "name": "Spice Plantation Tour",
+                    "description": "Take a guided tour of a local spice plantation to learn about various spices grown in the region."
+                  }
+                ]
+              },
+              {
+                "day_number": 7,
+                "cities": [
+                  {
+                    "name": "Kochi",
+                    "address": "Kochi, Kerala, India",
+                    "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJv8a-SlENCDsRkkGEpcqC1Qs",
+                    "lat": "9.9312328",
+                    "long": "76.26730409999999",
+                    "photos": [
+                      "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AciIO2cL6vqNh_FItwwkEaAHkYzftYWcA_tQ1lX9UpwgWOV1tcyxF871LVpAJ2LVGQzv5l_O7bsxvTQ5tDHsqqHDaqmZY4zt9CF18usBheoKNHI-gqsNuk8o27Ushy6NxPo14GEotj9X9Sfob66f-j_A1GMORN4Z3YMPeQKhczUxYy7jzNsKx6OmBU6I7NIUwKqNUruocdE_M7shgts2K2kHg1DMd9FeQc_M0WXSYw0CruvrUm0TPs7QdXyDVsh7bXtFouHZeluYvrEHqu2ESuWJkijXSPpfr4SSzbNtFCiIGvh3OXkagmAtxr8UPDGWaYeHd-2a9dr8Ju3xZKisOdgimyLBEJ_YbfvaJTSiESmQ19477abqxaxiUd59ee_JWHq2b3eSzWfryhjEgUykutOhZebfOYW2CZ7UGLyggsyIJAHrdjaOHke0D9BlI6YaR3wZBQvslRqtNI8LCBL8Ccb7RuZLODO2OYy_ew-o2T4cphOCRcFc-lTJRqBbV41ll4b1WYQMqzc-8kyDY_PCY9keam_gKZ2WgetLjen8HNOXNaqs3R24hWhbJaNglD9AlHSyT_qfpsjW&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                    ],
+                    "place_id": "ChIJv8a-SlENCDsRkkGEpcqC1Qs"
+                  }
+                ],
+                "must_do_activities": [
+                  {
+                    "type": "activity",
+                    "name": "Departure from Kochi",
+                    "description": "Travel back to Kochi from Munnar and depart from Kochi International Airport for your onward journey."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }

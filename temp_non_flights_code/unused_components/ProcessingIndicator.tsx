@@ -28,10 +28,17 @@ const ProcessingIndicator: React.FC<ProcessingIndicatorProps> = ({
 
   useEffect(() => {
     if (!isVisible) {
+      // Reset everything immediately when hiding
       setProgress(0);
       setCurrentTextIndex(0);
+      setIsTextVisible(true);
       return;
     }
+
+    // Reset progress immediately when becoming visible (for new requests)
+    setProgress(0);
+    setCurrentTextIndex(0);
+    setIsTextVisible(true);
 
     // Progress animation - always moves forward, never backwards
     const progressInterval = setInterval(() => {
@@ -65,8 +72,12 @@ const ProcessingIndicator: React.FC<ProcessingIndicatorProps> = ({
       setCurrentTextIndex(processingTexts.length - 1);
       setIsTextVisible(true);
 
-      // Call completion callback immediately
-      onComplete?.();
+      // Call completion callback after a brief delay to show 100%
+      const timer = setTimeout(() => {
+        onComplete?.();
+      }, 200);
+
+      return () => clearTimeout(timer);
     }
   }, [isVisible, progress, onComplete, processingTexts.length]);
 

@@ -1,0 +1,21 @@
+{
+    "source":"destination A",
+    "destination":"destination B",
+    "preferred_start_date":"2025-01-01",
+    "preferred_end_date":"2025-01-03"
+}
+
+{
+    "source":"destination B",
+    "destination":"destination C",
+    "preferred_start_date":"2025-01-03",
+    "preferred_end_date":"2025-01-05"
+}
+
+{
+    "source":"destination C",
+    "destination":"destination A",
+    "preferred_start_date":"2025-01-05",
+    "preferred_end_date":"2025-01-07"
+}
+

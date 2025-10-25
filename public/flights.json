@@ -1,0 +1,16 @@
+"duration": 2,
+{
+    "source":"destination A",
+    "destination":"destination B"
+}
+
+{
+    "source":"destination B",
+    "destination":"destination C"   
+}
+
+{
+    "source":"destination C",
+    "destination":"destination A"
+}
+

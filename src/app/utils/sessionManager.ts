@@ -101,6 +101,38 @@ export function clearSession(): void {
 }
 
 /**
+ * Clears only the session ID while preserving the user ID
+ * Useful for debug functionality where we want to keep the user context
+ */
+export function clearSessionIdOnly(): void {
+  if (typeof window !== 'undefined') {
+    try {
+      sessionStorage.removeItem(SESSION_ID_KEY);
+      console.log('Session ID cleared (user ID preserved)');
+    } catch (error) {
+      console.warn('Could not clear session ID:', error);
+    }
+  }
+}
+
+/**
+ * Gets a new session ID for authenticated users while preserving user context
+ * @param userId - The authenticated user's ID to preserve
+ */
+export function regenerateSessionForUser(userId: string): { sessionId: string; userId: string } {
+  // Clear only the session ID
+  clearSessionIdOnly();
+  
+  // Generate new session ID
+  const newSessionId = getSessionId();
+  
+  return {
+    sessionId: newSessionId,
+    userId: userId, // Keep the same user ID
+  };
+}
+
+/**
  * Gets session info for debugging
  */
 export function getSessionInfo(): { sessionId: string; userId: string; isNewSession: boolean } {

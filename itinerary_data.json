@@ -1,0 +1,488 @@
+{
+  "trip_id": "japan-trip-2025",
+  "trip_title": "Japan Cultural Adventure",
+  "total_days": 7,
+  "start_date": "2025-03-11",
+  "end_date": "2025-03-17",
+  "days": [
+    {
+      "day": 1,
+      "date": "Saturday, March 11",
+      "title": "Tokyo → Hakone",
+      "subtitle": "Explore Japan beyond the city with scenic day trip adventure to Hakone. This route blends culture, art, and relaxation.",
+      "weather": {
+        "temperature": "10°",
+        "condition": "Cloudy",
+        "icon": "🌤️"
+      },
+      "mapData": {
+        "avgTravelTime": "1h 50m",
+        "totalDistance": "80 km",
+        "plannedStops": 4
+      },
+      "stops": [
+        {
+          "id": "day1-stop1",
+          "name": "Morning Coffee at Ikigai Arabica",
+          "time": "8:30 AM",
+          "location": "1-1-3 Jinnan, Shibuya-ku, Tokyo",
+          "description": "Start your day with artisanal coffee in the heart of Shibuya",
+          "image": "☕",
+          "type": "coffee",
+          "duration": "30 mins",
+          "notes": "Try their signature blend"
+        },
+        {
+          "id": "day1-stop2",
+          "name": "Tokyo Station → Odawara Station",
+          "time": "10:00 AM",
+          "location": "1-9-1 Marunouchi, Chiyoda City, Tokyo",
+          "description": "Take the JR Tokaido Line for a scenic journey",
+          "image": "🚆",
+          "type": "transport",
+          "duration": "1h 30m",
+          "notes": "Book tickets in advance"
+        },
+        {
+          "id": "day1-stop3",
+          "name": "Hakone Open-Air Museum",
+          "time": "12:00 PM",
+          "location": "1121 Ninotaira, Hakone, Kanagawa",
+          "description": "Walk through an outdoor gallery featuring modern sculptures and mountainside views",
+          "image": "🎨",
+          "type": "museum",
+          "duration": "2h",
+          "notes": "Don't miss the Picasso Pavilion"
+        },
+        {
+          "id": "day1-stop4",
+          "name": "Odawara Station → Shibuya Station",
+          "time": "03:00 PM",
+          "location": "1-9-1 Shibuya, Chiyoda City, Tokyo",
+          "description": "Return journey to Tokyo with scenic mountain views",
+          "image": "🚆",
+          "type": "transport",
+          "duration": "1h 30m",
+          "notes": "Evening rush hour - expect crowds"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "date": "Sunday, March 12",
+      "title": "Tokyo Cultural Exploration",
+      "subtitle": "Immerse yourself in traditional Japanese culture with temple visits, local markets, and authentic cuisine.",
+      "weather": {
+        "temperature": "12°",
+        "condition": "Sunny",
+        "icon": "☀️"
+      },
+      "mapData": {
+        "avgTravelTime": "45 min",
+        "totalDistance": "25 km",
+        "plannedStops": 5
+      },
+      "stops": [
+        {
+          "id": "day2-stop1",
+          "name": "Senso-ji Temple",
+          "time": "9:00 AM",
+          "location": "2-3-1 Asakusa, Taito City, Tokyo",
+          "description": "Visit Tokyo's oldest and most significant Buddhist temple",
+          "image": "⛩️",
+          "type": "activity",
+          "duration": "1h 30m",
+          "notes": "Arrive early to avoid crowds"
+        },
+        {
+          "id": "day2-stop2",
+          "name": "Nakamise Shopping Street",
+          "time": "10:30 AM",
+          "location": "Asakusa, Taito City, Tokyo",
+          "description": "Browse traditional crafts and street food along historic shopping street",
+          "image": "🛍️",
+          "type": "activity",
+          "duration": "1h",
+          "notes": "Perfect for souvenirs"
+        },
+        {
+          "id": "day2-stop3",
+          "name": "Lunch at Tsukiji Outer Market",
+          "time": "12:00 PM",
+          "location": "4 Chome Tsukiji, Chuo City, Tokyo",
+          "description": "Enjoy fresh sushi and seafood at one of Tokyo's famous markets",
+          "image": "🍣",
+          "type": "restaurant",
+          "duration": "1h 30m",
+          "notes": "Try the tuna don bowl"
+        },
+        {
+          "id": "day2-stop4",
+          "name": "Imperial Palace Gardens",
+          "time": "2:30 PM",
+          "location": "1-1 Chiyoda, Chiyoda City, Tokyo",
+          "description": "Stroll through the beautiful East Gardens of the Imperial Palace",
+          "image": "🏯",
+          "type": "activity",
+          "duration": "1h 30m",
+          "notes": "Free admission, closed on Mondays"
+        },
+        {
+          "id": "day2-stop5",
+          "name": "Shibuya Crossing & Dinner",
+          "time": "6:00 PM",
+          "location": "Shibuya City, Tokyo",
+          "description": "Experience the world's busiest intersection and enjoy modern Tokyo dining",
+          "image": "🌃",
+          "type": "activity",
+          "duration": "2h",
+          "notes": "Visit Hachiko statue nearby"
+        }
+      ]
+    },
+    {
+      "day": 3,
+      "date": "Monday, March 13",
+      "title": "Mount Fuji & Lakes",
+      "subtitle": "A breathtaking journey to see Japan's iconic mountain, visit pristine lakes, and enjoy panoramic views.",
+      "weather": {
+        "temperature": "8°",
+        "condition": "Partly Cloudy",
+        "icon": "⛅"
+      },
+      "mapData": {
+        "avgTravelTime": "2h 15m",
+        "totalDistance": "120 km",
+        "plannedStops": 4
+      },
+      "stops": [
+        {
+          "id": "day3-stop1",
+          "name": "Early Departure from Tokyo",
+          "time": "7:00 AM",
+          "location": "Shinjuku Station, Tokyo",
+          "description": "Take the express bus to Mount Fuji area",
+          "image": "🚌",
+          "type": "transport",
+          "duration": "2h 30m",
+          "notes": "Reserve seats online"
+        },
+        {
+          "id": "day3-stop2",
+          "name": "Lake Kawaguchi",
+          "time": "10:00 AM",
+          "location": "Fujikawaguchiko, Yamanashi",
+          "description": "Enjoy stunning views of Mount Fuji reflected in the crystal-clear lake",
+          "image": "🏔️",
+          "type": "activity",
+          "duration": "2h",
+          "notes": "Best photo spots on north shore"
+        },
+        {
+          "id": "day3-stop3",
+          "name": "Mount Fuji 5th Station",
+          "time": "1:00 PM",
+          "location": "Narusawa, Yamanashi",
+          "description": "Visit the halfway point of Mount Fuji for spectacular mountain views",
+          "image": "⛰️",
+          "type": "activity",
+          "duration": "1h 30m",
+          "notes": "Dress warmly - it's cold at altitude"
+        },
+        {
+          "id": "day3-stop4",
+          "name": "Return to Tokyo",
+          "time": "4:00 PM",
+          "location": "Kawaguchiko Station",
+          "description": "Scenic bus ride back to the city",
+          "image": "🚌",
+          "type": "transport",
+          "duration": "2h 30m",
+          "notes": "Watch sunset from the bus"
+        }
+      ]
+    },
+    {
+      "day": 4,
+      "date": "Tuesday, March 14",
+      "title": "Kyoto Day Trip",
+      "subtitle": "Experience ancient Japan in Kyoto - temples, bamboo groves, and traditional geisha districts.",
+      "weather": {
+        "temperature": "14°",
+        "condition": "Clear",
+        "icon": "☀️"
+      },
+      "mapData": {
+        "avgTravelTime": "3h 20m",
+        "totalDistance": "460 km",
+        "plannedStops": 6
+      },
+      "stops": [
+        {
+          "id": "day4-stop1",
+          "name": "Shinkansen to Kyoto",
+          "time": "7:30 AM",
+          "location": "Tokyo Station",
+          "description": "Ride the bullet train to ancient capital",
+          "image": "🚄",
+          "type": "transport",
+          "duration": "2h 20m",
+          "notes": "JR Pass recommended"
+        },
+        {
+          "id": "day4-stop2",
+          "name": "Fushimi Inari Shrine",
+          "time": "10:00 AM",
+          "location": "68 Fukakusa Yabunouchicho, Fushimi Ward, Kyoto",
+          "description": "Walk through thousands of vermillion torii gates",
+          "image": "⛩️",
+          "type": "activity",
+          "duration": "2h",
+          "notes": "Hike to the summit if time permits"
+        },
+        {
+          "id": "day4-stop3",
+          "name": "Traditional Kyoto Lunch",
+          "time": "12:30 PM",
+          "location": "Gion District, Kyoto",
+          "description": "Savor kaiseki cuisine in a historic setting",
+          "image": "🍱",
+          "type": "restaurant",
+          "duration": "1h",
+          "notes": "Try yudofu (tofu hot pot)"
+        },
+        {
+          "id": "day4-stop4",
+          "name": "Arashiyama Bamboo Grove",
+          "time": "2:00 PM",
+          "location": "Arashiyama, Kyoto",
+          "description": "Walk through enchanting towering bamboo forest",
+          "image": "🎋",
+          "type": "activity",
+          "duration": "1h 30m",
+          "notes": "Early morning or late afternoon for fewer crowds"
+        },
+        {
+          "id": "day4-stop5",
+          "name": "Kinkaku-ji (Golden Pavilion)",
+          "time": "4:00 PM",
+          "location": "1 Kinkakujicho, Kita Ward, Kyoto",
+          "description": "Marvel at the gold-leaf covered Zen temple",
+          "image": "🏯",
+          "type": "activity",
+          "duration": "1h",
+          "notes": "Stunning in afternoon light"
+        },
+        {
+          "id": "day4-stop6",
+          "name": "Return to Tokyo",
+          "time": "6:30 PM",
+          "location": "Kyoto Station",
+          "description": "Evening Shinkansen back to Tokyo",
+          "image": "🚄",
+          "type": "transport",
+          "duration": "2h 20m",
+          "notes": "Grab ekiben (station bento) for dinner"
+        }
+      ]
+    },
+    {
+      "day": 5,
+      "date": "Wednesday, March 15",
+      "title": "Modern Tokyo Experience",
+      "subtitle": "Explore Tokyo's cutting-edge technology, anime culture, and vibrant nightlife in Akihabara and Shinjuku.",
+      "weather": {
+        "temperature": "15°",
+        "condition": "Sunny",
+        "icon": "☀️"
+      },
+      "mapData": {
+        "avgTravelTime": "30 min",
+        "totalDistance": "15 km",
+        "plannedStops": 5
+      },
+      "stops": [
+        {
+          "id": "day5-stop1",
+          "name": "TeamLab Borderless",
+          "time": "10:00 AM",
+          "location": "Azabudai Hills, Minato City, Tokyo",
+          "description": "Immersive digital art museum experience",
+          "image": "🎨",
+          "type": "museum",
+          "duration": "2h",
+          "notes": "Book tickets online in advance"
+        },
+        {
+          "id": "day5-stop2",
+          "name": "Akihabara Electric Town",
+          "time": "1:00 PM",
+          "location": "Akihabara, Chiyoda City, Tokyo",
+          "description": "Explore anime, manga, and electronics paradise",
+          "image": "🎮",
+          "type": "activity",
+          "duration": "2h 30m",
+          "notes": "Visit multi-floor gaming arcades"
+        },
+        {
+          "id": "day5-stop3",
+          "name": "Maid Café Experience",
+          "time": "3:30 PM",
+          "location": "Akihabara, Tokyo",
+          "description": "Unique Japanese pop culture dining experience",
+          "image": "🍰",
+          "type": "restaurant",
+          "duration": "1h",
+          "notes": "Reservations recommended"
+        },
+        {
+          "id": "day5-stop4",
+          "name": "Shinjuku Gyoen Garden",
+          "time": "5:00 PM",
+          "location": "11 Naitomachi, Shinjuku City, Tokyo",
+          "description": "Peaceful escape in the heart of the city",
+          "image": "🌸",
+          "type": "activity",
+          "duration": "1h 30m",
+          "notes": "Cherry blossoms in season"
+        },
+        {
+          "id": "day5-stop5",
+          "name": "Shinjuku Night District",
+          "time": "7:00 PM",
+          "location": "Kabukicho, Shinjuku, Tokyo",
+          "description": "Experience Tokyo's vibrant nightlife and neon lights",
+          "image": "🌃",
+          "type": "activity",
+          "duration": "2h",
+          "notes": "Visit Golden Gai for tiny bars"
+        }
+      ]
+    },
+    {
+      "day": 6,
+      "date": "Thursday, March 16",
+      "title": "Nikko Heritage Sites",
+      "subtitle": "Journey to the mountain town of Nikko to explore UNESCO World Heritage shrines and natural beauty.",
+      "weather": {
+        "temperature": "9°",
+        "condition": "Partly Cloudy",
+        "icon": "⛅"
+      },
+      "mapData": {
+        "avgTravelTime": "2h 30m",
+        "totalDistance": "140 km",
+        "plannedStops": 4
+      },
+      "stops": [
+        {
+          "id": "day6-stop1",
+          "name": "Train to Nikko",
+          "time": "8:00 AM",
+          "location": "Asakusa Station, Tokyo",
+          "description": "Scenic train journey to mountain shrine town",
+          "image": "🚃",
+          "type": "transport",
+          "duration": "2h",
+          "notes": "Tobu Railway limited express"
+        },
+        {
+          "id": "day6-stop2",
+          "name": "Toshogu Shrine",
+          "time": "10:30 AM",
+          "location": "2301 Sannai, Nikko, Tochigi",
+          "description": "Ornate shrine complex with famous carved monkeys",
+          "image": "⛩️",
+          "type": "activity",
+          "duration": "2h",
+          "notes": "See the 'Hear no evil' monkeys"
+        },
+        {
+          "id": "day6-stop3",
+          "name": "Kegon Falls",
+          "time": "1:30 PM",
+          "location": "Chugushi, Nikko, Tochigi",
+          "description": "100-meter waterfall, one of Japan's most beautiful",
+          "image": "💧",
+          "type": "activity",
+          "duration": "1h",
+          "notes": "Take elevator to viewing platform"
+        },
+        {
+          "id": "day6-stop4",
+          "name": "Return to Tokyo",
+          "time": "4:00 PM",
+          "location": "Tobu Nikko Station",
+          "description": "Evening journey back to the city",
+          "image": "🚃",
+          "type": "transport",
+          "duration": "2h",
+          "notes": "Enjoy mountain sunset views"
+        }
+      ]
+    },
+    {
+      "day": 7,
+      "date": "Friday, March 17",
+      "title": "Tokyo Farewell & Shopping",
+      "subtitle": "Final day in Tokyo - last-minute shopping, favorite spots revisited, and departure preparations.",
+      "weather": {
+        "temperature": "16°",
+        "condition": "Clear",
+        "icon": "☀️"
+      },
+      "mapData": {
+        "avgTravelTime": "25 min",
+        "totalDistance": "20 km",
+        "plannedStops": 4
+      },
+      "stops": [
+        {
+          "id": "day7-stop1",
+          "name": "Meiji Shrine",
+          "time": "9:00 AM",
+          "location": "1-1 Yoyogikamizonocho, Shibuya City, Tokyo",
+          "description": "Peaceful Shinto shrine in forested grounds",
+          "image": "⛩️",
+          "type": "activity",
+          "duration": "1h",
+          "notes": "Write your wishes on ema plaques"
+        },
+        {
+          "id": "day7-stop2",
+          "name": "Harajuku & Takeshita Street",
+          "time": "10:30 AM",
+          "location": "Harajuku, Shibuya City, Tokyo",
+          "description": "Youth fashion hub and quirky shops",
+          "image": "👗",
+          "type": "activity",
+          "duration": "2h",
+          "notes": "Try rainbow cotton candy"
+        },
+        {
+          "id": "day7-stop3",
+          "name": "Souvenir Shopping in Ginza",
+          "time": "1:00 PM",
+          "location": "Ginza, Chuo City, Tokyo",
+          "description": "Upscale shopping district for last-minute gifts",
+          "image": "🎁",
+          "type": "activity",
+          "duration": "2h 30m",
+          "notes": "Tax-free shopping available"
+        },
+        {
+          "id": "day7-stop4",
+          "name": "Departure to Airport",
+          "time": "5:00 PM",
+          "location": "Tokyo Station",
+          "description": "Narita Express to airport",
+          "image": "✈️",
+          "type": "transport",
+          "duration": "1h 30m",
+          "notes": "Arrive 3 hours before international flight"
+        }
+      ]
+    }
+  ]
+}
+

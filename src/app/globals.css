@@ -96,6 +96,40 @@ button {
   transition: all 150ms ease;
 }
 
+/* Tab transition animations */
+.tab-transition-enter {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.tab-transition-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 400ms ease-in-out, transform 400ms ease-in-out;
+}
+
+.tab-transition-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.tab-transition-exit-active {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
+}
+
+/* Smooth focus animations */
+.focus-ring {
+  transition: all 0.2s ease-in-out;
+}
+
+.focus-ring:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  border-color: rgb(59, 130, 246);
+}
+
 /* Accordion-style tab system */
 .accordion-tab {
   background: #000000;
@@ -663,4 +697,40 @@ button, .clickable {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
+}
+
+/* Profile image fade-in-scale animation */
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(10px);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05) translateY(-2px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-fade-in-scale {
+  animation: fadeInScale 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Slide up animation for selected trip indicator */
+@keyframes slideUp {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.animate-slideUp {
+  animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
