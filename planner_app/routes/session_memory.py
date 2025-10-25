@@ -21,11 +21,8 @@ async def get_session(
             status_code=200,
             content=session.state,
         )
-    except Exception as e: 
-        return JSONResponse(
-            status_code=500,
-            content=str(e)
-        )
+    except Exception as e:
+        return JSONResponse(status_code=500, content=str(e))
 
 
 @router.post("/memory/add")
@@ -38,9 +35,7 @@ async def add_memory(
             request.session_id, request.user_id
         )
         new_state = await merge_dict_intelligently(current_state.state, request.updates)
-        action_with_update = EventActions(
-            state_delta=new_state
-        )
+        action_with_update = EventActions(state_delta=new_state)
         system_event = Event(
             author="system",
             actions=action_with_update,
@@ -60,6 +55,7 @@ async def add_memory(
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+
 @router.delete("/memory/delete")
 async def delete_memory(
     request: DeleteMemorySchema,
@@ -70,14 +66,12 @@ async def delete_memory(
             request.session_id, request.user_id
         )
         new_state = current_state.state.copy()
-        
+
         for memory_key in request.memory_keys:
             if memory_key in current_state.state:
                 new_state[memory_key] = None
 
-        action_with_update = EventActions(
-            state_delta=new_state
-        )
+        action_with_update = EventActions(state_delta=new_state)
         system_event = Event(
             author="system",
             actions=action_with_update,
@@ -96,6 +90,7 @@ async def delete_memory(
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
 
 @router.post("/memory/chat_history")
 async def get_chat_history(

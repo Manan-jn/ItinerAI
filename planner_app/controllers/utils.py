@@ -1,5 +1,5 @@
-from ..schema.utils_schema import ConveyanceSchema
 from ..shared.sql_query import execute_sql_query
+from ..schema.utils_schema import ConveyanceSchema, StaySchema
 
 async def get_conveyances_controller(conveyance_details:ConveyanceSchema):
     try:
@@ -31,6 +31,22 @@ async def get_conveyances_controller(conveyance_details:ConveyanceSchema):
         """
         
         result = await execute_sql_query(sql_query_flights) + await execute_sql_query(sql_query_trains)
+        return result
+    except Exception as e:
+        print("Error in get_conveyance_controller: ", str(e))
+        return []
+    
+async def get_stays_controller(stay_details:StaySchema):
+    try:
+        sql_query = f"""
+        SELECT * 
+        FROM `itinerai-41751.hotelsdata.dectable`
+        WHERE
+            LOWER(city) = LOWER("{stay_details.city}")
+            AND available_from_date >= "{stay_details.from_date}"
+            AND available_until_date >= "{stay_details.to_date}"
+        """
+        result = await execute_sql_query(sql_query)
         return result
     except Exception as e:
         print("Error in get_conveyance_controller: ", str(e))

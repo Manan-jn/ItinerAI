@@ -7,7 +7,7 @@ from google.genai.types import GenerateContentConfig
 
 from . import prompt
 from .tools.memory import _set_initial_state
-from .tools.big_query import query_tool
+from .tools.big_query import conveyance_query_tool, stay_query_tool
 from .tools.memory import memorize
 from .tools.search import google_search_agent
 from .sub_agents.onboarding.agent import onboarding_agent
@@ -55,7 +55,26 @@ conveyance_agent = LlmAgent(
     ),
     tools=[
         memorize,
-        query_tool,
+        conveyance_query_tool,
+        AgentTool(agent=google_search_agent)
+    ],
+)
+
+stay_agent = LlmAgent(
+    name = "stay_agent",
+    description = "An agent that recommends the stay options",
+    model = "gemini-2.5-flash",
+    instruction = prompt.STAY_AGENT_INSTR,
+    output_key = "stay_agent",
+    disallow_transfer_to_parent=True,
+    disallow_transfer_to_peers=True,
+    after_agent_callback=[modify_state_callback],
+    generate_content_config = GenerateContentConfig(
+        temperature=0.3
+    ),
+    tools=[
+        memorize,
+        stay_query_tool,
         AgentTool(agent=google_search_agent)
     ],
 )

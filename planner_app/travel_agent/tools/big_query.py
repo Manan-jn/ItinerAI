@@ -12,6 +12,7 @@ from google.adk.tools.bigquery import BigQueryCredentialsConfig
 from google.cloud import bigquery
 
 from planner_app.shared.sql_query import execute_sql_query
+# from ...shared.sql_query import execute_sql_query
 
 dotenv.load_dotenv()
 
@@ -120,7 +121,7 @@ bigquery_tool = BigQueryToolset(
 
 client = bigquery.Client(project="itinerai-41751", credentials=credentials)
 
-async def query_tool(
+async def conveyance_query_tool(
     conveyance_type: Literal["flights", "trains"],
     departure_city: str,
     arrival_city: str,
@@ -164,8 +165,48 @@ async def query_tool(
             "response": result
         }
     except Exception as e:
-        print("Error in query_tool: ", str(e))
+        print("Error in conveyace_query_tool: ", str(e))
         return {"status": "error", "error": str(e)}
+    
+async def stay_query_tool(
+    city: str,
+    check_in_date: str,
+    check_out_date: str,
+) -> dict:
+    """
+    Tool to get records from the BigQuery Database.
+    
+    Args:
+        city (str): 
+            Name of the city.
+        check_in_date (str): 
+            Check-in date (in 'YYYY-MM-DD' format).
+        check_out_date (str): 
+            Check-out date (in 'YYYY-MM-DD' format).
+            
+    Returns:
+        dict:
+            Returns a dictionary containing 'status' & 'response' 
+    """
+    try:
+        QUERY = f"""
+        SELECT * 
+        FROM `itinerai-41751.hotelsdata.dectable`
+        WHERE
+            LOWER(city) = LOWER("{city}")
+            AND available_from_date >= "{check_in_date}"
+            AND available_until_date >= "{check_out_date}"
+        LIMIT 15
+        """
+        result = await execute_sql_query(QUERY)
+        return {
+            "status": "success",
+            "response": result
+        }
+    except Exception as e:
+        print("Error in stay_query_tool: ", str(e))
+        return {"status": "error", "error": str(e)}    
 
 
 # print(query_tool('trains', 'agra', 'new delhi', '2025-12-01', '2025-12-31'))
+# print(stay_query_tool('agra', '2025-12-01', '2025-12-03'))

@@ -4,7 +4,7 @@ from google.adk.tools.agent_tool import AgentTool
 from . import prompt
 from ...tools.memory import memorize
 from ...tools.search import google_search_agent
-from ...tools.big_query import query_tool
+from ...tools.big_query import conveyance_query_tool
 from ...tools.responses import modify_state_callback
 from ...tools.places import map_tool
 
@@ -21,7 +21,7 @@ origin_agent = LlmAgent(
     after_agent_callback=[modify_state_callback, map_tool],
     tools=[
         memorize,
-        query_tool,
+        conveyance_query_tool,
         AgentTool(agent=google_search_agent)
     ],
 )
