@@ -14,11 +14,17 @@ async def get_session(
     request: SessionSchema,
     session_service: SessionManager = Depends(get_session_service),
 ):
-    session = await session_service.get_session(request.session_id, request.user_id)
-    return JSONResponse(
-        status_code=200,
-        content=session.state,
-    )
+    try:
+        session = await session_service.get_session(request.session_id, request.user_id)
+        return JSONResponse(
+            status_code=200,
+            content=session.state,
+        )
+    except Exception as e: 
+        return JSONResponse(
+            status_code=500,
+            content=str(e)
+        )
 
 
 @router.post("/memory/add")

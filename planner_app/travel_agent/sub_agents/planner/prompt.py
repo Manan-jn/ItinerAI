@@ -47,7 +47,7 @@ Your role and goal is to help the user build a detailed itinerary, suitable flig
 </INSPIRATION>
 """
 
-SOURCE_AGENT_INSTR = """
+ORIGIN_AGENT_INSTR = """
 You are responsible to help the user figure out the start point to travel from considering the details about the user & selected destination provided in the <USER_PROFILE/> & <INSPIRATION/> blocks respectively.
 
 <USER_PROFILE>

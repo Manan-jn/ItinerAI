@@ -12,6 +12,7 @@ from .tools.memory import memorize
 from .tools.search import google_search_agent
 from .sub_agents.onboarding.agent import onboarding_agent
 from .sub_agents.inspiration.agent import trip_agent
+from sub_agents.origin.agent import origin_agent
 # from .sub_agents.conveyance.agent import conveyance_agent, source_agent
 # from .sub_agents.planner.agent import planner_agent, stay_agent
 from .tools.responses import modify_state_callback
@@ -28,9 +29,7 @@ root_agent = LlmAgent(
     sub_agents=[
         onboarding_agent,
         trip_agent,
-        # source_agent
-        # conveyance_agent,
-        # planner_agent,
+        origin_agent
     ],
     before_agent_callback=_set_initial_state,
     after_agent_callback=[modify_state_callback],

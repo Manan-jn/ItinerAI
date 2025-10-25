@@ -55,6 +55,12 @@ Return the response as a JSON object formatted like this:
             "from_city" str: "", (City where the day starts; ignore this key if 'is_required' is false)
             "to_city" str: "", (Destination city for that day; ignore this key if 'is_required' is false)
           }} (The conveyance details for the day)
+          "stay_details" dict: {{
+            "is_required" bool: "", 
+            "city" str: "", (City where the stay is required; ignore this key if 'is_required' is false)
+            "check_in_day" str: "", (The day number (e.g., 2) when the stay begins; corresponds to the itinerary's day_number),
+            "check_out_day" str: "", (The day number (e.g., 3) when the user checks out. This should be greater than or equal to check_in_day + 1)
+          }}
           "must_do_activities" List[MustDoActivity]: [
             {{
               "type" ENUM(place, activity, food, event, shopping, wellness, transport): "", (The type of the must do activity; use 'place' for a location of physical site, 'activity' for an action or experience, 'food' for a culinary experience, 'event' for a time-based experience or festival, eg. concerts, any shows or exhibitions, fairs, festivals etc. , 'shopping' for a place or experience centered on buying, 'wellness' for self-care or rejuvenating experience, 'transport' for a must do key travel or transfer experience)

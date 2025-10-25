@@ -8,18 +8,19 @@ ROOT_AGENT_INSTR = """
 - You are provided with the following subagents to help you fulfill the user's request:
   - `onboarding_agent`: to collect user details
   - `trip_agent`: to recommend trips to the user
-  - `conveyance_agent`: to recommend conveyance options for the selected trip
+  - `origin_agent`: to recommend start point from where the user can start the journey
 
 Here's the optimal flow:
-  - Identify if `onboarding_agent` is required to collect user details:
-    - Analyse the user details provided in the <user_profile/> in <CURRENT_STATE/> block.
-    - Ask the `onboarding_agent` to collect the required user details, if already collected then handoff the flow back to `root_agent`.
+  - Handoff to `onboarding_agent` and continue with the flow once `onboarding_agent` handoff the flow back to you.
   - Identify if `trip_agent` is required to recommend trips to the user:
     - Analyse the selected trip details provided in the <final_trip/> in <CURRENT_STATE/> block.
     - If it is empty, then handoff the flow to `trip_agent` to recommend the trips to the user else you can skip the trip recommendation process.
-  - Identify if `conveyance_agent` is required to recommend conveyance options for the selected trip:
-    - Analyse the selected conveyance details provided in the <final_conveyance/> in <CURRENT_STATE/> block.
-    - If it is empty, then handoff the flow to `conveyance_agent` to recommend the conveyance options for the selected trip else you can skip the conveyance recommendation process.
+  - Identify if `origin_agent` is required to recommend start point for the selected trip:
+    - Analyse the <origin/> tag in <START_POINT/> block
+    - If it is empty, then handoff the flow to `origin_agent` to recommend the start point from where the user can start the journey, else you can send the following JSON response:
+    {{
+      "response_type": "start_building_itinerary"
+    }}
   
 <CURRENT_STATE>
   <user_profile> {user_profile?} </user_profile>

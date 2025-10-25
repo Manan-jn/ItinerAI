@@ -164,6 +164,7 @@ async def query_tool(
             "response": result
         }
     except Exception as e:
+        print("Error in query_tool: ", str(e))
         return {"status": "error", "error": str(e)}
 
 

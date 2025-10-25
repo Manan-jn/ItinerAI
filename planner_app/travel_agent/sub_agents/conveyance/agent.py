@@ -2,22 +2,20 @@ from google.adk.agents import LlmAgent
 from google.genai.types import GenerateContentConfig
 from google.adk.tools.agent_tool import AgentTool
 
-
-
 from . import prompt
 from ...tools.memory import memorize
 from ...tools.search import google_search_agent
 from ...tools.big_query import query_tool
 from ...tools.responses import modify_state_callback
 from ...tools.places import map_tool
-from ...shared_libraries import Conveyances, SourceLocation
+# from ...shared_libraries import Conveyances, SourceLocation
 
 
 source_agent = LlmAgent(
     name = "source_agent",
     description = "An agent that recommends the optimal start point(s) from where the user can start the journey.",
     model = "gemini-2.5-pro",
-    instruction = prompt.SOURCE_AGENT_INSTR,
+    instruction = prompt.ORIGIN_AGENT_INSTR,
     output_key = "source_agent",
     # output_schema = SourceLocation,
     disallow_transfer_to_parent=True,

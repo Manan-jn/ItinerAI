@@ -80,49 +80,53 @@ class PlacesService:
 places_service = PlacesService()
 
 
-def _helper(data: Any):
-    if not (isinstance(data, (dict, list))):
-        return data
-    
-    if isinstance(data, list):
-        # print("data is a list: ", data)
-        for i in range(len(data)):
-            data[i] = _helper(data[i])
-    
-    if isinstance(data, dict):
-        # print("data is a dict: ", data)
-        for key, value in data.items():
-            data[key] = _helper(value)
+def map_helper(data: Any):
+    try:
+        if not (isinstance(data, (dict, list))):
+            return data
         
-        if data.get("place_name") or data.get("address"):
-            # Check if map_url is empty or None and we have place info to search with
-            if not data.get("map_url", None) or data.get("map_url") == "":
-                
-                search_query = ""
-                if data.get("place_name"):
-                    search_query += data["place_name"]
-                if data.get("address"):
-                    if search_query:
-                        search_query += ", "
-                    search_query += data["address"]
-                
-                if search_query:
-                    response = places_service.find_place_from_text(search_query)
+        if isinstance(data, list):
+            # print("data is a list: ", data)
+            for i in range(len(data)):
+                data[i] = map_helper(data[i])
+        
+        if isinstance(data, dict):
+            # print("data is a dict: ", data)
+            for key, value in data.items():
+                data[key] = map_helper(value)
+            
+            if data.get("place_name") or data.get("address"):
+                # Check if map_url is empty or None and we have place info to search with
+                if not data.get("map_url", None) or data.get("map_url") == "":
                     
+                    search_query = ""
+                    if data.get("place_name"):
+                        search_query += data["place_name"]
+                    if data.get("address"):
+                        if search_query:
+                            search_query += ", "
+                        search_query += data["address"]
+                    
+                    if search_query:
+                        response = places_service.find_place_from_text(search_query)
+                        
 
-                    if "error" not in response:
-                        data["map_url"] = response.get("map_url", "")
-                        data["lat"] = response.get("lat", 0.0)
-                        data["long"] = response.get("lng", 0.0)
-                        data["photos"] = response.get("photos", [])
-                        if "place_id" in response:
-                            data["place_id"] = response["place_id"]
-                    else:
-                        print(f"Error finding place: {response['error']}")
-        
-    return data
+                        if "error" not in response:
+                            data["map_url"] = response.get("map_url", "")
+                            data["lat"] = response.get("lat", 0.0)
+                            data["long"] = response.get("lng", 0.0)
+                            data["photos"] = response.get("photos", [])
+                            if "place_id" in response:
+                                data["place_id"] = response["place_id"]
+                        else:
+                            print(f"Error finding place: {response['error']}")
+            
+        return data
+    except Exception as e:
+        print("Error in map_helper: ", str(e))
+        return data
 
 def map_tool(callback_context: CallbackContext):
     state = callback_context.state.to_dict()
-    state = _helper(state)
+    state = map_helper(state)
     callback_context.state.update(state)

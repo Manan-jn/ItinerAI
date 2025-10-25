@@ -33,8 +33,8 @@ Your goal is to gather the following information:
 
 - Here's the optimal flow:
   - Analyse the current user details provided in the <USER_PROFILE/> block.
-  - Based on the current user details, check if all the 'Required' information mentioned above is present (if not, then gather the required information atleast):
-  - use `memorize` to update all the gathered information in the structured format discussed above.
+  - Based on the current user details, check if all the 'Required' information mentioned above is present, if already present then handoff the flow back to `root_agent` otherwise continue with the next step. 
+  - Gather the missing information naturally and use `memorize` to update all the gathered information in the structured format discussed above.
   - once all the required information is gathered, then only hand off the flow to back to the `root_agent`.
   - Strictly respond in the structured JSON format provided within the <RESPONSE_FORMAT/> block, do not deviate from the format.
 

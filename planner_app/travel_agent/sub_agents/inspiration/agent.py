@@ -2,7 +2,6 @@ from google.adk.agents import LlmAgent, SequentialAgent
 from google.adk.tools.agent_tool import AgentTool
 from google.genai.types import GenerateContentConfig
 
-
 from . import prompt
 from ...tools.memory import memorize
 from ...tools.places import map_tool

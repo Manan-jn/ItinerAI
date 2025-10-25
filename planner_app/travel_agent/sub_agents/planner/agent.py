@@ -14,7 +14,7 @@
 #     name = "source_agent",
 #     description = "An agent that gathers user preferences to figure out the source of the trip",
 #     model = "gemini-2.5-flash",
-#     instruction = prompt.SOURCE_AGENT_INSTR,
+#     instruction = prompt.ORIGIN_AGENT_INSTR,
 #     output_key = "origin",
 #     output_schema = SourceLocation,
 #     disallow_transfer_to_parent=True,
