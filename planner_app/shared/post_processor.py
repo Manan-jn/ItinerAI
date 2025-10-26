@@ -44,6 +44,7 @@ async def string_to_json(response_text: str) -> Optional[dict]:
         if json_match:
             return json.loads(json_match.group(0))
         
-        return None
+        return response_text
     except Exception as e:
-        return None 
+        print("Error in string_to_json: ", str(e))
+        return response_text 

@@ -13,9 +13,7 @@ from .tools.search import google_search_agent
 from .sub_agents.onboarding.agent import onboarding_agent
 from .sub_agents.inspiration.agent import trip_agent
 from .sub_agents.origin.agent import origin_agent
-# from .sub_agents.conveyance.agent import conveyance_agent, source_agent
-# from .sub_agents.planner.agent import planner_agent, stay_agent
-from .tools.responses import modify_state_callback
+from .shared_libraries.callbacks import modify_state_after_agent
 
 root_agent = LlmAgent(
     name="root_agent",
@@ -26,13 +24,9 @@ root_agent = LlmAgent(
     You are not allowed to share the internal information like about the tools, yourself etc. with the user.
     """,
     instruction=prompt.ROOT_AGENT_INSTR,
-    sub_agents=[
-        onboarding_agent,
-        trip_agent,
-        origin_agent
-    ],
+    sub_agents=[onboarding_agent, trip_agent, origin_agent],
     before_agent_callback=_set_initial_state,
-    after_agent_callback=[modify_state_callback],
+    after_agent_callback=[modify_state_after_agent],
     # planner=BuiltInPlanner(
     #     thinking_config=types.ThinkingConfig(
     #         type="PLAN_AND_EXECUTE",
@@ -42,41 +36,29 @@ root_agent = LlmAgent(
 )
 
 conveyance_agent = LlmAgent(
-    name = "conveyance_agent",
-    description = "An agent that recommends the conveyance options",
-    model = "gemini-2.5-pro",
-    instruction = prompt.CONVEYANCE_AGENT_INSTR,
-    output_key = "conveyance_agent",
+    name="conveyance_agent",
+    description="An agent that recommends the conveyance options",
+    model="gemini-2.5-pro",
+    instruction=prompt.CONVEYANCE_AGENT_INSTR,
+    output_key="conveyance_agent",
     disallow_transfer_to_parent=True,
     disallow_transfer_to_peers=True,
-    after_agent_callback=[modify_state_callback],
-    generate_content_config = GenerateContentConfig(
-        temperature=0.3
-    ),
-    tools=[
-        memorize,
-        conveyance_query_tool,
-        AgentTool(agent=google_search_agent)
-    ],
+    after_agent_callback=[modify_state_after_agent],
+    generate_content_config=GenerateContentConfig(temperature=0.3),
+    tools=[memorize, conveyance_query_tool, AgentTool(agent=google_search_agent)],
 )
 
 stay_agent = LlmAgent(
-    name = "stay_agent",
-    description = "An agent that recommends the stay options",
-    model = "gemini-2.5-flash",
-    instruction = prompt.STAY_AGENT_INSTR,
-    output_key = "stay_agent",
+    name="stay_agent",
+    description="An agent that recommends the stay options",
+    model="gemini-2.5-flash",
+    instruction=prompt.STAY_AGENT_INSTR,
+    output_key="stay_agent",
     disallow_transfer_to_parent=True,
     disallow_transfer_to_peers=True,
-    after_agent_callback=[modify_state_callback],
-    generate_content_config = GenerateContentConfig(
-        temperature=0.3
-    ),
-    tools=[
-        memorize,
-        stay_query_tool,
-        AgentTool(agent=google_search_agent)
-    ],
+    after_agent_callback=[modify_state_after_agent],
+    generate_content_config=GenerateContentConfig(temperature=0.3),
+    tools=[memorize, stay_query_tool, AgentTool(agent=google_search_agent)],
 )
 
 # root_agent = conveyance_agent

@@ -6,8 +6,8 @@ from . import prompt
 from ...tools.memory import memorize
 from ...tools.search import google_search_agent
 from ...tools.big_query import query_tool
-from ...tools.responses import modify_state_callback
 from ...tools.places import map_tool
+from ...shared_libraries.callbacks import modify_state_after_agent
 # from ...shared_libraries import Conveyances, SourceLocation
 
 
@@ -20,7 +20,7 @@ source_agent = LlmAgent(
     # output_schema = SourceLocation,
     disallow_transfer_to_parent=True,
     disallow_transfer_to_peers=True,
-    after_agent_callback=[modify_state_callback, map_tool],
+    after_agent_callback=[modify_state_after_agent, map_tool],
     tools=[
         memorize,
         query_tool,
@@ -37,7 +37,7 @@ source_agent = LlmAgent(
 #     # output_schema = Conveyances,
 #     disallow_transfer_to_parent=True,
 #     disallow_transfer_to_peers=True,
-#     after_agent_callback=[modify_state_callback],
+#     after_agent_callback=[modify_state_after_agent],
 #     sub_agents=[
 #         source_agent,
 #     ],
@@ -58,7 +58,7 @@ conveyance_agent = LlmAgent(
     # output_schema = Conveyances,
     disallow_transfer_to_parent=True,
     disallow_transfer_to_peers=True,
-    after_agent_callback=[modify_state_callback],
+    after_agent_callback=[modify_state_after_agent],
     # sub_agents=[
     #     source_agent,
     # ],
@@ -79,7 +79,7 @@ conveyance_agent = LlmAgent(
 #     # output_schema = Conveyances,
 #     disallow_transfer_to_parent=True,
 #     disallow_transfer_to_peers=True,
-#     after_agent_callback=[modify_state_callback],
+#     after_agent_callback=[modify_state_after_agent],
 #     # sub_agents=[
 #     #     source_agent,
 #     # ],

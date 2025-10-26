@@ -105,7 +105,7 @@ async def map_helper(data: Any):
                         search_query += data["address"]
                     
                     if search_query:
-                        response = places_service.find_place_from_text(search_query)
+                        response = await places_service.find_place_from_text(search_query)
                         
 
                         if "error" not in response:
