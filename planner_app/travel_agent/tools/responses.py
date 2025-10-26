@@ -4,9 +4,9 @@ from typing import Any
 
 from planner_app.shared.post_processor import string_to_json
 
-def state_update_helper(data: Any) -> Any:
+async def state_update_helper(data: Any) -> Any:
     try:
-        if isinstance(data, str) and (_data:=string_to_json(data)):
+        if isinstance(data, str) and (_data:=await string_to_json(data)):
             data = _data
             
         if not (isinstance(data, (dict, list))):
@@ -14,18 +14,18 @@ def state_update_helper(data: Any) -> Any:
         
         if isinstance(data, list):
             for i in range(len(data)):
-                data[i] = state_update_helper(data[i])
+                data[i] = await state_update_helper(data[i])
                 
         if isinstance(data, dict):
             for key, value in data.items():
-                data[key] = state_update_helper(value)
+                data[key] = await state_update_helper(value)
                 
         return data
     except Exception as e:
         print("Error in state_update_helper: ", str(e))
         return data
             
-def modify_state_callback(callback_context: CallbackContext) -> None:
+async def modify_state_callback(callback_context: CallbackContext) -> None:
     """
     Modfiy the state of the callback context with the string responses to JSON responses if possible.
     """
@@ -33,7 +33,7 @@ def modify_state_callback(callback_context: CallbackContext) -> None:
     agent_name = callback_context.agent_name
     invocation_id = callback_context.invocation_id
     current_state = callback_context.state.to_dict()
-    updated_state = state_update_helper(current_state)
+    updated_state = await state_update_helper(current_state)
     callback_context.state.update(updated_state)
     
     # if agent_response_json:

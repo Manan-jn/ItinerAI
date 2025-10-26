@@ -9,7 +9,8 @@ class SessionManager:
         self.app_name = "planner_ai"
 
     async def get_session(self, session_id: str, user_id: str) -> Session:
-        if existing := await self.session_service.get_session(
+        
+        if existing:=await self.session_service.get_session(
             app_name=self.app_name,
             user_id=user_id,
             session_id=session_id,

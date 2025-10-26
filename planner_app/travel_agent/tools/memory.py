@@ -5,13 +5,13 @@ from google.adk.tools import ToolContext
 from ..shared_libraries import State
 from planner_app.shared.post_processor import merge_dict_intelligently
 
-def _set_initial_state(callback_context: CallbackContext):
+async def _set_initial_state(callback_context: CallbackContext):
     items = State.model_fields.items()
     for key, value in items:
         if key not in callback_context.state:
             callback_context.state.update({key: value.default})
     
-def memorize(data: dict[str, Any], tool_context: ToolContext):
+async def memorize(data: dict[str, Any], tool_context: ToolContext):
     """
     Memorize pieces of information into the state with intelligent merging.
     
@@ -35,7 +35,7 @@ def memorize(data: dict[str, Any], tool_context: ToolContext):
         for key, value in data.items():
             if key in current_state:
                 current_data = current_state[key]
-                merged_data = merge_dict_intelligently(current_data, value)
+                merged_data = await merge_dict_intelligently(current_data, value)
                 current_state[key] = merged_data
             else:
                 current_state[key] = value

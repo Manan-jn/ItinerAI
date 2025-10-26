@@ -31,7 +31,7 @@ async def merge_dict_intelligently(existing: Dict[str, Any], new: Dict[str, Any]
         raise e 
         
 
-def string_to_json(response_text: str) -> Optional[dict]:
+async def string_to_json(response_text: str) -> Optional[dict]:
     """Extract JSON from markdown code blocks."""
     # Try to find JSON in code blocks first
     try:

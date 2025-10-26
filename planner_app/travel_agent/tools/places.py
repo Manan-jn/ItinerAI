@@ -9,17 +9,17 @@ dotenv.load_dotenv('../../../.env')
 
 class PlacesService:
 
-    def _check_key(self):
+    async def _check_key(self):
         if (
             not hasattr(self, "places_api_key") or not self.places_api_key
         ):  # Either it doesn't exist or is None.
             # https://developers.google.com/maps/documentation/places/web-service/get-api-key
             self.places_api_key = os.getenv("GOOGLE_PLACES_API_KEY")
 
-    def find_place_from_text(self, query: str) -> Dict[str, str]:
+    async def find_place_from_text(self, query: str) -> Dict[str, str]:
         """Fetches place details using a text query."""
         print("finding place from text: ", query)
-        self._check_key()
+        await self._check_key()
         places_url = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json"
         params = {
             "input": query,
@@ -77,7 +77,7 @@ class PlacesService:
 
 places_service = PlacesService()
 
-def map_helper(data: Any):
+async def map_helper(data: Any):
     try:
         if not (isinstance(data, (dict, list))):
             return data
@@ -85,12 +85,12 @@ def map_helper(data: Any):
         if isinstance(data, list):
             # print("data is a list: ", data)
             for i in range(len(data)):
-                data[i] = map_helper(data[i])
+                data[i] = await map_helper(data[i])
         
         if isinstance(data, dict):
             # print("data is a dict: ", data)
             for key, value in data.items():
-                data[key] = map_helper(value)
+                data[key] = await map_helper(value)
             
             if data.get("place_name") or data.get("address"):
                 # Check if map_url is empty or None and we have place info to search with
@@ -123,7 +123,7 @@ def map_helper(data: Any):
         print("Error in map_helper: ", str(e))
         return data
 
-def map_tool(callback_context: CallbackContext):
+async def map_tool(callback_context: CallbackContext):
     state = callback_context.state.to_dict()
-    state = map_helper(state)
+    state = await map_helper(state)
     callback_context.state.update(state)

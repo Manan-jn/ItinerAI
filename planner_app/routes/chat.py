@@ -16,7 +16,7 @@ router = APIRouter()
 async def chat(
     request: ChatRequest, session_service: SessionManager = Depends(get_session_service)
 ):
-    try:
+    # try:
         runner = Runner(
             app_name="planner_ai",
             agent=root_agent,
@@ -35,7 +35,8 @@ async def chat(
                 if event.content and event.content.parts:
                     final_text = event.content.parts[0].text
 
-        final_json_text = string_to_json(final_text)
+        # print(final_text)
+        final_json_text = await string_to_json(final_text)
 
         return JSONResponse(
             status_code=200,
@@ -45,8 +46,9 @@ async def chat(
                 "message": final_json_text or final_text or "",
             },
         )
-    except Exception as e:
-        return JSONResponse(status_code=500, content=str(e))
+    # except Exception as e:
+    #     print(e)
+    #     return JSONResponse(status_code=500, content=str(e))
 
 
 @router.post("/agents/conveyance")
@@ -72,7 +74,7 @@ async def chat(
                 if event.content and event.content.parts:
                     final_text = event.content.parts[0].text
 
-        final_json_text = string_to_json(final_text)
+        final_json_text = await string_to_json(final_text)
         return JSONResponse(
             status_code=200,
             content={
@@ -108,7 +110,7 @@ async def chat(
                 if event.content and event.content.parts:
                     final_text = event.content.parts[0].text
 
-        final_json_text = string_to_json(final_text)
+        final_json_text = await string_to_json(final_text)
         return JSONResponse(
             status_code=200,
             content={
