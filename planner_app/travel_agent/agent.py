@@ -47,6 +47,12 @@ conveyance_agent = LlmAgent(
     after_agent_callback=[modify_state_after_agent],
     generate_content_config=GenerateContentConfig(temperature=0.3),
     tools=[memorize, conveyance_query_tool, AgentTool(agent=google_search_agent)],
+    planner=BuiltInPlanner(
+        thinking_config=ThinkingConfig(
+            include_thoughts=True,
+            # thinking_budget=2048
+        )
+    )
 )
 
 stay_agent = LlmAgent(
@@ -60,6 +66,12 @@ stay_agent = LlmAgent(
     after_agent_callback=[modify_state_after_agent],
     generate_content_config=GenerateContentConfig(temperature=0.3),
     tools=[memorize, stay_query_tool, AgentTool(agent=google_search_agent)],
+    planner=BuiltInPlanner(
+        thinking_config=ThinkingConfig(
+            include_thoughts=True,
+            # thinking_budget=2048
+        )
+    )
 )
 
 itinerary_agent = LlmAgent(
@@ -73,6 +85,12 @@ itinerary_agent = LlmAgent(
     after_agent_callback=[modify_state_after_agent],
     generate_content_config=GenerateContentConfig(temperature=0.3),
     tools=[AgentTool(agent=google_search_agent)],
+    planner=BuiltInPlanner(
+        thinking_config=ThinkingConfig(
+            include_thoughts=True,
+            # thinking_budget=2048
+        )
+    )
 )
 # root_agent = itinerary_agent
 # root_agent = conveyance_agent

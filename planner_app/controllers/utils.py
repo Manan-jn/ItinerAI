@@ -34,7 +34,10 @@ async def get_conveyances_controller(conveyance_details:ConveyanceSchema):
                 "{conveyance_details.to_date}"
         """
         
-        result = await execute_sql_query(sql_query_flights) + await execute_sql_query(sql_query_trains)
+        if conveyance_details.conveyance_type == "flights":
+            result = await execute_sql_query(sql_query_flights)
+        else:
+            result = await execute_sql_query(sql_query_trains)
         return result
     except Exception as e:
         print("Error in get_conveyance_controller: ", str(e))
