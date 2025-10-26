@@ -1,5 +1,7 @@
 from google.adk.agents import LlmAgent
 from google.adk.tools.agent_tool import AgentTool
+from google.genai.types import ThinkingConfig
+from google.adk.planners import BuiltInPlanner
 
 from . import prompt
 from ...tools.memory import memorize
@@ -20,4 +22,9 @@ origin_agent = LlmAgent(
     disallow_transfer_to_peers=True,
     after_agent_callback=[modify_state_after_agent, map_tool],
     tools=[memorize, conveyance_query_tool, AgentTool(agent=google_search_agent)],
+    planner=BuiltInPlanner(
+        thinking_config=ThinkingConfig(
+            include_thoughts=True
+        )
+    )
 )

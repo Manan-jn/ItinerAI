@@ -11,7 +11,10 @@ from google.adk.tools.bigquery.config import WriteMode
 from google.adk.tools.bigquery import BigQueryCredentialsConfig
 from google.cloud import bigquery
 
-from planner_app.shared.sql_query import execute_sql_query
+import os 
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
+from shared.sql_query import execute_sql_query
 # from ...shared.sql_query import execute_sql_query
 
 dotenv.load_dotenv()

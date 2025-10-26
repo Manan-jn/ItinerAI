@@ -1,10 +1,11 @@
 from google.adk.agents import LlmAgent
+from google.genai.types import GenerateContentConfig, ThinkingConfig
+from google.adk.planners import BuiltInPlanner
 
-# from google.genai.types import GenerateContentConfig
 
 from . import prompt
 from ...tools.memory import memorize
-from ...shared_libraries.callbacks import modify_state_after_agent
+from ...shared_libraries.callbacks import modify_state_after_agent, logger_before_agent
 
 # from ...shared_libraries import OnboardingAgent
 
@@ -15,11 +16,18 @@ onboarding_agent = LlmAgent(
     output_key="onboarding_agent",
     # output_schema = OnboardingAgent,
     instruction=prompt.ONBOARDING_AGENT_INSTR,
-    disallow_transfer_to_parent=True,
-    disallow_transfer_to_peers=True,
+    disallow_transfer_to_parent=False,
+    disallow_transfer_to_peers=False,
+    before_agent_callback=[logger_before_agent],
     after_agent_callback=[modify_state_after_agent],
-    # generate_content_config = GenerateContentConfig(
-    #     response_mime_type = "application/json"
-    # ),
+    planner=BuiltInPlanner(
+        thinking_config=ThinkingConfig(
+            include_thoughts=True
+        )
+    ),
+    generate_content_config=GenerateContentConfig(
+        # response_mime_type = "application/json"
+        temperature=0.3
+    ),
     tools=[memorize],
 )

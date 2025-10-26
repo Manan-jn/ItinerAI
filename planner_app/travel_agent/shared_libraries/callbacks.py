@@ -2,7 +2,11 @@ import json
 from google.adk.agents.callback_context import CallbackContext
 from google.genai import types
 from typing import Optional, Any
-from planner_app.shared.post_processor import string_to_json
+
+import os 
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
+from shared.post_processor import string_to_json
 
 async def _state_update_helper(data: Any) -> Any:
     try:
@@ -24,6 +28,14 @@ async def _state_update_helper(data: Any) -> Any:
     except Exception as e:
         print("Error in _state_update_helper: ", str(e))
         return data
+
+async def logger_before_agent(callback_context: CallbackContext) -> None:
+    try:
+        agent_name = callback_context.agent_name
+        invocation_id = callback_context.invocation_id
+        print(f"Agent {agent_name} with invocation id {invocation_id} is starting execution.")
+    except Exception as e:
+        print("Error in logger_before_agent: ", str(e))
 
 async def modify_output_after_agent(callback_context: CallbackContext) -> Optional[types.Content]:
     try:

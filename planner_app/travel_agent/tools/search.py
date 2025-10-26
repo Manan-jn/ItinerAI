@@ -80,7 +80,7 @@ from ..sub_agents.logger import logging_callback
 #         current_state["google_search_summary"] = [response]
 
 google_search_agent = LlmAgent(
-        model="gemini-2.5-pro",
+        model="gemini-2.5-flash",
         name="google_search_agent",
         description="An agent providing Google-search results capability",
         instruction="""  

@@ -5,7 +5,11 @@ from google.adk.events import Event, EventActions
 from ..models import SessionManager
 from ..schema.session_schema import SessionSchema, AddMemorySchema, DeleteMemorySchema
 from ..common import get_session_service
-from ..shared.post_processor import merge_dict_intelligently
+
+import os 
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
+from shared.post_processor import merge_dict_intelligently
 
 router = APIRouter()
 

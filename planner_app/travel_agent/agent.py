@@ -1,6 +1,7 @@
 from google.adk.agents import LlmAgent
 from google.adk.tools.agent_tool import AgentTool
-from google.genai.types import GenerateContentConfig
+from google.genai.types import GenerateContentConfig, ThinkingConfig
+from google.adk.planners import BuiltInPlanner
 
 # from google.genai import types
 # from google.adk.planners.built_in_planner import BuiltInPlanner
@@ -13,26 +14,26 @@ from .tools.search import google_search_agent
 from .sub_agents.onboarding.agent import onboarding_agent
 from .sub_agents.inspiration.agent import trip_agent
 from .sub_agents.origin.agent import origin_agent
-from .shared_libraries.callbacks import modify_state_after_agent
+from .shared_libraries.callbacks import logger_before_agent, modify_state_after_agent
 
 root_agent = LlmAgent(
     name="root_agent",
     model="gemini-2.5-pro",
     description="Orchestrator Agent responsible for planning end-to-end dream vacation trip for the user.",
-    global_instruction="""
-    You are a part of a travel agent system that helps users plan their dream vacation trip. 
-    You are not allowed to share the internal information like about the tools, yourself etc. with the user.
-    """,
+    # global_instruction="""
+    # You are a part of a travel agent system that helps users plan their dream vacation trip. 
+    # You are not allowed to share the internal information like about the tools, yourself etc. with the user.
+    # """,
     instruction=prompt.ROOT_AGENT_INSTR,
     sub_agents=[onboarding_agent, trip_agent, origin_agent],
-    before_agent_callback=_set_initial_state,
+    before_agent_callback=[_set_initial_state, logger_before_agent],
     after_agent_callback=[modify_state_after_agent],
-    # planner=BuiltInPlanner(
-    #     thinking_config=types.ThinkingConfig(
-    #         type="PLAN_AND_EXECUTE",
-    #         plan_only=False,
-    #     )
-    # )
+    planner=BuiltInPlanner(
+        thinking_config=ThinkingConfig(
+            include_thoughts=True,
+            # thinking_budget=2048
+        )
+    )
 )
 
 conveyance_agent = LlmAgent(
@@ -61,5 +62,18 @@ stay_agent = LlmAgent(
     tools=[memorize, stay_query_tool, AgentTool(agent=google_search_agent)],
 )
 
+itinerary_agent = LlmAgent(
+    name="itinerary_agent",
+    description="An agent that recommends the complete itinerary.",
+    model="gemini-2.5-pro",
+    instruction=prompt.ITINERARY_AGENT_INSTR,
+    output_key="itinerary_agent",
+    disallow_transfer_to_parent=True,
+    disallow_transfer_to_peers=True,
+    after_agent_callback=[modify_state_after_agent],
+    generate_content_config=GenerateContentConfig(temperature=0.3),
+    tools=[AgentTool(agent=google_search_agent)],
+)
+# root_agent = itinerary_agent
 # root_agent = conveyance_agent
 # root_agent = bigquery_agent

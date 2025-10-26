@@ -7,7 +7,11 @@ from ..common import get_session_service
 from ..schema import ChatRequest, ChatResponse
 from ..models import SessionManager
 from ..travel_agent import root_agent, conveyance_agent, stay_agent
-from ..shared.post_processor import string_to_json
+
+import os 
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
+from shared.post_processor import string_to_json
 
 router = APIRouter()
 

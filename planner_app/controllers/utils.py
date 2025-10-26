@@ -1,5 +1,9 @@
-from ..shared.sql_query import execute_sql_query
 from ..schema.utils_schema import ConveyanceSchema, StaySchema
+
+import os 
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
+from shared.sql_query import execute_sql_query
 
 async def get_conveyances_controller(conveyance_details:ConveyanceSchema):
     try:

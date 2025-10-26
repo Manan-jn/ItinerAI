@@ -3,7 +3,11 @@ from google.adk.agents.callback_context import CallbackContext
 from google.adk.tools import ToolContext 
 
 from ..shared_libraries import State
-from planner_app.shared.post_processor import merge_dict_intelligently
+
+import os 
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
+from shared.post_processor import merge_dict_intelligently
 
 async def _set_initial_state(callback_context: CallbackContext):
     items = State.model_fields.items()

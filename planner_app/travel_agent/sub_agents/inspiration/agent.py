@@ -8,6 +8,7 @@ from ...tools.places import map_tool
 from ...tools.search import google_search_agent
 from ...shared_libraries import TripSuggestions, POISuggestions
 from ...shared_libraries.callbacks import (
+    logger_before_agent,
     modify_state_after_agent,
     modify_output_after_agent,
 )
@@ -24,6 +25,7 @@ trip_agent = LlmAgent(
     # generate_content_config = GenerateContentConfig(
     #     response_mime_type = "application/json"
     # ),
+    before_agent_callback=[logger_before_agent],
     after_agent_callback=[
         modify_state_after_agent,
         map_tool,
