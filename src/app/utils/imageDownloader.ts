@@ -15,38 +15,60 @@ class ImageDownloader {
   private downloadQueue: Set<string> = new Set();
 
   /**
+   * Helper function to convert Google Places photo URL to proxy URL
+   */
+  private convertToProxyUrl(url: string): string {
+    if (!url.includes('maps.googleapis.com/maps/api/place/photo')) {
+      return url;
+    }
+    
+    try {
+      const urlObj = new URL(url);
+      const photoReference = urlObj.searchParams.get('photoreference');
+      if (!photoReference) return url;
+      
+      return `/api/place-photo?photoreference=${photoReference}&maxwidth=400`;
+    } catch {
+      return url;
+    }
+  }
+
+  /**
    * Download a single image and cache it
    */
   async downloadImage(url: string): Promise<string> {
+    // Convert Google Places URLs to proxy URLs
+    const processedUrl = this.convertToProxyUrl(url);
+    
     // Check if already cached
-    if (this.cache.has(url)) {
-      return this.cache.get(url)!.objectUrl;
+    if (this.cache.has(processedUrl)) {
+      return this.cache.get(processedUrl)!.objectUrl;
     }
 
     // Check if already downloading
-    if (this.downloadQueue.has(url)) {
+    if (this.downloadQueue.has(processedUrl)) {
       // Wait for download to complete
       return new Promise((resolve, reject) => {
         const checkInterval = setInterval(() => {
-          if (this.cache.has(url)) {
+          if (this.cache.has(processedUrl)) {
             clearInterval(checkInterval);
-            resolve(this.cache.get(url)!.objectUrl);
+            resolve(this.cache.get(processedUrl)!.objectUrl);
           }
         }, 100);
 
         // Timeout after 30 seconds
         setTimeout(() => {
           clearInterval(checkInterval);
-          reject(new Error(`Timeout downloading image: ${url}`));
+          reject(new Error(`Timeout downloading image: ${processedUrl}`));
         }, 30000);
       });
     }
 
     try {
-      this.downloadQueue.add(url);
-      console.log(`Downloading image: ${url.substring(0, 100)}...`);
+      this.downloadQueue.add(processedUrl);
+      console.log(`Downloading image: ${processedUrl.substring(0, 100)}...`);
 
-      const response = await fetch(url, {
+      const response = await fetch(processedUrl, {
         method: 'GET',
         mode: 'cors',
         cache: 'force-cache',
@@ -60,20 +82,20 @@ class ImageDownloader {
       const objectUrl = URL.createObjectURL(blob);
 
       const downloadedImage: DownloadedImage = {
-        originalUrl: url,
+        originalUrl: url, // Keep original URL for reference
         localPath: objectUrl,
         blob,
         objectUrl,
       };
 
-      this.cache.set(url, downloadedImage);
-      this.downloadQueue.delete(url);
+      this.cache.set(processedUrl, downloadedImage);
+      this.downloadQueue.delete(processedUrl);
 
-      console.log(`Successfully downloaded image: ${url.substring(0, 100)}...`);
+      console.log(`Successfully downloaded image: ${processedUrl.substring(0, 100)}...`);
       return objectUrl;
     } catch (error) {
-      this.downloadQueue.delete(url);
-      console.error(`Error downloading image ${url}:`, error);
+      this.downloadQueue.delete(processedUrl);
+      console.error(`Error downloading image ${processedUrl}:`, error);
       throw error;
     }
   }
@@ -121,7 +143,9 @@ class ImageDownloader {
    * Get cached image URL
    */
   getCachedImage(url: string): string | null {
-    const cached = this.cache.get(url);
+    // Convert Google Places URLs to proxy URLs for cache lookup
+    const processedUrl = this.convertToProxyUrl(url);
+    const cached = this.cache.get(processedUrl);
     return cached ? cached.objectUrl : null;
   }
 

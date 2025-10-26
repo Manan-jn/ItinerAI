@@ -1,28 +1,12 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { FiChevronDown, FiUser, FiCalendar } from "react-icons/fi";
-import {
-  MdFlight,
-  MdHotel,
-  MdTrain,
-  MdDirectionsBus,
-  MdBeachAccess,
-  MdLocalTaxi,
-  MdLocalActivity,
-  MdCardGiftcard,
-  MdHome,
-  MdExplore,
-  MdBook,
-  MdPeople,
-  MdChat,
-} from "react-icons/md";
+import { useRouter } from "next/navigation";
+import { MdChat, MdExplore } from "react-icons/md";
 import { useAuth } from "../../contexts/AuthContext";
-import Dashboard from "../../components/Dashboard";
 import SessionDebugFlights from "../../components/SessionDebugFlights";
 import FlashcardsWidgetWhiteTheme from "../../components/FlashcardsWidgetWhiteTheme";
-import { FlashcardsWidgetRef } from "../../components/FlashcardsWidget";
+import type { FlashcardsWidgetRef } from "../../components/flashcards/types";
 import FlightsWidget from "../../components/FlightsWidget";
 import ItineraryWidget from "../../components/ItineraryWidget";
 import DateSelectorWidget from "../../components/DateSelectorWidget";
@@ -33,6 +17,12 @@ import {
   extractImageUrls,
   validateAndPopulateTripData,
 } from "../../utils/imageDownloader";
+// New component imports
+import { Sidebar } from "../../components/flights-page/Sidebar";
+import { DashboardContent } from "../../components/flights-page/DashboardContent";
+import { FlightsContent } from "../../components/flights-page/FlightsContent";
+import { TripLoader } from "../../components/flights-page/TripLoader";
+import { ChatNavbar } from "../../components/flights-page/ChatNavbar";
 
 type SectionType =
   | "flights"
@@ -145,72 +135,7 @@ export default function FlightsPageAuthenticated() {
     });
   };
 
-  // Sample data for dashboard
-  const upcomingTrips = [
-    {
-      id: 1,
-      from: "Kuala Lumpur - Ipoh",
-      country: "Malaysia",
-      image: "🏙️",
-      date: "29 Dec",
-      duration: "12 Days",
-      budget: "$1,200",
-      travelers: ["👤", "👤"],
-    },
-    {
-      id: 2,
-      from: "Sapa - Ninh Binh",
-      country: "Vietnam",
-      image: "🏞️",
-      date: "24 Nov",
-      duration: "12 Days",
-      budget: "$890",
-      travelers: ["👤", "👤"],
-    },
-  ];
-
-  const malaysiaPlaces = [
-    {
-      id: 1,
-      name: "Central Market - Kuala Lumpur",
-      description:
-        "A vibrant cultural landmark offering local crafts, souvenirs, and M...",
-      rating: 4.5,
-      reviews: 47,
-      guide: "Nita",
-      tags: ["Shopping", "Souvenirs", "Culture"],
-      image: "🏪",
-    },
-    {
-      id: 2,
-      name: "Merdeka Square - Kuala Lumpur",
-      description:
-        "An iconic historic site surrounded by colonial buildings and the fa...",
-      rating: 4.6,
-      reviews: 53,
-      guide: "El Primo",
-      tags: ["History", "Architecture", "Photography"],
-      image: "🏛️",
-    },
-  ];
-
-  const friendsLocations = [
-    { name: "Shelly A.", location: "Japan", lat: 35, lng: 60 },
-    { name: "Edgar P.", location: "Argentina", lat: 20, lng: 30 },
-  ];
-
-  const quickActions = [
-    { icon: "✈️", label: "Check flight status" },
-    { icon: "🏨", label: "Recommend hotels nearby" },
-    { icon: "🔄", label: "Build my itinerary" },
-    { icon: "💱", label: "Currency exchange info" },
-  ];
-
-  const [dashboardChatInput, setDashboardChatInput] = useState("");
-  const [convertAmount, setConvertAmount] = useState("1500");
-  const [fromCurrency, setFromCurrency] = useState("USD");
-  const [toCurrency, setToCurrency] = useState("EUR");
-  const [convertedAmount, setConvertedAmount] = useState("1275.53");
+  // No need for dashboard data here anymore - it's in DashboardData.ts
 
   // Chat functions
   const scrollToBottom = () => {
@@ -904,233 +829,7 @@ export default function FlightsPageAuthenticated() {
     "Family vacation ideas for summer",
   ];
 
-  // Enhanced Trip Loader Component with better messaging and animations
-  const TripLoader = () => {
-    const [currentMessage, setCurrentMessage] = useState("");
-    const [currentSubMessage, setCurrentSubMessage] = useState("");
-    const [isVisible, setIsVisible] = useState(true);
-    const [messageIndex, setMessageIndex] = useState(0);
-
-    const loadingMessages = [
-      {
-        main: "Analyzing your travel preferences",
-        sub: "Understanding what makes your perfect trip",
-      },
-      {
-        main: "Discovering amazing destinations",
-        sub: "Finding places that match your interests",
-      },
-      {
-        main: "Crafting personalized itineraries",
-        sub: "Creating experiences you'll never forget",
-      },
-      {
-        main: "Curating the perfect journey",
-        sub: "Tailoring everything just for you",
-      },
-      {
-        main: "Finding hidden gems",
-        sub: "Uncovering destinations off the beaten path",
-      },
-    ];
-
-    React.useEffect(() => {
-      if (showTripLoader) {
-        console.log(
-          "🎯 TripLoader: Showing loader - setting visibility to true"
-        );
-        setIsVisible(true);
-
-        // Set initial message
-        const initialMessage =
-          loadingMessages[Math.floor(Math.random() * loadingMessages.length)];
-        setCurrentMessage(initialMessage.main);
-        setCurrentSubMessage(initialMessage.sub);
-        setMessageIndex(0);
-
-        // Cycle through messages every 2.5 seconds
-        const messageInterval = setInterval(() => {
-          setMessageIndex((prev) => {
-            const nextIndex = (prev + 1) % loadingMessages.length;
-            setCurrentMessage(loadingMessages[nextIndex].main);
-            setCurrentSubMessage(loadingMessages[nextIndex].sub);
-            return nextIndex;
-          });
-        }, 2500);
-
-        return () => clearInterval(messageInterval);
-      } else {
-        console.log("🎯 TripLoader: Hiding loader - starting dissolve");
-        // allow a smooth dissolve before unmounting
-        const t = setTimeout(() => {
-          setIsVisible(false);
-          console.log("🎯 TripLoader: Loader fully dissolved");
-        }, 650);
-        return () => clearTimeout(t);
-      }
-    }, [showTripLoader]);
-
-    if (!showTripLoader && !isVisible) {
-      return null;
-    }
-
-    return (
-      <div
-        className={`absolute inset-0 z-50 bg-white flex items-center justify-center transition-all duration-700 ease-out ${
-          showTripLoader && isVisible
-            ? "opacity-100 pointer-events-auto"
-            : "opacity-0 pointer-events-none"
-        }`}
-        style={{
-          background:
-            "linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #ffffff 100%)",
-        }}
-      >
-        {/* Loading Animation Background */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -inset-10 opacity-20">
-            <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-100 rounded-full mix-blend-multiply filter blur-xl animate-blob"></div>
-            <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-purple-100 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-2000"></div>
-            <div className="absolute bottom-1/4 left-1/2 w-64 h-64 bg-pink-100 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-4000"></div>
-          </div>
-        </div>
-
-        <div className="relative text-center px-6 max-w-md">
-          {/* Main Icon */}
-          <div className="mb-6 relative">
-            <div className="w-16 h-16 mx-auto bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg animate-float">
-              <svg
-                className="w-8 h-8 text-white"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                />
-              </svg>
-            </div>
-            {/* Pulsing ring */}
-            <div className="absolute inset-0 w-16 h-16 mx-auto border-4 border-blue-200 rounded-2xl animate-ping opacity-20"></div>
-          </div>
-
-          {/* Main Message */}
-          <p className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 mb-2 animate-text-reveal">
-            {currentMessage}
-          </p>
-
-          {/* Sub Message */}
-          <p className="text-base text-gray-600 mb-6 animate-subtle-fade">
-            {currentSubMessage}
-          </p>
-
-          {/* Progress Dots */}
-          <div className="flex justify-center space-x-2 mb-4">
-            {[0, 1, 2].map((i) => (
-              <div
-                key={i}
-                className={`w-2 h-2 rounded-full transition-all duration-500 ${
-                  i === messageIndex % 3
-                    ? "bg-blue-500 scale-125"
-                    : "bg-gray-300"
-                }`}
-                style={{
-                  animationDelay: `${i * 200}ms`,
-                }}
-              />
-            ))}
-          </div>
-
-          {/* Status Text */}
-          <p className="text-sm text-gray-500 animate-pulse">
-            This may take a few moments...
-          </p>
-        </div>
-
-        <style jsx>{`
-          @keyframes text-reveal {
-            0% {
-              opacity: 0;
-              transform: translateY(10px);
-              letter-spacing: 0.5px;
-            }
-            100% {
-              opacity: 1;
-              transform: translateY(0);
-              letter-spacing: 0;
-            }
-          }
-
-          @keyframes subtle-fade {
-            0% {
-              opacity: 0;
-              transform: translateY(5px);
-            }
-            100% {
-              opacity: 1;
-              transform: translateY(0);
-            }
-          }
-
-          @keyframes float {
-            0%,
-            100% {
-              transform: translateY(0px);
-            }
-            50% {
-              transform: translateY(-10px);
-            }
-          }
-
-          @keyframes blob {
-            0%,
-            100% {
-              transform: translate(0px, 0px) scale(1);
-            }
-            33% {
-              transform: translate(30px, -50px) scale(1.1);
-            }
-            66% {
-              transform: translate(-20px, 20px) scale(0.9);
-            }
-          }
-
-          .animate-text-reveal {
-            animation: text-reveal 800ms cubic-bezier(0.22, 1, 0.36, 1) both;
-          }
-
-          .animate-subtle-fade {
-            animation: subtle-fade 1000ms ease-out 300ms both;
-          }
-
-          .animate-float {
-            animation: float 3s ease-in-out infinite;
-          }
-
-          .animate-blob {
-            animation: blob 7s infinite;
-          }
-
-          .animation-delay-2000 {
-            animation-delay: 2s;
-          }
-
-          .animation-delay-4000 {
-            animation-delay: 4s;
-          }
-        `}</style>
-      </div>
-    );
-  };
+  // TripLoader component moved to separate file
 
   if (!currentUser) {
     return null; // This shouldn't happen due to the parent component's validation
@@ -1139,1073 +838,113 @@ export default function FlightsPageAuthenticated() {
   return (
     <div className="h-screen bg-white flex overflow-hidden">
       {/* Left Sidebar */}
-      <aside className="w-52 bg-white border-r border-gray-200 flex flex-col flex-shrink-0">
-        {/* Logo */}
-        <div className="p-4 border-b border-gray-200">
-          <div className="flex items-center">
-            <MdFlight className="text-blue-500 text-2xl transform rotate-45" />
-            <div className="ml-2">
-              <div className="text-blue-600 font-bold text-base leading-tight">
-                ItinerAI
-              </div>
-              <div className="text-[8px] text-gray-500 -mt-0.5">
-                Your AI Travel Companion
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Sidebar Header - Clean */}
-        <div className="p-4 border-b border-gray-200">
-          <div className="h-4"></div>
-        </div>
-
-        {/* Navigation */}
-        <div className="flex-1 overflow-y-auto p-3">
-          <h4 className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-2">
-            MAIN
-          </h4>
-          <div className="space-y-1">
-            <SidebarButton
-              icon={<MdHome className="w-4 h-4" />}
-              text="Dashboard"
-              active={(activeSection as string) === "dashboard"}
-              onClick={() => setActiveSection("dashboard")}
-            />
-            <SidebarButton
-              icon={<MdChat className="w-4 h-4" />}
-              text="Chat"
-              active={activeSection === "chat"}
-              onClick={() => setActiveSection("chat")}
-            />
-            <SidebarButton
-              icon={<MdFlight className="w-4 h-4" />}
-              text="Flights"
-              active={activeSection === "flights"}
-              onClick={() => setActiveSection("flights")}
-            />
-          </div>
-
-          {/* Discover Section */}
-          <h4 className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider mt-5 mb-2">
-            DISCOVER
-          </h4>
-          <div className="space-y-1">
-            <SidebarButton
-              icon={<MdExplore className="w-4 h-4" />}
-              text="Explore"
-              active={activeSection === "explore"}
-              onClick={() => setActiveSection("explore")}
-            />
-            <SidebarButton
-              icon={<MdBook className="w-4 h-4" />}
-              text="Itinerary"
-              active={activeSection === "itinerary"}
-              onClick={() => setActiveSection("itinerary")}
-              badge="NEW!"
-            />
-            <SidebarButton
-              icon={<MdPeople className="w-4 h-4" />}
-              text="Friends"
-              active={activeSection === "friends"}
-              onClick={() => setActiveSection("friends")}
-            />
-          </div>
-        </div>
-
-        {/* Logout */}
-        <div className="p-3 border-t border-gray-200">
-          <button
-            onClick={logout}
-            className="w-full flex items-center space-x-2.5 px-2.5 py-2 rounded-lg text-red-500 hover:bg-red-50 transition-all"
-          >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-              />
-            </svg>
-            <span className="text-xs">Logout</span>
-          </button>
-        </div>
-      </aside>
+      <Sidebar
+        activeSection={activeSection}
+        onSectionChange={setActiveSection}
+        onLogout={logout}
+      />
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col bg-white min-h-0">
         {/* Conditional rendering based on active section */}
         <div className="flex-1 flex flex-col min-h-0 transition-all duration-500 ease-in-out">
           {activeSection === "dashboard" ? (
-            // Dashboard Content
-            <div className="flex-1 flex flex-col min-h-0 bg-gray-50">
-              {/* Combined Navigation Bar - Fixed */}
-              <nav className="bg-white border-b border-gray-200 flex-shrink-0 z-10">
-                <div className="px-6 py-4">
-                  <div className="flex items-center justify-between">
-                    {/* Left Side - Good Morning Message */}
-                    <div>
-                      <h1 className="text-2xl font-bold text-gray-900 mb-0.5">
-                        Good Morning,{" "}
-                        {currentUser?.displayName?.split(" ")[0] || "User"} 👋
-                      </h1>
-                      <p className="text-sm text-gray-500">
-                        Plan your itinerary with us
-                      </p>
-                    </div>
-
-                    {/* Right Side - User Profile */}
-                    <div className="flex items-center space-x-3">
-                      <div className="relative profile-dropdown">
-                        <button
-                          onClick={() =>
-                            setShowProfileDropdown(!showProfileDropdown)
-                          }
-                          className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-100 transition-colors"
-                        >
-                          <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center overflow-hidden">
-                            {currentUser?.photoURL ? (
-                              <img
-                                src={currentUser.photoURL}
-                                alt="Profile"
-                                className="w-full h-full object-cover rounded-full"
-                                referrerPolicy="no-referrer"
-                              />
-                            ) : (
-                              <span className="text-sm font-medium text-white">
-                                {currentUser?.displayName?.charAt(0) ||
-                                  currentUser?.email?.charAt(0) ||
-                                  "U"}
-                              </span>
-                            )}
-                          </div>
-                          <span className="text-sm text-gray-700 hidden sm:block">
-                            {currentUser?.displayName?.split(" ")[0] ||
-                              currentUser?.email}
-                          </span>
-                          <svg
-                            className={`w-4 h-4 text-gray-500 transition-transform ${
-                              showProfileDropdown ? "rotate-180" : ""
-                            }`}
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M19 9l-7 7-7-7"
-                            />
-                          </svg>
-                        </button>
-
-                        {/* Dropdown Menu */}
-                        {showProfileDropdown && (
-                          <div className="absolute right-0 mt-2 w-64 bg-white border border-gray-200 rounded-xl shadow-lg z-50">
-                            <div className="p-4 border-b border-gray-100">
-                              <div className="flex items-center space-x-3">
-                                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center overflow-hidden">
-                                  {currentUser?.photoURL ? (
-                                    <img
-                                      src={currentUser.photoURL}
-                                      alt="Profile"
-                                      className="w-full h-full object-cover rounded-full"
-                                      referrerPolicy="no-referrer"
-                                    />
-                                  ) : (
-                                    <span className="text-sm font-medium text-white">
-                                      {currentUser?.displayName?.charAt(0) ||
-                                        currentUser?.email?.charAt(0) ||
-                                        "U"}
-                                    </span>
-                                  )}
-                                </div>
-                                <div>
-                                  <p className="text-sm font-medium text-gray-900">
-                                    {currentUser?.displayName || "User"}
-                                  </p>
-                                  <p className="text-xs text-gray-500">
-                                    {currentUser?.email}
-                                  </p>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="p-2">
-                              <button
-                                onClick={() => {
-                                  router.push("/flights/settings");
-                                  setShowProfileDropdown(false);
-                                }}
-                                className="w-full flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors"
-                              >
-                                <svg
-                                  className="w-4 h-4"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                                  />
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                                  />
-                                </svg>
-                                <span>Settings</span>
-                              </button>
-
-                              <button
-                                onClick={() => {
-                                  logout();
-                                  setShowProfileDropdown(false);
-                                }}
-                                className="w-full flex items-center space-x-2 px-3 py-2 text-sm text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
-                              >
-                                <svg
-                                  className="w-4 h-4"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-                                  />
-                                </svg>
-                                <span>Logout</span>
-                              </button>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </nav>
-
-              {/* Main Content Grid - Scrollable */}
-              <div className="flex-1 overflow-y-auto">
-                <div className="grid grid-cols-1 xl:grid-cols-12 gap-4 p-5">
-                  {/* Left Column - Main Content */}
-                  <div className="xl:col-span-7 space-y-4">
-                    {/* Upcoming Trip */}
-                    <div className="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
-                      <div className="flex items-center justify-between mb-4">
-                        <div>
-                          <h2 className="text-lg font-semibold text-gray-900 mb-0.5">
-                            Upcoming Trip
-                          </h2>
-                          <p className="text-xs text-gray-500">
-                            Remember your upcoming trips!
-                          </p>
-                        </div>
-                        <button className="text-blue-600 hover:text-blue-700 text-xs font-medium">
-                          Details
-                        </button>
-                      </div>
-
-                      <div className="grid md:grid-cols-2 gap-3">
-                        {upcomingTrips.map((trip) => (
-                          <div
-                            key={trip.id}
-                            className="bg-gray-50 rounded-lg p-3 border border-gray-200 hover:border-blue-300 hover:shadow-sm transition-all"
-                          >
-                            <div className="flex items-start space-x-2.5 mb-3">
-                              <div className="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center text-xl flex-shrink-0 border border-blue-100">
-                                {trip.image}
-                              </div>
-                              <div className="flex-1 min-w-0">
-                                <h3 className="font-semibold text-xs text-gray-900 mb-0.5 truncate">
-                                  {trip.from}
-                                </h3>
-                                <p className="text-[10px] text-gray-500">
-                                  {trip.country}
-                                </p>
-                              </div>
-                            </div>
-
-                            <div className="flex items-center justify-between text-[10px] mb-2.5">
-                              <div className="bg-blue-100 text-blue-600 px-2 py-0.5 rounded font-medium">
-                                {trip.date}
-                              </div>
-                              <div className="text-gray-500">
-                                {trip.duration}
-                              </div>
-                            </div>
-
-                            <div className="flex items-center justify-between">
-                              <div>
-                                <p className="text-[10px] text-gray-500 mb-0.5">
-                                  Budget:
-                                </p>
-                                <p className="font-semibold text-sm text-gray-900">
-                                  {trip.budget}
-                                </p>
-                              </div>
-                              <div className="flex items-center -space-x-1">
-                                {trip.travelers.map((traveler, idx) => (
-                                  <div
-                                    key={idx}
-                                    className="w-5 h-5 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-[10px] border-2 border-white"
-                                  >
-                                    {traveler}
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* For your Malaysia Trip */}
-                    <div className="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center space-x-1.5">
-                          <h2 className="text-base font-semibold text-gray-900">
-                            For your{" "}
-                            <span className="text-blue-600">Malaysia</span>{" "}
-                            <span className="text-blue-500">🏔️ Trip</span>
-                          </h2>
-                        </div>
-                        <button className="text-blue-600 hover:text-blue-700 text-xs font-medium">
-                          Details
-                        </button>
-                      </div>
-                      <p className="text-xs text-gray-500 mb-4">
-                        These can't be missed places
-                      </p>
-
-                      <div className="space-y-3">
-                        {malaysiaPlaces.map((place) => (
-                          <div
-                            key={place.id}
-                            className="bg-gray-50 rounded-lg p-3 border border-gray-200 hover:border-blue-300 hover:shadow-sm transition-all"
-                          >
-                            <div className="flex items-start space-x-3">
-                              <div className="w-16 h-16 bg-blue-50 rounded-lg flex items-center justify-center text-2xl flex-shrink-0 border border-blue-100">
-                                {place.image}
-                              </div>
-                              <div className="flex-1 min-w-0">
-                                <div className="flex items-start justify-between mb-1.5">
-                                  <div className="flex-1">
-                                    <h3 className="font-semibold text-sm text-gray-900 mb-1">
-                                      {place.name}
-                                    </h3>
-                                    <p className="text-[10px] text-gray-500 leading-relaxed line-clamp-2">
-                                      {place.description}
-                                    </p>
-                                  </div>
-                                  <div className="flex items-center space-x-1 ml-2">
-                                    <button className="p-1.5 hover:bg-red-50 rounded-lg transition-colors">
-                                      <svg
-                                        className="w-4 h-4 text-red-500"
-                                        fill="currentColor"
-                                        viewBox="0 0 24 24"
-                                      >
-                                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                                      </svg>
-                                    </button>
-                                    <button className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors">
-                                      <svg
-                                        className="w-4 h-4 text-gray-500"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                      >
-                                        <path
-                                          strokeLinecap="round"
-                                          strokeLinejoin="round"
-                                          strokeWidth={2}
-                                          d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
-                                        />
-                                      </svg>
-                                    </button>
-                                  </div>
-                                </div>
-
-                                <div className="flex items-center space-x-3 mb-2">
-                                  <div className="flex items-center space-x-1">
-                                    <span className="text-yellow-500 text-xs">
-                                      ⭐
-                                    </span>
-                                    <span className="text-xs font-semibold text-gray-900">
-                                      {place.rating}
-                                    </span>
-                                    <span className="text-[10px] text-gray-500">
-                                      ({place.reviews})
-                                    </span>
-                                  </div>
-                                  <div className="flex items-center space-x-1 text-[10px] text-gray-500">
-                                    <span>Guide by:</span>
-                                    <span className="text-gray-900 font-medium">
-                                      👤 {place.guide}
-                                    </span>
-                                  </div>
-                                </div>
-
-                                <div className="flex items-center gap-1.5 flex-wrap">
-                                  {place.tags.map((tag, idx) => (
-                                    <span
-                                      key={idx}
-                                      className="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded border border-blue-100"
-                                    >
-                                      {tag}
-                                    </span>
-                                  ))}
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* One Week Itinerary */}
-                    <div className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm">
-                      <div className="relative h-48 bg-gradient-to-br from-blue-100 to-blue-50">
-                        <div className="absolute inset-0 flex items-center justify-center text-5xl">
-                          🏛️
-                        </div>
-                      </div>
-                      <div className="p-4">
-                        <h3 className="text-base font-semibold text-gray-900 mb-3">
-                          One Week Itinerary - Malacca...
-                        </h3>
-                        <div className="flex items-center space-x-1.5 text-xs text-gray-500 mb-3">
-                          <span>Traveller:</span>
-                          <span className="text-gray-900">
-                            👤{" "}
-                            {currentUser?.displayName?.split(" ")[0] || "User"}
-                          </span>
-                        </div>
-                        <div className="grid grid-cols-3 gap-3 text-xs">
-                          <div>
-                            <p className="text-gray-500 mb-0.5">Budget</p>
-                            <p className="font-semibold text-sm text-gray-900">
-                              $1,200
-                            </p>
-                          </div>
-                          <div>
-                            <p className="text-gray-500 mb-0.5">Person</p>
-                            <p className="font-semibold text-sm text-gray-900">
-                              2
-                            </p>
-                          </div>
-                          <div>
-                            <p className="text-gray-500 mb-0.5">Duration</p>
-                            <p className="font-semibold text-sm text-gray-900">
-                              7d, 6n
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Right Column - Sidebar with Chat on Top */}
-                  <div className="xl:col-span-5 space-y-4">
-                    {/* AI Assistant / Chatnavi */}
-                    <div className="bg-gradient-to-br from-blue-50 via-white to-white rounded-xl border border-blue-200 shadow-sm">
-                      <div className="p-4 border-b border-gray-200">
-                        <div>
-                          <h3 className="text-base font-semibold text-gray-900 mb-0.5">
-                            Hi I'm{" "}
-                            <span className="bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent">
-                              Chatnavi
-                            </span>
-                          </h3>
-                          <p className="text-[10px] text-gray-500">
-                            Your AI travel assistant — available 24/7
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="p-4">
-                        {/* Quick Actions */}
-                        <div className="space-y-1.5 mb-4">
-                          {quickActions.map((action, idx) => (
-                            <button
-                              key={idx}
-                              className="w-full flex items-center space-x-2 bg-gray-50 hover:bg-gray-100 rounded-lg p-2.5 transition-all text-xs text-left border border-gray-200 hover:border-blue-300"
-                            >
-                              <span className="text-base">{action.icon}</span>
-                              <span className="text-gray-700">
-                                {action.label}
-                              </span>
-                            </button>
-                          ))}
-                        </div>
-
-                        {/* Chat Input */}
-                        <form className="relative mb-2">
-                          <input
-                            type="text"
-                            value={dashboardChatInput}
-                            onChange={(e) =>
-                              setDashboardChatInput(e.target.value)
-                            }
-                            placeholder="Ask me anything..."
-                            className="w-full bg-white border border-gray-300 rounded-lg px-3 py-2.5 pr-10 text-xs focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-colors"
-                          />
-                          <button
-                            type="submit"
-                            className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 text-blue-600 hover:text-blue-700 transition-colors"
-                          >
-                            <svg
-                              className="w-4 h-4"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M14 5l7 7m0 0l-7 7m7-7H3"
-                              />
-                            </svg>
-                          </button>
-                        </form>
-
-                        {/* Voice Button */}
-                        <button className="w-full bg-gray-50 hover:bg-gray-100 rounded-lg p-2.5 transition-all flex items-center justify-center space-x-2 border border-gray-200">
-                          <svg
-                            className="w-4 h-4 text-gray-600"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"
-                            />
-                          </svg>
-                          <span className="text-xs text-gray-700">
-                            Voice Input
-                          </span>
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* Friends Location */}
-                    <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm">
-                      <div className="flex items-center justify-between mb-3">
-                        <h3 className="text-base font-semibold text-gray-900">
-                          Friends Location
-                        </h3>
-                        <button className="text-blue-600 hover:text-blue-700 text-xs font-medium">
-                          Expand
-                        </button>
-                      </div>
-                      <p className="text-xs text-gray-500 mb-4">
-                        Check on your friend live location
-                      </p>
-
-                      {/* Map */}
-                      <div className="bg-gray-50 rounded-lg h-52 relative overflow-hidden border border-gray-200">
-                        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-blue-100/30"></div>
-
-                        {/* Grid lines */}
-                        <div className="absolute inset-0">
-                          {[...Array(8)].map((_, i) => (
-                            <div
-                              key={`h-${i}`}
-                              className="absolute left-0 right-0 h-px bg-gray-300/50"
-                              style={{ top: `${(i + 1) * 12.5}%` }}
-                            ></div>
-                          ))}
-                          {[...Array(8)].map((_, i) => (
-                            <div
-                              key={`v-${i}`}
-                              className="absolute top-0 bottom-0 w-px bg-gray-300/50"
-                              style={{ left: `${(i + 1) * 12.5}%` }}
-                            ></div>
-                          ))}
-                        </div>
-
-                        {/* Friend markers */}
-                        {friendsLocations.map((friend, idx) => (
-                          <div
-                            key={idx}
-                            className="absolute"
-                            style={{
-                              top: `${friend.lat}%`,
-                              left: `${friend.lng}%`,
-                              transform: "translate(-50%, -50%)",
-                            }}
-                          >
-                            <div className="relative">
-                              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-lg animate-pulse">
-                                <span className="text-sm">👤</span>
-                              </div>
-                              <div className="absolute -top-7 left-1/2 -translate-x-1/2 whitespace-nowrap bg-white border border-gray-200 px-2 py-1 rounded text-[10px] shadow-sm">
-                                {friend.name}
-                                <div className="text-gray-500">
-                                  {friend.location}
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Exchange Converter */}
-                    <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm">
-                      <div className="flex items-center justify-between mb-4">
-                        <h3 className="text-base font-semibold text-gray-900">
-                          Exchange Converter
-                        </h3>
-                        <span className="text-[10px] bg-green-100 text-green-600 px-2 py-0.5 rounded-full flex items-center space-x-1">
-                          <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
-                          <span>Live</span>
-                        </span>
-                      </div>
-
-                      {/* From Currency */}
-                      <div className="mb-3">
-                        <label className="text-[10px] text-gray-500 mb-1.5 block">
-                          Amount to convert
-                        </label>
-                        <div className="flex items-center space-x-2 mb-2">
-                          <select
-                            value={fromCurrency}
-                            onChange={(e) => setFromCurrency(e.target.value)}
-                            className="bg-gray-50 border border-gray-200 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:border-blue-400 flex-1"
-                          >
-                            <option value="USD">USD 🇺🇸</option>
-                            <option value="EUR">EUR 🇪🇺</option>
-                            <option value="GBP">GBP 🇬🇧</option>
-                          </select>
-                          <button className="p-1.5 hover:bg-gray-50 rounded-lg transition-colors">
-                            <svg
-                              className="w-4 h-4 text-gray-600"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
-                              />
-                            </svg>
-                          </button>
-                        </div>
-                        <input
-                          type="text"
-                          value={`$${convertAmount}`}
-                          onChange={(e) =>
-                            setConvertAmount(
-                              e.target.value.replace(/[^0-9.]/g, "")
-                            )
-                          }
-                          className="w-full bg-transparent text-2xl font-bold text-gray-900 focus:outline-none"
-                        />
-                      </div>
-
-                      {/* To Currency */}
-                      <div>
-                        <label className="text-[10px] text-gray-500 mb-1.5 block">
-                          Converted amount
-                        </label>
-                        <select
-                          value={toCurrency}
-                          onChange={(e) => setToCurrency(e.target.value)}
-                          className="bg-gray-50 border border-gray-200 rounded-lg px-2.5 py-1.5 text-xs mb-2 w-full focus:outline-none focus:border-blue-400"
-                        >
-                          <option value="EUR">EUR 🇪🇺</option>
-                          <option value="USD">USD 🇺🇸</option>
-                          <option value="GBP">GBP 🇬🇧</option>
-                        </select>
-                        <div className="text-2xl font-bold text-blue-600">
-                          ${convertedAmount}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <DashboardContent
+              currentUser={currentUser}
+              showProfileDropdown={showProfileDropdown}
+              setShowProfileDropdown={setShowProfileDropdown}
+              onSettings={() => router.push("/flights/settings")}
+              onLogout={logout}
+            />
           ) : activeSection === "chat" ? (
             // Chat Content - Fixed height container with proper scrolling
             <div className="flex-1 flex flex-col bg-white min-h-0">
-              {/* Chat Navigation Bar - Fixed */}
-              <nav className="bg-white border-b border-gray-200 flex-shrink-0">
-                <div className="px-6 py-4">
-                  <div className="flex items-center justify-between">
-                    {/* Chat Header Info */}
-                    <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-md">
-                        <MdChat className="text-white text-xl" />
-                      </div>
-                      <div>
-                        <h1 className="text-lg font-bold text-gray-900">
-                          Travel Assistant
-                        </h1>
-                        <p className="text-xs text-gray-500">
-                          Powered by AI • Ready to help
-                        </p>
-                      </div>
-                    </div>
+              <ChatNavbar
+                currentUser={currentUser}
+                showProfileDropdown={showProfileDropdown}
+                setShowProfileDropdown={setShowProfileDropdown}
+                onSettings={() => router.push("/flights/settings")}
+                onLogout={logout}
+                showFlashcards={showFlashcards}
+                showFlights={showFlights}
+                showItinerary={showItinerary}
+                showDateSelector={showDateSelector}
+                showDebug={showDebug}
+                onFlashcardsToggle={() => {
+                  if (showFlashcards) {
+                    setShowFlashcards(false);
+                    setSelectedTrip(null);
+                    if (flashcardsRef.current) {
+                      flashcardsRef.current.clearSelection();
+                    }
+                  } else {
+                    console.log(
+                      "Places toggle: Showing trip loader for 4 seconds"
+                    );
+                    setShowTripLoader(true);
+                    setIsParsingTrips(true);
+                    setShowFlights(false);
+                    setShowItinerary(false);
+                    setShowDateSelector(false);
 
-                    {/* Right Side - Places Toggle, Flights Toggle, Itinerary Toggle, Debug Toggle, and Status */}
-                    <div className="flex items-center space-x-3">
-                      {/* Places Toggle */}
-                      <div className="flex items-center space-x-2">
-                        <span className="text-xs text-gray-500">Places</span>
-                        <button
-                          onClick={() => {
-                            // If turning OFF flashcards
-                            if (showFlashcards) {
-                              setShowFlashcards(false);
-                              setSelectedTrip(null);
-                              if (flashcardsRef.current) {
-                                flashcardsRef.current.clearSelection();
-                              }
-                            }
-                            // If turning ON flashcards - show trip loader first
-                            else {
-                              console.log(
-                                "Places toggle: Showing trip loader for 4 seconds"
-                              );
-                              setShowTripLoader(true);
-                              setIsParsingTrips(true);
-                              setShowFlights(false);
-                              setShowItinerary(false);
-                              setShowDateSelector(false);
-
-                              // Hide trip loader after 4 seconds with dissolve effect
-                              setTimeout(() => {
-                                setShowTripLoader(false);
-
-                                setTimeout(() => {
-                                  // Show flashcards after loader dissolves
-                                  setShowFlashcards(true);
-                                  setIsParsingTrips(false);
-                                  console.log(
-                                    "Places toggle: Flashcards activated after 4 second loader"
-                                  );
-                                }, 400); // Wait for dissolve animation
-                              }, 4000); // Show loader for 4 seconds
-                            }
-                          }}
-                          className={`relative inline-flex h-5 w-9 items-center rounded-full transition-all duration-300 ${
-                            showFlashcards
-                              ? "bg-purple-500 border-purple-400 shadow-md shadow-purple-200"
-                              : "bg-gray-300 border-gray-400 hover:bg-gray-400"
-                          } border`}
-                          title="Toggle Places Explorer"
-                        >
-                          <span
-                            className={`inline-block h-3 w-3 transform rounded-full bg-white shadow-sm transition-transform ${
-                              showFlashcards ? "translate-x-5" : "translate-x-1"
-                            }`}
-                          />
-                        </button>
-                      </div>
-
-                      {/* Flights Toggle */}
-                      <div className="flex items-center space-x-2">
-                        <span className="text-xs text-gray-500">Flights</span>
-                        <button
-                          onClick={() => {
-                            setShowFlights(!showFlights);
-                            // Close other widgets if opening flights
-                            if (!showFlights) {
-                              setShowFlashcards(false);
-                              setShowItinerary(false);
-                              setShowDateSelector(false);
-                              setSelectedTrip(null);
-                              if (flashcardsRef.current) {
-                                flashcardsRef.current.clearSelection();
-                              }
-                            }
-                          }}
-                          className={`relative inline-flex h-5 w-9 items-center rounded-full transition-all duration-300 ${
-                            showFlights
-                              ? "bg-blue-500 border-blue-400 shadow-md shadow-blue-200"
-                              : "bg-gray-300 border-gray-400 hover:bg-gray-400"
-                          } border`}
-                          title="Toggle Flights Search"
-                        >
-                          <span
-                            className={`inline-block h-3 w-3 transform rounded-full bg-white shadow-sm transition-transform ${
-                              showFlights ? "translate-x-5" : "translate-x-1"
-                            }`}
-                          />
-                        </button>
-                      </div>
-
-                      {/* Itinerary Toggle */}
-                      <div className="flex items-center space-x-2">
-                        <span className="text-xs text-gray-500">Itinerary</span>
-                        <button
-                          onClick={() => {
-                            setShowItinerary(!showItinerary);
-                            // Close other widgets if opening itinerary
-                            if (!showItinerary) {
-                              setShowFlashcards(false);
-                              setShowFlights(false);
-                              setShowDateSelector(false);
-                              setSelectedTrip(null);
-                              if (flashcardsRef.current) {
-                                flashcardsRef.current.clearSelection();
-                              }
-                            }
-                          }}
-                          className={`relative inline-flex h-5 w-9 items-center rounded-full transition-all duration-300 ${
-                            showItinerary
-                              ? "bg-gradient-to-r from-purple-500 to-blue-500 border-purple-400 shadow-md shadow-purple-200"
-                              : "bg-gray-300 border-gray-400 hover:bg-gray-400"
-                          } border`}
-                          title="Toggle Day Itinerary"
-                        >
-                          <span
-                            className={`inline-block h-3 w-3 transform rounded-full bg-white shadow-sm transition-transform ${
-                              showItinerary ? "translate-x-5" : "translate-x-1"
-                            }`}
-                          />
-                        </button>
-                      </div>
-
-                      {/* Date Selector Toggle */}
-                      <div className="flex items-center space-x-2">
-                        <span className="text-xs text-gray-500">Dates</span>
-                        <button
-                          onClick={() => {
-                            setShowDateSelector(!showDateSelector);
-                            // Close other widgets if opening date selector
-                            if (!showDateSelector) {
-                              setShowFlashcards(false);
-                              setShowFlights(false);
-                              setShowItinerary(false);
-                              setSelectedTrip(null);
-                              if (flashcardsRef.current) {
-                                flashcardsRef.current.clearSelection();
-                              }
-                            }
-                          }}
-                          className={`relative inline-flex h-5 w-9 items-center rounded-full transition-all duration-300 ${
-                            showDateSelector
-                              ? "bg-gradient-to-r from-pink-500 to-purple-500 border-pink-400 shadow-md shadow-pink-200"
-                              : "bg-gray-300 border-gray-400 hover:bg-gray-400"
-                          } border`}
-                          title="Toggle Date Selector"
-                        >
-                          <span
-                            className={`inline-block h-3 w-3 transform rounded-full bg-white shadow-sm transition-transform ${
-                              showDateSelector
-                                ? "translate-x-5"
-                                : "translate-x-1"
-                            }`}
-                          />
-                        </button>
-                      </div>
-
-                      {/* Debug Toggle */}
-                      <button
-                        onClick={() => setShowDebug(!showDebug)}
-                        className={`flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-xs font-medium transition-all duration-300 ${
-                          showDebug
-                            ? "bg-blue-100 text-blue-700 border border-blue-300"
-                            : "bg-gray-100 text-gray-600 border border-gray-300 hover:bg-gray-200"
-                        }`}
-                        title="Toggle Debug Info (Ctrl/Cmd + D)"
-                      >
-                        <svg
-                          className="w-3 h-3"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                          />
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                          />
-                        </svg>
-                        <span>Debug</span>
-                      </button>
-
-                      <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700 border border-green-200">
-                        <span className="w-1.5 h-1.5 bg-green-500 rounded-full mr-1.5 animate-pulse"></span>
-                        Online
-                      </span>
-
-                      <div className="relative profile-dropdown">
-                        <button
-                          onClick={() =>
-                            setShowProfileDropdown(!showProfileDropdown)
-                          }
-                          className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-100 transition-colors"
-                        >
-                          <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center overflow-hidden">
-                            {currentUser?.photoURL ? (
-                              <img
-                                src={currentUser.photoURL}
-                                alt="Profile"
-                                className="w-full h-full object-cover rounded-full"
-                                referrerPolicy="no-referrer"
-                              />
-                            ) : (
-                              <span className="text-sm font-medium text-white">
-                                {currentUser?.displayName?.charAt(0) ||
-                                  currentUser?.email?.charAt(0) ||
-                                  "U"}
-                              </span>
-                            )}
-                          </div>
-                          <span className="text-sm text-gray-700 hidden sm:block">
-                            {currentUser?.displayName?.split(" ")[0] ||
-                              currentUser?.email}
-                          </span>
-                          <svg
-                            className={`w-4 h-4 text-gray-500 transition-transform ${
-                              showProfileDropdown ? "rotate-180" : ""
-                            }`}
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M19 9l-7 7-7-7"
-                            />
-                          </svg>
-                        </button>
-
-                        {/* Dropdown Menu */}
-                        {showProfileDropdown && (
-                          <div className="absolute right-0 mt-2 w-64 bg-white border border-gray-200 rounded-xl shadow-lg z-50">
-                            <div className="p-4 border-b border-gray-100">
-                              <div className="flex items-center space-x-3">
-                                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center overflow-hidden">
-                                  {currentUser?.photoURL ? (
-                                    <img
-                                      src={currentUser.photoURL}
-                                      alt="Profile"
-                                      className="w-full h-full object-cover rounded-full"
-                                      referrerPolicy="no-referrer"
-                                    />
-                                  ) : (
-                                    <span className="text-sm font-medium text-white">
-                                      {currentUser?.displayName?.charAt(0) ||
-                                        currentUser?.email?.charAt(0) ||
-                                        "U"}
-                                    </span>
-                                  )}
-                                </div>
-                                <div>
-                                  <p className="text-sm font-medium text-gray-900">
-                                    {currentUser?.displayName || "User"}
-                                  </p>
-                                  <p className="text-xs text-gray-500">
-                                    {currentUser?.email}
-                                  </p>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="p-2">
-                              <button
-                                onClick={() => {
-                                  router.push("/flights/settings");
-                                  setShowProfileDropdown(false);
-                                }}
-                                className="w-full flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors"
-                              >
-                                <svg
-                                  className="w-4 h-4"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                                  />
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                                  />
-                                </svg>
-                                <span>Settings</span>
-                              </button>
-
-                              <button
-                                onClick={() => {
-                                  logout();
-                                  setShowProfileDropdown(false);
-                                }}
-                                className="w-full flex items-center space-x-2 px-3 py-2 text-sm text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
-                              >
-                                <svg
-                                  className="w-4 h-4"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013 3v1"
-                                  />
-                                </svg>
-                                <span>Logout</span>
-                              </button>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </nav>
+                    setTimeout(() => {
+                      setShowTripLoader(false);
+                      setTimeout(() => {
+                        setShowFlashcards(true);
+                        setIsParsingTrips(false);
+                        console.log(
+                          "Places toggle: Flashcards activated after 4 second loader"
+                        );
+                      }, 400);
+                    }, 4000);
+                  }
+                }}
+                onFlightsToggle={() => {
+                  setShowFlights(!showFlights);
+                  if (!showFlights) {
+                    setShowFlashcards(false);
+                    setShowItinerary(false);
+                    setShowDateSelector(false);
+                    setSelectedTrip(null);
+                    if (flashcardsRef.current) {
+                      flashcardsRef.current.clearSelection();
+                    }
+                  }
+                }}
+                onItineraryToggle={() => {
+                  setShowItinerary(!showItinerary);
+                  if (!showItinerary) {
+                    setShowFlashcards(false);
+                    setShowFlights(false);
+                    setShowDateSelector(false);
+                    setSelectedTrip(null);
+                    if (flashcardsRef.current) {
+                      flashcardsRef.current.clearSelection();
+                    }
+                  }
+                }}
+                onDateSelectorToggle={() => {
+                  setShowDateSelector(!showDateSelector);
+                  if (!showDateSelector) {
+                    setShowFlashcards(false);
+                    setShowFlights(false);
+                    setShowItinerary(false);
+                    setSelectedTrip(null);
+                    if (flashcardsRef.current) {
+                      flashcardsRef.current.clearSelection();
+                    }
+                  }
+                }}
+                onDebugToggle={() => setShowDebug(!showDebug)}
+              />
 
               {/* Chat Container - Scrollable messages area with fixed input */}
               <div className="flex-1 flex flex-col min-h-0">
                 {showItinerary ? (
-                  // ItineraryWidget - Full Screen (no chat input visible)
                   <div className="flex-1 overflow-hidden">
                     <ItineraryWidget
                       isVisible={showItinerary}
-                      onToggle={() => {
-                        setShowItinerary(false);
-                      }}
+                      onToggle={() => setShowItinerary(false)}
                       onOpenChat={() => {
                         setShowItinerary(false);
                         setTimeout(() => {
@@ -2217,39 +956,30 @@ export default function FlightsPageAuthenticated() {
                     />
                   </div>
                 ) : showDateSelector ? (
-                  // DateSelectorWidget - Full Screen (no chat input visible)
                   <div className="flex-1 overflow-hidden">
                     <DateSelectorWidget
                       isVisible={showDateSelector}
-                      onToggle={() => {
-                        setShowDateSelector(false);
-                      }}
+                      onToggle={() => setShowDateSelector(false)}
                     />
                   </div>
                 ) : (
                   <>
                     {/* Messages Container - Scrollable */}
                     <div className="flex-1 overflow-y-auto p-6 relative">
-                      {/* Trip Loader - Only covers chat area */}
-                      <TripLoader />
+                      {/* Trip Loader */}
+                      <TripLoader showTripLoader={showTripLoader} />
                       <div className="max-w-4xl mx-auto h-full">
                         {showFlights ? (
-                          // FlightsWidget
                           <div className="h-full flex flex-col relative">
-                            {/* FlightsWidget Container */}
                             <div className="flex-1 min-h-0 overflow-hidden">
                               <FlightsWidget
                                 isVisible={showFlights}
-                                onToggle={() => {
-                                  setShowFlights(false);
-                                }}
+                                onToggle={() => setShowFlights(false)}
                               />
                             </div>
                           </div>
                         ) : showFlashcards ? (
-                          // FlashcardsWidget with white/blue theme
                           <div className="h-full flex flex-col relative">
-                            {/* FlashcardsWidget Container */}
                             <div className="flex-1 min-h-0 bg-white rounded-xl border border-blue-200 overflow-hidden shadow-lg">
                               <FlashcardsWidgetWhiteTheme
                                 ref={flashcardsRef}
@@ -2269,7 +999,6 @@ export default function FlightsPageAuthenticated() {
                             </div>
                           </div>
                         ) : messages.length === 0 ? (
-                          // Welcome Screen
                           <div className="flex flex-col items-center justify-center h-full min-h-[400px]">
                             <div className="text-center mb-6">
                               <div className="relative w-16 h-16 mx-auto mb-4">
@@ -2306,7 +1035,6 @@ export default function FlightsPageAuthenticated() {
                             </div>
                           </div>
                         ) : (
-                          // Messages
                           <div className="space-y-6 pb-4">
                             {messages.map((message) => (
                               <div
@@ -2353,7 +1081,6 @@ export default function FlightsPageAuthenticated() {
                                       : "bg-white text-gray-900 border border-gray-200 shadow-sm"
                                   } rounded-2xl px-4 py-3`}
                                 >
-                                  {/* Show trip card if metadata contains selectedTrip */}
                                   {(message as any).metadata?.selectedTrip ? (
                                     <div className="space-y-2">
                                       <p className="text-xs font-medium opacity-90">
@@ -2394,18 +1121,14 @@ export default function FlightsPageAuthenticated() {
                               </div>
                             ))}
 
-                            {/* Enhanced Loading indicator */}
+                            {/* Loading indicator */}
                             {isLoading && (
                               <div className="flex items-start gap-3">
-                                {/* AI Avatar */}
                                 <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-gray-100 to-gray-200 border border-gray-300 flex items-center justify-center">
                                   <MdChat className="text-gray-600 text-sm" />
                                 </div>
-
-                                {/* Loading Animation */}
                                 <div className="bg-white border border-gray-200 shadow-sm rounded-2xl px-4 py-3 min-w-[120px]">
                                   <div className="flex items-center space-x-2">
-                                    {/* Gradient animated dots */}
                                     <div className="flex items-center space-x-1">
                                       <div className="w-2 h-2 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full animate-bounce"></div>
                                       <div
@@ -2428,15 +1151,11 @@ export default function FlightsPageAuthenticated() {
                             {/* Trip Parsing indicator */}
                             {isParsingTrips && (
                               <div className="flex items-start gap-3">
-                                {/* AI Avatar */}
                                 <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-purple-100 to-purple-200 border border-purple-300 flex items-center justify-center">
                                   <MdExplore className="text-purple-600 text-sm" />
                                 </div>
-
-                                {/* Parsing Animation */}
                                 <div className="bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-200 shadow-sm rounded-2xl px-4 py-3 min-w-[200px]">
                                   <div className="flex items-center space-x-2">
-                                    {/* Spinning icon */}
                                     <div className="w-4 h-4 border-2 border-purple-300 border-t-purple-600 rounded-full animate-spin"></div>
                                     <span className="text-xs text-purple-700 font-medium">
                                       Preparing your trip suggestions...
@@ -2452,9 +1171,9 @@ export default function FlightsPageAuthenticated() {
                       </div>
                     </div>
 
-                    {/* Chat Input - Fixed at bottom, no shifting */}
+                    {/* Chat Input - Fixed at bottom */}
                     <div className="flex-shrink-0 bg-gradient-to-t from-white to-blue-50/20 border-t border-blue-100 px-6 py-6 relative">
-                      {/* Selected Trip Snippet - Floating above chat */}
+                      {/* Selected Trip Snippet */}
                       {selectedTrip && showFlashcards && (
                         <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-full max-w-md px-6 z-10 animate-slideUp">
                           <div className="p-3 bg-white border-2 border-blue-400 rounded-xl shadow-2xl backdrop-blur-lg">
@@ -2667,381 +1386,18 @@ export default function FlightsPageAuthenticated() {
               </div>
             </div>
           ) : (
-            // Flights Content (same as non-authenticated version)
-            <div className="flex-1 flex flex-col min-h-0">
-              {/* Top Navigation Bar - Fixed */}
-              <nav className="bg-white border-b border-gray-200 flex-shrink-0 z-10">
-                <div className="px-6 py-4">
-                  <div className="flex items-center justify-between">
-                    {/* Left Side - Empty for flights */}
-                    <div></div>
-
-                    {/* Right Side - User Profile */}
-                    <div className="flex items-center space-x-3 ml-auto">
-                      <div className="relative profile-dropdown">
-                        <button
-                          onClick={() =>
-                            setShowProfileDropdown(!showProfileDropdown)
-                          }
-                          className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-100 transition-colors"
-                        >
-                          <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center overflow-hidden">
-                            {currentUser?.photoURL ? (
-                              <img
-                                src={currentUser.photoURL}
-                                alt="Profile"
-                                className="w-full h-full object-cover rounded-full"
-                                referrerPolicy="no-referrer"
-                              />
-                            ) : (
-                              <span className="text-sm font-medium text-white">
-                                {currentUser?.displayName?.charAt(0) ||
-                                  currentUser?.email?.charAt(0) ||
-                                  "U"}
-                              </span>
-                            )}
-                          </div>
-                          <span className="text-sm text-gray-700 hidden sm:block">
-                            {currentUser?.displayName?.split(" ")[0] ||
-                              currentUser?.email}
-                          </span>
-                          <svg
-                            className={`w-4 h-4 text-gray-500 transition-transform ${
-                              showProfileDropdown ? "rotate-180" : ""
-                            }`}
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M19 9l-7 7-7-7"
-                            />
-                          </svg>
-                        </button>
-
-                        {/* Dropdown Menu */}
-                        {showProfileDropdown && (
-                          <div className="absolute right-0 mt-2 w-64 bg-white border border-gray-200 rounded-xl shadow-lg z-50">
-                            <div className="p-4 border-b border-gray-100">
-                              <div className="flex items-center space-x-3">
-                                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center overflow-hidden">
-                                  {currentUser?.photoURL ? (
-                                    <img
-                                      src={currentUser.photoURL}
-                                      alt="Profile"
-                                      className="w-full h-full object-cover rounded-full"
-                                      referrerPolicy="no-referrer"
-                                    />
-                                  ) : (
-                                    <span className="text-sm font-medium text-white">
-                                      {currentUser?.displayName?.charAt(0) ||
-                                        currentUser?.email?.charAt(0) ||
-                                        "U"}
-                                    </span>
-                                  )}
-                                </div>
-                                <div>
-                                  <p className="text-sm font-medium text-gray-900">
-                                    {currentUser?.displayName || "User"}
-                                  </p>
-                                  <p className="text-xs text-gray-500">
-                                    {currentUser?.email}
-                                  </p>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="p-2">
-                              <button
-                                onClick={() => {
-                                  router.push("/flights/settings");
-                                  setShowProfileDropdown(false);
-                                }}
-                                className="w-full flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors"
-                              >
-                                <svg
-                                  className="w-4 h-4"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                                  />
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                                  />
-                                </svg>
-                                <span>Settings</span>
-                              </button>
-
-                              <button
-                                onClick={() => {
-                                  logout();
-                                  setShowProfileDropdown(false);
-                                }}
-                                className="w-full flex items-center space-x-2 px-3 py-2 text-sm text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
-                              >
-                                <svg
-                                  className="w-4 h-4"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-                                  />
-                                </svg>
-                                <span>Logout</span>
-                              </button>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </nav>
-
-              {/* Scrollable Content Area */}
-              <div className="flex-1 overflow-y-auto">
-                {/* Search Section */}
-                <div className="bg-gradient-to-r from-blue-500 via-blue-600 to-blue-500 py-8">
-                  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    {/* Trip Type Selector */}
-                    <div className="flex items-center space-x-4 mb-6">
-                      <TripTypeButton
-                        active={tripType === "oneWay"}
-                        onClick={() => setTripType("oneWay")}
-                      >
-                        One Way
-                      </TripTypeButton>
-                      <TripTypeButton
-                        active={tripType === "roundTrip"}
-                        onClick={() => setTripType("roundTrip")}
-                      >
-                        Round Trip
-                      </TripTypeButton>
-                      <TripTypeButton
-                        active={tripType === "multicity"}
-                        onClick={() => setTripType("multicity")}
-                      >
-                        Multicity
-                      </TripTypeButton>
-                    </div>
-
-                    {/* Search Lowest Price Header */}
-                    <div className="text-right mb-3">
-                      <h2 className="text-white text-xl font-semibold">
-                        Search Lowest Price
-                      </h2>
-                    </div>
-
-                    {/* Search Form */}
-                    <div className="bg-white rounded-lg p-4 shadow-lg">
-                      <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
-                        {/* From */}
-                        <div className="relative">
-                          <label className="block text-[10px] text-gray-500 mb-1 uppercase font-medium">
-                            FROM
-                          </label>
-                          <div className="flex items-center">
-                            <MdFlight
-                              className="text-gray-400 mr-2"
-                              size={16}
-                            />
-                            <div className="flex-1">
-                              <div className="text-lg font-bold text-gray-900">
-                                Delhi
-                              </div>
-                              <div className="text-[10px] text-gray-500">
-                                [DEL] Indira Gandhi International Airport
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Swap Button */}
-                        <div className="flex items-center justify-center">
-                          <button className="bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-colors">
-                            <svg
-                              className="w-5 h-5 text-gray-600"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
-                              />
-                            </svg>
-                          </button>
-                        </div>
-
-                        {/* To */}
-                        <div className="relative">
-                          <label className="block text-[10px] text-gray-500 mb-1 uppercase font-medium">
-                            TO
-                          </label>
-                          <div className="flex items-center">
-                            <MdFlight
-                              className="text-gray-400 mr-2 transform rotate-90"
-                              size={16}
-                            />
-                            <div className="flex-1">
-                              <div className="text-lg font-bold text-gray-900">
-                                Mumbai
-                              </div>
-                              <div className="text-[10px] text-gray-500">
-                                [BOM] Chhatrapati Shivaji International A...
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Departure Date */}
-                        <div className="relative">
-                          <label className="block text-[10px] text-gray-500 mb-1 uppercase font-medium">
-                            DEPARTURE DATE
-                          </label>
-                          <div className="flex items-center">
-                            <FiCalendar
-                              className="text-gray-400 mr-2"
-                              size={16}
-                            />
-                            <div className="flex-1">
-                              <div className="text-2xl font-bold text-gray-900">
-                                24
-                              </div>
-                              <div className="text-[10px] text-gray-500">
-                                Oct 2025
-                              </div>
-                            </div>
-                          </div>
-                          <div className="text-[10px] text-gray-500 mt-1">
-                            Friday
-                          </div>
-                        </div>
-
-                        {/* Return Date */}
-                        <div className="relative">
-                          <label className="block text-[10px] text-gray-500 mb-1 uppercase font-medium">
-                            RETURN DATE
-                          </label>
-                          <div className="flex items-center text-gray-400">
-                            <span className="text-xs">Book a round trip</span>
-                          </div>
-                          <div className="text-[10px] text-gray-500 mt-1">
-                            to save more
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Traveller & Class + Search Button */}
-                      <div className="flex items-center justify-between mt-4">
-                        <div className="flex items-center space-x-3 text-sm">
-                          <div className="flex items-center space-x-2">
-                            <FiUser className="text-gray-500" size={16} />
-                            <button className="flex items-center space-x-1 hover:text-blue-600">
-                              <span className="font-medium">
-                                {travellers} Traveller
-                              </span>
-                              <FiChevronDown size={14} />
-                            </button>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <button className="flex items-center space-x-1 hover:text-blue-600">
-                              <span className="font-medium">{travelClass}</span>
-                              <FiChevronDown size={14} />
-                            </button>
-                          </div>
-                        </div>
-
-                        <button className="bg-orange-500 hover:bg-orange-600 text-white font-bold text-lg px-12 py-3 rounded-md transition-colors">
-                          SEARCH
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* Special Fares */}
-                    <div className="mt-4 flex items-center space-x-6">
-                      <span className="text-white text-sm font-medium">
-                        Special Fares (Optional):
-                      </span>
-                      <div className="flex items-center space-x-6">
-                        <SpecialFareCheckbox label="Defence Forces" />
-                        <SpecialFareCheckbox label="Students" />
-                        <SpecialFareCheckbox label="Senior Citizens" />
-                        <SpecialFareCheckbox label="Doctors Nurses" />
-                      </div>
-                      <div className="flex-1"></div>
-                      <label className="flex items-center space-x-2 text-white text-sm">
-                        <input type="checkbox" className="rounded" />
-                        <span>Book Hotel & Get up to 45% OFF*</span>
-                      </label>
-                    </div>
-
-                    {/* Discover More Button */}
-                    <div className="mt-4">
-                      <button className="bg-white/20 hover:bg-white/30 text-white text-sm font-medium px-5 py-2 rounded-md border border-white/30 transition-colors">
-                        DISCOVER MORE
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Quick Links Section */}
-                <div className="bg-white py-6 border-b border-gray-200">
-                  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex items-center justify-between overflow-x-auto">
-                      <QuickLink
-                        icon={<MdFlight size={20} />}
-                        text="Best Flight Deals"
-                      />
-                      <QuickLink
-                        icon={<MdTrain size={20} />}
-                        text="Metro"
-                        badge="NEW"
-                      />
-                      <QuickLink
-                        icon={<MdCardGiftcard size={20} />}
-                        text="Gift Cards"
-                      />
-                      <QuickLink
-                        icon={<MdLocalTaxi size={20} />}
-                        text="Forex Cash & Cards"
-                      />
-                      <QuickLink
-                        icon={<MdBeachAccess size={20} />}
-                        text="EMT Airport Experience"
-                      />
-                      <QuickLink
-                        icon={<MdCardGiftcard size={20} />}
-                        text="EMT Cards"
-                      />
-                      <QuickLink
-                        icon={<MdHotel size={20} />}
-                        text="EasyDarshan"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            // Flights Content
+            <FlightsContent
+              currentUser={currentUser}
+              showProfileDropdown={showProfileDropdown}
+              setShowProfileDropdown={setShowProfileDropdown}
+              onSettings={() => router.push("/flights/settings")}
+              onLogout={logout}
+              tripType={tripType}
+              setTripType={setTripType}
+              travellers={travellers}
+              travelClass={travelClass}
+            />
           )}
         </div>
       </div>
@@ -3064,105 +1420,5 @@ export default function FlightsPageAuthenticated() {
         />
       )}
     </div>
-  );
-}
-// TripTypeButton Component
-function TripTypeButton({
-  children,
-  active,
-  onClick,
-}: {
-  children: React.ReactNode;
-  active: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className={`px-5 py-2 text-sm font-medium rounded-full transition-colors ${
-        active
-          ? "bg-white text-blue-600"
-          : "bg-white/20 text-white hover:bg-white/30"
-      }`}
-    >
-      {children}
-    </button>
-  );
-}
-
-// SpecialFareCheckbox Component
-function SpecialFareCheckbox({ label }: { label: string }) {
-  return (
-    <label className="flex items-center space-x-2 cursor-pointer">
-      <input
-        type="radio"
-        name="specialFare"
-        className="w-4 h-4 text-blue-600 bg-white border-white focus:ring-blue-500"
-      />
-      <span className="text-white text-sm">{label}</span>
-    </label>
-  );
-}
-
-// QuickLink Component
-function QuickLink({
-  icon,
-  text,
-  badge,
-}: {
-  icon: React.ReactNode;
-  text: string;
-  badge?: string;
-}) {
-  return (
-    <div className="flex flex-col items-center space-y-2 cursor-pointer group">
-      <div className="relative">
-        <div className="text-gray-600 group-hover:text-blue-600 transition-colors">
-          {icon}
-        </div>
-        {badge && (
-          <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[8px] font-bold px-1 rounded">
-            {badge}
-          </span>
-        )}
-      </div>
-      <span className="text-xs text-gray-700 group-hover:text-blue-600 transition-colors text-center">
-        {text}
-      </span>
-    </div>
-  );
-}
-
-// SidebarButton Component
-function SidebarButton({
-  icon,
-  text,
-  active = false,
-  onClick,
-  badge,
-}: {
-  icon: React.ReactNode;
-  text: string;
-  active?: boolean;
-  onClick?: () => void;
-  badge?: string;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className={`w-full flex items-center space-x-2.5 px-2.5 py-2 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 ${
-        active
-          ? "bg-blue-50 text-blue-600 border border-blue-200 shadow-md"
-          : "text-gray-600 hover:bg-gray-50 hover:text-gray-900 hover:shadow-sm"
-      }`}
-    >
-      {icon}
-      <span className="text-xs flex-1 text-left">{text}</span>
-      {badge && (
-        <span className="ml-auto bg-purple-600 text-white text-[9px] px-1.5 py-0.5 rounded-full">
-          {badge}
-        </span>
-      )}
-    </button>
   );
 }

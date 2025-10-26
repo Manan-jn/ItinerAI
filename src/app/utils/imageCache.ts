@@ -176,6 +176,31 @@ export const preloadImages = async (
 };
 
 /**
+ * Helper function to check if URL is a Google Places photo URL
+ */
+const isGooglePlacesPhotoUrl = (url: string): boolean => {
+  if (!url || url.trim() === "") return false;
+  return url.includes('maps.googleapis.com/maps/api/place/photo');
+};
+
+/**
+ * Helper function to convert Google Places photo URL to proxy URL
+ */
+const convertToProxyUrl = (url: string, maxwidth: number = 400): string => {
+  if (!isGooglePlacesPhotoUrl(url)) return url;
+  
+  try {
+    const urlObj = new URL(url);
+    const photoReference = urlObj.searchParams.get('photoreference');
+    if (!photoReference) return url;
+    
+    return `/api/place-photo?photoreference=${photoReference}&maxwidth=${maxwidth}`;
+  } catch {
+    return url;
+  }
+};
+
+/**
  * Extract all image URLs from places JSON data
  */
 export const extractImageUrlsFromPlacesData = (placesData: any): string[] => {
@@ -185,8 +210,32 @@ export const extractImageUrlsFromPlacesData = (placesData: any): string[] => {
     const trips = placesData?.trip_suggestions?.trips || [];
     
     trips.forEach((trip: any) => {
+      // Extract from trip_route (new structure)
+      if (trip.trip_route && Array.isArray(trip.trip_route)) {
+        trip.trip_route.forEach((place: any) => {
+          if (place.photos && Array.isArray(place.photos)) {
+            place.photos.forEach((photo: string) => {
+              if (photo && photo.trim() !== "") {
+                try {
+                  const urlObj = new URL(photo);
+                  if (urlObj.protocol === "http:" || urlObj.protocol === "https:") {
+                    // Convert Google Places URLs to proxy URLs for caching
+                    const processedUrl = isGooglePlacesPhotoUrl(photo) 
+                      ? convertToProxyUrl(photo, 400) 
+                      : photo;
+                    urls.add(processedUrl);
+                  }
+                } catch {
+                  // Invalid URL, skip
+                }
+              }
+            });
+          }
+        });
+      }
+
+      // Extract from day_wise_plan (legacy structure)
       const dayWisePlan = trip?.day_wise_plan || [];
-      
       dayWisePlan.forEach((day: any) => {
         const cities = day?.cities || [];
         
@@ -195,11 +244,14 @@ export const extractImageUrlsFromPlacesData = (placesData: any): string[] => {
           
           photos.forEach((photo: string) => {
             if (photo && photo.trim() !== "") {
-              // Validate URL format
               try {
                 const urlObj = new URL(photo);
                 if (urlObj.protocol === "http:" || urlObj.protocol === "https:") {
-                  urls.add(photo);
+                  // Convert Google Places URLs to proxy URLs for caching
+                  const processedUrl = isGooglePlacesPhotoUrl(photo) 
+                    ? convertToProxyUrl(photo, 400) 
+                    : photo;
+                  urls.add(processedUrl);
                 }
               } catch {
                 // Invalid URL, skip

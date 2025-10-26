@@ -22,7 +22,7 @@ import { useAuth } from "../contexts/AuthContext";
 import Dashboard from "../components/Dashboard";
 import SessionDebugFlights from "../components/SessionDebugFlights";
 import FlashcardsWidgetWhiteTheme from "../components/FlashcardsWidgetWhiteTheme";
-import { FlashcardsWidgetRef } from "../components/FlashcardsWidget";
+import type { FlashcardsWidgetRef } from "../components/flashcards/types";
 import FlightsWidget from "../components/FlightsWidget";
 import ItineraryWidget from "../components/ItineraryWidget";
 import LoginModalWhite from "../components/auth/LoginModalWhite";

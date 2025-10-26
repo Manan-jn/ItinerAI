@@ -1,7 +1,8 @@
 "use client";
 
 import React, { forwardRef } from "react";
-import FlashcardsWidget, { FlashcardsWidgetRef } from "./FlashcardsWidget";
+import FlashcardsWidget from "./FlashcardsWidget";
+import { FlashcardsWidgetRef } from "./flashcards/types";
 
 interface FlashcardsWidgetWhiteThemeProps {
   isVisible: boolean;

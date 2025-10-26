@@ -7,7 +7,8 @@ import TabPanel from "../../../temp_non_flights_code/unused_components/TabPanel"
 import ProcessingIndicator from "../../../temp_non_flights_code/unused_components/ProcessingIndicator";
 import APILoader from "../../../temp_non_flights_code/unused_components/APILoader";
 import SessionDebug from "../../../temp_non_flights_code/unused_components/SessionDebug";
-import FlashcardsWidget, { FlashcardsWidgetRef } from "./FlashcardsWidget";
+import FlashcardsWidget from "./FlashcardsWidget";
+import type { FlashcardsWidgetRef } from "./flashcards/types";
 import ConveyanceWidget from "../../../temp_non_flights_code/unused_components/ConveyanceWidget";
 import { getSessionId, getUserId } from "../utils/sessionManager";
 import {
