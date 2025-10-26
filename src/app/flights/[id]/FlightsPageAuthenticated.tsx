@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FiChevronDown, FiUser, FiCalendar } from "react-icons/fi";
 import {
@@ -25,8 +25,14 @@ import FlashcardsWidgetWhiteTheme from "../../components/FlashcardsWidgetWhiteTh
 import { FlashcardsWidgetRef } from "../../components/FlashcardsWidget";
 import FlightsWidget from "../../components/FlightsWidget";
 import ItineraryWidget from "../../components/ItineraryWidget";
+import DateSelectorWidget from "../../components/DateSelectorWidget";
 import OnboardingModalWhite from "../../components/auth/OnboardingModalWhite";
 import { getSessionId } from "../../utils/sessionManager";
+import {
+  imageDownloader,
+  extractImageUrls,
+  validateAndPopulateTripData,
+} from "../../utils/imageDownloader";
 
 type SectionType =
   | "flights"
@@ -72,7 +78,11 @@ export default function FlightsPageAuthenticated() {
   const [showFlashcards, setShowFlashcards] = useState(false);
   const [showFlights, setShowFlights] = useState(false);
   const [showItinerary, setShowItinerary] = useState(false);
+  const [showDateSelector, setShowDateSelector] = useState(false);
   const [selectedTrip, setSelectedTrip] = useState<any>(null);
+  const [tripSuggestions, setTripSuggestions] = useState<any[]>([]);
+  const [isParsingTrips, setIsParsingTrips] = useState(false);
+  const [showTripLoader, setShowTripLoader] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const flashcardsRef = useRef<FlashcardsWidgetRef>(null);
@@ -217,84 +227,54 @@ export default function FlightsPageAuthenticated() {
     }
   }, [messages, isLoading]);
 
-  // Retry function for API calls when message is empty (same as dashboard)
-  const makeAPICallWithRetry = async (
-    currentInput: string,
-    maxRetries: number = 5
-  ): Promise<any> => {
-    for (let attempt = 1; attempt <= maxRetries; attempt++) {
-      try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => {
-          console.log("Request timeout after 10 minutes");
-          controller.abort();
-        }, 600000);
+  // Simple API call function
+  const makeAPICall = async (currentInput: string): Promise<any> => {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => {
+      console.log("Request timeout after 2 minutes");
+      controller.abort();
+    }, 600000); // 2 minutes timeout
 
-        console.log(`Making API call (attempt ${attempt}/${maxRetries})...`);
+    try {
+      console.log("Making API call...");
 
-        const response = await fetch("https://agent-bigfit-api.com/api/chat", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            user_id: userId,
-            session_id: sessionId,
-            message: currentInput,
-          }),
-          signal: controller.signal,
-        });
-
-        clearTimeout(timeoutId);
-
-        console.log("FastAPI Request sent:", {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
           user_id: userId,
           session_id: sessionId,
           message: currentInput,
-        });
-        console.log("FastAPI Response status:", response.status);
+        }),
+        signal: controller.signal,
+      });
 
-        if (!response.ok) {
-          const errorText = await response.text();
-          console.error("FastAPI Error Response:", errorText);
-          throw new Error(
-            `FastAPI error! status: ${response.status}, message: ${errorText}`
-          );
-        }
+      clearTimeout(timeoutId);
 
-        const data = await response.json();
-        console.log("FastAPI Response:", data);
+      console.log("API Request sent:", {
+        user_id: userId,
+        session_id: sessionId,
+        message: currentInput,
+      });
+      console.log("API Response status:", response.status);
 
-        if (!data.message || data.message.trim() === "") {
-          console.log(
-            `Empty message received on attempt ${attempt}/${maxRetries}`
-          );
-
-          if (attempt === maxRetries) {
-            console.log("Max retries reached, returning empty response");
-            return data;
-          }
-
-          console.log(`Retrying... (attempt ${attempt + 1}/${maxRetries})`);
-          continue;
-        }
-
-        console.log(`Success on attempt ${attempt}/${maxRetries}`);
-        return data;
-      } catch (error) {
-        console.error(`Error on attempt ${attempt}/${maxRetries}:`, error);
-
-        if (attempt === maxRetries) {
-          throw error;
-        }
-
-        console.log(
-          `Retrying after error... (attempt ${attempt + 1}/${maxRetries})`
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("API Error Response:", errorData);
+        throw new Error(
+          errorData.error || `API error! status: ${response.status}`
         );
       }
-    }
 
-    throw new Error("Unexpected end of retry function");
+      const data = await response.json();
+      console.log("API Response received:", data);
+      return data;
+    } catch (error) {
+      clearTimeout(timeoutId);
+      throw error;
+    }
   };
 
   const handleChatSubmit = async (e: React.FormEvent) => {
@@ -319,37 +299,296 @@ export default function FlightsPageAuthenticated() {
     setIsLoading(true);
 
     try {
-      const data = await makeAPICallWithRetry(currentInput, 5);
+      const data = await makeAPICall(currentInput);
+
+      // Check if response contains trip suggestions
+      let parsedTripSuggestions: any[] = [];
+      let shouldShowPlaces = false;
+      let messageContent = "";
+
+      try {
+        console.log("Full API response data:", JSON.stringify(data, null, 2));
+
+        // Enhanced trip detection - Check for trip response at ANY level
+        const isTripResponse =
+          data.response_type === "trip" ||
+          (data.message &&
+            typeof data.message === "object" &&
+            data.message.response_type === "trip");
+
+        // Show trip loader IMMEDIATELY for ANY trip response detected
+        if (isTripResponse) {
+          console.log("🎯 Trip response detected - showing loader immediately");
+          console.log("🎯 Response data:", {
+            root_response_type: data.response_type,
+            nested_response_type: data.message?.response_type,
+          });
+
+          // Force loader to show immediately
+          setShowTripLoader(true);
+          setIsParsingTrips(true);
+
+          // Safety check - ensure loader stays visible for minimum duration
+          setTimeout(() => {
+            console.log("🎯 Safety check: Ensuring loader is still visible");
+            if (!showTripLoader) {
+              console.log(
+                "🎯 Safety: Loader was hidden prematurely, re-showing"
+              );
+              setShowTripLoader(true);
+            }
+          }, 100);
+        } else {
+          console.log("❌ No trip response detected", {
+            root_response_type: data.response_type,
+            nested_response_type: data.message?.response_type,
+          });
+        }
+
+        // Handle different response structures
+        // Case 1: Response type at root level (new format from temp.json)
+        if (data.response_type === "trip" && data.message) {
+          console.log(
+            "Detected trip response at root level (temp.json format)"
+          );
+
+          messageContent =
+            data.message.message ||
+            "Here are some amazing trip suggestions for you!";
+
+          // Extract trip suggestions directly from data.message.trips
+          if (data.message.trips && Array.isArray(data.message.trips)) {
+            // Validate and populate missing fields
+            parsedTripSuggestions = validateAndPopulateTripData(
+              data.message.trips
+            );
+            shouldShowPlaces = true;
+
+            console.log(
+              `Parsed ${parsedTripSuggestions.length} trip suggestions from root level (data.message.trips)`
+            );
+            console.log("Validated trip suggestions:", parsedTripSuggestions);
+          }
+        }
+        // Case 2: Response with trip_suggestions wrapper
+        else if (data.response_type === "trip" && data.trip_suggestions) {
+          console.log("Detected trip response with trip_suggestions wrapper");
+
+          messageContent =
+            data.trip_suggestions.message ||
+            "Here are some amazing trip suggestions for you!";
+
+          // Extract trip suggestions
+          if (
+            data.trip_suggestions.trips &&
+            Array.isArray(data.trip_suggestions.trips)
+          ) {
+            // Validate and populate missing fields
+            parsedTripSuggestions = validateAndPopulateTripData(
+              data.trip_suggestions.trips
+            );
+            shouldShowPlaces = true;
+
+            console.log(
+              `Parsed ${parsedTripSuggestions.length} trip suggestions from trip_suggestions wrapper`
+            );
+            console.log("Validated trip suggestions:", parsedTripSuggestions);
+          }
+        }
+        // Case 3: Response nested under data.message (old format)
+        else if (data.message && typeof data.message === "object") {
+          const messageData = data.message;
+
+          console.log("Checking nested message format");
+
+          if (messageData.response_type === "text" && messageData.message) {
+            console.log("Detected text response");
+            messageContent = messageData.message;
+          } else if (messageData.response_type === "trip") {
+            console.log("Detected trip response in nested format");
+            console.log("messageData structure:", Object.keys(messageData));
+
+            messageContent =
+              messageData.message ||
+              "Here are some amazing trip suggestions for you!";
+
+            // Case A: trips array directly under messageData (actual current API format)
+            if (messageData.trips && Array.isArray(messageData.trips)) {
+              console.log("Found trips array directly under messageData");
+              // Validate and populate missing fields
+              parsedTripSuggestions = validateAndPopulateTripData(
+                messageData.trips
+              );
+              shouldShowPlaces = true;
+
+              console.log(
+                `Parsed ${parsedTripSuggestions.length} trip suggestions from messageData.trips`
+              );
+              console.log("Validated trip suggestions:", parsedTripSuggestions);
+            }
+            // Case B: trips nested under trip_suggestions (alternative format)
+            else if (messageData.trip_suggestions) {
+              console.log(
+                "Trip suggestions detected in response:",
+                messageData.trip_suggestions
+              );
+
+              // Extract trip suggestions
+              if (
+                messageData.trip_suggestions.trips &&
+                Array.isArray(messageData.trip_suggestions.trips)
+              ) {
+                // Validate and populate missing fields
+                parsedTripSuggestions = validateAndPopulateTripData(
+                  messageData.trip_suggestions.trips
+                );
+                shouldShowPlaces = true;
+
+                console.log(
+                  `Parsed ${parsedTripSuggestions.length} trip suggestions from messageData.trip_suggestions.trips`
+                );
+                console.log(
+                  "Validated trip suggestions:",
+                  parsedTripSuggestions
+                );
+              }
+            } else {
+              console.warn("No trips array found in trip response!");
+            }
+          } else {
+            // Fallback for other response types
+            console.log("Using fallback message content");
+            messageContent = messageData.message || JSON.stringify(messageData);
+          }
+        }
+        // Case 4: String response (old format)
+        else if (typeof data.message === "string") {
+          messageContent = data.message;
+        }
+        // Case 5: Fallback
+        else {
+          messageContent =
+            "Sorry, I couldn't process your request. Please try again.";
+        }
+      } catch (parseError) {
+        console.error("Error parsing message data:", parseError);
+        messageContent =
+          "Sorry, I couldn't process your request. Please try again.";
+      }
 
       const assistantMessage = {
         id: (Date.now() + 1).toString(),
-        content:
-          data.message ||
-          "Sorry, I couldn't process your request. Please try again.",
+        content: messageContent,
         role: "assistant" as const,
         timestamp: new Date(),
       };
 
       setMessages((prev) => [...prev, assistantMessage]);
+
+      // Handle trip response with loader timing
+      const detectedTripResponse =
+        data.response_type === "trip" ||
+        (data.message &&
+          typeof data.message === "object" &&
+          data.message.response_type === "trip");
+
+      if (detectedTripResponse) {
+        const loaderStartTime = Date.now();
+        const minLoaderDuration = 4000; // Minimum 4 seconds display time
+
+        console.log("🎯 Starting trip loader for 4 seconds minimum");
+
+        // If trip suggestions were found, process them
+        if (shouldShowPlaces && parsedTripSuggestions.length > 0) {
+          // Extract all image URLs from trip suggestions
+          const imageUrls = extractImageUrls(parsedTripSuggestions);
+          console.log(`Found ${imageUrls.length} images to download`);
+
+          // Download images in the background while showing loader
+          const downloadPromise = imageDownloader
+            .downloadImages(imageUrls)
+            .then((downloadedImages) => {
+              console.log(
+                `Successfully downloaded ${downloadedImages.size} images`
+              );
+              return downloadedImages;
+            })
+            .catch((error) => {
+              console.error("Error downloading images:", error);
+              return new Map<string, string>(); // Return empty map on error
+            });
+
+          // Transform the trip data to match FlashcardsWidget's expected format
+          const transformedTrips = transformTripData(parsedTripSuggestions);
+
+          console.log("Original trip suggestions:", parsedTripSuggestions);
+          console.log("Transformed trip suggestions:", transformedTrips);
+
+          // Wait for both images and minimum loader duration
+          Promise.all([
+            Promise.race([
+              downloadPromise,
+              new Promise((resolve) => setTimeout(resolve, 5000)), // Max 5 seconds wait for images
+            ]),
+            new Promise((resolve) => setTimeout(resolve, minLoaderDuration)), // Minimum loader duration
+          ]).then(() => {
+            setTripSuggestions(transformedTrips);
+
+            console.log(
+              "🎯 Trip loader minimum duration completed, hiding loader"
+            );
+
+            // Hide trip loader with dissolving effect and show flashcards
+            setTimeout(() => {
+              setShowTripLoader(false);
+
+              setTimeout(() => {
+                // Automatically show the places widget after loader dissolves
+                setShowFlashcards(true);
+                setShowFlights(false);
+                setShowItinerary(false);
+                setSelectedTrip(null);
+                setIsParsingTrips(false);
+
+                // Clear selection in flashcards widget
+                if (flashcardsRef.current) {
+                  flashcardsRef.current.clearSelection();
+                }
+
+                console.log("Places widget activated with trip suggestions");
+              }, 400); // Wait for dissolve animation
+            }, 100); // Small buffer before hiding loader
+          });
+        } else {
+          // Trip response but no valid trip suggestions found
+          console.log(
+            "🎯 Trip response detected but no valid suggestions found"
+          );
+
+          // Still show loader for minimum duration, then hide
+          setTimeout(() => {
+            console.log(
+              "🎯 Trip loader duration completed, hiding loader (no suggestions)"
+            );
+            setShowTripLoader(false);
+            setIsParsingTrips(false);
+          }, minLoaderDuration);
+        }
+      } else {
+        // Non-trip response - hide loader immediately
+        setIsParsingTrips(false);
+        setShowTripLoader(false);
+      }
     } catch (error) {
-      console.error("Error calling FastAPI:", error);
+      console.error("Error calling API:", error);
 
       let errorContent =
-        "I'm sorry, I'm having trouble connecting right now. Please try again.";
+        "I'm sorry, I'm having trouble right now. Please try again.";
 
       if (error instanceof Error && error.name === "AbortError") {
-        console.log("Request aborted due to timeout");
-        errorContent =
-          "Request timeout - The AI is taking longer than expected. Please try again.";
-      } else if (
-        error instanceof TypeError &&
-        error.message.includes("fetch")
-      ) {
-        console.error("Network error - possibly CORS or connectivity issue");
-        errorContent =
-          "Network error - Unable to connect to AI service. Please check your internet connection and try again.";
+        errorContent = "Request timeout - Please try again.";
       } else if (error instanceof Error) {
-        errorContent = `Connection error: ${error.message}. Please try again.`;
+        errorContent = `Error: ${error.message}`;
       }
 
       const errorMessage = {
@@ -360,6 +599,10 @@ export default function FlightsPageAuthenticated() {
       };
 
       setMessages((prev) => [...prev, errorMessage]);
+
+      // Hide loader on error
+      setIsParsingTrips(false);
+      setShowTripLoader(false);
     } finally {
       setIsLoading(false);
     }
@@ -370,6 +613,175 @@ export default function FlightsPageAuthenticated() {
       e.preventDefault();
       handleChatSubmit(e);
     }
+  };
+
+  // Transform trip data from API format to FlashcardsWidget format
+  const transformTripData = (trips: any[]): any[] => {
+    console.log("=== TRANSFORMING TRIPS DATA ===");
+    console.log("Number of trips to transform:", trips.length);
+
+    return trips.map((trip, tripIdx) => {
+      console.log(
+        `\n--- Processing trip ${tripIdx + 1}: ${trip.trip_title} ---`
+      );
+      console.log("Raw trip data:", JSON.stringify(trip, null, 2));
+
+      // Create a map of cities from trip_route
+      const cityMap = new Map();
+      if (trip.trip_route && Array.isArray(trip.trip_route)) {
+        console.log(`Trip route has ${trip.trip_route.length} cities`);
+        trip.trip_route.forEach((city: any) => {
+          const cityData = {
+            name: city.place_name || city.name,
+            address: city.address || city.place_name || city.name,
+            map_url: city.map_url || "",
+            lat: city.lat || "0",
+            long: city.long || "0",
+            photos: city.photos || [],
+            place_id: city.place_id || "",
+          };
+          cityMap.set(city.place_name || city.name, cityData);
+          console.log(
+            `  - Mapped city: ${city.place_name || city.name}`,
+            cityData
+          );
+        });
+      } else {
+        console.log(
+          "No trip_route found in trip data - will create from day_wise_plan"
+        );
+      }
+
+      // Transform day_wise_plan to include cities
+      const transformedDayPlan =
+        trip.day_wise_plan?.map((day: any) => {
+          const cities: any[] = [];
+          let cityName = null;
+
+          console.log(`  Day ${day.day_number}:`);
+          console.log(`    - stay_details:`, day.stay_details);
+          console.log(`    - conveyance_details:`, day.conveyance_details);
+
+          // Extract city name with priority: stay_details > conveyance to_city
+          if (
+            day.stay_details?.is_required &&
+            day.stay_details?.city &&
+            day.stay_details.city !== "user_location"
+          ) {
+            cityName = day.stay_details.city;
+            console.log(`    - City from stay_details: ${cityName}`);
+          } else if (
+            day.conveyance_details?.is_required &&
+            day.conveyance_details?.to_city &&
+            day.conveyance_details.to_city !== "user_location"
+          ) {
+            cityName = day.conveyance_details.to_city;
+            console.log(`    - City from conveyance to_city: ${cityName}`);
+          } else if (
+            day.conveyance_details?.is_required &&
+            day.conveyance_details?.from_city &&
+            day.conveyance_details?.to_city &&
+            day.conveyance_details.from_city ===
+              day.conveyance_details.to_city &&
+            day.conveyance_details.to_city !== "user_location"
+          ) {
+            cityName = day.conveyance_details.to_city;
+            console.log(`    - City from same from/to city: ${cityName}`);
+          } else if (
+            day.conveyance_details?.is_required &&
+            day.conveyance_details?.from_city &&
+            day.conveyance_details.from_city !== "user_location"
+          ) {
+            cityName = day.conveyance_details.from_city;
+            console.log(`    - City from conveyance from_city: ${cityName}`);
+          }
+
+          if (cityName) {
+            const cityInfo = cityMap.get(cityName);
+
+            if (cityInfo) {
+              cities.push(cityInfo);
+              console.log(`    - Added city info from map: ${cityName}`);
+            } else {
+              // Create a basic city info if not found in trip_route
+              const basicCityInfo = {
+                name: cityName,
+                address: cityName,
+                map_url: "",
+                lat: "0",
+                long: "0",
+                photos: [],
+                place_id: "",
+              };
+              cities.push(basicCityInfo);
+              console.log(`    - Created basic city info for: ${cityName}`);
+            }
+          } else {
+            console.log(
+              `    - No city found for day ${day.day_number} - checking activities`
+            );
+          }
+
+          // If no city found yet, try to infer from must_do_activities or trip_route
+          if (
+            cities.length === 0 &&
+            day.must_do_activities &&
+            day.must_do_activities.length > 0
+          ) {
+            // Use trip_route cities if available
+            if (trip.trip_route && trip.trip_route.length > 0) {
+              const firstCity = trip.trip_route[0];
+              const fallbackCity = {
+                name: firstCity.place_name || firstCity.name,
+                address:
+                  firstCity.address || firstCity.place_name || firstCity.name,
+                map_url: firstCity.map_url || "",
+                lat: firstCity.lat || "0",
+                long: firstCity.long || "0",
+                photos: firstCity.photos || [],
+                place_id: firstCity.place_id || "",
+              };
+              cities.push(fallbackCity);
+              console.log(
+                `    - Fallback: Using first city from trip_route: ${fallbackCity.name}`
+              );
+            }
+          }
+
+          return {
+            day_number: day.day_number,
+            cities: cities,
+            must_do_activities: day.must_do_activities || [],
+          };
+        }) || [];
+
+      console.log(
+        `Transformed ${transformedDayPlan.length} days for trip ${tripIdx + 1}`
+      );
+
+      // Return transformed trip with theme instead of themes
+      const transformed = {
+        trip_title: trip.trip_title,
+        no_of_days: trip.no_of_days,
+        estimated_budget: trip.estimated_budget,
+        best_time_to_visit: trip.best_time_to_visit,
+        theme: trip.themes || trip.theme || [], // Handle both 'themes' and 'theme'
+        day_wise_plan: transformedDayPlan,
+      };
+
+      console.log(`Final transformed trip ${tripIdx + 1}:`);
+      console.log("  - trip_title:", transformed.trip_title);
+      console.log("  - no_of_days:", transformed.no_of_days);
+      console.log("  - estimated_budget:", transformed.estimated_budget);
+      console.log("  - best_time_to_visit:", transformed.best_time_to_visit);
+      console.log("  - theme:", transformed.theme);
+      console.log(
+        "  - day_wise_plan length:",
+        transformed.day_wise_plan.length
+      );
+
+      return transformed;
+    });
   };
 
   const adjustTextareaHeight = () => {
@@ -406,6 +818,234 @@ export default function FlightsPageAuthenticated() {
     "Budget backpacking through Europe",
     "Family vacation ideas for summer",
   ];
+
+  // Enhanced Trip Loader Component with better messaging and animations
+  const TripLoader = () => {
+    const [currentMessage, setCurrentMessage] = useState("");
+    const [currentSubMessage, setCurrentSubMessage] = useState("");
+    const [isVisible, setIsVisible] = useState(true);
+    const [messageIndex, setMessageIndex] = useState(0);
+
+    const loadingMessages = [
+      {
+        main: "Analyzing your travel preferences",
+        sub: "Understanding what makes your perfect trip",
+      },
+      {
+        main: "Discovering amazing destinations",
+        sub: "Finding places that match your interests",
+      },
+      {
+        main: "Crafting personalized itineraries",
+        sub: "Creating experiences you'll never forget",
+      },
+      {
+        main: "Curating the perfect journey",
+        sub: "Tailoring everything just for you",
+      },
+      {
+        main: "Finding hidden gems",
+        sub: "Uncovering destinations off the beaten path",
+      },
+    ];
+
+    React.useEffect(() => {
+      if (showTripLoader) {
+        console.log(
+          "🎯 TripLoader: Showing loader - setting visibility to true"
+        );
+        setIsVisible(true);
+
+        // Set initial message
+        const initialMessage =
+          loadingMessages[Math.floor(Math.random() * loadingMessages.length)];
+        setCurrentMessage(initialMessage.main);
+        setCurrentSubMessage(initialMessage.sub);
+        setMessageIndex(0);
+
+        // Cycle through messages every 2.5 seconds
+        const messageInterval = setInterval(() => {
+          setMessageIndex((prev) => {
+            const nextIndex = (prev + 1) % loadingMessages.length;
+            setCurrentMessage(loadingMessages[nextIndex].main);
+            setCurrentSubMessage(loadingMessages[nextIndex].sub);
+            return nextIndex;
+          });
+        }, 2500);
+
+        return () => clearInterval(messageInterval);
+      } else {
+        console.log("🎯 TripLoader: Hiding loader - starting dissolve");
+        // allow a smooth dissolve before unmounting
+        const t = setTimeout(() => {
+          setIsVisible(false);
+          console.log("🎯 TripLoader: Loader fully dissolved");
+        }, 650);
+        return () => clearTimeout(t);
+      }
+    }, [showTripLoader]);
+
+    if (!showTripLoader && !isVisible) {
+      return null;
+    }
+
+    return (
+      <div
+        className={`absolute inset-0 z-50 bg-white flex items-center justify-center transition-all duration-700 ease-out ${
+          showTripLoader && isVisible
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        }`}
+        style={{
+          background:
+            "linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #ffffff 100%)",
+        }}
+      >
+        {/* Loading Animation Background */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute -inset-10 opacity-20">
+            <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-100 rounded-full mix-blend-multiply filter blur-xl animate-blob"></div>
+            <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-purple-100 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-2000"></div>
+            <div className="absolute bottom-1/4 left-1/2 w-64 h-64 bg-pink-100 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-4000"></div>
+          </div>
+        </div>
+
+        <div className="relative text-center px-6 max-w-md">
+          {/* Main Icon */}
+          <div className="mb-6 relative">
+            <div className="w-16 h-16 mx-auto bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg animate-float">
+              <svg
+                className="w-8 h-8 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                />
+              </svg>
+            </div>
+            {/* Pulsing ring */}
+            <div className="absolute inset-0 w-16 h-16 mx-auto border-4 border-blue-200 rounded-2xl animate-ping opacity-20"></div>
+          </div>
+
+          {/* Main Message */}
+          <p className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 mb-2 animate-text-reveal">
+            {currentMessage}
+          </p>
+
+          {/* Sub Message */}
+          <p className="text-base text-gray-600 mb-6 animate-subtle-fade">
+            {currentSubMessage}
+          </p>
+
+          {/* Progress Dots */}
+          <div className="flex justify-center space-x-2 mb-4">
+            {[0, 1, 2].map((i) => (
+              <div
+                key={i}
+                className={`w-2 h-2 rounded-full transition-all duration-500 ${
+                  i === messageIndex % 3
+                    ? "bg-blue-500 scale-125"
+                    : "bg-gray-300"
+                }`}
+                style={{
+                  animationDelay: `${i * 200}ms`,
+                }}
+              />
+            ))}
+          </div>
+
+          {/* Status Text */}
+          <p className="text-sm text-gray-500 animate-pulse">
+            This may take a few moments...
+          </p>
+        </div>
+
+        <style jsx>{`
+          @keyframes text-reveal {
+            0% {
+              opacity: 0;
+              transform: translateY(10px);
+              letter-spacing: 0.5px;
+            }
+            100% {
+              opacity: 1;
+              transform: translateY(0);
+              letter-spacing: 0;
+            }
+          }
+
+          @keyframes subtle-fade {
+            0% {
+              opacity: 0;
+              transform: translateY(5px);
+            }
+            100% {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+
+          @keyframes float {
+            0%,
+            100% {
+              transform: translateY(0px);
+            }
+            50% {
+              transform: translateY(-10px);
+            }
+          }
+
+          @keyframes blob {
+            0%,
+            100% {
+              transform: translate(0px, 0px) scale(1);
+            }
+            33% {
+              transform: translate(30px, -50px) scale(1.1);
+            }
+            66% {
+              transform: translate(-20px, 20px) scale(0.9);
+            }
+          }
+
+          .animate-text-reveal {
+            animation: text-reveal 800ms cubic-bezier(0.22, 1, 0.36, 1) both;
+          }
+
+          .animate-subtle-fade {
+            animation: subtle-fade 1000ms ease-out 300ms both;
+          }
+
+          .animate-float {
+            animation: float 3s ease-in-out infinite;
+          }
+
+          .animate-blob {
+            animation: blob 7s infinite;
+          }
+
+          .animation-delay-2000 {
+            animation-delay: 2s;
+          }
+
+          .animation-delay-4000 {
+            animation-delay: 4s;
+          }
+        `}</style>
+      </div>
+    );
+  };
 
   if (!currentUser) {
     return null; // This shouldn't happen due to the parent component's validation
@@ -1150,17 +1790,38 @@ export default function FlightsPageAuthenticated() {
                         <span className="text-xs text-gray-500">Places</span>
                         <button
                           onClick={() => {
-                            setShowFlashcards(!showFlashcards);
+                            // If turning OFF flashcards
                             if (showFlashcards) {
+                              setShowFlashcards(false);
                               setSelectedTrip(null);
                               if (flashcardsRef.current) {
                                 flashcardsRef.current.clearSelection();
                               }
                             }
-                            // Close other widgets if opening places
-                            if (!showFlashcards) {
+                            // If turning ON flashcards - show trip loader first
+                            else {
+                              console.log(
+                                "Places toggle: Showing trip loader for 4 seconds"
+                              );
+                              setShowTripLoader(true);
+                              setIsParsingTrips(true);
                               setShowFlights(false);
                               setShowItinerary(false);
+                              setShowDateSelector(false);
+
+                              // Hide trip loader after 4 seconds with dissolve effect
+                              setTimeout(() => {
+                                setShowTripLoader(false);
+
+                                setTimeout(() => {
+                                  // Show flashcards after loader dissolves
+                                  setShowFlashcards(true);
+                                  setIsParsingTrips(false);
+                                  console.log(
+                                    "Places toggle: Flashcards activated after 4 second loader"
+                                  );
+                                }, 400); // Wait for dissolve animation
+                              }, 4000); // Show loader for 4 seconds
                             }
                           }}
                           className={`relative inline-flex h-5 w-9 items-center rounded-full transition-all duration-300 ${
@@ -1188,6 +1849,7 @@ export default function FlightsPageAuthenticated() {
                             if (!showFlights) {
                               setShowFlashcards(false);
                               setShowItinerary(false);
+                              setShowDateSelector(false);
                               setSelectedTrip(null);
                               if (flashcardsRef.current) {
                                 flashcardsRef.current.clearSelection();
@@ -1219,6 +1881,7 @@ export default function FlightsPageAuthenticated() {
                             if (!showItinerary) {
                               setShowFlashcards(false);
                               setShowFlights(false);
+                              setShowDateSelector(false);
                               setSelectedTrip(null);
                               if (flashcardsRef.current) {
                                 flashcardsRef.current.clearSelection();
@@ -1235,6 +1898,40 @@ export default function FlightsPageAuthenticated() {
                           <span
                             className={`inline-block h-3 w-3 transform rounded-full bg-white shadow-sm transition-transform ${
                               showItinerary ? "translate-x-5" : "translate-x-1"
+                            }`}
+                          />
+                        </button>
+                      </div>
+
+                      {/* Date Selector Toggle */}
+                      <div className="flex items-center space-x-2">
+                        <span className="text-xs text-gray-500">Dates</span>
+                        <button
+                          onClick={() => {
+                            setShowDateSelector(!showDateSelector);
+                            // Close other widgets if opening date selector
+                            if (!showDateSelector) {
+                              setShowFlashcards(false);
+                              setShowFlights(false);
+                              setShowItinerary(false);
+                              setSelectedTrip(null);
+                              if (flashcardsRef.current) {
+                                flashcardsRef.current.clearSelection();
+                              }
+                            }
+                          }}
+                          className={`relative inline-flex h-5 w-9 items-center rounded-full transition-all duration-300 ${
+                            showDateSelector
+                              ? "bg-gradient-to-r from-pink-500 to-purple-500 border-pink-400 shadow-md shadow-pink-200"
+                              : "bg-gray-300 border-gray-400 hover:bg-gray-400"
+                          } border`}
+                          title="Toggle Date Selector"
+                        >
+                          <span
+                            className={`inline-block h-3 w-3 transform rounded-full bg-white shadow-sm transition-transform ${
+                              showDateSelector
+                                ? "translate-x-5"
+                                : "translate-x-1"
                             }`}
                           />
                         </button>
@@ -1434,10 +2131,22 @@ export default function FlightsPageAuthenticated() {
                       }}
                     />
                   </div>
+                ) : showDateSelector ? (
+                  // DateSelectorWidget - Full Screen (no chat input visible)
+                  <div className="flex-1 overflow-hidden">
+                    <DateSelectorWidget
+                      isVisible={showDateSelector}
+                      onToggle={() => {
+                        setShowDateSelector(false);
+                      }}
+                    />
+                  </div>
                 ) : (
                   <>
                     {/* Messages Container - Scrollable */}
-                    <div className="flex-1 overflow-y-auto p-6">
+                    <div className="flex-1 overflow-y-auto p-6 relative">
+                      {/* Trip Loader - Only covers chat area */}
+                      <TripLoader />
                       <div className="max-w-4xl mx-auto h-full">
                         {showFlights ? (
                           // FlightsWidget
@@ -1464,6 +2173,11 @@ export default function FlightsPageAuthenticated() {
                                   setShowFlashcards(false);
                                   setSelectedTrip(null);
                                 }}
+                                trips={
+                                  tripSuggestions.length > 0
+                                    ? tripSuggestions
+                                    : undefined
+                                }
                                 rightPanelCollapsed={true}
                                 onTripSelect={setSelectedTrip}
                               />
@@ -1592,6 +2306,27 @@ export default function FlightsPageAuthenticated() {
                               </div>
                             )}
 
+                            {/* Trip Parsing indicator */}
+                            {isParsingTrips && (
+                              <div className="flex items-start gap-3">
+                                {/* AI Avatar */}
+                                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-purple-100 to-purple-200 border border-purple-300 flex items-center justify-center">
+                                  <MdExplore className="text-purple-600 text-sm" />
+                                </div>
+
+                                {/* Parsing Animation */}
+                                <div className="bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-200 shadow-sm rounded-2xl px-4 py-3 min-w-[200px]">
+                                  <div className="flex items-center space-x-2">
+                                    {/* Spinning icon */}
+                                    <div className="w-4 h-4 border-2 border-purple-300 border-t-purple-600 rounded-full animate-spin"></div>
+                                    <span className="text-xs text-purple-700 font-medium">
+                                      Preparing your trip suggestions...
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+
                             <div ref={messagesEndRef} />
                           </div>
                         )}
@@ -1599,7 +2334,7 @@ export default function FlightsPageAuthenticated() {
                     </div>
 
                     {/* Chat Input - Fixed at bottom, no shifting */}
-                    <div className="flex-shrink-0 bg-gradient-to-t from-white to-blue-50/20 border-t border-blue-100 px-6 py-4 relative">
+                    <div className="flex-shrink-0 bg-gradient-to-t from-white to-blue-50/20 border-t border-blue-100 px-6 py-6 relative">
                       {/* Selected Trip Snippet - Floating above chat */}
                       {selectedTrip && showFlashcards && (
                         <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-full max-w-md px-6 z-10 animate-slideUp">
@@ -1631,64 +2366,173 @@ export default function FlightsPageAuthenticated() {
                       )}
 
                       <div className="max-w-4xl mx-auto">
-                        <form onSubmit={handleChatSubmit} className="relative">
-                          <div className="flex items-end gap-2 bg-white rounded-2xl border-2 border-gray-200 p-2 focus-within:border-blue-400 focus-within:shadow-lg transition-all">
+                        <form
+                          onSubmit={handleChatSubmit}
+                          className="relative flex justify-center"
+                        >
+                          {/* Animated Chatbox Container */}
+                          <div className="itinerai-chatbox-container">
                             <textarea
                               ref={textareaRef}
+                              rows={1}
                               value={chatInput}
                               onChange={(e) => setChatInputText(e.target.value)}
                               onKeyDown={handleKeyDown}
-                              placeholder={
-                                showItinerary
-                                  ? "Ask about your itinerary..."
-                                  : showFlights
-                                  ? "Ask about flights..."
-                                  : showFlashcards
-                                  ? `Ask about ${
-                                      selectedTrip
-                                        ? selectedTrip.trip_title
-                                        : "places"
-                                    }...`
-                                  : "Ask me anything about your travel..."
-                              }
-                              className="flex-1 bg-transparent text-gray-900 placeholder-gray-400 resize-none outline-none min-h-[20px] max-h-[120px] text-sm leading-relaxed py-2 px-2 focus-ring"
-                              rows={1}
+                              placeholder="Ask ItinerAI"
+                              className="itinerai-chatbox-input"
                               disabled={isLoading}
                             />
                             <button
                               type="submit"
                               disabled={!chatInput.trim() || isLoading}
-                              className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 disabled:from-gray-300 disabled:to-gray-400 disabled:cursor-not-allowed text-white rounded-xl px-5 py-2 transition-all flex-shrink-0 font-medium text-sm shadow-md hover:shadow-lg disabled:shadow-none flex items-center gap-2"
+                              className="itinerai-chatbox-submit-btn"
                             >
-                              <span>Send</span>
                               <svg
-                                className="w-4 h-4"
+                                width="18"
+                                height="18"
+                                viewBox="0 0 24 24"
                                 fill="none"
                                 stroke="currentColor"
-                                viewBox="0 0 24 24"
+                                strokeWidth="2.5"
                               >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-                                />
+                                <polyline points="9 18 15 12 9 6"></polyline>
                               </svg>
                             </button>
                           </div>
-                          <p className="text-xs text-gray-500 mt-2 text-center">
-                            Press{" "}
-                            <kbd className="px-1.5 py-0.5 bg-gray-100 border border-gray-300 rounded text-xs">
-                              Enter
-                            </kbd>{" "}
-                            to send,{" "}
-                            <kbd className="px-1.5 py-0.5 bg-gray-100 border border-gray-300 rounded text-xs">
-                              Shift + Enter
-                            </kbd>{" "}
-                            for new line
-                          </p>
                         </form>
                       </div>
+
+                      {/* Inline Styles for the Chatbox */}
+                      <style jsx>{`
+                        .itinerai-chatbox-container {
+                          width: 260px;
+                          height: 50px;
+                          display: flex;
+                          align-items: center;
+                          background: linear-gradient(
+                            135deg,
+                            rgba(59, 130, 246, 0.1) 0%,
+                            rgba(147, 197, 253, 0.05) 100%
+                          );
+                          backdrop-filter: blur(20px);
+                          -webkit-backdrop-filter: blur(20px);
+                          border-radius: 25px;
+                          padding: 8px;
+                          gap: 8px;
+                          box-shadow: 0 4px 16px rgba(59, 130, 246, 0.15),
+                            0 2px 8px rgba(0, 0, 0, 0.05),
+                            inset 0 1px 0 rgba(255, 255, 255, 0.5);
+                          z-index: 10;
+                          animation: slideUpFade 0.5s
+                            cubic-bezier(0.34, 1.56, 0.64, 1) both;
+                          border: 1.5px solid rgba(59, 130, 246, 0.2);
+                          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                          margin: 0 auto;
+                        }
+
+                        .itinerai-chatbox-container:focus-within {
+                          width: 420px;
+                          box-shadow: 0 8px 24px rgba(59, 130, 246, 0.25),
+                            0 4px 12px rgba(0, 0, 0, 0.1),
+                            inset 0 1px 0 rgba(255, 255, 255, 0.6);
+                          background: linear-gradient(
+                            135deg,
+                            rgba(59, 130, 246, 0.15) 0%,
+                            rgba(147, 197, 253, 0.08) 100%
+                          );
+                          border-color: rgba(59, 130, 246, 0.35);
+                        }
+
+                        .itinerai-chatbox-input {
+                          flex: 1;
+                          background: transparent;
+                          border: none;
+                          outline: none;
+                          padding: 0 12px;
+                          font-size: 0.9rem;
+                          color: #1f2937;
+                          font-family: -apple-system, BlinkMacSystemFont,
+                            "Segoe UI", Roboto, sans-serif;
+                          font-weight: 500;
+                          height: 34px;
+                        }
+
+                        .itinerai-chatbox-input::placeholder {
+                          color: #9ca3af;
+                          font-weight: 400;
+                        }
+
+                        .itinerai-chatbox-input:focus {
+                          color: #111827;
+                        }
+
+                        .itinerai-chatbox-submit-btn {
+                          background: linear-gradient(
+                            135deg,
+                            #3b82f6 0%,
+                            #2563eb 100%
+                          );
+                          border: 1px solid rgba(59, 130, 246, 0.3);
+                          border-radius: 50%;
+                          width: 34px;
+                          height: 34px;
+                          min-width: 34px;
+                          display: flex;
+                          align-items: center;
+                          justify-content: center;
+                          color: white;
+                          cursor: pointer;
+                          transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+                          flex-shrink: 0;
+                          box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+                        }
+
+                        .itinerai-chatbox-submit-btn:hover:not(:disabled) {
+                          background: linear-gradient(
+                            135deg,
+                            #2563eb 0%,
+                            #1d4ed8 100%
+                          );
+                          border-color: rgba(37, 99, 235, 0.5);
+                          transform: scale(1.08);
+                          box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+                        }
+
+                        .itinerai-chatbox-submit-btn:active:not(:disabled) {
+                          transform: scale(0.95);
+                        }
+
+                        .itinerai-chatbox-submit-btn:disabled {
+                          background: linear-gradient(
+                            135deg,
+                            #d1d5db 0%,
+                            #9ca3af 100%
+                          );
+                          border-color: rgba(156, 163, 175, 0.3);
+                          cursor: not-allowed;
+                          box-shadow: none;
+                        }
+
+                        .itinerai-chatbox-submit-btn svg {
+                          transition: transform 0.2s ease;
+                          filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+                        }
+
+                        .itinerai-chatbox-submit-btn:hover:not(:disabled) svg {
+                          transform: translateX(2px);
+                        }
+
+                        @keyframes slideUpFade {
+                          from {
+                            opacity: 0;
+                            transform: translateY(20px);
+                          }
+                          to {
+                            opacity: 1;
+                            transform: translateY(0);
+                          }
+                        }
+                      `}</style>
                     </div>
                   </>
                 )}
@@ -2094,7 +2938,6 @@ export default function FlightsPageAuthenticated() {
     </div>
   );
 }
-
 // TripTypeButton Component
 function TripTypeButton({
   children,

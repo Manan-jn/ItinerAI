@@ -8,6 +8,7 @@ import {
   FiX,
   FiChevronLeft,
   FiChevronRight,
+  FiCheck,
 } from "react-icons/fi";
 import { MdFlight, MdTrain, MdDirectionsBus } from "react-icons/md";
 
@@ -15,6 +16,8 @@ interface FlightsWidgetProps {
   isVisible: boolean;
   onToggle: () => void;
 }
+
+type ConveyanceType = "Flight" | "Train" | "Bus";
 
 // Available cities
 const AVAILABLE_CITIES = [
@@ -58,10 +61,10 @@ function CitySelector({
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full text-left p-2 border border-gray-200 rounded-lg bg-white hover:border-blue-300 transition-all"
+        className="w-full text-left p-3 bg-white/50 backdrop-blur-sm rounded-xl hover:bg-white/70 transition-all border border-white/20"
       >
         <div className="flex items-center gap-2">
-          <MdFlight className="text-gray-400 flex-shrink-0" size={14} />
+          <MdFlight className="text-gray-500 flex-shrink-0" size={14} />
           <div className="flex-1 min-w-0">
             <div className="text-xs font-semibold text-gray-900">
               {selectedCity?.name || "Select City"}
@@ -73,7 +76,7 @@ function CitySelector({
             </div>
           </div>
           <FiChevronDown
-            className={`text-gray-400 transition-transform flex-shrink-0 ${
+            className={`text-gray-500 transition-transform flex-shrink-0 ${
               isOpen ? "rotate-180" : ""
             }`}
             size={12}
@@ -82,7 +85,7 @@ function CitySelector({
       </button>
 
       {isOpen && (
-        <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-xl z-[60]">
+        <div className="absolute top-full left-0 right-0 mt-2 bg-white/95 backdrop-blur-md rounded-xl shadow-2xl z-[100] border border-white/40">
           <div className="p-2 max-h-[250px] overflow-y-auto">
             {AVAILABLE_CITIES.map((city) => (
               <button
@@ -91,10 +94,10 @@ function CitySelector({
                   onChange(city.name);
                   setIsOpen(false);
                 }}
-                className={`w-full text-left px-3 py-2 rounded-md transition-all ${
+                className={`w-full text-left px-3 py-2 rounded-lg transition-all ${
                   value === city.name
-                    ? "bg-blue-100 text-blue-700"
-                    : "hover:bg-gray-50 text-gray-700"
+                    ? "bg-blue-500/20 text-blue-700"
+                    : "hover:bg-gray-100/50 text-gray-700"
                 }`}
               >
                 <div className="text-xs font-semibold">{city.name}</div>
@@ -202,10 +205,10 @@ function DatePicker({
     <div className="relative" ref={datePickerRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full text-left p-2 border border-gray-200 rounded-lg hover:border-blue-300 focus:border-blue-400 focus:ring-1 focus:ring-blue-100 transition-all"
+        className="w-full text-left p-3 bg-white/50 backdrop-blur-sm rounded-xl hover:bg-white/70 transition-all border border-white/20"
       >
         <div className="flex items-center gap-2">
-          <FiCalendar className="text-gray-400 flex-shrink-0" size={14} />
+          <FiCalendar className="text-gray-500 flex-shrink-0" size={14} />
           <div className="flex-1 min-w-0">
             {selectedDate && displayDate ? (
               <>
@@ -221,7 +224,7 @@ function DatePicker({
             )}
           </div>
           <FiChevronDown
-            className={`text-gray-400 transition-transform flex-shrink-0 ${
+            className={`text-gray-500 transition-transform flex-shrink-0 ${
               isOpen ? "rotate-180" : ""
             }`}
             size={12}
@@ -230,7 +233,7 @@ function DatePicker({
       </button>
 
       {isOpen && (
-        <div className="absolute top-full left-auto right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-xl z-[60] w-[280px]">
+        <div className="absolute top-full left-auto right-0 mt-2 bg-white/95 backdrop-blur-md rounded-xl shadow-2xl z-[100] w-[280px] border border-white/40">
           <div className="p-3">
             <div className="flex items-center justify-between mb-3">
               <button
@@ -325,16 +328,12 @@ function DatePicker({
   );
 }
 
-// Traveller Selector Component
-function TravellerSelector({
-  travellers,
+// Class Selector Component (Separate from Travellers)
+function ClassSelector({
   travelClass,
-  onTravellersChange,
   onClassChange,
 }: {
-  travellers: number;
   travelClass: string;
-  onTravellersChange: (count: number) => void;
   onClassChange: (className: string) => void;
 }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -360,18 +359,17 @@ function TravellerSelector({
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full text-left p-2 border border-gray-200 rounded-lg hover:border-blue-300 focus:border-blue-400 focus:ring-1 focus:ring-blue-100 transition-all"
+        className="w-full text-left p-3 bg-white/50 backdrop-blur-sm rounded-xl hover:bg-white/70 transition-all border border-white/20"
       >
         <div className="flex items-center gap-2">
-          <FiUser className="text-gray-400 flex-shrink-0" size={14} />
+          <FiUser className="text-gray-500 flex-shrink-0" size={14} />
           <div className="flex-1 min-w-0">
             <div className="text-xs font-medium text-gray-900">
-              {travellers} Traveller{travellers > 1 ? "s" : ""}
+              {travelClass}
             </div>
-            <div className="text-[10px] text-gray-500">{travelClass}</div>
           </div>
           <FiChevronDown
-            className={`text-gray-400 transition-transform flex-shrink-0 ${
+            className={`text-gray-500 transition-transform flex-shrink-0 ${
               isOpen ? "rotate-180" : ""
             }`}
             size={12}
@@ -380,59 +378,105 @@ function TravellerSelector({
       </button>
 
       {isOpen && (
-        <div className="absolute top-full left-0 right-auto mt-1 bg-white border border-gray-200 rounded-lg shadow-xl z-[60] w-[240px]">
-          <div className="p-3">
-            <div className="mb-3">
-              <label className="block text-xs font-medium text-gray-700 mb-2">
-                Travellers
-              </label>
-              <div className="flex items-center justify-center space-x-4">
+        <div className="absolute top-full left-0 right-0 mt-2 bg-white/95 backdrop-blur-md rounded-xl shadow-2xl z-[100] border border-white/40">
+          <div className="p-2">
+            <div className="space-y-1">
+              {classes.map((cls) => (
                 <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onTravellersChange(Math.max(1, travellers - 1));
+                  key={cls}
+                  onClick={() => {
+                    onClassChange(cls);
+                    setIsOpen(false);
                   }}
-                  className="w-8 h-8 rounded-full border-2 border-gray-400 flex items-center justify-center hover:bg-gray-50 text-gray-700 font-bold text-base bg-white"
+                  className={`w-full text-left px-3 py-2 rounded-lg text-xs transition-all ${
+                    travelClass === cls
+                      ? "bg-blue-500/20 text-blue-700 font-medium"
+                      : "text-gray-700 hover:bg-gray-100/50"
+                  }`}
                 >
-                  −
+                  {cls}
                 </button>
-                <span className="text-base font-semibold text-gray-900 min-w-[24px] text-center">
-                  {travellers}
-                </span>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onTravellersChange(Math.min(9, travellers + 1));
-                  }}
-                  className="w-8 h-8 rounded-full border-2 border-gray-400 flex items-center justify-center hover:bg-gray-50 text-gray-700 font-bold text-base bg-white"
-                >
-                  +
-                </button>
-              </div>
+              ))}
             </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
-            <div>
-              <label className="block text-xs font-medium text-gray-700 mb-2">
-                Class
-              </label>
-              <div className="space-y-1">
-                {classes.map((cls) => (
-                  <button
-                    key={cls}
-                    onClick={() => {
-                      onClassChange(cls);
-                      setIsOpen(false);
-                    }}
-                    className={`w-full text-left px-2.5 py-1.5 rounded-md text-xs transition-all ${
-                      travelClass === cls
-                        ? "bg-blue-100 text-blue-700 font-medium"
-                        : "text-gray-700 hover:bg-gray-50"
-                    }`}
-                  >
-                    {cls}
-                  </button>
-                ))}
-              </div>
+// Traveller Selector Component (Only for travellers count)
+function TravellerSelector({
+  travellers,
+  onTravellersChange,
+}: {
+  travellers: number;
+  onTravellersChange: (count: number) => void;
+}) {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  return (
+    <div className="relative" ref={dropdownRef}>
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full text-left p-3 bg-white/50 backdrop-blur-sm rounded-xl hover:bg-white/70 transition-all border border-white/20"
+      >
+        <div className="flex items-center gap-2">
+          <FiUser className="text-gray-500 flex-shrink-0" size={14} />
+          <div className="flex-1 min-w-0">
+            <div className="text-xs font-medium text-gray-900">
+              {travellers} Traveller{travellers > 1 ? "s" : ""}
+            </div>
+          </div>
+          <FiChevronDown
+            className={`text-gray-500 transition-transform flex-shrink-0 ${
+              isOpen ? "rotate-180" : ""
+            }`}
+            size={12}
+          />
+        </div>
+      </button>
+
+      {isOpen && (
+        <div className="absolute top-full left-0 right-0 mt-2 bg-white/95 backdrop-blur-md rounded-xl shadow-2xl z-[100] border border-white/40">
+          <div className="p-3">
+            <div className="flex items-center justify-center space-x-4">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onTravellersChange(Math.max(1, travellers - 1));
+                }}
+                className="w-8 h-8 rounded-full border-2 border-gray-400 flex items-center justify-center hover:bg-gray-50 text-gray-700 font-bold text-base bg-white"
+              >
+                −
+              </button>
+              <span className="text-base font-semibold text-gray-900 min-w-[24px] text-center">
+                {travellers}
+              </span>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onTravellersChange(Math.min(9, travellers + 1));
+                }}
+                className="w-8 h-8 rounded-full border-2 border-gray-400 flex items-center justify-center hover:bg-gray-50 text-gray-700 font-bold text-base bg-white"
+              >
+                +
+              </button>
             </div>
           </div>
         </div>
@@ -709,247 +753,544 @@ const sampleBuses: TransportOption[] = [
   },
 ];
 
-// Compact Transport Card Component for Column Layout
+// Horizontal Transport Card Component - Matching Image Design
 function TransportCard({
   option,
   mode,
+  fromCity,
+  toCity,
+  isBooked,
+  onBook,
 }: {
   option: TransportOption;
-  mode: "flights" | "trains" | "buses";
+  mode: "flight" | "train" | "bus";
+  fromCity?: string;
+  toCity?: string;
+  isBooked: boolean;
+  onBook: (id: string) => void;
 }) {
+  const [showFareDetails, setShowFareDetails] = useState(false);
+
   const getIcon = () => {
     switch (mode) {
-      case "flights":
-        return <MdFlight className="text-blue-500" size={18} />;
-      case "trains":
-        return <MdTrain className="text-green-500" size={18} />;
-      case "buses":
-        return <MdDirectionsBus className="text-orange-500" size={18} />;
+      case "flight":
+        return <MdFlight className="text-blue-500" size={20} />;
+      case "train":
+        return <MdTrain className="text-green-500" size={20} />;
+      case "bus":
+        return <MdDirectionsBus className="text-orange-500" size={20} />;
     }
   };
 
   const getBorderColor = () => {
     switch (mode) {
-      case "flights":
-        return "hover:border-blue-400";
-      case "trains":
-        return "hover:border-green-400";
-      case "buses":
-        return "hover:border-orange-400";
+      case "flight":
+        return "border-blue-100 hover:border-blue-300";
+      case "train":
+        return "border-green-100 hover:border-green-300";
+      case "bus":
+        return "border-orange-100 hover:border-orange-300";
+    }
+  };
+
+  const getIconBg = () => {
+    switch (mode) {
+      case "flight":
+        return "bg-red-50";
+      case "train":
+        return "bg-green-50";
+      case "bus":
+        return "bg-orange-50";
+    }
+  };
+
+  // Get city code from city name
+  const getCityCode = (cityName: string) => {
+    const city = AVAILABLE_CITIES.find((c) => c.name === cityName);
+    return city ? city.code : cityName.substring(0, 3).toUpperCase();
+  };
+
+  const departureCode = getCityCode(fromCity || "");
+  const arrivalCode = getCityCode(toCity || "");
+
+  // Calculate commission and agent fare (example logic)
+  const totalFare = option.price;
+  const commission = Math.round(totalFare * 0.08); // 8% commission example
+  const agentFare = totalFare - commission;
+
+  // Format date to show day name
+  const formatDate = (dateStr: string) => {
+    try {
+      const date = new Date(dateStr);
+      const dayName = date.toLocaleDateString("en-US", { weekday: "short" });
+      return `${dateStr}, ${dayName}`;
+    } catch {
+      return dateStr;
     }
   };
 
   return (
     <div
-      className={`bg-white border border-gray-200 rounded-lg p-3 ${getBorderColor()} hover:shadow-md transition-all duration-200 cursor-pointer group mb-3`}
+      className={`bg-white border-2 ${getBorderColor()} ${
+        isBooked
+          ? "ring-4 ring-green-400 shadow-2xl shadow-green-200/50 scale-[1.01] bg-gradient-to-br from-green-50/30 to-white"
+          : ""
+      } rounded-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300 mb-3 cursor-pointer group relative overflow-hidden backdrop-blur-sm`}
     >
-      {/* Header Row: Icon, Number, Operator */}
-      <div className="flex items-center gap-2 mb-3 pb-2 border-b border-gray-100">
-        <div className="p-1.5 bg-gray-50 rounded group-hover:bg-blue-50 transition-colors flex-shrink-0">
-          {getIcon()}
+      {/* Hover shimmer effect */}
+      <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none"></div>
+
+      {/* Booked Indicator */}
+      {isBooked && (
+        <div className="absolute top-2 right-2 z-10 bg-green-500 text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-lg flex items-center gap-1 animate-pulse">
+          <FiCheck size={12} />
+          <span>BOOKED</span>
         </div>
-        <div className="flex-1 min-w-0">
-          <div className="text-xs font-bold text-gray-900">{option.number}</div>
-          <div className="text-[10px] text-gray-500 truncate">
-            {option.operator}
+      )}
+
+      {/* Main Card Content */}
+      <div className="p-3">
+        <div className="flex items-center gap-4">
+          {/* Airline/Operator Logo Section */}
+          <div className="flex-shrink-0">
+            <div
+              className={`w-12 h-12 ${getIconBg()} rounded-lg flex items-center justify-center shadow-sm group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 transform`}
+            >
+              <div className="group-hover:rotate-12 transition-transform duration-300">
+                {getIcon()}
+              </div>
+            </div>
+            <div className="text-center mt-1">
+              <div className="text-[10px] font-bold text-gray-900 group-hover:text-gray-800 transition-colors">
+                {option.number}
+              </div>
+              <div className="text-[8px] text-gray-500 truncate max-w-[60px] group-hover:text-gray-600 transition-colors">
+                {option.operator.split(" ")[0]}
+              </div>
+            </div>
+          </div>
+
+          {/* Flight/Train/Bus Details - Horizontal Layout */}
+          <div className="flex-1 flex items-center gap-6">
+            {/* Departure Info */}
+            <div className="text-left min-w-[120px] group-hover:translate-x-1 transition-transform duration-300">
+              <div className="text-base font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                {departureCode} {option.departureTime}
+              </div>
+              <div className="text-[10px] text-gray-500 group-hover:text-gray-600 transition-colors">
+                {formatDate(option.departureDate)}
+              </div>
+            </div>
+
+            {/* Duration and Stops with Curved Line */}
+            <div className="flex-1 text-center px-4 relative">
+              <div className="flex items-center justify-center mb-1 relative">
+                {/* SVG Curved Path for Flights */}
+                {mode === "flight" && (
+                  <svg
+                    className="w-full h-8"
+                    viewBox="0 0 200 32"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    {/* Curved path with animation */}
+                    <path
+                      d="M 10 16 Q 50 8, 100 16 T 190 16"
+                      stroke="#9CA3AF"
+                      strokeWidth="1.5"
+                      fill="none"
+                      strokeDasharray="4 3"
+                      className="group-hover:stroke-blue-400 transition-colors"
+                    />
+                    {/* Start airport */}
+                    <circle
+                      cx="10"
+                      cy="16"
+                      r="4"
+                      fill="#3B82F6"
+                      className="group-hover:animate-pulse"
+                    />
+                    <circle cx="10" cy="16" r="2" fill="#EFF6FF" />
+                    {/* Middle airplane icon positioned on curve with animation */}
+                    <g
+                      transform="translate(95, 10)"
+                      className="group-hover:translate-x-1 group-hover:-translate-y-0.5 transition-transform duration-300"
+                    >
+                      <circle
+                        cx="5"
+                        cy="6"
+                        r="8"
+                        fill="#EFF6FF"
+                        className="group-hover:shadow-lg"
+                      />
+                      {/* Airplane body */}
+                      <path
+                        d="M 3 6 L 7 6 L 8 4 L 9 6 L 7 6 L 7 8 L 3 8 L 3 6 Z"
+                        fill="#3B82F6"
+                        className="group-hover:fill-blue-600"
+                      />
+                      {/* Contrail effect on hover */}
+                      <path
+                        d="M 1 6 L -2 6"
+                        stroke="#93C5FD"
+                        strokeWidth="0.5"
+                        opacity="0.6"
+                        className="group-hover:opacity-100"
+                      />
+                    </g>
+                    {/* End airport */}
+                    <circle
+                      cx="190"
+                      cy="16"
+                      r="4"
+                      fill="#3B82F6"
+                      className="group-hover:animate-pulse"
+                    />
+                    <circle cx="190" cy="16" r="2" fill="#EFF6FF" />
+                  </svg>
+                )}
+
+                {/* SVG Curved Path for Trains */}
+                {mode === "train" && (
+                  <svg
+                    className="w-full h-8"
+                    viewBox="0 0 200 32"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    {/* Double rail track */}
+                    <path
+                      d="M 10 14 L 190 14"
+                      stroke="#9CA3AF"
+                      strokeWidth="1.5"
+                      fill="none"
+                    />
+                    <path
+                      d="M 10 18 L 190 18"
+                      stroke="#9CA3AF"
+                      strokeWidth="1.5"
+                      fill="none"
+                    />
+                    {/* Animated rail ties pattern */}
+                    <g className="group-hover:opacity-80 transition-opacity">
+                      <path
+                        d="M 30 12 L 30 20 M 50 12 L 50 20 M 70 12 L 70 20 M 90 12 L 90 20 M 110 12 L 110 20 M 130 12 L 130 20 M 150 12 L 150 20 M 170 12 L 170 20"
+                        stroke="#9CA3AF"
+                        strokeWidth="2"
+                        fill="none"
+                      />
+                    </g>
+                    {/* Start station */}
+                    <circle
+                      cx="10"
+                      cy="16"
+                      r="4"
+                      fill="#10B981"
+                      className="group-hover:animate-pulse"
+                    />
+                    <circle cx="10" cy="16" r="2" fill="#ECFDF5" />
+                    {/* Animated train icon with smoke effect */}
+                    <g
+                      transform="translate(95, 8)"
+                      className="group-hover:translate-x-1 transition-transform"
+                    >
+                      <circle
+                        cx="5"
+                        cy="8"
+                        r="10"
+                        fill="#ECFDF5"
+                        className="group-hover:shadow-lg"
+                      />
+                      {/* Train body */}
+                      <rect
+                        x="1"
+                        y="5"
+                        width="8"
+                        height="6"
+                        rx="1.5"
+                        fill="#10B981"
+                      />
+                      {/* Train windows */}
+                      <rect
+                        x="2"
+                        y="6.5"
+                        width="2"
+                        height="2"
+                        rx="0.5"
+                        fill="#ECFDF5"
+                      />
+                      <rect
+                        x="5"
+                        y="6.5"
+                        width="2"
+                        height="2"
+                        rx="0.5"
+                        fill="#ECFDF5"
+                      />
+                      {/* Wheels */}
+                      <circle cx="3" cy="11.5" r="1" fill="#374151" />
+                      <circle cx="7" cy="11.5" r="1" fill="#374151" />
+                    </g>
+                    {/* End station */}
+                    <circle
+                      cx="190"
+                      cy="16"
+                      r="4"
+                      fill="#10B981"
+                      className="group-hover:animate-pulse"
+                    />
+                    <circle cx="190" cy="16" r="2" fill="#ECFDF5" />
+                  </svg>
+                )}
+
+                {/* SVG Curved Path for Buses */}
+                {mode === "bus" && (
+                  <svg
+                    className="w-full h-8"
+                    viewBox="0 0 200 32"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    {/* Road with lanes */}
+                    <path
+                      d="M 10 14 Q 50 11, 100 14 T 190 14"
+                      stroke="#6B7280"
+                      strokeWidth="3"
+                      fill="none"
+                    />
+                    <path
+                      d="M 10 18 Q 50 15, 100 18 T 190 18"
+                      stroke="#6B7280"
+                      strokeWidth="3"
+                      fill="none"
+                    />
+                    {/* Animated road markings */}
+                    <g className="group-hover:animate-pulse">
+                      <path
+                        d="M 35 16 L 45 16 M 75 16 L 85 16 M 105 16 L 115 16 M 145 16 L 155 16"
+                        stroke="#FFF7ED"
+                        strokeWidth="1.5"
+                        fill="none"
+                        strokeDasharray="3 2"
+                      />
+                    </g>
+                    {/* Start stop */}
+                    <g>
+                      <circle
+                        cx="10"
+                        cy="16"
+                        r="4"
+                        fill="#F97316"
+                        className="group-hover:animate-pulse"
+                      />
+                      <path
+                        d="M 10 13 L 10 19"
+                        stroke="#FFF7ED"
+                        strokeWidth="1.5"
+                      />
+                    </g>
+                    {/* Animated bus icon */}
+                    <g
+                      transform="translate(95, 8)"
+                      className="group-hover:translate-x-1 transition-transform"
+                    >
+                      <circle
+                        cx="5"
+                        cy="8"
+                        r="10"
+                        fill="#FFF7ED"
+                        className="group-hover:shadow-lg"
+                      />
+                      {/* Bus body */}
+                      <rect
+                        x="0.5"
+                        y="5"
+                        width="9"
+                        height="6"
+                        rx="1.5"
+                        fill="#F97316"
+                      />
+                      {/* Windows */}
+                      <rect
+                        x="1.5"
+                        y="6"
+                        width="2"
+                        height="2"
+                        rx="0.3"
+                        fill="#FFF7ED"
+                      />
+                      <rect
+                        x="4"
+                        y="6"
+                        width="2"
+                        height="2"
+                        rx="0.3"
+                        fill="#FFF7ED"
+                      />
+                      <rect
+                        x="6.5"
+                        y="6"
+                        width="2"
+                        height="2"
+                        rx="0.3"
+                        fill="#FFF7ED"
+                      />
+                      {/* Wheels */}
+                      <circle cx="2.5" cy="11.5" r="1" fill="#374151" />
+                      <circle cx="7.5" cy="11.5" r="1" fill="#374151" />
+                      {/* Headlights */}
+                      <circle
+                        cx="9.5"
+                        cy="7"
+                        r="0.5"
+                        fill="#FCD34D"
+                        className="group-hover:animate-pulse"
+                      />
+                    </g>
+                    {/* End stop */}
+                    <g>
+                      <circle
+                        cx="190"
+                        cy="16"
+                        r="4"
+                        fill="#F97316"
+                        className="group-hover:animate-pulse"
+                      />
+                      <path
+                        d="M 190 13 L 190 19"
+                        stroke="#FFF7ED"
+                        strokeWidth="1.5"
+                      />
+                    </g>
+                  </svg>
+                )}
+              </div>
+              <div className="text-[11px] text-gray-600 font-medium group-hover:text-gray-700 transition-colors">
+                {option.duration}
+              </div>
+              <div className="text-[9px] text-gray-400 group-hover:text-gray-500 transition-colors">
+                {mode === "flight" ? "1 Stop" : "Direct"}
+              </div>
+            </div>
+
+            {/* Arrival Info */}
+            <div className="text-right min-w-[120px] group-hover:-translate-x-1 transition-transform duration-300">
+              <div className="text-base font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                {arrivalCode} {option.arrivalTime}
+              </div>
+              <div className="text-[10px] text-gray-500 group-hover:text-gray-600 transition-colors">
+                {formatDate(option.arrivalDate)}
+              </div>
+            </div>
+          </div>
+
+          {/* Price and Actions Section */}
+          <div className="flex-shrink-0 border-l border-gray-200 pl-4 min-w-[180px]">
+            {/* Commented out: Refundable Badge and Options */}
+            {/* <div className="flex flex-wrap items-center gap-1 mb-2">
+              <span className="text-[10px] text-green-600 bg-green-50 px-2 py-0.5 rounded font-medium">
+                Refundable
+              </span>
+              <span className="text-[10px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded font-medium">
+                Book & Hold
+              </span>
+              <span className="text-[10px] text-purple-600 bg-purple-50 px-2 py-0.5 rounded font-medium">
+                Partial Payment
+              </span>
+            </div> */}
+
+            {/* Simplified Price Display */}
+            <div className="mb-3">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-xs text-gray-600 group-hover:text-gray-700 transition-colors">
+                  Total Fare:
+                </span>
+                <span className="text-lg font-bold text-gray-900 group-hover:text-blue-600 group-hover:scale-110 transition-all duration-300">
+                  ₹{totalFare}
+                </span>
+              </div>
+            </div>
+
+            {/* Commented out: Fare Breakdown with Commission and Agent Fare */}
+            {/* <div className="mb-2 bg-gray-50 rounded-lg p-2">
+              <div className="flex justify-between text-[11px] mb-1">
+                <span className="text-gray-600">Total Fare:</span>
+                <span className="font-bold text-gray-900">₹{totalFare}</span>
+              </div>
+              <div className="flex justify-between text-[11px] mb-1">
+                <span className="text-gray-600">Commission:</span>
+                <span className="font-bold text-red-600">₹{commission}</span>
+              </div>
+              <div className="flex justify-between text-[11px] border-t border-gray-300 pt-1 mt-1">
+                <span className="text-gray-700 font-semibold">Agent Fare:</span>
+                <span className="font-bold text-blue-600">₹{agentFare}</span>
+              </div>
+            </div> */}
+
+            {/* Commented out: Flight Details Dropdown */}
+            {/* <button
+              onClick={() => setShowFareDetails(!showFareDetails)}
+              className="w-full flex items-center justify-center gap-1 text-[11px] text-blue-600 hover:text-blue-700 mb-2 py-1 hover:bg-blue-50 rounded transition-colors"
+            >
+              <span>Flight Details</span>
+              <FiChevronDown
+                className={`transition-transform ${
+                  showFareDetails ? "rotate-180" : ""
+                }`}
+                size={12}
+              />
+            </button> */}
+
+            {/* Action Buttons */}
+            <div className="flex gap-1.5">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onBook(option.id);
+                }}
+                className={`flex-1 ${
+                  isBooked
+                    ? "bg-green-600 hover:bg-green-700"
+                    : "bg-gray-800 hover:bg-gray-900 group-hover:bg-gray-900"
+                } text-white text-xs font-semibold py-2 rounded transition-all duration-300 hover:shadow-lg transform hover:scale-105 active:scale-95`}
+              >
+                {isBooked ? (
+                  <span className="flex items-center justify-center gap-1">
+                    <FiCheck size={14} />
+                    Booked
+                  </span>
+                ) : (
+                  "Book Now"
+                )}
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Dates Row */}
-      <div className="space-y-2 mb-3">
-        <div>
-          <div className="text-[9px] text-gray-400 uppercase font-medium">
-            Departure Date
-          </div>
-          <div className="text-[10px] font-semibold text-gray-900">
-            {option.departureDate}
-          </div>
-        </div>
-        <div>
-          <div className="text-[9px] text-gray-400 uppercase font-medium">
-            Arrival Date
-          </div>
-          <div className="text-[10px] font-semibold text-gray-900">
-            {option.arrivalDate}
-          </div>
-        </div>
-      </div>
-
-      {/* Time and Duration */}
-      <div className="space-y-2 mb-3 pb-3 border-b border-gray-100">
-        <div className="flex items-center justify-between">
-          <div>
-            <div className="text-[9px] text-gray-400 uppercase font-medium">
-              Departure
+      {/* Expandable Fare Details */}
+      {showFareDetails && (
+        <div className="border-t border-gray-200 bg-gray-50 px-4 py-3">
+          <div className="text-xs space-y-2">
+            <div className="flex justify-between">
+              <span className="text-gray-600">Base Fare:</span>
+              <span className="text-gray-900">
+                ₹{Math.round(totalFare * 0.75)}
+              </span>
             </div>
-            <div className="text-xs font-bold text-gray-900">
-              {option.departureTime}
+            <div className="flex justify-between">
+              <span className="text-gray-600">Taxes & Fees:</span>
+              <span className="text-gray-900">
+                ₹{Math.round(totalFare * 0.25)}
+              </span>
             </div>
-          </div>
-          <div>
-            <div className="text-[9px] text-gray-400 uppercase font-medium">
-              Arrival
-            </div>
-            <div className="text-xs font-bold text-gray-900">
-              {option.arrivalTime}
+            <div className="flex justify-between font-semibold border-t border-gray-300 pt-2">
+              <span className="text-gray-700">Total Amount:</span>
+              <span className="text-gray-900">₹{totalFare}</span>
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-2">
-          <div className="flex-1 h-0.5 bg-gradient-to-r from-gray-200 via-blue-300 to-gray-200"></div>
-          <div className="text-[9px] text-gray-500 font-medium">
-            {option.duration}
-          </div>
-          <div className="flex-1 h-0.5 bg-gradient-to-r from-gray-200 via-blue-300 to-gray-200"></div>
-        </div>
-      </div>
-
-      {/* Price */}
-      <div className="text-center mb-2">
-        <div className="text-sm font-bold text-blue-600">₹{option.price}</div>
-        <div className="text-[9px] text-gray-500">per person</div>
-      </div>
-
-      {/* Book Button */}
-      <button className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold text-[10px] py-2 rounded-md transition-all shadow-sm hover:shadow-md">
-        Book Now
-      </button>
-    </div>
-  );
-}
-
-// Search Results Component - Three Columns Side by Side
-function SearchResults({ data }: { data: SearchResultsData }) {
-  return (
-    <div className="mt-6">
-      {/* Results Header */}
-      <div className="mb-4">
-        <h3 className="text-lg font-bold text-gray-900 mb-1">Search Results</h3>
-        <p className="text-sm text-gray-500">
-          Compare all available transport options side by side
-        </p>
-      </div>
-
-      {/* Three Column Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        {/* Flights Column */}
-        <div className="bg-gradient-to-b from-blue-50 to-white rounded-xl p-4 border-2 border-blue-200">
-          {/* Column Header */}
-          <div className="flex items-center justify-between mb-4 pb-3 border-b-2 border-blue-300">
-            <div className="flex items-center gap-2">
-              <div className="p-2 bg-blue-100 rounded-lg">
-                <MdFlight className="text-blue-600" size={20} />
-              </div>
-              <div>
-                <h4 className="text-sm font-bold text-gray-900">
-                  Recommended Flights
-                </h4>
-                <p className="text-xs text-gray-500">
-                  {data.flights.length} options
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Scrollable Cards */}
-          <div className="max-h-[600px] overflow-y-auto pr-2 custom-scrollbar">
-            {data.flights.length > 0 ? (
-              data.flights.map((flight) => (
-                <TransportCard key={flight.id} option={flight} mode="flights" />
-              ))
-            ) : (
-              <div className="text-center text-gray-500 py-8">
-                <p className="text-sm">No flights available</p>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Trains Column */}
-        <div className="bg-gradient-to-b from-green-50 to-white rounded-xl p-4 border-2 border-green-200">
-          {/* Column Header */}
-          <div className="flex items-center justify-between mb-4 pb-3 border-b-2 border-green-300">
-            <div className="flex items-center gap-2">
-              <div className="p-2 bg-green-100 rounded-lg">
-                <MdTrain className="text-green-600" size={20} />
-              </div>
-              <div>
-                <h4 className="text-sm font-bold text-gray-900">
-                  Recommended Trains
-                </h4>
-                <p className="text-xs text-gray-500">
-                  {data.trains.length} options
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Scrollable Cards */}
-          <div className="max-h-[600px] overflow-y-auto pr-2 custom-scrollbar">
-            {data.trains.length > 0 ? (
-              data.trains.map((train) => (
-                <TransportCard key={train.id} option={train} mode="trains" />
-              ))
-            ) : (
-              <div className="text-center text-gray-500 py-8">
-                <p className="text-sm">No trains available</p>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Buses Column */}
-        <div className="bg-gradient-to-b from-orange-50 to-white rounded-xl p-4 border-2 border-orange-200">
-          {/* Column Header */}
-          <div className="flex items-center justify-between mb-4 pb-3 border-b-2 border-orange-300">
-            <div className="flex items-center gap-2">
-              <div className="p-2 bg-orange-100 rounded-lg">
-                <MdDirectionsBus className="text-orange-600" size={20} />
-              </div>
-              <div>
-                <h4 className="text-sm font-bold text-gray-900">
-                  Recommended Buses
-                </h4>
-                <p className="text-xs text-gray-500">
-                  {data.buses.length} options
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Scrollable Cards */}
-          <div className="max-h-[600px] overflow-y-auto pr-2 custom-scrollbar">
-            {data.buses.length > 0 ? (
-              data.buses.map((bus) => (
-                <TransportCard key={bus.id} option={bus} mode="buses" />
-              ))
-            ) : (
-              <div className="text-center text-gray-500 py-8">
-                <p className="text-sm">No buses available</p>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Custom Scrollbar Styles */}
-      <style jsx>{`
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-          background: #f1f1f1;
-          border-radius: 10px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: #cbd5e1;
-          border-radius: 10px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: #94a3b8;
-        }
-      `}</style>
+      )}
     </div>
   );
 }
@@ -961,16 +1302,21 @@ export default function FlightsWidget({
   const [travellers, setTravellers] = useState(1);
   const [travelClass, setTravelClass] = useState("Economy");
   const [departureDate, setDepartureDate] = useState("");
-  const [returnDate, setReturnDate] = useState("");
   const [from, setFrom] = useState("New Delhi");
   const [to, setTo] = useState("Mumbai");
   const [showResults, setShowResults] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingComplete, setIsLoadingComplete] = useState(false);
+  const [selectedConveyance, setSelectedConveyance] =
+    useState<ConveyanceType>("Flight");
   const [searchResults, setSearchResults] = useState<SearchResultsData>({
     flights: [],
     trains: [],
     buses: [],
   });
+  const [fromCity, setFromCity] = useState("New Delhi");
+  const [toCity, setToCity] = useState("Mumbai");
+  const [bookedOption, setBookedOption] = useState<string | null>(null);
 
   // Helper function to format date for display
   const formatDateForMessage = (dateStr: string) => {
@@ -1078,6 +1424,7 @@ export default function FlightsWidget({
     }
 
     setIsLoading(true);
+    setIsLoadingComplete(false);
     setShowResults(false);
 
     try {
@@ -1132,12 +1479,14 @@ export default function FlightsWidget({
         trains: conveyanceDetails.trains
           ? parseTrainData(conveyanceDetails.trains)
           : [],
-        buses: [], // API doesn't provide buses yet
+        buses: [], // Commented out: buses functionality disabled
+        // buses: sampleBuses, // API doesn't provide buses yet, use sample data
       };
 
       console.log("Parsed results:", parsedResults);
       setSearchResults(parsedResults);
       setShowResults(true);
+      setIsLoadingComplete(true);
     } catch (error) {
       console.error("Error fetching transport options:", error);
       alert("Failed to fetch transport options. Please try again.");
@@ -1146,102 +1495,71 @@ export default function FlightsWidget({
     }
   };
 
+  const getFilteredResults = () => {
+    switch (selectedConveyance) {
+      case "Flight":
+        return searchResults.flights;
+      case "Train":
+        return searchResults.trains;
+      case "Bus":
+        return searchResults.buses;
+      default:
+        return [];
+    }
+  };
+
+  const handleBooking = (optionId: string) => {
+    setBookedOption(optionId);
+    console.log("Booked option:", optionId);
+    // Here you can add additional logic to save the booking information
+    // For example, send to backend, save to localStorage, etc.
+  };
+
   if (!isVisible) return null;
 
   return (
-    <div className="w-full h-full bg-white rounded-xl border border-gray-200 shadow-lg overflow-auto">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-blue-500 to-blue-600 px-4 py-2.5 flex-shrink-0">
+    <div className="w-full h-full bg-gradient-to-br from-white/98 to-gray-50/98 backdrop-blur-xl rounded-2xl shadow-xl overflow-hidden flex flex-col">
+      {/* Minimalistic Header */}
+      <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 backdrop-blur-sm px-4 py-2 flex-shrink-0 border-b border-gray-200/30">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <h2 className="text-white text-base font-semibold">
-              Search Transport
-            </h2>
-            <div className="flex items-center gap-1.5 ml-3">
-              <div className="flex items-center gap-1 bg-white/20 px-2 py-0.5 rounded-full">
-                <MdFlight className="text-white" size={12} />
-                <span className="text-white text-[10px] font-medium">
-                  Flights
-                </span>
-              </div>
-              <div className="flex items-center gap-1 bg-white/20 px-2 py-0.5 rounded-full">
-                <MdTrain className="text-white" size={12} />
-                <span className="text-white text-[10px] font-medium">
-                  Trains
-                </span>
-              </div>
-              <div className="flex items-center gap-1 bg-white/20 px-2 py-0.5 rounded-full">
-                <MdDirectionsBus className="text-white" size={12} />
-                <span className="text-white text-[10px] font-medium">
-                  Buses
-                </span>
-              </div>
-            </div>
-          </div>
+          <h2 className="text-gray-800 text-sm font-medium tracking-wide">
+            Search Transport
+          </h2>
           <button
             onClick={onToggle}
-            className="text-white hover:text-gray-200 transition-colors p-1"
+            className="text-gray-600 hover:text-gray-800 transition-colors p-1 hover:bg-gray-200/30 rounded-full"
           >
-            <FiX size={18} />
+            <FiX size={16} />
           </button>
         </div>
       </div>
 
-      {/* Content */}
-      <div className="p-4">
-        {/* Search Form */}
-        <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
-          <div className="flex flex-col lg:flex-row gap-3">
-            {/* From and To Row with Swap */}
-            <div className="flex items-end gap-2 flex-1">
-              {/* From */}
-              <div className="relative flex-1">
-                <label className="block text-[10px] text-gray-500 mb-1.5 uppercase font-medium">
-                  FROM
-                </label>
-                <CitySelector value={from} onChange={setFrom} label="From" />
-              </div>
+      {/* Content - Scrollable */}
+      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        {/* Search Form Container */}
+        <div className="relative z-20 bg-white/70 backdrop-blur-lg rounded-2xl p-4 shadow-xl border border-white/50">
+          {/* Input Fields Row */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
+            {/* From */}
+            <div className="relative">
+              <label className="block text-[10px] text-gray-600 mb-2 uppercase font-semibold tracking-wider">
+                FROM
+              </label>
+              <CitySelector value={from} onChange={setFrom} label="From" />
+            </div>
 
-              {/* Swap Button */}
-              <div className="flex items-center justify-center pb-2 flex-shrink-0">
-                <button
-                  onClick={() => {
-                    const temp = from;
-                    setFrom(to);
-                    setTo(temp);
-                  }}
-                  className="bg-white hover:bg-gray-100 rounded-full p-1.5 border border-gray-200 shadow-sm transition-all hover:shadow-md"
-                  title="Swap locations"
-                >
-                  <svg
-                    className="w-3.5 h-3.5 text-gray-600"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
-                    />
-                  </svg>
-                </button>
-              </div>
-
-              {/* To */}
-              <div className="relative flex-1">
-                <label className="block text-[10px] text-gray-500 mb-1.5 uppercase font-medium">
-                  TO
-                </label>
-                <CitySelector value={to} onChange={setTo} label="To" />
-              </div>
+            {/* To */}
+            <div className="relative">
+              <label className="block text-[10px] text-gray-600 mb-2 uppercase font-semibold tracking-wider">
+                TO
+              </label>
+              <CitySelector value={to} onChange={setTo} label="To" />
             </div>
 
             {/* Departure Date */}
-            <div className="relative flex-1 lg:max-w-[200px]">
-              <label className="block text-[10px] text-gray-500 mb-1.5 uppercase font-medium">
-                DEPARTURE
+            <div className="relative">
+              <label className="block text-[10px] text-gray-600 mb-2 uppercase font-semibold tracking-wider">
+                DEPART DATE
               </label>
               <DatePicker
                 value={departureDate}
@@ -1250,75 +1568,266 @@ export default function FlightsWidget({
               />
             </div>
 
-            {/* Return Date */}
-            <div className="relative flex-1 lg:max-w-[200px]">
-              <label className="block text-[10px] text-gray-500 mb-1.5 uppercase font-medium">
-                RETURN
+            {/* Class */}
+            <div className="relative">
+              <label className="block text-[10px] text-gray-600 mb-2 uppercase font-semibold tracking-wider">
+                CLASS
               </label>
-              <DatePicker
-                value={returnDate}
-                onChange={setReturnDate}
-                placeholder="Select date"
+              <ClassSelector
+                travelClass={travelClass}
+                onClassChange={setTravelClass}
               />
             </div>
           </div>
 
-          {/* Travellers & Class + Search Button */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 mt-3">
-            <div>
-              <label className="block text-[10px] text-gray-500 mb-1.5 uppercase font-medium">
-                TRAVELLERS & CLASS
-              </label>
-              <TravellerSelector
-                travellers={travellers}
-                travelClass={travelClass}
-                onTravellersChange={setTravellers}
-                onClassChange={setTravelClass}
-              />
-            </div>
-
-            <div className="flex items-end">
-              <button
-                onClick={handleSearch}
-                className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm px-4 py-2.5 rounded-lg transition-colors shadow-md hover:shadow-lg flex items-center justify-center space-x-2"
+          {/* Smart Search Button & Conveyance Type Selector */}
+          <div className="flex flex-col md:flex-row items-stretch md:items-center gap-3">
+            {/* Smart Search Button */}
+            <button
+              onClick={handleSearch}
+              className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-semibold text-sm px-6 py-2.5 rounded-xl transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2 border-none transform hover:scale-105"
+            >
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
               >
-                <span>SEARCH</span>
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+              <span>Smart Search</span>
+            </button>
+
+            {/* Conveyance Type Single Select */}
+            <div className="flex items-center gap-2 bg-white/60 backdrop-blur-md rounded-xl p-2 shadow-md border border-white/40">
+              <span className="text-xs text-gray-700 font-semibold px-1">
+                Type:
+              </span>
+              <div className="flex gap-1.5">
+                <button
+                  onClick={() => setSelectedConveyance("Flight")}
+                  className={`flex items-center gap-1.5 px-3 py-2 rounded-lg transition-all transform hover:scale-105 ${
+                    selectedConveyance === "Flight"
+                      ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-md"
+                      : "bg-white/60 text-gray-600 hover:bg-white/90 shadow-sm"
+                  }`}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                  />
-                </svg>
-              </button>
+                  <MdFlight size={16} />
+                  <span className="text-xs font-semibold">Flight</span>
+                </button>
+                <button
+                  onClick={() => setSelectedConveyance("Train")}
+                  className={`flex items-center gap-1.5 px-3 py-2 rounded-lg transition-all transform hover:scale-105 ${
+                    selectedConveyance === "Train"
+                      ? "bg-gradient-to-r from-green-500 to-green-600 text-white shadow-md"
+                      : "bg-white/60 text-gray-600 hover:bg-white/90 shadow-sm"
+                  }`}
+                >
+                  <MdTrain size={16} />
+                  <span className="text-xs font-semibold">Train</span>
+                </button>
+                {/* Commented out: Bus button */}
+                {/* <button
+                  onClick={() => setSelectedConveyance("Bus")}
+                  className={`flex items-center gap-1.5 px-3 py-2 rounded-lg transition-all transform hover:scale-105 ${
+                    selectedConveyance === "Bus"
+                      ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-md"
+                      : "bg-white/60 text-gray-600 hover:bg-white/90 shadow-sm"
+                  }`}
+                >
+                  <MdDirectionsBus size={16} />
+                  <span className="text-xs font-semibold">Bus</span>
+                </button> */}
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Loading Spinner */}
-        {isLoading && (
-          <div className="mt-6 flex flex-col items-center justify-center py-12">
+        {/* Results Section - Stacked Rows */}
+        {(showResults || isLoading) && (
+          <div className="space-y-4 relative z-10">
+            {/* AI Recommendations Box with RGB Glowing Border */}
             <div className="relative">
-              <div className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
+              {/* RGB Continuous Flowing Border */}
+              <div className="absolute -inset-[3px] rounded-2xl pointer-events-none">
+                {/* Continuous RGB Border with Flowing Effect */}
+                <div
+                  className="absolute inset-0 rounded-2xl border-4 border-transparent animate-rgb-flow"
+                  style={{
+                    background:
+                      "linear-gradient(90deg, #ff0000, #ff8000, #ffff00, #80ff00, #00ff00, #00ff80, #00ffff, #0080ff, #0000ff, #8000ff, #ff00ff, #ff0080, #ff0000) border-box",
+                    WebkitMask:
+                      "linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0)",
+                    WebkitMaskComposite: "xor",
+                    maskComposite: "exclude",
+                  }}
+                ></div>
+
+                {/* Flowing Glow Overlay */}
+                <div className="absolute inset-0 rounded-2xl animate-rgb-glow-continuous">
+                  <div
+                    className="absolute inset-0 rounded-2xl border-2 border-transparent bg-gradient-to-r from-red-500/60 via-green-500/60 via-blue-500/60 to-red-500/60 blur-sm shadow-[0_0_25px_rgba(255,0,0,0.8),0_0_25px_rgba(0,255,0,0.8),0_0_25px_rgba(0,0,255,0.8)]"
+                    style={{
+                      WebkitMask:
+                        "linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0)",
+                      WebkitMaskComposite: "xor",
+                      maskComposite: "exclude",
+                    }}
+                  ></div>
+                </div>
+              </div>
+
+              {/* Content Box */}
+              <div className="relative bg-white/90 backdrop-blur-md rounded-2xl shadow-xl overflow-hidden">
+                {/* Header */}
+                <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 p-3 border-b border-gray-200/30">
+                  <div className="flex items-center gap-3">
+                    <div
+                      className={`w-6 h-6 rounded-full flex items-center justify-center ${
+                        isLoadingComplete
+                          ? "bg-green-500"
+                          : isLoading
+                          ? "bg-blue-500"
+                          : "bg-gray-300"
+                      }`}
+                    >
+                      {isLoadingComplete ? (
+                        <FiCheck className="text-white" size={12} />
+                      ) : isLoading ? (
+                        <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      ) : (
+                        <div className="w-2 h-2 bg-white rounded-full"></div>
+                      )}
+                    </div>
+                    <span className="text-sm font-semibold text-gray-800">
+                      AI Recommendations
+                    </span>
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className="p-3 max-h-[500px] overflow-y-auto">
+                  {isLoading ? (
+                    <div className="flex flex-col items-center justify-center py-12">
+                      <div className="w-10 h-10 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
+                      <p className="mt-3 text-sm text-gray-600 font-medium">
+                        Finding best options...
+                      </p>
+                    </div>
+                  ) : showResults ? (
+                    <div className="space-y-3">
+                      {/* Show selected conveyance results without section header */}
+                      {getFilteredResults().length > 0 ? (
+                        <>
+                          {/* Render all cards for selected conveyance */}
+                          {getFilteredResults().map((option) => (
+                            <TransportCard
+                              key={option.id}
+                              option={option}
+                              mode={
+                                selectedConveyance.toLowerCase() as
+                                  | "flight"
+                                  | "train"
+                                  | "bus"
+                              }
+                              fromCity={from}
+                              toCity={to}
+                              isBooked={bookedOption === option.id}
+                              onBook={handleBooking}
+                            />
+                          ))}
+                        </>
+                      ) : (
+                        <div className="text-center py-12 text-gray-500">
+                          <p className="text-sm">
+                            No {selectedConveyance.toLowerCase()}s available
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="text-center py-12 text-gray-500">
+                      <p className="text-sm">
+                        Click "Smart Search" to see AI recommendations
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
-            <p className="mt-4 text-sm text-gray-600 font-medium">
-              Searching for transport options...
-            </p>
-            <p className="mt-1 text-xs text-gray-500">
-              This may take a few moments
-            </p>
+
+            {/* Other Travel Options Box - Empty for now */}
+            {showResults && (
+              <div className="bg-white/80 backdrop-blur-md rounded-2xl shadow-xl border border-gray-200/40 overflow-hidden">
+                {/* Header */}
+                <div className="bg-gradient-to-r from-orange-500/10 to-pink-500/10 p-3 border-b border-gray-200/30">
+                  <span className="text-sm font-semibold text-gray-800">
+                    Other Travel Options
+                  </span>
+                </div>
+
+                {/* Content - Empty for now */}
+                <div className="p-3 max-h-[500px] overflow-y-auto">
+                  <div className="text-center py-12 text-gray-500">
+                    <p className="text-sm">
+                      Additional travel options will appear here
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         )}
-
-        {/* Search Results */}
-        {showResults && !isLoading && <SearchResults data={searchResults} />}
       </div>
+
+      {/* RGB Continuous Flow Animation Keyframes */}
+      <style jsx>{`
+        @keyframes rgb-flow {
+          0% {
+            background-position: 0% 0%;
+          }
+          100% {
+            background-position: 200% 0%;
+          }
+        }
+
+        @keyframes rgb-glow-continuous {
+          0% {
+            filter: hue-rotate(0deg) brightness(1.2) saturate(1.5);
+            transform: scale(1);
+          }
+          25% {
+            filter: hue-rotate(90deg) brightness(1.4) saturate(1.8);
+            transform: scale(1.02);
+          }
+          50% {
+            filter: hue-rotate(180deg) brightness(1.2) saturate(1.5);
+            transform: scale(1);
+          }
+          75% {
+            filter: hue-rotate(270deg) brightness(1.4) saturate(1.8);
+            transform: scale(1.02);
+          }
+          100% {
+            filter: hue-rotate(360deg) brightness(1.2) saturate(1.5);
+            transform: scale(1);
+          }
+        }
+
+        .animate-rgb-flow {
+          animation: rgb-flow 3s linear infinite;
+          background-size: 200% 100%;
+        }
+
+        .animate-rgb-glow-continuous {
+          animation: rgb-glow-continuous 4s ease-in-out infinite;
+        }
+      `}</style>
     </div>
   );
 }

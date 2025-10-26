@@ -20,6 +20,11 @@ const FlashcardsWidgetWhiteTheme = forwardRef<
       <FlashcardsWidget ref={ref} {...props} />
 
       <style jsx global>{`
+        /* Respect appear animation from base widget */
+        .flashcards-white-theme .flashcards-widget.appear {
+          animation: fc-fade-up 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
         .flashcards-white-theme .flashcards-widget {
           background: #ffffff;
           border: none;
@@ -500,37 +505,6 @@ const FlashcardsWidgetWhiteTheme = forwardRef<
         .flashcards-white-theme .chatbox-submit-btn:hover {
           background: rgba(59, 130, 246, 0.9);
           border-color: rgba(59, 130, 246, 0.5);
-        }
-
-        /* Loading overlay for white theme */
-        .flashcards-white-theme .image-loading-overlay {
-          background: rgba(255, 255, 255, 0.95);
-          backdrop-filter: blur(10px);
-        }
-
-        .flashcards-white-theme .loading-content h3 {
-          color: #1e40af;
-          text-shadow: none;
-          font-weight: 700;
-        }
-
-        .flashcards-white-theme .loading-subtitle {
-          color: rgba(59, 130, 246, 0.7);
-          text-shadow: none;
-          font-weight: 500;
-        }
-
-        .flashcards-white-theme .spinner {
-          border: 4px solid rgba(59, 130, 246, 0.1);
-          border-top-color: #3b82f6;
-        }
-
-        .flashcards-white-theme .progress-bar {
-          background: linear-gradient(90deg, #3b82f6, #1d4ed8);
-        }
-
-        .flashcards-white-theme .progress-text {
-          color: #3b82f6;
         }
 
         /* Global text improvements for all elements */

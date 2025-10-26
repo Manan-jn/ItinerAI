@@ -11,6 +11,7 @@ import {
   preloadImages,
   getCachedImage,
 } from "../utils/imageCache";
+import { imageDownloader } from "../utils/imageDownloader";
 
 interface TripInfo {
   trip_title: string;
@@ -113,7 +114,12 @@ const getTripImage = (trip: any, cachedUrls?: Map<string, string>): string => {
 
     // Validate the URL before using it
     if (isValidImageUrl(firstCityPhoto)) {
-      // Return cached version if available
+      // Check imageDownloader cache first
+      const downloadedImage = imageDownloader.getCachedImage(firstCityPhoto);
+      if (downloadedImage) {
+        return downloadedImage;
+      }
+      // Return cached version from old cache if available
       if (cachedUrls && cachedUrls.has(firstCityPhoto)) {
         return cachedUrls.get(firstCityPhoto)!;
       }
@@ -125,7 +131,12 @@ const getTripImage = (trip: any, cachedUrls?: Map<string, string>): string => {
       for (const city of day.cities || []) {
         for (const photo of city.photos || []) {
           if (isValidImageUrl(photo)) {
-            // Return cached version if available
+            // Check imageDownloader cache first
+            const downloadedImage = imageDownloader.getCachedImage(photo);
+            if (downloadedImage) {
+              return downloadedImage;
+            }
+            // Return cached version from old cache if available
             if (cachedUrls && cachedUrls.has(photo)) {
               return cachedUrls.get(photo)!;
             }
@@ -193,7 +204,12 @@ const getCityImage = (city: any, cachedUrls?: Map<string, string>): string => {
       // Find the first valid image URL
       for (const photo of city.photos) {
         if (isValidImageUrl(photo)) {
-          // Return cached version if available
+          // Check imageDownloader cache first
+          const downloadedImage = imageDownloader.getCachedImage(photo);
+          if (downloadedImage) {
+            return downloadedImage;
+          }
+          // Return cached version from old cache if available
           if (cachedUrls && cachedUrls.has(photo)) {
             return cachedUrls.get(photo)!;
           }
@@ -283,7 +299,6 @@ const FlashcardsWidget = forwardRef<FlashcardsWidgetRef, FlashcardsWidgetProps>(
 
     // Image preloading states
     const [isLoadingImages, setIsLoadingImages] = useState(true);
-    const [loadingProgress, setLoadingProgress] = useState(0);
     const [cachedImageUrls, setCachedImageUrls] = useState<Map<string, string>>(
       new Map()
     );
@@ -348,22 +363,13 @@ const FlashcardsWidget = forwardRef<FlashcardsWidgetRef, FlashcardsWidgetProps>(
         try {
           console.log("Starting image preloading...");
           setIsLoadingImages(true);
-          setLoadingProgress(0);
 
           // Extract all image URLs from places.json
           const imageUrls = extractImageUrlsFromPlacesData(placesData);
           console.log(`Found ${imageUrls.length} images to preload`);
 
-          // Preload images with progress tracking
-          const result = await preloadImages(imageUrls, (current, total) => {
-            const progress = (current / total) * 100;
-            setLoadingProgress(progress);
-            console.log(
-              `Image preloading progress: ${current}/${total} (${progress.toFixed(
-                1
-              )}%)`
-            );
-          });
+          // Preload images in background without UI overlay
+          const result = await preloadImages(imageUrls);
 
           console.log(
             `Image preloading complete: ${result.successful} successful, ${result.failed} failed`
@@ -854,33 +860,18 @@ const FlashcardsWidget = forwardRef<FlashcardsWidgetRef, FlashcardsWidgetProps>(
       }
     };
 
+    // Smooth appear on initial mount (after loader dissolves)
+    const [isAppearing, setIsAppearing] = useState(true);
+    useEffect(() => {
+      const t = setTimeout(() => setIsAppearing(false), 600);
+      return () => clearTimeout(t);
+    }, []);
+
     if (!isVisible) return null;
 
     return (
       <>
-        <div className="flashcards-widget">
-          {/* Loading overlay for image preloading */}
-          {isLoadingImages && (
-            <div className="image-loading-overlay">
-              <div className="loading-content">
-                <div className="spinner-container">
-                  <div className="spinner"></div>
-                </div>
-                <h3>Loading Trip Images...</h3>
-                <div className="progress-bar-container">
-                  <div
-                    className="progress-bar"
-                    style={{ width: `${loadingProgress}%` }}
-                  ></div>
-                </div>
-                <p className="progress-text">{Math.round(loadingProgress)}%</p>
-                <p className="loading-subtitle">
-                  Downloading and caching images for offline use
-                </p>
-              </div>
-            </div>
-          )}
-
+        <div className={`flashcards-widget ${isAppearing ? "appear" : ""}`}>
           <div className="flashcards-header">
             <div className="header-content">
               <h3>Discover Amazing Trips</h3>
@@ -1669,6 +1660,21 @@ const FlashcardsWidget = forwardRef<FlashcardsWidgetRef, FlashcardsWidgetProps>(
         )}
 
         <style jsx>{`
+          @keyframes fc-fade-up {
+            from {
+              opacity: 0;
+              transform: translateY(6px) scale(0.98);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0) scale(1);
+            }
+          }
+
+          .flashcards-widget.appear {
+            animation: fc-fade-up 500ms cubic-bezier(0.22, 1, 0.36, 1) both;
+          }
+
           .flashcards-widget {
             background: transparent;
             backdrop-filter: none;
@@ -1697,87 +1703,6 @@ const FlashcardsWidget = forwardRef<FlashcardsWidgetRef, FlashcardsWidgetProps>(
             -webkit-overscroll-behavior: none;
             -webkit-overscroll-behavior-x: none;
             -webkit-overscroll-behavior-y: none;
-          }
-
-          /* Loading Overlay Styles */
-          .image-loading-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            border-radius: 12px;
-          }
-
-          .loading-content {
-            text-align: center;
-            color: white;
-            max-width: 400px;
-            padding: 40px;
-          }
-
-          .spinner-container {
-            margin: 0 auto 30px;
-            width: 80px;
-            height: 80px;
-          }
-
-          .spinner {
-            width: 80px;
-            height: 80px;
-            border: 4px solid rgba(255, 255, 255, 0.1);
-            border-top-color: #4f46e5;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-          }
-
-          @keyframes spin {
-            to {
-              transform: rotate(360deg);
-            }
-          }
-
-          .loading-content h3 {
-            font-size: 24px;
-            font-weight: 600;
-            margin: 0 0 24px 0;
-            color: white;
-          }
-
-          .progress-bar-container {
-            width: 100%;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-            overflow: hidden;
-            margin-bottom: 16px;
-          }
-
-          .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, #4f46e5, #7c3aed);
-            border-radius: 4px;
-            transition: width 0.3s ease;
-          }
-
-          .progress-text {
-            font-size: 18px;
-            font-weight: 600;
-            color: #4f46e5;
-            margin: 0 0 8px 0;
-          }
-
-          .loading-subtitle {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.6);
-            margin: 0;
           }
 
           /* Modal Styles */

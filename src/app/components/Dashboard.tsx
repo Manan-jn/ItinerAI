@@ -3,12 +3,12 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../contexts/AuthContext";
-import TabPanel from "./TabPanel";
-import ProcessingIndicator from "./ProcessingIndicator";
-import APILoader from "./APILoader";
-import SessionDebug from "./SessionDebug";
+import TabPanel from "../../../temp_non_flights_code/unused_components/TabPanel";
+import ProcessingIndicator from "../../../temp_non_flights_code/unused_components/ProcessingIndicator";
+import APILoader from "../../../temp_non_flights_code/unused_components/APILoader";
+import SessionDebug from "../../../temp_non_flights_code/unused_components/SessionDebug";
 import FlashcardsWidget, { FlashcardsWidgetRef } from "./FlashcardsWidget";
-import ConveyanceWidget from "./ConveyanceWidget";
+import ConveyanceWidget from "../../../temp_non_flights_code/unused_components/ConveyanceWidget";
 import { getSessionId, getUserId } from "../utils/sessionManager";
 import {
   TripDetailsContent,
@@ -21,7 +21,7 @@ import {
   PeopleContent,
   BudgetContent,
   PlacesContent,
-} from "./TabContents";
+} from "../../../temp_non_flights_code/unused_components/TabContents";
 
 interface Message {
   id: string;
@@ -140,84 +140,54 @@ export default function Dashboard() {
     return () => window.removeEventListener("resize", handleResize);
   }, [rightPanelWidth, isRightPanelCollapsed, isResizing]);
 
-  // Retry function for API calls when message is empty
-  const makeAPICallWithRetry = async (
-    currentInput: string,
-    maxRetries: number = 5
-  ): Promise<APIResponse> => {
-    for (let attempt = 1; attempt <= maxRetries; attempt++) {
-      try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => {
-          console.log("Request timeout after 10 minutes");
-          controller.abort();
-        }, 600000);
+  // Simple API call function
+  const makeAPICall = async (currentInput: string): Promise<APIResponse> => {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => {
+      console.log("Request timeout after 2 minutes");
+      controller.abort();
+    }, 600000); // 2 minutes timeout
 
-        console.log(`Making API call (attempt ${attempt}/${maxRetries})...`);
+    try {
+      console.log("Making API call...");
 
-        const response = await fetch("https://agent-bigfit-api.com/api/chat", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            user_id: userId,
-            session_id: sessionId,
-            message: currentInput,
-          }),
-          signal: controller.signal,
-        });
-
-        clearTimeout(timeoutId);
-
-        console.log("FastAPI Request sent:", {
-          userId,
-          sessionId,
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: userId,
+          session_id: sessionId,
           message: currentInput,
-        });
-        console.log("FastAPI Response status:", response.status);
+        }),
+        signal: controller.signal,
+      });
 
-        if (!response.ok) {
-          const errorText = await response.text();
-          console.error("FastAPI Error Response:", errorText);
-          throw new Error(
-            `FastAPI error! status: ${response.status}, message: ${errorText}`
-          );
-        }
+      clearTimeout(timeoutId);
 
-        const data: APIResponse = await response.json();
-        console.log("FastAPI Response:", data);
+      console.log("API Request sent:", {
+        userId,
+        sessionId,
+        message: currentInput,
+      });
+      console.log("API Response status:", response.status);
 
-        if (!data.message || data.message.trim() === "") {
-          console.log(
-            `Empty message received on attempt ${attempt}/${maxRetries}`
-          );
-
-          if (attempt === maxRetries) {
-            console.log("Max retries reached, returning empty response");
-            return data;
-          }
-
-          console.log(`Retrying... (attempt ${attempt + 1}/${maxRetries})`);
-          continue;
-        }
-
-        console.log(`Success on attempt ${attempt}/${maxRetries}`);
-        return data;
-      } catch (error) {
-        console.error(`Error on attempt ${attempt}/${maxRetries}:`, error);
-
-        if (attempt === maxRetries) {
-          throw error;
-        }
-
-        console.log(
-          `Retrying after error... (attempt ${attempt + 1}/${maxRetries})`
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("API Error Response:", errorData);
+        throw new Error(
+          errorData.error || `API error! status: ${response.status}`
         );
       }
-    }
 
-    throw new Error("Unexpected end of retry function");
+      const data: APIResponse = await response.json();
+      console.log("API Response received:", data);
+      return data;
+    } catch (error) {
+      clearTimeout(timeoutId);
+      throw error;
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -246,7 +216,7 @@ export default function Dashboard() {
     }
 
     try {
-      const data = await makeAPICallWithRetry(currentInput, 5);
+      const data = await makeAPICall(currentInput);
 
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -258,29 +228,17 @@ export default function Dashboard() {
       };
 
       setPendingResponse(assistantMessage);
-
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 100);
+      setIsLoading(false);
     } catch (error) {
-      console.error("Error calling FastAPI:", error);
+      console.error("Error calling API:", error);
 
       let errorContent =
-        "I'm sorry, I'm having trouble connecting right now. Please try again.";
+        "I'm sorry, I'm having trouble right now. Please try again.";
 
       if (error instanceof Error && error.name === "AbortError") {
-        console.log("Request aborted due to timeout");
-        errorContent =
-          "Request timeout - The AI is taking longer than expected. Please try again.";
-      } else if (
-        error instanceof TypeError &&
-        error.message.includes("fetch")
-      ) {
-        console.error("Network error - possibly CORS or connectivity issue");
-        errorContent =
-          "Network error - Unable to connect to AI service. Please check your internet connection and try again.";
+        errorContent = "Request timeout - Please try again.";
       } else if (error instanceof Error) {
-        errorContent = `Connection error: ${error.message}. Please try again.`;
+        errorContent = `Error: ${error.message}`;
       }
 
       const errorMessage: Message = {
@@ -291,10 +249,7 @@ export default function Dashboard() {
       };
 
       setPendingResponse(errorMessage);
-
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 100);
+      setIsLoading(false);
     }
   };
 

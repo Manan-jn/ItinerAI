@@ -4,7 +4,10 @@ import React, { useState, useMemo } from "react";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../../../firebase";
 import { useRouter } from "next/navigation";
-import ModalLoaderWhite from "../ModalLoaderWhite";
+import ModalLoaderWhite from "@/app/components/ModalLoaderWhite";
+import { updateUserMemory } from "../../utils/memoryApi";
+import { useAuth } from "../../contexts/AuthContext";
+import { getSessionId } from "../../utils/sessionManager";
 
 interface OnboardingModalWhiteProps {
   isOpen: boolean;
@@ -32,6 +35,7 @@ export default function OnboardingModalWhite({
   userId,
 }: OnboardingModalWhiteProps) {
   const router = useRouter();
+  const { currentUser } = useAuth();
   const [currentStep, setCurrentStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -132,6 +136,17 @@ export default function OnboardingModalWhite({
 
       // Save to Firestore with user ID as document ID
       await setDoc(doc(db, "users", userId), userData);
+
+      // Send user profile to memory API
+      const sessionId = getSessionId();
+      const memoryUserData = {
+        ...userData,
+        displayName: currentUser?.displayName,
+        email: currentUser?.email,
+      };
+
+      // Call memory API (non-blocking - don't fail onboarding if it fails)
+      updateUserMemory(memoryUserData, userId, sessionId);
 
       // Close modal and redirect to flights dashboard
       onClose();

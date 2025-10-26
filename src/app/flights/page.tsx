@@ -138,6 +138,8 @@ export default function FlightsPage() {
   const [showFlights, setShowFlights] = useState(false);
   const [showItinerary, setShowItinerary] = useState(false);
   const [selectedTrip, setSelectedTrip] = useState<any>(null);
+  const [tripSuggestions, setTripSuggestions] = useState<any[]>([]);
+  const [isParsingTrips, setIsParsingTrips] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const flashcardsRef = useRef<FlashcardsWidgetRef>(null);
@@ -304,84 +306,54 @@ export default function FlightsPage() {
     }
   }, [messages, isLoading]);
 
-  // Retry function for API calls when message is empty (same as dashboard)
-  const makeAPICallWithRetry = async (
-    currentInput: string,
-    maxRetries: number = 5
-  ): Promise<any> => {
-    for (let attempt = 1; attempt <= maxRetries; attempt++) {
-      try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => {
-          console.log("Request timeout after 10 minutes");
-          controller.abort();
-        }, 600000);
+  // Simple API call function
+  const makeAPICall = async (currentInput: string): Promise<any> => {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => {
+      console.log("Request timeout after 2 minutes");
+      controller.abort();
+    }, 600000); // 2 minutes timeout
 
-        console.log(`Making API call (attempt ${attempt}/${maxRetries})...`);
+    try {
+      console.log("Making API call...");
 
-        const response = await fetch("https://agent-bigfit-api.com/api/chat", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            user_id: userId,
-            session_id: sessionId,
-            message: currentInput,
-          }),
-          signal: controller.signal,
-        });
-
-        clearTimeout(timeoutId);
-
-        console.log("FastAPI Request sent:", {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
           user_id: userId,
           session_id: sessionId,
           message: currentInput,
-        });
-        console.log("FastAPI Response status:", response.status);
+        }),
+        signal: controller.signal,
+      });
 
-        if (!response.ok) {
-          const errorText = await response.text();
-          console.error("FastAPI Error Response:", errorText);
-          throw new Error(
-            `FastAPI error! status: ${response.status}, message: ${errorText}`
-          );
-        }
+      clearTimeout(timeoutId);
 
-        const data = await response.json();
-        console.log("FastAPI Response:", data);
+      console.log("API Request sent:", {
+        user_id: userId,
+        session_id: sessionId,
+        message: currentInput,
+      });
+      console.log("API Response status:", response.status);
 
-        if (!data.message || data.message.trim() === "") {
-          console.log(
-            `Empty message received on attempt ${attempt}/${maxRetries}`
-          );
-
-          if (attempt === maxRetries) {
-            console.log("Max retries reached, returning empty response");
-            return data;
-          }
-
-          console.log(`Retrying... (attempt ${attempt + 1}/${maxRetries})`);
-          continue;
-        }
-
-        console.log(`Success on attempt ${attempt}/${maxRetries}`);
-        return data;
-      } catch (error) {
-        console.error(`Error on attempt ${attempt}/${maxRetries}:`, error);
-
-        if (attempt === maxRetries) {
-          throw error;
-        }
-
-        console.log(
-          `Retrying after error... (attempt ${attempt + 1}/${maxRetries})`
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("API Error Response:", errorData);
+        throw new Error(
+          errorData.error || `API error! status: ${response.status}`
         );
       }
-    }
 
-    throw new Error("Unexpected end of retry function");
+      const data = await response.json();
+      console.log("API Response received:", data);
+      return data;
+    } catch (error) {
+      clearTimeout(timeoutId);
+      throw error;
+    }
   };
 
   const handleChatSubmit = async (e: React.FormEvent) => {
@@ -406,7 +378,52 @@ export default function FlightsPage() {
     setIsLoading(true);
 
     try {
-      const data = await makeAPICallWithRetry(currentInput, 5);
+      const data = await makeAPICall(currentInput);
+
+      // Check if response contains trip suggestions
+      let parsedTripSuggestions: any[] = [];
+      let shouldShowPlaces = false;
+
+      try {
+        // Try to parse the message as JSON
+        const parsedData =
+          typeof data.message === "string"
+            ? JSON.parse(data.message)
+            : data.message;
+
+        // Check if response_type is "trip"
+        if (
+          parsedData &&
+          parsedData.response_type === "trip" &&
+          parsedData.trip_suggestions
+        ) {
+          console.log(
+            "Trip suggestions detected in response:",
+            parsedData.trip_suggestions
+          );
+
+          // Show parsing indicator
+          setIsParsingTrips(true);
+
+          // Extract trip suggestions
+          if (
+            parsedData.trip_suggestions.trips &&
+            Array.isArray(parsedData.trip_suggestions.trips)
+          ) {
+            parsedTripSuggestions = parsedData.trip_suggestions.trips;
+            shouldShowPlaces = true;
+
+            console.log(
+              `Parsed ${parsedTripSuggestions.length} trip suggestions`
+            );
+          }
+        }
+      } catch (parseError) {
+        // If parsing fails, it's just a regular text message
+        console.log(
+          "Message is not JSON or doesn't contain trip suggestions, treating as regular text"
+        );
+      }
 
       const assistantMessage = {
         id: (Date.now() + 1).toString(),
@@ -418,25 +435,39 @@ export default function FlightsPage() {
       };
 
       setMessages((prev) => [...prev, assistantMessage]);
+
+      // If trip suggestions were found, update state and show places widget
+      if (shouldShowPlaces && parsedTripSuggestions.length > 0) {
+        setTimeout(() => {
+          setTripSuggestions(parsedTripSuggestions);
+          setIsParsingTrips(false);
+
+          // Automatically show the places widget
+          setShowFlashcards(true);
+          setShowFlights(false);
+          setShowItinerary(false);
+          setSelectedTrip(null);
+
+          // Clear selection in flashcards widget
+          if (flashcardsRef.current) {
+            flashcardsRef.current.clearSelection();
+          }
+
+          console.log("Places widget activated with trip suggestions");
+        }, 800); // Small delay for smooth transition
+      } else {
+        setIsParsingTrips(false);
+      }
     } catch (error) {
-      console.error("Error calling FastAPI:", error);
+      console.error("Error calling API:", error);
 
       let errorContent =
-        "I'm sorry, I'm having trouble connecting right now. Please try again.";
+        "I'm sorry, I'm having trouble right now. Please try again.";
 
       if (error instanceof Error && error.name === "AbortError") {
-        console.log("Request aborted due to timeout");
-        errorContent =
-          "Request timeout - The AI is taking longer than expected. Please try again.";
-      } else if (
-        error instanceof TypeError &&
-        error.message.includes("fetch")
-      ) {
-        console.error("Network error - possibly CORS or connectivity issue");
-        errorContent =
-          "Network error - Unable to connect to AI service. Please check your internet connection and try again.";
+        errorContent = "Request timeout - Please try again.";
       } else if (error instanceof Error) {
-        errorContent = `Connection error: ${error.message}. Please try again.`;
+        errorContent = `Error: ${error.message}`;
       }
 
       const errorMessage = {
@@ -447,6 +478,7 @@ export default function FlightsPage() {
       };
 
       setMessages((prev) => [...prev, errorMessage]);
+      setIsParsingTrips(false);
     } finally {
       setIsLoading(false);
     }
@@ -1448,6 +1480,11 @@ export default function FlightsPage() {
                                   setShowFlashcards(false);
                                   setSelectedTrip(null);
                                 }}
+                                trips={
+                                  tripSuggestions.length > 0
+                                    ? tripSuggestions
+                                    : undefined
+                                }
                                 rightPanelCollapsed={true}
                                 onTripSelect={setSelectedTrip}
                               />
@@ -1563,6 +1600,27 @@ export default function FlightsPage() {
                               </div>
                             )}
 
+                            {/* Trip Parsing indicator */}
+                            {isParsingTrips && (
+                              <div className="flex items-start gap-3">
+                                {/* AI Avatar */}
+                                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-purple-100 to-purple-200 border border-purple-300 flex items-center justify-center">
+                                  <MdExplore className="text-purple-600 text-sm" />
+                                </div>
+
+                                {/* Parsing Animation */}
+                                <div className="bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-200 shadow-sm rounded-2xl px-4 py-3 min-w-[200px]">
+                                  <div className="flex items-center space-x-2">
+                                    {/* Spinning icon */}
+                                    <div className="w-4 h-4 border-2 border-purple-300 border-t-purple-600 rounded-full animate-spin"></div>
+                                    <span className="text-xs text-purple-700 font-medium">
+                                      Preparing your trip suggestions...
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+
                             <div ref={messagesEndRef} />
                           </div>
                         )}
@@ -1570,7 +1628,7 @@ export default function FlightsPage() {
                     </div>
 
                     {/* Chat Input - Fixed at bottom, no shifting */}
-                    <div className="flex-shrink-0 bg-gradient-to-t from-white to-blue-50/20 border-t border-blue-100 px-6 py-4 relative">
+                    <div className="flex-shrink-0 bg-gradient-to-t from-white to-blue-50/20 border-t border-blue-100 px-6 py-6 relative">
                       {/* Selected Trip Snippet - Floating above chat */}
                       {selectedTrip && showFlashcards && (
                         <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-full max-w-md px-6 z-10 animate-slideUp">
@@ -1603,63 +1661,168 @@ export default function FlightsPage() {
 
                       <div className="max-w-4xl mx-auto">
                         <form onSubmit={handleChatSubmit} className="relative">
-                          <div className="flex items-end gap-2 bg-white rounded-2xl border-2 border-gray-200 p-2 focus-within:border-blue-400 focus-within:shadow-lg transition-all">
-                            <textarea
-                              ref={textareaRef}
+                          {/* Animated Chatbox Container */}
+                          <div className="itinerai-chatbox-container">
+                            <input
+                              type="text"
                               value={chatInput}
                               onChange={(e) => setChatInputText(e.target.value)}
                               onKeyDown={handleKeyDown}
-                              placeholder={
-                                showItinerary
-                                  ? "Ask about your itinerary..."
-                                  : showFlights
-                                  ? "Ask about flights..."
-                                  : showFlashcards
-                                  ? `Ask about ${
-                                      selectedTrip
-                                        ? selectedTrip.trip_title
-                                        : "places"
-                                    }...`
-                                  : "Ask me anything about your travel..."
-                              }
-                              className="flex-1 bg-transparent text-gray-900 placeholder-gray-400 resize-none outline-none min-h-[20px] max-h-[120px] text-sm leading-relaxed py-2 px-2 focus-ring"
-                              rows={1}
+                              placeholder="Ask ItinerAI"
+                              className="itinerai-chatbox-input"
                               disabled={isLoading}
                             />
                             <button
                               type="submit"
                               disabled={!chatInput.trim() || isLoading}
-                              className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 disabled:from-gray-300 disabled:to-gray-400 disabled:cursor-not-allowed text-white rounded-xl px-5 py-2 transition-all flex-shrink-0 font-medium text-sm shadow-md hover:shadow-lg disabled:shadow-none flex items-center gap-2"
+                              className="itinerai-chatbox-submit-btn"
                             >
-                              <span>Send</span>
                               <svg
-                                className="w-4 h-4"
+                                width="18"
+                                height="18"
+                                viewBox="0 0 24 24"
                                 fill="none"
                                 stroke="currentColor"
-                                viewBox="0 0 24 24"
+                                strokeWidth="2.5"
                               >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-                                />
+                                <polyline points="9 18 15 12 9 6"></polyline>
                               </svg>
                             </button>
                           </div>
-                          <p className="text-xs text-gray-500 mt-2 text-center">
-                            Press{" "}
-                            <kbd className="px-1.5 py-0.5 bg-gray-100 border border-gray-300 rounded text-xs">
-                              Enter
-                            </kbd>{" "}
-                            to send,{" "}
-                            <kbd className="px-1.5 py-0.5 bg-gray-100 border border-gray-300 rounded text-xs">
-                              Shift + Enter
-                            </kbd>{" "}
-                            for new line
-                          </p>
                         </form>
                       </div>
+
+                      {/* Inline Styles for the Chatbox */}
+                      <style jsx>{`
+                        .itinerai-chatbox-container {
+                          width: 260px;
+                          height: 50px;
+                          display: flex;
+                          align-items: center;
+                          background: linear-gradient(
+                            135deg,
+                            rgba(59, 130, 246, 0.1) 0%,
+                            rgba(147, 197, 253, 0.05) 100%
+                          );
+                          backdrop-filter: blur(20px);
+                          -webkit-backdrop-filter: blur(20px);
+                          border-radius: 25px;
+                          padding: 8px;
+                          gap: 8px;
+                          box-shadow: 0 4px 16px rgba(59, 130, 246, 0.15),
+                            0 2px 8px rgba(0, 0, 0, 0.05),
+                            inset 0 1px 0 rgba(255, 255, 255, 0.5);
+                          z-index: 10;
+                          animation: slideUpFade 0.5s
+                            cubic-bezier(0.34, 1.56, 0.64, 1) both;
+                          border: 1.5px solid rgba(59, 130, 246, 0.2);
+                          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                          margin: 0 auto;
+                        }
+
+                        .itinerai-chatbox-container:focus-within {
+                          width: 420px;
+                          box-shadow: 0 8px 24px rgba(59, 130, 246, 0.25),
+                            0 4px 12px rgba(0, 0, 0, 0.1),
+                            inset 0 1px 0 rgba(255, 255, 255, 0.6);
+                          background: linear-gradient(
+                            135deg,
+                            rgba(59, 130, 246, 0.15) 0%,
+                            rgba(147, 197, 253, 0.08) 100%
+                          );
+                          border-color: rgba(59, 130, 246, 0.35);
+                        }
+
+                        .itinerai-chatbox-input {
+                          flex: 1;
+                          background: transparent;
+                          border: none;
+                          outline: none;
+                          padding: 0 12px;
+                          font-size: 0.9rem;
+                          color: #1f2937;
+                          font-family: -apple-system, BlinkMacSystemFont,
+                            "Segoe UI", Roboto, sans-serif;
+                          font-weight: 500;
+                          height: 34px;
+                        }
+
+                        .itinerai-chatbox-input::placeholder {
+                          color: #9ca3af;
+                          font-weight: 400;
+                        }
+
+                        .itinerai-chatbox-input:focus {
+                          color: #111827;
+                        }
+
+                        .itinerai-chatbox-submit-btn {
+                          background: linear-gradient(
+                            135deg,
+                            #3b82f6 0%,
+                            #2563eb 100%
+                          );
+                          border: 1px solid rgba(59, 130, 246, 0.3);
+                          border-radius: 50%;
+                          width: 34px;
+                          height: 34px;
+                          min-width: 34px;
+                          display: flex;
+                          align-items: center;
+                          justify-content: center;
+                          color: white;
+                          cursor: pointer;
+                          transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+                          flex-shrink: 0;
+                          box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+                        }
+
+                        .itinerai-chatbox-submit-btn:hover:not(:disabled) {
+                          background: linear-gradient(
+                            135deg,
+                            #2563eb 0%,
+                            #1d4ed8 100%
+                          );
+                          border-color: rgba(37, 99, 235, 0.5);
+                          transform: scale(1.08);
+                          box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+                        }
+
+                        .itinerai-chatbox-submit-btn:active:not(:disabled) {
+                          transform: scale(0.95);
+                        }
+
+                        .itinerai-chatbox-submit-btn:disabled {
+                          background: linear-gradient(
+                            135deg,
+                            #d1d5db 0%,
+                            #9ca3af 100%
+                          );
+                          border-color: rgba(156, 163, 175, 0.3);
+                          cursor: not-allowed;
+                          box-shadow: none;
+                        }
+
+                        .itinerai-chatbox-submit-btn svg {
+                          transition: transform 0.2s ease;
+                          filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+                        }
+
+                        .itinerai-chatbox-submit-btn:hover:not(:disabled) svg {
+                          transform: translateX(2px);
+                        }
+
+                        @keyframes slideUpFade {
+                          from {
+                            opacity: 0;
+                            transform: translateY(20px);
+                          }
+                          to {
+                            opacity: 1;
+                            transform: translateY(0);
+                          }
+                        }
+                      `}</style>
                     </div>
                   </>
                 )}
