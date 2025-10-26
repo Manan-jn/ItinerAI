@@ -1,8 +1,20 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { FiChevronLeft, FiChevronRight, FiChevronDown } from "react-icons/fi";
 import { MdFlight, MdHotel } from "react-icons/md";
+import ItinerAIChatBox from "./ItinerAIChatBox";
+import {
+  fetchConveyanceData,
+  fetchStayData,
+  getDateRangeForMonth,
+  processPriceDataForMonth,
+  hasValidFlightFilters,
+  hasValidStayFilters,
+  DatePriceInfo,
+  FlightData,
+  StayData,
+} from "../utils/priceApi";
 
 interface DateSelectorWidgetProps {
   isVisible: boolean;
@@ -11,10 +23,11 @@ interface DateSelectorWidgetProps {
 
 interface DateInfo {
   date: Date;
-  flightPrice: number;
-  hotelPrice: number;
+  flightPrice: number | null;
+  hotelPrice: number | null;
   isToday?: boolean;
   isSelected?: boolean;
+  isLoading?: boolean;
 }
 
 interface PreferredTimeCard {
@@ -70,16 +83,34 @@ export default function DateSelectorWidget({
   isVisible,
   onToggle,
 }: DateSelectorWidgetProps) {
-  const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [chatInput, setChatInput] = useState("");
+  // Set to December 2025 to match sample data
+  const [currentMonth, setCurrentMonth] = useState(new Date(2025, 11, 1)); // December 2025
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [expandedCard, setExpandedCard] = useState<string | null>(null);
   const [isScrolling, setIsScrolling] = useState(false);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Price data states
+  const [flightData, setFlightData] = useState<FlightData[]>([]);
+  const [stayData, setStayData] = useState<StayData[]>([]);
+  const [priceData, setPriceData] = useState<DatePriceInfo[]>([]);
+  const [isLoadingPrices, setIsLoadingPrices] = useState(false);
+  const [lastFetchedMonth, setLastFetchedMonth] = useState<string | null>(null);
+  const [apiError, setApiError] = useState<string | null>(null);
+
+  const handleChatSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (chatInput.trim()) {
+      console.log("Chat submitted:", chatInput);
+      setChatInput("");
+    }
+  };
   const preferredTimeScrollRef = useRef<HTMLDivElement>(null);
 
-  // Filter states
-  const [fromCity, setFromCity] = useState("Select City");
-  const [toCity, setToCity] = useState("Select City");
+  // Filter states - Set defaults to match sample data for testing
+  const [fromCity, setFromCity] = useState("Leh");
+  const [toCity, setToCity] = useState("Mumbai");
   const [flightClass, setFlightClass] = useState("Economy");
   const [hotelRating, setHotelRating] = useState("3 Star");
   const [showFromDropdown, setShowFromDropdown] = useState(false);
@@ -87,10 +118,11 @@ export default function DateSelectorWidget({
   const [showFlightClassDropdown, setShowFlightClassDropdown] = useState(false);
   const [showHotelRatingDropdown, setShowHotelRatingDropdown] = useState(false);
 
-  // Placeholder data with more options
+  // Cities based on available data
   const cities = [
-    "New Delhi",
+    "Leh",
     "Mumbai",
+    "New Delhi",
     "Bangalore",
     "Kolkata",
     "Chennai",
@@ -108,27 +140,34 @@ export default function DateSelectorWidget({
   ];
   const hotelRatings = ["Budget", "3 Star", "4 Star", "5 Star", "Luxury"];
 
-  // Generate calendar dates for current month with fixed placeholder prices
+  // Generate calendar dates for current month with API-fetched prices
   const generateCalendarDates = (): DateInfo[] => {
     const year = currentMonth.getFullYear();
     const month = currentMonth.getMonth();
-    const firstDay = new Date(year, month, 1);
     const lastDay = new Date(year, month + 1, 0);
     const dates: DateInfo[] = [];
 
-    // Fixed price patterns for consistent display
-    const flightPrices = [850, 920, 780, 1100, 950, 820, 1050, 890, 760, 980];
-    const hotelPrices = [450, 520, 380, 600, 550, 420, 650, 490, 360, 580];
-
     for (let day = 1; day <= lastDay.getDate(); day++) {
       const date = new Date(year, month, day);
-      const priceIndex = (day - 1) % flightPrices.length;
+      const dateString = date.toISOString().split("T")[0];
+
+      // Find price data for this date
+      const priceInfo = priceData.find((p) => p.date === dateString);
+
+      // Debug logging for first few dates
+      if (day <= 3) {
+        console.log(
+          `Date ${dateString}: flight=${priceInfo?.cheapestFlightPrice}, stay=${priceInfo?.cheapestStayPrice}`
+        );
+      }
+
       dates.push({
         date,
-        flightPrice: flightPrices[priceIndex],
-        hotelPrice: hotelPrices[priceIndex],
+        flightPrice: priceInfo?.cheapestFlightPrice || null,
+        hotelPrice: priceInfo?.cheapestStayPrice || null,
         isToday: isToday(date),
         isSelected: selectedDate?.toDateString() === date.toDateString(),
+        isLoading: isLoadingPrices,
       });
     }
 
@@ -141,16 +180,114 @@ export default function DateSelectorWidget({
   };
 
   const handlePrevMonth = () => {
+    // Don't allow navigation while loading prices
+    if (isLoadingPrices) return;
+
     setCurrentMonth(
       new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1)
     );
   };
 
   const handleNextMonth = () => {
+    // Don't allow navigation while loading prices
+    if (isLoadingPrices) return;
+
     setCurrentMonth(
       new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1)
     );
   };
+
+  // Fetch price data for the current month
+  const fetchPriceData = useCallback(async () => {
+    const year = currentMonth.getFullYear();
+    const month = currentMonth.getMonth();
+    const monthKey = `${year}-${month}`;
+
+    // Skip if already fetched for this month
+    if (lastFetchedMonth === monthKey) return;
+
+    const { from_date, to_date } = getDateRangeForMonth(year, month);
+
+    setIsLoadingPrices(true);
+
+    try {
+      setApiError(null);
+      const promises = [];
+
+      // Fetch flight data if filters are valid
+      if (hasValidFlightFilters(fromCity, toCity)) {
+        promises.push(
+          fetchConveyanceData({
+            departure_city: fromCity,
+            arrival_city: toCity,
+            from_date,
+            to_date,
+          })
+        );
+      } else {
+        promises.push(Promise.resolve([]));
+      }
+
+      // Fetch stay data if filters are valid
+      if (hasValidStayFilters(toCity)) {
+        promises.push(
+          fetchStayData({
+            city: toCity,
+            from_date,
+            to_date,
+          })
+        );
+      } else {
+        promises.push(Promise.resolve([]));
+      }
+
+      const [flights, stays] = (await Promise.all(promises)) as [
+        FlightData[],
+        StayData[]
+      ];
+
+      console.log("Fetched data:", {
+        flights: flights.length,
+        stays: stays.length,
+        fromCity,
+        toCity,
+        flightClass,
+      });
+
+      setFlightData(flights);
+      setStayData(stays);
+
+      // Process price data for each date in the month
+      const processedPrices = processPriceDataForMonth(
+        flights,
+        stays,
+        year,
+        month,
+        flightClass
+      );
+
+      console.log("Processed prices for month:", processedPrices.slice(0, 5));
+
+      setPriceData(processedPrices);
+      setLastFetchedMonth(monthKey);
+    } catch (error) {
+      console.error("Error fetching price data:", error);
+      setApiError("Failed to fetch price data. Please try again.");
+    } finally {
+      setIsLoadingPrices(false);
+    }
+  }, [currentMonth, fromCity, toCity, flightClass, lastFetchedMonth]);
+
+  // Fetch price data when month or filters change
+  useEffect(() => {
+    fetchPriceData();
+  }, [fetchPriceData]);
+
+  // Reset price data when filters change
+  useEffect(() => {
+    setLastFetchedMonth(null);
+    setPriceData([]);
+  }, [fromCity, toCity, flightClass]);
 
   const handleDateClick = (date: Date) => {
     setSelectedDate(date);
@@ -379,21 +516,114 @@ export default function DateSelectorWidget({
           <div className="flex items-center justify-between p-4 border-b border-blue-100 bg-gradient-to-r from-blue-50 to-purple-50">
             <button
               onClick={handlePrevMonth}
-              className="p-2 hover:bg-white/70 rounded-lg transition-all"
+              className={`p-2 rounded-lg transition-all ${
+                isLoadingPrices
+                  ? "cursor-not-allowed opacity-50"
+                  : "hover:bg-white/70 cursor-pointer"
+              }`}
+              disabled={isLoadingPrices}
+              title={isLoadingPrices ? "Loading prices..." : "Previous month"}
             >
-              <FiChevronLeft className="text-gray-700" size={20} />
+              <FiChevronLeft
+                className={`${
+                  isLoadingPrices ? "text-gray-400" : "text-gray-700"
+                }`}
+                size={20}
+              />
             </button>
-            <h2 className="text-lg font-bold text-gray-800">{monthName}</h2>
+            <div className="flex items-center gap-2">
+              <h2 className="text-lg font-bold text-gray-800">{monthName}</h2>
+              {isLoadingPrices && (
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 border border-gray-300 border-t-blue-500 rounded-full animate-spin" />
+                  <span className="text-xs text-gray-600">
+                    Loading prices...
+                  </span>
+                </div>
+              )}
+            </div>
             <button
               onClick={handleNextMonth}
-              className="p-2 hover:bg-white/70 rounded-lg transition-all"
+              className={`p-2 rounded-lg transition-all ${
+                isLoadingPrices
+                  ? "cursor-not-allowed opacity-50"
+                  : "hover:bg-white/70 cursor-pointer"
+              }`}
+              disabled={isLoadingPrices}
+              title={isLoadingPrices ? "Loading prices..." : "Next month"}
             >
-              <FiChevronRight className="text-gray-700" size={20} />
+              <FiChevronRight
+                className={`${
+                  isLoadingPrices ? "text-gray-400" : "text-gray-700"
+                }`}
+                size={20}
+              />
             </button>
           </div>
 
+          {/* Error Message */}
+          {apiError && (
+            <div className="mx-4 mt-2 p-3 bg-red-50 border border-red-200 rounded-lg">
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 bg-red-500 rounded-full flex-shrink-0" />
+                <span className="text-sm text-red-700">{apiError}</span>
+                <button
+                  onClick={() => {
+                    setApiError(null);
+                    fetchPriceData();
+                  }}
+                  className="ml-auto text-xs text-red-600 hover:text-red-800 underline"
+                >
+                  Retry
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Price Legend or Instructions */}
+          {hasValidFlightFilters(fromCity, toCity) ||
+          hasValidStayFilters(toCity) ? (
+            <div className="mx-4 mt-2 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+              <div className="flex items-center justify-center gap-4 text-xs">
+                <span className="text-gray-600 font-medium">Price Legend:</span>
+                {hasValidFlightFilters(fromCity, toCity) && (
+                  <div className="flex items-center gap-1">
+                    <div className="w-2 h-2 rounded-full bg-red-500" />
+                    <span className="text-red-700">Flights</span>
+                  </div>
+                )}
+                {hasValidStayFilters(toCity) && (
+                  <div className="flex items-center gap-1">
+                    <div className="w-2 h-2 rounded-full bg-yellow-500" />
+                    <span className="text-yellow-700">Hotels</span>
+                  </div>
+                )}
+                <span className="text-gray-500 text-[10px]">
+                  Prices shown are cheapest available
+                </span>
+              </div>
+            </div>
+          ) : (
+            <div className="mx-4 mt-2 p-3 bg-gray-50 border border-gray-200 rounded-lg">
+              <div className="flex items-center justify-center text-xs text-gray-600">
+                <span>
+                  Select departure and destination cities to see live prices
+                </span>
+              </div>
+            </div>
+          )}
+
           {/* Calendar Grid */}
-          <div className="flex-1 overflow-y-auto p-4">
+          <div
+            className={`flex-1 overflow-y-auto p-4 relative ${
+              isLoadingPrices ? "pointer-events-none" : ""
+            }`}
+          >
+            {/* Loading overlay */}
+            {isLoadingPrices && (
+              <div className="absolute inset-0 bg-white/30 backdrop-blur-[1px] z-10 rounded-lg" />
+            )}
+
             <div className="grid grid-cols-7 gap-2">
               {/* Day Headers */}
               {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
@@ -444,39 +674,75 @@ export default function DateSelectorWidget({
 
                   {/* Prices */}
                   <div className="space-y-1">
-                    {/* Flight Price */}
-                    <div className="flex items-center justify-center gap-1">
-                      <div
-                        className={`w-2 h-2 rounded-full ${
-                          dateInfo.isSelected ? "bg-red-400" : "bg-red-500"
-                        }`}
-                      />
-                      <span
-                        className={`text-[9px] font-semibold ${
-                          dateInfo.isSelected ? "text-white" : "text-red-700"
-                        }`}
-                      >
-                        ${dateInfo.flightPrice}
-                      </span>
-                    </div>
+                    {dateInfo.isLoading ? (
+                      <div className="flex items-center justify-center">
+                        <div className="w-3 h-3 border border-gray-300 border-t-blue-500 rounded-full animate-spin" />
+                      </div>
+                    ) : (
+                      <>
+                        {/* Flight Price */}
+                        {dateInfo.flightPrice !== null &&
+                          hasValidFlightFilters(fromCity, toCity) && (
+                            <div className="flex items-center justify-center gap-1">
+                              <div
+                                className={`w-2 h-2 rounded-full ${
+                                  dateInfo.isSelected
+                                    ? "bg-red-400"
+                                    : "bg-red-500"
+                                }`}
+                              />
+                              <span
+                                className={`text-[9px] font-semibold ${
+                                  dateInfo.isSelected
+                                    ? "text-white"
+                                    : "text-red-700"
+                                }`}
+                              >
+                                ₹{dateInfo.flightPrice.toLocaleString()}
+                              </span>
+                            </div>
+                          )}
 
-                    {/* Hotel Price */}
-                    <div className="flex items-center justify-center gap-1">
-                      <div
-                        className={`w-2 h-2 rounded-full ${
-                          dateInfo.isSelected
-                            ? "bg-yellow-400"
-                            : "bg-yellow-500"
-                        }`}
-                      />
-                      <span
-                        className={`text-[9px] font-semibold ${
-                          dateInfo.isSelected ? "text-white" : "text-yellow-700"
-                        }`}
-                      >
-                        ${dateInfo.hotelPrice}
-                      </span>
-                    </div>
+                        {/* Hotel Price */}
+                        {dateInfo.hotelPrice !== null &&
+                          hasValidStayFilters(toCity) && (
+                            <div className="flex items-center justify-center gap-1">
+                              <div
+                                className={`w-2 h-2 rounded-full ${
+                                  dateInfo.isSelected
+                                    ? "bg-yellow-400"
+                                    : "bg-yellow-500"
+                                }`}
+                              />
+                              <span
+                                className={`text-[9px] font-semibold ${
+                                  dateInfo.isSelected
+                                    ? "text-white"
+                                    : "text-yellow-700"
+                                }`}
+                              >
+                                ₹{dateInfo.hotelPrice.toLocaleString()}
+                              </span>
+                            </div>
+                          )}
+
+                        {/* Show placeholder when no data available */}
+                        {dateInfo.flightPrice === null &&
+                          dateInfo.hotelPrice === null && (
+                            <div className="flex items-center justify-center">
+                              <span
+                                className={`text-[8px] ${
+                                  dateInfo.isSelected
+                                    ? "text-white/70"
+                                    : "text-gray-400"
+                                }`}
+                              >
+                                No data
+                              </span>
+                            </div>
+                          )}
+                      </>
+                    )}
                   </div>
                 </button>
               ))}
@@ -543,18 +809,28 @@ export default function DateSelectorWidget({
 
                     {/* Prices */}
                     <div className="flex items-center gap-3 mt-2">
-                      <div className="flex items-center gap-1">
-                        <div className="w-2 h-2 rounded-full bg-red-500" />
-                        <span className="text-xs font-semibold text-red-700">
-                          ${card.flightPrice}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <div className="w-2 h-2 rounded-full bg-yellow-500" />
-                        <span className="text-xs font-semibold text-yellow-700">
-                          ${card.hotelPrice}
-                        </span>
-                      </div>
+                      {hasValidFlightFilters(fromCity, toCity) && (
+                        <div className="flex items-center gap-1">
+                          <div className="w-2 h-2 rounded-full bg-red-500" />
+                          <span className="text-xs font-semibold text-red-700">
+                            ₹{card.flightPrice.toLocaleString()}
+                          </span>
+                        </div>
+                      )}
+                      {hasValidStayFilters(toCity) && (
+                        <div className="flex items-center gap-1">
+                          <div className="w-2 h-2 rounded-full bg-yellow-500" />
+                          <span className="text-xs font-semibold text-yellow-700">
+                            ₹{card.hotelPrice.toLocaleString()}
+                          </span>
+                        </div>
+                      )}
+                      {!hasValidFlightFilters(fromCity, toCity) &&
+                        !hasValidStayFilters(toCity) && (
+                          <span className="text-xs text-gray-500">
+                            Select cities to see prices
+                          </span>
+                        )}
                     </div>
                   </div>
 
@@ -591,146 +867,17 @@ export default function DateSelectorWidget({
                 : "opacity-100 translate-y-0"
             }`}
           >
-            <div className="chatbox-container-date">
-              <input
-                type="text"
-                placeholder="Ask ItinerAI"
-                className="chatbox-input-date"
-              />
-              <button className="chatbox-submit-btn-date">
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                >
-                  <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
-              </button>
-            </div>
+            <ItinerAIChatBox
+              value={chatInput}
+              onChange={setChatInput}
+              onSubmit={handleChatSubmit}
+              placeholder="Ask ItinerAI"
+              theme="purple"
+              inputType="input"
+            />
           </div>
         </div>
       </div>
-
-      {/* Chatbox Styles - Light Theme matching FlashcardsWidgetWhiteTheme */}
-      <style jsx>{`
-        .chatbox-container-date {
-          width: min(260px, 100%);
-          height: 50px;
-          display: flex;
-          align-items: center;
-          background: linear-gradient(
-            135deg,
-            rgba(147, 51, 234, 0.1) 0%,
-            rgba(219, 39, 119, 0.05) 100%
-          );
-          backdrop-filter: blur(20px);
-          -webkit-backdrop-filter: blur(20px);
-          border-radius: 25px;
-          padding: 8px;
-          gap: 8px;
-          box-shadow: 0 4px 16px rgba(147, 51, 234, 0.15),
-            0 2px 8px rgba(0, 0, 0, 0.05),
-            inset 0 1px 0 rgba(255, 255, 255, 0.5);
-          z-index: 30;
-          animation: slideUpFade 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-          border: 1.5px solid rgba(147, 51, 234, 0.2);
-          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .chatbox-container-date:focus-within {
-          width: min(420px, 100%);
-          box-shadow: 0 8px 24px rgba(147, 51, 234, 0.25),
-            0 4px 12px rgba(0, 0, 0, 0.1),
-            inset 0 1px 0 rgba(255, 255, 255, 0.6);
-          background: linear-gradient(
-            135deg,
-            rgba(147, 51, 234, 0.15) 0%,
-            rgba(219, 39, 119, 0.08) 100%
-          );
-          border-color: rgba(147, 51, 234, 0.35);
-        }
-
-        .chatbox-input-date {
-          flex: 1;
-          background: transparent;
-          border: none;
-          outline: none;
-          padding: 0 12px;
-          font-size: 0.9rem;
-          color: #6b21a8;
-          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-            sans-serif;
-          font-weight: 500;
-          height: 34px;
-        }
-
-        .chatbox-input-date::placeholder {
-          color: rgba(147, 51, 234, 0.5);
-          font-weight: 400;
-        }
-
-        .chatbox-input-date:focus {
-          color: #581c87;
-        }
-
-        .chatbox-submit-btn-date {
-          background: linear-gradient(135deg, #9333ea 0%, #db2777 100%);
-          border: 1px solid rgba(147, 51, 234, 0.3);
-          border-radius: 50%;
-          width: 34px;
-          height: 34px;
-          min-width: 34px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: white;
-          cursor: pointer;
-          transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-          flex-shrink: 0;
-          box-shadow: 0 2px 8px rgba(147, 51, 234, 0.3);
-        }
-
-        .chatbox-submit-btn-date:hover:not(:disabled) {
-          background: linear-gradient(135deg, #7c3aed 0%, #be185d 100%);
-          border-color: rgba(124, 58, 237, 0.5);
-          transform: scale(1.08);
-          box-shadow: 0 4px 12px rgba(147, 51, 234, 0.4);
-        }
-
-        .chatbox-submit-btn-date:active:not(:disabled) {
-          transform: scale(0.95);
-        }
-
-        .chatbox-submit-btn-date:disabled {
-          background: linear-gradient(135deg, #d1d5db 0%, #9ca3af 100%);
-          border-color: rgba(156, 163, 175, 0.3);
-          cursor: not-allowed;
-          box-shadow: none;
-        }
-
-        .chatbox-submit-btn-date svg {
-          transition: transform 0.2s ease;
-          filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
-        }
-
-        .chatbox-submit-btn-date:hover:not(:disabled) svg {
-          transform: translateX(2px);
-        }
-
-        @keyframes slideUpFade {
-          from {
-            opacity: 0;
-            transform: translateX(-50%) translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-          }
-        }
-      `}</style>
     </div>
   );
 }

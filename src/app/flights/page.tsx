@@ -28,6 +28,8 @@ import ItineraryWidget from "../components/ItineraryWidget";
 import LoginModalWhite from "../components/auth/LoginModalWhite";
 import SignupModalWhite from "../components/auth/SignupModalWhite";
 import OnboardingModalWhite from "../components/auth/OnboardingModalWhite";
+import ItinerAIChatBox from "../components/ItinerAIChatBox";
+import { TripLoader } from "../components/flights-page/TripLoader";
 import { getSessionId, getUserId } from "../utils/sessionManager";
 
 type SectionType =
@@ -140,6 +142,7 @@ export default function FlightsPage() {
   const [selectedTrip, setSelectedTrip] = useState<any>(null);
   const [tripSuggestions, setTripSuggestions] = useState<any[]>([]);
   const [isParsingTrips, setIsParsingTrips] = useState(false);
+  const [showTripLoader, setShowTripLoader] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const flashcardsRef = useRef<FlashcardsWidgetRef>(null);
@@ -402,7 +405,8 @@ export default function FlightsPage() {
             parsedData.trip_suggestions
           );
 
-          // Show parsing indicator
+          // Show trip loader for 4 seconds
+          setShowTripLoader(true);
           setIsParsingTrips(true);
 
           // Extract trip suggestions
@@ -440,23 +444,31 @@ export default function FlightsPage() {
       if (shouldShowPlaces && parsedTripSuggestions.length > 0) {
         setTimeout(() => {
           setTripSuggestions(parsedTripSuggestions);
-          setIsParsingTrips(false);
+          setShowTripLoader(false);
 
-          // Automatically show the places widget
-          setShowFlashcards(true);
-          setShowFlights(false);
-          setShowItinerary(false);
-          setSelectedTrip(null);
+          setTimeout(() => {
+            setIsParsingTrips(false);
+            // Automatically show the places widget
+            setShowFlashcards(true);
+            setShowFlights(false);
+            setShowItinerary(false);
+            setSelectedTrip(null);
 
-          // Clear selection in flashcards widget
-          if (flashcardsRef.current) {
-            flashcardsRef.current.clearSelection();
-          }
+            // Clear selection in flashcards widget
+            if (flashcardsRef.current) {
+              flashcardsRef.current.clearSelection();
+            }
 
-          console.log("Places widget activated with trip suggestions");
-        }, 800); // Small delay for smooth transition
+            console.log("Places widget activated with trip suggestions");
+          }, 400); // Wait for dissolve animation
+        }, 4000); // 4 second loader duration
       } else {
-        setIsParsingTrips(false);
+        setTimeout(() => {
+          setShowTripLoader(false);
+          setTimeout(() => {
+            setIsParsingTrips(false);
+          }, 400);
+        }, 4000);
       }
     } catch (error) {
       console.error("Error calling API:", error);
@@ -478,6 +490,7 @@ export default function FlightsPage() {
       };
 
       setMessages((prev) => [...prev, errorMessage]);
+      setShowTripLoader(false);
       setIsParsingTrips(false);
     } finally {
       setIsLoading(false);
@@ -1267,17 +1280,33 @@ export default function FlightsPage() {
                         <span className="text-xs text-gray-500">Places</span>
                         <button
                           onClick={() => {
-                            setShowFlashcards(!showFlashcards);
                             if (showFlashcards) {
+                              // Turning off places
+                              setShowFlashcards(false);
                               setSelectedTrip(null);
                               if (flashcardsRef.current) {
                                 flashcardsRef.current.clearSelection();
                               }
-                            }
-                            // Close other widgets if opening places
-                            if (!showFlashcards) {
+                            } else {
+                              // Turning on places - show loader first
+                              console.log(
+                                "Places toggle: Showing trip loader for 4 seconds"
+                              );
+                              setShowTripLoader(true);
+                              setIsParsingTrips(true);
                               setShowFlights(false);
                               setShowItinerary(false);
+
+                              setTimeout(() => {
+                                setShowTripLoader(false);
+                                setTimeout(() => {
+                                  setShowFlashcards(true);
+                                  setIsParsingTrips(false);
+                                  console.log(
+                                    "Places toggle: Flashcards activated after 4 second loader"
+                                  );
+                                }, 400);
+                              }, 4000);
                             }
                           }}
                           className={`relative inline-flex h-5 w-9 items-center rounded-full transition-all duration-300 ${
@@ -1453,7 +1482,12 @@ export default function FlightsPage() {
                 ) : (
                   <>
                     {/* Messages Container - Scrollable */}
-                    <div className="flex-1 overflow-y-auto p-6">
+                    <div className="flex-1 overflow-y-auto p-6 relative">
+                      {/* Trip Loader */}
+                      <TripLoader
+                        showTripLoader={showTripLoader}
+                        duration={4000}
+                      />
                       <div className="max-w-4xl mx-auto h-full">
                         {showFlights ? (
                           // FlightsWidget
@@ -1660,169 +1694,18 @@ export default function FlightsPage() {
                       )}
 
                       <div className="max-w-4xl mx-auto">
-                        <form onSubmit={handleChatSubmit} className="relative">
-                          {/* Animated Chatbox Container */}
-                          <div className="itinerai-chatbox-container">
-                            <input
-                              type="text"
-                              value={chatInput}
-                              onChange={(e) => setChatInputText(e.target.value)}
-                              onKeyDown={handleKeyDown}
-                              placeholder="Ask ItinerAI"
-                              className="itinerai-chatbox-input"
-                              disabled={isLoading}
-                            />
-                            <button
-                              type="submit"
-                              disabled={!chatInput.trim() || isLoading}
-                              className="itinerai-chatbox-submit-btn"
-                            >
-                              <svg
-                                width="18"
-                                height="18"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2.5"
-                              >
-                                <polyline points="9 18 15 12 9 6"></polyline>
-                              </svg>
-                            </button>
-                          </div>
-                        </form>
+                        <ItinerAIChatBox
+                          value={chatInput}
+                          onChange={setChatInputText}
+                          onSubmit={handleChatSubmit}
+                          onKeyDown={handleKeyDown}
+                          placeholder="Ask ItinerAI"
+                          disabled={isLoading}
+                          isLoading={isLoading}
+                          theme="default"
+                          inputType="input"
+                        />
                       </div>
-
-                      {/* Inline Styles for the Chatbox */}
-                      <style jsx>{`
-                        .itinerai-chatbox-container {
-                          width: 260px;
-                          height: 50px;
-                          display: flex;
-                          align-items: center;
-                          background: linear-gradient(
-                            135deg,
-                            rgba(59, 130, 246, 0.1) 0%,
-                            rgba(147, 197, 253, 0.05) 100%
-                          );
-                          backdrop-filter: blur(20px);
-                          -webkit-backdrop-filter: blur(20px);
-                          border-radius: 25px;
-                          padding: 8px;
-                          gap: 8px;
-                          box-shadow: 0 4px 16px rgba(59, 130, 246, 0.15),
-                            0 2px 8px rgba(0, 0, 0, 0.05),
-                            inset 0 1px 0 rgba(255, 255, 255, 0.5);
-                          z-index: 10;
-                          animation: slideUpFade 0.5s
-                            cubic-bezier(0.34, 1.56, 0.64, 1) both;
-                          border: 1.5px solid rgba(59, 130, 246, 0.2);
-                          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-                          margin: 0 auto;
-                        }
-
-                        .itinerai-chatbox-container:focus-within {
-                          width: 420px;
-                          box-shadow: 0 8px 24px rgba(59, 130, 246, 0.25),
-                            0 4px 12px rgba(0, 0, 0, 0.1),
-                            inset 0 1px 0 rgba(255, 255, 255, 0.6);
-                          background: linear-gradient(
-                            135deg,
-                            rgba(59, 130, 246, 0.15) 0%,
-                            rgba(147, 197, 253, 0.08) 100%
-                          );
-                          border-color: rgba(59, 130, 246, 0.35);
-                        }
-
-                        .itinerai-chatbox-input {
-                          flex: 1;
-                          background: transparent;
-                          border: none;
-                          outline: none;
-                          padding: 0 12px;
-                          font-size: 0.9rem;
-                          color: #1f2937;
-                          font-family: -apple-system, BlinkMacSystemFont,
-                            "Segoe UI", Roboto, sans-serif;
-                          font-weight: 500;
-                          height: 34px;
-                        }
-
-                        .itinerai-chatbox-input::placeholder {
-                          color: #9ca3af;
-                          font-weight: 400;
-                        }
-
-                        .itinerai-chatbox-input:focus {
-                          color: #111827;
-                        }
-
-                        .itinerai-chatbox-submit-btn {
-                          background: linear-gradient(
-                            135deg,
-                            #3b82f6 0%,
-                            #2563eb 100%
-                          );
-                          border: 1px solid rgba(59, 130, 246, 0.3);
-                          border-radius: 50%;
-                          width: 34px;
-                          height: 34px;
-                          min-width: 34px;
-                          display: flex;
-                          align-items: center;
-                          justify-content: center;
-                          color: white;
-                          cursor: pointer;
-                          transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-                          flex-shrink: 0;
-                          box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
-                        }
-
-                        .itinerai-chatbox-submit-btn:hover:not(:disabled) {
-                          background: linear-gradient(
-                            135deg,
-                            #2563eb 0%,
-                            #1d4ed8 100%
-                          );
-                          border-color: rgba(37, 99, 235, 0.5);
-                          transform: scale(1.08);
-                          box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
-                        }
-
-                        .itinerai-chatbox-submit-btn:active:not(:disabled) {
-                          transform: scale(0.95);
-                        }
-
-                        .itinerai-chatbox-submit-btn:disabled {
-                          background: linear-gradient(
-                            135deg,
-                            #d1d5db 0%,
-                            #9ca3af 100%
-                          );
-                          border-color: rgba(156, 163, 175, 0.3);
-                          cursor: not-allowed;
-                          box-shadow: none;
-                        }
-
-                        .itinerai-chatbox-submit-btn svg {
-                          transition: transform 0.2s ease;
-                          filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
-                        }
-
-                        .itinerai-chatbox-submit-btn:hover:not(:disabled) svg {
-                          transform: translateX(2px);
-                        }
-
-                        @keyframes slideUpFade {
-                          from {
-                            opacity: 0;
-                            transform: translateY(20px);
-                          }
-                          to {
-                            opacity: 1;
-                            transform: translateY(0);
-                          }
-                        }
-                      `}</style>
                     </div>
                   </>
                 )}

@@ -53,6 +53,7 @@ export default function Dashboard() {
   const [showFlashcards, setShowFlashcards] = useState(false);
   const [showConveyance, setShowConveyance] = useState(false);
   const [selectedTrip, setSelectedTrip] = useState<any>(null);
+  const [isTripSelected, setIsTripSelected] = useState(false);
 
   // Session management
   const [sessionId, setSessionId] = useState<string>("");
@@ -748,7 +749,10 @@ export default function Dashboard() {
                         setSelectedTrip(null);
                       }}
                       rightPanelCollapsed={isRightPanelCollapsed}
-                      onTripSelect={setSelectedTrip}
+                      onTripSelect={(trip) => {
+                        setSelectedTrip(trip);
+                        setIsTripSelected(trip !== null);
+                      }}
                     />
                   </div>
                   {/* Chat Input Below Flashcards */}
@@ -776,6 +780,7 @@ export default function Dashboard() {
                           <button
                             onClick={() => {
                               setSelectedTrip(null);
+                              setIsTripSelected(false);
                               flashcardsRef.current?.clearSelection();
                             }}
                             className="w-6 h-6 rounded-md bg-gray-700/50 hover:bg-red-500/20 border border-gray-600/50 hover:border-red-500/40 flex items-center justify-center transition-colors flex-shrink-0"
@@ -816,10 +821,7 @@ export default function Dashboard() {
                         />
                         <button
                           type="submit"
-                          disabled={
-                            isLoading ||
-                            (selectedTrip === null && !input.trim())
-                          }
+                          disabled={isLoading || (!isTripSelected && !input.trim())}
                           className="bg-white hover:bg-gray-200 disabled:bg-gray-700 disabled:cursor-not-allowed text-black disabled:text-gray-500 rounded p-1.5 transition-colors flex-shrink-0"
                         >
                           <svg

@@ -1,0 +1,2874 @@
+[
+    {
+        "flight_id": "FL000045",
+        "airline": "Go First",
+        "flight_number": "G86060",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-01",
+        "arrival_date": "2025-12-01",
+        "departure_time": "14:00",
+        "arrival_time": "17:01",
+        "duration": "3h 1m",
+        "price": {
+            "economy": 14380,
+            "business": 40705,
+            "first": 66409
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL000046",
+        "airline": "Go First",
+        "flight_number": "G89953",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-01",
+        "arrival_date": "2025-12-01",
+        "departure_time": "09:30",
+        "arrival_time": "12:33",
+        "duration": "3h 3m",
+        "price": {
+            "economy": 13246,
+            "business": 38390,
+            "first": 62760
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL000047",
+        "airline": "Air India",
+        "flight_number": "AI2445",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-01",
+        "arrival_date": "2025-12-01",
+        "departure_time": "17:00",
+        "arrival_time": "20:11",
+        "duration": "3h 11m",
+        "price": {
+            "economy": 18002,
+            "business": 48723,
+            "first": 77385
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL000103",
+        "airline": "Go First",
+        "flight_number": "G84183",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-02",
+        "arrival_date": "2025-12-02",
+        "departure_time": "06:30",
+        "arrival_time": "09:49",
+        "duration": "3h 19m",
+        "price": {
+            "economy": 9656,
+            "business": 29944,
+            "first": 47520
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL000104",
+        "airline": "Air India",
+        "flight_number": "AI7007",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-02",
+        "arrival_date": "2025-12-02",
+        "departure_time": "18:00",
+        "arrival_time": "21:16",
+        "duration": "3h 16m",
+        "price": {
+            "economy": 11850,
+            "business": 32303,
+            "first": 47126
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL000159",
+        "airline": "IndiGo",
+        "flight_number": "6E6480",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-03",
+        "arrival_date": "2025-12-03",
+        "departure_time": "17:30",
+        "arrival_time": "20:51",
+        "duration": "3h 21m",
+        "price": {
+            "economy": 11020,
+            "business": 34180,
+            "first": null
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business"
+        ]
+    },
+    {
+        "flight_id": "FL000160",
+        "airline": "Air India",
+        "flight_number": "AI9502",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-03",
+        "arrival_date": "2025-12-03",
+        "departure_time": "11:00",
+        "arrival_time": "14:23",
+        "duration": "3h 23m",
+        "price": {
+            "economy": 10417,
+            "business": 28407,
+            "first": 51915
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL000220",
+        "airline": "IndiGo",
+        "flight_number": "6E1789",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-04",
+        "arrival_date": "2025-12-04",
+        "departure_time": "20:30",
+        "arrival_time": "23:37",
+        "duration": "3h 7m",
+        "price": {
+            "economy": 10962,
+            "business": 27663,
+            "first": 52226
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL000221",
+        "airline": "Go First",
+        "flight_number": "G85837",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-04",
+        "arrival_date": "2025-12-04",
+        "departure_time": "19:30",
+        "arrival_time": "22:32",
+        "duration": "3h 2m",
+        "price": {
+            "economy": 15046,
+            "business": 39493,
+            "first": 63225
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL000278",
+        "airline": "SpiceJet",
+        "flight_number": "SG9183",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-05",
+        "arrival_date": "2025-12-05",
+        "departure_time": "19:00",
+        "arrival_time": "22:16",
+        "duration": "3h 16m",
+        "price": {
+            "economy": 12164,
+            "business": 39120,
+            "first": 53896
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL000279",
+        "airline": "Vistara",
+        "flight_number": "UK8018",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-05",
+        "arrival_date": "2025-12-05",
+        "departure_time": "17:30",
+        "arrival_time": "20:53",
+        "duration": "3h 23m",
+        "price": {
+            "economy": 14585,
+            "business": 39340,
+            "first": 60419
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL000280",
+        "airline": "IndiGo",
+        "flight_number": "6E2523",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-05",
+        "arrival_date": "2025-12-05",
+        "departure_time": "13:00",
+        "arrival_time": "16:10",
+        "duration": "3h 10m",
+        "price": {
+            "economy": 9682,
+            "business": 25100,
+            "first": null
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business"
+        ]
+    },
+    {
+        "flight_id": "FL000338",
+        "airline": "AirAsia India",
+        "flight_number": "I59327",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-06",
+        "arrival_date": "2025-12-06",
+        "departure_time": "14:00",
+        "arrival_time": "17:14",
+        "duration": "3h 14m",
+        "price": {
+            "economy": 14956,
+            "business": 47622,
+            "first": null
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business"
+        ]
+    },
+    {
+        "flight_id": "FL000339",
+        "airline": "Vistara",
+        "flight_number": "UK5603",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-06",
+        "arrival_date": "2025-12-06",
+        "departure_time": "08:00",
+        "arrival_time": "11:21",
+        "duration": "3h 21m",
+        "price": {
+            "economy": 20361,
+            "business": 65689,
+            "first": 100755
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL000340",
+        "airline": "Vistara",
+        "flight_number": "UK8054",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-06",
+        "arrival_date": "2025-12-06",
+        "departure_time": "19:30",
+        "arrival_time": "23:00",
+        "duration": "3h 30m",
+        "price": {
+            "economy": 19080,
+            "business": 54213,
+            "first": null
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business"
+        ]
+    },
+    {
+        "flight_id": "FL000403",
+        "airline": "IndiGo",
+        "flight_number": "6E2212",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-07",
+        "arrival_date": "2025-12-07",
+        "departure_time": "18:30",
+        "arrival_time": "21:57",
+        "duration": "3h 27m",
+        "price": {
+            "economy": 21357,
+            "business": 54787,
+            "first": 92669
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL000404",
+        "airline": "Air India",
+        "flight_number": "AI2682",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-07",
+        "arrival_date": "2025-12-07",
+        "departure_time": "12:00",
+        "arrival_time": "15:20",
+        "duration": "3h 20m",
+        "price": {
+            "economy": 12852,
+            "business": 39164,
+            "first": 56376
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL000405",
+        "airline": "IndiGo",
+        "flight_number": "6E3724",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-07",
+        "arrival_date": "2025-12-07",
+        "departure_time": "13:30",
+        "arrival_time": "16:43",
+        "duration": "3h 13m",
+        "price": {
+            "economy": 15428,
+            "business": 38613,
+            "first": 67609
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL000406",
+        "airline": "Vistara",
+        "flight_number": "UK2147",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-07",
+        "arrival_date": "2025-12-07",
+        "departure_time": "07:00",
+        "arrival_time": "10:04",
+        "duration": "3h 4m",
+        "price": {
+            "economy": 20921,
+            "business": 68221,
+            "first": 99510
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL000459",
+        "airline": "AirAsia India",
+        "flight_number": "I55912",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-08",
+        "arrival_date": "2025-12-08",
+        "departure_time": "12:30",
+        "arrival_time": "15:36",
+        "duration": "3h 6m",
+        "price": {
+            "economy": 6585,
+            "business": 20453,
+            "first": null
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business"
+        ]
+    },
+    {
+        "flight_id": "FL000460",
+        "airline": "SpiceJet",
+        "flight_number": "SG8513",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-08",
+        "arrival_date": "2025-12-08",
+        "departure_time": "06:30",
+        "arrival_time": "09:52",
+        "duration": "3h 22m",
+        "price": {
+            "economy": 10858,
+            "business": 32283,
+            "first": null
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business"
+        ]
+    },
+    {
+        "flight_id": "FL000461",
+        "airline": "SpiceJet",
+        "flight_number": "SG6014",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-08",
+        "arrival_date": "2025-12-08",
+        "departure_time": "10:30",
+        "arrival_time": "13:37",
+        "duration": "3h 7m",
+        "price": {
+            "economy": 9448,
+            "business": 29607,
+            "first": 44976
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL000512",
+        "airline": "IndiGo",
+        "flight_number": "6E3167",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-09",
+        "arrival_date": "2025-12-10",
+        "departure_time": "22:30",
+        "arrival_time": "01:37+1",
+        "duration": "3h 7m",
+        "price": {
+            "economy": 8805,
+            "business": 25146,
+            "first": 38772
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL000513",
+        "airline": "IndiGo",
+        "flight_number": "6E7336",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-09",
+        "arrival_date": "2025-12-09",
+        "departure_time": "07:00",
+        "arrival_time": "10:24",
+        "duration": "3h 24m",
+        "price": {
+            "economy": 11964,
+            "business": 32773,
+            "first": 49615
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL000574",
+        "airline": "Vistara",
+        "flight_number": "UK9418",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-10",
+        "arrival_date": "2025-12-10",
+        "departure_time": "16:30",
+        "arrival_time": "19:34",
+        "duration": "3h 4m",
+        "price": {
+            "economy": 8089,
+            "business": 22533,
+            "first": null
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business"
+        ]
+    },
+    {
+        "flight_id": "FL000575",
+        "airline": "AirAsia India",
+        "flight_number": "I51932",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-10",
+        "arrival_date": "2025-12-10",
+        "departure_time": "16:30",
+        "arrival_time": "19:42",
+        "duration": "3h 12m",
+        "price": {
+            "economy": 11300,
+            "business": 31721,
+            "first": null
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business"
+        ]
+    },
+    {
+        "flight_id": "FL000576",
+        "airline": "AirAsia India",
+        "flight_number": "I52200",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-10",
+        "arrival_date": "2025-12-10",
+        "departure_time": "17:00",
+        "arrival_time": "20:09",
+        "duration": "3h 9m",
+        "price": {
+            "economy": 13205,
+            "business": 37648,
+            "first": 53891
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL000631",
+        "airline": "Vistara",
+        "flight_number": "UK5743",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-11",
+        "arrival_date": "2025-12-11",
+        "departure_time": "08:30",
+        "arrival_time": "11:35",
+        "duration": "3h 5m",
+        "price": {
+            "economy": 10289,
+            "business": 26900,
+            "first": 36319
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL000632",
+        "airline": "Air India",
+        "flight_number": "AI7085",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-11",
+        "arrival_date": "2025-12-11",
+        "departure_time": "09:00",
+        "arrival_time": "12:07",
+        "duration": "3h 7m",
+        "price": {
+            "economy": 9954,
+            "business": 31896,
+            "first": null
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business"
+        ]
+    },
+    {
+        "flight_id": "FL000633",
+        "airline": "Air India",
+        "flight_number": "AI9734",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-11",
+        "arrival_date": "2025-12-11",
+        "departure_time": "07:30",
+        "arrival_time": "10:39",
+        "duration": "3h 9m",
+        "price": {
+            "economy": 11755,
+            "business": 30408,
+            "first": 45852
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL000634",
+        "airline": "Air India",
+        "flight_number": "AI2105",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-11",
+        "arrival_date": "2025-12-11",
+        "departure_time": "13:30",
+        "arrival_time": "16:56",
+        "duration": "3h 26m",
+        "price": {
+            "economy": 12338,
+            "business": 33935,
+            "first": null
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business"
+        ]
+    },
+    {
+        "flight_id": "FL000689",
+        "airline": "Air India",
+        "flight_number": "AI2479",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-12",
+        "arrival_date": "2025-12-12",
+        "departure_time": "14:00",
+        "arrival_time": "17:13",
+        "duration": "3h 13m",
+        "price": {
+            "economy": 9280,
+            "business": 29929,
+            "first": null
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business"
+        ]
+    },
+    {
+        "flight_id": "FL000690",
+        "airline": "SpiceJet",
+        "flight_number": "SG5940",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-12",
+        "arrival_date": "2025-12-13",
+        "departure_time": "22:00",
+        "arrival_time": "01:26+1",
+        "duration": "3h 26m",
+        "price": {
+            "economy": 9567,
+            "business": 26239,
+            "first": 34698
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL000745",
+        "airline": "Go First",
+        "flight_number": "G83315",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-13",
+        "arrival_date": "2025-12-13",
+        "departure_time": "10:00",
+        "arrival_time": "13:30",
+        "duration": "3h 30m",
+        "price": {
+            "economy": 14286,
+            "business": 43689,
+            "first": 62557
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL000746",
+        "airline": "SpiceJet",
+        "flight_number": "SG2941",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-13",
+        "arrival_date": "2025-12-13",
+        "departure_time": "12:30",
+        "arrival_time": "15:56",
+        "duration": "3h 26m",
+        "price": {
+            "economy": 14980,
+            "business": 40289,
+            "first": 70766
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL000747",
+        "airline": "Vistara",
+        "flight_number": "UK9349",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-13",
+        "arrival_date": "2025-12-13",
+        "departure_time": "11:30",
+        "arrival_time": "14:54",
+        "duration": "3h 24m",
+        "price": {
+            "economy": 15331,
+            "business": 48453,
+            "first": 72128
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL000748",
+        "airline": "IndiGo",
+        "flight_number": "6E8150",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-13",
+        "arrival_date": "2025-12-13",
+        "departure_time": "18:00",
+        "arrival_time": "21:12",
+        "duration": "3h 12m",
+        "price": {
+            "economy": 18504,
+            "business": 60479,
+            "first": 86881
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL000801",
+        "airline": "IndiGo",
+        "flight_number": "6E3380",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-14",
+        "arrival_date": "2025-12-14",
+        "departure_time": "14:30",
+        "arrival_time": "17:44",
+        "duration": "3h 14m",
+        "price": {
+            "economy": 13380,
+            "business": 39153,
+            "first": null
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business"
+        ]
+    },
+    {
+        "flight_id": "FL000802",
+        "airline": "IndiGo",
+        "flight_number": "6E5170",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-14",
+        "arrival_date": "2025-12-15",
+        "departure_time": "21:00",
+        "arrival_time": "00:14+1",
+        "duration": "3h 14m",
+        "price": {
+            "economy": 14308,
+            "business": 48982,
+            "first": 65165
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL000803",
+        "airline": "Go First",
+        "flight_number": "G84763",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-14",
+        "arrival_date": "2025-12-14",
+        "departure_time": "14:00",
+        "arrival_time": "17:09",
+        "duration": "3h 9m",
+        "price": {
+            "economy": 10708,
+            "business": 35810,
+            "first": 47784
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL000865",
+        "airline": "AirAsia India",
+        "flight_number": "I55748",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-15",
+        "arrival_date": "2025-12-15",
+        "departure_time": "11:00",
+        "arrival_time": "14:12",
+        "duration": "3h 12m",
+        "price": {
+            "economy": 8752,
+            "business": 25094,
+            "first": null
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business"
+        ]
+    },
+    {
+        "flight_id": "FL000866",
+        "airline": "IndiGo",
+        "flight_number": "6E1865",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-15",
+        "arrival_date": "2025-12-15",
+        "departure_time": "08:00",
+        "arrival_time": "11:18",
+        "duration": "3h 18m",
+        "price": {
+            "economy": 10825,
+            "business": 30530,
+            "first": 39768
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL000867",
+        "airline": "Go First",
+        "flight_number": "G88165",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-15",
+        "arrival_date": "2025-12-15",
+        "departure_time": "12:30",
+        "arrival_time": "15:32",
+        "duration": "3h 2m",
+        "price": {
+            "economy": 9499,
+            "business": 27568,
+            "first": 39862
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL000928",
+        "airline": "Go First",
+        "flight_number": "G82280",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-16",
+        "arrival_date": "2025-12-16",
+        "departure_time": "20:30",
+        "arrival_time": "23:33",
+        "duration": "3h 3m",
+        "price": {
+            "economy": 13963,
+            "business": 48449,
+            "first": null
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business"
+        ]
+    },
+    {
+        "flight_id": "FL000929",
+        "airline": "AirAsia India",
+        "flight_number": "I59276",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-16",
+        "arrival_date": "2025-12-16",
+        "departure_time": "13:00",
+        "arrival_time": "16:08",
+        "duration": "3h 8m",
+        "price": {
+            "economy": 9405,
+            "business": 23986,
+            "first": null
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business"
+        ]
+    },
+    {
+        "flight_id": "FL000930",
+        "airline": "Air India",
+        "flight_number": "AI5188",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-16",
+        "arrival_date": "2025-12-16",
+        "departure_time": "14:30",
+        "arrival_time": "17:47",
+        "duration": "3h 17m",
+        "price": {
+            "economy": 8734,
+            "business": 27365,
+            "first": 39780
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL000986",
+        "airline": "IndiGo",
+        "flight_number": "6E2494",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-17",
+        "arrival_date": "2025-12-17",
+        "departure_time": "06:00",
+        "arrival_time": "09:14",
+        "duration": "3h 14m",
+        "price": {
+            "economy": 9791,
+            "business": 33221,
+            "first": 43887
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL000987",
+        "airline": "IndiGo",
+        "flight_number": "6E2523",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-17",
+        "arrival_date": "2025-12-17",
+        "departure_time": "17:00",
+        "arrival_time": "20:11",
+        "duration": "3h 11m",
+        "price": {
+            "economy": 18914,
+            "business": 49915,
+            "first": 73357
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL000988",
+        "airline": "Vistara",
+        "flight_number": "UK6122",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-17",
+        "arrival_date": "2025-12-17",
+        "departure_time": "05:30",
+        "arrival_time": "08:48",
+        "duration": "3h 18m",
+        "price": {
+            "economy": 11864,
+            "business": 30082,
+            "first": null
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business"
+        ]
+    },
+    {
+        "flight_id": "FL001042",
+        "airline": "Vistara",
+        "flight_number": "UK4252",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-18",
+        "arrival_date": "2025-12-18",
+        "departure_time": "12:00",
+        "arrival_time": "15:22",
+        "duration": "3h 22m",
+        "price": {
+            "economy": 9569,
+            "business": 31675,
+            "first": null
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business"
+        ]
+    },
+    {
+        "flight_id": "FL001043",
+        "airline": "Vistara",
+        "flight_number": "UK7219",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-18",
+        "arrival_date": "2025-12-18",
+        "departure_time": "06:30",
+        "arrival_time": "09:57",
+        "duration": "3h 27m",
+        "price": {
+            "economy": 11912,
+            "business": 38405,
+            "first": 45906
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL001103",
+        "airline": "Go First",
+        "flight_number": "G86758",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-19",
+        "arrival_date": "2025-12-19",
+        "departure_time": "19:30",
+        "arrival_time": "22:56",
+        "duration": "3h 26m",
+        "price": {
+            "economy": 14787,
+            "business": 39189,
+            "first": 53592
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL001104",
+        "airline": "SpiceJet",
+        "flight_number": "SG7948",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-19",
+        "arrival_date": "2025-12-20",
+        "departure_time": "21:00",
+        "arrival_time": "00:24+1",
+        "duration": "3h 24m",
+        "price": {
+            "economy": 9961,
+            "business": 29300,
+            "first": 48018
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL001105",
+        "airline": "IndiGo",
+        "flight_number": "6E7335",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-19",
+        "arrival_date": "2025-12-19",
+        "departure_time": "18:30",
+        "arrival_time": "21:58",
+        "duration": "3h 28m",
+        "price": {
+            "economy": 10305,
+            "business": 26973,
+            "first": 39990
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL001106",
+        "airline": "Go First",
+        "flight_number": "G84156",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-19",
+        "arrival_date": "2025-12-19",
+        "departure_time": "08:00",
+        "arrival_time": "11:14",
+        "duration": "3h 14m",
+        "price": {
+            "economy": 10795,
+            "business": 34706,
+            "first": 52433
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL001163",
+        "airline": "Go First",
+        "flight_number": "G82002",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-20",
+        "arrival_date": "2025-12-20",
+        "departure_time": "08:30",
+        "arrival_time": "11:42",
+        "duration": "3h 12m",
+        "price": {
+            "economy": 15912,
+            "business": 54294,
+            "first": null
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business"
+        ]
+    },
+    {
+        "flight_id": "FL001164",
+        "airline": "SpiceJet",
+        "flight_number": "SG7093",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-20",
+        "arrival_date": "2025-12-21",
+        "departure_time": "21:00",
+        "arrival_time": "00:01+1",
+        "duration": "3h 1m",
+        "price": {
+            "economy": 9295,
+            "business": 25266,
+            "first": 43023
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL001165",
+        "airline": "IndiGo",
+        "flight_number": "6E9012",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-20",
+        "arrival_date": "2025-12-20",
+        "departure_time": "11:00",
+        "arrival_time": "14:09",
+        "duration": "3h 9m",
+        "price": {
+            "economy": 10738,
+            "business": 32621,
+            "first": null
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business"
+        ]
+    },
+    {
+        "flight_id": "FL001222",
+        "airline": "Air India",
+        "flight_number": "AI5437",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-21",
+        "arrival_date": "2025-12-21",
+        "departure_time": "14:30",
+        "arrival_time": "17:54",
+        "duration": "3h 24m",
+        "price": {
+            "economy": 13130,
+            "business": 38525,
+            "first": 46868
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL001223",
+        "airline": "AirAsia India",
+        "flight_number": "I54039",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-21",
+        "arrival_date": "2025-12-21",
+        "departure_time": "08:00",
+        "arrival_time": "11:17",
+        "duration": "3h 17m",
+        "price": {
+            "economy": 18520,
+            "business": 62253,
+            "first": 69740
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL001282",
+        "airline": "IndiGo",
+        "flight_number": "6E7358",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-22",
+        "arrival_date": "2025-12-22",
+        "departure_time": "12:00",
+        "arrival_time": "15:25",
+        "duration": "3h 25m",
+        "price": {
+            "economy": 12520,
+            "business": 32340,
+            "first": null
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business"
+        ]
+    },
+    {
+        "flight_id": "FL001283",
+        "airline": "Go First",
+        "flight_number": "G85752",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-22",
+        "arrival_date": "2025-12-22",
+        "departure_time": "17:30",
+        "arrival_time": "20:35",
+        "duration": "3h 5m",
+        "price": {
+            "economy": 15239,
+            "business": 52851,
+            "first": 73888
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL001342",
+        "airline": "Go First",
+        "flight_number": "G89580",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-23",
+        "arrival_date": "2025-12-23",
+        "departure_time": "05:00",
+        "arrival_time": "08:00",
+        "duration": "3h 0m",
+        "price": {
+            "economy": 10201,
+            "business": 27464,
+            "first": 49521
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL001343",
+        "airline": "Go First",
+        "flight_number": "G83870",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-23",
+        "arrival_date": "2025-12-24",
+        "departure_time": "22:00",
+        "arrival_time": "01:26+1",
+        "duration": "3h 26m",
+        "price": {
+            "economy": 7938,
+            "business": 22228,
+            "first": null
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business"
+        ]
+    },
+    {
+        "flight_id": "FL001344",
+        "airline": "Go First",
+        "flight_number": "G81040",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-23",
+        "arrival_date": "2025-12-23",
+        "departure_time": "10:00",
+        "arrival_time": "13:12",
+        "duration": "3h 12m",
+        "price": {
+            "economy": 12472,
+            "business": 35907,
+            "first": 51754
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL001345",
+        "airline": "Vistara",
+        "flight_number": "UK1700",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-23",
+        "arrival_date": "2025-12-23",
+        "departure_time": "11:00",
+        "arrival_time": "14:16",
+        "duration": "3h 16m",
+        "price": {
+            "economy": 12016,
+            "business": 32632,
+            "first": null
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business"
+        ]
+    },
+    {
+        "flight_id": "FL001405",
+        "airline": "AirAsia India",
+        "flight_number": "I54480",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-24",
+        "arrival_date": "2025-12-24",
+        "departure_time": "13:00",
+        "arrival_time": "16:05",
+        "duration": "3h 5m",
+        "price": {
+            "economy": 11553,
+            "business": 34885,
+            "first": 56422
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL001406",
+        "airline": "AirAsia India",
+        "flight_number": "I51687",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-24",
+        "arrival_date": "2025-12-24",
+        "departure_time": "19:00",
+        "arrival_time": "22:21",
+        "duration": "3h 21m",
+        "price": {
+            "economy": 15844,
+            "business": 47387,
+            "first": null
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business"
+        ]
+    },
+    {
+        "flight_id": "FL001462",
+        "airline": "AirAsia India",
+        "flight_number": "I53737",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-25",
+        "arrival_date": "2025-12-25",
+        "departure_time": "14:30",
+        "arrival_time": "17:47",
+        "duration": "3h 17m",
+        "price": {
+            "economy": 13582,
+            "business": 36965,
+            "first": null
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business"
+        ]
+    },
+    {
+        "flight_id": "FL001463",
+        "airline": "SpiceJet",
+        "flight_number": "SG5904",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-25",
+        "arrival_date": "2025-12-26",
+        "departure_time": "21:30",
+        "arrival_time": "00:58+1",
+        "duration": "3h 28m",
+        "price": {
+            "economy": 10284,
+            "business": 32558,
+            "first": null
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business"
+        ]
+    },
+    {
+        "flight_id": "FL001464",
+        "airline": "Air India",
+        "flight_number": "AI3421",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-25",
+        "arrival_date": "2025-12-25",
+        "departure_time": "12:00",
+        "arrival_time": "15:20",
+        "duration": "3h 20m",
+        "price": {
+            "economy": 17205,
+            "business": 58412,
+            "first": null
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business"
+        ]
+    },
+    {
+        "flight_id": "FL001465",
+        "airline": "Air India",
+        "flight_number": "AI9089",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-25",
+        "arrival_date": "2025-12-25",
+        "departure_time": "15:30",
+        "arrival_time": "18:48",
+        "duration": "3h 18m",
+        "price": {
+            "economy": 14448,
+            "business": 44502,
+            "first": null
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business"
+        ]
+    },
+    {
+        "flight_id": "FL001519",
+        "airline": "SpiceJet",
+        "flight_number": "SG2860",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-26",
+        "arrival_date": "2025-12-26",
+        "departure_time": "19:30",
+        "arrival_time": "22:39",
+        "duration": "3h 9m",
+        "price": {
+            "economy": 20860,
+            "business": 60934,
+            "first": 94484
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL001520",
+        "airline": "Vistara",
+        "flight_number": "UK6087",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-26",
+        "arrival_date": "2025-12-26",
+        "departure_time": "13:00",
+        "arrival_time": "16:14",
+        "duration": "3h 14m",
+        "price": {
+            "economy": 12841,
+            "business": 40720,
+            "first": null
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business"
+        ]
+    },
+    {
+        "flight_id": "FL001584",
+        "airline": "Vistara",
+        "flight_number": "UK3448",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-27",
+        "arrival_date": "2025-12-28",
+        "departure_time": "22:00",
+        "arrival_time": "01:25+1",
+        "duration": "3h 25m",
+        "price": {
+            "economy": 9935,
+            "business": 30812,
+            "first": 40576
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL001585",
+        "airline": "Go First",
+        "flight_number": "G87667",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-27",
+        "arrival_date": "2025-12-27",
+        "departure_time": "18:30",
+        "arrival_time": "21:38",
+        "duration": "3h 8m",
+        "price": {
+            "economy": 10384,
+            "business": 33418,
+            "first": 50839
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL001586",
+        "airline": "Go First",
+        "flight_number": "G85796",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-27",
+        "arrival_date": "2025-12-27",
+        "departure_time": "11:00",
+        "arrival_time": "14:26",
+        "duration": "3h 26m",
+        "price": {
+            "economy": 9383,
+            "business": 28050,
+            "first": null
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business"
+        ]
+    },
+    {
+        "flight_id": "FL001642",
+        "airline": "AirAsia India",
+        "flight_number": "I51217",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-28",
+        "arrival_date": "2025-12-28",
+        "departure_time": "17:00",
+        "arrival_time": "20:07",
+        "duration": "3h 7m",
+        "price": {
+            "economy": 12533,
+            "business": 33039,
+            "first": 46215
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL001643",
+        "airline": "SpiceJet",
+        "flight_number": "SG6967",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-28",
+        "arrival_date": "2025-12-28",
+        "departure_time": "06:00",
+        "arrival_time": "09:05",
+        "duration": "3h 5m",
+        "price": {
+            "economy": 16397,
+            "business": 53539,
+            "first": null
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business"
+        ]
+    },
+    {
+        "flight_id": "FL001698",
+        "airline": "Air India",
+        "flight_number": "AI4549",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-29",
+        "arrival_date": "2025-12-29",
+        "departure_time": "15:00",
+        "arrival_time": "18:18",
+        "duration": "3h 18m",
+        "price": {
+            "economy": 13616,
+            "business": 42379,
+            "first": 67810
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL001699",
+        "airline": "Go First",
+        "flight_number": "G86893",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-29",
+        "arrival_date": "2025-12-29",
+        "departure_time": "09:30",
+        "arrival_time": "12:46",
+        "duration": "3h 16m",
+        "price": {
+            "economy": 14032,
+            "business": 41171,
+            "first": null
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business"
+        ]
+    },
+    {
+        "flight_id": "FL001700",
+        "airline": "IndiGo",
+        "flight_number": "6E4869",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-29",
+        "arrival_date": "2025-12-29",
+        "departure_time": "14:00",
+        "arrival_time": "17:24",
+        "duration": "3h 24m",
+        "price": {
+            "economy": 8999,
+            "business": 26254,
+            "first": 39211
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL001701",
+        "airline": "SpiceJet",
+        "flight_number": "SG5468",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-29",
+        "arrival_date": "2025-12-29",
+        "departure_time": "16:00",
+        "arrival_time": "19:01",
+        "duration": "3h 1m",
+        "price": {
+            "economy": 9498,
+            "business": 28148,
+            "first": null
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business"
+        ]
+    },
+    {
+        "flight_id": "FL001759",
+        "airline": "Air India",
+        "flight_number": "AI1474",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-30",
+        "arrival_date": "2025-12-30",
+        "departure_time": "06:00",
+        "arrival_time": "09:14",
+        "duration": "3h 14m",
+        "price": {
+            "economy": 17765,
+            "business": 61885,
+            "first": 71406
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL001760",
+        "airline": "Go First",
+        "flight_number": "G84733",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-30",
+        "arrival_date": "2025-12-30",
+        "departure_time": "05:00",
+        "arrival_time": "08:17",
+        "duration": "3h 17m",
+        "price": {
+            "economy": 15110,
+            "business": 44363,
+            "first": 64368
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL001814",
+        "airline": "Go First",
+        "flight_number": "G84882",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-31",
+        "arrival_date": "2025-12-31",
+        "departure_time": "05:00",
+        "arrival_time": "08:24",
+        "duration": "3h 24m",
+        "price": {
+            "economy": 16079,
+            "business": 51170,
+            "first": 78789
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL001815",
+        "airline": "IndiGo",
+        "flight_number": "6E8535",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-31",
+        "arrival_date": "2025-12-31",
+        "departure_time": "13:00",
+        "arrival_time": "16:23",
+        "duration": "3h 23m",
+        "price": {
+            "economy": 16544,
+            "business": 45263,
+            "first": 80778
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    },
+    {
+        "flight_id": "FL001816",
+        "airline": "Vistara",
+        "flight_number": "UK5989",
+        "departure_airport": {
+            "code": "IXL",
+            "name": "Leh Kushok Bakula Rimpochee Airport",
+            "city": "Leh",
+            "country": "India"
+        },
+        "arrival_airport": {
+            "code": "BOM",
+            "name": "Chhatrapati Shivaji International Airport",
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "departure_date": "2025-12-31",
+        "arrival_date": "2025-12-31",
+        "departure_time": "15:30",
+        "arrival_time": "18:41",
+        "duration": "3h 11m",
+        "price": {
+            "economy": 10700,
+            "business": 32221,
+            "first": 37981
+        },
+        "currency": "INR",
+        "travel_class_options": [
+            "economy",
+            "business",
+            "first"
+        ]
+    }
+]
