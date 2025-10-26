@@ -277,8 +277,93 @@ export default function FlightsPageAuthenticated() {
     }
   };
 
+  // Handle trip memory update when a trip is selected and send button is clicked
+  const handleTripMemoryUpdate = async () => {
+    if (!selectedTrip || !sessionId || !userId) {
+      console.error("Missing required data for trip memory update");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      console.log("Sending trip to memory API:", selectedTrip);
+
+      // Send the selected trip to memory API
+      const response = await fetch("/api/memory", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: userId,
+          session_id: sessionId,
+          updates: selectedTrip,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response
+          .json()
+          .catch(() => ({ error: "Unknown error" }));
+        console.error("Memory API Error:", errorData);
+        throw new Error(
+          `Failed to update memory: ${errorData.error || response.statusText}`
+        );
+      }
+
+      const result = await response.json();
+      console.log("Memory API success:", result);
+
+      // Add a user message showing the selected trip
+      const userMessage = {
+        id: Date.now().toString(),
+        content: `Selected trip: ${selectedTrip.trip_title}`,
+        role: "user" as const,
+        timestamp: new Date(),
+        metadata: {
+          selectedTrip: selectedTrip,
+        },
+      };
+
+      setMessages((prev) => [...prev, userMessage]);
+
+      // Close flashcards and clear selection
+      setShowFlashcards(false);
+      setSelectedTrip(null);
+
+      // Clear flashcards selection via ref
+      if (flashcardsRef.current) {
+        flashcardsRef.current.clearSelection();
+      }
+
+      // Add a small delay before showing assistant response
+      setTimeout(() => {
+        const assistantMessage = {
+          id: (Date.now() + 1).toString(),
+          content: `Great choice! I've saved "${selectedTrip.trip_title}" to your itinerary. What would you like to know or do next?`,
+          role: "assistant" as const,
+          timestamp: new Date(),
+        };
+        setMessages((prev) => [...prev, assistantMessage]);
+        setIsLoading(false);
+      }, 500);
+    } catch (error) {
+      console.error("Error updating trip memory:", error);
+      setIsLoading(false);
+      alert("Failed to save trip selection. Please try again.");
+    }
+  };
+
   const handleChatSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Special handling when a trip is selected
+    if (selectedTrip && showFlashcards) {
+      await handleTripMemoryUpdate();
+      return;
+    }
+
     if (!chatInput.trim() || isLoading) return;
 
     if (!sessionId || !userId) {
@@ -2268,9 +2353,43 @@ export default function FlightsPageAuthenticated() {
                                       : "bg-white text-gray-900 border border-gray-200 shadow-sm"
                                   } rounded-2xl px-4 py-3`}
                                 >
-                                  <p className="whitespace-pre-wrap text-sm leading-relaxed">
-                                    {message.content}
-                                  </p>
+                                  {/* Show trip card if metadata contains selectedTrip */}
+                                  {(message as any).metadata?.selectedTrip ? (
+                                    <div className="space-y-2">
+                                      <p className="text-xs font-medium opacity-90">
+                                        Selected Trip:
+                                      </p>
+                                      <div className="bg-white/10 rounded-lg p-3 border border-white/20">
+                                        <h4 className="font-semibold text-sm mb-1">
+                                          {
+                                            (message as any).metadata
+                                              .selectedTrip.trip_title
+                                          }
+                                        </h4>
+                                        <div className="flex items-center gap-3 text-xs opacity-90">
+                                          <span>
+                                            {
+                                              (message as any).metadata
+                                                .selectedTrip.no_of_days
+                                            }{" "}
+                                            days
+                                          </span>
+                                          <span>•</span>
+                                          <span>
+                                            ₹
+                                            {
+                                              (message as any).metadata
+                                                .selectedTrip.estimated_budget
+                                            }
+                                          </span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <p className="whitespace-pre-wrap text-sm leading-relaxed">
+                                      {message.content}
+                                    </p>
+                                  )}
                                 </div>
                               </div>
                             ))}
@@ -2378,13 +2497,22 @@ export default function FlightsPageAuthenticated() {
                               value={chatInput}
                               onChange={(e) => setChatInputText(e.target.value)}
                               onKeyDown={handleKeyDown}
-                              placeholder="Ask ItinerAI"
+                              placeholder={
+                                selectedTrip && showFlashcards
+                                  ? "Click send to confirm trip selection"
+                                  : "Ask ItinerAI"
+                              }
                               className="itinerai-chatbox-input"
-                              disabled={isLoading}
+                              disabled={
+                                isLoading || (selectedTrip && showFlashcards)
+                              }
                             />
                             <button
                               type="submit"
-                              disabled={!chatInput.trim() || isLoading}
+                              disabled={
+                                isLoading ||
+                                (!selectedTrip && !chatInput.trim())
+                              }
                               className="itinerai-chatbox-submit-btn"
                             >
                               <svg
