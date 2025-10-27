@@ -11,6 +11,7 @@ import FlashcardsWidget from "./FlashcardsWidget";
 import type { FlashcardsWidgetRef } from "./flashcards/types";
 import ConveyanceWidget from "../../../temp_non_flights_code/unused_components/ConveyanceWidget";
 import { getSessionId, getUserId } from "../utils/sessionManager";
+import { updateMemoryOnSessionChange } from "../utils/memoryApi";
 import {
   TripDetailsContent,
   ItineraryContent,
@@ -58,6 +59,7 @@ export default function Dashboard() {
   // Session management
   const [sessionId, setSessionId] = useState<string>("");
   const [userId, setUserId] = useState<string>("");
+  const [isFirstMessage, setIsFirstMessage] = useState(true);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -218,6 +220,26 @@ export default function Dashboard() {
     }
 
     try {
+      // Update memory before first message if this is the first message
+      if (isFirstMessage && currentUser) {
+        console.log(
+          "First message detected, updating memory before sending..."
+        );
+        try {
+          await updateMemoryOnSessionChange(
+            userId,
+            sessionId,
+            currentUser.displayName,
+            currentUser.email
+          );
+          console.log("Memory updated successfully for first message");
+        } catch (error) {
+          console.error("Failed to update memory for first message:", error);
+          // Continue with the message even if memory update fails
+        }
+        setIsFirstMessage(false);
+      }
+
       const data = await makeAPICall(currentInput);
 
       const assistantMessage: Message = {
@@ -821,7 +843,9 @@ export default function Dashboard() {
                         />
                         <button
                           type="submit"
-                          disabled={isLoading || (!isTripSelected && !input.trim())}
+                          disabled={
+                            isLoading || (!isTripSelected && !input.trim())
+                          }
                           className="bg-white hover:bg-gray-200 disabled:bg-gray-700 disabled:cursor-not-allowed text-black disabled:text-gray-500 rounded p-1.5 transition-colors flex-shrink-0"
                         >
                           <svg

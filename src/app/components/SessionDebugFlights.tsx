@@ -7,17 +7,20 @@ import {
   regenerateSessionForUser,
 } from "../utils/sessionManager";
 import { useAuth } from "../contexts/AuthContext";
+import { updateMemoryOnSessionChange } from "../utils/memoryApi";
 
 interface SessionDebugFlightsProps {
   isVisible?: boolean;
   onClose?: () => void;
   onSessionRegenerated?: (newSessionId: string, userId: string) => void;
+  onClearChatHistory?: () => void;
 }
 
 const SessionDebugFlights: React.FC<SessionDebugFlightsProps> = ({
   isVisible = false,
   onClose,
   onSessionRegenerated,
+  onClearChatHistory,
 }) => {
   const { currentUser } = useAuth();
   const [sessionInfo, setSessionInfo] = useState<{
@@ -38,7 +41,7 @@ const SessionDebugFlights: React.FC<SessionDebugFlightsProps> = ({
     }
   }, [isVisible, currentUser]);
 
-  const handleClearSession = () => {
+  const handleClearSession = async () => {
     if (currentUser) {
       // For authenticated users, only regenerate session ID while keeping user ID
       const { sessionId: newSessionId, userId } = regenerateSessionForUser(
@@ -55,6 +58,26 @@ const SessionDebugFlights: React.FC<SessionDebugFlightsProps> = ({
             }
           : null
       );
+
+      // Update memory with existing user data for the new session
+      try {
+        await updateMemoryOnSessionChange(
+          userId,
+          newSessionId,
+          currentUser.displayName,
+          currentUser.email
+        );
+        console.log("Memory updated for new session");
+      } catch (error) {
+        console.error("Failed to update memory for new session:", error);
+        // Don't block the session regeneration if memory update fails
+      }
+
+      // Clear chat history when session is regenerated
+      if (onClearChatHistory) {
+        onClearChatHistory();
+        console.log("Chat history cleared for new session");
+      }
 
       // Notify parent component about the session regeneration
       if (onSessionRegenerated) {

@@ -13,6 +13,7 @@ import DateSelectorWidget from "../../components/DateSelectorWidget";
 import OnboardingModalWhite from "../../components/auth/OnboardingModalWhite";
 import ItinerAIChatBox from "../../components/ItinerAIChatBox";
 import { getSessionId } from "../../utils/sessionManager";
+import { updateMemoryOnSessionChange } from "../../utils/memoryApi";
 import {
   imageDownloader,
   extractImageUrls,
@@ -81,6 +82,8 @@ export default function FlightsPageAuthenticated() {
   // Session management - for authenticated users, always use Firebase UID
   const [sessionId, setSessionId] = useState<string>("");
   const [userId, setUserId] = useState<string>("");
+  const [previousSessionId, setPreviousSessionId] = useState<string>("");
+  const [isFirstMessage, setIsFirstMessage] = useState(true);
 
   // Handle clicking outside profile dropdown
   useEffect(() => {
@@ -100,24 +103,58 @@ export default function FlightsPageAuthenticated() {
   // Initialize session for authenticated user
   useEffect(() => {
     if (currentUser) {
-      const initializeAuthenticatedSession = () => {
+      const initializeAuthenticatedSession = async () => {
         const newSessionId = getSessionId();
         const authenticatedUserId = currentUser.uid; // Always use Firebase UID
 
+        // Check if session has changed and update memory if needed
+        if (previousSessionId && previousSessionId !== newSessionId) {
+          console.log(
+            "Session changed in authenticated page, updating memory:",
+            {
+              previousSessionId,
+              newSessionId,
+              userId: authenticatedUserId,
+            }
+          );
+
+          try {
+            await updateMemoryOnSessionChange(
+              authenticatedUserId,
+              newSessionId,
+              currentUser.displayName,
+              currentUser.email
+            );
+            console.log(
+              "Memory updated for session change in authenticated page"
+            );
+          } catch (error) {
+            console.error("Failed to update memory for session change:", error);
+            // Don't block the session initialization if memory update fails
+          }
+        }
+
         setSessionId(newSessionId);
         setUserId(authenticatedUserId);
+        setPreviousSessionId(newSessionId);
+
+        // Reset first message flag when session changes
+        if (previousSessionId && previousSessionId !== newSessionId) {
+          setIsFirstMessage(true);
+        }
 
         console.log("Authenticated flights session initialized:", {
           sessionId: newSessionId,
           userId: authenticatedUserId,
           userEmail: currentUser.email,
           isAuthenticated: true,
+          previousSessionId,
         });
       };
 
       initializeAuthenticatedSession();
     }
-  }, [currentUser]);
+  }, [currentUser, previousSessionId]);
 
   // Handle session regeneration from debug component
   const handleSessionRegenerated = (
@@ -128,12 +165,21 @@ export default function FlightsPageAuthenticated() {
     // For authenticated users, userId should always remain the same (Firebase UID)
     // but we'll update it anyway in case the debug component passes it
     setUserId(currentUser?.uid || newUserId);
+    setIsFirstMessage(true); // Reset first message flag for new session
 
     console.log("Authenticated session regenerated:", {
       sessionId: newSessionId,
       userId: currentUser?.uid || newUserId,
       userEmail: currentUser?.email,
     });
+  };
+
+  // Handle chat history clearing when session is regenerated
+  const handleClearChatHistory = () => {
+    setMessages([]);
+    setChatInputText("");
+    setIsLoading(false);
+    console.log("Chat history cleared");
   };
 
   // No need for dashboard data here anymore - it's in DashboardData.ts
@@ -310,6 +356,25 @@ export default function FlightsPageAuthenticated() {
     setIsLoading(true);
 
     try {
+      // Update memory before first message if this is the first message
+      if (isFirstMessage && currentUser) {
+        console.log(
+          "First message detected, updating memory before sending..."
+        );
+        try {
+          await updateMemoryOnSessionChange(
+            userId,
+            sessionId,
+            currentUser.displayName,
+            currentUser.email
+          );
+          console.log("Memory updated successfully for first message");
+        } catch (error) {
+          console.error("Failed to update memory for first message:", error);
+          // Continue with the message even if memory update fails
+        }
+        setIsFirstMessage(false);
+      }
       const data = await makeAPICall(currentInput);
 
       // Check if response contains trip suggestions
@@ -1256,6 +1321,7 @@ export default function FlightsPageAuthenticated() {
           isVisible={showDebug}
           onClose={() => setShowDebug(false)}
           onSessionRegenerated={handleSessionRegenerated}
+          onClearChatHistory={handleClearChatHistory}
         />
       )}
 

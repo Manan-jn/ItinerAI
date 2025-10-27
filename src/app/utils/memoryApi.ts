@@ -3,6 +3,9 @@
  * Handles sending user profile updates to the memory service
  */
 
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../../firebase";
+
 interface UserProfileData {
   dateOfBirth: string;
   gender: string;
@@ -77,6 +80,73 @@ function transformToMemoryFormat(
       user_profile: userProfile
     }
   };
+}
+
+/**
+ * Fetches user data from Firestore
+ */
+export async function fetchUserDataFromFirestore(userId: string): Promise<UserProfileData | null> {
+  try {
+    const userDoc = await getDoc(doc(db, "users", userId));
+    
+    if (userDoc.exists()) {
+      const data = userDoc.data();
+      return {
+        dateOfBirth: data.dateOfBirth || "",
+        gender: data.gender || "",
+        passportNationality: data.passportNationality || "",
+        allergies: data.allergies || "",
+        emergencyContactName: data.emergencyContactName || "",
+        emergencyContactPhone: data.emergencyContactPhone || "",
+        foodPreferences: data.foodPreferences || "",
+        displayName: data.displayName || null,
+        email: data.email || null,
+      };
+    }
+    
+    return null;
+  } catch (error) {
+    console.error('Error fetching user data from Firestore:', error);
+    return null;
+  }
+}
+
+/**
+ * Updates memory with existing user data when session changes
+ */
+export async function updateMemoryOnSessionChange(
+  userId: string,
+  sessionId: string,
+  displayName?: string | null,
+  email?: string | null
+): Promise<void> {
+  try {
+    console.log('Updating memory for session change:', { userId, sessionId });
+    
+    // Fetch user data from Firestore
+    const userData = await fetchUserDataFromFirestore(userId);
+    
+    if (!userData) {
+      console.warn('No user data found in Firestore for memory update');
+      return;
+    }
+    
+    // Add current user info if provided
+    const memoryUserData = {
+      ...userData,
+      displayName: displayName || userData.displayName,
+      email: email || userData.email,
+    };
+    
+    // Update memory with existing data
+    await updateUserMemory(memoryUserData, userId, sessionId);
+    
+    console.log('Memory updated successfully for session change');
+    
+  } catch (error) {
+    console.error('Error updating memory on session change:', error);
+    // Don't throw - this is a background operation
+  }
 }
 
 /**

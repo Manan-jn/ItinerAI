@@ -31,6 +31,7 @@ import OnboardingModalWhite from "../components/auth/OnboardingModalWhite";
 import ItinerAIChatBox from "../components/ItinerAIChatBox";
 import { TripLoader } from "../components/flights-page/TripLoader";
 import { getSessionId, getUserId } from "../utils/sessionManager";
+import { updateMemoryOnSessionChange } from "../utils/memoryApi";
 
 type SectionType =
   | "flights"
@@ -150,6 +151,8 @@ export default function FlightsPage() {
   // Session management
   const [sessionId, setSessionId] = useState<string>("");
   const [userId, setUserId] = useState<string>("");
+  const [previousSessionId, setPreviousSessionId] = useState<string>("");
+  const [isFirstMessage, setIsFirstMessage] = useState(true);
 
   // Check for login query parameter and open login modal
   useEffect(() => {
@@ -175,24 +178,57 @@ export default function FlightsPage() {
 
   // Initialize session IDs on component mount
   useEffect(() => {
-    const initializeSession = () => {
+    const initializeSession = async () => {
       const newSessionId = getSessionId();
       // For signed-in users, use their Firebase UID as user ID
       // For non-signed-in users, use the generated user ID
       const newUserId = currentUser ? currentUser.uid : getUserId();
 
+      // Check if session has changed and update memory if needed
+      if (
+        currentUser &&
+        previousSessionId &&
+        previousSessionId !== newSessionId
+      ) {
+        console.log("Session changed, updating memory:", {
+          previousSessionId,
+          newSessionId,
+          userId: newUserId,
+        });
+
+        try {
+          await updateMemoryOnSessionChange(
+            newUserId,
+            newSessionId,
+            currentUser.displayName,
+            currentUser.email
+          );
+          console.log("Memory updated for session change");
+        } catch (error) {
+          console.error("Failed to update memory for session change:", error);
+          // Don't block the session initialization if memory update fails
+        }
+      }
+
       setSessionId(newSessionId);
       setUserId(newUserId);
+      setPreviousSessionId(newSessionId);
+
+      // Reset first message flag when session changes
+      if (previousSessionId && previousSessionId !== newSessionId) {
+        setIsFirstMessage(true);
+      }
 
       console.log("Flights session initialized:", {
         sessionId: newSessionId,
         userId: newUserId,
         isAuthenticated: !!currentUser,
+        previousSessionId,
       });
     };
 
     initializeSession();
-  }, [currentUser]); // Re-initialize when currentUser changes
+  }, [currentUser, previousSessionId]); // Re-initialize when currentUser changes
 
   // Handle session regeneration from debug component
   const handleSessionRegenerated = (
@@ -201,11 +237,20 @@ export default function FlightsPage() {
   ) => {
     setSessionId(newSessionId);
     setUserId(newUserId);
+    setIsFirstMessage(true); // Reset first message flag for new session
 
     console.log("Session regenerated in flights:", {
       sessionId: newSessionId,
       userId: newUserId,
     });
+  };
+
+  // Handle chat history clearing when session is regenerated
+  const handleClearChatHistory = () => {
+    setMessages([]);
+    setChatInputText("");
+    setIsLoading(false);
+    console.log("Chat history cleared");
   };
 
   const handleSwitchToSignup = () => {
@@ -381,6 +426,26 @@ export default function FlightsPage() {
     setIsLoading(true);
 
     try {
+      // Update memory before first message if this is the first message
+      if (isFirstMessage && currentUser) {
+        console.log(
+          "First message detected, updating memory before sending..."
+        );
+        try {
+          await updateMemoryOnSessionChange(
+            userId,
+            sessionId,
+            currentUser.displayName,
+            currentUser.email
+          );
+          console.log("Memory updated successfully for first message");
+        } catch (error) {
+          console.error("Failed to update memory for first message:", error);
+          // Continue with the message even if memory update fails
+        }
+        setIsFirstMessage(false);
+      }
+
       const data = await makeAPICall(currentInput);
 
       // Check if response contains trip suggestions
@@ -1996,6 +2061,7 @@ export default function FlightsPage() {
           isVisible={showDebug}
           onClose={() => setShowDebug(false)}
           onSessionRegenerated={handleSessionRegenerated}
+          onClearChatHistory={handleClearChatHistory}
         />
       )}
 
