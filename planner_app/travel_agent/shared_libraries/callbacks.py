@@ -58,7 +58,7 @@ async def modify_output_after_agent(callback_context: CallbackContext) -> Option
         if not agent_response_content:
             return None 
         
-        str_response = agent_response_content.parts[0].text
+        str_response = agent_response_content.parts[-1].text
         json_response = await string_to_json(str_response)
         if not json_response:
             return None 

@@ -14,7 +14,7 @@ from ...shared_libraries.callbacks import modify_state_after_agent
 origin_agent = LlmAgent(
     name="origin_agent",
     description="An agent that recommends the start point(s) from where the user can start the journey.",
-    model="gemini-2.5-pro",
+    model="gemini-2.5-flash",
     instruction=prompt.ORIGIN_AGENT_INSTR,
     output_key="origin_agent",
     # output_schema = SourceLocation,

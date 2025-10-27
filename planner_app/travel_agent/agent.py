@@ -18,7 +18,7 @@ from .shared_libraries.callbacks import logger_before_agent, modify_state_after_
 
 root_agent = LlmAgent(
     name="root_agent",
-    model="gemini-2.5-pro",
+    model="gemini-2.5-flash",
     description="Orchestrator Agent responsible for planning end-to-end dream vacation trip for the user.",
     # global_instruction="""
     # - You are not allowed to share your internal thoughts or reasoning with the user. 
@@ -99,4 +99,5 @@ itinerary_agent = LlmAgent(
 # root_agent = onboarding_agent
 # root_agent = itinerary_agent
 # root_agent = conveyance_agent
+# root_agent = trip_agent
 # root_agent = bigquery_agent

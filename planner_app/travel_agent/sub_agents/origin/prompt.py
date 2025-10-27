@@ -174,7 +174,7 @@ Do not transfer the flow until the following information is present:
 </FINAL_TRIP>
    
 <RESPONSE_FORMAT>
-Return the response as a JSON object formatted like this:
+Always respond in the following structured JSON format:
 ```json
 {{
   "response_type" ENUM(text): "", (Always use 'text' as your response_type)
