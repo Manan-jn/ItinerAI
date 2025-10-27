@@ -17,7 +17,7 @@ router = APIRouter()
 
 
 @router.post("/agents/chat", response_model=ChatResponse)
-async def chat(
+async def root_agent_chat(
     request: ChatRequest, session_service: SessionManager = Depends(get_session_service)
 ):
     # try:
@@ -56,7 +56,7 @@ async def chat(
 
 
 @router.post("/agents/conveyance")
-async def chat(
+async def conveyance_agent_chat(
     request: ChatRequest, session_service: SessionManager = Depends(get_session_service)
 ):
     try:
@@ -92,7 +92,7 @@ async def chat(
 
 
 @router.post("/agents/stay")
-async def chat(
+async def stay_agent_chat(
     request: ChatRequest, session_service: SessionManager = Depends(get_session_service)
 ):
     try:

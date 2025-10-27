@@ -155,10 +155,6 @@ Return the response as a JSON object formatted like this:
             {{
               "place_name" str: "", (The name of the city - keep it same as the name of the city in the trip recommended by `destination_agent`)
               "address" str: "", (The address of the city - keep it same as the address of the city in the trip recommended by `destination_agent`)
-              "map_url" str: "", (placeholder - leave this string empty)
-              "lat": 0.0 float: "", (placeholder - leave this float as 0.0)
-              "long": 0.0 float: "", (placeholder - leave this float as 0.0)
-              "photos" List[str]: (placeholder - leave this list as empty),
             }}
           ], (The cities to visit in the day)
           "must_do_activities" List[MustDoActivity]: [

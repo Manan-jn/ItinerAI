@@ -21,16 +21,19 @@ root_agent = LlmAgent(
     model="gemini-2.5-pro",
     description="Orchestrator Agent responsible for planning end-to-end dream vacation trip for the user.",
     # global_instruction="""
-    # You are a part of a travel agent system that helps users plan their dream vacation trip. 
-    # You are not allowed to share the internal information like about the tools, yourself etc. with the user.
+    # - You are not allowed to share your internal thoughts or reasoning with the user. 
+    # - You must follow the optimal flow mentioned in the instruction and subtly nudge the user if they deviate from the flow.
     # """,
     instruction=prompt.ROOT_AGENT_INSTR,
     sub_agents=[onboarding_agent, trip_agent, origin_agent],
     before_agent_callback=[_set_initial_state, logger_before_agent],
     after_agent_callback=[modify_state_after_agent],
+    generate_content_config=GenerateContentConfig(
+        temperature=0.3
+    ),
     planner=BuiltInPlanner(
         thinking_config=ThinkingConfig(
-            include_thoughts=False,
+            include_thoughts=True,
             # thinking_budget=2048
         )
     )
