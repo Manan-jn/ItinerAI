@@ -73,6 +73,7 @@ export default function FlightsPageAuthenticated() {
   const [showDateSelector, setShowDateSelector] = useState(false);
   const [selectedTrip, setSelectedTrip] = useState<any>(null);
   const [tripSuggestions, setTripSuggestions] = useState<any[]>([]);
+  const [originalTrips, setOriginalTrips] = useState<any[]>([]); // Store original trip data for memory API
   const [isParsingTrips, setIsParsingTrips] = useState(false);
   const [showTripLoader, setShowTripLoader] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -249,6 +250,42 @@ export default function FlightsPageAuthenticated() {
     }
   };
 
+  // Clean up trip data - remove 'theme' field and keep only 'themes'
+  const cleanupTripData = (trips: any[]): any[] => {
+    return trips.map((trip) => {
+      const cleanedTrip = { ...trip };
+      // Remove 'theme' field if it exists, keep only 'themes'
+      if (cleanedTrip.theme !== undefined) {
+        delete cleanedTrip.theme;
+      }
+      return cleanedTrip;
+    });
+  };
+
+  // Handle trip selection - map transformed trip back to original trip
+  const handleTripSelect = (transformedTrip: any | null) => {
+    if (transformedTrip === null) {
+      setSelectedTrip(null);
+      return;
+    }
+
+    // Find the corresponding original trip by matching trip_title
+    const originalTrip = originalTrips.find(
+      (trip) => trip.trip_title === transformedTrip.trip_title
+    );
+
+    if (originalTrip) {
+      console.log("Selected original trip:", originalTrip);
+      setSelectedTrip(originalTrip);
+    } else {
+      console.warn(
+        "Could not find original trip for:",
+        transformedTrip.trip_title
+      );
+      setSelectedTrip(transformedTrip); // Fallback to transformed trip
+    }
+  };
+
   // Handle trip memory update when a trip is selected and send button is clicked
   const handleTripMemoryUpdate = async () => {
     if (!selectedTrip || !sessionId || !userId) {
@@ -270,7 +307,9 @@ export default function FlightsPageAuthenticated() {
         body: JSON.stringify({
           user_id: userId,
           session_id: sessionId,
-          updates: selectedTrip,
+          updates: {
+            final_trip: selectedTrip,
+          },
         }),
       });
 
@@ -434,6 +473,9 @@ export default function FlightsPageAuthenticated() {
 
           // Extract trip suggestions directly from data.message.trips
           if (data.message.trips && Array.isArray(data.message.trips)) {
+            // Store original trips before validation
+            setOriginalTrips(cleanupTripData(data.message.trips));
+            
             // Validate and populate missing fields
             parsedTripSuggestions = validateAndPopulateTripData(
               data.message.trips
@@ -459,6 +501,9 @@ export default function FlightsPageAuthenticated() {
             data.trip_suggestions.trips &&
             Array.isArray(data.trip_suggestions.trips)
           ) {
+            // Store original trips before validation
+            setOriginalTrips(cleanupTripData(data.trip_suggestions.trips));
+            
             // Validate and populate missing fields
             parsedTripSuggestions = validateAndPopulateTripData(
               data.trip_suggestions.trips
@@ -491,6 +536,9 @@ export default function FlightsPageAuthenticated() {
             // Case A: trips array directly under messageData (actual current API format)
             if (messageData.trips && Array.isArray(messageData.trips)) {
               console.log("Found trips array directly under messageData");
+              // Store original trips before validation
+              setOriginalTrips(cleanupTripData(messageData.trips));
+              
               // Validate and populate missing fields
               parsedTripSuggestions = validateAndPopulateTripData(
                 messageData.trips
@@ -514,6 +562,9 @@ export default function FlightsPageAuthenticated() {
                 messageData.trip_suggestions.trips &&
                 Array.isArray(messageData.trip_suggestions.trips)
               ) {
+                // Store original trips before validation
+                setOriginalTrips(cleanupTripData(messageData.trip_suggestions.trips));
+                
                 // Validate and populate missing fields
                 parsedTripSuggestions = validateAndPopulateTripData(
                   messageData.trip_suggestions.trips
@@ -1031,7 +1082,7 @@ export default function FlightsPageAuthenticated() {
                 ) : (
                   <>
                     {/* Messages Container - Scrollable */}
-                    <div className="flex-1 overflow-y-auto p-6 relative">
+                    <div className="flex-1 overflow-y-auto p-6 relative min-h-0">
                       {/* Trip Loader */}
                       <TripLoader
                         showTripLoader={showTripLoader}
@@ -1063,7 +1114,7 @@ export default function FlightsPageAuthenticated() {
                                     : undefined
                                 }
                                 rightPanelCollapsed={true}
-                                onTripSelect={setSelectedTrip}
+                                onTripSelect={handleTripSelect}
                               />
                             </div>
                           </div>

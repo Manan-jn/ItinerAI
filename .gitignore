@@ -13,6 +13,8 @@
 # testing
 /coverage
 
+WARP.md
+
 # next.js
 /.next/
 /out/

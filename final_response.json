@@ -1,0 +1,1188 @@
+{
+  "user_id": "WT7kBUDDDTVtBHDbiRpHkeH7SVE3",
+  "session_id": "1761561493493-3iizyo785n7",
+  "message": {
+    "response_type": "trip",
+    "message": "",
+    "trips": [
+      {
+        "trip_title": "Himalayan Spiritual and Adventure Quest",
+        "no_of_days": 8,
+        "estimated_budget": 120000,
+        "best_time_to_visit": "September to June",
+        "themes": [
+          "Spiritual",
+          "Adventure",
+          "Nature"
+        ],
+        "trip_route": [
+          {
+            "place_name": "Delhi",
+            "address": "Delhi, India",
+            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJLbZ-NFv9DDkRQJY4FbcFcgM",
+            "lat": "28.7040592",
+            "long": "77.10249019999999",
+            "photos": [
+              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU4P6BXoWglpxEuEWc7Zx1yIvb_RrvTQYYXuKtcIFlVM_VkxUPsoB_HaqZ4iSid37DcbkQ-BuYuaAYquHiM7cTKGhWiKq5GzMsssFTbBau8y0vjZ8FnWIvMMYhl85lx_ZjZSCk-byPkDYtCmg3Ne41jHNK3R5V9hptcPUGlO9cmWNEp3ROwI6688WlS9IaGevmz8e7ajkpv-aKKSF-xBqEAn1EOBxC8kJ9R6Xs83hd07Wkv9ZKxtC4AymNzI8y-3Cn1kQQep0YqUATdHjtui1EW50nbyBuxAc5OFN1XvYXquk6X6uwqHVJGjbJu0YBux_fE20iG8wAXgBulTuz5q7GPwTvqQ5oN5uSUGrxfOFsSWqeXk_i89DJmROJw60E4NFLQrFbACWROwOh5AXNJ1R-nRqG9LYyrPQvA4sUwOds-TJMnd7m3p5ixTJtAdK2GIh1vDFqjJ1jVhAR0WA2ls3M74QvZGjeOgz5gCFW1OU-l4bTW48F_hS8q_wx0IU-t8_gDOpSK1G9brHKYeWqDvMqRNdADnkyIyiSqoZhMh2b74bzesgA7ktZxcJp2FLWQoGQc0tyVqyJv28Q&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+            ],
+            "place_id": "ChIJLbZ-NFv9DDkRQJY4FbcFcgM"
+          },
+          {
+            "place_name": "Rishikesh",
+            "address": "Rishikesh, Uttarakhand, India",
+            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJEfGTz2c-CTkR_huUb0qAeMw",
+            "lat": "30.1157619",
+            "long": "78.28530169999999",
+            "photos": [
+              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU4fFFJl4ESLhRRGbESfWRTmOONCJ0ePPGHgrTXR3acrwfbg2vTrHngIy7ScVrdualmMd1yDKKepxZ1iKu6JC4sOPinp1F5oFkeP8ClC9I-_XNQg5VX1kmEXXn5z8A-4EN2a1iwpRDMuAg_2pSI5woNPLAT1NtcixlvZIiJ-iBfyVTTSTaOr0L8AgyS5Hw8RFcH7I1lNmKACFhJH93I6rdaxkwxvBNwdRl2x1_170DGTHDFYgIWTsA6HbDDQwVMx31Grzo1wMimxBrSaSixoWUqiXfbEtPgdYmc45jk7tsUTwr4gCtS92PTS5-LSppM6aZw3QiUGDh0xibMI1LBLfICQbTY5LPG_JrMdipRBdP_TKDJbyV7oZLJUtSugx3IHSEICdbCGxoO9D2ttq_imfy-eXJKwatzsxTKleG5t2Q3OwYInvJbKqzdFuKHwTq0BwAio6gY8Vh1H7gJFw2eleQ9xEkw03GqY3H5ZkiVLhdEsBG5OmwoTR2Oap8DwtrXEsKviRPA-x_QLDoqNrachpzt9AeMxRQBLf9g0tqx9Za9g8EdT_6HXBQQhnHs28fRYPTJW4w&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+            ],
+            "place_id": "ChIJEfGTz2c-CTkR_huUb0qAeMw"
+          }
+        ],
+        "day_wise_plan": [
+          {
+            "day_number": 1,
+            "conveyance_details": {
+              "is_required": true,
+              "travel_timing": "evening",
+              "from_city": "user_location",
+              "to_city": "Delhi"
+            },
+            "stay_details": {
+              "is_required": true,
+              "city": "Delhi",
+              "check_in_day": "1",
+              "check_out_day": "2"
+            },
+            "must_do_activities": [
+              {
+                "type": "place",
+                "category": "cultural_site",
+                "name": "Arrive in Delhi",
+                "description": "Arrive at Indira Gandhi International Airport (DEL), transfer to your hotel and rest."
+              }
+            ]
+          },
+          {
+            "day_number": 2,
+            "conveyance_details": {
+              "is_required": true,
+              "travel_timing": "morning",
+              "from_city": "Delhi",
+              "to_city": "Rishikesh"
+            },
+            "stay_details": {
+              "is_required": true,
+              "city": "Rishikesh",
+              "check_in_day": "2",
+              "check_out_day": "7"
+            },
+            "must_do_activities": [
+              {
+                "type": "activity",
+                "category": "wellness",
+                "name": "Settle into Rishikesh",
+                "description": "Take a scenic drive to Rishikesh. Check into a wellness ashram or a hotel by the Ganges. Attend the evening Ganga Aarti at Triveni Ghat."
+              }
+            ]
+          },
+          {
+            "day_number": 3,
+            "conveyance_details": {
+              "is_required": false
+            },
+            "stay_details": {
+              "is_required": false
+            },
+            "must_do_activities": [
+              {
+                "type": "wellness",
+                "category": "yoga",
+                "name": "Yoga and Meditation",
+                "description": "Start your day with a sunrise yoga and meditation session overlooking the Ganges."
+              },
+              {
+                "type": "place",
+                "category": "cultural_site",
+                "name": "Explore Ashrams",
+                "description": "Visit famous ashrams like Parmarth Niketan and Sivananda Ashram to understand the spiritual roots of Rishikesh."
+              }
+            ]
+          },
+          {
+            "day_number": 4,
+            "conveyance_details": {
+              "is_required": false
+            },
+            "stay_details": {
+              "is_required": false
+            },
+            "must_do_activities": [
+              {
+                "type": "activity",
+                "category": "adventure",
+                "name": "White Water Rafting",
+                "description": "Experience the thrill of rafting through the rapids of the Ganges river."
+              },
+              {
+                "type": "activity",
+                "category": "adventure",
+                "name": "Cliff Jumping",
+                "description": "For an extra dose of adrenaline, take a leap from the cliffs into the holy river."
+              }
+            ]
+          },
+          {
+            "day_number": 5,
+            "conveyance_details": {
+              "is_required": false
+            },
+            "stay_details": {
+              "is_required": false
+            },
+            "must_do_activities": [
+              {
+                "type": "activity",
+                "category": "trekking",
+                "name": "Trek to Neer Garh Waterfall",
+                "description": "Hike to the beautiful Neer Garh waterfall, a perfect spot for relaxation and photography."
+              },
+              {
+                "type": "place",
+                "category": "cafe",
+                "name": "Relax at a Riverside Cafe",
+                "description": "Spend the evening at a cafe, enjoying the serene views of the Laxman Jhula bridge and the river."
+              }
+            ]
+          },
+          {
+            "day_number": 6,
+            "conveyance_details": {
+              "is_required": false
+            },
+            "stay_details": {
+              "is_required": false
+            },
+            "must_do_activities": [
+              {
+                "type": "activity",
+                "category": "adventure",
+                "name": "Bungee Jumping or Giant Swing",
+                "description": "Challenge yourself with India's highest bungee jump or a giant swing for an unforgettable thrill."
+              },
+              {
+                "type": "shopping",
+                "category": "market",
+                "name": "Shopping at Laxman Jhula Market",
+                "description": "Explore the local market for spiritual souvenirs, books, and traditional clothing."
+              }
+            ]
+          },
+          {
+            "day_number": 7,
+            "conveyance_details": {
+              "is_required": true,
+              "travel_timing": "morning",
+              "from_city": "Rishikesh",
+              "to_city": "Delhi"
+            },
+            "stay_details": {
+              "is_required": true,
+              "city": "Delhi",
+              "check_in_day": "7",
+              "check_out_day": "8"
+            },
+            "must_do_activities": [
+              {
+                "type": "place",
+                "category": "cultural_site",
+                "name": "Return to Delhi & Explore",
+                "description": "Travel back to Delhi. In the evening, explore the Hauz Khas Village, known for its vibrant nightlife and historical ruins."
+              }
+            ]
+          },
+          {
+            "day_number": 8,
+            "conveyance_details": {
+              "is_required": true,
+              "travel_timing": "evening",
+              "from_city": "Delhi",
+              "to_city": "user_location"
+            },
+            "stay_details": {
+              "is_required": false
+            },
+            "must_do_activities": [
+              {
+                "type": "transport",
+                "category": "flight",
+                "name": "Departure",
+                "description": "Enjoy a final Indian breakfast before heading to the airport for your flight back home."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "trip_title": "Andaman Islands: Diving and Discovery",
+        "no_of_days": 8,
+        "estimated_budget": 180000,
+        "best_time_to_visit": "October to May",
+        "themes": [
+          "Beach",
+          "Adventure",
+          "Nature"
+        ],
+        "trip_route": [
+          {
+            "place_name": "Port Blair",
+            "address": "Port Blair, Andaman and Nicobar Islands, India",
+            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJcVlrF2yUiDARMO2l6aVD-ls",
+            "lat": "11.6233774",
+            "long": "92.7264828",
+            "photos": [
+              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU4tMIo1LRRFM_qbvYuMR0Kh_e5y6FlURzQ5jLC34hYrOPKJyislltXq8M9Dt1O174coZPZ0-Lsl277iHnOIiLw_eVOaZaafoyaxfJM53FblHefF2UZPs4P8xzqzy6W9Ef3Y5dZ18Ct5GjszaPbNCX_2QEx_4E_Fsz-yY3nA5J_xs_oDlkKPlINg8Hw2THkO2ps5DdjZMrwB5v_3wUxubk8HkM38h8onsGSfzIk2fcpyhEMdyHT-VFRIIEiwUT-Itsf3Tn_LtzNPqvPe5TO0PdB2BOy8wPjwFwdcJPCfE8kTtDx3NuNknTUgJ7RFs2FYk8ggvB5OgXWEWK-qi_TUJklBNcwcZGmTWYbyOZwK9LrIUE2mBJmBsh7jhdPnBaLb5-ns1sQAjMnKe3AtwNLE547KufrCeER0HuxGtY0I-4htcS3UgO4QDtNzyPDeCBlLckVNrgS_20topKSTE3qgRFhTFuT7JgPEuxFw8DTTvSiVDFFiH0m6ZsESpgmtF-Z2mMmBaEneIJAYYbhc7ekco0mWa8Ho2aaad9LBCym3xeGIQkc2IZnV6m0XWDHOdEoPV7VoVx_d&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+            ],
+            "place_id": "ChIJcVlrF2yUiDARMO2l6aVD-ls"
+          },
+          {
+            "place_name": "Havelock Island (Swaraj Dweep)",
+            "address": "Havelock Island, Andaman and Nicobar Islands, India",
+            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJOeAPXtjTiDARv_Q-UaqqyCU",
+            "lat": "11.9760503",
+            "long": "92.9875565",
+            "photos": [
+              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU7lVv0Dkj3DIPacY19j02ug1dSUMsq4JwRAvJpve-udZwKTe8rZFtKGjZwpKTvCFR6XWNXm-7vKEynIjSP-Hprr0kh4fLWev5PTD0x6X2C_XSPrTj3QUE-V32AdCBQZwrRfxX8devs3wsU_aVIxpk3AkzoKd_vxR2OwAsIaHnP89sSIOsi73BI5LVRKzm45RE3IvffuiA4pK9j-H-imeosAZyNM6gkrgAjTXPOJqtY8onkhxq_ri4W7v4azNizrOQ4RnSiA1DjiRstPgQWqYHXUcFbUox6l_OomvfZAABsJfELnUac2Sp_elZIoCU5RHuYdnN_qzebmggZwwCs5lekK7-D8NnMkDyaqLYWLv0At8o0IzSRsrN-ErHtkX__2kGUZZfg6Hj8pYxx0D3tfOnNfO0rJRzxPMb7VTfbEQdFXFWuwGSOI1RWDDTa-DdC2yJJJBr7MUhhiUyJkEjV2vIwLgcse854awC3kR0ApuJJoF8JxAirWm19JPmxLwcmpjz1A4n-5caf0_sgkKUkgTjhIr0ujfz-z6aOW6K4L3EY0QZALqYLQCjgDnyg92eR6jxmXbg&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+            ],
+            "place_id": "ChIJOeAPXtjTiDARv_Q-UaqqyCU"
+          }
+        ],
+        "day_wise_plan": [
+          {
+            "day_number": 1,
+            "conveyance_details": {
+              "is_required": true,
+              "travel_timing": "evening",
+              "from_city": "user_location",
+              "to_city": "Port Blair"
+            },
+            "stay_details": {
+              "is_required": true,
+              "city": "Port Blair",
+              "check_in_day": "1",
+              "check_out_day": "2"
+            },
+            "must_do_activities": [
+              {
+                "type": "place",
+                "category": "cultural_site",
+                "name": "Arrival in Port Blair",
+                "description": "Arrive at Veer Savarkar International Airport (IXZ), check into your hotel."
+              }
+            ]
+          },
+          {
+            "day_number": 2,
+            "conveyance_details": {
+              "is_required": true,
+              "travel_timing": "morning",
+              "from_city": "Port Blair",
+              "to_city": "Havelock Island (Swaraj Dweep)"
+            },
+            "stay_details": {
+              "is_required": true,
+              "city": "Havelock Island (Swaraj Dweep)",
+              "check_in_day": "2",
+              "check_out_day": "7"
+            },
+            "must_do_activities": [
+              {
+                "type": "transport",
+                "category": "ferry",
+                "name": "Ferry to Havelock Island",
+                "description": "Take a morning ferry to Havelock Island. Settle into your beachside resort."
+              },
+              {
+                "type": "place",
+                "category": "beach",
+                "name": "Radhanagar Beach",
+                "description": "Visit the world-famous Radhanagar Beach for its stunning sunset."
+              }
+            ]
+          },
+          {
+            "day_number": 3,
+            "conveyance_details": {
+              "is_required": false
+            },
+            "stay_details": {
+              "is_required": false
+            },
+            "must_do_activities": [
+              {
+                "type": "activity",
+                "category": "adventure",
+                "name": "Discover Scuba Diving",
+                "description": "Try a Discover Scuba Dive (DSD) with a certified instructor to experience the vibrant coral reefs and marine life."
+              },
+              {
+                "type": "food",
+                "category": "restaurant",
+                "name": "Seafood Dinner",
+                "description": "Enjoy fresh seafood at a local restaurant."
+              }
+            ]
+          },
+          {
+            "day_number": 4,
+            "conveyance_details": {
+              "is_required": false
+            },
+            "stay_details": {
+              "is_required": false
+            },
+            "must_do_activities": [
+              {
+                "type": "activity",
+                "category": "adventure",
+                "name": "Kayaking through Mangroves",
+                "description": "Go for a unique kayaking experience through the dense mangrove forests of Havelock."
+              },
+              {
+                "type": "place",
+                "category": "beach",
+                "name": "Kalapathar Beach",
+                "description": "Visit the serene Kalapathar Beach, known for its black rocks and tranquil environment."
+              }
+            ]
+          },
+          {
+            "day_number": 5,
+            "conveyance_details": {
+              "is_required": false
+            },
+            "stay_details": {
+              "is_required": false
+            },
+            "must_do_activities": [
+              {
+                "type": "activity",
+                "category": "trekking",
+                "name": "Trek to Elephant Beach",
+                "description": "Instead of taking a boat, trek through the jungle to reach the popular Elephant Beach, known for its water sports."
+              },
+              {
+                "type": "activity",
+                "category": "adventure",
+                "name": "Snorkeling",
+                "description": "Snorkel at Elephant Beach to see the beautiful coral reefs."
+              }
+            ]
+          },
+          {
+            "day_number": 6,
+            "conveyance_details": {
+              "is_required": false
+            },
+            "stay_details": {
+              "is_required": false
+            },
+            "must_do_activities": [
+              {
+                "type": "wellness",
+                "category": "spa",
+                "name": "Relax and Rejuvenate",
+                "description": "Spend the day at leisure, maybe get a spa treatment or simply relax by the beach with a book."
+              }
+            ]
+          },
+          {
+            "day_number": 7,
+            "conveyance_details": {
+              "is_required": true,
+              "travel_timing": "morning",
+              "from_city": "Havelock Island (Swaraj Dweep)",
+              "to_city": "Port Blair"
+            },
+            "stay_details": {
+              "is_required": true,
+              "city": "Port Blair",
+              "check_in_day": "7",
+              "check_out_day": "8"
+            },
+            "must_do_activities": [
+              {
+                "type": "transport",
+                "category": "ferry",
+                "name": "Return to Port Blair",
+                "description": "Take the ferry back to Port Blair."
+              },
+              {
+                "type": "place",
+                "category": "museum",
+                "name": "Cellular Jail Light and Sound Show",
+                "description": "In the evening, witness the poignant history of the Cellular Jail through the Sound and Light Show."
+              }
+            ]
+          },
+          {
+            "day_number": 8,
+            "conveyance_details": {
+              "is_required": true,
+              "travel_timing": "evening",
+              "from_city": "Port Blair",
+              "to_city": "user_location"
+            },
+            "stay_details": {
+              "is_required": false
+            },
+            "must_do_activities": [
+              {
+                "type": "transport",
+                "category": "flight",
+                "name": "Departure",
+                "description": "Fly back home with memories of the beautiful islands."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "trip_title": "Vietnam: Culture, Cuisine and Karsts",
+        "no_of_days": 9,
+        "estimated_budget": 190000,
+        "best_time_to_visit": "March to April, September to November",
+        "themes": [
+          "Culture",
+          "Food",
+          "Nature"
+        ],
+        "trip_route": [
+          {
+            "place_name": "Hanoi",
+            "address": "Hanoi, Vietnam",
+            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJoRyG2ZurNTERqRfKcnt_iOc",
+            "lat": "21.0277644",
+            "long": "105.8341598",
+            "photos": [
+              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU7srbpIprQbNyYSe8_ipLgrrgK_4aGMInaoe53cFNblSwlfYVFqo35aaD5JjXrfstaIirsQBv3FziRr6wC3Bqgw-Yx6dqa_cnvseWfYzGjWEpy0wcyHGxE63bu1eLzOUq0nwdW7M95I59LObJMx-i8CqGVKtsjkINQERlIl2rujGD7lD5KrG7jRmxUvJ8wxNOWoFb4e1bDNSHp2RAExfmeOgn2RHLj0BEPWuqM0_jTHinXEuH6cU_L0IJp9WJAlxkP15vn9zu3tnuZ1onze6VTP2VUPTnLw51An0JDJQK69jdIdJgkyvmLlNrv3kDxyQAyse9RClz-4L0WB8JB0xlEzBsx-DwYxukbO9MhTLigT2v3XCfScy5ozWQPrKRV5LpTBDbdwVdMRfbrkkj92Lv7SMcd3efCpC1D_METP3icpJAf_EXZsseG-M2UlqLQrfeQYJvC2ZUtM9yMqhNBwOmtYqujwrCEu77CCcncOppuZ2_kVvJA1doAVwKEbHvO2HWbH1AV7pbr4UTLpnNMlJoyHLIBbmqdFzG0shMQfJkKqELqgoldvTZt4qxeFpF9x4rUdAw&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+            ],
+            "place_id": "ChIJoRyG2ZurNTERqRfKcnt_iOc"
+          },
+          {
+            "place_name": "Ha Long Bay",
+            "address": "Ha Long Bay, Quang Ninh Province, Vietnam",
+            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJh-6MUZZXSjER23hUyLywxlU",
+            "lat": "20.9100512",
+            "long": "107.1839024",
+            "photos": [
+              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU7atCyuq3owYAgC4vtVddRBkVP7PXb2a-GYvsdL2WCO9zGt5bAJtbfqo6mOtDmvI29xTwQKLnIuFxIBwA0CZdHuu_OcJdZ1wagrfSG1DnVfgfwgboELvkIpjmkwE1hUFGxH5v7tIZrijx0RBVrhLzKCqDBoho9Ut9xp5nv9QN-kRH4yOGFLkwvxd8Al8SmgxDKOOCrXXQOt2NW2a1R5bHjG88JYd5gikqP_9-vIXx_BxwyoDLsCqUjVoGIdi1Yd4B-feHzh2W2HV5IjmughtPTtUh7VrngtO21HAb_KEKpJcXua32jPR8AQtNKonFd96WGmVZHJzIwRGkqD17iMOXUWiHKQK7vRC6FgexiHTUGlJrM-lpOxN2nl62ujPUGqbQkB4O8l_7leF3UWgWolifxCRrvqeb6OLvHCIITk1mp-ifOmeUvk8t5LWajU3NRznz0zETmRifxYKK73Tg2eieKirzIG3eOZ62erNgvSorrBVml8486MfMLDlCk4ttD4MnMkQk4Hw7BjD11mb8pBQoEV2VO9dXAqBASKM5GJelQ5U0VxLbkhlpaqmWK8aAS39r8aI8CP&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+            ],
+            "place_id": "ChIJh-6MUZZXSjER23hUyLywxlU"
+          }
+        ],
+        "day_wise_plan": [
+          {
+            "day_number": 1,
+            "conveyance_details": {
+              "is_required": true,
+              "travel_timing": "evening",
+              "from_city": "user_location",
+              "to_city": "Hanoi"
+            },
+            "stay_details": {
+              "is_required": true,
+              "city": "Hanoi",
+              "check_in_day": "1",
+              "check_out_day": "3"
+            },
+            "must_do_activities": [
+              {
+                "type": "place",
+                "category": "cultural_site",
+                "name": "Arrive in Hanoi",
+                "description": "Arrive at Noi Bai International Airport (HAN), transfer to your hotel in the Old Quarter."
+              }
+            ]
+          },
+          {
+            "day_number": 2,
+            "conveyance_details": {
+              "is_required": false
+            },
+            "stay_details": {
+              "is_required": false
+            },
+            "must_do_activities": [
+              {
+                "type": "activity",
+                "category": "walking_tour",
+                "name": "Hanoi Old Quarter Walking Tour",
+                "description": "Explore the bustling streets, colonial architecture, and hidden temples of the Old Quarter."
+              },
+              {
+                "type": "food",
+                "category": "local_street_food",
+                "name": "Street Food Adventure",
+                "description": "Go on a guided street food tour to sample iconic dishes like Pho, Bun Cha, and Banh Mi."
+              },
+              {
+                "type": "event",
+                "category": "show",
+                "name": "Water Puppet Show",
+                "description": "Experience the unique Vietnamese art form of water puppetry."
+              }
+            ]
+          },
+          {
+            "day_number": 3,
+            "conveyance_details": {
+              "is_required": true,
+              "travel_timing": "morning",
+              "from_city": "Hanoi",
+              "to_city": "Ha Long Bay"
+            },
+            "stay_details": {
+              "is_required": true,
+              "city": "Ha Long Bay",
+              "check_in_day": "3",
+              "check_out_day": "5"
+            },
+            "must_do_activities": [
+              {
+                "type": "transport",
+                "category": "cruise",
+                "name": "Embark on a Ha Long Bay Cruise",
+                "description": "Travel to Ha Long Bay and board a traditional junk boat for an overnight cruise."
+              },
+              {
+                "type": "activity",
+                "category": "adventure",
+                "name": "Kayaking in the Bay",
+                "description": "Kayak through the emerald waters amidst the limestone karsts."
+              }
+            ]
+          },
+          {
+            "day_number": 4,
+            "conveyance_details": {
+              "is_required": false
+            },
+            "stay_details": {
+              "is_required": false
+            },
+            "must_do_activities": [
+              {
+                "type": "place",
+                "category": "cave",
+                "name": "Visit Sung Sot (Surprise) Cave",
+                "description": "Explore one of the largest and most beautiful caves in Ha Long Bay."
+              },
+              {
+                "type": "place",
+                "category": "island",
+                "name": "Hike on Titop Island",
+                "description": "Hike to the summit of Titop Island for a panoramic view of the bay."
+              },
+              {
+                "type": "food",
+                "category": "cooking_class",
+                "name": "Vietnamese Cooking Class",
+                "description": "Participate in a cooking class on board the cruise."
+              }
+            ]
+          },
+          {
+            "day_number": 5,
+            "conveyance_details": {
+              "is_required": true,
+              "travel_timing": "morning",
+              "from_city": "Ha Long Bay",
+              "to_city": "Hanoi"
+            },
+            "stay_details": {
+              "is_required": true,
+              "city": "Hanoi",
+              "check_in_day": "5",
+              "check_out_day": "9"
+            },
+            "must_do_activities": [
+              {
+                "type": "activity",
+                "category": "wellness",
+                "name": "Morning Tai Chi",
+                "description": "Start your day with a Tai Chi session on the sundeck of the cruise."
+              },
+              {
+                "type": "place",
+                "category": "cultural_site",
+                "name": "Return to Hanoi",
+                "description": "Disembark and travel back to Hanoi."
+              }
+            ]
+          },
+          {
+            "day_number": 6,
+            "conveyance_details": {
+              "is_required": false
+            },
+            "stay_details": {
+              "is_required": false
+            },
+            "must_do_activities": [
+              {
+                "type": "place",
+                "category": "museum",
+                "name": "Vietnam Museum of Ethnology",
+                "description": "Learn about the diverse ethnic groups of Vietnam."
+              },
+              {
+                "type": "place",
+                "category": "cultural_site",
+                "name": "Temple of Literature",
+                "description": "Visit Vietnam's first university, a beautiful example of traditional Vietnamese architecture."
+              }
+            ]
+          },
+          {
+            "day_number": 7,
+            "conveyance_details": {
+              "is_required": false
+            },
+            "stay_details": {
+              "is_required": false
+            },
+            "must_do_activities": [
+              {
+                "type": "activity",
+                "category": "cycling",
+                "name": "Countryside Cycling Tour",
+                "description": "Take a cycling tour to the outskirts of Hanoi to experience rural life."
+              },
+              {
+                "type": "food",
+                "category": "cafe",
+                "name": "Egg Coffee Experience",
+                "description": "Try the famous Vietnamese egg coffee at a traditional cafe."
+              }
+            ]
+          },
+          {
+            "day_number": 8,
+            "conveyance_details": {
+              "is_required": false
+            },
+            "stay_details": {
+              "is_required": false
+            },
+            "must_do_activities": [
+              {
+                "type": "shopping",
+                "category": "market",
+                "name": "Dong Xuan Market",
+                "description": "Explore Hanoi's largest indoor market for souvenirs and local products."
+              },
+              {
+                "type": "wellness",
+                "category": "spa",
+                "name": "Traditional Vietnamese Massage",
+                "description": "Relax with a traditional massage before your departure."
+              }
+            ]
+          },
+          {
+            "day_number": 9,
+            "conveyance_details": {
+              "is_required": true,
+              "travel_timing": "evening",
+              "from_city": "Hanoi",
+              "to_city": "user_location"
+            },
+            "stay_details": {
+              "is_required": false
+            },
+            "must_do_activities": [
+              {
+                "type": "transport",
+                "category": "flight",
+                "name": "Departure",
+                "description": "Depart from Hanoi."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "trip_title": "Uzbekistan: Journey Through the Silk Road",
+        "no_of_days": 9,
+        "estimated_budget": 170000,
+        "best_time_to_visit": "April to May, September to November",
+        "themes": [
+          "History",
+          "Culture",
+          "Architecture"
+        ],
+        "trip_route": [
+          {
+            "place_name": "Tashkent",
+            "address": "Tashkent, Uzbekistan",
+            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJw-l5wwyLrjgRmMulSjsyqaU",
+            "lat": "41.2994958",
+            "long": "69.2400734",
+            "photos": [
+              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU4Zgofgf5g3i0nwwaKf7atx7S4nEQAbnA0K0dMNoYUaTY6HMhkOOqJm75RXc7IcBwsKbO08S_hEAWI6XL04PJrn6wI97E_qab0p9aS19zacpCsQ_Tha_CqR36QmF4d71u2tJzLQ86ScR53r6-wDnyP1iUK0AURe71p0sJK9lwIG6N9ElxnGky-B_qX4QrindTNYtWyR8rNRwY9RSAtlby-dvfek2aUOTl8yRzvPny1ndVQE4p_TLr19Rjoog2LIq_c1bnJspGD71jvsBRMuHny2w8IHlAj8xkZua8xWZC7_ztdh01yLeQg8578KXmJVnH28RZE2PF7PRuH34TZFyhAtUJuP0FXgKu7k2TNRi_4svalS8bplLz8En9Oso0LQGnx1Z0wyZFkJfnXZmIS9eWcxZTjZqRgpjU9wwRrUso0-2WIeV3aHBE_xIFWyWwd98dnkUnrvw7V5eP31bb6U_DoHxYV65BmhX_l7FoKzXJbK7jwZT6IHfgApTY613SxLC3zHp9-yBh1WQoxHNIF8SVGOCXVVSnoVtxU8st6cc13bAm8jRxkgl0sjsLMP87Z95V00EpUc&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+            ],
+            "place_id": "ChIJw-l5wwyLrjgRmMulSjsyqaU"
+          },
+          {
+            "place_name": "Samarkand",
+            "address": "Samarkand, Uzbekistan",
+            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJ930HYBkZTT8RVy8_0dk2dkg",
+            "lat": "39.6507963",
+            "long": "66.9653502",
+            "photos": [
+              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6eeqqyxD8NXhOQ1DOYIOjQZl_XzC4d6NC3DIyNQIzP5uNCQjpUoG7AGmrHYydNeFGCH9t7QHGvWZPOSunbkr0ketoEDM88TWZY0ixg8L2BBl9uWiKj1dKS766DifMykMEohF4ooxdaHzSnBdseq5v56E_e8JRhxIyj4yAImZY7EsFju2WNArkXwqwaF_WVFryRtagBuPdy0j018ccXxxteBIf74GvpRqyxzqWdjK2k2DlxuQX6tR75R_2OUafUS3JwRcbRZLsdtImLat9GER4DZaYLDzJNF-7yAAzqYfbAdYr73NUyn5SmiEly-6qk87bbiZoSDVjvole5Y49fOU2Be_y2hAuBD9TiseN9xZnRoLqLFbE6-9eK_QZ4wV19hL_1K4kDwfr5NPW6mUyWe3sGCnktKoq6_kPZsznf1RHXjJEacn3Z0v2H70pW_0psFOuebVuCCCp4rNkLeU_ToztcienCy8LyoVyXZkWBQelvDM-VX3dv5zSfCM1o3vZE6wZyH7EXjhQbiZ2i2Tood0kCgPsDBZ3rGnM7Txg4xiiZiNnyf9nSXbR6fZ0cPh-EJaKqryXO4YShjw&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+            ],
+            "place_id": "ChIJ930HYBkZTT8RVy8_0dk2dkg"
+          }
+        ],
+        "day_wise_plan": [
+          {
+            "day_number": 1,
+            "conveyance_details": {
+              "is_required": true,
+              "travel_timing": "evening",
+              "from_city": "user_location",
+              "to_city": "Tashkent"
+            },
+            "stay_details": {
+              "is_required": true,
+              "city": "Tashkent",
+              "check_in_day": "1",
+              "check_out_day": "3"
+            },
+            "must_do_activities": [
+              {
+                "type": "place",
+                "category": "cultural_site",
+                "name": "Arrive in Tashkent",
+                "description": "Arrive at Islam Karimov Tashkent International Airport (TAS) and check into your hotel."
+              }
+            ]
+          },
+          {
+            "day_number": 2,
+            "conveyance_details": {
+              "is_required": false
+            },
+            "stay_details": {
+              "is_required": false
+            },
+            "must_do_activities": [
+              {
+                "type": "place",
+                "category": "cultural_site",
+                "name": "Tashkent City Tour",
+                "description": "Explore the old city with its mosques and madrasas, and the modern city with its wide avenues and green spaces."
+              },
+              {
+                "type": "transport",
+                "category": "metro",
+                "name": "Tashkent Metro",
+                "description": "Take a ride on the beautifully decorated Tashkent Metro, a work of art in itself."
+              },
+              {
+                "type": "shopping",
+                "category": "market",
+                "name": "Chorsu Bazaar",
+                "description": "Visit the bustling Chorsu Bazaar to experience local life and shop for traditional crafts."
+              }
+            ]
+          },
+          {
+            "day_number": 3,
+            "conveyance_details": {
+              "is_required": true,
+              "travel_timing": "morning",
+              "from_city": "Tashkent",
+              "to_city": "Samarkand"
+            },
+            "stay_details": {
+              "is_required": true,
+              "city": "Samarkand",
+              "check_in_day": "3",
+              "check_out_day": "8"
+            },
+            "must_do_activities": [
+              {
+                "type": "transport",
+                "category": "train",
+                "name": "High-Speed Train to Samarkand",
+                "description": "Take the modern 'Afrosiyob' high-speed train to Samarkand."
+              },
+              {
+                "type": "place",
+                "category": "cultural_site",
+                "name": "Registan Square",
+                "description": "Witness the grandeur of Registan Square, the heart of ancient Samarkand, with its three magnificent madrasas."
+              }
+            ]
+          },
+          {
+            "day_number": 4,
+            "conveyance_details": {
+              "is_required": false
+            },
+            "stay_details": {
+              "is_required": false
+            },
+            "must_do_activities": [
+              {
+                "type": "place",
+                "category": "cultural_site",
+                "name": "Gur-e-Amir Mausoleum",
+                "description": "Visit the mausoleum of Timur (Tamerlane), a stunning example of Timurid architecture."
+              },
+              {
+                "type": "place",
+                "category": "observatory",
+                "name": "Ulugh Beg Observatory",
+                "description": "Explore the remains of one of the most advanced observatories of the medieval Islamic world."
+              }
+            ]
+          },
+          {
+            "day_number": 5,
+            "conveyance_details": {
+              "is_required": false
+            },
+            "stay_details": {
+              "is_required": false
+            },
+            "must_do_activities": [
+              {
+                "type": "place",
+                "category": "cultural_site",
+                "name": "Shah-i-Zinda Necropolis",
+                "description": "Wander through the 'Avenue of Mausoleums', a breathtaking collection of tombs with intricate tilework."
+              },
+              {
+                "type": "place",
+                "category": "mosque",
+                "name": "Bibi-Khanym Mosque",
+                "description": "Visit the grand Bibi-Khanym Mosque, once one of the largest mosques in the Islamic world."
+              }
+            ]
+          },
+          {
+            "day_number": 6,
+            "conveyance_details": {
+              "is_required": false
+            },
+            "stay_details": {
+              "is_required": false
+            },
+            "must_do_activities": [
+              {
+                "type": "activity",
+                "category": "workshop",
+                "name": "Visit a Silk Carpet Factory",
+                "description": "Learn about the ancient art of silk carpet weaving and see artisans at work."
+              },
+              {
+                "type": "shopping",
+                "category": "market",
+                "name": "Siab Bazaar",
+                "description": "Explore the vibrant Siab Bazaar, located next to the Bibi-Khanym Mosque."
+              }
+            ]
+          },
+          {
+            "day_number": 7,
+            "conveyance_details": {
+              "is_required": false
+            },
+            "stay_details": {
+              "is_required": false
+            },
+            "must_do_activities": [
+              {
+                "type": "food",
+                "category": "cooking_class",
+                "name": "Uzbek Plov Masterclass",
+                "description": "Learn to cook the national dish, Plov, in a traditional Uzbek home."
+              }
+            ]
+          },
+          {
+            "day_number": 8,
+            "conveyance_details": {
+              "is_required": true,
+              "travel_timing": "morning",
+              "from_city": "Samarkand",
+              "to_city": "Tashkent"
+            },
+            "stay_details": {
+              "is_required": true,
+              "city": "Tashkent",
+              "check_in_day": "8",
+              "check_out_day": "9"
+            },
+            "must_do_activities": [
+              {
+                "type": "transport",
+                "category": "train",
+                "name": "Return to Tashkent",
+                "description": "Take the high-speed train back to Tashkent."
+              },
+              {
+                "type": "event",
+                "category": "show",
+                "name": "Ilkhom Theatre",
+                "description": "If time permits, watch a performance at the renowned Ilkhom Theatre, one of the first independent theatres in the Soviet Union."
+              }
+            ]
+          },
+          {
+            "day_number": 9,
+            "conveyance_details": {
+              "is_required": true,
+              "travel_timing": "evening",
+              "from_city": "Tashkent",
+              "to_city": "user_location"
+            },
+            "stay_details": {
+              "is_required": false
+            },
+            "must_do_activities": [
+              {
+                "type": "transport",
+                "category": "flight",
+                "name": "Departure",
+                "description": "Depart from Tashkent."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "trip_title": "Balkan Discovery: Montenegro & Croatia",
+        "no_of_days": 8,
+        "estimated_budget": 150000,
+        "best_time_to_visit": "May to June, September to October",
+        "themes": [
+          "History",
+          "Culture",
+          "Coastal"
+        ],
+        "trip_route": [
+          {
+            "place_name": "Kotor",
+            "address": "Kotor, Montenegro",
+            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJG8lwPQYzTBMRBpMuIV7xc3o",
+            "lat": "42.424662",
+            "long": "18.771234",
+            "photos": [
+              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6Kwtb2_DikRvIngDFL8t4umhhNCHe-ANVSMPLGNFrD83bsibjCgHmQGp5EbtSGsLdmT5vtVdSEgNSKfs_KhnPDnviZYNx6FZ3U9qS6Vqv3_mtira-oM2Wj0lwGah0m7oj2GUJo9YcPNl-MRf92wMwPzU3XGM0yJZ72NrIx2xbISQqjw4Tw4mxeJUxGnGr9BcOT8yeoirL7aGdQm5t-ytf0aHwhyXuT-o4Ezsn94I68Tbqjn3I794FgEiHOYL97FC4pvgQQDcNsKitG60fnz_UImIZVvZXg6qvYdRVKJKEa9H-OKsyP7GMAJ93mP9OIJd4RS3kCHNtFvYBJUzabxUtDAha0o46YQOAGrMfHcZXbIU_ojOWj2rq7aoVezxFIgP6Jjfw0mi5p0UWuEbsk4RD0Je65H8tvYzczfMz-Ibq1Ns3SllfDh6qMNCmBGUuEZ4oHudtGQnEt3AIEreqtOXYAjopkWlj7hEl-U7dJUr7a8uamWGucuBkGLEtg97qSoKV_3RZgt11Pz3I5DNHABO-e5d2Rg9MYJcNKB2i_oGrcRd91mbY2wCQjBP17mdY2B0jSbk9D&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+            ],
+            "place_id": "ChIJG8lwPQYzTBMRBpMuIV7xc3o"
+          },
+          {
+            "place_name": "Dubrovnik",
+            "address": "Dubrovnik, Croatia",
+            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJfeg1CKKLSxMRANUrhlCtAAQ",
+            "lat": "42.65066059999999",
+            "long": "18.0944238",
+            "photos": [
+              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU5qSdVhtEAEmS1RfddJ4kmO6zIk0HpGsCYAgSS1ga-w6iP8IW0nHNZRg2GRPmT5-4ATJM8-wwb_de0DMYB7p4KTFvt5wP-yP5h3tixMA0jNj9XlsXjq4iljp4UKYPcGkrEozvPGBDPgIDLjJapcMxNPb8cnecR_UDIl4AyrCBxHIymcWLY0URf7q7H_Qte51MXxcMJGLjUzQf6XK_TRhV1LctgnJhjUtxRCejNS1-pFi6S7Tw6UeikjzViFbAxfiFkslDZiw5_aGeMc7bt93NRliB3UEV-Js6FhSr9tBnquy66UMA_iIIZstGDREuioj1waei_Ntc3GS_YNUbcUpCD9DPc5oykJmAZAm72LrWPHrWB9FeK3b3eGHjgeskMycIITk4I6P7N5M8GGFHW0nMqPQKaWts9xS5mJFQTkQnBtbh24R4rE_7NeBcqKaziVFtfLYP5xgXX7ucjoqgwwAih4nUW3rPO-PVktpsmAs_CrlwRJ4jgPJoHnA8UiBw1SXgPKibd8iS2rMdO_p5EK95fBwn3DIjYJp-dJTtz1KIL5-tKtFbdvsmXg1nYUX6zunOhKQZk6&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+            ],
+            "place_id": "ChIJfeg1CKKLSxMRANUrhlCtAAQ"
+          }
+        ],
+        "day_wise_plan": [
+          {
+            "day_number": 1,
+            "conveyance_details": {
+              "is_required": true,
+              "travel_timing": "morning",
+              "from_city": "user_location",
+              "to_city": "Kotor"
+            },
+            "stay_details": {
+              "is_required": true,
+              "city": "Kotor",
+              "check_in_day": "1",
+              "check_out_day": "5"
+            },
+            "must_do_activities": [
+              {
+                "type": "place",
+                "category": "cultural_site",
+                "name": "Travel to Kotor and Explore the Old Town",
+                "description": "Travel from Albania to Kotor. After checking in, get lost in the labyrinthine streets of Kotor's UNESCO-listed Old Town."
+              }
+            ]
+          },
+          {
+            "day_number": 2,
+            "conveyance_details": {
+              "is_required": false
+            },
+            "stay_details": {
+              "is_required": false
+            },
+            "must_do_activities": [
+              {
+                "type": "activity",
+                "category": "trekking",
+                "name": "Hike the Ladder of Kotor",
+                "description": "For a challenging but rewarding experience, hike the ancient Ladder of Kotor trail for breathtaking views of the bay."
+              },
+              {
+                "type": "place",
+                "category": "fort",
+                "name": "San Giovanni Fortress",
+                "description": "Climb the 1350 steps to the San Giovanni Fortress for the iconic panoramic view of Kotor and its bay."
+              }
+            ]
+          },
+          {
+            "day_number": 3,
+            "conveyance_details": {
+              "is_required": false
+            },
+            "stay_details": {
+              "is_required": false
+            },
+            "must_do_activities": [
+              {
+                "type": "activity",
+                "category": "boating",
+                "name": "Boat Trip to Our Lady of the Rocks",
+                "description": "Take a boat trip on the Bay of Kotor to the man-made islet of Our Lady of the Rocks and the charming town of Perast."
+              },
+              {
+                "type": "food",
+                "category": "restaurant",
+                "name": "Dine in Perast",
+                "description": "Enjoy a meal at a seaside restaurant in the peaceful, historic town of Perast."
+              }
+            ]
+          },
+          {
+            "day_number": 4,
+            "conveyance_details": {
+              "is_required": false
+            },
+            "stay_details": {
+              "is_required": false
+            },
+            "must_do_activities": [
+              {
+                "type": "activity",
+                "category": "adventure",
+                "name": "Sea Kayaking in the Bay",
+                "description": "Explore the beautiful Bay of Kotor from a different perspective on a sea kayaking tour."
+              },
+              {
+                "type": "shopping",
+                "category": "market",
+                "name": "Kotor Market",
+                "description": "Visit the local market outside the Old Town walls to sample local produce, cheese, and prosciutto."
+              }
+            ]
+          },
+          {
+            "day_number": 5,
+            "conveyance_details": {
+              "is_required": true,
+              "travel_timing": "morning",
+              "from_city": "Kotor",
+              "to_city": "Dubrovnik"
+            },
+            "stay_details": {
+              "is_required": true,
+              "city": "Dubrovnik",
+              "check_in_day": "5",
+              "check_out_day": "8"
+            },
+            "must_do_activities": [
+              {
+                "type": "place",
+                "category": "cultural_site",
+                "name": "Travel to Dubrovnik and Walk the City Walls",
+                "description": "Take a scenic bus ride to Dubrovnik. After checking in, walk the famous city walls for stunning views of the Old Town and the Adriatic Sea."
+              }
+            ]
+          },
+          {
+            "day_number": 6,
+            "conveyance_details": {
+              "is_required": false
+            },
+            "stay_details": {
+              "is_required": false
+            },
+            "must_do_activities": [
+              {
+                "type": "activity",
+                "category": "adventure",
+                "name": "Sea Kayaking around Lokrum Island",
+                "description": "Join a sea kayaking tour to explore the caves and beaches around Dubrovnik and the nearby Lokrum Island."
+              },
+              {
+                "type": "place",
+                "category": "bar",
+                "name": "Buza Bar",
+                "description": "Have a drink at a 'hole-in-the-wall' cliff bar with amazing sea views."
+              }
+            ]
+          },
+          {
+            "day_number": 7,
+            "conveyance_details": {
+              "is_required": false
+            },
+            "stay_details": {
+              "is_required": false
+            },
+            "must_do_activities": [
+              {
+                "type": "transport",
+                "category": "cable_car",
+                "name": "Dubrovnik Cable Car",
+                "description": "Take the cable car up Mount Srđ for breathtaking panoramic views of Dubrovnik and the surrounding islands, especially at sunset."
+              },
+              {
+                "type": "event",
+                "category": "walking_tour",
+                "name": "Game of Thrones Tour",
+                "description": "For fans of the show, take a walking tour to discover the filming locations of 'King's Landing'."
+              }
+            ]
+          },
+          {
+            "day_number": 8,
+            "conveyance_details": {
+              "is_required": true,
+              "travel_timing": "morning",
+              "from_city": "Dubrovnik",
+              "to_city": "user_location"
+            },
+            "stay_details": {
+              "is_required": false
+            },
+            "must_do_activities": [
+              {
+                "type": "transport",
+                "category": "bus",
+                "name": "Departure",
+                "description": "Enjoy a final Croatian breakfast before traveling back to Albania."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,218 @@
+{
+    "trip_title": "Himalayan Spiritual and Adventure Quest",
+    "no_of_days": 8,
+    "estimated_budget": 120000,
+    "best_time_to_visit": "September to June",
+    "themes": [
+        "Spiritual",
+        "Adventure",
+        "Nature"
+    ],
+    "trip_route": [
+        {
+            "place_name": "Delhi",
+            "address": "Delhi, India",
+            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJLbZ-NFv9DDkRQJY4FbcFcgM",
+            "lat": "28.7040592",
+            "long": "77.10249019999999",
+            "photos": [
+                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU4P6BXoWglpxEuEWc7Zx1yIvb_RrvTQYYXuKtcIFlVM_VkxUPsoB_HaqZ4iSid37DcbkQ-BuYuaAYquHiM7cTKGhWiKq5GzMsssFTbBau8y0vjZ8FnWIvMMYhl85lx_ZjZSCk-byPkDYtCmg3Ne41jHNK3R5V9hptcPUGlO9cmWNEp3ROwI6688WlS9IaGevmz8e7ajkpv-aKKSF-xBqEAn1EOBxC8kJ9R6Xs83hd07Wkv9ZKxtC4AymNzI8y-3Cn1kQQep0YqUATdHjtui1EW50nbyBuxAc5OFN1XvYXquk6X6uwqHVJGjbJu0YBux_fE20iG8wAXgBulTuz5q7GPwTvqQ5oN5uSUGrxfOFsSWqeXk_i89DJmROJw60E4NFLQrFbACWROwOh5AXNJ1R-nRqG9LYyrPQvA4sUwOds-TJMnd7m3p5ixTJtAdK2GIh1vDFqjJ1jVhAR0WA2ls3M74QvZGjeOgz5gCFW1OU-l4bTW48F_hS8q_wx0IU-t8_gDOpSK1G9brHKYeWqDvMqRNdADnkyIyiSqoZhMh2b74bzesgA7ktZxcJp2FLWQoGQc0tyVqyJv28Q&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+            ],
+            "place_id": "ChIJLbZ-NFv9DDkRQJY4FbcFcgM"
+        },
+        {
+            "place_name": "Rishikesh",
+            "address": "Rishikesh, Uttarakhand, India",
+            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJEfGTz2c-CTkR_huUb0qAeMw",
+            "lat": "30.1157619",
+            "long": "78.28530169999999",
+            "photos": [
+                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU4fFFJl4ESLhRRGbESfWRTmOONCJ0ePPGHgrTXR3acrwfbg2vTrHngIy7ScVrdualmMd1yDKKepxZ1iKu6JC4sOPinp1F5oFkeP8ClC9I-_XNQg5VX1kmEXXn5z8A-4EN2a1iwpRDMuAg_2pSI5woNPLAT1NtcixlvZIiJ-iBfyVTTSTaOr0L8AgyS5Hw8RFcH7I1lNmKACFhJH93I6rdaxkwxvBNwdRl2x1_170DGTHDFYgIWTsA6HbDDQwVMx31Grzo1wMimxBrSaSixoWUqiXfbEtPgdYmc45jk7tsUTwr4gCtS92PTS5-LSppM6aZw3QiUGDh0xibMI1LBLfICQbTY5LPG_JrMdipRBdP_TKDJbyV7oZLJUtSugx3IHSEICdbCGxoO9D2ttq_imfy-eXJKwatzsxTKleG5t2Q3OwYInvJbKqzdFuKHwTq0BwAio6gY8Vh1H7gJFw2eleQ9xEkw03GqY3H5ZkiVLhdEsBG5OmwoTR2Oap8DwtrXEsKviRPA-x_QLDoqNrachpzt9AeMxRQBLf9g0tqx9Za9g8EdT_6HXBQQhnHs28fRYPTJW4w&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+            ],
+            "place_id": "ChIJEfGTz2c-CTkR_huUb0qAeMw"
+        }
+    ],
+    "day_wise_plan": [
+        {
+            "day_number": 1,
+            "conveyance_details": {
+                "is_required": true,
+                "travel_timing": "evening",
+                "from_city": "user_location",
+                "to_city": "Delhi"
+            },
+            "stay_details": {
+                "is_required": true,
+                "city": "Delhi",
+                "check_in_day": "1",
+                "check_out_day": "2"
+            },
+            "must_do_activities": [
+                {
+                    "type": "place",
+                    "category": "cultural_site",
+                    "name": "Arrive in Delhi",
+                    "description": "Arrive at Indira Gandhi International Airport (DEL), transfer to your hotel and rest."
+                }
+            ]
+        },
+        {
+            "day_number": 2,
+            "conveyance_details": {
+                "is_required": true,
+                "travel_timing": "morning",
+                "from_city": "Delhi",
+                "to_city": "Rishikesh"
+            },
+            "stay_details": {
+                "is_required": true,
+                "city": "Rishikesh",
+                "check_in_day": "2",
+                "check_out_day": "7"
+            },
+            "must_do_activities": [
+                {
+                    "type": "activity",
+                    "category": "wellness",
+                    "name": "Settle into Rishikesh",
+                    "description": "Take a scenic drive to Rishikesh. Check into a wellness ashram or a hotel by the Ganges. Attend the evening Ganga Aarti at Triveni Ghat."
+                }
+            ]
+        },
+        {
+            "day_number": 3,
+            "conveyance_details": {
+                "is_required": false
+            },
+            "stay_details": {
+                "is_required": false
+            },
+            "must_do_activities": [
+                {
+                    "type": "wellness",
+                    "category": "yoga",
+                    "name": "Yoga and Meditation",
+                    "description": "Start your day with a sunrise yoga and meditation session overlooking the Ganges."
+                },
+                {
+                    "type": "place",
+                    "category": "cultural_site",
+                    "name": "Explore Ashrams",
+                    "description": "Visit famous ashrams like Parmarth Niketan and Sivananda Ashram to understand the spiritual roots of Rishikesh."
+                }
+            ]
+        },
+        {
+            "day_number": 4,
+            "conveyance_details": {
+                "is_required": false
+            },
+            "stay_details": {
+                "is_required": false
+            },
+            "must_do_activities": [
+                {
+                    "type": "activity",
+                    "category": "adventure",
+                    "name": "White Water Rafting",
+                    "description": "Experience the thrill of rafting through the rapids of the Ganges river."
+                },
+                {
+                    "type": "activity",
+                    "category": "adventure",
+                    "name": "Cliff Jumping",
+                    "description": "For an extra dose of adrenaline, take a leap from the cliffs into the holy river."
+                }
+            ]
+        },
+        {
+            "day_number": 5,
+            "conveyance_details": {
+                "is_required": false
+            },
+            "stay_details": {
+                "is_required": false
+            },
+            "must_do_activities": [
+                {
+                    "type": "activity",
+                    "category": "trekking",
+                    "name": "Trek to Neer Garh Waterfall",
+                    "description": "Hike to the beautiful Neer Garh waterfall, a perfect spot for relaxation and photography."
+                },
+                {
+                    "type": "place",
+                    "category": "cafe",
+                    "name": "Relax at a Riverside Cafe",
+                    "description": "Spend the evening at a cafe, enjoying the serene views of the Laxman Jhula bridge and the river."
+                }
+            ]
+        },
+        {
+            "day_number": 6,
+            "conveyance_details": {
+                "is_required": false
+            },
+            "stay_details": {
+                "is_required": false
+            },
+            "must_do_activities": [
+                {
+                    "type": "activity",
+                    "category": "adventure",
+                    "name": "Bungee Jumping or Giant Swing",
+                    "description": "Challenge yourself with India's highest bungee jump or a giant swing for an unforgettable thrill."
+                },
+                {
+                    "type": "shopping",
+                    "category": "market",
+                    "name": "Shopping at Laxman Jhula Market",
+                    "description": "Explore the local market for spiritual souvenirs, books, and traditional clothing."
+                }
+            ]
+        },
+        {
+            "day_number": 7,
+            "conveyance_details": {
+                "is_required": true,
+                "travel_timing": "morning",
+                "from_city": "Rishikesh",
+                "to_city": "Delhi"
+            },
+            "stay_details": {
+                "is_required": true,
+                "city": "Delhi",
+                "check_in_day": "7",
+                "check_out_day": "8"
+            },
+            "must_do_activities": [
+                {
+                    "type": "place",
+                    "category": "cultural_site",
+                    "name": "Return to Delhi & Explore",
+                    "description": "Travel back to Delhi. In the evening, explore the Hauz Khas Village, known for its vibrant nightlife and historical ruins."
+                }
+            ]
+        },
+        {
+            "day_number": 8,
+            "conveyance_details": {
+                "is_required": true,
+                "travel_timing": "evening",
+                "from_city": "Delhi",
+                "to_city": "user_location"
+            },
+            "stay_details": {
+                "is_required": false
+            },
+            "must_do_activities": [
+                {
+                    "type": "transport",
+                    "category": "flight",
+                    "name": "Departure",
+                    "description": "Enjoy a final Indian breakfast before heading to the airport for your flight back home."
+                }
+            ]
+        }
+    ]
+}
