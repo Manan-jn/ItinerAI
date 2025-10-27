@@ -1,4 +1,5 @@
 import json
+from google.adk.models import LlmRequest
 from google.adk.agents.callback_context import CallbackContext
 from google.genai import types
 from typing import Optional, Any
@@ -36,6 +37,16 @@ async def logger_before_agent(callback_context: CallbackContext) -> None:
         print(f"Agent {agent_name} with invocation id {invocation_id} is starting execution.")
     except Exception as e:
         print("Error in logger_before_agent: ", str(e))
+        
+async def logger_before_llm(callback_context: CallbackContext, llm_request: LlmRequest) -> None:
+    try:
+        agent_name = callback_context.agent_name
+        invocation_id = callback_context.invocation_id
+        instructions = llm_request.config.system_instruction
+        print(f"Agent {agent_name} with invocation id {invocation_id} is starting execution.")
+        print(f"Instructions: {instructions}")
+    except Exception as e:
+        print("Error in logger_before_llm: ", str(e))
 
 async def modify_output_after_agent(callback_context: CallbackContext) -> Optional[types.Content]:
     try:
