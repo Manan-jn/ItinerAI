@@ -24,6 +24,7 @@ import { Sidebar } from "../../components/flights-page/Sidebar";
 import { DashboardContent } from "../../components/flights-page/DashboardContent";
 import { FlightsContent } from "../../components/flights-page/FlightsContent";
 import { TripLoader } from "../../components/flights-page/TripLoader";
+import { EndResponseLoader } from "../../components/flights-page/EndResponseLoader";
 import { ChatNavbar } from "../../components/flights-page/ChatNavbar";
 
 type SectionType =
@@ -76,6 +77,8 @@ export default function FlightsPageAuthenticated() {
   const [originalTrips, setOriginalTrips] = useState<any[]>([]); // Store original trip data for memory API
   const [isParsingTrips, setIsParsingTrips] = useState(false);
   const [showTripLoader, setShowTripLoader] = useState(false);
+  const [showEndLoader, setShowEndLoader] = useState(false);
+  const [testEndResponse, setTestEndResponse] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const flashcardsRef = useRef<FlashcardsWidgetRef>(null);
@@ -199,6 +202,17 @@ export default function FlightsPageAuthenticated() {
       }, 100);
     }
   }, [messages, isLoading]);
+
+  // Test function to simulate end response
+  const simulateEndResponse = (): any => {
+    return {
+      response_type: "end",
+      message: {
+        message: "Great! Now let's finalize your travel dates to complete your booking.",
+        additional_data: {}
+      }
+    };
+  };
 
   // Simple API call function
   const makeAPICall = async (currentInput: string): Promise<any> => {
@@ -414,22 +428,44 @@ export default function FlightsPageAuthenticated() {
         }
         setIsFirstMessage(false);
       }
-      const data = await makeAPICall(currentInput);
+      
+      // Check if we should simulate end response for testing
+      const data = testEndResponse ? simulateEndResponse() : await makeAPICall(currentInput);
+      
+      // Reset test flag after use
+      if (testEndResponse) {
+        setTestEndResponse(false);
+      }
 
       // Check if response contains trip suggestions
       let parsedTripSuggestions: any[] = [];
       let shouldShowPlaces = false;
       let messageContent = "";
 
+      // Enhanced trip detection - Check for trip response at ANY level
+      const isTripResponse =
+        data.response_type === "trip" ||
+        (data.message &&
+          typeof data.message === "object" &&
+          data.message.response_type === "trip");
+
+      // Enhanced end response detection - Check for end response at ANY level
+      const isEndResponse =
+        data.response_type === "end" ||
+        (data.message &&
+          typeof data.message === "object" &&
+          data.message.response_type === "end");
+
       try {
         console.log("Full API response data:", JSON.stringify(data, null, 2));
 
-        // Enhanced trip detection - Check for trip response at ANY level
-        const isTripResponse =
-          data.response_type === "trip" ||
-          (data.message &&
-            typeof data.message === "object" &&
-            data.message.response_type === "trip");
+        // Debug logging for end response detection
+        console.log("🔍 End response detection:", {
+          root_response_type: data.response_type,
+          nested_response_type: data.message?.response_type,
+          isEndResponse: isEndResponse,
+          full_data_structure: JSON.stringify(data, null, 2)
+        });
 
         // Show trip loader IMMEDIATELY for ANY trip response detected
         if (isTripResponse) {
@@ -453,8 +489,30 @@ export default function FlightsPageAuthenticated() {
               setShowTripLoader(true);
             }
           }, 100);
+        } 
+        // Show end loader IMMEDIATELY for ANY end response detected
+        else if (isEndResponse) {
+          console.log("🎯 End response detected - showing end loader immediately");
+          console.log("🎯 End response data:", {
+            root_response_type: data.response_type,
+            nested_response_type: data.message?.response_type,
+          });
+
+          // Force end loader to show immediately
+          setShowEndLoader(true);
+
+          // Safety check - ensure loader stays visible for minimum duration
+          setTimeout(() => {
+            console.log("🎯 Safety check: Ensuring end loader is still visible");
+            if (!showEndLoader) {
+              console.log(
+                "🎯 Safety: End loader was hidden prematurely, re-showing"
+              );
+              setShowEndLoader(true);
+            }
+          }, 100);
         } else {
-          console.log("❌ No trip response detected", {
+          console.log("❌ No trip or end response detected", {
             root_response_type: data.response_type,
             nested_response_type: data.message?.response_type,
           });
@@ -462,7 +520,12 @@ export default function FlightsPageAuthenticated() {
 
         // Handle different response structures
         // Case 1: Response type at root level (new format from temp.json)
-        if (data.response_type === "trip" && data.message) {
+        if (data.response_type === "end" && data.message) {
+          console.log("Detected end response at root level");
+          messageContent = data.message.message || data.message || "Let's finalize your travel dates";
+        }
+        // Case 2: Trip response at root level (new format from temp.json)
+        else if (data.response_type === "trip" && data.message) {
           console.log(
             "Detected trip response at root level (temp.json format)"
           );
@@ -488,7 +551,7 @@ export default function FlightsPageAuthenticated() {
             console.log("Validated trip suggestions:", parsedTripSuggestions);
           }
         }
-        // Case 2: Response with trip_suggestions wrapper
+        // Case 3: Response with trip_suggestions wrapper
         else if (data.response_type === "trip" && data.trip_suggestions) {
           console.log("Detected trip response with trip_suggestions wrapper");
 
@@ -516,7 +579,7 @@ export default function FlightsPageAuthenticated() {
             console.log("Validated trip suggestions:", parsedTripSuggestions);
           }
         }
-        // Case 3: Response nested under data.message (old format)
+        // Case 4: Response nested under data.message (old format)
         else if (data.message && typeof data.message === "object") {
           const messageData = data.message;
 
@@ -524,6 +587,9 @@ export default function FlightsPageAuthenticated() {
 
           if (messageData.response_type === "text" && messageData.message) {
             console.log("Detected text response");
+            messageContent = messageData.message;
+          } else if (messageData.response_type === "end" && messageData.message) {
+            console.log("Detected end response in nested format");
             messageContent = messageData.message;
           } else if (messageData.response_type === "trip") {
             console.log("Detected trip response in nested format");
@@ -588,11 +654,11 @@ export default function FlightsPageAuthenticated() {
             messageContent = messageData.message || JSON.stringify(messageData);
           }
         }
-        // Case 4: String response (old format)
+        // Case 5: String response (old format)
         else if (typeof data.message === "string") {
           messageContent = data.message;
         }
-        // Case 5: Fallback
+        // Case 6: Fallback
         else {
           messageContent =
             "Sorry, I couldn't process your request. Please try again.";
@@ -701,10 +767,51 @@ export default function FlightsPageAuthenticated() {
             setIsParsingTrips(false);
           }, minLoaderDuration);
         }
+      } 
+      // Handle end response detection and flow
+      else if (isEndResponse) {
+        console.log("🎯 End response detected - showing EndResponseLoader");
+        console.log("🎯 End response data:", {
+          root_response_type: data.response_type,
+          nested_response_type: data.message?.response_type,
+          message_content: messageContent
+        });
+        
+        const loaderStartTime = Date.now();
+        const minLoaderDuration = 4000; // Minimum 4 seconds display time
+
+        console.log("🎯 Starting end loader for 4 seconds minimum");
+
+        // Wait for minimum loader duration
+        setTimeout(() => {
+          console.log("🎯 End loader minimum duration completed, hiding loader");
+
+          // Hide end loader with dissolving effect and show date selector
+          setTimeout(() => {
+            setShowEndLoader(false);
+
+            setTimeout(() => {
+              // Automatically show the date selector widget after loader dissolves
+              setShowDateSelector(true);
+              setShowFlashcards(false);
+              setShowFlights(false);
+              setShowItinerary(false);
+              setSelectedTrip(null);
+
+              // Clear selection in flashcards widget
+              if (flashcardsRef.current) {
+                flashcardsRef.current.clearSelection();
+              }
+
+              console.log("Date selector widget activated after end response");
+            }, 400); // Wait for dissolve animation
+          }, 100); // Small buffer before hiding loader
+        }, minLoaderDuration);
       } else {
-        // Non-trip response - hide loader immediately
+        // Non-trip, non-end response - hide loaders immediately
         setIsParsingTrips(false);
         setShowTripLoader(false);
+        setShowEndLoader(false);
       }
     } catch (error) {
       console.error("Error calling API:", error);
@@ -727,9 +834,10 @@ export default function FlightsPageAuthenticated() {
 
       setMessages((prev) => [...prev, errorMessage]);
 
-      // Hide loader on error
+      // Hide loaders on error
       setIsParsingTrips(false);
       setShowTripLoader(false);
+      setShowEndLoader(false);
     } finally {
       setIsLoading(false);
     }
@@ -987,6 +1095,11 @@ export default function FlightsPageAuthenticated() {
                 showItinerary={showItinerary}
                 showDateSelector={showDateSelector}
                 showDebug={showDebug}
+                testEndResponse={testEndResponse}
+                onTestEndResponseToggle={() => {
+                  setTestEndResponse(!testEndResponse);
+                  console.log("🧪 Test End Response toggled:", !testEndResponse);
+                }}
                 onFlashcardsToggle={() => {
                   if (showFlashcards) {
                     setShowFlashcards(false);
@@ -1088,6 +1201,23 @@ export default function FlightsPageAuthenticated() {
                         showTripLoader={showTripLoader}
                         duration={4000}
                       />
+                      {/* End Response Loader */}
+                      <EndResponseLoader
+                        showEndLoader={showEndLoader}
+                        duration={4000}
+                      />
+                      
+                      {/* Test Mode Indicator */}
+                      {testEndResponse && (
+                        <div className="absolute top-4 right-4 z-40 bg-orange-100 border border-orange-300 rounded-lg px-3 py-2 shadow-lg">
+                          <div className="flex items-center gap-2">
+                            <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></div>
+                            <span className="text-xs font-medium text-orange-700">
+                              🧪 Test Mode: End Response Active
+                            </span>
+                          </div>
+                        </div>
+                      )}
                       <div className="max-w-4xl mx-auto h-full">
                         {showFlights ? (
                           <div className="h-full flex flex-col relative">
@@ -1331,7 +1461,9 @@ export default function FlightsPageAuthenticated() {
                           onSubmit={handleChatSubmit}
                           onKeyDown={handleKeyDown}
                           placeholder={
-                            selectedTrip && showFlashcards
+                            testEndResponse
+                              ? "🧪 TEST MODE: Next message will trigger date selector"
+                              : selectedTrip && showFlashcards
                               ? "Click send to confirm trip selection"
                               : "Ask ItinerAI"
                           }
