@@ -362,17 +362,56 @@ export default function FlightsPageAuthenticated() {
         flashcardsRef.current.clearSelection();
       }
 
-      // Add a small delay before showing assistant response
-      setTimeout(() => {
-        const assistantMessage = {
-          id: (Date.now() + 1).toString(),
-          content: `Great choice! I've saved "${selectedTrip.trip_title}" to your itinerary. What would you like to know or do next?`,
-          role: "assistant" as const,
-          timestamp: new Date(),
-        };
-        setMessages((prev) => [...prev, assistantMessage]);
-        setIsLoading(false);
-      }, 500);
+      // Make a chat API call to notify the backend about the memory update
+      console.log("Making chat API call after memory update");
+      const chatResponse = await fetch("/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: userId,
+          session_id: sessionId,
+          message: "I have updated the memory with the trip selected by the user.",
+        }),
+      });
+
+      if (!chatResponse.ok) {
+        const errorData = await chatResponse
+          .json()
+          .catch(() => ({ error: "Unknown error" }));
+        console.error("Chat API Error:", errorData);
+        throw new Error(
+          `Failed to call chat API: ${errorData.error || chatResponse.statusText}`
+        );
+      }
+
+      const chatData = await chatResponse.json();
+      console.log("Chat API response received:", chatData);
+
+      // Extract message content from chat response
+      let chatMessageContent = "";
+      
+      if (chatData.response_type === "text" && chatData.message) {
+        chatMessageContent = chatData.message.message || chatData.message;
+      } else if (chatData.message && typeof chatData.message === "object") {
+        chatMessageContent = chatData.message.message || JSON.stringify(chatData.message);
+      } else if (typeof chatData.message === "string") {
+        chatMessageContent = chatData.message;
+      } else {
+        chatMessageContent = "Trip selection updated successfully.";
+      }
+
+      // Add assistant response from chat API to messages
+      const assistantMessage = {
+        id: (Date.now() + 1).toString(),
+        content: chatMessageContent,
+        role: "assistant" as const,
+        timestamp: new Date(),
+      };
+
+      setMessages((prev) => [...prev, assistantMessage]);
+      setIsLoading(false);
     } catch (error) {
       console.error("Error updating trip memory:", error);
       setIsLoading(false);
