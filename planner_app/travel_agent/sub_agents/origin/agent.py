@@ -24,7 +24,7 @@ origin_agent = LlmAgent(
     tools=[memorize, conveyance_query_tool, AgentTool(agent=google_search_agent)],
     planner=BuiltInPlanner(
         thinking_config=ThinkingConfig(
-            include_thoughts=True
+            include_thoughts=False
         )
     )
 )

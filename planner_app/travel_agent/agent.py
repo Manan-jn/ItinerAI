@@ -30,7 +30,7 @@ root_agent = LlmAgent(
     after_agent_callback=[modify_state_after_agent],
     planner=BuiltInPlanner(
         thinking_config=ThinkingConfig(
-            include_thoughts=True,
+            include_thoughts=False,
             # thinking_budget=2048
         )
     )
@@ -49,7 +49,7 @@ conveyance_agent = LlmAgent(
     tools=[memorize, conveyance_query_tool, AgentTool(agent=google_search_agent)],
     planner=BuiltInPlanner(
         thinking_config=ThinkingConfig(
-            include_thoughts=True,
+            include_thoughts=False,
             # thinking_budget=2048
         )
     )
@@ -68,7 +68,7 @@ stay_agent = LlmAgent(
     tools=[memorize, stay_query_tool, AgentTool(agent=google_search_agent)],
     planner=BuiltInPlanner(
         thinking_config=ThinkingConfig(
-            include_thoughts=True,
+            include_thoughts=False,
             # thinking_budget=2048
         )
     )
@@ -87,7 +87,7 @@ itinerary_agent = LlmAgent(
     tools=[AgentTool(agent=google_search_agent)],
     planner=BuiltInPlanner(
         thinking_config=ThinkingConfig(
-            include_thoughts=True,
+            include_thoughts=False,
             # thinking_budget=2048
         )
     )

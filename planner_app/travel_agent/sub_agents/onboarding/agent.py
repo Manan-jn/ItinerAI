@@ -22,7 +22,7 @@ onboarding_agent = LlmAgent(
     after_agent_callback=[modify_state_after_agent],
     planner=BuiltInPlanner(
         thinking_config=ThinkingConfig(
-            include_thoughts=True
+            include_thoughts=False
         )
     ),
     generate_content_config=GenerateContentConfig(
