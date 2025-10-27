@@ -25,7 +25,7 @@ interface MemoryUpdatePayload {
     user_id: string;
     user_profile: {
       name: string;
-      date_of_birth: string;
+      age: number;
       gender: string;
       passport_nationality: string;
       allergies?: string;
@@ -36,7 +36,27 @@ interface MemoryUpdatePayload {
   };
 }
 
-// Removed calculateAge function - we'll send date_of_birth directly
+/**
+ * Calculates age from date of birth string (YYYY-MM-DD format)
+ */
+function calculateAge(dateOfBirthString: string): number {
+  try {
+    const dob = new Date(dateOfBirthString);
+    const today = new Date();
+    let age = today.getFullYear() - dob.getFullYear();
+    const monthDiff = today.getMonth() - dob.getMonth();
+    
+    // Adjust age if birthday hasn't occurred this year
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+      age--;
+    }
+    
+    return age;
+  } catch (error) {
+    console.error('Error calculating age from DOB:', error);
+    return 0;
+  }
+}
 
 /**
  * Transforms onboarding data to memory API format
@@ -50,10 +70,13 @@ function transformToMemoryFormat(
   const name = userData.displayName || 
                (userData.email ? userData.email.split('@')[0] : 'User');
   
+  // Calculate age from date of birth
+  const age = calculateAge(userData.dateOfBirth);
+  
   // Build user profile with only frontend-collected fields
   const userProfile: any = {
     name: name,
-    date_of_birth: userData.dateOfBirth,
+    age: age,
     gender: userData.gender.toLowerCase(),
     passport_nationality: userData.passportNationality,
   };

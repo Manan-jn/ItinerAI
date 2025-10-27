@@ -14,6 +14,7 @@ import OnboardingModalWhite from "../../components/auth/OnboardingModalWhite";
 import ItinerAIChatBox from "../../components/ItinerAIChatBox";
 import { getSessionId } from "../../utils/sessionManager";
 import { updateMemoryOnSessionChange } from "../../utils/memoryApi";
+import { storeSelectedTrip } from "../../utils/tripStorage";
 import {
   imageDownloader,
   extractImageUrls,
@@ -310,7 +311,11 @@ export default function FlightsPageAuthenticated() {
     setIsLoading(true);
 
     try {
-      console.log("Sending trip to memory API:", selectedTrip);
+      console.log("Sending trip to memory API and Firestore:", selectedTrip);
+
+      // Store the selected trip in Firestore first
+      await storeSelectedTrip(userId, sessionId, selectedTrip);
+      console.log("Trip stored in Firestore successfully");
 
       // Send the selected trip to memory API
       const response = await fetch("/api/memory", {
@@ -416,6 +421,65 @@ export default function FlightsPageAuthenticated() {
       console.error("Error updating trip memory:", error);
       setIsLoading(false);
       alert("Failed to save trip selection. Please try again.");
+    }
+  };
+
+  // Handle date selection from DateSelectorWidget
+  const handleDateSelection = async (selectedDate: Date) => {
+    if (!sessionId || !userId) {
+      console.error("Missing required data for date selection: sessionId or userId");
+      return;
+    }
+
+    try {
+      console.log("Date selected:", selectedDate);
+
+      // If there's a selected trip, store it with the date
+      if (selectedTrip) {
+        console.log("Storing trip with selected date:", selectedTrip);
+        await storeSelectedTrip(userId, sessionId, {
+          ...selectedTrip,
+          trip_date: selectedDate.toISOString(),
+        });
+
+        // Add a message to chat indicating date was selected
+        const userMessage = {
+          id: Date.now().toString(),
+          content: `Selected date: ${selectedDate.toLocaleDateString()} for trip: ${selectedTrip.trip_title}`,
+          role: "user" as const,
+          timestamp: new Date(),
+          metadata: {
+            selectedDate: selectedDate.toISOString(),
+            selectedTrip: selectedTrip,
+          },
+        };
+
+        setMessages((prev) => [...prev, userMessage]);
+      } else {
+        // If no trip selected, just store the date
+        console.log("Storing date without trip");
+        
+        // Add a message to chat indicating date was selected
+        const userMessage = {
+          id: Date.now().toString(),
+          content: `Selected travel date: ${selectedDate.toLocaleDateString()}`,
+          role: "user" as const,
+          timestamp: new Date(),
+          metadata: {
+            selectedDate: selectedDate.toISOString(),
+          },
+        };
+
+        setMessages((prev) => [...prev, userMessage]);
+      }
+
+      // Close date selector
+      setShowDateSelector(false);
+
+      console.log("Date selection saved successfully");
+    } catch (error) {
+      console.error("Error storing date selection:", error);
+      alert("Failed to save date selection. Please try again.");
     }
   };
 
@@ -1235,6 +1299,9 @@ export default function FlightsPageAuthenticated() {
                     <DateSelectorWidget
                       isVisible={showDateSelector}
                       onToggle={() => setShowDateSelector(false)}
+                      onDateSelected={handleDateSelection}
+                      userId={userId}
+                      sessionId={sessionId}
                     />
                   </div>
                 ) : (

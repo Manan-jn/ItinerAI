@@ -4,6 +4,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { FiChevronLeft, FiChevronRight, FiChevronDown } from "react-icons/fi";
 import { MdFlight, MdHotel } from "react-icons/md";
 import ItinerAIChatBox from "./ItinerAIChatBox";
+import { storeSelectedDate } from "../utils/tripStorage";
 import {
   fetchConveyanceData,
   fetchStayData,
@@ -19,6 +20,9 @@ import {
 interface DateSelectorWidgetProps {
   isVisible: boolean;
   onToggle: () => void;
+  onDateSelected?: (date: Date) => void;
+  userId?: string;
+  sessionId?: string;
 }
 
 interface DateInfo {
@@ -82,6 +86,9 @@ const preferredTimeOptions: PreferredTimeCard[] = [
 export default function DateSelectorWidget({
   isVisible,
   onToggle,
+  onDateSelected,
+  userId,
+  sessionId,
 }: DateSelectorWidgetProps) {
   const [chatInput, setChatInput] = useState("");
   // Set to December 2025 to match sample data
@@ -291,6 +298,32 @@ export default function DateSelectorWidget({
 
   const handleDateClick = (date: Date) => {
     setSelectedDate(date);
+  };
+
+  const handleContinueClick = async () => {
+    if (!selectedDate) {
+      console.warn("No date selected");
+      return;
+    }
+
+    try {
+      // Store date in Firestore and update memory API
+      if (userId && sessionId) {
+        console.log("Storing selected date:", selectedDate);
+        await storeSelectedDate(userId, sessionId, selectedDate);
+        console.log("Date stored successfully");
+      } else {
+        console.warn("Missing userId or sessionId for date storage");
+      }
+
+      // Call the callback if provided
+      if (onDateSelected) {
+        onDateSelected(selectedDate);
+      }
+    } catch (error) {
+      console.error("Error in handleContinueClick:", error);
+      alert("Failed to save date selection. Please try again.");
+    }
   };
 
   const handleCardClick = (cardId: string) => {
@@ -619,6 +652,20 @@ export default function DateSelectorWidget({
               isLoadingPrices ? "pointer-events-none" : ""
             }`}
           >
+            {/* Continue Button - Fixed at bottom */}
+            <div className="absolute bottom-4 right-4 z-20">
+              <button
+                onClick={handleContinueClick}
+                disabled={!selectedDate}
+                className={`px-6 py-2 rounded-lg font-semibold transition-all duration-200 ${
+                  selectedDate
+                    ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:shadow-lg hover:scale-105 cursor-pointer"
+                    : "bg-gray-300 text-gray-500 cursor-not-allowed opacity-50"
+                }`}
+              >
+                Continue
+              </button>
+            </div>
             {/* Loading overlay */}
             {isLoadingPrices && (
               <div className="absolute inset-0 bg-white/30 backdrop-blur-[1px] z-10 rounded-lg" />

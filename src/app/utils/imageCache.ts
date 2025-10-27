@@ -1,6 +1,7 @@
 /**
  * Image Cache Utility
  * Downloads and caches images from URLs to IndexedDB for offline/persistent access
+ * Gracefully falls back to direct URLs if IndexedDB is unavailable
  */
 
 const DB_NAME = "ImageCacheDB";
@@ -13,14 +14,68 @@ interface CachedImage {
   timestamp: number;
 }
 
+// Track IndexedDB availability to avoid repeated failed attempts
+let indexedDBAvailable: boolean | null = null;
+
+/**
+ * Check if IndexedDB is available in the current browser environment
+ */
+const isIndexedDBAvailable = (): boolean => {
+  // Return cached result if already checked
+  if (indexedDBAvailable !== null) {
+    return indexedDBAvailable;
+  }
+
+  try {
+    // Check if indexedDB exists and is accessible
+    if (!window.indexedDB) {
+      console.warn("IndexedDB not available (private mode or disabled)");
+      indexedDBAvailable = false;
+      return false;
+    }
+
+    // Try to open a test database to verify it actually works
+    const testRequest = window.indexedDB.open("__test__");
+    testRequest.onerror = () => {
+      console.warn("IndexedDB is blocked or unavailable");
+      indexedDBAvailable = false;
+    };
+    testRequest.onsuccess = () => {
+      indexedDBAvailable = true;
+      // Clean up test database
+      try {
+        window.indexedDB.deleteDatabase("__test__");
+      } catch (e) {
+        // Ignore cleanup errors
+      }
+    };
+
+    // Assume available for now (will be updated by handlers)
+    return true;
+  } catch (error) {
+    console.warn("Error checking IndexedDB availability:", error);
+    indexedDBAvailable = false;
+    return false;
+  }
+};
+
 /**
  * Initialize IndexedDB
  */
 const openDB = (): Promise<IDBDatabase> => {
   return new Promise((resolve, reject) => {
+    // Check availability first
+    if (!isIndexedDBAvailable()) {
+      reject(new Error("IndexedDB is not available"));
+      return;
+    }
+
     const request = indexedDB.open(DB_NAME, DB_VERSION);
 
-    request.onerror = () => reject(request.error);
+    request.onerror = () => {
+      indexedDBAvailable = false;
+      reject(request.error);
+    };
     request.onsuccess = () => resolve(request.result);
 
     request.onupgradeneeded = (event) => {
@@ -62,21 +117,33 @@ const saveImageToDB = async (
   url: string,
   data: string
 ): Promise<void> => {
-  const db = await openDB();
-  return new Promise((resolve, reject) => {
-    const transaction = db.transaction([STORE_NAME], "readwrite");
-    const store = transaction.objectStore(STORE_NAME);
+  try {
+    // Skip if IndexedDB is not available
+    if (!isIndexedDBAvailable()) {
+      console.debug("IndexedDB not available, skipping cache save");
+      return;
+    }
 
-    const cachedImage: CachedImage = {
-      url,
-      data,
-      timestamp: Date.now(),
-    };
+    const db = await openDB();
+    return new Promise((resolve, reject) => {
+      const transaction = db.transaction([STORE_NAME], "readwrite");
+      const store = transaction.objectStore(STORE_NAME);
 
-    const request = store.put(cachedImage);
-    request.onsuccess = () => resolve();
-    request.onerror = () => reject(request.error);
-  });
+      const cachedImage: CachedImage = {
+        url,
+        data,
+        timestamp: Date.now(),
+      };
+
+      const request = store.put(cachedImage);
+      request.onsuccess = () => resolve();
+      request.onerror = () => reject(request.error);
+    });
+  } catch (error) {
+    console.debug("Could not save image to cache, will use direct URL:", error);
+    // Don't throw - just skip caching
+    return;
+  }
 };
 
 /**
@@ -84,6 +151,11 @@ const saveImageToDB = async (
  */
 const getImageFromDB = async (url: string): Promise<string | null> => {
   try {
+    // Skip if IndexedDB is not available
+    if (!isIndexedDBAvailable()) {
+      return null;
+    }
+
     const db = await openDB();
     return new Promise((resolve, reject) => {
       const transaction = db.transaction([STORE_NAME], "readonly");
@@ -97,7 +169,7 @@ const getImageFromDB = async (url: string): Promise<string | null> => {
       request.onerror = () => reject(request.error);
     });
   } catch (error) {
-    console.error(`Error getting image from DB:`, error);
+    console.debug(`IndexedDB unavailable, skipping cache lookup:`, error);
     return null;
   }
 };
@@ -119,6 +191,11 @@ export const isImageCached = async (url: string): Promise<boolean> => {
  */
 export const getCachedImage = async (url: string): Promise<string> => {
   try {
+    // If IndexedDB is not available, just return the original URL
+    if (!isIndexedDBAvailable()) {
+      return url;
+    }
+
     // Try to get from cache first
     const cached = await getImageFromDB(url);
     if (cached) {
@@ -130,7 +207,7 @@ export const getCachedImage = async (url: string): Promise<string> => {
     await saveImageToDB(url, data);
     return data;
   } catch (error) {
-    console.error(`Error getting cached image:`, error);
+    console.debug(`Error getting cached image, using direct URL:`, error);
     // Return the original URL as fallback
     return url;
   }
@@ -149,6 +226,18 @@ export const preloadImages = async (
   let failed = 0;
   const errors: string[] = [];
 
+  // If IndexedDB is not available, skip preloading entirely
+  if (!isIndexedDBAvailable()) {
+    console.debug("IndexedDB not available, skipping image preloading");
+    // Report all as successful since we're just using direct URLs
+    for (let i = 0; i < total; i++) {
+      if (onProgress) {
+        onProgress(i + 1, total);
+      }
+    }
+    return { successful: total, failed: 0, errors: [] };
+  }
+
   for (let i = 0; i < urls.length; i++) {
     const url = urls[i];
     try {
@@ -163,7 +252,7 @@ export const preloadImages = async (
     } catch (error) {
       failed++;
       errors.push(`${url}: ${error}`);
-      console.error(`Failed to preload image ${url}:`, error);
+      console.debug(`Failed to preload image ${url}:`, error);
     }
 
     // Report progress
