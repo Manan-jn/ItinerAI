@@ -14,6 +14,7 @@ import {
 // Component imports
 import { FlashcardSlide } from "./flashcards/FlashcardSlide";
 import { TripDetailsModal } from "./flashcards/TripDetailsModal";
+import { TripExpandedView } from "./flashcards/TripExpandedView";
 import { PhotoGallery } from "./flashcards/PhotoGallery";
 import { SuggestionPanel } from "./flashcards/SuggestionPanel";
 import { FlashcardsStyles } from "./flashcards/FlashcardsStyles";
@@ -27,11 +28,11 @@ import {
 // Helper imports
 import { isValidImageUrl, getTripImage } from "./flashcards/imageHelpers";
 import { buildExtendedTrips } from "./flashcards/scrollHelpers";
-// Import trip data from places.json
-import placesData from "../../../places.json";
+// Import trip data from final_response.json
+import finalResponseData from "../../../final_response.json";
 
 // Extract trips from the imported data
-const tripsData: TripInfo[] = placesData.trip_suggestions.trips.map(
+const tripsData: TripInfo[] = finalResponseData.message.trips.map(
   (trip: any) => ({
     ...trip,
     image: getTripImage(trip),
@@ -144,15 +145,15 @@ const FlashcardsWidget = forwardRef<FlashcardsWidgetRef, FlashcardsWidgetProps>(
       });
     }, [trips]);
 
-    // Preload all images from places.json on component mount
+    // Preload all images from final_response.json on component mount
     React.useEffect(() => {
       const preloadAllImages = async () => {
         try {
           console.log("Starting image preloading...");
           setIsLoadingImages(true);
 
-          // Extract all image URLs from places.json
-          const imageUrls = extractImageUrlsFromPlacesData(placesData);
+          // Extract all image URLs from final_response.json
+          const imageUrls = extractImageUrlsFromPlacesData(finalResponseData);
           console.log(`Found ${imageUrls.length} images to preload`);
 
           // Preload images in background without UI overlay
@@ -789,15 +790,9 @@ const FlashcardsWidget = forwardRef<FlashcardsWidgetRef, FlashcardsWidgetProps>(
 
         {/* Modal for expanded trip details */}
         {isModalOpen && activeSlide !== null && (
-          <TripDetailsModal
-            trip={trips[activeSlide]}
+          <TripExpandedView
+            trip={trips[activeSlide] as any}
             onClose={handleCloseModal}
-            onPhotoClick={handlePhotoClick}
-            onAddActivity={() => setSuggestionPanelOpen(true)}
-            onRemoveActivity={(activityName) =>
-              console.log("Remove activity:", activityName)
-            }
-            cachedImageUrls={cachedImageUrls}
           />
         )}
 

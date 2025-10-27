@@ -207,7 +207,8 @@ export const extractImageUrlsFromPlacesData = (placesData: any): string[] => {
   const urls = new Set<string>();
 
   try {
-    const trips = placesData?.trip_suggestions?.trips || [];
+    // Support both old and new JSON structures
+    const trips = placesData?.message?.trips || placesData?.trip_suggestions?.trips || [];
     
     trips.forEach((trip: any) => {
       // Extract from trip_route (new structure)

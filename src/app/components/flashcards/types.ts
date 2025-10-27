@@ -14,8 +14,20 @@ export interface TripInfo {
 
 export interface DayPlan {
   day_number: number;
-  cities: CityInfo[];
+  cities?: CityInfo[]; // Legacy format
   must_do_activities: Activity[];
+  conveyance_details?: {
+    is_required: boolean;
+    travel_timing?: string;
+    from_city?: string;
+    to_city?: string;
+  };
+  stay_details?: {
+    is_required: boolean;
+    city?: string;
+    check_in_day?: string;
+    check_out_day?: string;
+  };
 }
 
 export interface CityInfo {
@@ -40,6 +52,7 @@ export interface PlaceInfo {
 
 export interface Activity {
   type: string;
+  category?: string;
   name: string;
   description: string;
 }

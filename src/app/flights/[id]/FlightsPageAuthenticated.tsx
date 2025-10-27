@@ -987,6 +987,8 @@ export default function FlightsPageAuthenticated() {
             day_number: day.day_number,
             cities: cities,
             must_do_activities: day.must_do_activities || [],
+            conveyance_details: day.conveyance_details, // Include original conveyance details
+            stay_details: day.stay_details, // Include original stay details
           };
         }) || [];
 
@@ -994,13 +996,15 @@ export default function FlightsPageAuthenticated() {
         `Transformed ${transformedDayPlan.length} days for trip ${tripIdx + 1}`
       );
 
-      // Return transformed trip with theme instead of themes
+      // Return transformed trip with theme instead of themes AND trip_route
       const transformed = {
         trip_title: trip.trip_title,
         no_of_days: trip.no_of_days,
         estimated_budget: trip.estimated_budget,
         best_time_to_visit: trip.best_time_to_visit,
         theme: trip.themes || trip.theme || [], // Handle both 'themes' and 'theme'
+        themes: trip.themes || trip.theme || [], // Include both for compatibility
+        trip_route: trip.trip_route || [], // CRITICAL: Include trip_route for photos and map
         day_wise_plan: transformedDayPlan,
       };
 
@@ -1010,6 +1014,8 @@ export default function FlightsPageAuthenticated() {
       console.log("  - estimated_budget:", transformed.estimated_budget);
       console.log("  - best_time_to_visit:", transformed.best_time_to_visit);
       console.log("  - theme:", transformed.theme);
+      console.log("  - themes:", transformed.themes);
+      console.log("  - trip_route length:", transformed.trip_route?.length || 0);
       console.log(
         "  - day_wise_plan length:",
         transformed.day_wise_plan.length

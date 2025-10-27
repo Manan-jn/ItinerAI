@@ -99,7 +99,7 @@ export function TripDetailsModal({
                   <div className="day-content">
                     {/* City Cards with Images */}
                     <div className="day-cities-section">
-                      {day.cities.map((city, cityIdx) => (
+                      {(day.cities || []).map((city, cityIdx) => (
                         <React.Fragment key={cityIdx}>
                           {cityIdx > 0 && (
                             <div className="city-divider">
