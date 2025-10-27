@@ -15,6 +15,9 @@ import { MdFlight, MdTrain, MdDirectionsBus } from "react-icons/md";
 interface FlightsWidgetProps {
   isVisible: boolean;
   onToggle: () => void;
+  initialFromCity?: string;
+  initialToCity?: string;
+  onContinue?: () => void;
 }
 
 type ConveyanceType = "Flight" | "Train" | "Bus";
@@ -840,11 +843,11 @@ function TransportCard({
       {/* Hover shimmer effect */}
       <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none"></div>
 
-      {/* Booked Indicator */}
+      {/* Selected Indicator */}
       {isBooked && (
         <div className="absolute top-2 right-2 z-10 bg-green-500 text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-lg flex items-center gap-1 animate-pulse">
           <FiCheck size={12} />
-          <span>BOOKED</span>
+          <span>SELECTED</span>
         </div>
       )}
 
@@ -1257,10 +1260,10 @@ function TransportCard({
                 {isBooked ? (
                   <span className="flex items-center justify-center gap-1">
                     <FiCheck size={14} />
-                    Booked
+                    Selected
                   </span>
                 ) : (
-                  "Book Now"
+                  "Select"
                 )}
               </button>
             </div>
@@ -1298,12 +1301,15 @@ function TransportCard({
 export default function FlightsWidget({
   isVisible,
   onToggle,
+  initialFromCity,
+  initialToCity,
+  onContinue,
 }: FlightsWidgetProps) {
   const [travellers, setTravellers] = useState(1);
   const [travelClass, setTravelClass] = useState("Economy");
   const [departureDate, setDepartureDate] = useState("");
-  const [from, setFrom] = useState("New Delhi");
-  const [to, setTo] = useState("Mumbai");
+  const [from, setFrom] = useState(initialFromCity || "New Delhi");
+  const [to, setTo] = useState(initialToCity || "Mumbai");
   const [showResults, setShowResults] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingComplete, setIsLoadingComplete] = useState(false);
@@ -1314,9 +1320,31 @@ export default function FlightsWidget({
     trains: [],
     buses: [],
   });
-  const [fromCity, setFromCity] = useState("New Delhi");
-  const [toCity, setToCity] = useState("Mumbai");
+  const [fromCity, setFromCity] = useState(initialFromCity || "New Delhi");
+  const [toCity, setToCity] = useState(initialToCity || "Mumbai");
   const [bookedOption, setBookedOption] = useState<string | null>(null);
+
+  // Update cities when initial props change
+  useEffect(() => {
+    console.log("🛫 FlightsWidget received props - From:", initialFromCity, "To:", initialToCity);
+    if (initialFromCity) {
+      console.log("🛫 Setting FROM city to:", initialFromCity);
+      setFrom(initialFromCity);
+      setFromCity(initialFromCity);
+    }
+    if (initialToCity) {
+      console.log("🛫 Setting TO city to:", initialToCity);
+      setTo(initialToCity);
+      setToCity(initialToCity);
+    }
+  }, [initialFromCity, initialToCity]);
+
+  // Log when widget becomes visible
+  useEffect(() => {
+    if (isVisible) {
+      console.log("🛫 FlightsWidget is now visible. Current cities - From:", from, "To:", to);
+    }
+  }, [isVisible, from, to]);
 
   // Helper function to format date for display
   const formatDateForMessage = (dateStr: string) => {
@@ -1784,6 +1812,31 @@ export default function FlightsWidget({
           </div>
         )}
       </div>
+
+      {/* Floating Continue Button */}
+      {onContinue && (
+        <div className="absolute bottom-6 right-6 z-20">
+          <button
+            onClick={onContinue}
+            disabled={!bookedOption}
+            className={`px-6 py-3 rounded-full font-medium text-sm transition-all duration-300 shadow-lg backdrop-blur-sm ${
+              bookedOption
+                ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:from-blue-600 hover:to-purple-600 hover:shadow-xl hover:scale-105 active:scale-95 cursor-pointer"
+                : "bg-gray-200/50 text-gray-400 cursor-not-allowed backdrop-blur-sm border border-gray-300/30"
+            }`}
+          >
+            <div className="flex items-center gap-2">
+              <span>Continue</span>
+              <FiChevronRight 
+                size={16} 
+                className={`transition-transform duration-300 ${
+                  bookedOption ? "group-hover:translate-x-1" : ""
+                }`}
+              />
+            </div>
+          </button>
+        </div>
+      )}
 
       {/* RGB Continuous Flow Animation Keyframes */}
       <style jsx>{`

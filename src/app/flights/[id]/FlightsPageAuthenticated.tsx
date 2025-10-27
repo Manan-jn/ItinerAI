@@ -14,7 +14,7 @@ import OnboardingModalWhite from "../../components/auth/OnboardingModalWhite";
 import ItinerAIChatBox from "../../components/ItinerAIChatBox";
 import { getSessionId } from "../../utils/sessionManager";
 import { updateMemoryOnSessionChange } from "../../utils/memoryApi";
-import { storeSelectedTrip } from "../../utils/tripStorage";
+import { storeSelectedTrip, getSelectedTripFromFirestore } from "../../utils/tripStorage";
 import {
   imageDownloader,
   extractImageUrls,
@@ -80,6 +80,9 @@ export default function FlightsPageAuthenticated() {
   const [showTripLoader, setShowTripLoader] = useState(false);
   const [showEndLoader, setShowEndLoader] = useState(false);
   const [testEndResponse, setTestEndResponse] = useState(false);
+  const [conveyanceLoaderMessages, setConveyanceLoaderMessages] = useState<string[]>([]);
+  const [conveyanceFromCity, setConveyanceFromCity] = useState<string>("");
+  const [conveyanceToCity, setConveyanceToCity] = useState<string>("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const flashcardsRef = useRef<FlashcardsWidgetRef>(null);
@@ -186,6 +189,45 @@ export default function FlightsPageAuthenticated() {
     setIsLoading(false);
     console.log("Chat history cleared");
   };
+
+  // Restore selected trip from Firestore when component mounts or userId changes
+  useEffect(() => {
+    const restoreSelectedTrip = async () => {
+      if (!userId) {
+        console.log("⏳ Waiting for userId to restore trip");
+        return;
+      }
+
+      // Only restore if we don't already have a selected trip
+      if (selectedTrip) {
+        console.log("✅ Selected trip already in memory:", selectedTrip.trip_title);
+        return;
+      }
+
+      console.log("🔄 Attempting to restore selected trip from Firestore for user:", userId);
+      
+      try {
+        const restoredTrip = await getSelectedTripFromFirestore(userId);
+        
+        if (restoredTrip) {
+          console.log("✅ Successfully restored trip from Firestore:", restoredTrip.trip_title);
+          setSelectedTrip(restoredTrip);
+          
+          // Also restore to originalTrips if it's a trip suggestion format
+          if (restoredTrip.trip_title) {
+            setOriginalTrips([restoredTrip]);
+          }
+        } else {
+          console.log("ℹ️ No trip found in Firestore to restore");
+        }
+      } catch (error) {
+        console.error("❌ Error restoring trip from Firestore:", error);
+      }
+    };
+
+    restoreSelectedTrip();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId]); // Run when userId is set (selectedTrip checked inside but not in deps to avoid loops)
 
   // No need for dashboard data here anymore - it's in DashboardData.ts
 
@@ -434,27 +476,123 @@ export default function FlightsPageAuthenticated() {
     try {
       console.log("Date selected:", selectedDate);
 
-      // If there's a selected trip, store it with the date
-      if (selectedTrip) {
-        console.log("Storing trip with selected date:", selectedTrip);
+      // If selectedTrip is not in memory, try to restore it from Firestore
+      let tripToUse = selectedTrip;
+      
+      if (!tripToUse) {
+        console.log("⚠️ Selected trip not in memory, attempting to restore from Firestore");
+        tripToUse = await getSelectedTripFromFirestore(userId);
+        
+        if (tripToUse) {
+          console.log("✅ Restored trip from Firestore:", tripToUse.trip_title);
+          setSelectedTrip(tripToUse); // Update state for future use
+        } else {
+          console.log("❌ No trip found in Firestore");
+        }
+      }
+
+      // If there's a selected trip (either from memory or Firestore), store it with the date
+      if (tripToUse) {
+        console.log("Storing trip with selected date:", tripToUse.trip_title);
         await storeSelectedTrip(userId, sessionId, {
-          ...selectedTrip,
+          ...tripToUse,
           trip_date: selectedDate.toISOString(),
         });
 
         // Add a message to chat indicating date was selected
         const userMessage = {
           id: Date.now().toString(),
-          content: `Selected date: ${selectedDate.toLocaleDateString()} for trip: ${selectedTrip.trip_title}`,
+          content: `Selected date: ${selectedDate.toLocaleDateString()} for trip: ${tripToUse.trip_title}`,
           role: "user" as const,
           timestamp: new Date(),
           metadata: {
             selectedDate: selectedDate.toISOString(),
-            selectedTrip: selectedTrip,
+            selectedTrip: tripToUse,
           },
         };
 
         setMessages((prev) => [...prev, userMessage]);
+
+        // Check if Day 1 has conveyance requirements
+        const dayWisePlan = tripToUse.day_wise_plan;
+        console.log("🔍 Day-wise plan:", dayWisePlan);
+        
+        if (dayWisePlan && dayWisePlan.length > 0) {
+          const day1 = dayWisePlan[0]; // Day 1 is at index 0
+          
+          console.log("🔍 Checking Day 1 conveyance details:", day1);
+          console.log("🔍 Day 1 conveyance_details:", day1.conveyance_details);
+          
+          // Check if conveyance_details exists and is_required is true
+          if (day1.conveyance_details && day1.conveyance_details.is_required === true) {
+            console.log("✅ Day 1 conveyance is required, showing loader and flights");
+            
+            // Extract from and to cities
+            let fromCity = day1.conveyance_details.from_city || "";
+            let toCity = day1.conveyance_details.to_city || "";
+            
+            // Handle "user_location" placeholder
+            if (fromCity === "user_location" || fromCity === "User Location") {
+              fromCity = "Mumbai"; // Default to Mumbai or use user's actual location
+              console.log("🔄 Converted user_location to:", fromCity);
+            }
+            
+            // Capitalize city names properly
+            if (toCity) {
+              toCity = toCity.charAt(0).toUpperCase() + toCity.slice(1).toLowerCase();
+              if (toCity === "Delhi") toCity = "New Delhi"; // Match FlightsWidget format
+            }
+            if (fromCity) {
+              fromCity = fromCity.charAt(0).toUpperCase() + fromCity.slice(1).toLowerCase();
+            }
+            
+            console.log("🎯 Setting conveyance cities - From:", fromCity, "To:", toCity);
+            
+            // Set conveyance cities for FlightsWidget
+            setConveyanceFromCity(fromCity);
+            setConveyanceToCity(toCity);
+            
+            // Set custom loader messages
+            setConveyanceLoaderMessages([
+              "Let's find conveyance options for day 1",
+              `Searching ${fromCity} to ${toCity} routes`,
+              "Finding the best travel options",
+              "Comparing prices and timings",
+            ]);
+            
+            console.log("🔄 Closing date selector and showing loader");
+            
+            // Close date selector
+            setShowDateSelector(false);
+            
+            // Show trip loader with conveyance message
+            setShowTripLoader(true);
+            setIsParsingTrips(true);
+            
+            console.log("⏱️ Starting 4-second timer for loader");
+            
+            // After 4 seconds, hide loader and show flights widget
+            setTimeout(() => {
+              console.log("⏱️ 4 seconds elapsed, hiding loader");
+              setShowTripLoader(false);
+              
+              setTimeout(() => {
+                console.log("✈️ Showing FlightsWidget with cities:", fromCity, "to", toCity);
+                setIsParsingTrips(false);
+                setShowFlights(true);
+                setShowFlashcards(false);
+                setShowItinerary(false);
+                setShowDateSelector(false);
+              }, 700); // Dissolve duration
+            }, 4000);
+            
+            return; // Exit early since we're showing conveyance flow
+          } else {
+            console.log("❌ Day 1 conveyance not required or missing. is_required:", day1.conveyance_details?.is_required);
+          }
+        } else {
+          console.log("❌ No day_wise_plan found in trip");
+        }
       } else {
         // If no trip selected, just store the date
         console.log("Storing date without trip");
@@ -481,6 +619,34 @@ export default function FlightsPageAuthenticated() {
       console.error("Error storing date selection:", error);
       alert("Failed to save date selection. Please try again.");
     }
+  };
+
+  // Handle continue action from FlightsWidget
+  const handleFlightsContinue = () => {
+    console.log("🚀 Continue clicked from FlightsWidget - proceeding to next step");
+    
+    // Add a message to chat indicating conveyance was selected
+    const conveyanceMessage = {
+      id: Date.now().toString(),
+      content: "Conveyance selected. Proceeding with travel arrangements.",
+      role: "user" as const,
+      timestamp: new Date(),
+      metadata: {
+        action: "conveyance_selected",
+        step: "conveyance_complete",
+      },
+    };
+
+    setMessages((prev) => [...prev, conveyanceMessage]);
+    
+    // Close flights widget and show next step (could be itinerary or confirmation)
+    setShowFlights(false);
+    
+    // For now, show the itinerary widget as the next step
+    // This can be customized based on your flow
+    setShowItinerary(true);
+    
+    console.log("✅ Flights continue flow completed - showing next step");
   };
 
   const handleChatSubmit = async (e: React.FormEvent) => {
@@ -1312,6 +1478,7 @@ export default function FlightsPageAuthenticated() {
                       <TripLoader
                         showTripLoader={showTripLoader}
                         duration={4000}
+                        customMessages={conveyanceLoaderMessages.length > 0 ? conveyanceLoaderMessages : undefined}
                       />
                       {/* End Response Loader */}
                       <EndResponseLoader
@@ -1337,6 +1504,9 @@ export default function FlightsPageAuthenticated() {
                               <FlightsWidget
                                 isVisible={showFlights}
                                 onToggle={() => setShowFlights(false)}
+                                initialFromCity={conveyanceFromCity}
+                                initialToCity={conveyanceToCity}
+                                onContinue={handleFlightsContinue}
                               />
                             </div>
                           </div>

@@ -617,7 +617,7 @@ export default function ConveyanceWidget({
                               {formatPrice(train.price)}
                             </span>
                             <button className="select-train-btn">
-                              Book Now
+                                Select
                             </button>
                           </div>
                         </div>
@@ -720,7 +720,7 @@ export default function ConveyanceWidget({
                             <span className="price">
                               {formatPrice(bus.price)}
                             </span>
-                            <button className="select-bus-btn">Book Now</button>
+                            <button className="select-bus-btn">Select</button>
                           </div>
                         </div>
 

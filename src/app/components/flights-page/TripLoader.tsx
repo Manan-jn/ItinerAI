@@ -3,23 +3,27 @@ import React, { useState, useEffect } from "react";
 interface TripLoaderProps {
   showTripLoader: boolean;
   duration?: number; // Duration in milliseconds
+  customMessages?: string[]; // Optional custom messages
 }
 
 export function TripLoader({
   showTripLoader,
   duration = 4000,
+  customMessages,
 }: TripLoaderProps) {
   const [currentMessage, setCurrentMessage] = useState("");
   const [isVisible, setIsVisible] = useState(true);
   const [messageIndex, setMessageIndex] = useState(0);
 
-  const loadingMessages = [
+  const defaultLoadingMessages = [
     "Analyzing your travel preferences",
     "Understanding your journey style",
     "Discovering perfect destinations",
     "Crafting personalized experiences",
     "Curating your ideal adventure",
   ];
+
+  const loadingMessages = customMessages || defaultLoadingMessages;
 
   useEffect(() => {
     if (showTripLoader) {
