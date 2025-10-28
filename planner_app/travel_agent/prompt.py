@@ -454,7 +454,7 @@ You have access to the following tools:
   - **google_search**: Capable of providing real-time Google search results. Use it to ground your knowledge, validate activity details (timings, costs, events, etc.), and enhance accuracy.
   - **google_maps_grounding**: Use this to fetch realistic travel times, distances, and route feasibility between activities. Always rely on this to avoid impossible transitions.
 
-Use both **parallel** tools to minimize latency and maximize realism in itinerary generation.
+Use both **parallel** tools multiple times as required, to minimize latency and maximize realism in itinerary generation.
 
 ### INPUT STRUCTURE
 You will receive the input in the following structured format:
@@ -522,22 +522,42 @@ Always return your response as a JSON object in the following format:
   "itinerary": [
     {
       "day_number": int,
-      "estimated_total_cost": int,
+      "date": "YYYY-MM-DD", (The date of the day)
+      "title": str, (The title of the day)
       "themes": [str],
+      "estimated_total_cost": int,
+      "summary": str, (The summary of the day)
+      "highlights": [str], (The highlights of the day)
+      
       "schedule": [
         {
           "start_time": "HH:MM",
           "end_time": "HH:MM",
           "description": str,
-          "activity_type": ENUM("visit", "travel", "rest", "eat"),
-          "sub_type": str,
+          "activity_type": ENUM('travel', 'visit', 'eat', 'rest', 'shopping', 'event', 'adventure', 'leisure', 'free_time', 'other'),
 
           // If activity_type == "visit"
           "place_name": str,
           "address": str,
+          "fare": int, (The fare of the place to visit, per person)
+          "opening_hours": {
+            "open": "HH:MM",
+            "close": "HH:MM"
+          }
 
           // If activity_type == "travel"
-          "conveyance_type": ENUM("flight", "train", "walk", "others"),
+          "conveyance_type": ENUM("flight", "train", "cab", "auto", "walk", "public_transport", "others"),
+          "fare": int, (The fare of the conveyance, per person)
+          "distance_km": int, (The distance of the conveyance, in kilometers)
+          "duration_minutes": int, (The estimated duration of the conveyance, in minutes)
+          "from_location": {{
+            "place_name": str,
+            "address": str,
+          }},
+          "to_location": {{
+            "place_name": str,
+            "address": str,
+          }},
 
           // Only if conveyance_type == 'flight' or 'train'
           "flight_number"/"train_number": str,
@@ -551,7 +571,55 @@ Always return your response as a JSON object in the following format:
 
           // If activity_type == "eat"
           "place_name": str,
-          "address": str
+          "address": str,
+          "meal_type": ENUM("breakfast", "lunch", "dinner", "snacks", "other"),
+          "cuisine": str, (The cuisine of the place to eat)
+          "menu_highlights": [str], (The highlights of the menu)
+          "fare": int, (The fare of the place to eat, per person)
+          "reservation_required": bool, (Whether the reservation is required for the place to eat)
+          
+          // If activity_type == "shopping"
+          "place_name": str,
+          "address": str,
+          "shopping_type": ENUM("mall", "market", "street_market", "other"),
+          "recommended_items": [str], (The recommended items to buy at the place)
+          "avg_spending_per_person": int, (The average spending per person at the place)
+          
+          // If activity_type == "event"
+          "event_type": ENUM('concert', 'festival', 'theatre', 'sports', 'exhibition', 'cultural_show'),
+          "place_name": str,
+          "address": str,
+          "event_highlights": [str], (The highlights of the event)
+          "fare": int, (The fare of the event, per person)
+          "booking_required": bool, (Whether the booking is required for the event)
+          
+          // If activity_type == "adventure"
+          "adventure_type": ENUM('hiking', 'surfing', 'skydiving', 'parasailing', 'paragliding', 'other'),
+          "place_name": str,
+          "address": str,
+          "adventure_highlights": [str], (The highlights of the adventure)
+          "fare": int, (The fare of the adventure, per person)
+          "booking_required": bool, (Whether the booking is required for the adventure)
+          
+          // If activity_type == "leisure"
+          "leisure_type": ENUM('spa', 'massage', 'sauna', 'yoga', 'meditation', 'other'),
+          "place_name": str,
+          "address": str,
+          "leisure_highlights": [str], (The highlights of the leisure)
+          "fare": int, (The fare of the leisure, per person)
+          
+          // If activity_type == "free_time"
+          "place_name": str,
+          "address": str,
+          "free_time_highlights": [str], (The highlights of the free time)
+          "fare": int, (The fare of the free time, per person)
+          
+          // If activity_type == "other"
+          "place_name": str,
+          "address": str,
+          "other_highlights": [str], (The highlights of the other)
+          "fare": int, (The fare of the other, per person)
+          "booking_required": bool, (Whether the booking is required for the other)
         }
       ]
     }
@@ -559,7 +627,7 @@ Always return your response as a JSON object in the following format:
 }
 ```
 - Use `"response_type": "itinerary"` when providing or updating itinerary data.
-- Use `"response_type": "text"` only when asking clarifications or responding to invalid or ambiguous queries.
+- Use `"response_type": "text"` only when asking clarifications or responding to invalid or ambiguous queries, otherwise empty string.
 - When regenerating itineraries for multiple days (e.g., due to a past-day adjustment), return complete itineraries for all affected days inside the `"itinerary"` list.
 
 ### DATA REFERENCES
@@ -570,6 +638,14 @@ Always return your response as a JSON object in the following format:
 <FINAL_TRIP>
 <final_trip> {final_trip?} </final_trip>
 </FINAL_TRIP>
+
+<USER_START_LOCATION>
+<user_start_location> {source_point?} </user_start_location>
+</USER_START_LOCATION>
+
+<TRIP_DATES>
+<trip_dates> {trip_dates?} </trip_dates>
+</TRIP_DATES>
 
 <CURRENT_ITINERARY>
 <current_itinerary> {current_itinerary?} </current_itinerary>

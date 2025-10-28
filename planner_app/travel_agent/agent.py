@@ -2,11 +2,6 @@ from google.adk.agents import LlmAgent
 from google.adk.tools.agent_tool import AgentTool
 from google.genai.types import GenerateContentConfig, ThinkingConfig
 from google.adk.planners import BuiltInPlanner
-# from google.adk.tools.google_search_tool import google_search
-# from google.adk.tools.google_maps_grounding_tool import google_maps_grounding
-
-# from google.genai import types
-# from google.adk.planners.built_in_planner import BuiltInPlanner
 
 from . import prompt
 from .tools.memory import _set_initial_state
@@ -14,32 +9,36 @@ from .tools.big_query import conveyance_query_tool, stay_query_tool
 from .tools.memory import memorize
 from .tools.search import google_search_agent
 from .tools.maps import google_maps_agent
+from .tools.places import map_tool
 from .sub_agents.onboarding.agent import onboarding_agent
 from .sub_agents.inspiration.agent import trip_agent
 from .sub_agents.origin.agent import origin_agent
-from .shared_libraries.callbacks import logger_before_agent, modify_state_after_agent
+from .shared_libraries.callbacks import (
+    logger_before_agent,
+    modify_state_after_agent,
+    modify_output_after_agent,
+)
+
 
 root_agent = LlmAgent(
     name="root_agent",
     model="gemini-2.5-flash",
     description="Orchestrator Agent responsible for planning end-to-end dream vacation trip for the user.",
     # global_instruction="""
-    # - You are not allowed to share your internal thoughts or reasoning with the user. 
+    # - You are not allowed to share your internal thoughts or reasoning with the user.
     # - You must follow the optimal flow mentioned in the instruction and subtly nudge the user if they deviate from the flow.
     # """,
     instruction=prompt.ROOT_AGENT_INSTR,
     sub_agents=[onboarding_agent, trip_agent, origin_agent],
     before_agent_callback=[_set_initial_state, logger_before_agent],
     after_agent_callback=[modify_state_after_agent],
-    generate_content_config=GenerateContentConfig(
-        temperature=0.3
-    ),
+    generate_content_config=GenerateContentConfig(temperature=0.3),
     planner=BuiltInPlanner(
         thinking_config=ThinkingConfig(
             include_thoughts=True,
             # thinking_budget=2048
         )
-    )
+    ),
 )
 
 conveyance_agent = LlmAgent(
@@ -58,7 +57,7 @@ conveyance_agent = LlmAgent(
             include_thoughts=True,
             # thinking_budget=2048
         )
-    )
+    ),
 )
 
 stay_agent = LlmAgent(
@@ -77,7 +76,7 @@ stay_agent = LlmAgent(
             include_thoughts=True,
             # thinking_budget=2048
         )
-    )
+    ),
 )
 
 itinerary_agent = LlmAgent(
@@ -88,20 +87,24 @@ itinerary_agent = LlmAgent(
     output_key="itinerary_agent",
     disallow_transfer_to_parent=True,
     disallow_transfer_to_peers=True,
-    after_agent_callback=[modify_state_after_agent],
     generate_content_config=GenerateContentConfig(temperature=0.3),
     tools=[AgentTool(agent=google_search_agent), AgentTool(agent=google_maps_agent)],
-    # tools = [google_search],
+    after_agent_callback=[
+        modify_state_after_agent,
+        map_tool,
+        modify_output_after_agent,
+    ],
     planner=BuiltInPlanner(
         thinking_config=ThinkingConfig(
             include_thoughts=True,
             # thinking_budget=2048
         )
-    )
+    ),
 )
 
 # root_agent = onboarding_agent
 # root_agent = google_maps_agent
 # root_agent = conveyance_agent
 # root_agent = trip_agent
+# root_agent = itinerary_agent
 # root_agent = bigquery_agent
