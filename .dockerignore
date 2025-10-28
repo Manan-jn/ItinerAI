@@ -9,3 +9,4 @@ venv
 .gitignore
 README.md
 LICENSE
+.env

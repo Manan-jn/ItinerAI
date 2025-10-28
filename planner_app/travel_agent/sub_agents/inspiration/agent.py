@@ -17,7 +17,7 @@ from ...shared_libraries.callbacks import (
 trip_agent = LlmAgent(
     name="trip_agent",
     description="An agent who recommends trips to the user",
-    model="gemini-2.5-flash",
+    model="gemini-2.5-pro",
     instruction=prompt.TRIP_AGENT_INSTR,
     output_key="trip_suggestions",
     # output_schema = TripSuggestions,

@@ -17,26 +17,26 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')
 from shared.sql_query import execute_sql_query
 # from ...shared.sql_query import execute_sql_query
 
-dotenv.load_dotenv()
+# dotenv.load_dotenv()
 
-tool_config = BigQueryToolConfig(write_mode=WriteMode.BLOCKED)
+# tool_config = BigQueryToolConfig(write_mode=WriteMode.BLOCKED)
 
-key_contents_str = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
-key_contents = json.loads(key_contents_str)
+# key_contents_str = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+# key_contents = json.loads(key_contents_str)
 
-credentials = service_account.Credentials.from_service_account_info(
-    key_contents, scopes=["https://www.googleapis.com/auth/bigquery"]
-)
-# credentials = service_account.Credentials.from_service_account_file(
-#     key_path,
-#     scopes=["https://www.googleapis.com/auth/bigquery"]
+# credentials = service_account.Credentials.from_service_account_info(
+#     key_contents, scopes=["https://www.googleapis.com/auth/bigquery"]
 # )
-credentials_config = BigQueryCredentialsConfig(credentials=credentials)
+# # credentials = service_account.Credentials.from_service_account_file(
+# #     key_path,
+# #     scopes=["https://www.googleapis.com/auth/bigquery"]
+# # )
+# credentials_config = BigQueryCredentialsConfig(credentials=credentials)
 
 
-bigquery_tool = BigQueryToolset(
-    credentials_config=credentials_config, bigquery_tool_config=tool_config
-)
+# bigquery_tool = BigQueryToolset(
+#     credentials_config=credentials_config, bigquery_tool_config=tool_config
+# )
 
 # bigquery_agent = LlmAgent(
 #     model="gemini-2.5-flash",
@@ -122,7 +122,7 @@ bigquery_tool = BigQueryToolset(
 #     agent=bigquery_agent
 # )
 
-client = bigquery.Client(project="itinerai-41751", credentials=credentials)
+# client = bigquery.Client(project="itinerai-41751", credentials=credentials)
 
 async def conveyance_query_tool(
     conveyance_type: Literal["flights", "trains"],
