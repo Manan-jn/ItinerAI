@@ -18,7 +18,6 @@ class PlacesService:
 
     async def find_place_from_text(self, query: str) -> Dict[str, str]:
         """Fetches place details using a text query."""
-        print("finding place from text: ", query)
         await self._check_key()
         places_url = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json"
         params = {
@@ -48,7 +47,6 @@ class PlacesService:
             lat = str(location["lat"])
             lng = str(location["lng"])
 
-            print("place details: ", place_details)
             return {
                 "place_id": place_id,
                 "place_name": place_name,

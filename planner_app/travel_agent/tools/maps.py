@@ -1,17 +1,33 @@
-from google.adk.agents import LlmAgent
-from google.adk.tools.google_maps_grounding_tool import google_maps_grounding
+from google.adk.agents.llm_agent import LlmAgent
+from google.adk.tools.mcp_tool.mcp_toolset import MCPToolset
+from google.adk.tools.mcp_tool.mcp_session_manager import StdioConnectionParams
+from mcp import StdioServerParameters
+import os
 
+google_maps_api_key = os.environ.get("GOOGLE_MAPS_API_KEY", "")
 google_maps_agent = LlmAgent(
-    model="gemini-2.5-flash",
-    name="google_maps_agent",
-    description="An agent providing Google-maps results capability",
-    instruction="""  
-    Answer the user's question directly using `google_maps_grounding` grounding tool; Provide a brief but concise response. 
-    Do not ask the user to check or look up information for themselves, that's your role; do your best to be informative
-    
-    Always provide the summary in a structured JSON format for others to understand without missing any information in the structured format.
-    """,
-    tools=[google_maps_grounding],
-    include_contents="none",
-    # after_agent_callback=[_google_search_callback]
+    model='gemini-2.5-flash',
+    name='google_maps_agent',
+    description='A helpful assistant for user questions related to locations,maps & directions',
+    instruction='Answer user questions to the best of your knowledge using goolge map tools provided to you',
+    tools=[
+        MCPToolset(
+            connection_params=StdioConnectionParams(
+                server_params = StdioServerParameters(
+                    command='npx',
+                    args=[
+                        "-y",
+                        "@modelcontextprotocol/server-google-maps",
+                    ],
+                    env={
+                        "GOOGLE_MAPS_API_KEY": google_maps_api_key
+                    }
+                ),
+                timeout=10.0
+            ),
+            # You can filter for specific Maps tools if needed:
+            # tool_filter=['get_directions', 'find_place_by_id']
+        )
+    ],
+    include_contents="none"
 )

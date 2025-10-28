@@ -24,7 +24,7 @@ trip_agent = LlmAgent(
     disallow_transfer_to_parent=True,
     disallow_transfer_to_peers=True,
     generate_content_config = GenerateContentConfig(
-        # response_mime_type = "application/json"
+        # response_mime_type = "application/json",
         temperature=0.3
     ),
     before_agent_callback=[logger_before_agent],

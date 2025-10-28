@@ -30,7 +30,6 @@ You have the access to the following parallel tools:
 
 <RESPONSE_FORMAT>
 Return the response in the structure format provided below:
-```json
 {{
   "response_type" ENUM(trip, text): "", (Use 'trip' if you are recommending a list of trips; use 'text' if you want to conversate with the user to ask or clarify something)`
   "message" str: "", (keep it "" (empty string) if 'response_type' is 'trip'; otherwise, your response to display to the user)
@@ -74,7 +73,6 @@ Return the response in the structure format provided below:
     }}
   ] (The list of trips, keep it [] (empty list) if 'response_type' is 'text')
 }}
-```
 </RESPONSE_FORMAT>
 """
 
