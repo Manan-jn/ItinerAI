@@ -17,7 +17,10 @@ interface FlightsWidgetProps {
   onToggle: () => void;
   initialFromCity?: string;
   initialToCity?: string;
-  onContinue?: () => void;
+  onContinue?: (selectedConveyanceData?: TransportOption) => void;
+  userId?: string;
+  sessionId?: string;
+  currentDayNumber?: number;
 }
 
 type ConveyanceType = "Flight" | "Train" | "Bus";
@@ -1304,6 +1307,9 @@ export default function FlightsWidget({
   initialFromCity,
   initialToCity,
   onContinue,
+  userId,
+  sessionId,
+  currentDayNumber,
 }: FlightsWidgetProps) {
   const [travellers, setTravellers] = useState(1);
   const [travelClass, setTravelClass] = useState("Economy");
@@ -1323,6 +1329,7 @@ export default function FlightsWidget({
   const [fromCity, setFromCity] = useState(initialFromCity || "New Delhi");
   const [toCity, setToCity] = useState(initialToCity || "Mumbai");
   const [bookedOption, setBookedOption] = useState<string | null>(null);
+  const [selectedConveyanceData, setSelectedConveyanceData] = useState<TransportOption | null>(null);
 
   // Update cities when initial props change
   useEffect(() => {
@@ -1467,8 +1474,8 @@ export default function FlightsWidget({
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          user_id: "user123",
-          session_id: "session456",
+          user_id: userId || "user123",
+          session_id: sessionId || "session456",
           message: message,
         }),
       });
@@ -1538,9 +1545,15 @@ export default function FlightsWidget({
 
   const handleBooking = (optionId: string) => {
     setBookedOption(optionId);
-    console.log("Booked option:", optionId);
-    // Here you can add additional logic to save the booking information
-    // For example, send to backend, save to localStorage, etc.
+    
+    // Find the selected option from all results
+    const allResults = [...searchResults.flights, ...searchResults.trains, ...searchResults.buses];
+    const selectedOption = allResults.find(opt => opt.id === optionId);
+    
+    if (selectedOption) {
+      setSelectedConveyanceData(selectedOption);
+      console.log("✅ Selected conveyance data:", selectedOption);
+    }
   };
 
   if (!isVisible) return null;
@@ -1551,7 +1564,7 @@ export default function FlightsWidget({
       <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 backdrop-blur-sm px-4 py-2 flex-shrink-0 border-b border-gray-200/30">
         <div className="flex items-center justify-between">
           <h2 className="text-gray-800 text-sm font-medium tracking-wide">
-            Search Transport
+            {currentDayNumber ? `Day ${currentDayNumber} - Search Transport` : "Search Transport"}
           </h2>
           <button
             onClick={onToggle}
@@ -1817,7 +1830,10 @@ export default function FlightsWidget({
       {onContinue && (
         <div className="absolute bottom-6 right-6 z-20">
           <button
-            onClick={onContinue}
+            onClick={() => {
+              console.log("🚀 Continue clicked with selected data:", selectedConveyanceData);
+              onContinue(selectedConveyanceData || undefined);
+            }}
             disabled={!bookedOption}
             className={`px-6 py-3 rounded-full font-medium text-sm transition-all duration-300 shadow-lg backdrop-blur-sm ${
               bookedOption

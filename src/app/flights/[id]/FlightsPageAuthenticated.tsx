@@ -8,6 +8,7 @@ import SessionDebugFlights from "../../components/SessionDebugFlights";
 import FlashcardsWidgetWhiteTheme from "../../components/FlashcardsWidgetWhiteTheme";
 import type { FlashcardsWidgetRef } from "../../components/flashcards/types";
 import FlightsWidget from "../../components/FlightsWidget";
+import StaysWidget from "../../components/StaysWidget";
 import ItineraryWidget from "../../components/ItineraryWidget";
 import DateSelectorWidget from "../../components/DateSelectorWidget";
 import OnboardingModalWhite from "../../components/auth/OnboardingModalWhite";
@@ -71,6 +72,7 @@ export default function FlightsPageAuthenticated() {
   const [showDebug, setShowDebug] = useState(false);
   const [showFlashcards, setShowFlashcards] = useState(false);
   const [showFlights, setShowFlights] = useState(false);
+  const [showStays, setShowStays] = useState(false);
   const [showItinerary, setShowItinerary] = useState(false);
   const [showDateSelector, setShowDateSelector] = useState(false);
   const [selectedTrip, setSelectedTrip] = useState<any>(null);
@@ -83,6 +85,10 @@ export default function FlightsPageAuthenticated() {
   const [conveyanceLoaderMessages, setConveyanceLoaderMessages] = useState<string[]>([]);
   const [conveyanceFromCity, setConveyanceFromCity] = useState<string>("");
   const [conveyanceToCity, setConveyanceToCity] = useState<string>("");
+  const [stayCity, setStayCity] = useState<string>("");
+  const [currentDayNumber, setCurrentDayNumber] = useState<number>(1);
+  const [selectedConveyances, setSelectedConveyances] = useState<{[key: number]: any}>({});
+  const [tempConveyanceSelection, setTempConveyanceSelection] = useState<any>(null); // Temporary storage for current day's conveyance
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const flashcardsRef = useRef<FlashcardsWidgetRef>(null);
@@ -527,6 +533,9 @@ export default function FlightsPageAuthenticated() {
           if (day1.conveyance_details && day1.conveyance_details.is_required === true) {
             console.log("✅ Day 1 conveyance is required, showing loader and flights");
             
+            // Initialize current day number to 1
+            setCurrentDayNumber(1);
+            
             // Extract from and to cities
             let fromCity = day1.conveyance_details.from_city || "";
             let toCity = day1.conveyance_details.to_city || "";
@@ -554,7 +563,7 @@ export default function FlightsPageAuthenticated() {
             
             // Set custom loader messages
             setConveyanceLoaderMessages([
-              "Let's find conveyance options for day 1",
+              "Let's find conveyance options for Day 1",
               `Searching ${fromCity} to ${toCity} routes`,
               "Finding the best travel options",
               "Comparing prices and timings",
@@ -621,32 +630,290 @@ export default function FlightsPageAuthenticated() {
     }
   };
 
-  // Handle continue action from FlightsWidget
-  const handleFlightsContinue = () => {
-    console.log("🚀 Continue clicked from FlightsWidget - proceeding to next step");
+  // Handle continue action from FlightsWidget with selected conveyance data
+  const handleFlightsContinue = async (selectedConveyanceData?: any) => {
+    console.log("🚀 Continue clicked from FlightsWidget with data:", selectedConveyanceData);
     
-    // Add a message to chat indicating conveyance was selected
-    const conveyanceMessage = {
-      id: Date.now().toString(),
-      content: "Conveyance selected. Proceeding with travel arrangements.",
-      role: "user" as const,
-      timestamp: new Date(),
-      metadata: {
-        action: "conveyance_selected",
-        step: "conveyance_complete",
-      },
-    };
+    if (!selectedConveyanceData) {
+      console.error("❌ No conveyance data selected");
+      alert("Please select a conveyance option before continuing.");
+      return;
+    }
 
-    setMessages((prev) => [...prev, conveyanceMessage]);
+    if (!selectedTrip || !userId || !sessionId) {
+      console.error("❌ Missing required data for conveyance selection");
+      return;
+    }
+
+    try {
+      // Store conveyance temporarily (DO NOT update memory yet)
+      console.log(`💾 Storing conveyance temporarily for day ${currentDayNumber}:`, selectedConveyanceData);
+      setTempConveyanceSelection(selectedConveyanceData);
+
+      // Add a message to chat
+      const conveyanceMessage = {
+        id: Date.now().toString(),
+        content: `Selected ${selectedConveyanceData.operator} ${selectedConveyanceData.number} for Day ${currentDayNumber} (${conveyanceFromCity} to ${conveyanceToCity})`,
+        role: "user" as const,
+        timestamp: new Date(),
+        metadata: {
+          action: "conveyance_selected",
+          day_number: currentDayNumber,
+          conveyance: selectedConveyanceData,
+        },
+      };
+
+      setMessages((prev) => [...prev, conveyanceMessage]);
+      
+      // Close flights widget
+      setShowFlights(false);
+
+      // Find current day in trip plan
+      const currentDay = selectedTrip.day_wise_plan?.find((d: any) => d.day_number === currentDayNumber);
+      
+      if (!currentDay) {
+        console.error(`❌ Could not find day ${currentDayNumber} in day_wise_plan`);
+        return;
+      }
+
+      console.log(`🔍 Checking if day ${currentDayNumber} requires stay...`);
+      
+      // CASE 1: Current day requires stay
+      if (currentDay.stay_details && currentDay.stay_details.is_required === true) {
+        console.log(`✅ Day ${currentDayNumber} requires stay, showing loader...`);
+        
+        // Extract city for stay
+        let stayCity = currentDay.stay_details.city || "";
+        
+        // Capitalize city name
+        if (stayCity) {
+          stayCity = stayCity.charAt(0).toUpperCase() + stayCity.slice(1).toLowerCase();
+          if (stayCity === "Delhi") stayCity = "New Delhi";
+        }
+        
+        setStayCity(stayCity);
+        
+        // Set loader messages for stay
+        setConveyanceLoaderMessages([
+          `Let's find stay options for day ${currentDayNumber}`,
+          `Searching accommodations in ${stayCity}`,
+          "Finding the best hotels",
+          "Comparing prices and ratings",
+        ]);
+        
+        // Show loader
+        setShowTripLoader(true);
+        setIsParsingTrips(true);
+        
+        // After 4 seconds, show stays widget
+        setTimeout(() => {
+          setShowTripLoader(false);
+          
+          setTimeout(() => {
+            console.log(`🏨 Showing StaysWidget for day ${currentDayNumber} in ${stayCity}`);
+            setIsParsingTrips(false);
+            setShowStays(true);
+          }, 700);
+        }, 4000);
+        
+        return; // Exit early, show stay widget
+      } 
+      
+      // CASE 2: Current day does NOT require stay - update memory with conveyance only
+      console.log(`❌ Day ${currentDayNumber} does not require stay - updating memory with conveyance only`);
+      
+      // Build current_itinerary for current day with conveyance only
+      const currentItineraryDay = {
+        day_number: currentDayNumber,
+        conveyance_details: {
+          is_required: true,
+          from_city: currentDay.conveyance_details.from_city,
+          to_city: currentDay.conveyance_details.to_city,
+          type: selectedConveyanceData.operator.includes("Train") ? "train" : 
+                selectedConveyanceData.operator.includes("Bus") ? "bus" : "flight",
+          number: selectedConveyanceData.number,
+          operator: selectedConveyanceData.operator,
+          departure_date: selectedConveyanceData.departureDate,
+          departure_time: selectedConveyanceData.departureTime,
+          arrival_date: selectedConveyanceData.arrivalDate,
+          arrival_time: selectedConveyanceData.arrivalTime,
+          duration: selectedConveyanceData.duration,
+          price: selectedConveyanceData.price,
+          selected_from_city: conveyanceFromCity,
+          selected_to_city: conveyanceToCity
+        },
+        // Include other day info if present
+        ...(currentDay.must_do_activities && { must_do_activities: currentDay.must_do_activities }),
+        ...(currentDay.places_to_visit && { places_to_visit: currentDay.places_to_visit }),
+        ...(currentDay.stay_details && { stay_details: currentDay.stay_details }),
+      };
+
+      console.log("📤 Sending current_itinerary to memory API (conveyance only):", currentItineraryDay);
+
+      // Update memory with current_itinerary
+      const memoryResponse = await fetch("/api/memory", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: userId,
+          session_id: sessionId,
+          updates: {
+            current_itinerary: [currentItineraryDay],
+          },
+        }),
+      });
+
+      if (!memoryResponse.ok) {
+        throw new Error(`Memory API error: ${memoryResponse.status}`);
+      }
+
+      const memoryResult = await memoryResponse.json();
+      console.log("✅ Memory updated successfully with current_itinerary:", memoryResult);
+
+      // Clear temporary conveyance selection
+      setTempConveyanceSelection(null);
+
+      // Show itinerary
+      setShowItinerary(true);
+      console.log("✅ Day 1 completed (conveyance only) - showing itinerary");
+      
+    } catch (error) {
+      console.error("❌ Error handling conveyance selection:", error);
+      alert("Failed to save conveyance selection. Please try again.");
+    }
+  };
+
+  // Handle continue action from StaysWidget with selected stay data
+  const handleStaysContinue = async (selectedStayData?: any) => {
+    console.log("🚀 Continue clicked from StaysWidget with data:", selectedStayData);
     
-    // Close flights widget and show next step (could be itinerary or confirmation)
-    setShowFlights(false);
-    
-    // For now, show the itinerary widget as the next step
-    // This can be customized based on your flow
-    setShowItinerary(true);
-    
-    console.log("✅ Flights continue flow completed - showing next step");
+    if (!selectedStayData) {
+      console.error("❌ No stay data selected");
+      alert("Please select a stay option before continuing.");
+      return;
+    }
+
+    if (!selectedTrip || !userId || !sessionId) {
+      console.error("❌ Missing required data for stay selection");
+      return;
+    }
+
+    if (!tempConveyanceSelection) {
+      console.error("❌ No conveyance data found in temporary storage");
+      alert("Missing conveyance data. Please try again.");
+      return;
+    }
+
+    try {
+      console.log(`💾 Processing day ${currentDayNumber} with conveyance and stay`);
+      console.log(`📦 Temp conveyance:`, tempConveyanceSelection);
+      console.log(`🏨 Stay data:`, selectedStayData);
+
+      // Find current day in trip plan
+      const currentDay = selectedTrip.day_wise_plan?.find((d: any) => d.day_number === currentDayNumber);
+      
+      if (!currentDay) {
+        console.error(`❌ Could not find day ${currentDayNumber} in day_wise_plan`);
+        return;
+      }
+
+      // Build current_itinerary for current day with BOTH conveyance and stay
+      const currentItineraryDay = {
+        day_number: currentDayNumber,
+        conveyance_details: {
+          is_required: true,
+          from_city: currentDay.conveyance_details.from_city,
+          to_city: currentDay.conveyance_details.to_city,
+          type: tempConveyanceSelection.operator.includes("Train") ? "train" : 
+                tempConveyanceSelection.operator.includes("Bus") ? "bus" : "flight",
+          number: tempConveyanceSelection.number,
+          operator: tempConveyanceSelection.operator,
+          departure_date: tempConveyanceSelection.departureDate,
+          departure_time: tempConveyanceSelection.departureTime,
+          arrival_date: tempConveyanceSelection.arrivalDate,
+          arrival_time: tempConveyanceSelection.arrivalTime,
+          duration: tempConveyanceSelection.duration,
+          price: tempConveyanceSelection.price,
+          selected_from_city: conveyanceFromCity,
+          selected_to_city: conveyanceToCity
+        },
+        stay_details: {
+          is_required: true,
+          city: currentDay.stay_details.city,
+          check_in_day: currentDay.stay_details.check_in_day,
+          check_out_day: currentDay.stay_details.check_out_day,
+          property_name: selectedStayData.property_name,
+          property_address: selectedStayData.property_address,
+          property_location: selectedStayData.property_location,
+          state: selectedStayData.state,
+          country: selectedStayData.country,
+          overall_rating: selectedStayData.overall_rating,
+          starting_price: selectedStayData.starting_price,
+          currency: selectedStayData.currency,
+          available_rooms_total: selectedStayData.available_rooms_total,
+          available_from_date: selectedStayData.available_from_date,
+          available_until_date: selectedStayData.available_until_date,
+        },
+        // Include other day info if present
+        ...(currentDay.must_do_activities && { must_do_activities: currentDay.must_do_activities }),
+        ...(currentDay.places_to_visit && { places_to_visit: currentDay.places_to_visit }),
+      };
+
+      console.log("📤 Sending current_itinerary to memory API (conveyance + stay):", currentItineraryDay);
+
+      // Update memory with current_itinerary
+      const memoryResponse = await fetch("/api/memory", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: userId,
+          session_id: sessionId,
+          updates: {
+            current_itinerary: [currentItineraryDay],
+          },
+        }),
+      });
+
+      if (!memoryResponse.ok) {
+        throw new Error(`Memory API error: ${memoryResponse.status}`);
+      }
+
+      const memoryResult = await memoryResponse.json();
+      console.log("✅ Memory updated successfully with current_itinerary:", memoryResult);
+
+      // Add a message to chat
+      const stayMessage = {
+        id: Date.now().toString(),
+        content: `Selected ${selectedStayData.property_name} for Day ${currentDayNumber} in ${selectedStayData.city}`,
+        role: "user" as const,
+        timestamp: new Date(),
+        metadata: {
+          action: "stay_selected",
+          day_number: currentDayNumber,
+          stay: selectedStayData,
+        },
+      };
+
+      setMessages((prev) => [...prev, stayMessage]);
+
+      // Clear temporary conveyance selection
+      setTempConveyanceSelection(null);
+      
+      // Close stays widget
+      setShowStays(false);
+
+      // Show itinerary
+      setShowItinerary(true);
+      console.log("✅ Day 1 completed (conveyance + stay) - showing itinerary");
+      
+    } catch (error) {
+      console.error("❌ Error handling stay selection:", error);
+      alert("Failed to save stay selection. Please try again.");
+    }
   };
 
   const handleChatSubmit = async (e: React.FormEvent) => {
@@ -1008,6 +1275,7 @@ export default function FlightsPageAuthenticated() {
                 // Automatically show the places widget after loader dissolves
                 setShowFlashcards(true);
                 setShowFlights(false);
+                setShowStays(false);
                 setShowItinerary(false);
                 setSelectedTrip(null);
                 setIsParsingTrips(false);
@@ -1064,6 +1332,7 @@ export default function FlightsPageAuthenticated() {
               setShowDateSelector(true);
               setShowFlashcards(false);
               setShowFlights(false);
+              setShowStays(false);
               setShowItinerary(false);
               setSelectedTrip(null);
 
@@ -1367,6 +1636,7 @@ export default function FlightsPageAuthenticated() {
                 onLogout={logout}
                 showFlashcards={showFlashcards}
                 showFlights={showFlights}
+                showStays={showStays}
                 showItinerary={showItinerary}
                 showDateSelector={showDateSelector}
                 showDebug={showDebug}
@@ -1389,6 +1659,7 @@ export default function FlightsPageAuthenticated() {
                     setShowTripLoader(true);
                     setIsParsingTrips(true);
                     setShowFlights(false);
+                    setShowStays(false);
                     setShowItinerary(false);
                     setShowDateSelector(false);
 
@@ -1408,6 +1679,20 @@ export default function FlightsPageAuthenticated() {
                   setShowFlights(!showFlights);
                   if (!showFlights) {
                     setShowFlashcards(false);
+                    setShowStays(false);
+                    setShowItinerary(false);
+                    setShowDateSelector(false);
+                    setSelectedTrip(null);
+                    if (flashcardsRef.current) {
+                      flashcardsRef.current.clearSelection();
+                    }
+                  }
+                }}
+                onStaysToggle={() => {
+                  setShowStays(!showStays);
+                  if (!showStays) {
+                    setShowFlashcards(false);
+                    setShowFlights(false);
                     setShowItinerary(false);
                     setShowDateSelector(false);
                     setSelectedTrip(null);
@@ -1421,6 +1706,7 @@ export default function FlightsPageAuthenticated() {
                   if (!showItinerary) {
                     setShowFlashcards(false);
                     setShowFlights(false);
+                    setShowStays(false);
                     setShowDateSelector(false);
                     setSelectedTrip(null);
                     if (flashcardsRef.current) {
@@ -1433,6 +1719,7 @@ export default function FlightsPageAuthenticated() {
                   if (!showDateSelector) {
                     setShowFlashcards(false);
                     setShowFlights(false);
+                    setShowStays(false);
                     setShowItinerary(false);
                     setSelectedTrip(null);
                     if (flashcardsRef.current) {
@@ -1506,7 +1793,24 @@ export default function FlightsPageAuthenticated() {
                                 onToggle={() => setShowFlights(false)}
                                 initialFromCity={conveyanceFromCity}
                                 initialToCity={conveyanceToCity}
+                                userId={userId}
+                                sessionId={sessionId}
+                                currentDayNumber={currentDayNumber}
                                 onContinue={handleFlightsContinue}
+                              />
+                            </div>
+                          </div>
+                        ) : showStays ? (
+                          <div className="h-full flex flex-col relative">
+                            <div className="flex-1 min-h-0 overflow-hidden">
+                              <StaysWidget
+                                isVisible={showStays}
+                                onToggle={() => setShowStays(false)}
+                                initialCity={stayCity}
+                                userId={userId}
+                                sessionId={sessionId}
+                                currentDayNumber={currentDayNumber}
+                                onContinue={handleStaysContinue}
                               />
                             </div>
                           </div>

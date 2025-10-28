@@ -11,12 +11,14 @@ interface ChatNavbarProps {
   onLogout: () => void;
   showFlashcards: boolean;
   showFlights: boolean;
+  showStays: boolean;
   showItinerary: boolean;
   showDateSelector: boolean;
   showDebug: boolean;
   testEndResponse?: boolean;
   onFlashcardsToggle: () => void;
   onFlightsToggle: () => void;
+  onStaysToggle: () => void;
   onItineraryToggle: () => void;
   onDateSelectorToggle: () => void;
   onDebugToggle: () => void;
@@ -31,12 +33,14 @@ export function ChatNavbar({
   onLogout,
   showFlashcards,
   showFlights,
+  showStays,
   showItinerary,
   showDateSelector,
   showDebug,
   testEndResponse = false,
   onFlashcardsToggle,
   onFlightsToggle,
+  onStaysToggle,
   onItineraryToggle,
   onDateSelectorToggle,
   onDebugToggle,
@@ -98,6 +102,26 @@ export function ChatNavbar({
                 <span
                   className={`inline-block h-3 w-3 transform rounded-full bg-white shadow-sm transition-transform ${
                     showFlights ? "translate-x-5" : "translate-x-1"
+                  }`}
+                />
+              </button>
+            </div>
+
+            {/* Stays Toggle */}
+            <div className="flex items-center space-x-2">
+              <span className="text-xs text-gray-500">Stays</span>
+              <button
+                onClick={onStaysToggle}
+                className={`relative inline-flex h-5 w-9 items-center rounded-full transition-all duration-300 ${
+                  showStays
+                    ? "bg-green-500 border-green-400 shadow-md shadow-green-200"
+                    : "bg-gray-300 border-gray-400 hover:bg-gray-400"
+                } border`}
+                title="Toggle Stays Search"
+              >
+                <span
+                  className={`inline-block h-3 w-3 transform rounded-full bg-white shadow-sm transition-transform ${
+                    showStays ? "translate-x-5" : "translate-x-1"
                   }`}
                 />
               </button>

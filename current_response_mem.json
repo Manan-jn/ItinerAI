@@ -1,0 +1,217 @@
+"final_trip": {
+        "trip_title": "Mumbai and the Hills",
+        "no_of_days": 4,
+        "estimated_budget": 60000,
+        "best_time_to_visit": "October to May",
+        "themes": [
+            "city",
+            "hill_station",
+            "nature"
+        ],
+        "trip_route": [
+            {
+                "place_name": "Mumbai",
+                "address": "Mumbai, Maharashtra, India",
+                "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJwe1EZjDG5zsRaYxkjY_tpF0",
+                "lat": "18.9581934",
+                "long": "72.8320729",
+                "photos": [
+                    "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU4b4YDEquYqgC5vrSHhJNWRFA_GWTgyWNEj_fnAbUsoQROiK1aJcyQDP7TqUHxbm4AYatGy_mPUOSGhwtATu1Opu5M6QantvH8VD2jbaufwCUga5KycT8d8euhypx_CRNoMzjOwzTHHr9U2a4Xawlg2Qv6tY8Uh03r_qbICmqE4S4LP37bVF6hj3S2a8ltkCx4SToKOUQdlrSvsAgurgGazTG8VC6xWNzrjHzb8TjiCihYWTc86HaXthr7r285B-S8o8bYCVcxIzvhirkznRpMgswzT_ZeKNRzp2eZsV3Hyz3GK1IRNIEUNNgl5t_magG91h150vj1IReK3ZrEfTUwFjGlFAk9YybtyFL7RA7aDUd4u5FvPjRufv4pcbDWnvLdGAk0FcESEBfopt0rj5syaz5FbHn1s2iHldtS7oeNrRcLw5w-M7o_BpRxghdYwlWcTidSnrBjgv-bcZJrp2uXFK7cNy5NmREO-l_DxoLhBVn8wKrC99R-czL_-m-IBDfqlZ70rojtRUO69BxmH0EG8kDYb8_fwx1oJr7bYgslvDgoq7y03QdpNDbYoUhsba70-rC2R&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                ],
+                "place_id": "ChIJwe1EZjDG5zsRaYxkjY_tpF0"
+            },
+            {
+                "place_name": "Lonavala",
+                "address": "Lonavala, Maharashtra, India",
+                "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJRYHfiwkB6DsRWIbipWBKa2k",
+                "lat": "18.7557237",
+                "long": "73.4090757",
+                "photos": [
+                    "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6gaplXtcOMszU77A04Vj8Cgcy0saHck_gEKKhe5Bi5uJvbKmpLF7CJbUXYBDxFmVNMPl45kE2SypACQg9M1Ku0_ueFbb4erkFNtcTpsCwCo81x3DjZe08o93Ffby9I4qN6Aqo4I1WrNPMhhasbw11MPvOxo_8Ke29Xl4UfznC5duAe-YOt5tVKNrbACkdQjqKjz4eQCNJlrB4UBq2MhEHe6kwc7vGIOWRF-hOGDRCItrNM-wMzdI4DVGn0rWEtYTCkbi2jxhkh1JVLfp_NTU8aWjdcDj48zwUkuvK-N-CiRBqV-3MBzmUhJKPtoWiSMJnHA6GNFDNqDmruDZfhzypYGVmIhOu7AtgLDWgtE7yvvs0TqBQviC_EQA2Z99cQ89G55FImNDDiOD9bPnBbc8Aw5-0R8cM8l42YM_tx3DaYZmhsQv_ERVvYngZQK3k5cfRVJx_PWMdvDGBZYdJqhnjAy2T839QIoI3qzdaCWI683D3-4spM7P_l48sxV8SbjOoBHjyJUSWJeK2Ekgg-MyaKTASoQZLG3gH2yQCE7I6tQwczJhI7eybZNU7YBPLHspvKOw&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                ],
+                "place_id": "ChIJRYHfiwkB6DsRWIbipWBKa2k"
+            }
+        ],
+        "day_wise_plan": [
+            {
+                "day_number": 1,
+                "conveyance_details": {
+                    "is_required": true,
+                    "travel_timing": "morning",
+                    "from_city": "user_location",
+                    "to_city": "Mumbai"
+                },
+                "stay_details": {
+                    "is_required": true,
+                    "city": "Lonavala",
+                    "check_in_day": "1",
+                    "check_out_day": "3"
+                },
+                "must_do_activities": [
+                    {
+                        "type": "transport",
+                        "category": "scenic_drive",
+                        "name": "Travel to Lonavala",
+                        "description": "Enjoy a scenic drive from Mumbai to the hill station of Lonavala."
+                    }
+                ]
+            },
+            {
+                "day_number": 2,
+                "conveyance_details": {
+                    "is_required": false
+                },
+                "stay_details": {
+                    "is_required": false
+                },
+                "must_do_activities": [
+                    {
+                        "type": "place",
+                        "category": "viewpoint",
+                        "name": "Tiger's Leap",
+                        "description": "Enjoy breathtaking views of the valley from this clifftop."
+                    },
+                    {
+                        "type": "place",
+                        "category": "dam",
+                        "name": "Bhushi Dam",
+                        "description": "Have fun in the water at this popular dam, especially during the monsoon."
+                    },
+                    {
+                        "type": "place",
+                        "category": "cultural_site",
+                        "name": "Karla Caves",
+                        "description": "Explore these ancient Buddhist rock-cut caves."
+                    }
+                ]
+            },
+            {
+                "day_number": 3,
+                "conveyance_details": {
+                    "is_required": true,
+                    "travel_timing": "morning",
+                    "from_city": "Lonavala",
+                    "to_city": "Mumbai"
+                },
+                "stay_details": {
+                    "is_required": true,
+                    "city": "Mumbai",
+                    "check_in_day": "3",
+                    "check_out_day": "5"
+                },
+                "must_do_activities": [
+                    {
+                        "type": "place",
+                        "category": "beach",
+                        "name": "Juhu Beach",
+                        "description": "Relax and enjoy the evening at this famous Mumbai beach."
+                    }
+                ]
+            },
+            {
+                "day_number": 4,
+                "conveyance_details": {
+                    "is_required": true,
+                    "travel_timing": "evening",
+                    "from_city": "Mumbai",
+                    "to_city": "user_location"
+                },
+                "stay_details": {
+                    "is_required": false
+                },
+                "must_do_activities": [
+                    {
+                        "type": "place",
+                        "category": "temple",
+                        "name": "Siddhivinayak Temple",
+                        "description": "Visit this famous temple dedicated to Lord Ganesha."
+                    },
+                    {
+                        "type": "place",
+                        "category": "bridge",
+                        "name": "Bandra-Worli Sea Link",
+                        "description": "Drive across this iconic cable-stayed bridge for stunning views of the city."
+                    }
+                ]
+            },
+            {
+                "day_number": 1,
+                "conveyance_details": {
+                    "is_required": true,
+                    "travel_timing": "morning",
+                    "from_city": "user_location",
+                    "to_city": "Mumbai",
+                    "type": "flight",
+                    "number": "SG8446",
+                    "operator": "SpiceJet",
+                    "departure_date": "Dec 01, 2025",
+                    "departure_time": "22:00",
+                    "arrival_date": "Dec 02, 2025",
+                    "arrival_time": "00:13+1",
+                    "duration": "2h 13m",
+                    "price": 3627,
+                    "selected_from_city": "Mumbai",
+                    "selected_to_city": "Mumbai"
+                },
+                "stay_details": {
+                    "is_required": true,
+                    "city": "Lonavala",
+                    "check_in_day": "1",
+                    "check_out_day": "3"
+                },
+                "must_do_activities": [
+                    {
+                        "type": "transport",
+                        "category": "scenic_drive",
+                        "name": "Travel to Lonavala",
+                        "description": "Enjoy a scenic drive from Mumbai to the hill station of Lonavala."
+                    }
+                ]
+            },
+            {
+                "day_number": 1,
+                "conveyance_details": {
+                    "is_required": true,
+                    "travel_timing": "morning",
+                    "from_city": "user_location",
+                    "to_city": "Mumbai",
+                    "type": "flight",
+                    "number": "SG8446",
+                    "operator": "SpiceJet",
+                    "departure_date": "Dec 01, 2025",
+                    "departure_time": "22:00",
+                    "arrival_date": "Dec 02, 2025",
+                    "arrival_time": "00:13+1",
+                    "duration": "2h 13m",
+                    "price": 3627,
+                    "selected_from_city": "Mumbai",
+                    "selected_to_city": "Mumbai"
+                },
+                "stay_details": {
+                    "is_required": true,
+                    "city": "Mumbai",
+                    "check_in_day": "1",
+                    "check_out_day": "3",
+                    "property_name": "Four Seasons Hotel Mumbai",
+                    "property_address": "Worli, Mumbai",
+                    "property_location": "Mumbai",
+                    "state": "Maharashtra",
+                    "country": "India",
+                    "overall_rating": 4.8,
+                    "starting_price": "12608",
+                    "currency": "INR",
+                    "available_rooms_total": 20,
+                    "available_from_date": "2025-12-11",
+                    "available_until_date": "2025-12-13"
+                },
+                "must_do_activities": [
+                    {
+                        "type": "transport",
+                        "category": "scenic_drive",
+                        "name": "Travel to Lonavala",
+                        "description": "Enjoy a scenic drive from Mumbai to the hill station of Lonavala."
+                    }
+                ]
+            }
+        ]
+    },
