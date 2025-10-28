@@ -60,7 +60,7 @@ async def modify_output_after_agent(callback_context: CallbackContext) -> Option
         
         str_response = [part for part in agent_response_content.parts if part.text and not part.thought]
         str_response = "\n".join([part.text for part in str_response])
-        print(f"str_response of agent {agent_name} with invocation id {invocation_id}: ", str_response)
+
         json_response = await string_to_json(str_response)
         if not json_response:
             return None 
