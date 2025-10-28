@@ -70,6 +70,11 @@ async def modify_output_after_agent(callback_context: CallbackContext) -> Option
                 parts=[types.Part(text=json.dumps(current_state.get("trip_suggestions")))],
                 role='model'
             )
+        elif json_response['response_type'] == 'itinerary':
+            return types.Content(
+                parts=[types.Part(text=json.dumps(current_state.get("itinerary")))],
+                role='model'
+            )
         else:
             return None
     except Exception as e:
