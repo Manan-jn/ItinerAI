@@ -2,6 +2,8 @@ from google.adk.agents import LlmAgent
 from google.adk.tools.agent_tool import AgentTool
 from google.genai.types import GenerateContentConfig, ThinkingConfig
 from google.adk.planners import BuiltInPlanner
+# from google.adk.tools.google_search_tool import google_search
+# from google.adk.tools.google_maps_grounding_tool import google_maps_grounding
 
 # from google.genai import types
 # from google.adk.planners.built_in_planner import BuiltInPlanner
@@ -11,6 +13,7 @@ from .tools.memory import _set_initial_state
 from .tools.big_query import conveyance_query_tool, stay_query_tool
 from .tools.memory import memorize
 from .tools.search import google_search_agent
+from .tools.maps import google_maps_agent
 from .sub_agents.onboarding.agent import onboarding_agent
 from .sub_agents.inspiration.agent import trip_agent
 from .sub_agents.origin.agent import origin_agent
@@ -52,7 +55,7 @@ conveyance_agent = LlmAgent(
     tools=[memorize, conveyance_query_tool, AgentTool(agent=google_search_agent)],
     planner=BuiltInPlanner(
         thinking_config=ThinkingConfig(
-            include_thoughts=False,
+            include_thoughts=True,
             # thinking_budget=2048
         )
     )
@@ -71,7 +74,7 @@ stay_agent = LlmAgent(
     tools=[memorize, stay_query_tool, AgentTool(agent=google_search_agent)],
     planner=BuiltInPlanner(
         thinking_config=ThinkingConfig(
-            include_thoughts=False,
+            include_thoughts=True,
             # thinking_budget=2048
         )
     )
@@ -87,17 +90,18 @@ itinerary_agent = LlmAgent(
     disallow_transfer_to_peers=True,
     after_agent_callback=[modify_state_after_agent],
     generate_content_config=GenerateContentConfig(temperature=0.3),
-    tools=[AgentTool(agent=google_search_agent)],
+    tools=[AgentTool(agent=google_search_agent), AgentTool(agent=google_maps_agent)],
+    # tools = [google_search],
     planner=BuiltInPlanner(
         thinking_config=ThinkingConfig(
-            include_thoughts=False,
+            include_thoughts=True,
             # thinking_budget=2048
         )
     )
 )
 
 # root_agent = onboarding_agent
-# root_agent = itinerary_agent
+# root_agent = google_maps_agent
 # root_agent = conveyance_agent
 # root_agent = trip_agent
 # root_agent = bigquery_agent

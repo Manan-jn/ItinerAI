@@ -48,7 +48,7 @@ async def root_agent_chat(
         ):
             if event.is_final_response():
                 if event.content and event.content.parts:
-                    final_text = [part.text for part in event.content.parts if part.text]
+                    final_text = [part.text for part in event.content.parts if part.text and not part.thought]
                     final_text = '\n'.join(final_text)
 
         final_json_text = await string_to_json(final_text)
@@ -88,7 +88,7 @@ async def conveyance_agent_chat(
         ):
             if event.is_final_response():
                 if event.content and event.content.parts:
-                    final_text = [part.text for part in event.content.parts if part.text]
+                    final_text = [part.text for part in event.content.parts if part.text and not part.thought]
                     final_text = '\n'.join(final_text)
 
         final_json_text = await string_to_json(final_text)
@@ -125,7 +125,7 @@ async def stay_agent_chat(
         ):
             if event.is_final_response():
                 if event.content and event.content.parts:
-                    final_text = [part.text for part in event.content.parts if part.text]
+                    final_text = [part.text for part in event.content.parts if part.text and not part.thought]
                     final_text = '\n'.join(final_text)
 
         final_json_text = await string_to_json(final_text)
@@ -161,7 +161,7 @@ async def itinerary_agent_chat(
         ):
             if event.is_final_response():
                 if event.content and event.content.parts:
-                    final_text = [part.text for part in event.content.parts if part.text]
+                    final_text = [part.text for part in event.content.parts if part.text and not part.thought]
                     final_text = '\n'.join(final_text)
 
         final_json_text = await string_to_json(final_text)
