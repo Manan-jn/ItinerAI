@@ -103,5 +103,5 @@ itinerary_agent = LlmAgent(
 # root_agent = onboarding_agent
 # root_agent = google_maps_agent
 # root_agent = conveyance_agent
-root_agent = trip_agent
+# root_agent = trip_agent
 # root_agent = bigquery_agent
