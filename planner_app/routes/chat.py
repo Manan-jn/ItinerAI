@@ -27,9 +27,9 @@ async def root_agent_chat(
         app = App(
             name="planner_ai",
             root_agent=root_agent,
-            context_cache_config=ContextCacheConfig(
-                cache_intervals=10
-            ),
+            # context_cache_config=ContextCacheConfig(
+            #     cache_intervals=10
+            # ),
         )
         runner = Runner(
             app=app,
@@ -72,9 +72,15 @@ async def conveyance_agent_chat(
     request: ChatRequest, session_service: SessionManager = Depends(get_session_service)
 ):
     try:
+        app = App(
+            name="planner_ai",
+            root_agent=conveyance_agent,
+            # context_cache_config=ContextCacheConfig(
+            #     cache_intervals=10
+            # ),
+        )
         runner = Runner(
-            app_name="planner_ai",
-            agent=conveyance_agent,
+            app=app,
             session_service=session_service.session_service,
         )
 
@@ -109,9 +115,15 @@ async def stay_agent_chat(
     request: ChatRequest, session_service: SessionManager = Depends(get_session_service)
 ):
     try:
+        app = App(
+            name="planner_ai",
+            root_agent=stay_agent,
+            # context_cache_config=ContextCacheConfig(
+            #     cache_intervals=10
+            # ),
+        )
         runner = Runner(
-            app_name="planner_ai",
-            agent=stay_agent,
+            app=app,
             session_service=session_service.session_service,
         )
 
@@ -145,9 +157,15 @@ async def itinerary_agent_chat(
     request: ChatRequest, session_service: SessionManager = Depends(get_session_service)
 ):
     try:
+        app = App(
+            name="planner_ai",
+            root_agent=itinerary_agent,
+            # context_cache_config=ContextCacheConfig(
+            #     cache_intervals=10
+            # ),
+        )
         runner = Runner(
-            app_name="planner_ai",
-            agent=itinerary_agent,
+            app=app,
             session_service=session_service.session_service,
         )
 

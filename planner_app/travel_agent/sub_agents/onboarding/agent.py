@@ -14,7 +14,7 @@ from ...shared_libraries.callbacks import modify_state_after_agent, logger_befor
 onboarding_agent = LlmAgent(
     name="onboarding_agent",
     description="An agent that gathers first level information from the user to build the user profile",
-    model="gemini-2.5-flash",
+    model="gemini-2.5-pro",
     output_key="onboarding_agent",
     # output_schema = OnboardingAgent,
     instruction=prompt.ONBOARDING_AGENT_INSTR,
@@ -28,9 +28,9 @@ onboarding_agent = LlmAgent(
             include_thoughts=True
         )
     ),
-    # generate_content_config=GenerateContentConfig(
+    generate_content_config=GenerateContentConfig(
         # response_mime_type = "application/json"
-        # temperature=0.3
-    # ),
+        temperature=0.3
+    ),
     tools=[memorize],
 )

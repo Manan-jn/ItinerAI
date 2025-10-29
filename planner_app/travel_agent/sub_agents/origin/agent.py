@@ -18,13 +18,13 @@ origin_agent = LlmAgent(
     instruction=prompt.ORIGIN_AGENT_INSTR,
     output_key="origin_agent",
     # output_schema = SourceLocation,
-    disallow_transfer_to_parent=True,
-    disallow_transfer_to_peers=True,
+    disallow_transfer_to_parent=False,
+    disallow_transfer_to_peers=False,
     after_agent_callback=[modify_state_after_agent, map_tool],
     tools=[memorize, conveyance_query_tool, AgentTool(agent=google_search_agent)],
     planner=BuiltInPlanner(
         thinking_config=ThinkingConfig(
-            include_thoughts=False
+            include_thoughts=True
         )
     )
 )

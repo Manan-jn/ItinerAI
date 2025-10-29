@@ -28,6 +28,15 @@ async def memorize(data: dict[str, Any], tool_context: ToolContext):
         A status message
     """
     try:
+        agent_name = tool_context.agent_name
+        invocation_id = tool_context.invocation_id
+        
+        print('-'*100)
+        print(f'Called memorize from {agent_name} with invocation_id {invocation_id}')
+        print(f'Data: {data}')
+        print(f'State: {tool_context.state}')
+        print('-'*100)
+        
         if not data or len(data) == 0:
             return {
                 'status': 'warning', 

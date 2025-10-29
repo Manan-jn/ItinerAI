@@ -150,7 +150,7 @@ You are **not responsible** for suggesting or finalizing the conveyance options 
   - If the user requests changes or clarification, re-run your logic and update suggestions accordingly.
 
 ** 4. Finalize & Store **
-  - Once the user confirms, use `memorize` to save the final start point in the following format:    
+  - Once the user confirms, **use `memorize` to save the final start point** in the following format:    
     ```
     memorize({
         "source_point": {
@@ -181,5 +181,4 @@ Always respond in the following structured JSON format:
   "message" str: "", (Your response to display to the user, keep it empty if 'response_type' is 'origin')
 }}
 ```
-</RESPONSE_FORMAT>
 """

@@ -22,7 +22,7 @@ from .shared_libraries.callbacks import (
 
 root_agent = LlmAgent(
     name="root_agent",
-    model="gemini-2.5-flash",
+    model="gemini-2.5-pro",
     description="Orchestrator Agent responsible for planning end-to-end dream vacation trip for the user.",
     # global_instruction="""
     # - You are not allowed to share your internal thoughts or reasoning with the user.
@@ -44,7 +44,7 @@ root_agent = LlmAgent(
 conveyance_agent = LlmAgent(
     name="conveyance_agent",
     description="An agent that recommends the conveyance options",
-    model="gemini-2.5-pro",
+    model="gemini-2.5-flash",
     instruction=prompt.CONVEYANCE_AGENT_INSTR,
     output_key="conveyance_agent",
     disallow_transfer_to_parent=True,
@@ -108,3 +108,7 @@ itinerary_agent = LlmAgent(
 # root_agent = trip_agent
 # root_agent = itinerary_agent
 # root_agent = bigquery_agent
+# {
+#     "role":"user",
+#     "query": "Hi"
+# }
