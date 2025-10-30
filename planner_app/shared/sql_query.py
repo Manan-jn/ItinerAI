@@ -10,14 +10,14 @@ from .logging import logger
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
 dotenv.load_dotenv(os.path.join(BASE_DIR, '.env'))
 
-key_contents_str = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+auth_file_path = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
 # if key_contents_str:
-key_contents = json.loads(key_contents_str)
+# key_contents = json.loads(key_contents_str)
 # else:
 #     # Fall back to reading from auth.json file
-#     auth_file_path = os.path.join(os.path.dirname(__file__), "../../auth.json")
-#     with open(auth_file_path, 'r') as f:
-#         key_contents = json.load(f) 
+# auth_file_path = os.path.join(os.path.dirname(__file__), "../../auth.json")
+with open(auth_file_path, 'r') as f:
+    key_contents = json.load(f) 
 
 credentials = service_account.Credentials.from_service_account_info(
     key_contents,
