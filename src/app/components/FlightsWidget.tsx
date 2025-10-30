@@ -11,7 +11,10 @@ import {
   FiCheck,
 } from "react-icons/fi";
 import { MdFlight, MdTrain, MdDirectionsBus } from "react-icons/md";
-import { getConveyanceDataForWidget, formatConveyanceForDisplay } from "../utils/preFetchIntegration";
+import {
+  getConveyanceDataForWidget,
+  formatConveyanceForDisplay,
+} from "../utils/preFetchIntegration";
 
 interface FlightsWidgetProps {
   isVisible: boolean;
@@ -19,7 +22,8 @@ interface FlightsWidgetProps {
   initialFromCity?: string;
   initialToCity?: string;
   initialDepartureDate?: string; // NEW: Initial departure date in YYYY-MM-DD format
-  autoFillMode?: boolean; // NEW: If true, fields are auto-filled and disabled
+  autoFillMode?: boolean; // NEW: If true, ALL fields are auto-filled and disabled
+  partialAutoFillMode?: boolean; // NEW: If true, only FROM and DATE are fixed, TO is selectable
   onContinue?: (selectedConveyanceData?: TransportOption) => void;
   userId?: string;
   sessionId?: string;
@@ -515,6 +519,10 @@ interface TransportOption {
   arrivalTime: string;
   duration: string;
   price: number;
+  // Enriched metadata for parent flows
+  from_city?: string;
+  to_city?: string;
+  is_required?: boolean;
 }
 
 // Transport results grouped by mode
@@ -770,10 +778,13 @@ const sampleTrains: TransportOption[] = [
 ];
 
 // Parse utility flights data
-const parseUtilityFlightData = (flights: UtilityFlightData[]): TransportOption[] => {
+const parseUtilityFlightData = (
+  flights: UtilityFlightData[]
+): TransportOption[] => {
   return flights.map((flight) => {
     // Get price based on travel class (default to economy)
-    const price = flight.price.economy || flight.price.business || flight.price.first || 0;
+    const price =
+      flight.price.economy || flight.price.business || flight.price.first || 0;
 
     // Format date
     const formatDate = (dateStr: string) => {
@@ -809,7 +820,9 @@ const parseUtilityFlightData = (flights: UtilityFlightData[]): TransportOption[]
 };
 
 // Parse utility trains data
-const parseUtilityTrainData = (trains: UtilityTrainData[]): TransportOption[] => {
+const parseUtilityTrainData = (
+  trains: UtilityTrainData[]
+): TransportOption[] => {
   return trains.map((train) => {
     // Get price based on available class (priority: 3AC > 2AC > SL > 1AC)
     const price =
@@ -1473,6 +1486,7 @@ export default function FlightsWidget({
   initialToCity,
   initialDepartureDate,
   autoFillMode = false,
+  partialAutoFillMode = false,
   onContinue,
   userId,
   sessionId,
@@ -1503,11 +1517,17 @@ export default function FlightsWidget({
   const [fromCity, setFromCity] = useState(initialFromCity || "New Delhi");
   const [toCity, setToCity] = useState(initialToCity || "Mumbai");
   const [bookedOption, setBookedOption] = useState<string | null>(null);
-  const [selectedConveyanceData, setSelectedConveyanceData] = useState<TransportOption | null>(null);
+  const [selectedConveyanceData, setSelectedConveyanceData] =
+    useState<TransportOption | null>(null);
 
   // Update cities when initial props change
   useEffect(() => {
-    console.log("🛫 FlightsWidget received props - From:", initialFromCity, "To:", initialToCity);
+    console.log(
+      "🛫 FlightsWidget received props - From:",
+      initialFromCity,
+      "To:",
+      initialToCity
+    );
     if (initialFromCity) {
       console.log("🛫 Setting FROM city to:", initialFromCity);
       setFrom(initialFromCity);
@@ -1523,33 +1543,77 @@ export default function FlightsWidget({
   // Log when widget becomes visible
   useEffect(() => {
     if (isVisible) {
-      console.log("🛫 FlightsWidget is now visible. Current cities - From:", from, "To:", to);
+      console.log(
+        "🛫 FlightsWidget is now visible. Current cities - From:",
+        from,
+        "To:",
+        to
+      );
     }
   }, [isVisible, from, to]);
 
-  // Auto-fill departure date when coming from date selector route
+  // Auto-fill departure date when coming from date selector route or partial auto-fill mode
   useEffect(() => {
-    if (isVisible && autoFillMode && initialDepartureDate && !departureDate) {
+    if (
+      isVisible &&
+      (autoFillMode || partialAutoFillMode) &&
+      initialDepartureDate &&
+      !departureDate
+    ) {
       console.log("🚀 Auto-fill mode enabled - setting departure date...");
       console.log("📅 Setting departure date to:", initialDepartureDate);
       setDepartureDate(initialDepartureDate);
     }
-  }, [isVisible, autoFillMode, initialDepartureDate, departureDate]);
+  }, [
+    isVisible,
+    autoFillMode,
+    partialAutoFillMode,
+    initialDepartureDate,
+    departureDate,
+  ]);
 
   // Auto-trigger search when all fields are ready in auto-fill mode
   useEffect(() => {
-    if (isVisible && autoFillMode && from && to && departureDate && !showResults) {
-      console.log("✅ All fields ready for auto-search:", { from, to, departureDate });
-      
+    if (
+      isVisible &&
+      autoFillMode &&
+      from &&
+      to &&
+      departureDate &&
+      !showResults
+    ) {
+      console.log("✅ All fields ready for auto-search (full auto-fill):", {
+        from,
+        to,
+        departureDate,
+      });
+
       // Trigger search after a short delay
       const timer = setTimeout(async () => {
         console.log("🔍 Auto-triggering search with pre-filled data...");
         await handleSearch();
       }, 500);
-      
+
       return () => clearTimeout(timer);
     }
   }, [isVisible, autoFillMode, from, to, departureDate, showResults]);
+
+  // NOTE: Disabled auto-trigger search for partial auto-fill mode
+  // User should manually click search after selecting TO city
+  // This allows user to review FROM, TO, and DATE before searching
+  // useEffect(() => {
+  //   if (isVisible && partialAutoFillMode && from && to && departureDate && !showResults) {
+  //     console.log("✅ All fields ready for auto-search (partial auto-fill):", { from, to, departureDate });
+  //
+  //     // Trigger search after a short delay
+  //     const timer = setTimeout(async () => {
+  //       console.log("🔍 Auto-triggering search with partial auto-fill...");
+  //       await handleSearch();
+  //     }, 500);
+  //
+  //     return () => clearTimeout(timer);
+  //   }
+  // }, [isVisible, partialAutoFillMode, from, to, departureDate, showResults]);
 
   // Helper function to format date for display
   const formatDateForMessage = (dateStr: string) => {
@@ -1651,8 +1715,14 @@ export default function FlightsWidget({
   };
 
   const handleSearch = async () => {
-    console.log("🔍 handleSearch called - Current state:", { from, to, departureDate, fromCity, toCity });
-    
+    console.log("🔍 handleSearch called - Current state:", {
+      from,
+      to,
+      departureDate,
+      fromCity,
+      toCity,
+    });
+
     if (!from || !to || !departureDate) {
       console.error("❌ Missing required fields:", { from, to, departureDate });
       alert("Please fill in all required fields: From, To, and Departure Date");
@@ -1679,27 +1749,38 @@ export default function FlightsWidget({
 
       // Check for pre-fetched data if userId is available
       if (userId) {
-        console.log(`🔍 Checking for pre-fetched data for route: ${from} → ${to} on ${dateStr}...`);
-        const cachedData = await getConveyanceDataForWidget(userId, from, to, dateStr);
-        
+        console.log(
+          `🔍 Checking for pre-fetched data for route: ${from} → ${to} on ${dateStr}...`
+        );
+        const cachedData = await getConveyanceDataForWidget(
+          userId,
+          from,
+          to,
+          dateStr
+        );
+
         if (cachedData) {
           console.log("✅ Found pre-fetched data! Using cached results.");
-          
+
           // Parse pre-fetched data
           const aiFlights = parseFlightData(cachedData.aiFlights);
           const aiTrains = parseTrainData(cachedData.aiTrains);
           const utilFlights = parseUtilityFlightData(cachedData.utilityFlights);
           const utilTrains = parseUtilityTrainData(cachedData.utilityTrains);
-          
+
           // Set results from pre-fetched data
           setSearchResults({ flights: aiFlights, trains: aiTrains, buses: [] });
-          setUtilityResults({ flights: utilFlights, trains: utilTrains, buses: [] });
+          setUtilityResults({
+            flights: utilFlights,
+            trains: utilTrains,
+            buses: [],
+          });
           setShowResults(true);
           setIsLoadingComplete(true);
           setIsUtilityComplete(true);
           setIsLoading(false);
           setIsLoadingUtility(false);
-          
+
           console.log("✅ Pre-fetched data loaded:", {
             aiFlights: aiFlights.length,
             aiTrains: aiTrains.length,
@@ -1707,50 +1788,55 @@ export default function FlightsWidget({
             utilTrains: utilTrains.length,
             source: cachedData.isCached ? "cached" : "fresh",
           });
-          
+
           return; // Exit early, no need to make API calls
         } else {
-          console.log("ℹ️ No pre-fetched data found, proceeding with API calls...");
+          console.log(
+            "ℹ️ No pre-fetched data found, proceeding with API calls..."
+          );
         }
       }
 
       // Make parallel API calls to utility/conveyance for flights and trains
-      const [flightsResponse, trainsResponse, aiResponse] = await Promise.allSettled([
-        // Utility API call for flights
-        fetch("/api/utility/conveyance", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            conveyance_type: "flights",
-            departure_city: from,
-            arrival_city: to,
-            from_date: dateStr,
-            to_date: dateStr,
+      const [flightsResponse, trainsResponse, aiResponse] =
+        await Promise.allSettled([
+          // Utility API call for flights
+          fetch("/api/utility/conveyance", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              conveyance_type: "flights",
+              departure_city: from,
+              arrival_city: to,
+              from_date: dateStr,
+              to_date: dateStr,
+            }),
           }),
-        }),
-        // Utility API call for trains
-        fetch("/api/utility/conveyance", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            conveyance_type: "trains",
-            departure_city: from,
-            arrival_city: to,
-            from_date: dateStr,
-            to_date: dateStr,
+          // Utility API call for trains
+          fetch("/api/utility/conveyance", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              conveyance_type: "trains",
+              departure_city: from,
+              arrival_city: to,
+              from_date: dateStr,
+              to_date: dateStr,
+            }),
           }),
-        }),
-        // AI recommendations call (existing)
-        fetch("/api/conveyance", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            user_id: userId || "user123",
-            session_id: sessionId || "session456",
-            message: `Give me all the travel options from ${from} to ${to} on ${formatDateForMessage(departureDate)}`,
+          // AI recommendations call (existing)
+          fetch("/api/conveyance", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              user_id: userId || "user123",
+              session_id: sessionId || "session456",
+              message: `Give me all the travel options from ${from} to ${to} on ${formatDateForMessage(
+                departureDate
+              )}`,
+            }),
           }),
-        }),
-      ]);
+        ]);
 
       // Separate AI results from utility results
       let aiFlights: TransportOption[] = [];
@@ -1782,7 +1868,8 @@ export default function FlightsWidget({
           aiData.message.conveyances &&
           aiData.message.conveyances.conveyance_details
         ) {
-          const conveyanceDetails = aiData.message.conveyances.conveyance_details;
+          const conveyanceDetails =
+            aiData.message.conveyances.conveyance_details;
           if (conveyanceDetails.flights) {
             aiFlights = parseFlightData(conveyanceDetails.flights);
           }
@@ -1858,20 +1945,27 @@ export default function FlightsWidget({
 
   const handleBooking = (optionId: string) => {
     setBookedOption(optionId);
-    
+
     // Find the selected option from all results (both AI and utility)
     const allResults = [
-      ...searchResults.flights, 
-      ...searchResults.trains, 
+      ...searchResults.flights,
+      ...searchResults.trains,
       ...searchResults.buses,
       ...utilityResults.flights,
       ...utilityResults.trains,
-      ...utilityResults.buses
+      ...utilityResults.buses,
     ];
-    const selectedOption = allResults.find(opt => opt.id === optionId);
-    
+    const selectedOption = allResults.find((opt) => opt.id === optionId);
+
     if (selectedOption) {
-      setSelectedConveyanceData(selectedOption);
+      // Enrich with route metadata for upstream consumers
+      const enriched: TransportOption = {
+        ...selectedOption,
+        from_city: from,
+        to_city: to,
+        is_required: true,
+      };
+      setSelectedConveyanceData(enriched);
       console.log("✅ Selected conveyance data:", selectedOption);
     }
   };
@@ -1884,7 +1978,9 @@ export default function FlightsWidget({
       <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 backdrop-blur-sm px-4 py-2 flex-shrink-0 border-b border-gray-200/30">
         <div className="flex items-center justify-between">
           <h2 className="text-gray-800 text-sm font-medium tracking-wide">
-            {currentDayNumber ? `Day ${currentDayNumber} - Search Transport` : "Search Transport"}
+            {currentDayNumber
+              ? `Day ${currentDayNumber} - Search Transport`
+              : "Search Transport"}
           </h2>
           <button
             onClick={onToggle}
@@ -1906,7 +2002,12 @@ export default function FlightsWidget({
               <label className="block text-[10px] text-gray-600 mb-2 uppercase font-semibold tracking-wider">
                 FROM
               </label>
-              <CitySelector value={from} onChange={setFrom} label="From" disabled={autoFillMode} />
+              <CitySelector
+                value={from}
+                onChange={setFrom}
+                label="From"
+                disabled={autoFillMode || partialAutoFillMode}
+              />
             </div>
 
             {/* To */}
@@ -1914,7 +2015,12 @@ export default function FlightsWidget({
               <label className="block text-[10px] text-gray-600 mb-2 uppercase font-semibold tracking-wider">
                 TO
               </label>
-              <CitySelector value={to} onChange={setTo} label="To" disabled={autoFillMode} />
+              <CitySelector
+                value={to}
+                onChange={setTo}
+                label="To"
+                disabled={autoFillMode}
+              />
             </div>
 
             {/* Departure Date */}
@@ -1926,7 +2032,7 @@ export default function FlightsWidget({
                 value={departureDate}
                 onChange={setDepartureDate}
                 placeholder="Select date"
-                disabled={autoFillMode}
+                disabled={autoFillMode || partialAutoFillMode}
               />
             </div>
 
@@ -1947,9 +2053,11 @@ export default function FlightsWidget({
             {/* Smart Search Button */}
             <button
               onClick={handleSearch}
-              disabled={autoFillMode}
+              disabled={autoFillMode && !partialAutoFillMode}
               className={`bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold text-sm px-6 py-2.5 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 border-none ${
-                autoFillMode ? "cursor-not-allowed opacity-60" : "hover:from-blue-600 hover:to-indigo-700 hover:shadow-xl transform hover:scale-105"
+                autoFillMode && !partialAutoFillMode
+                  ? "cursor-not-allowed opacity-60"
+                  : "hover:from-blue-600 hover:to-indigo-700 hover:shadow-xl transform hover:scale-105"
               }`}
             >
               <svg
@@ -2186,7 +2294,8 @@ export default function FlightsWidget({
                   ) : (
                     <div className="text-center py-12 text-gray-500">
                       <p className="text-sm">
-                        No additional {selectedConveyance.toLowerCase()}s available
+                        No additional {selectedConveyance.toLowerCase()}s
+                        available
                       </p>
                     </div>
                   )}
@@ -2202,7 +2311,10 @@ export default function FlightsWidget({
         <div className="absolute bottom-6 right-6 z-20">
           <button
             onClick={() => {
-              console.log("🚀 Continue clicked with selected data:", selectedConveyanceData);
+              console.log(
+                "🚀 Continue clicked with selected data:",
+                selectedConveyanceData
+              );
               onContinue(selectedConveyanceData || undefined);
             }}
             disabled={!bookedOption}
@@ -2214,8 +2326,8 @@ export default function FlightsWidget({
           >
             <div className="flex items-center gap-2">
               <span>Continue</span>
-              <FiChevronRight 
-                size={16} 
+              <FiChevronRight
+                size={16}
                 className={`transition-transform duration-300 ${
                   bookedOption ? "group-hover:translate-x-1" : ""
                 }`}

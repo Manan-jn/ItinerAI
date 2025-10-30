@@ -110,6 +110,8 @@ export default function FlightsPageAuthenticated() {
     useState<any>(null); // Temporary storage for current day's conveyance
   const [itineraryData, setItineraryData] = useState<any>(null); // Store itinerary response
   const [autoFillMode, setAutoFillMode] = useState<boolean>(false); // NEW: Auto-fill mode for FlightsWidget
+  const [partialAutoFillMode, setPartialAutoFillMode] =
+    useState<boolean>(false); // NEW: Partial auto-fill mode (only FROM and DATE locked)
   const [initialDepartureDate, setInitialDepartureDate] = useState<string>(""); // NEW: Initial departure date for FlightsWidget
   const [isLoadingItinerary, setIsLoadingItinerary] = useState(false); // Loading state for itinerary
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -1070,6 +1072,250 @@ export default function FlightsPageAuthenticated() {
     }
   };
 
+  // Handler for adding a new day to the itinerary
+  const handleAddDay = async (
+    extendTrip: boolean,
+    needsConveyance: boolean,
+    currentDayNumber: number
+  ) => {
+    console.log("➕ handleAddDay called:", {
+      extendTrip,
+      needsConveyance,
+      currentDayNumber,
+    });
+
+    if (!selectedTrip || !userId || !sessionId) {
+      console.error("❌ Missing required data for adding day");
+      return;
+    }
+
+    try {
+      // Calculate the new day number - insert AFTER the current day
+      const newDayNumber = currentDayNumber + 1;
+
+      console.log(
+        `📅 Adding day ${newDayNumber} after current day ${currentDayNumber}`
+      );
+
+      // Update trip in Firestore and memory
+      let updatedTrip = { ...selectedTrip };
+
+      if (extendTrip) {
+        // CASE: User wants to extend trip duration
+        console.log(
+          `✅ Extending trip duration from ${updatedTrip.no_of_days} to ${
+            updatedTrip.no_of_days + 1
+          }`
+        );
+
+        // Update local state
+        updatedTrip.no_of_days = updatedTrip.no_of_days + 1;
+      }
+
+      // Find the current city - look for last to_city BEFORE the new day position
+      let fromCity = "Mumbai"; // Default
+
+      // Iterate backwards from currentDayNumber to find the last conveyance with to_city
+      console.log(
+        `🔍 Looking for last to_city before day ${newDayNumber} (checking days 1 to ${currentDayNumber})`
+      );
+
+      for (let i = currentDayNumber - 1; i >= 0; i--) {
+        const day = selectedTrip.day_wise_plan?.[i];
+        console.log(`   Checking day ${i + 1}:`, day?.conveyance_details);
+
+        if (day?.conveyance_details?.to_city) {
+          fromCity = day.conveyance_details.to_city;
+          console.log(`🎯 Found last to_city: ${fromCity} from day ${i + 1}`);
+          break;
+        }
+      }
+
+      // If no to_city found, use trip's source_point if available
+      if (fromCity === "Mumbai" && selectedTrip.source_point?.place_name) {
+        fromCity = selectedTrip.source_point.place_name;
+        console.log(`🎯 Using source_point as from_city: ${fromCity}`);
+      }
+
+      // Normalize city name and handle special cases
+      let normalizedFromCity = fromCity;
+
+      // First, check if it's a special placeholder value
+      if (
+        fromCity.toLowerCase() === "user_location" ||
+        fromCity.toLowerCase() === "user location" ||
+        fromCity.toLowerCase() === "userlocation"
+      ) {
+        console.log(
+          `⚠️ Found placeholder value: ${fromCity}, resolving to actual city...`
+        );
+        // Try to get from source_point or default to Mumbai
+        if (selectedTrip.source_point?.place_name) {
+          normalizedFromCity = selectedTrip.source_point.place_name;
+          console.log(`✅ Resolved to source_point: ${normalizedFromCity}`);
+        } else {
+          normalizedFromCity = "Mumbai";
+          console.log(
+            `⚠️ No source_point found, defaulting to: ${normalizedFromCity}`
+          );
+        }
+      }
+
+      // Capitalize first letter and lowercase the rest
+      normalizedFromCity =
+        normalizedFromCity.charAt(0).toUpperCase() +
+        normalizedFromCity.slice(1).toLowerCase();
+
+      // Handle special city name mappings
+      if (normalizedFromCity === "Delhi") {
+        normalizedFromCity = "New Delhi";
+      }
+
+      // Verify city is in supported cities list
+      const supportedCities = [
+        "Mumbai",
+        "Bangalore",
+        "New Delhi",
+        "Agra",
+        "Leh",
+      ];
+      const isSupportedCity = supportedCities.some(
+        (city) => city.toLowerCase() === normalizedFromCity.toLowerCase()
+      );
+
+      if (!isSupportedCity) {
+        console.log(
+          `⚠️ City "${normalizedFromCity}" is not in supported cities list, defaulting to Mumbai`
+        );
+        normalizedFromCity = "Mumbai";
+      }
+
+      fromCity = normalizedFromCity;
+      console.log(`🚗 Final from_city for new day: ${fromCity}`);
+
+      // Create empty day structure
+      const newDay: any = {
+        day_number: newDayNumber,
+        conveyance_details: {
+          is_required: needsConveyance,
+          from_city: fromCity,
+          to_city: "", // Will be filled by user if conveyance is required
+        },
+      };
+
+      // Insert the new day at the correct position
+      if (!updatedTrip.day_wise_plan) {
+        updatedTrip.day_wise_plan = [];
+      }
+
+      // Insert at position (newDayNumber - 1) to maintain array index = dayNumber - 1
+      updatedTrip.day_wise_plan.splice(newDayNumber - 1, 0, newDay);
+
+      // Re-number all subsequent days
+      for (let i = newDayNumber; i < updatedTrip.day_wise_plan.length; i++) {
+        updatedTrip.day_wise_plan[i].day_number = i + 1;
+      }
+
+      console.log(
+        `✅ Inserted new day ${newDayNumber} and renumbered subsequent days`
+      );
+      console.log(
+        `📊 Updated day_wise_plan has ${updatedTrip.day_wise_plan.length} days`
+      );
+
+      // Store updated trip in Firestore
+      await storeSelectedTrip(userId, sessionId, updatedTrip);
+      setSelectedTrip(updatedTrip);
+      console.log(`✅ Added day ${newDayNumber} to trip in Firestore`);
+
+      if (needsConveyance) {
+        // CASE 1: User needs conveyance - redirect to FlightsWidget
+        console.log(`✈️ Redirecting to FlightsWidget for day ${newDayNumber}`);
+
+        // Calculate departure date for the new day
+        const tripDate = selectedTrip.trip_date;
+        console.log("trip date", tripDate);
+        if (tripDate) {
+          const baseDate = new Date(tripDate);
+          const departureDate = new Date(baseDate);
+          departureDate.setDate(departureDate.getDate() + (newDayNumber - 1));
+          const departureDateStr = departureDate.toISOString().split("T")[0];
+
+          console.log(`📅 Calculated departure date: ${departureDateStr}`);
+
+          // Set current day number
+          setCurrentDayNumber(newDayNumber);
+
+          // Set states for FlightsWidget
+          setConveyanceFromCity(fromCity);
+          setConveyanceToCity(""); // Not prefilled - user selects
+          setAutoFillMode(false); // Not full auto-fill mode
+          setPartialAutoFillMode(true); // Enable partial auto-fill (FROM and DATE locked, TO selectable)
+          setInitialDepartureDate(departureDateStr);
+
+          // Set loader messages
+          setConveyanceLoaderMessages([
+            `Let's find conveyance options for Day ${newDayNumber}`,
+            `Starting from ${fromCity}`,
+            "Finding the best travel options",
+            "Comparing prices and timings",
+          ]);
+
+          console.log("🔄 Closing itinerary and showing loader");
+
+          // Close itinerary widget
+          setShowItinerary(false);
+
+          // Show trip loader
+          setShowTripLoader(true);
+          setIsParsingTrips(true);
+
+          // After 4 seconds, show flights widget
+          setTimeout(() => {
+            setShowTripLoader(false);
+
+            setTimeout(() => {
+              console.log(`✈️ Showing FlightsWidget for day ${newDayNumber}`);
+              setIsParsingTrips(false);
+              setShowFlights(true);
+              setShowFlashcards(false);
+              setShowStays(false);
+              setShowDateSelector(false);
+            }, 700);
+          }, 4000);
+        }
+      } else {
+        // CASE 2: No conveyance needed - call itinerary API directly
+        console.log(
+          `📋 No conveyance needed for day ${newDayNumber}, calling itinerary API`
+        );
+
+        // Store the new day with is_required: false
+        const dayToStore = {
+          day_number: newDayNumber,
+          conveyance_details: {
+            is_required: false,
+          },
+        };
+
+        await storeDayItinerary(
+          userId,
+          sessionId,
+          dayToStore as DayItineraryData
+        );
+        console.log(
+          `✅ Stored day ${newDayNumber} with no conveyance requirement`
+        );
+
+        // Call itinerary API
+        await callItineraryAPI(newDayNumber, true);
+      }
+    } catch (error) {
+      console.error("❌ Error adding new day:", error);
+      alert("Failed to add new day. Please try again.");
+    }
+  };
+
   // Handle date selection from DateSelectorWidget
   const handleDateSelection = async (selectedDate: Date) => {
     console.log("🎯 handleDateSelection called with date:", selectedDate);
@@ -1162,12 +1408,12 @@ export default function FlightsPageAuthenticated() {
           });
         }
 
-        await storeSelectedTrip(userId, sessionId, {
-          ...correctedTrip,
-          trip_date: dateString,
-        });
+        // Add trip_date to correctedTrip
+        correctedTrip.trip_date = dateString;
 
-        // Update the local state with corrected trip
+        await storeSelectedTrip(userId, sessionId, correctedTrip);
+
+        // Update the local state with corrected trip (now includes trip_date)
         setSelectedTrip(correctedTrip);
 
         // Add a message to chat indicating date was selected
@@ -1233,11 +1479,8 @@ export default function FlightsPageAuthenticated() {
                 });
               }
 
-              // Store updated trip with source_point
-              await storeSelectedTrip(userId, sessionId, {
-                ...correctedTrip,
-                trip_date: dateString,
-              });
+              // Store updated trip with source_point (trip_date already added above)
+              await storeSelectedTrip(userId, sessionId, correctedTrip);
 
               // Update local state
               setSelectedTrip(correctedTrip);
@@ -1269,11 +1512,8 @@ export default function FlightsPageAuthenticated() {
                 });
               }
 
-              // Store updated trip with default source_point
-              await storeSelectedTrip(userId, sessionId, {
-                ...correctedTrip,
-                trip_date: dateString,
-              });
+              // Store updated trip with default source_point (trip_date already added above)
+              await storeSelectedTrip(userId, sessionId, correctedTrip);
 
               // Update local state
               setSelectedTrip(correctedTrip);
@@ -1602,6 +1842,157 @@ export default function FlightsPageAuthenticated() {
       }
 
       console.log(`🔍 Checking if day ${currentDayNumber} requires stay...`);
+      console.log(`🔍 Partial auto-fill mode: ${partialAutoFillMode}`);
+
+      // CASE 0: Partial auto-fill mode (Add Day flow) - Route to StaysWidget
+      if (partialAutoFillMode) {
+        console.log(
+          `🚀 Partial auto-fill mode detected - routing to StaysWidget for new day ${currentDayNumber}`
+        );
+
+        // Store conveyance temporarily for handleStaysContinue
+        console.log(
+          `💾 Storing conveyance temporarily for day ${currentDayNumber}:`,
+          selectedConveyanceData
+        );
+        setTempConveyanceSelection(selectedConveyanceData);
+
+        // Update the current day with conveyance details
+        const updatedTrip = { ...selectedTrip };
+        const dayIndex = updatedTrip.day_wise_plan?.findIndex(
+          (d: any) => d.day_number === currentDayNumber
+        );
+
+        if (dayIndex !== -1 && updatedTrip.day_wise_plan) {
+          // Determine cities from selected data (fallback to existing state)
+          const enrichedToCity =
+            (selectedConveyanceData as any).to_city || conveyanceToCity || "";
+          const enrichedFromCity =
+            (selectedConveyanceData as any).from_city ||
+            conveyanceFromCity ||
+            "";
+
+          // Also reflect in component state for downstream flows
+          if (enrichedFromCity) setConveyanceFromCity(enrichedFromCity);
+          if (enrichedToCity) setConveyanceToCity(enrichedToCity);
+
+          updatedTrip.day_wise_plan[dayIndex].conveyance_details = {
+            is_required: true,
+            from_city: enrichedFromCity,
+            to_city: enrichedToCity,
+            type: selectedConveyanceData.operator.includes("Train")
+              ? "train"
+              : selectedConveyanceData.operator.includes("Bus")
+              ? "bus"
+              : "flight",
+            number: selectedConveyanceData.number,
+            operator: selectedConveyanceData.operator,
+            departure_date: selectedConveyanceData.departureDate,
+            departure_time: selectedConveyanceData.departureTime,
+            arrival_date: selectedConveyanceData.arrivalDate,
+            arrival_time: selectedConveyanceData.arrivalTime,
+            duration: selectedConveyanceData.duration,
+            price: selectedConveyanceData.price,
+          };
+          console.log("updatedTrip", updatedTrip);
+          // Store updated trip
+          await storeSelectedTrip(userId, sessionId, updatedTrip);
+          setSelectedTrip(updatedTrip);
+          console.log(
+            `✅ Updated day ${currentDayNumber} with conveyance details`
+          );
+        }
+
+        // Extract TO city from conveyance selection (prefer enriched value)
+        const toCity =
+          (selectedConveyanceData as any).to_city || conveyanceToCity || "";
+
+        // Capitalize city name
+        let stayCity = toCity;
+        if (stayCity) {
+          stayCity =
+            stayCity.charAt(0).toUpperCase() + stayCity.slice(1).toLowerCase();
+          if (stayCity === "Delhi") stayCity = "New Delhi";
+        }
+
+        console.log(`🏨 Setting stay city to: ${stayCity}`);
+        setStayCity(stayCity);
+
+        // Calculate check-in and check-out dates (1 day stay)
+        const tripDate = selectedTrip.trip_date;
+        if (tripDate) {
+          const baseDate = new Date(tripDate);
+          const checkInDate = new Date(baseDate);
+          checkInDate.setDate(checkInDate.getDate() + (currentDayNumber - 1));
+          const checkInDateStr = checkInDate.toISOString().split("T")[0];
+
+          const checkOutDate = new Date(checkInDate);
+          checkOutDate.setDate(checkOutDate.getDate() + 1); // 1 day stay
+          const checkOutDateStr = checkOutDate.toISOString().split("T")[0];
+
+          console.log(
+            `📅 Check-in date: ${checkInDateStr}, Check-out date: ${checkOutDateStr}`
+          );
+
+          setStayCheckInDate(checkInDateStr);
+          setStayCheckOutDate(checkOutDateStr);
+          setAutoFillStaysMode(true); // Enable auto-fill mode
+
+          // Also add stay_details to the day structure for handleStaysContinue
+          if (dayIndex !== -1 && updatedTrip.day_wise_plan) {
+            updatedTrip.day_wise_plan[dayIndex].stay_details = {
+              is_required: true,
+              city: stayCity,
+              check_in_day: currentDayNumber,
+              check_out_day: currentDayNumber + 1,
+            };
+
+            // Update trip again with stay_details
+            await storeSelectedTrip(userId, sessionId, updatedTrip);
+            setSelectedTrip(updatedTrip);
+            console.log(
+              `✅ Added stay_details structure for day ${currentDayNumber}`
+            );
+          }
+        }
+
+        // Set loader messages for stay
+        setConveyanceLoaderMessages([
+          `Let's find stay options for day ${currentDayNumber}`,
+          `Searching accommodations in ${stayCity}`,
+          "Finding the best hotels",
+          "Comparing prices and ratings",
+        ]);
+
+        console.log(`🏨 Setting auto-fill mode for StaysWidget:`, {
+          stayCity,
+          checkInDate: stayCheckInDate,
+          checkOutDate: stayCheckOutDate,
+          autoFillMode: true,
+        });
+
+        // Show loader
+        setShowTripLoader(true);
+        setIsParsingTrips(true);
+
+        // Reset partial auto-fill mode
+        setPartialAutoFillMode(false);
+
+        // After 4 seconds, show stays widget
+        setTimeout(() => {
+          setShowTripLoader(false);
+
+          setTimeout(() => {
+            console.log(
+              `🏨 Showing StaysWidget for day ${currentDayNumber} in ${stayCity} with auto-fill mode`
+            );
+            setIsParsingTrips(false);
+            setShowStays(true);
+          }, 700);
+        }, 4000);
+
+        return; // Exit early, show stay widget
+      }
 
       // CASE 1: Current day requires stay
       if (
@@ -2782,6 +3173,7 @@ export default function FlightsPageAuthenticated() {
                       onRequestNextDay={handleRequestNextDay}
                       totalDays={selectedTrip?.day_wise_plan?.length || 1}
                       isLoadingNextDay={isLoadingItinerary}
+                      onAddDay={handleAddDay}
                     />
                   </div>
                 ) : showDateSelector ? (
@@ -2837,6 +3229,7 @@ export default function FlightsPageAuthenticated() {
                                 initialToCity={conveyanceToCity}
                                 initialDepartureDate={initialDepartureDate}
                                 autoFillMode={autoFillMode}
+                                partialAutoFillMode={partialAutoFillMode}
                                 userId={userId}
                                 sessionId={sessionId}
                                 currentDayNumber={currentDayNumber}

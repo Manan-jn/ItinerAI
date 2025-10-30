@@ -1,0 +1,2160 @@
+background.js:53 Uncaught TypeError: Cannot read properties of null (reading 'addEventListener')
+    at background.js:53:33
+(anonymous) @ background.js:53
+chext_driver.js:539 Initialized driver at: Fri Oct 31 2025 02:30:26 GMT+0530 (India Standard Time)
+main-app.js?v=1761858025363:1160 Download the React DevTools for a better development experience: https://react.dev/link/react-devtools
+chext_loader.js:73 Initialized chextloader at: 1761858026943
+firebase.js:20  POST https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyDdUTUNW31w5sYVc8jaWjh8_BGJrcoDDdE 400 (Bad Request)
+eval @ index-9ccb475d.js:1043
+await in eval
+_performFetchWithErrorHandling @ index-9ccb475d.js:1052
+_performApiRequest @ index-9ccb475d.js:1006
+getAccountInfo @ index-9ccb475d.js:1302
+_reloadWithoutSaving @ index-9ccb475d.js:1613
+await in _reloadWithoutSaving
+reloadAndSetCurrentUserOrClear @ index-9ccb475d.js:2962
+initializeCurrentUser @ index-9ccb475d.js:2914
+await in initializeCurrentUser
+eval @ index-9ccb475d.js:2817
+Promise.then
+queue @ index-9ccb475d.js:3259
+_initializeWithPersistence @ index-9ccb475d.js:2797
+_initializeAuthInstance @ index-9ccb475d.js:3853
+eval @ index-9ccb475d.js:11137
+getOrInitializeService @ index.esm.js:296
+initialize @ index.esm.js:240
+initializeAuth @ index-9ccb475d.js:3841
+getAuth @ index-9ccb475d.js:11216
+eval @ firebase.js:20
+(app-pages-browser)/./firebase.js @ layout.js:18
+options.factory @ webpack.js?v=1761858025363:704
+__webpack_require__ @ webpack.js?v=1761858025363:29
+fn @ webpack.js?v=1761858025363:361
+eval @ AuthContext.tsx:12
+(app-pages-browser)/./src/app/contexts/AuthContext.tsx @ layout.js:299
+options.factory @ webpack.js?v=1761858025363:704
+__webpack_require__ @ webpack.js?v=1761858025363:29
+fn @ webpack.js?v=1761858025363:361
+Promise.then
+eval @ next-flight-client-entry-loader.js?modules=%7B%22request%22%3A%22%2FUsers%2Fmananjain%2FDownloads%2Fgenai-hack-final%2Fgenai-hack%2Fhack2skill-genai%2Fnode_modules%2Fnext%2Ffont%2Fgoogle%2Ftarget.css%3F%7B%5C%22path%5C%22%3A%5C%22src%2Fapp%2Flayout.tsx%5C%22%2C%5C%22import%5C%22%3A%5C%22Geist%5C%22%2C%5C%22arguments%5C%22%3A%5B%7B%5C%22variable%5C%22%3A%5C%22--font-geist-sans%5C%22%2C%5C%22subsets%5C%22%3A%5B%5C%22latin%5C%22%5D%7D%5D%2C%5C%22variableName%5C%22%3A%5C%22geistSans%5C%22%7D%22%2C%22ids%22%3A%5B%5D%7D&modules=%7B%22request%22%3A%22%2FUsers%2Fmananjain%2FDownloads%2Fgenai-hack-final%2Fgenai-hack%2Fhack2skill-genai%2Fnode_modules%2Fnext%2Ffont%2Fgoogle%2Ftarget.css%3F%7B%5C%22path%5C%22%3A%5C%22src%2Fapp%2Flayout.tsx%5C%22%2C%5C%22import%5C%22%3A%5C%22Geist_Mono%5C%22%2C%5C%22arguments%5C%22%3A%5B%7B%5C%22variable%5C%22%3A%5C%22--font-geist-mono%5C%22%2C%5C%22subsets%5C%22%3A%5B%5C%22latin%5C%22%5D%7D%5D%2C%5C%22variableName%5C%22%3A%5C%22geistMono%5C%22%7D%22%2C%22ids%22%3A%5B%5D%7D&modules=%7B%22request%22%3A%22%2FUsers%2Fmananjain%2FDownloads%2Fgenai-hack-final%2Fgenai-hack%2Fhack2skill-genai%2Fsrc%2Fapp%2Fcontexts%2FAuthContext.tsx%22%2C%22ids%22%3A%5B%22AuthProvider%22%5D%7D&modules=%7B%22request%22%3A%22%2FUsers%2Fmananjain%2FDownloads%2Fgenai-hack-final%2Fgenai-hack%2Fhack2skill-genai%2Fsrc%2Fapp%2Fglobals.css%22%2C%22ids%22%3A%5B%5D%7D&server=false!:5
+(app-pages-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-client-entry-loader.js?modules=%7B%22request%22%3A%22%2FUsers%2Fmananjain%2FDownloads%2Fgenai-hack-final%2Fgenai-hack%2Fhack2skill-genai%2Fnode_modules%2Fnext%2Ffont%2Fgoogle%2Ftarget.css%3F%7B%5C%22path%5C%22%3A%5C%22src%2Fapp%2Flayout.tsx%5C%22%2C%5C%22import%5C%22%3A%5C%22Geist%5C%22%2C%5C%22arguments%5C%22%3A%5B%7B%5C%22variable%5C%22%3A%5C%22--font-geist-sans%5C%22%2C%5C%22subsets%5C%22%3A%5B%5C%22latin%5C%22%5D%7D%5D%2C%5C%22variableName%5C%22%3A%5C%22geistSans%5C%22%7D%22%2C%22ids%22%3A%5B%5D%7D&modules=%7B%22request%22%3A%22%2FUsers%2Fmananjain%2FDownloads%2Fgenai-hack-final%2Fgenai-hack%2Fhack2skill-genai%2Fnode_modules%2Fnext%2Ffont%2Fgoogle%2Ftarget.css%3F%7B%5C%22path%5C%22%3A%5C%22src%2Fapp%2Flayout.tsx%5C%22%2C%5C%22import%5C%22%3A%5C%22Geist_Mono%5C%22%2C%5C%22arguments%5C%22%3A%5B%7B%5C%22variable%5C%22%3A%5C%22--font-geist-mono%5C%22%2C%5C%22subsets%5C%22%3A%5B%5C%22latin%5C%22%5D%7D%5D%2C%5C%22variableName%5C%22%3A%5C%22geistMono%5C%22%7D%22%2C%22ids%22%3A%5B%5D%7D&modules=%7B%22request%22%3A%22%2FUsers%2Fmananjain%2FDownloads%2Fgenai-hack-final%2Fgenai-hack%2Fhack2skill-genai%2Fsrc%2Fapp%2Fcontexts%2FAuthContext.tsx%22%2C%22ids%22%3A%5B%22AuthProvider%22%5D%7D&modules=%7B%22request%22%3A%22%2FUsers%2Fmananjain%2FDownloads%2Fgenai-hack-final%2Fgenai-hack%2Fhack2skill-genai%2Fsrc%2Fapp%2Fglobals.css%22%2C%22ids%22%3A%5B%5D%7D&server=false! @ layout.js:236
+options.factory @ webpack.js?v=1761858025363:704
+__webpack_require__ @ webpack.js?v=1761858025363:29
+__webpack_exec__ @ layout.js:316
+(anonymous) @ layout.js:317
+__webpack_require__.O @ webpack.js?v=1761858025363:76
+webpackJsonpCallback @ webpack.js?v=1761858025363:1390
+(anonymous) @ main-app.js?v=1761858025363:9
+hot-reloader-app.js:197 [Fast Refresh] rebuilding
+report-hmr-latency.js:14 [Fast Refresh] done in 2886ms
+sessionManager.ts:45 Generated new session ID: 1761858032167-wy9y8d4aa08
+sessionManager.ts:75 Generated new user ID: user-hjk6aqvs0jo
+page.tsx:222 Flights session initialized: {sessionId: '1761858032167-wy9y8d4aa08', userId: 'user-hjk6aqvs0jo', isAuthenticated: false, previousSessionId: ''}
+sessionManager.ts:47 Using existing session ID: 1761858032167-wy9y8d4aa08
+sessionManager.ts:77 Using existing user ID: user-hjk6aqvs0jo
+page.tsx:222 Flights session initialized: {sessionId: '1761858032167-wy9y8d4aa08', userId: 'user-hjk6aqvs0jo', isAuthenticated: false, previousSessionId: ''}
+sessionManager.ts:47 Using existing session ID: 1761858032167-wy9y8d4aa08
+sessionManager.ts:77 Using existing user ID: user-hjk6aqvs0jo
+page.tsx:222 Flights session initialized: {sessionId: '1761858032167-wy9y8d4aa08', userId: 'user-hjk6aqvs0jo', isAuthenticated: false, previousSessionId: '1761858032167-wy9y8d4aa08'}
+chext_loader.js:73 Initialized chextloader at: 1761858036342
+cb=gapi.loaded_0?le=scs:195 Cross-Origin-Opener-Policy policy would block the window.close call.
+close @ index-9ccb475d.js:10545
+cleanUp @ index-9ccb475d.js:9727
+unregisterAndCleanUp @ index-9ccb475d.js:9542
+resolve @ index-9ccb475d.js:9530
+onAuthEvent @ index-9ccb475d.js:9503
+await in onAuthEvent
+sendToConsumer @ index-9ccb475d.js:10182
+eval @ index-9ccb475d.js:10158
+onEvent @ index-9ccb475d.js:10155
+eval @ index-9ccb475d.js:10758
+Tm @ cb=gapi.loaded_0?le=scs:195
+gapi.loaded_0.Um @ cb=gapi.loaded_0?le=scs:195
+hl @ cb=gapi.loaded_0?le=scs:174
+ql @ cb=gapi.loaded_0?le=scs:174
+Lk @ cb=gapi.loaded_0?le=scs:175
+gapi.loaded_0.Rk.eI @ cb=gapi.loaded_0?le=scs:168
+cb=gapi.loaded_0?le=scs:195 Cross-Origin-Opener-Policy policy would block the window.close call.
+close @ index-9ccb475d.js:10545
+cleanUp @ index-9ccb475d.js:9727
+unregisterAndCleanUp @ index-9ccb475d.js:9542
+resolve @ index-9ccb475d.js:9530
+onAuthEvent @ index-9ccb475d.js:9503
+await in onAuthEvent
+sendToConsumer @ index-9ccb475d.js:10182
+eval @ index-9ccb475d.js:10158
+onEvent @ index-9ccb475d.js:10155
+eval @ index-9ccb475d.js:10758
+Tm @ cb=gapi.loaded_0?le=scs:195
+gapi.loaded_0.Um @ cb=gapi.loaded_0?le=scs:195
+hl @ cb=gapi.loaded_0?le=scs:174
+ql @ cb=gapi.loaded_0?le=scs:174
+Lk @ cb=gapi.loaded_0?le=scs:175
+gapi.loaded_0.Rk.eI @ cb=gapi.loaded_0?le=scs:168
+sessionManager.ts:47 Using existing session ID: 1761858032167-wy9y8d4aa08
+page.tsx:222 Flights session initialized: {sessionId: '1761858032167-wy9y8d4aa08', userId: '072GjbIPSbZup5fHaHp6hHQItyn2', isAuthenticated: true, previousSessionId: '1761858032167-wy9y8d4aa08'}
+FlightsPageAuthenticated.tsx:157 🔄 Creating new session via API for user: 072GjbIPSbZup5fHaHp6hHQItyn2
+FlightsPageAuthenticated.tsx:282 ⏳ Waiting for userId to restore trip
+FlightsPageAuthenticated.tsx:282 ⏳ Waiting for userId to restore trip
+FlightsPageAuthenticated.tsx:179 ✅ Session created via API: {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112'}
+FlightsPageAuthenticated.tsx:189 Authenticated flights session initialized: {sessionId: '5656127781692506112', userId: '072GjbIPSbZup5fHaHp6hHQItyn2', userEmail: 'manan.jain@convegenius.ai', isAuthenticated: true}
+FlightsPageAuthenticated.tsx:295 🔄 Attempting to restore selected trip from Firestore for user: 072GjbIPSbZup5fHaHp6hHQItyn2
+tripStorage.ts:201 No selected trip found in Firestore for user: 072GjbIPSbZup5fHaHp6hHQItyn2
+FlightsPageAuthenticated.tsx:315 ℹ️ No trip found in Firestore to restore
+sessionManager.ts:47 Using existing session ID: 1761858032167-wy9y8d4aa08
+memoryApi.ts:184 Sending user profile to memory API: {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '1761858032167-wy9y8d4aa08', updates: {…}}
+memoryApi.ts:186  POST http://localhost:3000/api/memory 500 (Internal Server Error)
+updateUserMemory @ memoryApi.ts:186
+handleSubmit @ OnboardingModalWhite.tsx:149
+await in handleSubmit
+executeDispatch @ react-dom-client.development.js:16971
+runWithFiberInDEV @ react-dom-client.development.js:872
+processDispatchQueue @ react-dom-client.development.js:17021
+eval @ react-dom-client.development.js:17622
+batchedUpdates$1 @ react-dom-client.development.js:3312
+dispatchEventForPluginEventSystem @ react-dom-client.development.js:17175
+dispatchEvent @ react-dom-client.development.js:21358
+dispatchDiscreteEvent @ react-dom-client.development.js:21326
+<button>
+exports.jsxDEV @ react-jsx-dev-runtime.development.js:323
+OnboardingModalWhite @ OnboardingModalWhite.tsx:581
+react_stack_bottom_frame @ react-dom-client.development.js:23584
+renderWithHooksAgain @ react-dom-client.development.js:6893
+renderWithHooks @ react-dom-client.development.js:6805
+updateFunctionComponent @ react-dom-client.development.js:9247
+beginWork @ react-dom-client.development.js:10858
+runWithFiberInDEV @ react-dom-client.development.js:872
+performUnitOfWork @ react-dom-client.development.js:15727
+workLoopSync @ react-dom-client.development.js:15547
+renderRootSync @ react-dom-client.development.js:15527
+performWorkOnRoot @ react-dom-client.development.js:14991
+performSyncWorkOnRoot @ react-dom-client.development.js:16831
+flushSyncWorkAcrossRoots_impl @ react-dom-client.development.js:16677
+processRootScheduleInMicrotask @ react-dom-client.development.js:16715
+eval @ react-dom-client.development.js:16850
+<OnboardingModalWhite>
+exports.jsxDEV @ react-jsx-dev-runtime.development.js:323
+FlightsPageAuthenticated @ FlightsPageAuthenticated.tsx:3569
+react_stack_bottom_frame @ react-dom-client.development.js:23584
+renderWithHooksAgain @ react-dom-client.development.js:6893
+renderWithHooks @ react-dom-client.development.js:6805
+updateFunctionComponent @ react-dom-client.development.js:9247
+beginWork @ react-dom-client.development.js:10858
+runWithFiberInDEV @ react-dom-client.development.js:872
+performUnitOfWork @ react-dom-client.development.js:15727
+workLoopSync @ react-dom-client.development.js:15547
+renderRootSync @ react-dom-client.development.js:15527
+performWorkOnRoot @ react-dom-client.development.js:14991
+performWorkOnRootViaSchedulerTask @ react-dom-client.development.js:16816
+performWorkUntilDeadline @ scheduler.development.js:45
+<FlightsPageAuthenticated>
+exports.jsxDEV @ react-jsx-dev-runtime.development.js:323
+FlightsIdPage @ page.tsx:46
+react_stack_bottom_frame @ react-dom-client.development.js:23584
+renderWithHooksAgain @ react-dom-client.development.js:6893
+renderWithHooks @ react-dom-client.development.js:6805
+updateFunctionComponent @ react-dom-client.development.js:9247
+beginWork @ react-dom-client.development.js:10858
+runWithFiberInDEV @ react-dom-client.development.js:872
+performUnitOfWork @ react-dom-client.development.js:15727
+workLoopSync @ react-dom-client.development.js:15547
+renderRootSync @ react-dom-client.development.js:15527
+performWorkOnRoot @ react-dom-client.development.js:14991
+performWorkOnRootViaSchedulerTask @ react-dom-client.development.js:16816
+performWorkUntilDeadline @ scheduler.development.js:45
+<FlightsIdPage>
+exports.jsx @ react-jsx-runtime.development.js:323
+ClientPageRoot @ client-page.js:20
+react_stack_bottom_frame @ react-dom-client.development.js:23584
+renderWithHooksAgain @ react-dom-client.development.js:6893
+renderWithHooks @ react-dom-client.development.js:6805
+updateFunctionComponent @ react-dom-client.development.js:9247
+beginWork @ react-dom-client.development.js:10807
+runWithFiberInDEV @ react-dom-client.development.js:872
+performUnitOfWork @ react-dom-client.development.js:15727
+workLoopConcurrentByScheduler @ react-dom-client.development.js:15721
+renderRootConcurrent @ react-dom-client.development.js:15696
+performWorkOnRoot @ react-dom-client.development.js:14990
+performWorkOnRootViaSchedulerTask @ react-dom-client.development.js:16816
+performWorkUntilDeadline @ scheduler.development.js:45
+"use client"
+Function.all @ VM4589 <anonymous>:1
+initializeElement @ react-server-dom-webpack-client.browser.development.js:1343
+eval @ react-server-dom-webpack-client.browser.development.js:3066
+initializeModelChunk @ react-server-dom-webpack-client.browser.development.js:1246
+resolveModelChunk @ react-server-dom-webpack-client.browser.development.js:1101
+processFullStringRow @ react-server-dom-webpack-client.browser.development.js:2899
+processFullBinaryRow @ react-server-dom-webpack-client.browser.development.js:2766
+processBinaryChunk @ react-server-dom-webpack-client.browser.development.js:2969
+progress @ react-server-dom-webpack-client.browser.development.js:3233
+"use server"
+ResponseInstance @ react-server-dom-webpack-client.browser.development.js:2041
+createResponseFromOptions @ react-server-dom-webpack-client.browser.development.js:3094
+exports.createFromReadableStream @ react-server-dom-webpack-client.browser.development.js:3478
+createFromNextReadableStream @ fetch-server-response.js:209
+fetchServerResponse @ fetch-server-response.js:116
+await in fetchServerResponse
+eval @ prefetch-cache-utils.js:197
+task @ promise-queue.js:30
+processNext @ promise-queue.js:81
+enqueue @ promise-queue.js:45
+createLazyPrefetchEntry @ prefetch-cache-utils.js:197
+getOrCreatePrefetchCacheEntry @ prefetch-cache-utils.js:144
+navigateReducer @ navigate-reducer.js:166
+clientReducer @ router-reducer.js:25
+action @ app-router-instance.js:156
+runAction @ app-router-instance.js:66
+dispatchAction @ app-router-instance.js:120
+dispatch @ app-router-instance.js:154
+eval @ use-action-queue.js:55
+startTransition @ react-dom-client.development.js:7968
+dispatch @ use-action-queue.js:54
+dispatchAppRouterAction @ use-action-queue.js:37
+dispatchNavigateAction @ app-router-instance.js:207
+eval @ app-router-instance.js:260
+exports.startTransition @ react.development.js:1150
+push @ app-router-instance.js:258
+FlightsPage.useEffect @ page.tsx:108
+react_stack_bottom_frame @ react-dom-client.development.js:23669
+runWithFiberInDEV @ react-dom-client.development.js:872
+commitHookEffectListMount @ react-dom-client.development.js:12345
+commitHookPassiveMountEffects @ react-dom-client.development.js:12466
+commitPassiveMountOnFiber @ react-dom-client.development.js:14387
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14390
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14390
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14390
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14390
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14390
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14390
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14390
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14390
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14390
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14399
+flushPassiveEffects @ react-dom-client.development.js:16338
+eval @ react-dom-client.development.js:15974
+performWorkUntilDeadline @ scheduler.development.js:45
+memoryApi.ts:196 Memory API error response: {"error":"Memory API error: {\"detail\":\"[add_memory_controller] Error in add_memory_controller: [get_session] 400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'List of found errors:\\\\t1.Field: name; Message: Invalid Session resource name.\\\\t', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.BadRequest', 'fieldViolations': [{'field': 'name', 'description': 'Invalid Session resource name.'}]}]}}\"}"}
+error @ intercept-console-error.js:57
+updateUserMemory @ memoryApi.ts:196
+await in updateUserMemory
+handleSubmit @ OnboardingModalWhite.tsx:149
+await in handleSubmit
+executeDispatch @ react-dom-client.development.js:16971
+runWithFiberInDEV @ react-dom-client.development.js:872
+processDispatchQueue @ react-dom-client.development.js:17021
+eval @ react-dom-client.development.js:17622
+batchedUpdates$1 @ react-dom-client.development.js:3312
+dispatchEventForPluginEventSystem @ react-dom-client.development.js:17175
+dispatchEvent @ react-dom-client.development.js:21358
+dispatchDiscreteEvent @ react-dom-client.development.js:21326
+<button>
+exports.jsxDEV @ react-jsx-dev-runtime.development.js:323
+OnboardingModalWhite @ OnboardingModalWhite.tsx:581
+react_stack_bottom_frame @ react-dom-client.development.js:23584
+renderWithHooksAgain @ react-dom-client.development.js:6893
+renderWithHooks @ react-dom-client.development.js:6805
+updateFunctionComponent @ react-dom-client.development.js:9247
+beginWork @ react-dom-client.development.js:10858
+runWithFiberInDEV @ react-dom-client.development.js:872
+performUnitOfWork @ react-dom-client.development.js:15727
+workLoopSync @ react-dom-client.development.js:15547
+renderRootSync @ react-dom-client.development.js:15527
+performWorkOnRoot @ react-dom-client.development.js:14991
+performSyncWorkOnRoot @ react-dom-client.development.js:16831
+flushSyncWorkAcrossRoots_impl @ react-dom-client.development.js:16677
+processRootScheduleInMicrotask @ react-dom-client.development.js:16715
+eval @ react-dom-client.development.js:16850
+memoryApi.ts:204 Error updating user memory: Error: Memory API error! status: 500, message: {"error":"Memory API error: {\"detail\":\"[add_memory_controller] Error in add_memory_controller: [get_session] 400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'List of found errors:\\\\t1.Field: name; Message: Invalid Session resource name.\\\\t', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.BadRequest', 'fieldViolations': [{'field': 'name', 'description': 'Invalid Session resource name.'}]}]}}\"}"}
+    at updateUserMemory (memoryApi.ts:197:13)
+error @ intercept-console-error.js:57
+updateUserMemory @ memoryApi.ts:204
+await in updateUserMemory
+handleSubmit @ OnboardingModalWhite.tsx:149
+await in handleSubmit
+executeDispatch @ react-dom-client.development.js:16971
+runWithFiberInDEV @ react-dom-client.development.js:872
+processDispatchQueue @ react-dom-client.development.js:17021
+eval @ react-dom-client.development.js:17622
+batchedUpdates$1 @ react-dom-client.development.js:3312
+dispatchEventForPluginEventSystem @ react-dom-client.development.js:17175
+dispatchEvent @ react-dom-client.development.js:21358
+dispatchDiscreteEvent @ react-dom-client.development.js:21326
+<button>
+exports.jsxDEV @ react-jsx-dev-runtime.development.js:323
+OnboardingModalWhite @ OnboardingModalWhite.tsx:581
+react_stack_bottom_frame @ react-dom-client.development.js:23584
+renderWithHooksAgain @ react-dom-client.development.js:6893
+renderWithHooks @ react-dom-client.development.js:6805
+updateFunctionComponent @ react-dom-client.development.js:9247
+beginWork @ react-dom-client.development.js:10858
+runWithFiberInDEV @ react-dom-client.development.js:872
+performUnitOfWork @ react-dom-client.development.js:15727
+workLoopSync @ react-dom-client.development.js:15547
+renderRootSync @ react-dom-client.development.js:15527
+performWorkOnRoot @ react-dom-client.development.js:14991
+performSyncWorkOnRoot @ react-dom-client.development.js:16831
+flushSyncWorkAcrossRoots_impl @ react-dom-client.development.js:16677
+processRootScheduleInMicrotask @ react-dom-client.development.js:16715
+eval @ react-dom-client.development.js:16850
+memoryApi.ts:207 Memory API update failed, but continuing with onboarding...
+updateUserMemory @ memoryApi.ts:207
+await in updateUserMemory
+handleSubmit @ OnboardingModalWhite.tsx:149
+await in handleSubmit
+executeDispatch @ react-dom-client.development.js:16971
+runWithFiberInDEV @ react-dom-client.development.js:872
+processDispatchQueue @ react-dom-client.development.js:17021
+eval @ react-dom-client.development.js:17622
+batchedUpdates$1 @ react-dom-client.development.js:3312
+dispatchEventForPluginEventSystem @ react-dom-client.development.js:17175
+dispatchEvent @ react-dom-client.development.js:21358
+dispatchDiscreteEvent @ react-dom-client.development.js:21326
+<button>
+exports.jsxDEV @ react-jsx-dev-runtime.development.js:323
+OnboardingModalWhite @ OnboardingModalWhite.tsx:581
+react_stack_bottom_frame @ react-dom-client.development.js:23584
+renderWithHooksAgain @ react-dom-client.development.js:6893
+renderWithHooks @ react-dom-client.development.js:6805
+updateFunctionComponent @ react-dom-client.development.js:9247
+beginWork @ react-dom-client.development.js:10858
+runWithFiberInDEV @ react-dom-client.development.js:872
+performUnitOfWork @ react-dom-client.development.js:15727
+workLoopSync @ react-dom-client.development.js:15547
+renderRootSync @ react-dom-client.development.js:15527
+performWorkOnRoot @ react-dom-client.development.js:14991
+performSyncWorkOnRoot @ react-dom-client.development.js:16831
+flushSyncWorkAcrossRoots_impl @ react-dom-client.development.js:16677
+processRootScheduleInMicrotask @ react-dom-client.development.js:16715
+eval @ react-dom-client.development.js:16850
+FlightsPageAuthenticated.tsx:2328 First message detected, updating memory before sending...
+memoryApi.ts:145 Updating memory for session change: {userId: '072GjbIPSbZup5fHaHp6hHQItyn2', sessionId: '5656127781692506112'}
+memoryApi.ts:184 Sending user profile to memory API: {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', updates: {…}}
+memoryApi.ts:201 Memory API success: {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: 'Memory added successfully'}
+memoryApi.ts:165 Memory updated successfully for session change
+FlightsPageAuthenticated.tsx:2338 Memory updated successfully for first message
+FlightsPageAuthenticated.tsx:469 Making API call...
+FlightsPageAuthenticated.tsx:486 API Request sent: {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: 'hi'}
+FlightsPageAuthenticated.tsx:491 API Response status: 200
+FlightsPageAuthenticated.tsx:502 API Response received (raw): {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: {…}}
+FlightsPageAuthenticated.tsx:506 API Response (cleaned): {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: {…}}
+FlightsPageAuthenticated.tsx:2376 Full API response data: {
+  "user_id": "072GjbIPSbZup5fHaHp6hHQItyn2",
+  "session_id": "5656127781692506112",
+  "message": {
+    "response_type": "text",
+    "message": "Hi Manan! It's great to connect with you. To ensure I can craft the most amazing and personalized trip for you, would you be comfortable sharing a little more about your travel preferences?"
+  }
+}
+FlightsPageAuthenticated.tsx:2379 🔍 End response detection: {root_response_type: undefined, nested_response_type: 'text', isEndResponse: false, full_data_structure: '{\n  "user_id": "072GjbIPSbZup5fHaHp6hHQItyn2",\n  "…little more about your travel preferences?"\n  }\n}'}
+FlightsPageAuthenticated.tsx:2436 ❌ No trip or end response detected {root_response_type: undefined, nested_response_type: 'text'}
+FlightsPageAuthenticated.tsx:2519 Checking nested message format
+FlightsPageAuthenticated.tsx:2522 Detected text response
+FlightsPageAuthenticated.tsx:469 Making API call...
+FlightsPageAuthenticated.tsx:486 API Request sent: {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: 'manan, 25, male, indian, solo trip to leh in december 2025.'}
+FlightsPageAuthenticated.tsx:491 API Response status: 200
+FlightsPageAuthenticated.tsx:502 API Response received (raw): {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: "That's great, Manan! Thanks for sharing those deta…e? We’ll take this step-by-step — no rush at all!"}
+FlightsPageAuthenticated.tsx:506 API Response (cleaned): {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: "That's great, Manan! Thanks for sharing those deta…e? We’ll take this step-by-step — no rush at all!"}
+FlightsPageAuthenticated.tsx:2376 Full API response data: {
+  "user_id": "072GjbIPSbZup5fHaHp6hHQItyn2",
+  "session_id": "5656127781692506112",
+  "message": "That's great, Manan! Thanks for sharing those details. I'll just ask a few more quick questions to personalize things better for your trip to Leh.\n\nCould you please tell me your estimated budget for this trip and how long you plan for your trip to be? We’ll take this step-by-step — no rush at all!"
+}
+FlightsPageAuthenticated.tsx:2379 🔍 End response detection: {root_response_type: undefined, nested_response_type: undefined, isEndResponse: false, full_data_structure: '{\n  "user_id": "072GjbIPSbZup5fHaHp6hHQItyn2",\n  "…We’ll take this step-by-step — no rush at all!"\n}'}
+FlightsPageAuthenticated.tsx:2436 ❌ No trip or end response detected {root_response_type: undefined, nested_response_type: undefined}
+FlightsPageAuthenticated.tsx:469 Making API call...
+FlightsPageAuthenticated.tsx:486 API Request sent: {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: '2,00,000, 7 days'}
+FlightsPageAuthenticated.tsx:491 API Response status: 200
+FlightsPageAuthenticated.tsx:502 API Response received (raw): {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: 'Got it! A budget of 2,00,000 and a 7-day trip soun…w if you have any allergies I should be aware of?'}
+FlightsPageAuthenticated.tsx:506 API Response (cleaned): {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: 'Got it! A budget of 2,00,000 and a 7-day trip soun…w if you have any allergies I should be aware of?'}
+FlightsPageAuthenticated.tsx:2376 Full API response data: {
+  "user_id": "072GjbIPSbZup5fHaHp6hHQItyn2",
+  "session_id": "5656127781692506112",
+  "message": "Got it! A budget of 2,00,000 and a 7-day trip sounds like a fantastic plan.\n\nTo make sure your trip is as comfortable and enjoyable as possible, could you let me know if you have any allergies I should be aware of?"
+}
+FlightsPageAuthenticated.tsx:2379 🔍 End response detection: {root_response_type: undefined, nested_response_type: undefined, isEndResponse: false, full_data_structure: '{\n  "user_id": "072GjbIPSbZup5fHaHp6hHQItyn2",\n  "…f you have any allergies I should be aware of?"\n}'}
+FlightsPageAuthenticated.tsx:2436 ❌ No trip or end response detected {root_response_type: undefined, nested_response_type: undefined}
+FlightsPageAuthenticated.tsx:469 Making API call...
+FlightsPageAuthenticated.tsx:486 API Request sent: {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: 'no'}
+FlightsPageAuthenticated.tsx:491 API Response status: 200
+FlightsPageAuthenticated.tsx:502 API Response received (raw): {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: "Great, so no allergies to worry about! That's all … history? No pressure at all if you'd rather not!"}
+FlightsPageAuthenticated.tsx:506 API Response (cleaned): {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: "Great, so no allergies to worry about! That's all … history? No pressure at all if you'd rather not!"}
+FlightsPageAuthenticated.tsx:2376 Full API response data: {
+  "user_id": "072GjbIPSbZup5fHaHp6hHQItyn2",
+  "session_id": "5656127781692506112",
+  "message": "Great, so no allergies to worry about! That's all the essential information I need for now, Manan.\n\nTo help me tailor your trip even further, would you be comfortable sharing an emergency contact, and perhaps a little about your past travel history? No pressure at all if you'd rather not!"
+}
+FlightsPageAuthenticated.tsx:2379 🔍 End response detection: {root_response_type: undefined, nested_response_type: undefined, isEndResponse: false, full_data_structure: `{\n  "user_id": "072GjbIPSbZup5fHaHp6hHQItyn2",\n  "…story? No pressure at all if you'd rather not!"\n}`}
+FlightsPageAuthenticated.tsx:2436 ❌ No trip or end response detected {root_response_type: undefined, nested_response_type: undefined}
+FlightsPageAuthenticated.tsx:469 Making API call...
+FlightsPageAuthenticated.tsx:486 API Request sent: {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: 'no'}
+FlightsPageAuthenticated.tsx:491 API Response status: 200
+FlightsPageAuthenticated.tsx:502 API Response received (raw): {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: "No worries at all, Manan! I completely understand.…me get a better sense of what you're looking for!"}
+FlightsPageAuthenticated.tsx:506 API Response (cleaned): {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: "No worries at all, Manan! I completely understand.…me get a better sense of what you're looking for!"}
+FlightsPageAuthenticated.tsx:2376 Full API response data: {
+  "user_id": "072GjbIPSbZup5fHaHp6hHQItyn2",
+  "session_id": "5656127781692506112",
+  "message": "No worries at all, Manan! I completely understand.\n\nIs there anything else you'd like to share about your general preferences, like specific types of food, activities you enjoy, or even destinations you particularly love or dislike? This helps me get a better sense of what you're looking for!"
+}
+FlightsPageAuthenticated.tsx:2379 🔍 End response detection: {root_response_type: undefined, nested_response_type: undefined, isEndResponse: false, full_data_structure: `{\n  "user_id": "072GjbIPSbZup5fHaHp6hHQItyn2",\n  "…get a better sense of what you're looking for!"\n}`}
+FlightsPageAuthenticated.tsx:2436 ❌ No trip or end response detected {root_response_type: undefined, nested_response_type: undefined}
+FlightsPageAuthenticated.tsx:469 Making API call...
+FlightsPageAuthenticated.tsx:486 API Request sent: {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: 'no'}
+FlightsPageAuthenticated.tsx:491 API Response status: 200
+FlightsPageAuthenticated.tsx:502 API Response received (raw): {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: {…}}
+FlightsPageAuthenticated.tsx:506 API Response (cleaned): {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: {…}}
+FlightsPageAuthenticated.tsx:2376 Full API response data: {
+  "user_id": "072GjbIPSbZup5fHaHp6hHQItyn2",
+  "session_id": "5656127781692506112",
+  "message": {
+    "response_type": "text",
+    "message": "Perfect, Manan! Thank you for sharing all that. It gives me a great starting point to plan your adventure.\n\nYou mentioned a solo trip to Leh in December 2025 - that sounds absolutely breathtaking! Are you ready for me to put together some initial ideas and a skeletal itinerary for this amazing trip?"
+  }
+}
+FlightsPageAuthenticated.tsx:2379 🔍 End response detection: {root_response_type: undefined, nested_response_type: 'text', isEndResponse: false, full_data_structure: '{\n  "user_id": "072GjbIPSbZup5fHaHp6hHQItyn2",\n  "… skeletal itinerary for this amazing trip?"\n  }\n}'}
+FlightsPageAuthenticated.tsx:2436 ❌ No trip or end response detected {root_response_type: undefined, nested_response_type: 'text'}
+FlightsPageAuthenticated.tsx:2519 Checking nested message format
+FlightsPageAuthenticated.tsx:2522 Detected text response
+FlightsPageAuthenticated.tsx:469 Making API call...
+FlightsPageAuthenticated.tsx:486 API Request sent: {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: 'yes'}
+FlightsPageAuthenticated.tsx:491 API Response status: 200
+FlightsPageAuthenticated.tsx:502 API Response received (raw): {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: {…}}
+FlightsPageAuthenticated.tsx:506 API Response (cleaned): {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: {…}}
+FlightsPageAuthenticated.tsx:2376 Full API response data: {
+  "user_id": "072GjbIPSbZup5fHaHp6hHQItyn2",
+  "session_id": "5656127781692506112",
+  "message": {
+    "response_type": "trip",
+    "message": "",
+    "trips": [
+      {
+        "trip_title": "Winter Monastery Trail & Leh's Heart",
+        "no_of_days": 7,
+        "estimated_budget": 75000,
+        "best_time_to_visit": "December",
+        "themes": [
+          "Culture",
+          "Spirituality",
+          "Winter"
+        ],
+        "trip_route": [
+          {
+            "place_name": "Leh",
+            "address": "Ladakh, India",
+            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJhe1fRCHr_TgREPeGUJcJu9E",
+            "lat": "34.1525864",
+            "long": "77.57705349999999",
+            "photos": [
+              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6Emi4DeUB3jzpdqDiq_PSB1x8Affp_R4to_jpEuboho8QzWymAh68B-ZGiHrdKbrr2XGvd4cakQu9P2h1762eNBnQebozxjYrgIESq9HfT6G7FAdv2X__hP0_HjaGFYPlzEzibrtG3IEepUxxVgQzE-qO2gjyo1QhYjPTX4P1klJm-pPcYzKUGfoOItiYwV3QHNfOfzHut0gnbkTKYd0AWL4M9jwK8p_zxTqSnP6CAGjwWufGv11Cu2t-ZkrqqhTOd41E65KSPIgJzGwwXptzaiXHNcYmevrbUvm7wqgomsvurBqky7xW3NA-pfpeMJa85NjiLDi-05oqtI8UwMgPSC8xCSmfxo1aSq6pQNThqerzEJDb4hxuUORSi2yYqUgvEndJyXDZmFCQsJ4vYmQub2buP95Iu7IYcE78MoedjtEsB-HlMu6rTwrGIpXFO_dj6OhrR8gPwLFod8mLKHP-qKaa0dK1Dj0bNfcsZFS6RDAW_GXjiwc17BYNS7dKs6v3U8pKyFX0tzA07CIyPlvTdR59ifd9SK0Bi8QQKAXe0GXC0FVCuPcq8GR0LIOuA_ZK0f4Xz&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+            ],
+            "place_id": "ChIJhe1fRCHr_TgREPeGUJcJu9E"
+          }
+        ],
+        "day_wise_plan": [
+          {
+            "day_number": 1,
+            "conveyance_details": {
+              "is_required": true,
+              "travel_timing": "morning",
+              "from_city": "user_location",
+              "to_city": "Leh"
+            },
+            "stay_details": {
+              "is_required": true,
+              "city": "Leh",
+              "check_in_day": "1",
+              "check_out_day": "8"
+            },
+            "must_do_activities": [
+              {
+                "type": "activity",
+                "category": "wellness",
+                "name": "Acclimatization Day",
+                "description": "Arrive in Leh by flight, check into a centrally heated hotel, and rest completely to acclimatize to the high altitude (3500m). Drink plenty of water and avoid exertion. [11, 22, 25]"
+              }
+            ]
+          },
+          {
+            "day_number": 2,
+            "conveyance_details": {
+              "is_required": false
+            },
+            "stay_details": {
+              "is_required": false
+            },
+            "must_do_activities": [
+              {
+                "type": "place",
+                "category": "cultural_site",
+                "name": "Explore Leh Town",
+                "description": "Take a gentle walk to Leh Palace for panoramic views and explore the historic Leh Market for local crafts. [7, 11]"
+              },
+              {
+                "type": "place",
+                "category": "cultural_site",
+                "name": "Shanti Stupa at Sunset",
+                "description": "Visit the iconic white-domed Shanti Stupa for breathtaking sunset views over the snow-dusted landscape. [5, 7]"
+              }
+            ]
+          },
+          {
+            "day_number": 3,
+            "conveyance_details": {
+              "is_required": false
+            },
+            "stay_details": {
+              "is_required": false
+            },
+            "must_do_activities": [
+              {
+                "type": "place",
+                "category": "monastery",
+                "name": "Indus Valley Monasteries",
+                "description": "Embark on a day trip to visit the grand Thiksey Monastery, resembling the Potala Palace, and the historic Shey Palace, the former summer capital of Ladakh's kings. [6, 16, 23]"
+              },
+              {
+                "type": "place",
+                "category": "monastery",
+                "name": "Hemis Monastery",
+                "description": "Visit the wealthiest monastery in Ladakh, Hemis, nestled in a valley. Explore its museum and serene courtyards. [5, 6]"
+              }
+            ]
+          },
+          {
+            "day_number": 4,
+            "conveyance_details": {
+              "is_required": false
+            },
+            "stay_details": {
+              "is_required": false
+            },
+            "must_do_activities": [
+              {
+                "type": "place",
+                "category": "natural_wonder",
+                "name": "Sham Valley Exploration",
+                "description": "Drive towards the Sham Valley, visiting the Sangam (confluence of Indus and Zanskar rivers), Magnetic Hill, and Gurudwara Pathar Sahib. [2, 11]"
+              },
+              {
+                "type": "place",
+                "category": "monastery",
+                "name": "Alchi and Likir Monasteries",
+               
+FlightsPageAuthenticated.tsx:2379 🔍 End response detection: {root_response_type: undefined, nested_response_type: 'trip', isEndResponse: false, full_data_structure: '{\n  "user_id": "072GjbIPSbZup5fHaHp6hHQItyn2",\n  "…      ]\n          }\n        ]\n      }\n    ]\n  }\n}'}
+FlightsPageAuthenticated.tsx:2388 🎯 Trip response detected - showing loader immediately
+FlightsPageAuthenticated.tsx:2389 🎯 Response data: {root_response_type: undefined, nested_response_type: 'trip'}
+FlightsPageAuthenticated.tsx:2519 Checking nested message format
+FlightsPageAuthenticated.tsx:2540 Detected trip response in nested format
+FlightsPageAuthenticated.tsx:2541 messageData structure: (3) ['response_type', 'message', 'trips']
+FlightsPageAuthenticated.tsx:2551 Found trips array directly under messageData
+FlightsPageAuthenticated.tsx:2561 Parsed 5 trip suggestions from messageData.trips
+FlightsPageAuthenticated.tsx:2564 Validated trip suggestions: (5) [{…}, {…}, {…}, {…}, {…}]
+FlightsPageAuthenticated.tsx:2644 🎯 Starting trip loader for 4 seconds minimum
+FlightsPageAuthenticated.tsx:2650 Found 9 images to download
+imageDownloader.ts:110 Starting download of 5 images...
+FlightsPageAuthenticated.tsx:2811 === TRANSFORMING TRIPS DATA ===
+FlightsPageAuthenticated.tsx:2812 Number of trips to transform: 5
+FlightsPageAuthenticated.tsx:2936     - Fallback: Using first city from trip_route: Leh
+FlightsPageAuthenticated.tsx:2936     - Fallback: Using first city from trip_route: Leh
+FlightsPageAuthenticated.tsx:2936     - Fallback: Using first city from trip_route: Leh
+FlightsPageAuthenticated.tsx:2936     - Fallback: Using first city from trip_route: Leh
+FlightsPageAuthenticated.tsx:2936     - Fallback: Using first city from trip_route: Leh
+FlightsPageAuthenticated.tsx:2951 Transformed 7 days for trip 1
+FlightsPageAuthenticated.tsx:2967 Final transformed trip 1:
+FlightsPageAuthenticated.tsx:2968   - trip_title: Winter Monastery Trail & Leh's Heart
+FlightsPageAuthenticated.tsx:2969   - no_of_days: 7
+FlightsPageAuthenticated.tsx:2970   - estimated_budget: 75000
+FlightsPageAuthenticated.tsx:2971   - best_time_to_visit: December
+FlightsPageAuthenticated.tsx:2972   - theme: (3) ['Culture', 'Spirituality', 'Winter']
+FlightsPageAuthenticated.tsx:2973   - themes: (3) ['Culture', 'Spirituality', 'Winter']
+FlightsPageAuthenticated.tsx:2974   - trip_route length: 1
+FlightsPageAuthenticated.tsx:2978   - day_wise_plan length: 7
+FlightsPageAuthenticated.tsx:2936     - Fallback: Using first city from trip_route: Leh
+FlightsPageAuthenticated.tsx:2936     - Fallback: Using first city from trip_route: Leh
+FlightsPageAuthenticated.tsx:2936     - Fallback: Using first city from trip_route: Leh
+FlightsPageAuthenticated.tsx:2951 Transformed 7 days for trip 2
+FlightsPageAuthenticated.tsx:2967 Final transformed trip 2:
+FlightsPageAuthenticated.tsx:2968   - trip_title: Frozen Kingdom: Nubra Valley Winter Expedition
+FlightsPageAuthenticated.tsx:2969   - no_of_days: 7
+FlightsPageAuthenticated.tsx:2970   - estimated_budget: 95000
+FlightsPageAuthenticated.tsx:2971   - best_time_to_visit: December
+FlightsPageAuthenticated.tsx:2972   - theme: (3) ['Adventure', 'Nature', 'Landscape']
+FlightsPageAuthenticated.tsx:2973   - themes: (3) ['Adventure', 'Nature', 'Landscape']
+FlightsPageAuthenticated.tsx:2974   - trip_route length: 2
+FlightsPageAuthenticated.tsx:2978   - day_wise_plan length: 7
+FlightsPageAuthenticated.tsx:2936     - Fallback: Using first city from trip_route: Leh
+FlightsPageAuthenticated.tsx:2936     - Fallback: Using first city from trip_route: Leh
+FlightsPageAuthenticated.tsx:2936     - Fallback: Using first city from trip_route: Leh
+FlightsPageAuthenticated.tsx:2936     - Fallback: Using first city from trip_route: Leh
+FlightsPageAuthenticated.tsx:2951 Transformed 7 days for trip 3
+FlightsPageAuthenticated.tsx:2967 Final transformed trip 3:
+FlightsPageAuthenticated.tsx:2968   - trip_title: The Frozen Spectacle: Pangong Lake Winter Quest
+FlightsPageAuthenticated.tsx:2969   - no_of_days: 7
+FlightsPageAuthenticated.tsx:2970   - estimated_budget: 110000
+FlightsPageAuthenticated.tsx:2971   - best_time_to_visit: December
+FlightsPageAuthenticated.tsx:2972   - theme: (3) ['Adventure', 'Nature', 'Photography']
+FlightsPageAuthenticated.tsx:2973   - themes: (3) ['Adventure', 'Nature', 'Photography']
+FlightsPageAuthenticated.tsx:2974   - trip_route length: 2
+FlightsPageAuthenticated.tsx:2978   - day_wise_plan length: 7
+FlightsPageAuthenticated.tsx:2936     - Fallback: Using first city from trip_route: Leh
+FlightsPageAuthenticated.tsx:2936     - Fallback: Using first city from trip_route: Leh
+FlightsPageAuthenticated.tsx:2936     - Fallback: Using first city from trip_route: Leh
+FlightsPageAuthenticated.tsx:2951 Transformed 7 days for trip 4
+FlightsPageAuthenticated.tsx:2967 Final transformed trip 4:
+FlightsPageAuthenticated.tsx:2968   - trip_title: Sham Valley 'Baby Trek' & Winter Culture
+FlightsPageAuthenticated.tsx:2969   - no_of_days: 7
+FlightsPageAuthenticated.tsx:2970   - estimated_budget: 85000
+FlightsPageAuthenticated.tsx:2971   - best_time_to_visit: November to March
+FlightsPageAuthenticated.tsx:2972   - theme: (3) ['Trekking', 'Culture', 'Village Life']
+FlightsPageAuthenticated.tsx:2973   - themes: (3) ['Trekking', 'Culture', 'Village Life']
+FlightsPageAuthenticated.tsx:2974   - trip_route length: 3
+FlightsPageAuthenticated.tsx:2978   - day_wise_plan length: 7
+FlightsPageAuthenticated.tsx:2936     - Fallback: Using first city from trip_route: Leh
+FlightsPageAuthenticated.tsx:2936     - Fallback: Using first city from trip_route: Leh
+FlightsPageAuthenticated.tsx:2936     - Fallback: Using first city from trip_route: Leh
+FlightsPageAuthenticated.tsx:2936     - Fallback: Using first city from trip_route: Leh
+FlightsPageAuthenticated.tsx:2936     - Fallback: Using first city from trip_route: Leh
+FlightsPageAuthenticated.tsx:2951 Transformed 7 days for trip 5
+FlightsPageAuthenticated.tsx:2967 Final transformed trip 5:
+FlightsPageAuthenticated.tsx:2968   - trip_title: Ladakh's Winter Festivals & Spiritual Quest
+FlightsPageAuthenticated.tsx:2969   - no_of_days: 7
+FlightsPageAuthenticated.tsx:2970   - estimated_budget: 70000
+FlightsPageAuthenticated.tsx:2971   - best_time_to_visit: December
+FlightsPageAuthenticated.tsx:2972   - theme: (3) ['Festival', 'Culture', 'Spirituality']
+FlightsPageAuthenticated.tsx:2973   - themes: (3) ['Festival', 'Culture', 'Spirituality']
+FlightsPageAuthenticated.tsx:2974   - trip_route length: 1
+FlightsPageAuthenticated.tsx:2978   - day_wise_plan length: 7
+FlightsPageAuthenticated.tsx:2669 Original trip suggestions: (5) [{…}, {…}, {…}, {…}, {…}]
+FlightsPageAuthenticated.tsx:2670 Transformed trip suggestions: (5) [{…}, {…}, {…}, {…}, {…}]
+FlightsPageAuthenticated.tsx:2400 🎯 Safety check: Ensuring loader is still visible
+FlightsPageAuthenticated.tsx:2402 🎯 Safety: Loader was hidden prematurely, re-showing
+imageDownloader.ts:94 Successfully downloaded image: /api/place-photo?photoreference=AWn5SU6Emi4DeUB3jzpdqDiq_PSB1x8Affp_R4to_jpEuboho8QzWymAh68B-ZGiHrdK...
+imageDownloader.ts:94 Successfully downloaded image: /api/place-photo?photoreference=AWn5SU6hFK560J0zdIDj6ALm_JKv-m9mCfTKHe-sEIyLhJ04tiPeZRg3B-G3ky_z-Fi5...
+imageDownloader.ts:94 Successfully downloaded image: /api/place-photo?photoreference=AWn5SU4aeoheC9LGOnd0Yyuv1Hg1BxktYjQuww6gxaJf6a5_sKWIsicVsw74E8Bhaq0y...
+imageDownloader.ts:94 Successfully downloaded image: /api/place-photo?photoreference=AWn5SU7dO6p16qMn6kHu2ssBXv-OVG81pJDMivvsmjl_SHp9UjqlVx3OApjgRNjvijqy...
+imageDownloader.ts:94 Successfully downloaded image: /api/place-photo?photoreference=AWn5SU5z7F_tEkGPvehjO2wy0fukJXvMrtgxqtMtEphMHiJrg2bkUHce4hQN3kf5USxv...
+imageDownloader.ts:138 Downloaded 5 images successfully
+FlightsPageAuthenticated.tsx:2656 Successfully downloaded 5 images
+FlightsPageAuthenticated.tsx:2682 🎯 Trip loader minimum duration completed, hiding loader
+FlightsPageAuthenticated.tsx:2704 Places widget activated with trip suggestions
+FlashcardsWidget.tsx:115 FlashcardsWidget trips data with images from JSON:
+FlashcardsWidget.tsx:127 Trip 1: Winter Monastery Trail & Leh's Heart
+FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6Emi4DeUB3jzpdqDiq_PSB1x8Affp_R4to_jpEuboho8QzWymAh68B-ZGiHrdKbrr2XGvd4cakQu9P2h1762eNBnQebozxjYrgIESq9HfT6G7FAdv2X__hP0_HjaGFYPlzEzibrtG3IEepUxxVgQzE-qO2gjyo1QhYjPTX4P1klJm-pPcYzKUGfoOItiYwV3QHNfOfzHut0gnbkTKYd0AWL4M9jwK8p_zxTqSnP6CAGjwWufGv11Cu2t-ZkrqqhTOd41E65KSPIgJzGwwXptzaiXHNcYmevrbUvm7wqgomsvurBqky7xW3NA-pfpeMJa85NjiLDi-05oqtI8UwMgPSC8xCSmfxo1aSq6pQNThqerzEJDb4hxuUORSi2yYqUgvEndJyXDZmFCQsJ4vYmQub2buP95Iu7IYcE78MoedjtEsB-HlMu6rTwrGIpXFO_dj6OhrR8gPwLFod8mLKHP-qKaa0dK1Dj0bNfcsZFS6RDAW_GXjiwc17BYNS7dKs6v3U8pKyFX0tzA07CIyPlvTdR59ifd9SK0Bi8QQKAXe0GXC0FVCuPcq8GR0LIOuA_ZK0f4Xz&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
+FlashcardsWidget.tsx:129   - Is Google Places photo: true
+FlashcardsWidget.tsx:130   - Using image: undefined
+FlashcardsWidget.tsx:131   - Source: Google Places API
+FlashcardsWidget.tsx:140   - Themes: Culture, Spirituality, Winter
+FlashcardsWidget.tsx:127 Trip 2: Frozen Kingdom: Nubra Valley Winter Expedition
+FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6Emi4DeUB3jzpdqDiq_PSB1x8Affp_R4to_jpEuboho8QzWymAh68B-ZGiHrdKbrr2XGvd4cakQu9P2h1762eNBnQebozxjYrgIESq9HfT6G7FAdv2X__hP0_HjaGFYPlzEzibrtG3IEepUxxVgQzE-qO2gjyo1QhYjPTX4P1klJm-pPcYzKUGfoOItiYwV3QHNfOfzHut0gnbkTKYd0AWL4M9jwK8p_zxTqSnP6CAGjwWufGv11Cu2t-ZkrqqhTOd41E65KSPIgJzGwwXptzaiXHNcYmevrbUvm7wqgomsvurBqky7xW3NA-pfpeMJa85NjiLDi-05oqtI8UwMgPSC8xCSmfxo1aSq6pQNThqerzEJDb4hxuUORSi2yYqUgvEndJyXDZmFCQsJ4vYmQub2buP95Iu7IYcE78MoedjtEsB-HlMu6rTwrGIpXFO_dj6OhrR8gPwLFod8mLKHP-qKaa0dK1Dj0bNfcsZFS6RDAW_GXjiwc17BYNS7dKs6v3U8pKyFX0tzA07CIyPlvTdR59ifd9SK0Bi8QQKAXe0GXC0FVCuPcq8GR0LIOuA_ZK0f4Xz&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
+FlashcardsWidget.tsx:129   - Is Google Places photo: true
+FlashcardsWidget.tsx:130   - Using image: undefined
+FlashcardsWidget.tsx:131   - Source: Google Places API
+FlashcardsWidget.tsx:140   - Themes: Adventure, Nature, Landscape
+FlashcardsWidget.tsx:127 Trip 3: The Frozen Spectacle: Pangong Lake Winter Quest
+FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6Emi4DeUB3jzpdqDiq_PSB1x8Affp_R4to_jpEuboho8QzWymAh68B-ZGiHrdKbrr2XGvd4cakQu9P2h1762eNBnQebozxjYrgIESq9HfT6G7FAdv2X__hP0_HjaGFYPlzEzibrtG3IEepUxxVgQzE-qO2gjyo1QhYjPTX4P1klJm-pPcYzKUGfoOItiYwV3QHNfOfzHut0gnbkTKYd0AWL4M9jwK8p_zxTqSnP6CAGjwWufGv11Cu2t-ZkrqqhTOd41E65KSPIgJzGwwXptzaiXHNcYmevrbUvm7wqgomsvurBqky7xW3NA-pfpeMJa85NjiLDi-05oqtI8UwMgPSC8xCSmfxo1aSq6pQNThqerzEJDb4hxuUORSi2yYqUgvEndJyXDZmFCQsJ4vYmQub2buP95Iu7IYcE78MoedjtEsB-HlMu6rTwrGIpXFO_dj6OhrR8gPwLFod8mLKHP-qKaa0dK1Dj0bNfcsZFS6RDAW_GXjiwc17BYNS7dKs6v3U8pKyFX0tzA07CIyPlvTdR59ifd9SK0Bi8QQKAXe0GXC0FVCuPcq8GR0LIOuA_ZK0f4Xz&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
+FlashcardsWidget.tsx:129   - Is Google Places photo: true
+FlashcardsWidget.tsx:130   - Using image: undefined
+FlashcardsWidget.tsx:131   - Source: Google Places API
+FlashcardsWidget.tsx:140   - Themes: Adventure, Nature, Photography
+FlashcardsWidget.tsx:127 Trip 4: Sham Valley 'Baby Trek' & Winter Culture
+FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6Emi4DeUB3jzpdqDiq_PSB1x8Affp_R4to_jpEuboho8QzWymAh68B-ZGiHrdKbrr2XGvd4cakQu9P2h1762eNBnQebozxjYrgIESq9HfT6G7FAdv2X__hP0_HjaGFYPlzEzibrtG3IEepUxxVgQzE-qO2gjyo1QhYjPTX4P1klJm-pPcYzKUGfoOItiYwV3QHNfOfzHut0gnbkTKYd0AWL4M9jwK8p_zxTqSnP6CAGjwWufGv11Cu2t-ZkrqqhTOd41E65KSPIgJzGwwXptzaiXHNcYmevrbUvm7wqgomsvurBqky7xW3NA-pfpeMJa85NjiLDi-05oqtI8UwMgPSC8xCSmfxo1aSq6pQNThqerzEJDb4hxuUORSi2yYqUgvEndJyXDZmFCQsJ4vYmQub2buP95Iu7IYcE78MoedjtEsB-HlMu6rTwrGIpXFO_dj6OhrR8gPwLFod8mLKHP-qKaa0dK1Dj0bNfcsZFS6RDAW_GXjiwc17BYNS7dKs6v3U8pKyFX0tzA07CIyPlvTdR59ifd9SK0Bi8QQKAXe0GXC0FVCuPcq8GR0LIOuA_ZK0f4Xz&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
+FlashcardsWidget.tsx:129   - Is Google Places photo: true
+FlashcardsWidget.tsx:130   - Using image: undefined
+FlashcardsWidget.tsx:131   - Source: Google Places API
+FlashcardsWidget.tsx:140   - Themes: Trekking, Culture, Village Life
+FlashcardsWidget.tsx:127 Trip 5: Ladakh's Winter Festivals & Spiritual Quest
+FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6Emi4DeUB3jzpdqDiq_PSB1x8Affp_R4to_jpEuboho8QzWymAh68B-ZGiHrdKbrr2XGvd4cakQu9P2h1762eNBnQebozxjYrgIESq9HfT6G7FAdv2X__hP0_HjaGFYPlzEzibrtG3IEepUxxVgQzE-qO2gjyo1QhYjPTX4P1klJm-pPcYzKUGfoOItiYwV3QHNfOfzHut0gnbkTKYd0AWL4M9jwK8p_zxTqSnP6CAGjwWufGv11Cu2t-ZkrqqhTOd41E65KSPIgJzGwwXptzaiXHNcYmevrbUvm7wqgomsvurBqky7xW3NA-pfpeMJa85NjiLDi-05oqtI8UwMgPSC8xCSmfxo1aSq6pQNThqerzEJDb4hxuUORSi2yYqUgvEndJyXDZmFCQsJ4vYmQub2buP95Iu7IYcE78MoedjtEsB-HlMu6rTwrGIpXFO_dj6OhrR8gPwLFod8mLKHP-qKaa0dK1Dj0bNfcsZFS6RDAW_GXjiwc17BYNS7dKs6v3U8pKyFX0tzA07CIyPlvTdR59ifd9SK0Bi8QQKAXe0GXC0FVCuPcq8GR0LIOuA_ZK0f4Xz&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
+FlashcardsWidget.tsx:129   - Is Google Places photo: true
+FlashcardsWidget.tsx:130   - Using image: undefined
+FlashcardsWidget.tsx:131   - Source: Google Places API
+FlashcardsWidget.tsx:140   - Themes: Festival, Culture, Spirituality
+FlashcardsWidget.tsx:152 Starting image preloading...
+FlashcardsWidget.tsx:157 Found 10 images to preload
+FlashcardsWidget.tsx:115 FlashcardsWidget trips data with images from JSON:
+FlashcardsWidget.tsx:127 Trip 1: Winter Monastery Trail & Leh's Heart
+FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6Emi4DeUB3jzpdqDiq_PSB1x8Affp_R4to_jpEuboho8QzWymAh68B-ZGiHrdKbrr2XGvd4cakQu9P2h1762eNBnQebozxjYrgIESq9HfT6G7FAdv2X__hP0_HjaGFYPlzEzibrtG3IEepUxxVgQzE-qO2gjyo1QhYjPTX4P1klJm-pPcYzKUGfoOItiYwV3QHNfOfzHut0gnbkTKYd0AWL4M9jwK8p_zxTqSnP6CAGjwWufGv11Cu2t-ZkrqqhTOd41E65KSPIgJzGwwXptzaiXHNcYmevrbUvm7wqgomsvurBqky7xW3NA-pfpeMJa85NjiLDi-05oqtI8UwMgPSC8xCSmfxo1aSq6pQNThqerzEJDb4hxuUORSi2yYqUgvEndJyXDZmFCQsJ4vYmQub2buP95Iu7IYcE78MoedjtEsB-HlMu6rTwrGIpXFO_dj6OhrR8gPwLFod8mLKHP-qKaa0dK1Dj0bNfcsZFS6RDAW_GXjiwc17BYNS7dKs6v3U8pKyFX0tzA07CIyPlvTdR59ifd9SK0Bi8QQKAXe0GXC0FVCuPcq8GR0LIOuA_ZK0f4Xz&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
+FlashcardsWidget.tsx:129   - Is Google Places photo: true
+FlashcardsWidget.tsx:130   - Using image: undefined
+FlashcardsWidget.tsx:131   - Source: Google Places API
+FlashcardsWidget.tsx:140   - Themes: Culture, Spirituality, Winter
+FlashcardsWidget.tsx:127 Trip 2: Frozen Kingdom: Nubra Valley Winter Expedition
+FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6Emi4DeUB3jzpdqDiq_PSB1x8Affp_R4to_jpEuboho8QzWymAh68B-ZGiHrdKbrr2XGvd4cakQu9P2h1762eNBnQebozxjYrgIESq9HfT6G7FAdv2X__hP0_HjaGFYPlzEzibrtG3IEepUxxVgQzE-qO2gjyo1QhYjPTX4P1klJm-pPcYzKUGfoOItiYwV3QHNfOfzHut0gnbkTKYd0AWL4M9jwK8p_zxTqSnP6CAGjwWufGv11Cu2t-ZkrqqhTOd41E65KSPIgJzGwwXptzaiXHNcYmevrbUvm7wqgomsvurBqky7xW3NA-pfpeMJa85NjiLDi-05oqtI8UwMgPSC8xCSmfxo1aSq6pQNThqerzEJDb4hxuUORSi2yYqUgvEndJyXDZmFCQsJ4vYmQub2buP95Iu7IYcE78MoedjtEsB-HlMu6rTwrGIpXFO_dj6OhrR8gPwLFod8mLKHP-qKaa0dK1Dj0bNfcsZFS6RDAW_GXjiwc17BYNS7dKs6v3U8pKyFX0tzA07CIyPlvTdR59ifd9SK0Bi8QQKAXe0GXC0FVCuPcq8GR0LIOuA_ZK0f4Xz&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
+FlashcardsWidget.tsx:129   - Is Google Places photo: true
+FlashcardsWidget.tsx:130   - Using image: undefined
+FlashcardsWidget.tsx:131   - Source: Google Places API
+FlashcardsWidget.tsx:140   - Themes: Adventure, Nature, Landscape
+FlashcardsWidget.tsx:127 Trip 3: The Frozen Spectacle: Pangong Lake Winter Quest
+FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6Emi4DeUB3jzpdqDiq_PSB1x8Affp_R4to_jpEuboho8QzWymAh68B-ZGiHrdKbrr2XGvd4cakQu9P2h1762eNBnQebozxjYrgIESq9HfT6G7FAdv2X__hP0_HjaGFYPlzEzibrtG3IEepUxxVgQzE-qO2gjyo1QhYjPTX4P1klJm-pPcYzKUGfoOItiYwV3QHNfOfzHut0gnbkTKYd0AWL4M9jwK8p_zxTqSnP6CAGjwWufGv11Cu2t-ZkrqqhTOd41E65KSPIgJzGwwXptzaiXHNcYmevrbUvm7wqgomsvurBqky7xW3NA-pfpeMJa85NjiLDi-05oqtI8UwMgPSC8xCSmfxo1aSq6pQNThqerzEJDb4hxuUORSi2yYqUgvEndJyXDZmFCQsJ4vYmQub2buP95Iu7IYcE78MoedjtEsB-HlMu6rTwrGIpXFO_dj6OhrR8gPwLFod8mLKHP-qKaa0dK1Dj0bNfcsZFS6RDAW_GXjiwc17BYNS7dKs6v3U8pKyFX0tzA07CIyPlvTdR59ifd9SK0Bi8QQKAXe0GXC0FVCuPcq8GR0LIOuA_ZK0f4Xz&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
+FlashcardsWidget.tsx:129   - Is Google Places photo: true
+FlashcardsWidget.tsx:130   - Using image: undefined
+FlashcardsWidget.tsx:131   - Source: Google Places API
+FlashcardsWidget.tsx:140   - Themes: Adventure, Nature, Photography
+FlashcardsWidget.tsx:127 Trip 4: Sham Valley 'Baby Trek' & Winter Culture
+FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6Emi4DeUB3jzpdqDiq_PSB1x8Affp_R4to_jpEuboho8QzWymAh68B-ZGiHrdKbrr2XGvd4cakQu9P2h1762eNBnQebozxjYrgIESq9HfT6G7FAdv2X__hP0_HjaGFYPlzEzibrtG3IEepUxxVgQzE-qO2gjyo1QhYjPTX4P1klJm-pPcYzKUGfoOItiYwV3QHNfOfzHut0gnbkTKYd0AWL4M9jwK8p_zxTqSnP6CAGjwWufGv11Cu2t-ZkrqqhTOd41E65KSPIgJzGwwXptzaiXHNcYmevrbUvm7wqgomsvurBqky7xW3NA-pfpeMJa85NjiLDi-05oqtI8UwMgPSC8xCSmfxo1aSq6pQNThqerzEJDb4hxuUORSi2yYqUgvEndJyXDZmFCQsJ4vYmQub2buP95Iu7IYcE78MoedjtEsB-HlMu6rTwrGIpXFO_dj6OhrR8gPwLFod8mLKHP-qKaa0dK1Dj0bNfcsZFS6RDAW_GXjiwc17BYNS7dKs6v3U8pKyFX0tzA07CIyPlvTdR59ifd9SK0Bi8QQKAXe0GXC0FVCuPcq8GR0LIOuA_ZK0f4Xz&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
+FlashcardsWidget.tsx:129   - Is Google Places photo: true
+FlashcardsWidget.tsx:130   - Using image: undefined
+FlashcardsWidget.tsx:131   - Source: Google Places API
+FlashcardsWidget.tsx:140   - Themes: Trekking, Culture, Village Life
+FlashcardsWidget.tsx:127 Trip 5: Ladakh's Winter Festivals & Spiritual Quest
+FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6Emi4DeUB3jzpdqDiq_PSB1x8Affp_R4to_jpEuboho8QzWymAh68B-ZGiHrdKbrr2XGvd4cakQu9P2h1762eNBnQebozxjYrgIESq9HfT6G7FAdv2X__hP0_HjaGFYPlzEzibrtG3IEepUxxVgQzE-qO2gjyo1QhYjPTX4P1klJm-pPcYzKUGfoOItiYwV3QHNfOfzHut0gnbkTKYd0AWL4M9jwK8p_zxTqSnP6CAGjwWufGv11Cu2t-ZkrqqhTOd41E65KSPIgJzGwwXptzaiXHNcYmevrbUvm7wqgomsvurBqky7xW3NA-pfpeMJa85NjiLDi-05oqtI8UwMgPSC8xCSmfxo1aSq6pQNThqerzEJDb4hxuUORSi2yYqUgvEndJyXDZmFCQsJ4vYmQub2buP95Iu7IYcE78MoedjtEsB-HlMu6rTwrGIpXFO_dj6OhrR8gPwLFod8mLKHP-qKaa0dK1Dj0bNfcsZFS6RDAW_GXjiwc17BYNS7dKs6v3U8pKyFX0tzA07CIyPlvTdR59ifd9SK0Bi8QQKAXe0GXC0FVCuPcq8GR0LIOuA_ZK0f4Xz&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
+FlashcardsWidget.tsx:129   - Is Google Places photo: true
+FlashcardsWidget.tsx:130   - Using image: undefined
+FlashcardsWidget.tsx:131   - Source: Google Places API
+FlashcardsWidget.tsx:140   - Themes: Festival, Culture, Spirituality
+FlashcardsWidget.tsx:152 Starting image preloading...
+FlashcardsWidget.tsx:157 Found 10 images to preload
+FlashcardsWidget.tsx:162 Image preloading complete: 10 successful, 0 failed
+FlashcardsWidget.tsx:162 Image preloading complete: 10 successful, 0 failed
+FlashcardsWidget.tsx:182 All images loaded and cached
+FlashcardsWidget.tsx:182 All images loaded and cached
+FlightsPageAuthenticated.tsx:540 Selected original trip: {trip_title: "Winter Monastery Trail & Leh's Heart", no_of_days: 7, estimated_budget: 75000, best_time_to_visit: 'December', themes: Array(3), …}
+FlightsPageAuthenticated.tsx:561 Sending trip to memory API and Firestore: {trip_title: "Winter Monastery Trail & Leh's Heart", no_of_days: 7, estimated_budget: 75000, best_time_to_visit: 'December', themes: Array(3), …}
+tripStorage.ts:28 Storing trip in Firestore for user: 072GjbIPSbZup5fHaHp6hHQItyn2
+tripStorage.ts:48 Trip stored successfully in Firestore
+tripStorage.ts:61 Storing trip in code memory: {trip_title: "Winter Monastery Trail & Leh's Heart", no_of_days: 7, estimated_budget: 75000, best_time_to_visit: 'December', themes: Array(3), …}
+tripStorage.ts:92 Trip stored in both Firestore and memory: {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', trip_data: {…}}
+FlightsPageAuthenticated.tsx:565 ✅ Trip stored in Firestore successfully: Winter Monastery Trail & Leh's Heart
+FlightsPageAuthenticated.tsx:569 📌 Trip remains in component state for subsequent operations
+FlightsPageAuthenticated.tsx:599 Memory API success: {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: 'Memory added successfully'}
+FlightsPageAuthenticated.tsx:626 Making chat API call after memory update
+FlightsPageAuthenticated.tsx:653 Chat API response received: {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: {…}}
+FlightsPageAuthenticated.tsx:469 Making API call...
+FlightsPageAuthenticated.tsx:486 API Request sent: {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: 'yes'}
+FlightsPageAuthenticated.tsx:491 API Response status: 200
+FlightsPageAuthenticated.tsx:502 API Response received (raw): {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: "It's wonderful that you're excited for your trip t…elhi, or would Mumbai be a better option for you?"}
+FlightsPageAuthenticated.tsx:506 API Response (cleaned): {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: "It's wonderful that you're excited for your trip t…elhi, or would Mumbai be a better option for you?"}
+FlightsPageAuthenticated.tsx:2376 Full API response data: {
+  "user_id": "072GjbIPSbZup5fHaHp6hHQItyn2",
+  "session_id": "5656127781692506112",
+  "message": "It's wonderful that you're excited for your trip to Leh! Based on the information we have, Delhi is generally the most convenient and well-connected city for flights to Leh, especially in December. Many major airlines operate direct flights from Delhi to Leh, making it a popular choice.\n\nMumbai is another major Indian city with direct flight connections to Leh, offering a good alternative if it's more convenient for you.\n\nWhile specific flight schedules for December 2025 aren't fully available yet through my current tools, direct flights from both Delhi and Mumbai are confirmed to be operating during that time of year.\n\nWould you prefer to start your trip from Delhi, or would Mumbai be a better option for you?"
+}
+FlightsPageAuthenticated.tsx:2379 🔍 End response detection: {root_response_type: undefined, nested_response_type: undefined, isEndResponse: false, full_data_structure: '{\n  "user_id": "072GjbIPSbZup5fHaHp6hHQItyn2",\n  "…i, or would Mumbai be a better option for you?"\n}'}
+FlightsPageAuthenticated.tsx:2436 ❌ No trip or end response detected {root_response_type: undefined, nested_response_type: undefined}
+FlightsPageAuthenticated.tsx:469 Making API call...
+FlightsPageAuthenticated.tsx:486 API Request sent: {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: 'Delhi'}
+FlightsPageAuthenticated.tsx:491 API Response status: 200
+FlightsPageAuthenticated.tsx:502 API Response received (raw): {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: {…}}
+FlightsPageAuthenticated.tsx:506 API Response (cleaned): {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: {…}}
+FlightsPageAuthenticated.tsx:2376 Full API response data: {
+  "user_id": "072GjbIPSbZup5fHaHp6hHQItyn2",
+  "session_id": "5656127781692506112",
+  "message": {
+    "response_type": "end",
+    "message": ""
+  }
+}
+FlightsPageAuthenticated.tsx:2379 🔍 End response detection: {root_response_type: undefined, nested_response_type: 'end', isEndResponse: true, full_data_structure: '{\n  "user_id": "072GjbIPSbZup5fHaHp6hHQItyn2",\n  "…  "response_type": "end",\n    "message": ""\n  }\n}'}
+FlightsPageAuthenticated.tsx:2411 🎯 End response detected - showing end loader immediately
+FlightsPageAuthenticated.tsx:2415 🎯 End response data: {root_response_type: undefined, nested_response_type: 'end'}
+FlightsPageAuthenticated.tsx:2519 Checking nested message format
+FlightsPageAuthenticated.tsx:2528 Detected end response in nested format
+FlightsPageAuthenticated.tsx:2726 🎯 End response detected - showing EndResponseLoader
+FlightsPageAuthenticated.tsx:2727 🎯 End response data: {root_response_type: undefined, nested_response_type: 'end', message_content: "Let's call the smart date recommender now"}
+FlightsPageAuthenticated.tsx:2736 🎯 Starting end loader for 4 seconds minimum
+FlightsPageAuthenticated.tsx:2425 🎯 Safety check: Ensuring end loader is still visible
+FlightsPageAuthenticated.tsx:2429 🎯 Safety: End loader was hidden prematurely, re-showing
+FlightsPageAuthenticated.tsx:2740 🎯 End loader minimum duration completed, hiding loader
+FlightsPageAuthenticated.tsx:2762 Date selector widget activated after end response
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:150 📋 DateSelector: Starting memory data fetch for auto-fill
+DateSelectorWidget.tsx:155 📋 DateSelector: Fetching memory data with: {userId: '072GjbIPSbZup5fHaHp6hHQItyn2', sessionId: '5656127781692506112'}
+priceApi.ts:174 Fetching stay data with request: {city: '', from_date: '2025-11-30', to_date: '2025-12-30'}
+DateSelectorWidget.tsx:150 📋 DateSelector: Starting memory data fetch for auto-fill
+DateSelectorWidget.tsx:155 📋 DateSelector: Fetching memory data with: {userId: '072GjbIPSbZup5fHaHp6hHQItyn2', sessionId: '5656127781692506112'}
+priceApi.ts:174 Fetching stay data with request: {city: '', from_date: '2025-11-30', to_date: '2025-12-30'}
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:172 ✅ Memory data received: {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', user_profile: {…}, onboarding_agent: "No worries at all, Manan! I completely understand.…me get a better sense of what you're looking for!", trip_suggestions: {…}, final_trip: {…}, …}
+DateSelectorWidget.tsx:177 ✅ Extracted from_city from source_point: Delhi
+DateSelectorWidget.tsx:188 📋 DateSelector: Extracting to_city from selectedTrip: {trip_title: "Winter Monastery Trail & Leh's Heart", no_of_days: 7, estimated_budget: 75000, best_time_to_visit: 'December', themes: Array(3), …}
+DateSelectorWidget.tsx:191 📋 DateSelector: Found Day 1: {day_number: 1, conveyance_details: {…}, stay_details: {…}, must_do_activities: Array(1)}
+DateSelectorWidget.tsx:195 ✅ Extracted to_city from Day 1: Leh
+DateSelectorWidget.tsx:201 ✅ Formatted to_city: Leh
+DateSelectorWidget.tsx:214 ✅ Formatted from_city: New Delhi
+DateSelectorWidget.tsx:220 📍 Set from_city to: New Delhi
+DateSelectorWidget.tsx:225 📍 Set to_city to: Leh
+DateSelectorWidget.tsx:231 ✅ DateSelector fields auto-filled and locked
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=undefined, stay=undefined
+priceApi.ts:115 Fetching conveyance data with request: {conveyance_type: 'flights', departure_city: 'New Delhi', arrival_city: 'Leh', from_date: '2025-11-30', to_date: '2025-12-30'}
+priceApi.ts:174 Fetching stay data with request: {city: 'Leh', from_date: '2025-11-30', to_date: '2025-12-30'}
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:172 ✅ Memory data received: {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', user_profile: {…}, onboarding_agent: "No worries at all, Manan! I completely understand.…me get a better sense of what you're looking for!", trip_suggestions: {…}, final_trip: {…}, …}
+DateSelectorWidget.tsx:177 ✅ Extracted from_city from source_point: Delhi
+DateSelectorWidget.tsx:188 📋 DateSelector: Extracting to_city from selectedTrip: {trip_title: "Winter Monastery Trail & Leh's Heart", no_of_days: 7, estimated_budget: 75000, best_time_to_visit: 'December', themes: Array(3), …}
+DateSelectorWidget.tsx:191 📋 DateSelector: Found Day 1: {day_number: 1, conveyance_details: {…}, stay_details: {…}, must_do_activities: Array(1)}
+DateSelectorWidget.tsx:195 ✅ Extracted to_city from Day 1: Leh
+DateSelectorWidget.tsx:201 ✅ Formatted to_city: Leh
+DateSelectorWidget.tsx:214 ✅ Formatted from_city: New Delhi
+DateSelectorWidget.tsx:220 📍 Set from_city to: New Delhi
+DateSelectorWidget.tsx:225 📍 Set to_city to: Leh
+DateSelectorWidget.tsx:231 ✅ DateSelector fields auto-filled and locked
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=undefined, stay=undefined
+priceApi.ts:187 Received stay data from API: 0 stays
+DateSelectorWidget.tsx:405 Fetched data: {flights: 0, trains: 0, stays: 0, fromCity: '', toCity: '', …}
+priceApi.ts:304 Processing price data for 2025-11, flights: 0, trains: 0, stays: 0, flightClass: Economy, trainClass: SL
+priceApi.ts:324 Processed price data sample: (5) [{…}, {…}, {…}, {…}, {…}]
+DateSelectorWidget.tsx:430 Processed prices for month: (5) [{…}, {…}, {…}, {…}, {…}]
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=null, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=null, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=null, stay=null
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=null, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=null, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=null, stay=null
+priceApi.ts:187 Received stay data from API: 0 stays
+DateSelectorWidget.tsx:405 Fetched data: {flights: 0, trains: 0, stays: 0, fromCity: '', toCity: '', …}
+priceApi.ts:304 Processing price data for 2025-11, flights: 0, trains: 0, stays: 0, flightClass: Economy, trainClass: SL
+priceApi.ts:324 Processed price data sample: (5) [{…}, {…}, {…}, {…}, {…}]
+DateSelectorWidget.tsx:430 Processed prices for month: (5) [{…}, {…}, {…}, {…}, {…}]
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=null, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=null, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=null, stay=null
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=null, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=null, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=null, stay=null
+priceApi.ts:128 Received conveyance data from API: 84 flights
+priceApi.ts:187 Received stay data from API: 80 stays
+DateSelectorWidget.tsx:405 Fetched data: {flights: 84, trains: 0, stays: 80, fromCity: 'New Delhi', toCity: 'Leh', …}
+priceApi.ts:304 Processing price data for 2025-11, flights: 84, trains: 0, stays: 80, flightClass: Economy, trainClass: SL
+priceApi.ts:247 Found 3 prices for date 2025-12-01, class Economy: (3) [7403, 4305, 6506]
+priceApi.ts:247 Found 2 prices for date 2025-12-02, class Economy: (2) [5871, 4407]
+priceApi.ts:247 Found 3 prices for date 2025-12-03, class Economy: (3) [5956, 5059, 7512]
+priceApi.ts:247 Found 4 prices for date 2025-12-04, class Economy: (4) [5803, 8701, 7526, 7220]
+priceApi.ts:247 Found 2 prices for date 2025-12-05, class Economy: (2) [7367, 6800]
+priceApi.ts:247 Found 3 prices for date 2025-12-06, class Economy: (3) [6968, 8406, 9227]
+priceApi.ts:247 Found 3 prices for date 2025-12-07, class Economy: (3) [8362, 9942, 8364]
+priceApi.ts:247 Found 2 prices for date 2025-12-08, class Economy: (2) [7540, 6106]
+priceApi.ts:247 Found 2 prices for date 2025-12-09, class Economy: (2) [5679, 6541]
+priceApi.ts:247 Found 4 prices for date 2025-12-10, class Economy: (4) [5772, 4417, 4306, 7317]
+priceApi.ts:247 Found 2 prices for date 2025-12-11, class Economy: (2) [6962, 6926]
+priceApi.ts:247 Found 2 prices for date 2025-12-12, class Economy: (2) [6276, 7527]
+priceApi.ts:247 Found 2 prices for date 2025-12-13, class Economy: (2) [9757, 7517]
+priceApi.ts:247 Found 3 prices for date 2025-12-14, class Economy: (3) [8340, 8230, 7584]
+priceApi.ts:247 Found 2 prices for date 2025-12-15, class Economy: (2) [8741, 7709]
+priceApi.ts:247 Found 3 prices for date 2025-12-16, class Economy: (3) [6983, 5695, 8273]
+priceApi.ts:247 Found 2 prices for date 2025-12-17, class Economy: (2) [8847, 5412]
+priceApi.ts:247 Found 4 prices for date 2025-12-18, class Economy: (4) [5965, 10116, 4671, 7974]
+priceApi.ts:247 Found 3 prices for date 2025-12-19, class Economy: (3) [6870, 4307, 5701]
+priceApi.ts:247 Found 3 prices for date 2025-12-20, class Economy: (3) [6999, 8586, 8662]
+priceApi.ts:247 Found 4 prices for date 2025-12-21, class Economy: (4) [8975, 7187, 6413, 5597]
+priceApi.ts:247 Found 2 prices for date 2025-12-22, class Economy: (2) [7068, 6687]
+priceApi.ts:247 Found 2 prices for date 2025-12-23, class Economy: (2) [5353, 8576]
+priceApi.ts:247 Found 4 prices for date 2025-12-24, class Economy: (4) [10983, 13149, 10921, 8538]
+priceApi.ts:247 Found 4 prices for date 2025-12-25, class Economy: (4) [6583, 8924, 11364, 9263]
+priceApi.ts:247 Found 2 prices for date 2025-12-26, class Economy: (2) [7493, 9940]
+priceApi.ts:247 Found 4 prices for date 2025-12-27, class Economy: (4) [6652, 5353, 7113, 5093]
+priceApi.ts:247 Found 2 prices for date 2025-12-28, class Economy: (2) [10710, 7075]
+priceApi.ts:247 Found 2 prices for date 2025-12-29, class Economy: (2) [7872, 5834]
+priceApi.ts:247 Found 4 prices for date 2025-12-30, class Economy: (4) [8930, 9763, 9797, 8204]
+priceApi.ts:324 Processed price data sample: (5) [{…}, {…}, {…}, {…}, {…}]
+DateSelectorWidget.tsx:430 Processed prices for month: (5) [{…}, {…}, {…}, {…}, {…}]
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=null, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=4305, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=4407, stay=null
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=null, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=4305, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=4407, stay=null
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=null, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=4305, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=4407, stay=null
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=null, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=4305, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=4407, stay=null
+DateSelectorWidget.tsx:479 Storing selected date: Mon Dec 22 2025 00:00:00 GMT+0530 (India Standard Time)
+tripStorage.ts:109 Storing selected date for user: 072GjbIPSbZup5fHaHp6hHQItyn2 Date: Mon Dec 22 2025 00:00:00 GMT+0530 (India Standard Time)
+tripStorage.ts:129 Date stored successfully in Firestore as: 2025-12-21
+tripStorage.ts:148 Updating memory API with selected date: 2025-12-21
+tripStorage.ts:175 Memory API updated successfully with date: {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: 'Memory added successfully'}
+DateSelectorWidget.tsx:481 Date stored successfully
+FlightsPageAuthenticated.tsx:1321 🎯 handleDateSelection called with date: Mon Dec 22 2025 00:00:00 GMT+0530 (India Standard Time)
+FlightsPageAuthenticated.tsx:1322 🔍 Current state at entry:
+FlightsPageAuthenticated.tsx:1323    - userId: 072GjbIPSbZup5fHaHp6hHQItyn2
+FlightsPageAuthenticated.tsx:1324    - sessionId: 5656127781692506112
+FlightsPageAuthenticated.tsx:1325    - selectedTrip: Present (Winter Monastery Trail & Leh's Heart)
+FlightsPageAuthenticated.tsx:1338 ✅ Date selected: 22/12/2025
+FlightsPageAuthenticated.tsx:1344 ✅ Trip already in memory: Winter Monastery Trail & Leh's Heart
+FlightsPageAuthenticated.tsx:1367 Storing trip with selected date: Winter Monastery Trail & Leh's Heart
+FlightsPageAuthenticated.tsx:1400 🔄 Day 1: Converting "user_location" to Mumbai in trip JSON
+tripStorage.ts:28 Storing trip in Firestore for user: 072GjbIPSbZup5fHaHp6hHQItyn2
+tripStorage.ts:48 Trip stored successfully in Firestore
+tripStorage.ts:61 Storing trip in code memory: {trip_title: "Winter Monastery Trail & Leh's Heart", no_of_days: 7, estimated_budget: 75000, best_time_to_visit: 'December', themes: Array(3), …}
+tripStorage.ts:92 Trip stored in both Firestore and memory: {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', trip_data: {…}}
+FlightsPageAuthenticated.tsx:1436 🔍 Fetching source_point from memory API...
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=null, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=4305, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=4407, stay=null
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=null, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=4305, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=4407, stay=null
+DateSelectorWidget.tsx:146 📋 DateSelector: Already auto-filled, skipping
+FlightsPageAuthenticated.tsx:1450 ✅ Memory data received: {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', user_profile: {…}, onboarding_agent: "No worries at all, Manan! I completely understand.…me get a better sense of what you're looking for!", trip_suggestions: {…}, final_trip: {…}, …}
+FlightsPageAuthenticated.tsx:1454 ✅ Found source_point: Delhi
+tripStorage.ts:28 Storing trip in Firestore for user: 072GjbIPSbZup5fHaHp6hHQItyn2
+tripStorage.ts:48 Trip stored successfully in Firestore
+tripStorage.ts:61 Storing trip in code memory: {trip_title: "Winter Monastery Trail & Leh's Heart", no_of_days: 7, estimated_budget: 75000, best_time_to_visit: 'December', themes: Array(3), …}
+tripStorage.ts:92 Trip stored in both Firestore and memory: {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', trip_data: {…}}
+FlightsPageAuthenticated.tsx:1487 ✅ Trip updated with source_point
+FlightsPageAuthenticated.tsx:1545 🔍 Day-wise plan: (7) [{…}, {…}, {…}, {…}, {…}, {…}, {…}]
+FlightsPageAuthenticated.tsx:1607 🔍 Checking Day 1 conveyance details: {day_number: 1, conveyance_details: {…}, stay_details: {…}, must_do_activities: Array(1)}
+FlightsPageAuthenticated.tsx:1608 🔍 Day 1 conveyance_details: {is_required: true, travel_timing: 'morning', from_city: 'Mumbai', to_city: 'Leh'}
+FlightsPageAuthenticated.tsx:1609 🔍 Day 1 conveyance is_required: true
+FlightsPageAuthenticated.tsx:1613 🔍 Day 1 conveyance is_required type: boolean
+FlightsPageAuthenticated.tsx:1623 ✅✅✅ Day 1 conveyance is required, showing loader and flights
+FlightsPageAuthenticated.tsx:1676 🎯 Setting conveyance cities - From: Mumbai To: Leh
+FlightsPageAuthenticated.tsx:1690 📅 Set auto-fill mode with departure date: 2025-12-21
+FlightsPageAuthenticated.tsx:1703 🔄 Closing date selector and showing loader
+FlightsPageAuthenticated.tsx:1712 ⏱️ Starting 4-second timer for loader
+FlightsPageAuthenticated.tsx:1716 ⏱️ 4 seconds elapsed, hiding loader
+FlightsPageAuthenticated.tsx:1720 ✈️ Showing FlightsWidget with cities: Mumbai to Leh
+FlightsWidget.tsx:1525 🛫 FlightsWidget received props - From: Mumbai To: Leh
+FlightsWidget.tsx:1532 🛫 Setting FROM city to: Mumbai
+FlightsWidget.tsx:1537 🛫 Setting TO city to: Leh
+FlightsWidget.tsx:1546 🛫 FlightsWidget is now visible. Current cities - From: Mumbai To: Leh
+FlightsWidget.tsx:1563 🚀 Auto-fill mode enabled - setting departure date...
+FlightsWidget.tsx:1564 📅 Setting departure date to: 2025-12-21
+FlightsWidget.tsx:1525 🛫 FlightsWidget received props - From: Mumbai To: Leh
+FlightsWidget.tsx:1532 🛫 Setting FROM city to: Mumbai
+FlightsWidget.tsx:1537 🛫 Setting TO city to: Leh
+FlightsWidget.tsx:1546 🛫 FlightsWidget is now visible. Current cities - From: Mumbai To: Leh
+FlightsWidget.tsx:1563 🚀 Auto-fill mode enabled - setting departure date...
+FlightsWidget.tsx:1564 📅 Setting departure date to: 2025-12-21
+FlightsWidget.tsx:1585 ✅ All fields ready for auto-search (full auto-fill): {from: 'Mumbai', to: 'Leh', departureDate: '2025-12-21'}
+FlightsWidget.tsx:1593 🔍 Auto-triggering search with pre-filled data...
+FlightsWidget.tsx:1718 🔍 handleSearch called - Current state: {from: 'Mumbai', to: 'Leh', departureDate: '2025-12-21', fromCity: 'Mumbai', toCity: 'Leh'}
+FlightsWidget.tsx:1732 ✅ All fields present, proceeding with search
+FlightsWidget.tsx:1743 🔍 Fetching conveyance data for: {from: 'Mumbai', to: 'Leh', date: '2025-12-21', dayNumber: 1}
+FlightsWidget.tsx:1752 🔍 Checking for pre-fetched data for route: Mumbai → Leh on 2025-12-21...
+preFetchConveyance.ts:328 🔍 Retrieving pre-fetched data for route: Mumbai|Leh|2025-12-21
+preFetchConveyance.ts:347 ℹ️ No pre-fetched data collection found for user: 072GjbIPSbZup5fHaHp6hHQItyn2
+preFetchIntegration.ts:52 ℹ️ No cached conveyance data for Mumbai → Leh
+FlightsWidget.tsx:1794 ℹ️ No pre-fetched data found, proceeding with API calls...
+FlightsWidget.tsx:1896 ✅ AI results: {flights: 3, trains: 0}
+FlightsWidget.tsx:1901 ✅ Utility results: {flights: 3, trains: 0}
+FlightsWidget.tsx:1969 ✅ Selected conveyance data: {id: 'F1', number: 'UK9237', operator: 'Vistara', departureDate: 'Dec 21, 2025', arrivalDate: 'Dec 21, 2025', …}
+FlightsWidget.tsx:2314 🚀 Continue clicked with selected data: {id: 'F1', number: 'UK9237', operator: 'Vistara', departureDate: 'Dec 21, 2025', arrivalDate: 'Dec 21, 2025', …}
+FlightsPageAuthenticated.tsx:1790 🚀 Continue clicked from FlightsWidget with data: {id: 'F1', number: 'UK9237', operator: 'Vistara', departureDate: 'Dec 21, 2025', arrivalDate: 'Dec 21, 2025', …}
+FlightsPageAuthenticated.tsx:1808 💾 Storing conveyance temporarily for day 1: {id: 'F1', number: 'UK9237', operator: 'Vistara', departureDate: 'Dec 21, 2025', arrivalDate: 'Dec 21, 2025', …}
+FlightsPageAuthenticated.tsx:1844 🔍 Checking if day 1 requires stay...
+FlightsPageAuthenticated.tsx:1845 🔍 Partial auto-fill mode: false
+FlightsPageAuthenticated.tsx:2002 ✅ Day 1 requires stay, showing loader...
+FlightsPageAuthenticated.tsx:2039 📅 Check-in day: 1, Check-out day: 8
+FlightsPageAuthenticated.tsx:2053 📅 Check-in date: 2025-12-21, Check-out date: 2025-12-28
+FlightsPageAuthenticated.tsx:2070 🏨 Setting auto-fill mode for StaysWidget: {stayCity: 'Leh', checkInDate: '', checkOutDate: '', autoFillMode: true}
+FlightsPageAuthenticated.tsx:2086 🏨 Showing StaysWidget for day 1 in Leh with auto-fill mode: false
+StaysWidget.tsx:567 🏨 StaysWidget received props - City: Leh CheckIn: 2025-12-21 CheckOut: 2025-12-28 AutoFill: true
+StaysWidget.tsx:569 🏨 Setting city to: Leh
+StaysWidget.tsx:573 🏨 Setting check-in date to: 2025-12-21
+StaysWidget.tsx:577 🏨 Setting check-out date to: 2025-12-28
+StaysWidget.tsx:585 🏨 StaysWidget is now visible in AUTO-FILL mode. Auto-triggering search...
+StaysWidget.tsx:586 🏨 Search params: {city: 'Leh', checkInDate: '2025-12-21', checkOutDate: '2025-12-28'}
+StaysWidget.tsx:620 🏨 Checking for pre-fetched stays data for: Leh (2025-12-21 to 2025-12-28)...
+preFetchStays.ts:332 🔍 Retrieving pre-fetched stays data for: Leh|2025-12-21|2025-12-28
+StaysWidget.tsx:567 🏨 StaysWidget received props - City: Leh CheckIn: 2025-12-21 CheckOut: 2025-12-28 AutoFill: true
+StaysWidget.tsx:569 🏨 Setting city to: Leh
+StaysWidget.tsx:573 🏨 Setting check-in date to: 2025-12-21
+StaysWidget.tsx:577 🏨 Setting check-out date to: 2025-12-28
+StaysWidget.tsx:585 🏨 StaysWidget is now visible in AUTO-FILL mode. Auto-triggering search...
+StaysWidget.tsx:586 🏨 Search params: {city: 'Leh', checkInDate: '2025-12-21', checkOutDate: '2025-12-28'}
+StaysWidget.tsx:620 🏨 Checking for pre-fetched stays data for: Leh (2025-12-21 to 2025-12-28)...
+preFetchStays.ts:332 🔍 Retrieving pre-fetched stays data for: Leh|2025-12-21|2025-12-28
+preFetchStays.ts:351 ℹ️ No pre-fetched stays data collection found for user: 072GjbIPSbZup5fHaHp6hHQItyn2
+StaysWidget.tsx:666 ℹ️ No pre-fetched stays data found, proceeding with API call...
+preFetchStays.ts:351 ℹ️ No pre-fetched stays data collection found for user: 072GjbIPSbZup5fHaHp6hHQItyn2
+StaysWidget.tsx:666 ℹ️ No pre-fetched stays data found, proceeding with API call...
+StaysWidget.tsx:701 Received stay response: {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: {…}}
+StaysWidget.tsx:732 Parsed stay options: [{…}]
+StaysWidget.tsx:701 Received stay response: {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: {…}}
+StaysWidget.tsx:732 Parsed stay options: [{…}]
+StaysWidget.tsx:752 ✅ Selected stay data: {stay_id: 'stay_0', property_name: 'Hotel Kidar', property_address: 'Fort Road, Leh', property_location: 'Leh', city: 'Leh', …}
+StaysWidget.tsx:1008 🚀 Continue clicked with selected stay data: {stay_id: 'stay_0', property_name: 'Hotel Kidar', property_address: 'Fort Road, Leh', property_location: 'Leh', city: 'Leh', …}
+FlightsPageAuthenticated.tsx:2164 🚀 Continue clicked from StaysWidget with data: {stay_id: 'stay_0', property_name: 'Hotel Kidar', property_address: 'Fort Road, Leh', property_location: 'Leh', city: 'Leh', …}
+FlightsPageAuthenticated.tsx:2187 💾 Processing day 1 with conveyance and stay
+FlightsPageAuthenticated.tsx:2190 📦 Temp conveyance: {id: 'F1', number: 'UK9237', operator: 'Vistara', departureDate: 'Dec 21, 2025', arrivalDate: 'Dec 21, 2025', …}
+FlightsPageAuthenticated.tsx:2191 🏨 Stay data: {stay_id: 'stay_0', property_name: 'Hotel Kidar', property_address: 'Fort Road, Leh', property_location: 'Leh', city: 'Leh', …}
+FlightsPageAuthenticated.tsx:2254 📤 Building complete day itinerary (conveyance + stay): {day_number: 1, conveyance_details: {…}, stay_details: {…}, must_do_activities: Array(1)}
+itineraryStorage.ts:148 ✅ Created itinerary with day 1
+FlightsPageAuthenticated.tsx:2265 ✅ Stored day 1 itinerary in Firestore
+FlightsPageAuthenticated.tsx:2289 📞 Calling itinerary API for day 1
+FlightsPageAuthenticated.tsx:714 📤 Calling itinerary API for day 1 of 7 days
+itineraryStorage.ts:169 ✅ Retrieved generated itinerary from Firestore
+itineraryStorage.ts:266 📦 Day 1 complete data includes: {has_conveyance: true, has_stay: true, has_schedule: false, has_title: false}
+itineraryStorage.ts:279 📦 Built complete itinerary with 1 days
+FlightsPageAuthenticated.tsx:725 📦 Built complete itinerary with 1 days for API request
+FlightsPageAuthenticated.tsx:728 📊 Complete itinerary data: [{…}]
+FlightsPageAuthenticated.tsx:733 📝 Itinerary message: {'role':'admin','day_number':1,'end_day':7,'query':'recommend the itinerary for day 1'}
+FlightsPageAuthenticated.tsx:742 📤 Request body: {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: "{'role':'admin','day_number':1,'end_day':7,'query':'recommend the itinerary for day 1'}", current_itinerary: Array(1)}
+FlightsPageAuthenticated.tsx:809 ✅ Itinerary API response received on attempt 1
+FlightsPageAuthenticated.tsx:838 ✅ Itinerary API response received: {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: {…}}
+FlightsPageAuthenticated.tsx:848 📦 Extracting itinerary from nested message object
+FlightsPageAuthenticated.tsx:858 ✅ Itinerary data stored successfully
+FlightsPageAuthenticated.tsx:859 📊 Itinerary contains 1 day(s)
+FlightsPageAuthenticated.tsx:866 💾 Storing all received days to Firestore...
+itineraryStorage.ts:126 ✅ Updated day 1 itinerary
+FlightsPageAuthenticated.tsx:896 ✅ Stored day 1 in Firestore
+FlightsPageAuthenticated.tsx:905 ✅ All days stored in Firestore
+FlightsPageAuthenticated.tsx:924 ✅ Showing itinerary widget
+ItineraryWidget.tsx:286 📊 Transforming API response to display format
+ItineraryWidget.tsx:85 📊 Transforming 1 day(s) from API response
+ItineraryWidget.tsx:289 ✅ Successfully transformed itinerary data
+ItineraryWidget.tsx:286 📊 Transforming API response to display format
+ItineraryWidget.tsx:85 📊 Transforming 1 day(s) from API response
+ItineraryWidget.tsx:289 ✅ Successfully transformed itinerary data
+ItineraryWidget.tsx:311 📊 Updating itinerary data from new API response
+ItineraryWidget.tsx:85 📊 Transforming 1 day(s) from API response
+ItineraryWidget.tsx:325 🔄 Merging itinerary: 1 existing days + 1 new days
+ItineraryWidget.tsx:335 📝 Updating/Adding day 1
+ItineraryWidget.tsx:344 ✅ Merged itinerary has 1 total days
+ItineraryWidget.tsx:356 ✅ Itinerary data updated successfully
+ItineraryWidget.tsx:311 📊 Updating itinerary data from new API response
+ItineraryWidget.tsx:85 📊 Transforming 1 day(s) from API response
+ItineraryWidget.tsx:356 ✅ Itinerary data updated successfully
+ItineraryWidget.tsx:325 🔄 Merging itinerary: 1 existing days + 1 new days
+ItineraryWidget.tsx:335 📝 Updating/Adding day 1
+ItineraryWidget.tsx:344 ✅ Merged itinerary has 1 total days
+ItineraryWidget.tsx:325 🔄 Merging itinerary: 1 existing days + 1 new days
+ItineraryWidget.tsx:335 📝 Updating/Adding day 1
+ItineraryWidget.tsx:344 ✅ Merged itinerary has 1 total days
+ItineraryWidget.tsx:325 🔄 Merging itinerary: 1 existing days + 1 new days
+ItineraryWidget.tsx:335 📝 Updating/Adding day 1
+ItineraryWidget.tsx:344 ✅ Merged itinerary has 1 total days
+VM5575 js:1362 Google Maps JavaScript API has been loaded directly without loading=async. This can result in suboptimal performance. For best-practice loading patterns please see https://goo.gle/js-api-loading
+Wda @ VM5575 js:1362
+(anonymous) @ VM5575 js:14
+(anonymous) @ VM5575 js:1666
+(anonymous) @ VM5575 js:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-internal-loading-text" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1591
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-internal-request-error-text" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1591
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-internal-back-button" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1608
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-internal-dialog" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1613
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-internal-basic-disclosure" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1639
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-internal-basic-disclosure-section" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1639
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-internal-attribution" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1660
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-internal-element-support-verification" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+Nda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1370
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1362
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1370 You have included the Google Maps JavaScript API multiple times on this page. This may cause unexpected errors.
+error @ intercept-console-error.js:57
+Oda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1370
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1362
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1362 Google Maps JavaScript API has been loaded directly without loading=async. This can result in suboptimal performance. For best-practice loading patterns please see https://goo.gle/js-api-loading
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1362
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-internal-rating" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:577
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1228
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1421
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1420
+oda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1332
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1364
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-internal-link-button" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:611
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1228
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1421
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1420
+oda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1332
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1364
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-internal-menu" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:676
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1228
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1421
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1420
+oda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1332
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1364
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-internal-place-opening-hours" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:702
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1228
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1421
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1420
+oda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1332
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1364
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-internal-place-review" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:720
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1228
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1421
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1420
+oda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1332
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1364
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-internal-tabbed-layout" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:745
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1228
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1421
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1420
+oda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1332
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1364
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-internal-lightbox" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:832
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1228
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1421
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1420
+oda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1332
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1364
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-internal-collage" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:840
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1228
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1421
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1420
+oda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1332
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1364
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-internal-place-rating-summary" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:857
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1228
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1421
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1420
+oda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1332
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1364
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-internal-place-basic-info" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:878
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1228
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1421
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1420
+oda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1332
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1364
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-internal-status-text" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:891
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1228
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1421
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1420
+oda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1332
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1364
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-internal-circular-loader" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:908
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1228
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1421
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1420
+oda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1332
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1364
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-internal-use-place-details-compact" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:941
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1228
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1421
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1420
+oda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1332
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1364
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-place-content-config" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+Vpa @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:84
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:941
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1228
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1421
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1420
+oda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1332
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1364
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-place-media" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+Upa @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:83
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:941
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1228
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1421
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1420
+oda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1332
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1364
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-place-address" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+Upa @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:83
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:941
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1228
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1421
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1420
+oda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1332
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1364
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-place-rating" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+Upa @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:83
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:941
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1228
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1421
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1420
+oda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1332
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1364
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-place-type" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+Upa @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:83
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:941
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1228
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1421
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1420
+oda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1332
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1364
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-place-price" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+Upa @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:83
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:941
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1228
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1421
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1420
+oda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1332
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1364
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-place-accessible-entrance-icon" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+Upa @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:83
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:941
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1228
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1421
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1420
+oda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1332
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1364
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-place-open-now-status" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+Upa @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:83
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:941
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1228
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1421
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1420
+oda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1332
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1364
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-place-attribution" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+Upa @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:83
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:941
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1228
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1421
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1420
+oda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1332
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1364
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-place-website" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+Upa @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:83
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:941
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1228
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1421
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1420
+oda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1332
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1364
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-place-phone-number" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+Upa @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:83
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:941
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1228
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1421
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1420
+oda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1332
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1364
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-place-opening-hours" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+Upa @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:83
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:941
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1228
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1421
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1420
+oda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1332
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1364
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-place-summary" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+Upa @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:83
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:941
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1228
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1421
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1420
+oda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1332
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1364
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-place-type-specific-highlights" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+Upa @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:83
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:941
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1228
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1421
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1420
+oda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1332
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1364
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-place-reviews" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+Upa @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:83
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:941
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1228
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1421
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1420
+oda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1332
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1364
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-place-plus-code" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+Upa @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:83
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:941
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1228
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1421
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1420
+oda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1332
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1364
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-place-feature-list" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+Upa @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:83
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:941
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1228
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1421
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1420
+oda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1332
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1364
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-place-details-place-request" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+lra @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:249
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:941
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1228
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1421
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1420
+oda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1332
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1364
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-internal-place-carousel" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:997
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1228
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1421
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1420
+oda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1332
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1364
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-internal-place-search-list-item" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1012
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1228
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1226
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1421
+init @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1420
+oda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1332
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1364
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-map" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1364
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-place-autocomplete" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+connectForExplicitThirdPartyLoad @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1060
+eda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1328
+await in eda
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1366
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-basic-place-autocomplete" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+connectForExplicitThirdPartyLoad @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1060
+eda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1328
+await in eda
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1366
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-place-search" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+connectForExplicitThirdPartyLoad @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1061
+eda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1328
+await in eda
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1366
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-place-text-search-request" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+connectForExplicitThirdPartyLoad @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1061
+eda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1328
+await in eda
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1366
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-place-nearby-search-request" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+connectForExplicitThirdPartyLoad @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1061
+eda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1328
+await in eda
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1366
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-place-details" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+connectForExplicitThirdPartyLoad @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1061
+eda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1328
+await in eda
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1366
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-place-details-compact" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+connectForExplicitThirdPartyLoad @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1061
+eda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1328
+await in eda
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1366
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-place-details-location-request" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+connectForExplicitThirdPartyLoad @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1061
+eda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1328
+await in eda
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1366
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-place-standard-content" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+connectForExplicitThirdPartyLoad @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1061
+eda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1328
+await in eda
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1366
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266 Element with name "gmp-place-all-content" already defined.
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1266
+connectForExplicitThirdPartyLoad @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1061
+eda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1328
+await in eda
+Wda @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1366
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:14
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+(anonymous) @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1666
+ItineraryMap.tsx:92 Found 9 coordinates from 9 stops
+js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1461 As of February 21st, 2024, google.maps.Marker is deprecated. Please use google.maps.marker.AdvancedMarkerElement instead. At this time, google.maps.Marker is not scheduled to be discontinued, but google.maps.marker.AdvancedMarkerElement is recommended over google.maps.Marker. While google.maps.Marker will continue to receive bug fixes for any major regressions, existing bugs in google.maps.Marker will not be addressed. At least 12 months notice will be given before support is discontinued. Please see https://developers.google.com/maps/deprecations for additional details and https://developers.google.com/maps/documentation/javascript/advanced-markers/migration for the migration guide.
+oA @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1461
+_.Ft @ js?key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk&libraries=places,geometry:1461
+ItineraryMap.useEffect @ ItineraryMap.tsx:152
+ItineraryMap.useEffect @ ItineraryMap.tsx:149
+react_stack_bottom_frame @ react-dom-client.development.js:23669
+runWithFiberInDEV @ react-dom-client.development.js:872
+commitHookEffectListMount @ react-dom-client.development.js:12345
+commitHookPassiveMountEffects @ react-dom-client.development.js:12466
+commitPassiveMountOnFiber @ react-dom-client.development.js:14387
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14485
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14458
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14390
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14390
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14390
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14390
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14390
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14390
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14390
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14390
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14390
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14390
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14390
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14514
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+commitPassiveMountOnFiber @ react-dom-client.development.js:14380
+recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:14360
+<...>
+exports.jsx @ react-jsx-runtime.development.js:323
+LoadableComponent @ loadable.js:63
+react_stack_bottom_frame @ react-dom-client.development.js:23584
+renderWithHooksAgain @ react-dom-client.development.js:6893
+renderWithHooks @ react-dom-client.development.js:6805
+updateFunctionComponent @ react-dom-client.development.js:9247
+beginWork @ react-dom-client.development.js:10858
+runWithFiberInDEV @ react-dom-client.development.js:872
+performUnitOfWork @ react-dom-client.development.js:15727
+workLoopSync @ react-dom-client.development.js:15547
+renderRootSync @ react-dom-client.development.js:15527
+performWorkOnRoot @ react-dom-client.development.js:14991
+performWorkOnRootViaSchedulerTask @ react-dom-client.development.js:16816
+performWorkUntilDeadline @ scheduler.development.js:45
+<LoadableComponent>
+exports.jsxDEV @ react-jsx-dev-runtime.development.js:323
+ItineraryWidget @ ItineraryWidget.tsx:1033
+react_stack_bottom_frame @ react-dom-client.development.js:23584
+renderWithHooksAgain @ react-dom-client.development.js:6893
+renderWithHooks @ react-dom-client.development.js:6805
+updateFunctionComponent @ react-dom-client.development.js:9247
+beginWork @ react-dom-client.development.js:10858
+runWithFiberInDEV @ react-dom-client.development.js:872
+performUnitOfWork @ react-dom-client.development.js:15727
+workLoopSync @ react-dom-client.development.js:15547
+renderRootSync @ react-dom-client.development.js:15527
+performWorkOnRoot @ react-dom-client.development.js:14991
+performWorkOnRootViaSchedulerTask @ react-dom-client.development.js:16816
+performWorkUntilDeadline @ scheduler.development.js:45
+<ItineraryWidget>
+exports.jsxDEV @ react-jsx-dev-runtime.development.js:323
+FlightsPageAuthenticated @ FlightsPageAuthenticated.tsx:3161
+react_stack_bottom_frame @ react-dom-client.development.js:23584
+renderWithHooksAgain @ react-dom-client.development.js:6893
+renderWithHooks @ react-dom-client.development.js:6805
+updateFunctionComponent @ react-dom-client.development.js:9247
+beginWork @ react-dom-client.development.js:10858
+runWithFiberInDEV @ react-dom-client.development.js:872
+performUnitOfWork @ react-dom-client.development.js:15727
+workLoopSync @ react-dom-client.development.js:15547
+renderRootSync @ react-dom-client.development.js:15527
+performWorkOnRoot @ react-dom-client.development.js:14991
+performWorkOnRootViaSchedulerTask @ react-dom-client.development.js:16816
+performWorkUntilDeadline @ scheduler.development.js:45
+VM5575 js:1364 Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'AJ')
+(anonymous) @ VM5575 js:1364
+Promise.then
+(anonymous) @ VM5575 js:1364
+setTimeout
+Wda @ VM5575 js:1364
+(anonymous) @ VM5575 js:14
+(anonymous) @ VM5575 js:1666
+(anonymous) @ VM5575 js:1666
+ItineraryWidget.tsx:386 ➕ Add day button clicked
+ItineraryWidget.tsx:392 ✅ User wants to extend trip duration
+ItineraryWidget.tsx:408 ✅ User needs conveyance for new day
+FlightsPageAuthenticated.tsx:1081 ➕ handleAddDay called: {extendTrip: true, needsConveyance: true, currentDayNumber: 1}currentDayNumber: 1extendTrip: trueneedsConveyance: true[[Prototype]]: Object
+FlightsPageAuthenticated.tsx:1096 📅 Adding day 2 after current day 1
+FlightsPageAuthenticated.tsx:1105 ✅ Extending trip duration from 7 to 8
+FlightsPageAuthenticated.tsx:1119 🔍 Looking for last to_city before day 2 (checking days 1 to 1)
+FlightsPageAuthenticated.tsx:1125    Checking day 1: {is_required: true, travel_timing: 'morning', from_city: 'Mumbai', to_city: 'Leh'}from_city: "Mumbai"is_required: trueto_city: "Leh"travel_timing: "morning"[[Prototype]]: Object
+FlightsPageAuthenticated.tsx:1129 🎯 Found last to_city: Leh from day 1
+FlightsPageAuthenticated.tsx:1194 🚗 Final from_city for new day: Leh
+FlightsPageAuthenticated.tsx:1219 ✅ Inserted new day 2 and renumbered subsequent days
+FlightsPageAuthenticated.tsx:1222 📊 Updated day_wise_plan has 8 days
+tripStorage.ts:28 Storing trip in Firestore for user: 072GjbIPSbZup5fHaHp6hHQItyn2
+tripStorage.ts:48 Trip stored successfully in Firestore
+tripStorage.ts:61 Storing trip in code memory: {trip_title: "Winter Monastery Trail & Leh's Heart", no_of_days: 8, estimated_budget: 75000, best_time_to_visit: 'December', themes: Array(3), …}
+tripStorage.ts:92 Trip stored in both Firestore and memory: {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', trip_data: {…}}
+FlightsPageAuthenticated.tsx:1229 ✅ Added day 2 to trip in Firestore
+FlightsPageAuthenticated.tsx:1233 ✈️ Redirecting to FlightsWidget for day 2
+FlightsPageAuthenticated.tsx:1237 trip date 2025-12-21
+FlightsPageAuthenticated.tsx:1244 📅 Calculated departure date: 2025-12-22
+FlightsPageAuthenticated.tsx:1264 🔄 Closing itinerary and showing loader
+FlightsPageAuthenticated.tsx:1278 ✈️ Showing FlightsWidget for day 2
+FlightsWidget.tsx:1525 🛫 FlightsWidget received props - From: Leh To: 
+FlightsWidget.tsx:1532 🛫 Setting FROM city to: Leh
+FlightsWidget.tsx:1546 🛫 FlightsWidget is now visible. Current cities - From: Leh To: Mumbai
+FlightsWidget.tsx:1563 🚀 Auto-fill mode enabled - setting departure date...
+FlightsWidget.tsx:1564 📅 Setting departure date to: 2025-12-22
+FlightsWidget.tsx:1525 🛫 FlightsWidget received props - From: Leh To: 
+FlightsWidget.tsx:1532 🛫 Setting FROM city to: Leh
+FlightsWidget.tsx:1546 🛫 FlightsWidget is now visible. Current cities - From: Leh To: Mumbai
+FlightsWidget.tsx:1563 🚀 Auto-fill mode enabled - setting departure date...
+FlightsWidget.tsx:1564 📅 Setting departure date to: 2025-12-22
+FlightsWidget.tsx:1546 🛫 FlightsWidget is now visible. Current cities - From: Leh To: Agra
+FlightsWidget.tsx:1718 🔍 handleSearch called - Current state: {from: 'Leh', to: 'Agra', departureDate: '2025-12-22', fromCity: 'Leh', toCity: 'Mumbai'}departureDate: "2025-12-22"from: "Leh"fromCity: "Leh"to: "Agra"toCity: "Mumbai"[[Prototype]]: Object
+FlightsWidget.tsx:1732 ✅ All fields present, proceeding with search
+FlightsWidget.tsx:1743 🔍 Fetching conveyance data for: {from: 'Leh', to: 'Agra', date: '2025-12-22', dayNumber: 2}date: "2025-12-22"dayNumber: 2from: "Leh"to: "Agra"[[Prototype]]: Object
+FlightsWidget.tsx:1752 🔍 Checking for pre-fetched data for route: Leh → Agra on 2025-12-22...
+preFetchConveyance.ts:328 🔍 Retrieving pre-fetched data for route: Leh|Agra|2025-12-22
+preFetchConveyance.ts:347 ℹ️ No pre-fetched data collection found for user: 072GjbIPSbZup5fHaHp6hHQItyn2
+preFetchIntegration.ts:52 ℹ️ No cached conveyance data for Leh → Agra
+FlightsWidget.tsx:1794 ℹ️ No pre-fetched data found, proceeding with API calls...
+FlightsWidget.tsx:1896 ✅ AI results: {flights: 2, trains: 0}
+FlightsWidget.tsx:1901 ✅ Utility results: {flights: 2, trains: 0}
+FlightsWidget.tsx:1969 ✅ Selected conveyance data: {id: 'F1', number: 'UK9938', operator: 'Vistara', departureDate: 'Dec 22, 2025', arrivalDate: 'Dec 22, 2025', …}arrivalDate: "Dec 22, 2025"arrivalTime: "18:19"departureDate: "Dec 22, 2025"departureTime: "17:00"duration: "1h 19m"id: "F1"number: "UK9938"operator: "Vistara"price: 10360[[Prototype]]: Object
+FlightsWidget.tsx:2314 🚀 Continue clicked with selected data: {id: 'F1', number: 'UK9938', operator: 'Vistara', departureDate: 'Dec 22, 2025', arrivalDate: 'Dec 22, 2025', …}arrivalDate: "Dec 22, 2025"arrivalTime: "18:19"departureDate: "Dec 22, 2025"departureTime: "17:00"duration: "1h 19m"from_city: "Leh"id: "F1"is_required: truenumber: "UK9938"operator: "Vistara"price: 10360to_city: "Agra"[[Prototype]]: Object
+FlightsPageAuthenticated.tsx:1790 🚀 Continue clicked from FlightsWidget with data: {id: 'F1', number: 'UK9938', operator: 'Vistara', departureDate: 'Dec 22, 2025', arrivalDate: 'Dec 22, 2025', …}
+FlightsPageAuthenticated.tsx:1808 💾 Storing conveyance temporarily for day 2: {id: 'F1', number: 'UK9938', operator: 'Vistara', departureDate: 'Dec 22, 2025', arrivalDate: 'Dec 22, 2025', …}arrivalDate: "Dec 22, 2025"arrivalTime: "18:19"departureDate: "Dec 22, 2025"departureTime: "17:00"duration: "1h 19m"from_city: "Leh"id: "F1"is_required: truenumber: "UK9938"operator: "Vistara"price: 10360to_city: "Agra"[[Prototype]]: Object
+FlightsPageAuthenticated.tsx:1844 🔍 Checking if day 2 requires stay...
+FlightsPageAuthenticated.tsx:1845 🔍 Partial auto-fill mode: true
+FlightsPageAuthenticated.tsx:1849 🚀 Partial auto-fill mode detected - routing to StaysWidget for new day 2
+FlightsPageAuthenticated.tsx:1854 💾 Storing conveyance temporarily for day 2: {id: 'F1', number: 'UK9938', operator: 'Vistara', departureDate: 'Dec 22, 2025', arrivalDate: 'Dec 22, 2025', …}
+FlightsPageAuthenticated.tsx:1897 updatedTrip {trip_title: "Winter Monastery Trail & Leh's Heart", no_of_days: 8, estimated_budget: 75000, best_time_to_visit: 'December', themes: Array(3), …}best_time_to_visit: "December"day_wise_plan: Array(8)0: {day_number: 1, conveyance_details: {…}, stay_details: {…}, must_do_activities: Array(1)}conveyance_details: {is_required: true, travel_timing: 'morning', from_city: 'Mumbai', to_city: 'Leh'}day_number: 1must_do_activities: [{…}]stay_details: {is_required: true, city: 'Leh', check_in_day: '1', check_out_day: '8'}[[Prototype]]: Object1: conveyance_details: arrival_date: "Dec 22, 2025"arrival_time: "18:19"departure_date: "Dec 22, 2025"departure_time: "17:00"duration: "1h 19m"from_city: "Leh"is_required: truenumber: "UK9938"operator: "Vistara"price: 10360to_city: "Agra"type: "flight"[[Prototype]]: Objectday_number: 2stay_details: check_in_day: 2check_out_day: 3city: "Agra"is_required: true[[Prototype]]: Object[[Prototype]]: Object2: {day_number: 3, conveyance_details: {…}, stay_details: {…}, must_do_activities: Array(2)}3: {day_number: 4, conveyance_details: {…}, stay_details: {…}, must_do_activities: Array(2)}4: {day_number: 5, conveyance_details: {…}, stay_details: {…}, must_do_activities: Array(2)}5: {day_number: 6, conveyance_details: {…}, stay_details: {…}, must_do_activities: Array(2)}6: {day_number: 7, conveyance_details: {…}, stay_details: {…}, must_do_activities: Array(1)}7: {day_number: 8, conveyance_details: {…}, stay_details: {…}, must_do_activities: Array(1)}length: 8[[Prototype]]: Array(0)estimated_budget: 75000no_of_days: 8source_point: {place_name: 'Delhi', address: 'Delhi, India', map_url: 'https://www.google.com/maps/place/?q=place_id:ChIJLbZ-NFv9DDkRQJY4FbcFcgM', lat: '28.7040592', long: '77.10249019999999', …}themes: (3) ['Culture', 'Spirituality', 'Winter']trip_date: "2025-12-21"trip_route: [{…}]trip_title: "Winter Monastery Trail & Leh's Heart"[[Prototype]]: Object
+tripStorage.ts:28 Storing trip in Firestore for user: 072GjbIPSbZup5fHaHp6hHQItyn2
+tripStorage.ts:48 Trip stored successfully in Firestore
+tripStorage.ts:61 Storing trip in code memory: {trip_title: "Winter Monastery Trail & Leh's Heart", no_of_days: 8, estimated_budget: 75000, best_time_to_visit: 'December', themes: Array(3), …}
+tripStorage.ts:92 Trip stored in both Firestore and memory: {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', trip_data: {…}}
+FlightsPageAuthenticated.tsx:1901 ✅ Updated day 2 with conveyance details
+FlightsPageAuthenticated.tsx:1918 🏨 Setting stay city to: Agra
+FlightsPageAuthenticated.tsx:1933 📅 Check-in date: 2025-12-22, Check-out date: 2025-12-23
+tripStorage.ts:28 Storing trip in Firestore for user: 072GjbIPSbZup5fHaHp6hHQItyn2
+tripStorage.ts:48 Trip stored successfully in Firestore
+tripStorage.ts:61 Storing trip in code memory: {trip_title: "Winter Monastery Trail & Leh's Heart", no_of_days: 8, estimated_budget: 75000, best_time_to_visit: 'December', themes: Array(3), …}
+tripStorage.ts:92 Trip stored in both Firestore and memory: {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', trip_data: {…}}session_id: "5656127781692506112"trip_data: best_time_to_visit: "December"day_wise_plan: Array(8)0: conveyance_details: {is_required: true, travel_timing: 'morning', from_city: 'Mumbai', to_city: 'Leh'}day_number: 1must_do_activities: [{…}]stay_details: {is_required: true, city: 'Leh', check_in_day: '1', check_out_day: '8'}[[Prototype]]: Object1: conveyance_details: arrival_date: "Dec 22, 2025"arrival_time: "18:19"departure_date: "Dec 22, 2025"departure_time: "17:00"duration: "1h 19m"from_city: "Leh"is_required: truenumber: "UK9938"operator: "Vistara"price: 10360to_city: "Agra"type: "flight"[[Prototype]]: Objectday_number: 2stay_details: check_in_day: 2check_out_day: 3city: "Agra"is_required: true[[Prototype]]: Object[[Prototype]]: Object2: {day_number: 3, conveyance_details: {…}, stay_details: {…}, must_do_activities: Array(2)}3: {day_number: 4, conveyance_details: {…}, stay_details: {…}, must_do_activities: Array(2)}4: {day_number: 5, conveyance_details: {…}, stay_details: {…}, must_do_activities: Array(2)}5: {day_number: 6, conveyance_details: {…}, stay_details: {…}, must_do_activities: Array(2)}6: {day_number: 7, conveyance_details: {…}, stay_details: {…}, must_do_activities: Array(1)}7: {day_number: 8, conveyance_details: {…}, stay_details: {…}, must_do_activities: Array(1)}length: 8[[Prototype]]: Array(0)estimated_budget: 75000no_of_days: 8source_point: {place_name: 'Delhi', address: 'Delhi, India', map_url: 'https://www.google.com/maps/place/?q=place_id:ChIJLbZ-NFv9DDkRQJY4FbcFcgM', lat: '28.7040592', long: '77.10249019999999', …}themes: (3) ['Culture', 'Spirituality', 'Winter']trip_date: "2025-12-21"trip_route: [{…}]trip_title: "Winter Monastery Trail & Leh's Heart"[[Prototype]]: Objectuser_id: "072GjbIPSbZup5fHaHp6hHQItyn2"[[Prototype]]: Object
+FlightsPageAuthenticated.tsx:1953 ✅ Added stay_details structure for day 2
+FlightsPageAuthenticated.tsx:1967 🏨 Setting auto-fill mode for StaysWidget: {stayCity: 'Agra', checkInDate: '2025-12-21', checkOutDate: '2025-12-28', autoFillMode: true}autoFillMode: truecheckInDate: "2025-12-21"checkOutDate: "2025-12-28"stayCity: "Agra"[[Prototype]]: Object
+FlightsPageAuthenticated.tsx:1986 🏨 Showing StaysWidget for day 2 in Agra with auto-fill mode
+StaysWidget.tsx:567 🏨 StaysWidget received props - City: Agra CheckIn: 2025-12-22 CheckOut: 2025-12-23 AutoFill: true
+StaysWidget.tsx:569 🏨 Setting city to: Agra
+StaysWidget.tsx:573 🏨 Setting check-in date to: 2025-12-22
+StaysWidget.tsx:577 🏨 Setting check-out date to: 2025-12-23
+StaysWidget.tsx:585 🏨 StaysWidget is now visible in AUTO-FILL mode. Auto-triggering search...
+StaysWidget.tsx:586 🏨 Search params: {city: 'Agra', checkInDate: '2025-12-22', checkOutDate: '2025-12-23'}
+StaysWidget.tsx:620 🏨 Checking for pre-fetched stays data for: Agra (2025-12-22 to 2025-12-23)...
+preFetchStays.ts:332 🔍 Retrieving pre-fetched stays data for: Agra|2025-12-22|2025-12-23
+StaysWidget.tsx:567 🏨 StaysWidget received props - City: Agra CheckIn: 2025-12-22 CheckOut: 2025-12-23 AutoFill: true
+StaysWidget.tsx:569 🏨 Setting city to: Agra
+StaysWidget.tsx:573 🏨 Setting check-in date to: 2025-12-22
+StaysWidget.tsx:577 🏨 Setting check-out date to: 2025-12-23
+StaysWidget.tsx:585 🏨 StaysWidget is now visible in AUTO-FILL mode. Auto-triggering search...
+StaysWidget.tsx:586 🏨 Search params: {city: 'Agra', checkInDate: '2025-12-22', checkOutDate: '2025-12-23'}
+StaysWidget.tsx:620 🏨 Checking for pre-fetched stays data for: Agra (2025-12-22 to 2025-12-23)...
+preFetchStays.ts:332 🔍 Retrieving pre-fetched stays data for: Agra|2025-12-22|2025-12-23
+preFetchStays.ts:351 ℹ️ No pre-fetched stays data collection found for user: 072GjbIPSbZup5fHaHp6hHQItyn2
+StaysWidget.tsx:666 ℹ️ No pre-fetched stays data found, proceeding with API call...
+preFetchStays.ts:351 ℹ️ No pre-fetched stays data collection found for user: 072GjbIPSbZup5fHaHp6hHQItyn2
+StaysWidget.tsx:666 ℹ️ No pre-fetched stays data found, proceeding with API call...
+StaysWidget.tsx:701 Received stay response: {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: ''}message: ""session_id: "5656127781692506112"user_id: "072GjbIPSbZup5fHaHp6hHQItyn2"[[Prototype]]: Object
+StaysWidget.tsx:732 Parsed stay options: []
+StaysWidget.tsx:701 Received stay response: {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: ''}
+StaysWidget.tsx:732 Parsed stay options: []
+StaysWidget.tsx:620 🏨 Checking for pre-fetched stays data for: Agra (2025-12-22 to 2025-12-23)...
+preFetchStays.ts:332 🔍 Retrieving pre-fetched stays data for: Agra|2025-12-22|2025-12-23
+preFetchStays.ts:351 ℹ️ No pre-fetched stays data collection found for user: 072GjbIPSbZup5fHaHp6hHQItyn2
+StaysWidget.tsx:666 ℹ️ No pre-fetched stays data found, proceeding with API call...
+StaysWidget.tsx:701 Received stay response: {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: {…}}
+StaysWidget.tsx:732 Parsed stay options: (2) [{…}, {…}]
+StaysWidget.tsx:752 ✅ Selected stay data: {stay_id: 'stay_0', property_name: 'Courtyard by Marriott Agra', property_address: 'Taj Nagari Phase II, Agra', property_location: 'Agra', city: 'Agra', …}available_from_date: "2025-12-22"available_rooms_total: 22available_until_date: "2025-12-29"city: "Agra"country: "India"currency: "INR"overall_rating: 4.8property_address: "Taj Nagari Phase II, Agra"property_location: "Agra"property_name: "Courtyard by Marriott Agra"starting_price: "8082 INR"state: "Uttar Pradesh"stay_id: "stay_0"[[Prototype]]: Object
+StaysWidget.tsx:1008 🚀 Continue clicked with selected stay data: {stay_id: 'stay_0', property_name: 'Courtyard by Marriott Agra', property_address: 'Taj Nagari Phase II, Agra', property_location: 'Agra', city: 'Agra', …}available_from_date: "2025-12-22"available_rooms_total: 22available_until_date: "2025-12-29"city: "Agra"country: "India"currency: "INR"overall_rating: 4.8property_address: "Taj Nagari Phase II, Agra"property_location: "Agra"property_name: "Courtyard by Marriott Agra"starting_price: "8082 INR"state: "Uttar Pradesh"stay_id: "stay_0"[[Prototype]]: Object
+FlightsPageAuthenticated.tsx:2164 🚀 Continue clicked from StaysWidget with data: {stay_id: 'stay_0', property_name: 'Courtyard by Marriott Agra', property_address: 'Taj Nagari Phase II, Agra', property_location: 'Agra', city: 'Agra', …}available_from_date: "2025-12-22"available_rooms_total: 22available_until_date: "2025-12-29"city: "Agra"country: "India"currency: "INR"overall_rating: 4.8property_address: "Taj Nagari Phase II, Agra"property_location: "Agra"property_name: "Courtyard by Marriott Agra"starting_price: "8082 INR"state: "Uttar Pradesh"stay_id: "stay_0"[[Prototype]]: Object
+FlightsPageAuthenticated.tsx:2187 💾 Processing day 2 with conveyance and stay
+FlightsPageAuthenticated.tsx:2190 📦 Temp conveyance: {id: 'F1', number: 'UK9938', operator: 'Vistara', departureDate: 'Dec 22, 2025', arrivalDate: 'Dec 22, 2025', …}arrivalDate: "Dec 22, 2025"arrivalTime: "18:19"departureDate: "Dec 22, 2025"departureTime: "17:00"duration: "1h 19m"from_city: "Leh"id: "F1"is_required: truenumber: "UK9938"operator: "Vistara"price: 10360to_city: "Agra"[[Prototype]]: Object
+FlightsPageAuthenticated.tsx:2191 🏨 Stay data: {stay_id: 'stay_0', property_name: 'Courtyard by Marriott Agra', property_address: 'Taj Nagari Phase II, Agra', property_location: 'Agra', city: 'Agra', …}available_from_date: "2025-12-22"available_rooms_total: 22available_until_date: "2025-12-29"city: "Agra"country: "India"currency: "INR"overall_rating: 4.8property_address: "Taj Nagari Phase II, Agra"property_location: "Agra"property_name: "Courtyard by Marriott Agra"starting_price: "8082 INR"state: "Uttar Pradesh"stay_id: "stay_0"[[Prototype]]: Object
+FlightsPageAuthenticated.tsx:2254 📤 Building complete day itinerary (conveyance + stay): {day_number: 2, conveyance_details: {…}, stay_details: {…}}conveyance_details: {is_required: true, from_city: 'Leh', to_city: 'Agra', type: 'flight', number: 'UK9938', …}arrival_date: "Dec 22, 2025"arrival_time: "18:19"departure_date: "Dec 22, 2025"departure_time: "17:00"duration: "1h 19m"from_city: "Leh"is_required: truenumber: "UK9938"operator: "Vistara"price: 10360selected_from_city: "Leh"selected_to_city: "Agra"to_city: "Agra"type: "flight"[[Prototype]]: Objectday_number: 2stay_details: {is_required: true, city: 'Agra', check_in_day: 2, check_out_day: 3, property_name: 'Courtyard by Marriott Agra', …}available_from_date: "2025-12-22"available_rooms_total: 22available_until_date: "2025-12-29"check_in_day: 2check_out_day: 3city: "Agra"country: "India"currency: "INR"is_required: trueoverall_rating: 4.8property_address: "Taj Nagari Phase II, Agra"property_location: "Agra"property_name: "Courtyard by Marriott Agra"starting_price: "8082 INR"state: "Uttar Pradesh"[[Prototype]]: Object[[Prototype]]: Object
+itineraryStorage.ts:130 ✅ Added day 2 itinerary
+FlightsPageAuthenticated.tsx:2265 ✅ Stored day 2 itinerary in Firestore
+FlightsPageAuthenticated.tsx:2289 📞 Calling itinerary API for day 2
+FlightsPageAuthenticated.tsx:714 📤 Calling itinerary API for day 2 of 8 days
+itineraryStorage.ts:169 ✅ Retrieved generated itinerary from Firestore
+itineraryStorage.ts:266 📦 Day 1 complete data includes: {has_conveyance: true, has_stay: true, has_schedule: true, has_title: true}
+itineraryStorage.ts:266 📦 Day 2 complete data includes: {has_conveyance: true, has_stay: true, has_schedule: false, has_title: false}
+itineraryStorage.ts:279 📦 Built complete itinerary with 2 days
+FlightsPageAuthenticated.tsx:725 📦 Built complete itinerary with 2 days for API request
+FlightsPageAuthenticated.tsx:728 📊 Complete itinerary data: (2) [{…}, {…}]0: conveyance_details: {operator: 'Vistara', departure_time: '05:30', selected_from_city: 'Mumbai', price: 13489, selected_to_city: 'Leh', …}date: "2025-12-21"day_number: 1estimated_total_cost: 15489highlights: (3) ['Arrival in the high-altitude region of Leh', 'Rest and acclimatization', 'Authentic Ladakhi lunch']must_do_activities: [{…}]schedule: (9) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]stay_details: {available_from_date: '2025-12-21', currency: 'INR', property_address: 'Fort Road, Leh', country: 'India', state: 'Ladakh', …}summary: "Arrive in Leh, transfer to your hotel, and spend the day resting to acclimatize to the high altitude. Enjoy local Ladakhi cuisine for lunch and dinner at nearby restaurants."themes: (3) ['Culture', 'Spirituality', 'Winter']title: "Arrival and Acclimatization in Leh"[[Prototype]]: Object1: conveyance_details: {is_required: true, from_city: 'Leh', to_city: 'Agra', type: 'flight', number: 'UK9938', …}day_number: 2stay_details: {is_required: true, city: 'Agra', check_in_day: 2, check_out_day: 3, property_name: 'Courtyard by Marriott Agra', …}[[Prototype]]: Objectlength: 2[[Prototype]]: Array(0)
+FlightsPageAuthenticated.tsx:733 📝 Itinerary message: {'role':'admin','day_number':2,'end_day':8,'query':'recommend the itinerary for day 2'}
+FlightsPageAuthenticated.tsx:742 📤 Request body: {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: "{'role':'admin','day_number':2,'end_day':8,'query':'recommend the itinerary for day 2'}", current_itinerary: Array(2)}
+FlightsPageAuthenticated.tsx:809 ✅ Itinerary API response received on attempt 1
+FlightsPageAuthenticated.tsx:838 ✅ Itinerary API response received: {user_id: '072GjbIPSbZup5fHaHp6hHQItyn2', session_id: '5656127781692506112', message: {…}}
+FlightsPageAuthenticated.tsx:848 📦 Extracting itinerary from nested message object
+FlightsPageAuthenticated.tsx:858 ✅ Itinerary data stored successfully
+FlightsPageAuthenticated.tsx:859 📊 Itinerary contains 1 day(s)
+FlightsPageAuthenticated.tsx:866 💾 Storing all received days to Firestore...
+itineraryStorage.ts:126 ✅ Updated day 2 itinerary
+FlightsPageAuthenticated.tsx:896 ✅ Stored day 2 in Firestore
+FlightsPageAuthenticated.tsx:905 ✅ All days stored in Firestore
+FlightsPageAuthenticated.tsx:924 ✅ Showing itinerary widget
+ItineraryWidget.tsx:286 📊 Transforming API response to display format
+ItineraryWidget.tsx:85 📊 Transforming 1 day(s) from API response
+ItineraryWidget.tsx:289 ✅ Successfully transformed itinerary data
+ItineraryWidget.tsx:286 📊 Transforming API response to display format
+ItineraryWidget.tsx:85 📊 Transforming 1 day(s) from API response
+ItineraryWidget.tsx:289 ✅ Successfully transformed itinerary data
+ItineraryWidget.tsx:311 📊 Updating itinerary data from new API response
+ItineraryWidget.tsx:85 📊 Transforming 1 day(s) from API response
+ItineraryWidget.tsx:325 🔄 Merging itinerary: 1 existing days + 1 new days
+ItineraryWidget.tsx:335 📝 Updating/Adding day 2
+ItineraryWidget.tsx:344 ✅ Merged itinerary has 1 total days
+ItineraryWidget.tsx:356 ✅ Itinerary data updated successfully
+ItineraryWidget.tsx:311 📊 Updating itinerary data from new API response
+ItineraryWidget.tsx:85 📊 Transforming 1 day(s) from API response
+ItineraryWidget.tsx:356 ✅ Itinerary data updated successfully
+ItineraryWidget.tsx:325 🔄 Merging itinerary: 1 existing days + 1 new days
+ItineraryWidget.tsx:335 📝 Updating/Adding day 2
+ItineraryWidget.tsx:344 ✅ Merged itinerary has 1 total days
+ItineraryWidget.tsx:325 🔄 Merging itinerary: 1 existing days + 1 new days
+ItineraryWidget.tsx:335 📝 Updating/Adding day 2
+ItineraryWidget.tsx:344 ✅ Merged itinerary has 1 total days
+ItineraryWidget.tsx:325 🔄 Merging itinerary: 1 existing days + 1 new days
+ItineraryWidget.tsx:335 📝 Updating/Adding day 2
+ItineraryWidget.tsx:344 ✅ Merged itinerary has 1 total days
+ItineraryMap.tsx:92 Found 13 coordinates from 13 stops

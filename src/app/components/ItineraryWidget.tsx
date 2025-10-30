@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { MdLocationOn, MdClose, MdChat } from "react-icons/md";
 import ItinerAIChatBox from "./ItinerAIChatBox";
 import dynamic from "next/dynamic";
+import ExtendTripPopup from "./ExtendTripPopup";
+import ConveyanceRequirementPopup from "./ConveyanceRequirementPopup";
 
 // Dynamically import the map component to avoid SSR issues
 const ItineraryMap = dynamic(() => import("./ItineraryMap"), {
@@ -67,6 +69,11 @@ interface ItineraryWidgetProps {
   onRequestNextDay?: (nextDayNumber: number) => Promise<void>; // NEW: Callback to request next day
   totalDays?: number; // NEW: Total days in the trip
   isLoadingNextDay?: boolean; // NEW: Loading state for next day
+  onAddDay?: (
+    extendTrip: boolean,
+    needsConveyance: boolean,
+    currentDayNumber: number
+  ) => Promise<void>; // NEW: Callback to add new day
 }
 
 // Helper function to transform API response to display format
@@ -79,7 +86,9 @@ const transformItineraryResponse = (apiResponse: any): ItineraryData | null => {
     return null;
   }
 
-  console.log(`📊 Transforming ${itineraryData.length} day(s) from API response`);
+  console.log(
+    `📊 Transforming ${itineraryData.length} day(s) from API response`
+  );
 
   // Process ALL days from the response, not just the first one
   const transformedDays: DayItinerary[] = itineraryData.map((apiDay: any) => {
@@ -91,14 +100,14 @@ const transformItineraryResponse = (apiResponse: any): ItineraryData | null => {
     trip_title: "Your Trip",
     total_days: itineraryData.length,
     start_date: itineraryData[0]?.date || new Date().toISOString(),
-    end_date: itineraryData[itineraryData.length - 1]?.date || new Date().toISOString(),
+    end_date:
+      itineraryData[itineraryData.length - 1]?.date || new Date().toISOString(),
     days: transformedDays,
   };
 };
 
 // Helper function to transform a single day's data
 const transformSingleDay = (apiDay: any): DayItinerary => {
-
   // Map activity types to stop types
   const getStopType = (activityType: string): ItineraryStop["type"] => {
     switch (activityType) {
@@ -265,11 +274,15 @@ export default function ItineraryWidget({
   onRequestNextDay,
   totalDays = 1,
   isLoadingNextDay = false,
+  onAddDay,
 }: ItineraryWidgetProps) {
   const [currentDayIndex, setCurrentDayIndex] = useState(0);
   const [chatInput, setChatInput] = useState("");
   const [showAddDayOptions, setShowAddDayOptions] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [showExtendTripPopup, setShowExtendTripPopup] = useState(false);
+  const [showConveyancePopup, setShowConveyancePopup] = useState(false);
+  const [pendingExtendTrip, setPendingExtendTrip] = useState(false);
 
   // Load itinerary data from JSON or API response
   const [itineraryData, setItineraryData] = useState<ItineraryData | null>(
@@ -374,6 +387,50 @@ export default function ItineraryWidget({
     }
   };
 
+  // Handle add day button click
+  const handleAddDayClick = () => {
+    console.log("➕ Add day button clicked");
+    setShowExtendTripPopup(true);
+  };
+
+  // Handle extend trip popup - YES
+  const handleExtendTripYes = () => {
+    console.log("✅ User wants to extend trip duration");
+    setPendingExtendTrip(true);
+    setShowExtendTripPopup(false);
+    setShowConveyancePopup(true);
+  };
+
+  // Handle extend trip popup - NO
+  const handleExtendTripNo = () => {
+    console.log("❌ User does not want to extend trip duration");
+    setPendingExtendTrip(false);
+    setShowExtendTripPopup(false);
+    setShowConveyancePopup(true);
+  };
+
+  // Handle conveyance requirement popup - YES
+  const handleConveyanceYes = async () => {
+    console.log("✅ User needs conveyance for new day");
+    setShowConveyancePopup(false);
+
+    if (onAddDay) {
+      // Pass the current day number (currentDayIndex + 1 because index is 0-based)
+      await onAddDay(pendingExtendTrip, true, currentDayIndex + 1);
+    }
+  };
+
+  // Handle conveyance requirement popup - NO
+  const handleConveyanceNo = async () => {
+    console.log("❌ User does not need conveyance for new day");
+    setShowConveyancePopup(false);
+
+    if (onAddDay) {
+      // Pass the current day number (currentDayIndex + 1 because index is 0-based)
+      await onAddDay(pendingExtendTrip, false, currentDayIndex + 1);
+    }
+  };
+
   // Handle scroll to update progress indicator
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const element = e.currentTarget;
@@ -404,7 +461,9 @@ export default function ItineraryWidget({
       return `https://maps.google.com/?q=${location.lat},${location.long}`;
     }
     if (location?.place_name) {
-      return `https://maps.google.com/?q=${encodeURIComponent(location.place_name)}`;
+      return `https://maps.google.com/?q=${encodeURIComponent(
+        location.place_name
+      )}`;
     }
     return null;
   };
@@ -476,7 +535,7 @@ export default function ItineraryWidget({
                 className="absolute w-3 h-3 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-full shadow-lg border-2 border-white transition-all duration-200"
                 style={{
                   top: `${scrollProgress}%`,
-                  transform: 'translateY(-50%)'
+                  transform: "translateY(-50%)",
                 }}
               >
                 <div className="absolute inset-0 bg-purple-400 rounded-full animate-ping opacity-40"></div>
@@ -490,13 +549,15 @@ export default function ItineraryWidget({
                 const isLast = index === currentDay.stops.length - 1;
 
                 // Determine activity type from original data
-                const activityType = stop.activity_type || 'other';
+                const activityType = stop.activity_type || "other";
 
                 // Get image URL if available
                 const imageUrl = stop.image_url || stop.photo_url || null;
 
                 // Get location for maps URL
-                const mapsUrl = getGoogleMapsUrl(stop.from_location || stop.to_location || stop);
+                const mapsUrl = getGoogleMapsUrl(
+                  stop.from_location || stop.to_location || stop
+                );
 
                 return (
                   <div key={stop.id} className="relative">
@@ -506,7 +567,7 @@ export default function ItineraryWidget({
                     )}
 
                     {/* Category-Specific Activity Cards */}
-                    {activityType === 'travel' ? (
+                    {activityType === "travel" ? (
                       // TRAVEL CARD
                       <div className="relative bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border-2 border-green-200 hover:border-green-400 group">
                         <div className="flex items-start gap-3 p-4">
@@ -514,15 +575,21 @@ export default function ItineraryWidget({
                           <div className="flex flex-col items-center flex-shrink-0 w-14">
                             <div className="bg-gradient-to-br from-green-500 to-emerald-600 text-white rounded-xl px-2 py-1.5 text-center shadow-md">
                               <div className="text-[9px] font-bold uppercase tracking-wide opacity-90">
-                                {parseInt(stop.time.split(' - ')[0].split(':')[0]) >= 12 ? 'PM' : 'AM'}
+                                {parseInt(
+                                  stop.time.split(" - ")[0].split(":")[0]
+                                ) >= 12
+                                  ? "PM"
+                                  : "AM"}
                               </div>
                               <div className="text-xs font-extrabold leading-tight">
-                                {stop.time.split(' - ')[0]}
+                                {stop.time.split(" - ")[0]}
                               </div>
                             </div>
                             {stop.duration && (
                               <div className="mt-1.5 bg-green-100 rounded-md px-1.5 py-0.5 border border-green-300">
-                                <span className="text-[8px] font-bold text-green-700">{stop.duration}</span>
+                                <span className="text-[8px] font-bold text-green-700">
+                                  {stop.duration}
+                                </span>
                               </div>
                             )}
                           </div>
@@ -552,9 +619,13 @@ export default function ItineraryWidget({
                             {/* From → To */}
                             {(stop.from_location || stop.to_location) && (
                               <div className="flex items-center gap-1 mb-2 text-[10px] font-semibold text-gray-700">
-                                <span className="bg-green-100 px-2 py-0.5 rounded-md">{stop.from_location?.place_name || 'Start'}</span>
+                                <span className="bg-green-100 px-2 py-0.5 rounded-md">
+                                  {stop.from_location?.place_name || "Start"}
+                                </span>
                                 <span>→</span>
-                                <span className="bg-emerald-100 px-2 py-0.5 rounded-md">{stop.to_location?.place_name || 'End'}</span>
+                                <span className="bg-emerald-100 px-2 py-0.5 rounded-md">
+                                  {stop.to_location?.place_name || "End"}
+                                </span>
                               </div>
                             )}
 
@@ -565,7 +636,9 @@ export default function ItineraryWidget({
                             {/* Travel Details */}
                             {stop.notes && (
                               <div className="bg-white/60 border border-green-300 rounded-lg px-2 py-1.5 mb-2">
-                                <span className="text-[10px] text-green-900 font-bold leading-relaxed">{stop.notes}</span>
+                                <span className="text-[10px] text-green-900 font-bold leading-relaxed">
+                                  {stop.notes}
+                                </span>
                               </div>
                             )}
 
@@ -585,7 +658,7 @@ export default function ItineraryWidget({
                         </div>
                         <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-green-400 to-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                       </div>
-                    ) : activityType === 'eat' ? (
+                    ) : activityType === "eat" ? (
                       // EAT/RESTAURANT CARD
                       <div className="relative bg-gradient-to-br from-orange-50 to-red-50 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border-2 border-orange-200 hover:border-orange-400 group">
                         <div className="flex items-start gap-3 p-4">
@@ -593,15 +666,21 @@ export default function ItineraryWidget({
                           <div className="flex flex-col items-center flex-shrink-0 w-14">
                             <div className="bg-gradient-to-br from-orange-500 to-red-600 text-white rounded-xl px-2 py-1.5 text-center shadow-md">
                               <div className="text-[9px] font-bold uppercase opacity-90">
-                                {parseInt(stop.time.split(' - ')[0].split(':')[0]) >= 12 ? 'PM' : 'AM'}
+                                {parseInt(
+                                  stop.time.split(" - ")[0].split(":")[0]
+                                ) >= 12
+                                  ? "PM"
+                                  : "AM"}
                               </div>
                               <div className="text-xs font-extrabold leading-tight">
-                                {stop.time.split(' - ')[0]}
+                                {stop.time.split(" - ")[0]}
                               </div>
                             </div>
                             {stop.duration && (
                               <div className="mt-1.5 bg-orange-100 rounded-md px-1.5 py-0.5 border border-orange-300">
-                                <span className="text-[8px] font-bold text-orange-700">{stop.duration}</span>
+                                <span className="text-[8px] font-bold text-orange-700">
+                                  {stop.duration}
+                                </span>
                               </div>
                             )}
                           </div>
@@ -628,12 +707,18 @@ export default function ItineraryWidget({
                               )}
                             </div>
 
-                            {stop.location && stop.location !== "Location not specified" && (
-                              <div className="flex items-start gap-1 mb-2">
-                                <MdLocationOn className="text-orange-400 mt-0.5 flex-shrink-0" size={12} />
-                                <span className="text-[10px] text-gray-600 font-medium line-clamp-1">{stop.location}</span>
-                              </div>
-                            )}
+                            {stop.location &&
+                              stop.location !== "Location not specified" && (
+                                <div className="flex items-start gap-1 mb-2">
+                                  <MdLocationOn
+                                    className="text-orange-400 mt-0.5 flex-shrink-0"
+                                    size={12}
+                                  />
+                                  <span className="text-[10px] text-gray-600 font-medium line-clamp-1">
+                                    {stop.location}
+                                  </span>
+                                </div>
+                              )}
 
                             <p className="text-xs text-gray-700 leading-relaxed font-medium">
                               {stop.description}
@@ -641,29 +726,37 @@ export default function ItineraryWidget({
 
                             {stop.notes && (
                               <div className="mt-2 bg-white/60 border border-orange-300 rounded-lg px-2 py-1">
-                                <span className="text-[10px] text-orange-900 font-bold">{stop.notes}</span>
+                                <span className="text-[10px] text-orange-900 font-bold">
+                                  {stop.notes}
+                                </span>
                               </div>
                             )}
                           </div>
                         </div>
                         <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-orange-400 to-red-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                       </div>
-                    ) : activityType === 'visit' ? (
+                    ) : activityType === "visit" ? (
                       // VISIT/SIGHTSEEING CARD
                       <div className="relative bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border-2 border-blue-200 hover:border-blue-400 group">
                         <div className="flex items-start gap-3 p-4">
                           <div className="flex flex-col items-center flex-shrink-0 w-14">
                             <div className="bg-gradient-to-br from-blue-500 to-indigo-600 text-white rounded-xl px-2 py-1.5 text-center shadow-md">
                               <div className="text-[9px] font-bold uppercase opacity-90">
-                                {parseInt(stop.time.split(' - ')[0].split(':')[0]) >= 12 ? 'PM' : 'AM'}
+                                {parseInt(
+                                  stop.time.split(" - ")[0].split(":")[0]
+                                ) >= 12
+                                  ? "PM"
+                                  : "AM"}
                               </div>
                               <div className="text-xs font-extrabold leading-tight">
-                                {stop.time.split(' - ')[0]}
+                                {stop.time.split(" - ")[0]}
                               </div>
                             </div>
                             {stop.duration && (
                               <div className="mt-1.5 bg-blue-100 rounded-md px-1.5 py-0.5 border border-blue-300">
-                                <span className="text-[8px] font-bold text-blue-700">{stop.duration}</span>
+                                <span className="text-[8px] font-bold text-blue-700">
+                                  {stop.duration}
+                                </span>
                               </div>
                             )}
                           </div>
@@ -688,12 +781,18 @@ export default function ItineraryWidget({
                               )}
                             </div>
 
-                            {stop.location && stop.location !== "Location not specified" && (
-                              <div className="flex items-start gap-1 mb-2">
-                                <MdLocationOn className="text-blue-400 mt-0.5" size={12} />
-                                <span className="text-[10px] text-gray-600 font-medium">{stop.location}</span>
-                              </div>
-                            )}
+                            {stop.location &&
+                              stop.location !== "Location not specified" && (
+                                <div className="flex items-start gap-1 mb-2">
+                                  <MdLocationOn
+                                    className="text-blue-400 mt-0.5"
+                                    size={12}
+                                  />
+                                  <span className="text-[10px] text-gray-600 font-medium">
+                                    {stop.location}
+                                  </span>
+                                </div>
+                              )}
 
                             <p className="text-xs text-gray-700 leading-relaxed font-medium">
                               {stop.description}
@@ -701,29 +800,37 @@ export default function ItineraryWidget({
 
                             {stop.notes && (
                               <div className="mt-2 bg-white/60 border border-blue-300 rounded-lg px-2 py-1">
-                                <span className="text-[10px] text-blue-900 font-bold">{stop.notes}</span>
+                                <span className="text-[10px] text-blue-900 font-bold">
+                                  {stop.notes}
+                                </span>
                               </div>
                             )}
                           </div>
                         </div>
                         <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-400 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                       </div>
-                    ) : activityType === 'rest' ? (
+                    ) : activityType === "rest" ? (
                       // REST/HOTEL CARD
                       <div className="relative bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border-2 border-purple-200 hover:border-purple-400 group">
                         <div className="flex items-start gap-3 p-4">
                           <div className="flex flex-col items-center flex-shrink-0 w-14">
                             <div className="bg-gradient-to-br from-purple-500 to-pink-600 text-white rounded-xl px-2 py-1.5 text-center shadow-md">
                               <div className="text-[9px] font-bold uppercase opacity-90">
-                                {parseInt(stop.time.split(' - ')[0].split(':')[0]) >= 12 ? 'PM' : 'AM'}
+                                {parseInt(
+                                  stop.time.split(" - ")[0].split(":")[0]
+                                ) >= 12
+                                  ? "PM"
+                                  : "AM"}
                               </div>
                               <div className="text-xs font-extrabold leading-tight">
-                                {stop.time.split(' - ')[0]}
+                                {stop.time.split(" - ")[0]}
                               </div>
                             </div>
                             {stop.duration && (
                               <div className="mt-1.5 bg-purple-100 rounded-md px-1.5 py-0.5 border border-purple-300">
-                                <span className="text-[8px] font-bold text-purple-700">{stop.duration}</span>
+                                <span className="text-[8px] font-bold text-purple-700">
+                                  {stop.duration}
+                                </span>
                               </div>
                             )}
                           </div>
@@ -748,12 +855,18 @@ export default function ItineraryWidget({
                               )}
                             </div>
 
-                            {stop.location && stop.location !== "Location not specified" && (
-                              <div className="flex items-start gap-1 mb-2">
-                                <MdLocationOn className="text-purple-400 mt-0.5" size={12} />
-                                <span className="text-[10px] text-gray-600 font-medium">{stop.location}</span>
-                              </div>
-                            )}
+                            {stop.location &&
+                              stop.location !== "Location not specified" && (
+                                <div className="flex items-start gap-1 mb-2">
+                                  <MdLocationOn
+                                    className="text-purple-400 mt-0.5"
+                                    size={12}
+                                  />
+                                  <span className="text-[10px] text-gray-600 font-medium">
+                                    {stop.location}
+                                  </span>
+                                </div>
+                              )}
 
                             <p className="text-xs text-gray-700 leading-relaxed font-medium">
                               {stop.description}
@@ -761,7 +874,9 @@ export default function ItineraryWidget({
 
                             {stop.notes && (
                               <div className="mt-2 bg-white/60 border border-purple-300 rounded-lg px-2 py-1">
-                                <span className="text-[10px] text-purple-900 font-bold">{stop.notes}</span>
+                                <span className="text-[10px] text-purple-900 font-bold">
+                                  {stop.notes}
+                                </span>
                               </div>
                             )}
                           </div>
@@ -775,21 +890,29 @@ export default function ItineraryWidget({
                           <div className="flex flex-col items-center flex-shrink-0 w-14">
                             <div className="bg-gradient-to-br from-purple-500 via-indigo-500 to-purple-600 text-white rounded-xl px-2 py-1.5 text-center shadow-md">
                               <div className="text-[9px] font-bold uppercase opacity-90">
-                                {parseInt(stop.time.split(' - ')[0].split(':')[0]) >= 12 ? 'PM' : 'AM'}
+                                {parseInt(
+                                  stop.time.split(" - ")[0].split(":")[0]
+                                ) >= 12
+                                  ? "PM"
+                                  : "AM"}
                               </div>
                               <div className="text-xs font-extrabold leading-tight">
-                                {stop.time.split(' - ')[0]}
+                                {stop.time.split(" - ")[0]}
                               </div>
                             </div>
                             {stop.duration && (
                               <div className="mt-1.5 bg-blue-50 rounded-md px-1.5 py-0.5 border border-blue-200">
-                                <span className="text-[8px] font-bold text-blue-700">{stop.duration}</span>
+                                <span className="text-[8px] font-bold text-blue-700">
+                                  {stop.duration}
+                                </span>
                               </div>
                             )}
                           </div>
 
                           <div className="relative flex-shrink-0 mt-1">
-                            <div className={`w-11 h-11 ${iconConfig.bg} border-2 ${iconConfig.border} rounded-xl flex items-center justify-center text-lg shadow-md`}>
+                            <div
+                              className={`w-11 h-11 ${iconConfig.bg} border-2 ${iconConfig.border} rounded-xl flex items-center justify-center text-lg shadow-md`}
+                            >
                               {stop.image}
                             </div>
                           </div>
@@ -808,12 +931,18 @@ export default function ItineraryWidget({
                               )}
                             </div>
 
-                            {stop.location && stop.location !== "Location not specified" && (
-                              <div className="flex items-start gap-1 mb-2">
-                                <MdLocationOn className="text-purple-400 mt-0.5" size={12} />
-                                <span className="text-[10px] text-gray-600 font-medium line-clamp-1">{stop.location}</span>
-                              </div>
-                            )}
+                            {stop.location &&
+                              stop.location !== "Location not specified" && (
+                                <div className="flex items-start gap-1 mb-2">
+                                  <MdLocationOn
+                                    className="text-purple-400 mt-0.5"
+                                    size={12}
+                                  />
+                                  <span className="text-[10px] text-gray-600 font-medium line-clamp-1">
+                                    {stop.location}
+                                  </span>
+                                </div>
+                              )}
 
                             <p className="text-xs text-gray-700 leading-relaxed mb-2 font-medium">
                               {stop.description}
@@ -823,7 +952,9 @@ export default function ItineraryWidget({
                               <div className="mt-2 bg-gradient-to-r from-amber-50 via-yellow-50 to-orange-50 border border-amber-300 rounded-lg px-2 py-1.5">
                                 <div className="flex items-start gap-1.5">
                                   <span className="text-xs">💡</span>
-                                  <span className="text-[10px] text-amber-900 font-bold leading-relaxed">{stop.notes}</span>
+                                  <span className="text-[10px] text-amber-900 font-bold leading-relaxed">
+                                    {stop.notes}
+                                  </span>
                                 </div>
                               </div>
                             )}
@@ -864,7 +995,9 @@ export default function ItineraryWidget({
                 >
                   <svg
                     className={`w-5 h-5 mx-auto transition-colors ${
-                      hasPrevDay ? "text-purple-600 group-hover:text-purple-700" : "text-gray-400"
+                      hasPrevDay
+                        ? "text-purple-600 group-hover:text-purple-700"
+                        : "text-gray-400"
                     }`}
                     fill="none"
                     stroke="currentColor"
@@ -884,7 +1017,7 @@ export default function ItineraryWidget({
 
                 {/* Add Day Button */}
                 <button
-                  onClick={() => setShowAddDayOptions(!showAddDayOptions)}
+                  onClick={handleAddDayClick}
                   className="group relative w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 shadow-md hover:shadow-xl transition-all duration-300 hover:scale-110 active:scale-95"
                   title="Add New Day"
                 >
@@ -912,7 +1045,8 @@ export default function ItineraryWidget({
                     isLoadingNextDay
                   }
                   className={`group relative w-10 h-10 rounded-full transition-all duration-300 ${
-                    hasNextDay || (currentDay.day < totalDays && !isLoadingNextDay)
+                    hasNextDay ||
+                    (currentDay.day < totalDays && !isLoadingNextDay)
                       ? "bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 shadow-md hover:shadow-xl hover:scale-110 active:scale-95"
                       : "bg-gray-100 border-2 border-gray-200 cursor-not-allowed opacity-50"
                   }`}
@@ -979,7 +1113,10 @@ export default function ItineraryWidget({
 
               {/* Map Component */}
               <div className="relative h-full z-10">
-                <ItineraryMap stops={currentDay.stops} dayTitle={currentDay.title} />
+                <ItineraryMap
+                  stops={currentDay.stops}
+                  dayTitle={currentDay.title}
+                />
               </div>
 
               {/* Decorative glassmorphic corners */}
@@ -989,6 +1126,21 @@ export default function ItineraryWidget({
           </div>
         </div>
       </div>
+
+      {/* Extend Trip Popup */}
+      <ExtendTripPopup
+        isVisible={showExtendTripPopup}
+        onYes={handleExtendTripYes}
+        onNo={handleExtendTripNo}
+      />
+
+      {/* Conveyance Requirement Popup */}
+      <ConveyanceRequirementPopup
+        isVisible={showConveyancePopup}
+        dayNumber={itineraryData ? itineraryData.days.length + 1 : 1}
+        onYes={handleConveyanceYes}
+        onNo={handleConveyanceNo}
+      />
     </div>
   );
 }
