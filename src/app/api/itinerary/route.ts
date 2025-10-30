@@ -4,6 +4,7 @@ interface ItineraryRequest {
   message: string;
   session_id: string;
   user_id: string;
+  current_itinerary?: any[]; // Array of day itinerary objects
 }
 
 const BACKEND_API_URL = process.env.BACKEND_API_URL || "http://127.0.0.1:8000";
@@ -11,7 +12,7 @@ const BACKEND_API_URL = process.env.BACKEND_API_URL || "http://127.0.0.1:8000";
 export async function POST(request: NextRequest) {
   try {
     const body: ItineraryRequest = await request.json();
-    const { message, session_id, user_id } = body;
+    const { message, session_id, user_id, current_itinerary } = body;
 
     // Validate input
     if (!message) {
@@ -28,12 +29,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // console.log("Proxying itinerary request to backend:", {
-    //   url: `${BACKEND_API_URL}/agents/itinerary`,
-    //   user_id,
-    //   session_id,
-    //   message: message.substring(0, 100) + (message.length > 100 ? "..." : "")
-    // });
+    // Validate current_itinerary - it should be an array (even if empty)
+    if (!Array.isArray(current_itinerary)) {
+      return NextResponse.json(
+        { error: "current_itinerary is required and must be an array" },
+        { status: 400 }
+      );
+    }
+
+    console.log("Proxying itinerary request to backend:", {
+      url: `${BACKEND_API_URL}/agents/itinerary`,
+      user_id,
+      session_id,
+      message: message.substring(0, 100) + (message.length > 100 ? "..." : ""),
+      current_itinerary: current_itinerary,
+    });
 
     // Proxy the request to the FastAPI backend
     const response = await fetch(`${BACKEND_API_URL}/agents/itinerary`, {
@@ -45,6 +55,7 @@ export async function POST(request: NextRequest) {
         user_id,
         session_id,
         message,
+        current_itinerary, // ✅ Forward current_itinerary to backend
       }),
     });
 

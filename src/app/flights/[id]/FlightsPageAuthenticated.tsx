@@ -152,7 +152,10 @@ export default function FlightsPageAuthenticated() {
 
         try {
           // Call /api/session/create to get a new session ID
-          console.log("🔄 Creating new session via API for user:", authenticatedUserId);
+          console.log(
+            "🔄 Creating new session via API for user:",
+            authenticatedUserId
+          );
 
           const response = await fetch("/api/session/create", {
             method: "POST",
@@ -220,7 +223,10 @@ export default function FlightsPageAuthenticated() {
     // If no sessionId provided, call API to create new one
     if (!newSessionId && currentUser) {
       try {
-        console.log("🔄 Regenerating session via API for user:", currentUser.uid);
+        console.log(
+          "🔄 Regenerating session via API for user:",
+          currentUser.uid
+        );
 
         const response = await fetch("/api/session/create", {
           method: "POST",
@@ -729,9 +735,14 @@ export default function FlightsPageAuthenticated() {
         user_id: userId,
         session_id: sessionId,
         message: itineraryMessage,
-        current_itinerary: completeItinerary,
+        current_itinerary: completeItinerary || [], // Ensure it's always an array
       };
-
+      console.log("📤 Request body:", {
+        user_id: userId,
+        session_id: sessionId,
+        message: itineraryMessage,
+        current_itinerary: completeItinerary,
+      });
       // Retry configuration
       const MAX_RETRIES = 2;
       const RETRY_DELAY = 5000; // 5 seconds
@@ -743,7 +754,9 @@ export default function FlightsPageAuthenticated() {
         try {
           if (attempt > 0) {
             console.log(
-              `⏳ Retrying itinerary API (attempt ${attempt + 1}/${MAX_RETRIES + 1}) after 5 seconds...`
+              `⏳ Retrying itinerary API (attempt ${attempt + 1}/${
+                MAX_RETRIES + 1
+              }) after 5 seconds...`
             );
 
             // Update loader messages for retry
@@ -771,7 +784,9 @@ export default function FlightsPageAuthenticated() {
           // Check for 503 specifically
           if (response.status === 503) {
             console.warn(
-              `⚠️ Itinerary API returned 503 (attempt ${attempt + 1}/${MAX_RETRIES + 1})`
+              `⚠️ Itinerary API returned 503 (attempt ${attempt + 1}/${
+                MAX_RETRIES + 1
+              })`
             );
             lastError = new Error(`Service unavailable (503)`);
 
@@ -797,7 +812,9 @@ export default function FlightsPageAuthenticated() {
           break;
         } catch (error) {
           console.error(
-            `❌ Itinerary API error (attempt ${attempt + 1}/${MAX_RETRIES + 1}):`,
+            `❌ Itinerary API error (attempt ${attempt + 1}/${
+              MAX_RETRIES + 1
+            }):`,
             error
           );
           lastError = error as Error;
@@ -2003,6 +2020,7 @@ export default function FlightsPageAuthenticated() {
           console.log(
             "🎯 End response detected - showing end loader immediately"
           );
+          messageContent = "Let's call the smart date recommender now";
           console.log("🎯 End response data:", {
             root_response_type: data.response_type,
             nested_response_type: data.message?.response_type,
