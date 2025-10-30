@@ -231,7 +231,7 @@ export default function ChatModal({
     setHasStartedChat(false);
     setShowFlashcards(false);
     setShowFlights(false);
-    setSelectedTrip(null);
+    // setSelectedTrip(null);
     if (flashcardsRef.current) {
       flashcardsRef.current.clearSelection();
     }
@@ -267,7 +267,7 @@ export default function ChatModal({
                 onClick={() => {
                   setShowFlashcards(!showFlashcards);
                   if (showFlashcards) {
-                    setSelectedTrip(null);
+                    // setSelectedTrip(null);
                     if (flashcardsRef.current) {
                       flashcardsRef.current.clearSelection();
                     }
@@ -301,7 +301,7 @@ export default function ChatModal({
                   // Close places if opening flights
                   if (!showFlights) {
                     setShowFlashcards(false);
-                    setSelectedTrip(null);
+                    // setSelectedTrip(null);
                     if (flashcardsRef.current) {
                       flashcardsRef.current.clearSelection();
                     }
@@ -410,7 +410,7 @@ export default function ChatModal({
                       isVisible={showFlashcards}
                       onToggle={() => {
                         setShowFlashcards(false);
-                        setSelectedTrip(null);
+                        // setSelectedTrip(null);
                       }}
                       rightPanelCollapsed={true}
                       onTripSelect={setSelectedTrip}

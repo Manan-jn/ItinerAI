@@ -15,12 +15,22 @@ import OnboardingModalWhite from "../../components/auth/OnboardingModalWhite";
 import ItinerAIChatBox from "../../components/ItinerAIChatBox";
 import { getSessionId } from "../../utils/sessionManager";
 import { updateMemoryOnSessionChange } from "../../utils/memoryApi";
-import { storeSelectedTrip, getSelectedTripFromFirestore } from "../../utils/tripStorage";
+import {
+  storeSelectedTrip,
+  getSelectedTripFromFirestore,
+} from "../../utils/tripStorage";
+import { preFetchConveyanceData } from "../../utils/preFetchConveyance";
+import { preFetchStaysData } from "../../utils/preFetchStays";
 import {
   imageDownloader,
   extractImageUrls,
   validateAndPopulateTripData,
 } from "../../utils/imageDownloader";
+import {
+  storeDayItinerary,
+  buildCompleteItinerary,
+  DayItineraryData,
+} from "../../utils/itineraryStorage";
 // New component imports
 import { Sidebar } from "../../components/flights-page/Sidebar";
 import { DashboardContent } from "../../components/flights-page/DashboardContent";
@@ -28,6 +38,7 @@ import { FlightsContent } from "../../components/flights-page/FlightsContent";
 import { TripLoader } from "../../components/flights-page/TripLoader";
 import { EndResponseLoader } from "../../components/flights-page/EndResponseLoader";
 import { ChatNavbar } from "../../components/flights-page/ChatNavbar";
+import PreFetchTestTrigger from "../../components/PreFetchTestTrigger";
 
 type SectionType =
   | "flights"
@@ -82,13 +93,25 @@ export default function FlightsPageAuthenticated() {
   const [showTripLoader, setShowTripLoader] = useState(false);
   const [showEndLoader, setShowEndLoader] = useState(false);
   const [testEndResponse, setTestEndResponse] = useState(false);
-  const [conveyanceLoaderMessages, setConveyanceLoaderMessages] = useState<string[]>([]);
+  const [conveyanceLoaderMessages, setConveyanceLoaderMessages] = useState<
+    string[]
+  >([]);
   const [conveyanceFromCity, setConveyanceFromCity] = useState<string>("");
   const [conveyanceToCity, setConveyanceToCity] = useState<string>("");
   const [stayCity, setStayCity] = useState<string>("");
+  const [stayCheckInDate, setStayCheckInDate] = useState<string>(""); // YYYY-MM-DD format
+  const [stayCheckOutDate, setStayCheckOutDate] = useState<string>(""); // YYYY-MM-DD format
+  const [autoFillStaysMode, setAutoFillStaysMode] = useState<boolean>(false);
   const [currentDayNumber, setCurrentDayNumber] = useState<number>(1);
-  const [selectedConveyances, setSelectedConveyances] = useState<{[key: number]: any}>({});
-  const [tempConveyanceSelection, setTempConveyanceSelection] = useState<any>(null); // Temporary storage for current day's conveyance
+  const [selectedConveyances, setSelectedConveyances] = useState<{
+    [key: number]: any;
+  }>({});
+  const [tempConveyanceSelection, setTempConveyanceSelection] =
+    useState<any>(null); // Temporary storage for current day's conveyance
+  const [itineraryData, setItineraryData] = useState<any>(null); // Store itinerary response
+  const [autoFillMode, setAutoFillMode] = useState<boolean>(false); // NEW: Auto-fill mode for FlightsWidget
+  const [initialDepartureDate, setInitialDepartureDate] = useState<string>(""); // NEW: Initial departure date for FlightsWidget
+  const [isLoadingItinerary, setIsLoadingItinerary] = useState(false); // Loading state for itinerary
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const flashcardsRef = useRef<FlashcardsWidgetRef>(null);
@@ -98,6 +121,8 @@ export default function FlightsPageAuthenticated() {
   const [userId, setUserId] = useState<string>("");
   const [previousSessionId, setPreviousSessionId] = useState<string>("");
   const [isFirstMessage, setIsFirstMessage] = useState(true);
+  const [isInitializingSession, setIsInitializingSession] = useState(false);
+  const sessionInitRef = useRef<boolean>(false); // Prevent double initialization in dev mode
 
   // Handle clicking outside profile dropdown
   useEffect(() => {
@@ -114,67 +139,113 @@ export default function FlightsPageAuthenticated() {
     return () => document.removeEventListener("click", handleClickOutside);
   }, [showProfileDropdown]);
 
-  // Initialize session for authenticated user
+  // Initialize session for authenticated user using API
   useEffect(() => {
-    if (currentUser) {
+    if (currentUser && !sessionId && !sessionInitRef.current) {
+      // Only run if we don't have a session yet AND haven't started initialization
+      sessionInitRef.current = true; // Mark as initializing to prevent double calls
+
       const initializeAuthenticatedSession = async () => {
-        const newSessionId = getSessionId();
         const authenticatedUserId = currentUser.uid; // Always use Firebase UID
 
-        // Check if session has changed and update memory if needed
-        if (previousSessionId && previousSessionId !== newSessionId) {
-          console.log(
-            "Session changed in authenticated page, updating memory:",
-            {
-              previousSessionId,
-              newSessionId,
-              userId: authenticatedUserId,
-            }
-          );
+        setIsInitializingSession(true);
 
-          try {
-            await updateMemoryOnSessionChange(
-              authenticatedUserId,
-              newSessionId,
-              currentUser.displayName,
-              currentUser.email
-            );
-            console.log(
-              "Memory updated for session change in authenticated page"
-            );
-          } catch (error) {
-            console.error("Failed to update memory for session change:", error);
-            // Don't block the session initialization if memory update fails
+        try {
+          // Call /api/session/create to get a new session ID
+          console.log("🔄 Creating new session via API for user:", authenticatedUserId);
+
+          const response = await fetch("/api/session/create", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              user_id: authenticatedUserId,
+            }),
+          });
+
+          if (!response.ok) {
+            throw new Error(`Session API error: ${response.status}`);
           }
+
+          const sessionData = await response.json();
+          const newSessionId = sessionData.body.session_id;
+
+          console.log("✅ Session created via API:", {
+            user_id: sessionData.body.user_id,
+            session_id: newSessionId,
+          });
+
+          setSessionId(newSessionId);
+          setUserId(authenticatedUserId);
+          setPreviousSessionId(newSessionId);
+          setIsInitializingSession(false);
+
+          console.log("Authenticated flights session initialized:", {
+            sessionId: newSessionId,
+            userId: authenticatedUserId,
+            userEmail: currentUser.email,
+            isAuthenticated: true,
+          });
+        } catch (error) {
+          console.error("❌ Error creating session via API:", error);
+
+          // Fallback to old method if API fails
+          console.warn("⚠️ Falling back to local session generation");
+          const fallbackSessionId = getSessionId();
+
+          setSessionId(fallbackSessionId);
+          setUserId(authenticatedUserId);
+          setPreviousSessionId(fallbackSessionId);
+          setIsInitializingSession(false);
+
+          console.log("Authenticated flights session initialized (fallback):", {
+            sessionId: fallbackSessionId,
+            userId: authenticatedUserId,
+            userEmail: currentUser.email,
+            isAuthenticated: true,
+          });
         }
-
-        setSessionId(newSessionId);
-        setUserId(authenticatedUserId);
-        setPreviousSessionId(newSessionId);
-
-        // Reset first message flag when session changes
-        if (previousSessionId && previousSessionId !== newSessionId) {
-          setIsFirstMessage(true);
-        }
-
-        console.log("Authenticated flights session initialized:", {
-          sessionId: newSessionId,
-          userId: authenticatedUserId,
-          userEmail: currentUser.email,
-          isAuthenticated: true,
-          previousSessionId,
-        });
       };
 
       initializeAuthenticatedSession();
     }
-  }, [currentUser, previousSessionId]);
+  }, [currentUser]); // ✅ Only depend on currentUser, not previousSessionId
 
   // Handle session regeneration from debug component
-  const handleSessionRegenerated = (
+  const handleSessionRegenerated = async (
     newSessionId: string,
     newUserId: string
   ) => {
+    // If no sessionId provided, call API to create new one
+    if (!newSessionId && currentUser) {
+      try {
+        console.log("🔄 Regenerating session via API for user:", currentUser.uid);
+
+        const response = await fetch("/api/session/create", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            user_id: currentUser.uid,
+          }),
+        });
+
+        if (response.ok) {
+          const sessionData = await response.json();
+          newSessionId = sessionData.body.session_id;
+          console.log("✅ Session regenerated via API:", newSessionId);
+        } else {
+          throw new Error("Failed to create session via API");
+        }
+      } catch (error) {
+        console.error("❌ Error regenerating session:", error);
+        // Fallback to provided session or generate locally
+        newSessionId = newSessionId || getSessionId();
+      }
+    }
+
     setSessionId(newSessionId);
     // For authenticated users, userId should always remain the same (Firebase UID)
     // but we'll update it anyway in case the debug component passes it
@@ -206,19 +277,28 @@ export default function FlightsPageAuthenticated() {
 
       // Only restore if we don't already have a selected trip
       if (selectedTrip) {
-        console.log("✅ Selected trip already in memory:", selectedTrip.trip_title);
+        console.log(
+          "✅ Selected trip already in memory:",
+          selectedTrip.trip_title
+        );
         return;
       }
 
-      console.log("🔄 Attempting to restore selected trip from Firestore for user:", userId);
-      
+      console.log(
+        "🔄 Attempting to restore selected trip from Firestore for user:",
+        userId
+      );
+
       try {
         const restoredTrip = await getSelectedTripFromFirestore(userId);
-        
+
         if (restoredTrip) {
-          console.log("✅ Successfully restored trip from Firestore:", restoredTrip.trip_title);
+          console.log(
+            "✅ Successfully restored trip from Firestore:",
+            restoredTrip.trip_title
+          );
           setSelectedTrip(restoredTrip);
-          
+
           // Also restore to originalTrips if it's a trip suggestion format
           if (restoredTrip.trip_title) {
             setOriginalTrips([restoredTrip]);
@@ -257,10 +337,116 @@ export default function FlightsPageAuthenticated() {
     return {
       response_type: "end",
       message: {
-        message: "Great! Now let's finalize your travel dates to complete your booking.",
-        additional_data: {}
-      }
+        message:
+          "Great! Now let's finalize your travel dates to complete your booking.",
+        additional_data: {},
+      },
     };
+  };
+
+  // Post-processing function to clean backticks from API response
+  const cleanBackticksFromResponse = (data: any): any => {
+    if (!data || typeof data !== "object") {
+      return data;
+    }
+
+    if (data.message && typeof data.message === "string") {
+      let cleanedMessage = data.message;
+
+      // Remove markdown code blocks: ```json\n{...}\n``` or ```{...}```
+      // Pattern 1: ```json\n...\n```
+      cleanedMessage = cleanedMessage.replace(/^```json\s*\n/i, "");
+      cleanedMessage = cleanedMessage.replace(/\n```\s*$/, "");
+
+      // Pattern 2: ```...```
+      cleanedMessage = cleanedMessage.replace(/^```\s*/, "");
+      cleanedMessage = cleanedMessage.replace(/\s*```$/, "");
+
+      // Trim whitespace
+      cleanedMessage = cleanedMessage.trim();
+
+      // If the cleaned message looks like JSON, try to parse it
+      if (cleanedMessage.startsWith("{") || cleanedMessage.startsWith("[")) {
+        try {
+          // First attempt: Direct parse
+          const parsed = JSON.parse(cleanedMessage);
+          console.log(
+            "✅ Successfully parsed cleaned message as JSON (direct)"
+          );
+          return { ...data, message: parsed };
+        } catch (e: any) {
+          console.warn(
+            "⚠️ Direct JSON parse failed, attempting to sanitize control characters:",
+            e.message
+          );
+
+          try {
+            // Second attempt: Sanitize control characters
+            // Replace unescaped control characters with escaped versions
+            let sanitized = cleanedMessage;
+
+            // First, remove any literal backspace characters that may have been added incorrectly
+            sanitized = sanitized.replace(/[\b]/g, "");
+
+            // Handle common control character issues in JSON strings
+            // This regex finds string values and fixes unescaped control chars within them
+            sanitized = sanitized.replace(
+              /"([^"\\]*(\\.[^"\\]*)*)"/g,
+              (match: string) => {
+                // Don't modify keys like "response_type", only string values
+                // Check if this is likely a value (not a key)
+                return match
+                  .replace(/\n/g, "\\n")
+                  .replace(/\r/g, "\\r")
+                  .replace(/\t/g, "\\t")
+                  .replace(/\f/g, "\\f");
+                // Note: backspace chars already removed above
+              }
+            );
+
+            const parsed = JSON.parse(sanitized);
+            console.log(
+              "✅ Successfully parsed cleaned message as JSON (after sanitization)"
+            );
+            return { ...data, message: parsed };
+          } catch (e2: any) {
+            console.warn(
+              "⚠️ Sanitized JSON parse failed, attempting JSON5-like parse:",
+              e2.message
+            );
+
+            try {
+              // Third attempt: More aggressive sanitization
+              // Remove all literal control characters (not escaped)
+              let aggressiveSanitized = cleanedMessage
+                .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, "") // Remove control chars
+                .replace(/\n/g, "\\n")
+                .replace(/\r/g, "\\r")
+                .replace(/\t/g, "\\t");
+
+              const parsed = JSON.parse(aggressiveSanitized);
+              console.log(
+                "✅ Successfully parsed cleaned message as JSON (aggressive sanitization)"
+              );
+              return { ...data, message: parsed };
+            } catch (e3: any) {
+              console.error("❌ All JSON parse attempts failed:", e3.message);
+              console.error(
+                "Failed at character position:",
+                e3.message.match(/position (\d+)/)?.[1]
+              );
+
+              // Return the cleaned message as-is if parsing fails completely
+              return { ...data, message: cleanedMessage };
+            }
+          }
+        }
+      }
+
+      return { ...data, message: cleanedMessage };
+    }
+
+    return data;
   };
 
   // Simple API call function
@@ -305,8 +491,13 @@ export default function FlightsPageAuthenticated() {
       }
 
       const data = await response.json();
-      console.log("API Response received:", data);
-      return data;
+      console.log("API Response received (raw):", data);
+
+      // Clean backticks from response
+      const cleanedData = cleanBackticksFromResponse(data);
+      console.log("API Response (cleaned):", cleanedData);
+
+      return cleanedData;
     } catch (error) {
       clearTimeout(timeoutId);
       throw error;
@@ -363,7 +554,13 @@ export default function FlightsPageAuthenticated() {
 
       // Store the selected trip in Firestore first
       await storeSelectedTrip(userId, sessionId, selectedTrip);
-      console.log("Trip stored in Firestore successfully");
+      console.log(
+        "✅ Trip stored in Firestore successfully:",
+        selectedTrip.trip_title
+      );
+      console.log(
+        "📌 Trip remains in component state for subsequent operations"
+      );
 
       // Send the selected trip to memory API
       const response = await fetch("/api/memory", {
@@ -406,11 +603,13 @@ export default function FlightsPageAuthenticated() {
 
       setMessages((prev) => [...prev, userMessage]);
 
-      // Close flashcards and clear selection
+      // Close flashcards and clear visual selection
       setShowFlashcards(false);
-      setSelectedTrip(null);
+      // NOTE: Keep selectedTrip in state - it's needed for subsequent operations
+      // (date selection, conveyance flow, stays). Trip is already stored in Firestore.
+      // setSelectedTrip(null); // ❌ Removed - causes null trip in date selector
 
-      // Clear flashcards selection via ref
+      // Clear flashcards visual selection via ref
       if (flashcardsRef.current) {
         flashcardsRef.current.clearSelection();
       }
@@ -425,7 +624,8 @@ export default function FlightsPageAuthenticated() {
         body: JSON.stringify({
           user_id: userId,
           session_id: sessionId,
-          message: "I have updated the memory with the trip selected by the user.",
+          message:
+            "I have updated the memory with the trip selected by the user.",
         }),
       });
 
@@ -435,7 +635,9 @@ export default function FlightsPageAuthenticated() {
           .catch(() => ({ error: "Unknown error" }));
         console.error("Chat API Error:", errorData);
         throw new Error(
-          `Failed to call chat API: ${errorData.error || chatResponse.statusText}`
+          `Failed to call chat API: ${
+            errorData.error || chatResponse.statusText
+          }`
         );
       }
 
@@ -444,11 +646,12 @@ export default function FlightsPageAuthenticated() {
 
       // Extract message content from chat response
       let chatMessageContent = "";
-      
+
       if (chatData.response_type === "text" && chatData.message) {
         chatMessageContent = chatData.message.message || chatData.message;
       } else if (chatData.message && typeof chatData.message === "object") {
-        chatMessageContent = chatData.message.message || JSON.stringify(chatData.message);
+        chatMessageContent =
+          chatData.message.message || JSON.stringify(chatData.message);
       } else if (typeof chatData.message === "string") {
         chatMessageContent = chatData.message;
       } else {
@@ -472,95 +675,766 @@ export default function FlightsPageAuthenticated() {
     }
   };
 
-  // Handle date selection from DateSelectorWidget
-  const handleDateSelection = async (selectedDate: Date) => {
-    if (!sessionId || !userId) {
-      console.error("Missing required data for date selection: sessionId or userId");
+  // Call itinerary API to generate detailed itinerary for a specific day
+  const callItineraryAPI = async (
+    dayNumber: number,
+    showLoaderScreen: boolean = true
+  ) => {
+    if (!selectedTrip || !userId || !sessionId) {
+      console.error("❌ Missing required data for itinerary API call");
       return;
     }
 
     try {
-      console.log("Date selected:", selectedDate);
+      // Calculate total days from trip
+      const totalDays = selectedTrip.day_wise_plan?.length || 1;
+
+      // Show loader with itinerary messages
+      setIsLoadingItinerary(true);
+
+      if (showLoaderScreen) {
+        setConveyanceLoaderMessages([
+          `Creating your detailed itinerary for day ${dayNumber}`,
+          "Analyzing your preferences and selections",
+          "Optimizing your schedule",
+          "Adding personalized recommendations",
+        ]);
+        setShowTripLoader(true);
+        setIsParsingTrips(true);
+      }
+
+      console.log(
+        `📤 Calling itinerary API for day ${dayNumber} of ${totalDays} days`
+      );
+
+      // Build complete itinerary from Firestore (includes all completed days)
+      const completeItinerary = await buildCompleteItinerary(
+        userId,
+        selectedTrip,
+        dayNumber
+      );
+
+      console.log(
+        `📦 Built complete itinerary with ${completeItinerary.length} days for API request`
+      );
+      console.log("📊 Complete itinerary data:", completeItinerary);
+
+      // Prepare the message as a string with single-quoted JSON format
+      const itineraryMessage = `{'role':'admin','day_number':${dayNumber},'end_day':${totalDays},'query':'recommend the itinerary for day ${dayNumber}'}`;
+
+      console.log("📝 Itinerary message:", itineraryMessage);
+
+      // Build request body with complete itinerary
+      const requestBody: any = {
+        user_id: userId,
+        session_id: sessionId,
+        message: itineraryMessage,
+        current_itinerary: completeItinerary,
+      };
+
+      // Retry configuration
+      const MAX_RETRIES = 2;
+      const RETRY_DELAY = 5000; // 5 seconds
+      let lastError: Error | null = null;
+      let itineraryResponse: any = null;
+
+      // Retry loop for handling 503 errors
+      for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+        try {
+          if (attempt > 0) {
+            console.log(
+              `⏳ Retrying itinerary API (attempt ${attempt + 1}/${MAX_RETRIES + 1}) after 5 seconds...`
+            );
+
+            // Update loader messages for retry
+            if (showLoaderScreen) {
+              setConveyanceLoaderMessages([
+                `Retrying itinerary generation (attempt ${attempt + 1})`,
+                "Please wait, this may take a moment...",
+                "Optimizing your schedule",
+                "Adding personalized recommendations",
+              ]);
+            }
+
+            // Wait 5 seconds before retry
+            await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY));
+          }
+
+          const response = await fetch("/api/itinerary", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(requestBody),
+          });
+
+          // Check for 503 specifically
+          if (response.status === 503) {
+            console.warn(
+              `⚠️ Itinerary API returned 503 (attempt ${attempt + 1}/${MAX_RETRIES + 1})`
+            );
+            lastError = new Error(`Service unavailable (503)`);
+
+            // If we have retries left, continue to next attempt
+            if (attempt < MAX_RETRIES) {
+              continue;
+            } else {
+              // Last attempt failed with 503
+              throw lastError;
+            }
+          }
+
+          if (!response.ok) {
+            throw new Error(`Itinerary API error: ${response.status}`);
+          }
+
+          itineraryResponse = await response.json();
+          console.log(
+            `✅ Itinerary API response received on attempt ${attempt + 1}`
+          );
+
+          // Success - break out of retry loop
+          break;
+        } catch (error) {
+          console.error(
+            `❌ Itinerary API error (attempt ${attempt + 1}/${MAX_RETRIES + 1}):`,
+            error
+          );
+          lastError = error as Error;
+
+          // If this was the last attempt, throw
+          if (attempt === MAX_RETRIES) {
+            throw lastError;
+          }
+          // Otherwise, continue to next retry
+        }
+      }
+
+      // If we get here without itineraryResponse, all retries failed
+      if (!itineraryResponse) {
+        throw (
+          lastError || new Error("Failed to generate itinerary after retries")
+        );
+      }
+      console.log("✅ Itinerary API response received:", itineraryResponse);
+
+      // Parse the response - the actual itinerary data is inside the 'message' object
+      let itineraryPayload = itineraryResponse;
+
+      // Check if the response has a nested message structure
+      if (
+        itineraryResponse.message &&
+        typeof itineraryResponse.message === "object"
+      ) {
+        console.log("📦 Extracting itinerary from nested message object");
+        itineraryPayload = itineraryResponse.message;
+      }
+
+      // Store itinerary data and save ALL days to Firestore
+      if (
+        itineraryPayload.response_type === "itinerary" &&
+        itineraryPayload.itinerary
+      ) {
+        setItineraryData(itineraryPayload);
+        console.log("✅ Itinerary data stored successfully");
+        console.log(
+          "📊 Itinerary contains",
+          itineraryPayload.itinerary.length,
+          "day(s)"
+        );
+
+        // Store ALL received days in Firestore
+        console.log("💾 Storing all received days to Firestore...");
+        for (const dayData of itineraryPayload.itinerary) {
+          try {
+            // Extract only the day structure needed for Firestore
+            const dayToStore: DayItineraryData = {
+              day_number: dayData.day_number,
+              // Store the complete day data including schedule
+              ...(dayData.conveyance_details && {
+                conveyance_details: dayData.conveyance_details,
+              }),
+              ...(dayData.stay_details && {
+                stay_details: dayData.stay_details,
+              }),
+              ...(dayData.must_do_activities && {
+                must_do_activities: dayData.must_do_activities,
+              }),
+              ...(dayData.places_to_visit && {
+                places_to_visit: dayData.places_to_visit,
+              }),
+              // Store complete API response for this day
+              schedule: dayData.schedule,
+              title: dayData.title,
+              date: dayData.date,
+              summary: dayData.summary,
+              themes: dayData.themes,
+              estimated_total_cost: dayData.estimated_total_cost,
+              highlights: dayData.highlights,
+            };
+
+            await storeDayItinerary(userId, sessionId, dayToStore);
+            console.log(`✅ Stored day ${dayData.day_number} in Firestore`);
+          } catch (storeError) {
+            console.error(
+              `❌ Failed to store day ${dayData.day_number}:`,
+              storeError
+            );
+            // Continue storing other days even if one fails
+          }
+        }
+        console.log("✅ All days stored in Firestore");
+      } else {
+        console.warn(
+          "⚠️ Unexpected itinerary response format:",
+          itineraryResponse
+        );
+        console.warn("⚠️ Payload structure:", itineraryPayload);
+      }
+
+      if (showLoaderScreen) {
+        // Hide loader after minimum display time
+        setTimeout(() => {
+          setShowTripLoader(false);
+          setIsLoadingItinerary(false);
+
+          setTimeout(() => {
+            setIsParsingTrips(false);
+            // Show itinerary widget
+            setShowItinerary(true);
+            console.log("✅ Showing itinerary widget");
+          }, 700);
+        }, 4000);
+      } else {
+        // Just hide loading state if called from within itinerary
+        setIsLoadingItinerary(false);
+      }
+    } catch (error) {
+      console.error("❌ Error calling itinerary API:", error);
+      setIsLoadingItinerary(false);
+      setShowTripLoader(false);
+      setIsParsingTrips(false);
+      alert("Failed to generate itinerary. Please try again.");
+    }
+  };
+
+  // Handler for requesting next day itinerary from ItineraryWidget
+  const handleRequestNextDay = async (nextDayNumber: number) => {
+    console.log(`🔄 Requesting itinerary for next day: ${nextDayNumber}`);
+
+    if (!selectedTrip || !selectedTrip.day_wise_plan) {
+      console.error("❌ No selected trip or day_wise_plan found");
+      return;
+    }
+
+    // Find the next day in the trip plan
+    const nextDay = selectedTrip.day_wise_plan.find(
+      (d: any) => d.day_number === nextDayNumber
+    );
+
+    if (!nextDay) {
+      console.error(`❌ Could not find day ${nextDayNumber} in day_wise_plan`);
+      return;
+    }
+
+    console.log(`🔍 Checking day ${nextDayNumber} requirements:`, nextDay);
+
+    // Update current day number
+    setCurrentDayNumber(nextDayNumber);
+
+    // Check if conveyance is required for this day
+    if (
+      nextDay.conveyance_details &&
+      nextDay.conveyance_details.is_required === true
+    ) {
+      console.log(`✅ Day ${nextDayNumber} requires conveyance`);
+
+      // Extract from and to cities
+      let fromCity = nextDay.conveyance_details.from_city || "";
+      let toCity = nextDay.conveyance_details.to_city || "";
+
+      // Define supported cities
+      const supportedCities = [
+        "Mumbai",
+        "Bangalore",
+        "Agra",
+        "New Delhi",
+        "Leh",
+        "Delhi",
+      ];
+
+      // Normalize fromCity
+      if (fromCity) {
+        const normalizedFromCity =
+          fromCity.charAt(0).toUpperCase() + fromCity.slice(1).toLowerCase();
+        const isSupported = supportedCities.some(
+          (city) => city.toLowerCase() === normalizedFromCity.toLowerCase()
+        );
+
+        if (!isSupported) {
+          console.log(
+            `🔄 "${fromCity}" is not a supported city, defaulting to Mumbai`
+          );
+          fromCity = "Mumbai";
+        } else {
+          fromCity = normalizedFromCity;
+        }
+      } else {
+        fromCity = "Mumbai";
+        console.log("🔄 Empty from_city, defaulting to Mumbai");
+      }
+
+      // Normalize toCity
+      if (toCity) {
+        toCity = toCity.charAt(0).toUpperCase() + toCity.slice(1).toLowerCase();
+        if (toCity === "Delhi") toCity = "New Delhi";
+      }
+
+      console.log(
+        `🎯 Setting conveyance cities - From: ${fromCity}, To: ${toCity}`
+      );
+
+      // Calculate departure date for this day
+      const tripDate = selectedTrip.trip_date;
+      if (tripDate) {
+        const baseDate = new Date(tripDate);
+        const departureDate = new Date(baseDate);
+        departureDate.setDate(departureDate.getDate() + (nextDayNumber - 1));
+        const departureDateStr = departureDate.toISOString().split("T")[0];
+
+        console.log(`📅 Calculated departure date: ${departureDateStr}`);
+
+        // Set states for FlightsWidget
+        setConveyanceFromCity(fromCity);
+        setConveyanceToCity(toCity);
+        setAutoFillMode(true);
+        setInitialDepartureDate(departureDateStr);
+
+        // Set loader messages
+        setConveyanceLoaderMessages([
+          `Let's find conveyance options for Day ${nextDayNumber}`,
+          `Searching ${fromCity} to ${toCity} routes`,
+          "Finding the best travel options",
+          "Comparing prices and timings",
+        ]);
+
+        console.log("🔄 Closing itinerary and showing loader");
+
+        // Close itinerary widget
+        setShowItinerary(false);
+
+        // Show trip loader
+        setShowTripLoader(true);
+        setIsParsingTrips(true);
+
+        console.log("⏱️ Starting 4-second timer for loader");
+
+        // After 4 seconds, hide loader and show flights widget
+        setTimeout(() => {
+          console.log("⏱️ 4 seconds elapsed, hiding loader");
+          setShowTripLoader(false);
+
+          setTimeout(() => {
+            console.log(
+              `✈️ Showing FlightsWidget for day ${nextDayNumber} with cities: ${fromCity} to ${toCity}`
+            );
+            setIsParsingTrips(false);
+            setShowFlights(true);
+            setShowFlashcards(false);
+            setShowStays(false);
+            setShowDateSelector(false);
+          }, 700); // Dissolve duration
+        }, 4000);
+      }
+    } else {
+      // No conveyance required, directly call itinerary API
+      console.log(`❌ Day ${nextDayNumber} does not require conveyance`);
+      await callItineraryAPI(nextDayNumber, false);
+    }
+  };
+
+  // Handle date selection from DateSelectorWidget
+  const handleDateSelection = async (selectedDate: Date) => {
+    console.log("🎯 handleDateSelection called with date:", selectedDate);
+    console.log("🔍 Current state at entry:");
+    console.log("   - userId:", userId);
+    console.log("   - sessionId:", sessionId);
+    console.log(
+      "   - selectedTrip:",
+      selectedTrip ? `Present (${selectedTrip.trip_title})` : "NULL ❌"
+    );
+
+    if (!sessionId || !userId) {
+      console.error(
+        "❌ Missing required data for date selection: sessionId or userId"
+      );
+      return;
+    }
+
+    try {
+      console.log("✅ Date selected:", selectedDate.toLocaleDateString());
 
       // If selectedTrip is not in memory, try to restore it from Firestore
       let tripToUse = selectedTrip;
-      
-      if (!tripToUse) {
-        console.log("⚠️ Selected trip not in memory, attempting to restore from Firestore");
+
+      if (tripToUse) {
+        console.log("✅ Trip already in memory:", tripToUse.trip_title);
+      } else {
+        console.log(
+          "⚠️ Trip NOT in memory - attempting Firestore restoration..."
+        );
         tripToUse = await getSelectedTripFromFirestore(userId);
-        
+
         if (tripToUse) {
-          console.log("✅ Restored trip from Firestore:", tripToUse.trip_title);
+          console.log(
+            "✅ SUCCESS - Restored trip from Firestore:",
+            tripToUse.trip_title
+          );
           setSelectedTrip(tripToUse); // Update state for future use
         } else {
-          console.log("❌ No trip found in Firestore");
+          console.error(
+            "❌ FAILED - No trip found in Firestore for user:",
+            userId
+          );
         }
       }
 
       // If there's a selected trip (either from memory or Firestore), store it with the date
       if (tripToUse) {
         console.log("Storing trip with selected date:", tripToUse.trip_title);
+        // Convert date to strict YYYY-MM-DD format
+        const dateString = selectedDate.toISOString().split("T")[0];
+
+        // Validate and correct from_city in all days before storing
+        const supportedCities = [
+          "Mumbai",
+          "Bangalore",
+          "Delhi",
+          "New Delhi",
+          "Leh",
+          "Agra",
+        ];
+        const correctedTrip = JSON.parse(JSON.stringify(tripToUse)); // Deep copy
+
+        if (
+          correctedTrip.day_wise_plan &&
+          Array.isArray(correctedTrip.day_wise_plan)
+        ) {
+          correctedTrip.day_wise_plan.forEach((day: any) => {
+            if (day.conveyance_details && day.conveyance_details.from_city) {
+              let fromCity = day.conveyance_details.from_city;
+
+              // Check if it's a supported city
+              const normalizedFromCity =
+                fromCity.charAt(0).toUpperCase() +
+                fromCity.slice(1).toLowerCase();
+              const isSupported = supportedCities.some(
+                (city) =>
+                  city.toLowerCase() === normalizedFromCity.toLowerCase()
+              );
+
+              if (!isSupported) {
+                console.log(
+                  `🔄 Day ${day.day_number}: Converting "${fromCity}" to Mumbai in trip JSON`
+                );
+                day.conveyance_details.from_city = "Mumbai";
+              } else {
+                day.conveyance_details.from_city = normalizedFromCity;
+              }
+            }
+          });
+        }
+
         await storeSelectedTrip(userId, sessionId, {
-          ...tripToUse,
-          trip_date: selectedDate.toISOString(),
+          ...correctedTrip,
+          trip_date: dateString,
         });
+
+        // Update the local state with corrected trip
+        setSelectedTrip(correctedTrip);
 
         // Add a message to chat indicating date was selected
         const userMessage = {
           id: Date.now().toString(),
-          content: `Selected date: ${selectedDate.toLocaleDateString()} for trip: ${tripToUse.trip_title}`,
+          content: `Selected date: ${selectedDate.toLocaleDateString()} for trip: ${
+            correctedTrip.trip_title
+          }`,
           role: "user" as const,
           timestamp: new Date(),
           metadata: {
-            selectedDate: selectedDate.toISOString(),
-            selectedTrip: tripToUse,
+            selectedDate: dateString, // Store in YYYY-MM-DD format
+            selectedTrip: correctedTrip,
           },
         };
 
         setMessages((prev) => [...prev, userMessage]);
 
-        // Check if Day 1 has conveyance requirements
-        const dayWisePlan = tripToUse.day_wise_plan;
+        // Fetch source_point from memory API
+        console.log("🔍 Fetching source_point from memory API...");
+        try {
+          const memoryResponse = await fetch(`/api/memory/get`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              user_id: userId,
+              session_id: sessionId,
+            }),
+          });
+          if (memoryResponse.ok) {
+            const memoryData = await memoryResponse.json();
+            console.log("✅ Memory data received:", memoryData);
+
+            // Check if source_point exists in the response
+            if (memoryData.source_point && memoryData.source_point.place_name) {
+              console.log(
+                "✅ Found source_point:",
+                memoryData.source_point.place_name
+              );
+
+              // Add source_point to the trip
+              correctedTrip.source_point = memoryData.source_point;
+
+              // Update all days with from_city = "user_location" to use source_point
+              if (
+                correctedTrip.day_wise_plan &&
+                Array.isArray(correctedTrip.day_wise_plan)
+              ) {
+                correctedTrip.day_wise_plan.forEach((day: any) => {
+                  if (
+                    day.conveyance_details &&
+                    (day.conveyance_details.from_city === "user_location" ||
+                      day.conveyance_details.from_city === "User Location")
+                  ) {
+                    console.log(
+                      `🔄 Day ${day.day_number}: Updating from_city from "${day.conveyance_details.from_city}" to "${memoryData.source_point.place_name}"`
+                    );
+                    day.conveyance_details.from_city =
+                      memoryData.source_point.place_name;
+                  }
+                });
+              }
+
+              // Store updated trip with source_point
+              await storeSelectedTrip(userId, sessionId, {
+                ...correctedTrip,
+                trip_date: dateString,
+              });
+
+              // Update local state
+              setSelectedTrip(correctedTrip);
+              console.log("✅ Trip updated with source_point");
+            } else {
+              console.log("⚠️ No source_point in memory, using default Mumbai");
+              // Default to Mumbai if no source_point
+              correctedTrip.source_point = {
+                place_name: "Mumbai",
+                address: "Mumbai, India",
+              };
+
+              // Update all days with from_city = "user_location" to Mumbai
+              if (
+                correctedTrip.day_wise_plan &&
+                Array.isArray(correctedTrip.day_wise_plan)
+              ) {
+                correctedTrip.day_wise_plan.forEach((day: any) => {
+                  if (
+                    day.conveyance_details &&
+                    (day.conveyance_details.from_city === "user_location" ||
+                      day.conveyance_details.from_city === "User Location")
+                  ) {
+                    console.log(
+                      `🔄 Day ${day.day_number}: Updating from_city from "${day.conveyance_details.from_city}" to Mumbai (default)`
+                    );
+                    day.conveyance_details.from_city = "Mumbai";
+                  }
+                });
+              }
+
+              // Store updated trip with default source_point
+              await storeSelectedTrip(userId, sessionId, {
+                ...correctedTrip,
+                trip_date: dateString,
+              });
+
+              // Update local state
+              setSelectedTrip(correctedTrip);
+            }
+          } else {
+            console.error(
+              "❌ Failed to fetch memory data:",
+              memoryResponse.status
+            );
+            // Default to Mumbai on API failure
+            console.log("⚠️ Defaulting to Mumbai due to API failure");
+            correctedTrip.source_point = {
+              place_name: "Mumbai",
+              address: "Mumbai, India",
+            };
+          }
+        } catch (error) {
+          console.error("❌ Error fetching source_point from memory:", error);
+          // Default to Mumbai on error
+          console.log("⚠️ Defaulting to Mumbai due to error");
+          correctedTrip.source_point = {
+            place_name: "Mumbai",
+            address: "Mumbai, India",
+          };
+        }
+
+        // Pre-fetch conveyance data for all days that require it
+        const dayWisePlan = correctedTrip.day_wise_plan;
         console.log("🔍 Day-wise plan:", dayWisePlan);
-        
+
+        if (dayWisePlan && dayWisePlan.length > 0) {
+          // Extract days that require conveyance
+          const dayDetails = dayWisePlan
+            .filter((day: any) => day.conveyance_details)
+            .map((day: any) => ({
+              day_number: day.day_number,
+              from_city: day.conveyance_details.from_city || "",
+              to_city: day.conveyance_details.to_city || "",
+              is_required: day.conveyance_details.is_required === true,
+            }));
+
+          // Trigger pre-fetch in background (don't await to not block UI)
+          // preFetchConveyanceData({
+          //   userId,
+          //   sessionId,
+          //   tripDate: dateString,
+          //   dayDetails,
+          // }).catch((error) => {
+          //   console.error(
+          //     "❌ Conveyance pre-fetch failed (non-blocking):",
+          //     error
+          //   );
+          // });
+
+          // Extract days that require stays
+          const stayDetails = dayWisePlan
+            .filter(
+              (day: any) =>
+                day.stay_details && day.stay_details.is_required === true
+            )
+            .map((day: any) => ({
+              day_number: day.day_number,
+              city: day.stay_details.city || "",
+              check_in_day: day.stay_details.check_in_day || day.day_number,
+              check_out_day:
+                day.stay_details.check_out_day || day.day_number + 1,
+              is_required: true,
+            }));
+
+          // Trigger stays pre-fetch in background (don't await to not block UI)
+          // if (stayDetails.length > 0) {
+          //   console.log(
+          //     "🏨 Triggering stays pre-fetch for",
+          //     stayDetails.length,
+          //     "days"
+          //   );
+          //   preFetchStaysData({
+          //     userId,
+          //     sessionId,
+          //     tripDate: dateString,
+          //     dayDetails: stayDetails,
+          //   }).catch((error) => {
+          //     console.error("❌ Stays pre-fetch failed (non-blocking):", error);
+          //   });
+          // }
+        }
+
         if (dayWisePlan && dayWisePlan.length > 0) {
           const day1 = dayWisePlan[0]; // Day 1 is at index 0
-          
+
           console.log("🔍 Checking Day 1 conveyance details:", day1);
           console.log("🔍 Day 1 conveyance_details:", day1.conveyance_details);
-          
+          console.log(
+            "🔍 Day 1 conveyance is_required:",
+            day1.conveyance_details?.is_required
+          );
+          console.log(
+            "🔍 Day 1 conveyance is_required type:",
+            typeof day1.conveyance_details?.is_required
+          );
+
           // Check if conveyance_details exists and is_required is true
-          if (day1.conveyance_details && day1.conveyance_details.is_required === true) {
-            console.log("✅ Day 1 conveyance is required, showing loader and flights");
-            
+          if (
+            day1.conveyance_details &&
+            day1.conveyance_details.is_required === true
+          ) {
+            console.log(
+              "✅✅✅ Day 1 conveyance is required, showing loader and flights"
+            );
+
             // Initialize current day number to 1
             setCurrentDayNumber(1);
-            
+
             // Extract from and to cities
             let fromCity = day1.conveyance_details.from_city || "";
             let toCity = day1.conveyance_details.to_city || "";
-            
-            // Handle "user_location" placeholder
-            if (fromCity === "user_location" || fromCity === "User Location") {
-              fromCity = "Mumbai"; // Default to Mumbai or use user's actual location
-              console.log("🔄 Converted user_location to:", fromCity);
+
+            // Define supported cities (5 cities we have data for)
+            const supportedCities = [
+              "Mumbai",
+              "Bangalore",
+              "Agra",
+              "New Delhi",
+              "Leh",
+              "Delhi",
+            ];
+
+            // Handle "user_location" and other placeholder values
+            // Check if fromCity is not one of the supported cities
+            if (fromCity) {
+              // Capitalize for comparison
+              const normalizedFromCity =
+                fromCity.charAt(0).toUpperCase() +
+                fromCity.slice(1).toLowerCase();
+              const isSupported = supportedCities.some(
+                (city) =>
+                  city.toLowerCase() === normalizedFromCity.toLowerCase()
+              );
+
+              if (!isSupported) {
+                console.log(
+                  `🔄 "${fromCity}" is not a supported city, defaulting to Mumbai`
+                );
+                fromCity = "Mumbai";
+              } else {
+                fromCity = normalizedFromCity;
+              }
+            } else {
+              fromCity = "Mumbai"; // Default if empty
+              console.log("🔄 Empty from_city, defaulting to Mumbai");
             }
-            
-            // Capitalize city names properly
+
+            // Capitalize city names properly for toCity
             if (toCity) {
-              toCity = toCity.charAt(0).toUpperCase() + toCity.slice(1).toLowerCase();
+              toCity =
+                toCity.charAt(0).toUpperCase() + toCity.slice(1).toLowerCase();
               if (toCity === "Delhi") toCity = "New Delhi"; // Match FlightsWidget format
             }
-            if (fromCity) {
-              fromCity = fromCity.charAt(0).toUpperCase() + fromCity.slice(1).toLowerCase();
-            }
-            
-            console.log("🎯 Setting conveyance cities - From:", fromCity, "To:", toCity);
-            
+
+            console.log(
+              "🎯 Setting conveyance cities - From:",
+              fromCity,
+              "To:",
+              toCity
+            );
+
             // Set conveyance cities for FlightsWidget
             setConveyanceFromCity(fromCity);
             setConveyanceToCity(toCity);
-            
+
+            // Set auto-fill mode and initial departure date
+            setAutoFillMode(true);
+            setInitialDepartureDate(dateString); // Use the trip start date
+            console.log(
+              "📅 Set auto-fill mode with departure date:",
+              dateString
+            );
+
             // Set custom loader messages
             setConveyanceLoaderMessages([
               "Let's find conveyance options for Day 1",
@@ -568,25 +1442,30 @@ export default function FlightsPageAuthenticated() {
               "Finding the best travel options",
               "Comparing prices and timings",
             ]);
-            
+
             console.log("🔄 Closing date selector and showing loader");
-            
+
             // Close date selector
             setShowDateSelector(false);
-            
+
             // Show trip loader with conveyance message
             setShowTripLoader(true);
             setIsParsingTrips(true);
-            
+
             console.log("⏱️ Starting 4-second timer for loader");
-            
+
             // After 4 seconds, hide loader and show flights widget
             setTimeout(() => {
               console.log("⏱️ 4 seconds elapsed, hiding loader");
               setShowTripLoader(false);
-              
+
               setTimeout(() => {
-                console.log("✈️ Showing FlightsWidget with cities:", fromCity, "to", toCity);
+                console.log(
+                  "✈️ Showing FlightsWidget with cities:",
+                  fromCity,
+                  "to",
+                  toCity
+                );
                 setIsParsingTrips(false);
                 setShowFlights(true);
                 setShowFlashcards(false);
@@ -594,18 +1473,37 @@ export default function FlightsPageAuthenticated() {
                 setShowDateSelector(false);
               }, 700); // Dissolve duration
             }, 4000);
-            
+
             return; // Exit early since we're showing conveyance flow
           } else {
-            console.log("❌ Day 1 conveyance not required or missing. is_required:", day1.conveyance_details?.is_required);
+            console.log("❌❌❌ Day 1 conveyance not required or missing.");
+            console.log(
+              "❌ is_required value:",
+              day1.conveyance_details?.is_required
+            );
+            console.log(
+              "❌ Strict equality check (=== true):",
+              day1.conveyance_details?.is_required === true
+            );
+            console.log(
+              "❌ Loose equality check (== true):",
+              day1.conveyance_details?.is_required == true
+            );
+            console.log(
+              "❌ Full conveyance_details:",
+              JSON.stringify(day1.conveyance_details, null, 2)
+            );
           }
         } else {
-          console.log("❌ No day_wise_plan found in trip");
+          console.log("❌❌❌ No day_wise_plan found in trip");
+          console.log("❌ dayWisePlan:", dayWisePlan);
         }
       } else {
         // If no trip selected, just store the date
         console.log("Storing date without trip");
-        
+        // Convert date to strict YYYY-MM-DD format
+        const dateString = selectedDate.toISOString().split("T")[0];
+
         // Add a message to chat indicating date was selected
         const userMessage = {
           id: Date.now().toString(),
@@ -613,7 +1511,7 @@ export default function FlightsPageAuthenticated() {
           role: "user" as const,
           timestamp: new Date(),
           metadata: {
-            selectedDate: selectedDate.toISOString(),
+            selectedDate: dateString, // Store in YYYY-MM-DD format
           },
         };
 
@@ -632,8 +1530,11 @@ export default function FlightsPageAuthenticated() {
 
   // Handle continue action from FlightsWidget with selected conveyance data
   const handleFlightsContinue = async (selectedConveyanceData?: any) => {
-    console.log("🚀 Continue clicked from FlightsWidget with data:", selectedConveyanceData);
-    
+    console.log(
+      "🚀 Continue clicked from FlightsWidget with data:",
+      selectedConveyanceData
+    );
+
     if (!selectedConveyanceData) {
       console.error("❌ No conveyance data selected");
       alert("Please select a conveyance option before continuing.");
@@ -647,7 +1548,10 @@ export default function FlightsPageAuthenticated() {
 
     try {
       // Store conveyance temporarily (DO NOT update memory yet)
-      console.log(`💾 Storing conveyance temporarily for day ${currentDayNumber}:`, selectedConveyanceData);
+      console.log(
+        `💾 Storing conveyance temporarily for day ${currentDayNumber}:`,
+        selectedConveyanceData
+      );
       setTempConveyanceSelection(selectedConveyanceData);
 
       // Add a message to chat
@@ -664,35 +1568,89 @@ export default function FlightsPageAuthenticated() {
       };
 
       setMessages((prev) => [...prev, conveyanceMessage]);
-      
+
       // Close flights widget
       setShowFlights(false);
 
       // Find current day in trip plan
-      const currentDay = selectedTrip.day_wise_plan?.find((d: any) => d.day_number === currentDayNumber);
-      
+      const currentDay = selectedTrip.day_wise_plan?.find(
+        (d: any) => d.day_number === currentDayNumber
+      );
+
       if (!currentDay) {
-        console.error(`❌ Could not find day ${currentDayNumber} in day_wise_plan`);
+        console.error(
+          `❌ Could not find day ${currentDayNumber} in day_wise_plan`
+        );
         return;
       }
 
       console.log(`🔍 Checking if day ${currentDayNumber} requires stay...`);
-      
+
       // CASE 1: Current day requires stay
-      if (currentDay.stay_details && currentDay.stay_details.is_required === true) {
-        console.log(`✅ Day ${currentDayNumber} requires stay, showing loader...`);
-        
+      if (
+        currentDay.stay_details &&
+        currentDay.stay_details.is_required === true
+      ) {
+        console.log(
+          `✅ Day ${currentDayNumber} requires stay, showing loader...`
+        );
+
         // Extract city for stay
         let stayCity = currentDay.stay_details.city || "";
-        
+
         // Capitalize city name
         if (stayCity) {
-          stayCity = stayCity.charAt(0).toUpperCase() + stayCity.slice(1).toLowerCase();
+          stayCity =
+            stayCity.charAt(0).toUpperCase() + stayCity.slice(1).toLowerCase();
           if (stayCity === "Delhi") stayCity = "New Delhi";
         }
-        
+
         setStayCity(stayCity);
-        
+
+        // Calculate check-in and check-out dates
+        const tripDate = selectedTrip.trip_date; // Trip start date in YYYY-MM-DD format
+        if (tripDate) {
+          // Check-in day from stay_details or current day number
+          const checkInDay =
+            currentDay.stay_details.check_in_day || currentDayNumber;
+          // Check-out day from stay_details or find next conveyance day
+          let checkOutDay = currentDay.stay_details.check_out_day;
+
+          if (!checkOutDay) {
+            // Find next day with conveyance requirement
+            const nextConveyanceDay = selectedTrip.day_wise_plan?.find(
+              (d: any) =>
+                d.day_number > currentDayNumber &&
+                d.conveyance_details?.is_required === true
+            );
+            checkOutDay = nextConveyanceDay
+              ? nextConveyanceDay.day_number
+              : currentDayNumber + 1;
+          }
+
+          console.log(
+            `📅 Check-in day: ${checkInDay}, Check-out day: ${checkOutDay}`
+          );
+
+          // Calculate actual dates
+          const baseDate = new Date(tripDate);
+          const checkInDate = new Date(baseDate);
+          checkInDate.setDate(checkInDate.getDate() + (checkInDay - 1));
+          const checkInDateStr = checkInDate.toISOString().split("T")[0];
+
+          const checkOutDate = new Date(baseDate);
+          checkOutDate.setDate(checkOutDate.getDate() + (checkOutDay - 1));
+          const checkOutDateStr = checkOutDate.toISOString().split("T")[0];
+
+          console.log(
+            `📅 Check-in date: ${checkInDateStr}, Check-out date: ${checkOutDateStr}`
+          );
+
+          setStayCheckInDate(checkInDateStr);
+          setStayCheckOutDate(checkOutDateStr);
+          setAutoFillStaysMode(true); // Enable auto-fill mode
+        }
+
         // Set loader messages for stay
         setConveyanceLoaderMessages([
           `Let's find stay options for day ${currentDayNumber}`,
@@ -700,28 +1658,39 @@ export default function FlightsPageAuthenticated() {
           "Finding the best hotels",
           "Comparing prices and ratings",
         ]);
-        
+
+        console.log(`🏨 Setting auto-fill mode for StaysWidget:`, {
+          stayCity,
+          checkInDate: stayCheckInDate,
+          checkOutDate: stayCheckOutDate,
+          autoFillMode: true,
+        });
+
         // Show loader
         setShowTripLoader(true);
         setIsParsingTrips(true);
-        
+
         // After 4 seconds, show stays widget
         setTimeout(() => {
           setShowTripLoader(false);
-          
+
           setTimeout(() => {
-            console.log(`🏨 Showing StaysWidget for day ${currentDayNumber} in ${stayCity}`);
+            console.log(
+              `🏨 Showing StaysWidget for day ${currentDayNumber} in ${stayCity} with auto-fill mode: ${autoFillStaysMode}`
+            );
             setIsParsingTrips(false);
             setShowStays(true);
           }, 700);
         }, 4000);
-        
+
         return; // Exit early, show stay widget
-      } 
-      
-      // CASE 2: Current day does NOT require stay - update memory with conveyance only
-      console.log(`❌ Day ${currentDayNumber} does not require stay - updating memory with conveyance only`);
-      
+      }
+
+      // CASE 2: Current day does NOT require stay - pass conveyance data to itinerary API
+      console.log(
+        `❌ Day ${currentDayNumber} does not require stay - passing conveyance data to itinerary API`
+      );
+
       // Build current_itinerary for current day with conveyance only
       const currentItineraryDay = {
         day_number: currentDayNumber,
@@ -729,8 +1698,11 @@ export default function FlightsPageAuthenticated() {
           is_required: true,
           from_city: currentDay.conveyance_details.from_city,
           to_city: currentDay.conveyance_details.to_city,
-          type: selectedConveyanceData.operator.includes("Train") ? "train" : 
-                selectedConveyanceData.operator.includes("Bus") ? "bus" : "flight",
+          type: selectedConveyanceData.operator.includes("Train")
+            ? "train"
+            : selectedConveyanceData.operator.includes("Bus")
+            ? "bus"
+            : "flight",
           number: selectedConveyanceData.number,
           operator: selectedConveyanceData.operator,
           departure_date: selectedConveyanceData.departureDate,
@@ -740,45 +1712,39 @@ export default function FlightsPageAuthenticated() {
           duration: selectedConveyanceData.duration,
           price: selectedConveyanceData.price,
           selected_from_city: conveyanceFromCity,
-          selected_to_city: conveyanceToCity
+          selected_to_city: conveyanceToCity,
         },
         // Include other day info if present
-        ...(currentDay.must_do_activities && { must_do_activities: currentDay.must_do_activities }),
-        ...(currentDay.places_to_visit && { places_to_visit: currentDay.places_to_visit }),
-        ...(currentDay.stay_details && { stay_details: currentDay.stay_details }),
+        ...(currentDay.must_do_activities && {
+          must_do_activities: currentDay.must_do_activities,
+        }),
+        ...(currentDay.places_to_visit && {
+          places_to_visit: currentDay.places_to_visit,
+        }),
+        ...(currentDay.stay_details && {
+          stay_details: currentDay.stay_details,
+        }),
       };
 
-      console.log("📤 Sending current_itinerary to memory API (conveyance only):", currentItineraryDay);
+      console.log(
+        "📤 Building complete day itinerary (conveyance only):",
+        currentItineraryDay
+      );
 
-      // Update memory with current_itinerary
-      const memoryResponse = await fetch("/api/memory", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user_id: userId,
-          session_id: sessionId,
-          updates: {
-            current_itinerary: [currentItineraryDay],
-          },
-        }),
-      });
-
-      if (!memoryResponse.ok) {
-        throw new Error(`Memory API error: ${memoryResponse.status}`);
-      }
-
-      const memoryResult = await memoryResponse.json();
-      console.log("✅ Memory updated successfully with current_itinerary:", memoryResult);
+      // Store day itinerary in Firestore
+      await storeDayItinerary(
+        userId,
+        sessionId,
+        currentItineraryDay as DayItineraryData
+      );
+      console.log(`✅ Stored day ${currentDayNumber} itinerary in Firestore`);
 
       // Clear temporary conveyance selection
       setTempConveyanceSelection(null);
 
-      // Show itinerary
-      setShowItinerary(true);
-      console.log("✅ Day 1 completed (conveyance only) - showing itinerary");
-      
+      // Call itinerary API (will retrieve complete itinerary from Firestore)
+      console.log("📞 Calling itinerary API for day", currentDayNumber);
+      await callItineraryAPI(currentDayNumber, true);
     } catch (error) {
       console.error("❌ Error handling conveyance selection:", error);
       alert("Failed to save conveyance selection. Please try again.");
@@ -787,8 +1753,11 @@ export default function FlightsPageAuthenticated() {
 
   // Handle continue action from StaysWidget with selected stay data
   const handleStaysContinue = async (selectedStayData?: any) => {
-    console.log("🚀 Continue clicked from StaysWidget with data:", selectedStayData);
-    
+    console.log(
+      "🚀 Continue clicked from StaysWidget with data:",
+      selectedStayData
+    );
+
     if (!selectedStayData) {
       console.error("❌ No stay data selected");
       alert("Please select a stay option before continuing.");
@@ -807,15 +1776,21 @@ export default function FlightsPageAuthenticated() {
     }
 
     try {
-      console.log(`💾 Processing day ${currentDayNumber} with conveyance and stay`);
+      console.log(
+        `💾 Processing day ${currentDayNumber} with conveyance and stay`
+      );
       console.log(`📦 Temp conveyance:`, tempConveyanceSelection);
       console.log(`🏨 Stay data:`, selectedStayData);
 
       // Find current day in trip plan
-      const currentDay = selectedTrip.day_wise_plan?.find((d: any) => d.day_number === currentDayNumber);
-      
+      const currentDay = selectedTrip.day_wise_plan?.find(
+        (d: any) => d.day_number === currentDayNumber
+      );
+
       if (!currentDay) {
-        console.error(`❌ Could not find day ${currentDayNumber} in day_wise_plan`);
+        console.error(
+          `❌ Could not find day ${currentDayNumber} in day_wise_plan`
+        );
         return;
       }
 
@@ -826,8 +1801,11 @@ export default function FlightsPageAuthenticated() {
           is_required: true,
           from_city: currentDay.conveyance_details.from_city,
           to_city: currentDay.conveyance_details.to_city,
-          type: tempConveyanceSelection.operator.includes("Train") ? "train" : 
-                tempConveyanceSelection.operator.includes("Bus") ? "bus" : "flight",
+          type: tempConveyanceSelection.operator.includes("Train")
+            ? "train"
+            : tempConveyanceSelection.operator.includes("Bus")
+            ? "bus"
+            : "flight",
           number: tempConveyanceSelection.number,
           operator: tempConveyanceSelection.operator,
           departure_date: tempConveyanceSelection.departureDate,
@@ -837,7 +1815,7 @@ export default function FlightsPageAuthenticated() {
           duration: tempConveyanceSelection.duration,
           price: tempConveyanceSelection.price,
           selected_from_city: conveyanceFromCity,
-          selected_to_city: conveyanceToCity
+          selected_to_city: conveyanceToCity,
         },
         stay_details: {
           is_required: true,
@@ -857,33 +1835,26 @@ export default function FlightsPageAuthenticated() {
           available_until_date: selectedStayData.available_until_date,
         },
         // Include other day info if present
-        ...(currentDay.must_do_activities && { must_do_activities: currentDay.must_do_activities }),
-        ...(currentDay.places_to_visit && { places_to_visit: currentDay.places_to_visit }),
+        ...(currentDay.must_do_activities && {
+          must_do_activities: currentDay.must_do_activities,
+        }),
+        ...(currentDay.places_to_visit && {
+          places_to_visit: currentDay.places_to_visit,
+        }),
       };
 
-      console.log("📤 Sending current_itinerary to memory API (conveyance + stay):", currentItineraryDay);
+      console.log(
+        "📤 Building complete day itinerary (conveyance + stay):",
+        currentItineraryDay
+      );
 
-      // Update memory with current_itinerary
-      const memoryResponse = await fetch("/api/memory", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user_id: userId,
-          session_id: sessionId,
-          updates: {
-            current_itinerary: [currentItineraryDay],
-          },
-        }),
-      });
-
-      if (!memoryResponse.ok) {
-        throw new Error(`Memory API error: ${memoryResponse.status}`);
-      }
-
-      const memoryResult = await memoryResponse.json();
-      console.log("✅ Memory updated successfully with current_itinerary:", memoryResult);
+      // Store day itinerary in Firestore
+      await storeDayItinerary(
+        userId,
+        sessionId,
+        currentItineraryDay as DayItineraryData
+      );
+      console.log(`✅ Stored day ${currentDayNumber} itinerary in Firestore`);
 
       // Add a message to chat
       const stayMessage = {
@@ -902,14 +1873,13 @@ export default function FlightsPageAuthenticated() {
 
       // Clear temporary conveyance selection
       setTempConveyanceSelection(null);
-      
+
       // Close stays widget
       setShowStays(false);
 
-      // Show itinerary
-      setShowItinerary(true);
-      console.log("✅ Day 1 completed (conveyance + stay) - showing itinerary");
-      
+      // Call itinerary API (will retrieve complete itinerary from Firestore)
+      console.log("📞 Calling itinerary API for day", currentDayNumber);
+      await callItineraryAPI(currentDayNumber, true);
     } catch (error) {
       console.error("❌ Error handling stay selection:", error);
       alert("Failed to save stay selection. Please try again.");
@@ -964,10 +1934,12 @@ export default function FlightsPageAuthenticated() {
         }
         setIsFirstMessage(false);
       }
-      
+
       // Check if we should simulate end response for testing
-      const data = testEndResponse ? simulateEndResponse() : await makeAPICall(currentInput);
-      
+      const data = testEndResponse
+        ? simulateEndResponse()
+        : await makeAPICall(currentInput);
+
       // Reset test flag after use
       if (testEndResponse) {
         setTestEndResponse(false);
@@ -1000,7 +1972,7 @@ export default function FlightsPageAuthenticated() {
           root_response_type: data.response_type,
           nested_response_type: data.message?.response_type,
           isEndResponse: isEndResponse,
-          full_data_structure: JSON.stringify(data, null, 2)
+          full_data_structure: JSON.stringify(data, null, 2),
         });
 
         // Show trip loader IMMEDIATELY for ANY trip response detected
@@ -1025,10 +1997,12 @@ export default function FlightsPageAuthenticated() {
               setShowTripLoader(true);
             }
           }, 100);
-        } 
+        }
         // Show end loader IMMEDIATELY for ANY end response detected
         else if (isEndResponse) {
-          console.log("🎯 End response detected - showing end loader immediately");
+          console.log(
+            "🎯 End response detected - showing end loader immediately"
+          );
           console.log("🎯 End response data:", {
             root_response_type: data.response_type,
             nested_response_type: data.message?.response_type,
@@ -1039,7 +2013,9 @@ export default function FlightsPageAuthenticated() {
 
           // Safety check - ensure loader stays visible for minimum duration
           setTimeout(() => {
-            console.log("🎯 Safety check: Ensuring end loader is still visible");
+            console.log(
+              "🎯 Safety check: Ensuring end loader is still visible"
+            );
             if (!showEndLoader) {
               console.log(
                 "🎯 Safety: End loader was hidden prematurely, re-showing"
@@ -1056,9 +2032,17 @@ export default function FlightsPageAuthenticated() {
 
         // Handle different response structures
         // Case 1: Response type at root level (new format from temp.json)
-        if (data.response_type === "end" && data.message) {
+        if (data.response_type === "end") {
           console.log("Detected end response at root level");
-          messageContent = data.message.message || data.message || "Let's finalize your travel dates";
+          // Handle empty message case with custom text
+          if (data.message === "" || !data.message) {
+            messageContent = "Let's call the smart date recommender now";
+          } else {
+            messageContent =
+              (typeof data.message === "object"
+                ? data.message.message
+                : data.message) || "Let's finalize your travel dates";
+          }
         }
         // Case 2: Trip response at root level (new format from temp.json)
         else if (data.response_type === "trip" && data.message) {
@@ -1067,14 +2051,16 @@ export default function FlightsPageAuthenticated() {
           );
 
           messageContent =
-            data.message.message ||
+            (typeof data.message === "object"
+              ? data.message.message
+              : data.message) ||
             "Here are some amazing trip suggestions for you!";
 
           // Extract trip suggestions directly from data.message.trips
           if (data.message.trips && Array.isArray(data.message.trips)) {
             // Store original trips before validation
             setOriginalTrips(cleanupTripData(data.message.trips));
-            
+
             // Validate and populate missing fields
             parsedTripSuggestions = validateAndPopulateTripData(
               data.message.trips
@@ -1092,7 +2078,9 @@ export default function FlightsPageAuthenticated() {
           console.log("Detected trip response with trip_suggestions wrapper");
 
           messageContent =
-            data.trip_suggestions.message ||
+            (typeof data.trip_suggestions.message === "object"
+              ? data.trip_suggestions.message.message
+              : data.trip_suggestions.message) ||
             "Here are some amazing trip suggestions for you!";
 
           // Extract trip suggestions
@@ -1102,7 +2090,7 @@ export default function FlightsPageAuthenticated() {
           ) {
             // Store original trips before validation
             setOriginalTrips(cleanupTripData(data.trip_suggestions.trips));
-            
+
             // Validate and populate missing fields
             parsedTripSuggestions = validateAndPopulateTripData(
               data.trip_suggestions.trips
@@ -1123,16 +2111,30 @@ export default function FlightsPageAuthenticated() {
 
           if (messageData.response_type === "text" && messageData.message) {
             console.log("Detected text response");
-            messageContent = messageData.message;
-          } else if (messageData.response_type === "end" && messageData.message) {
+            messageContent =
+              typeof messageData.message === "string"
+                ? messageData.message
+                : messageData.message.message || "Text response received";
+          } else if (messageData.response_type === "end") {
             console.log("Detected end response in nested format");
-            messageContent = messageData.message;
+            // Handle empty message case with custom text
+            if (messageData.message === "" || !messageData.message) {
+              messageContent = "Let's call the smart date recommender now";
+            } else {
+              messageContent =
+                typeof messageData.message === "string"
+                  ? messageData.message
+                  : messageData.message.message ||
+                    "Let's finalize your travel dates";
+            }
           } else if (messageData.response_type === "trip") {
             console.log("Detected trip response in nested format");
             console.log("messageData structure:", Object.keys(messageData));
 
             messageContent =
-              messageData.message ||
+              (typeof messageData.message === "object"
+                ? messageData.message.message
+                : messageData.message) ||
               "Here are some amazing trip suggestions for you!";
 
             // Case A: trips array directly under messageData (actual current API format)
@@ -1140,7 +2142,7 @@ export default function FlightsPageAuthenticated() {
               console.log("Found trips array directly under messageData");
               // Store original trips before validation
               setOriginalTrips(cleanupTripData(messageData.trips));
-              
+
               // Validate and populate missing fields
               parsedTripSuggestions = validateAndPopulateTripData(
                 messageData.trips
@@ -1165,8 +2167,10 @@ export default function FlightsPageAuthenticated() {
                 Array.isArray(messageData.trip_suggestions.trips)
               ) {
                 // Store original trips before validation
-                setOriginalTrips(cleanupTripData(messageData.trip_suggestions.trips));
-                
+                setOriginalTrips(
+                  cleanupTripData(messageData.trip_suggestions.trips)
+                );
+
                 // Validate and populate missing fields
                 parsedTripSuggestions = validateAndPopulateTripData(
                   messageData.trip_suggestions.trips
@@ -1187,7 +2191,10 @@ export default function FlightsPageAuthenticated() {
           } else {
             // Fallback for other response types
             console.log("Using fallback message content");
-            messageContent = messageData.message || JSON.stringify(messageData);
+            messageContent =
+              (typeof messageData.message === "string"
+                ? messageData.message
+                : null) || JSON.stringify(messageData);
           }
         }
         // Case 5: String response (old format)
@@ -1277,7 +2284,7 @@ export default function FlightsPageAuthenticated() {
                 setShowFlights(false);
                 setShowStays(false);
                 setShowItinerary(false);
-                setSelectedTrip(null);
+                // Keep selectedTrip for potential future use - don't clear it here
                 setIsParsingTrips(false);
 
                 // Clear selection in flashcards widget
@@ -1304,16 +2311,16 @@ export default function FlightsPageAuthenticated() {
             setIsParsingTrips(false);
           }, minLoaderDuration);
         }
-      } 
+      }
       // Handle end response detection and flow
       else if (isEndResponse) {
         console.log("🎯 End response detected - showing EndResponseLoader");
         console.log("🎯 End response data:", {
           root_response_type: data.response_type,
           nested_response_type: data.message?.response_type,
-          message_content: messageContent
+          message_content: messageContent,
         });
-        
+
         const loaderStartTime = Date.now();
         const minLoaderDuration = 4000; // Minimum 4 seconds display time
 
@@ -1321,7 +2328,9 @@ export default function FlightsPageAuthenticated() {
 
         // Wait for minimum loader duration
         setTimeout(() => {
-          console.log("🎯 End loader minimum duration completed, hiding loader");
+          console.log(
+            "🎯 End loader minimum duration completed, hiding loader"
+          );
 
           // Hide end loader with dissolving effect and show date selector
           setTimeout(() => {
@@ -1334,7 +2343,7 @@ export default function FlightsPageAuthenticated() {
               setShowFlights(false);
               setShowStays(false);
               setShowItinerary(false);
-              setSelectedTrip(null);
+              // Keep selectedTrip for DateSelector auto-fill - don't set to null
 
               // Clear selection in flashcards widget
               if (flashcardsRef.current) {
@@ -1394,15 +2403,15 @@ export default function FlightsPageAuthenticated() {
     console.log("Number of trips to transform:", trips.length);
 
     return trips.map((trip, tripIdx) => {
-      console.log(
-        `\n--- Processing trip ${tripIdx + 1}: ${trip.trip_title} ---`
-      );
-      console.log("Raw trip data:", JSON.stringify(trip, null, 2));
+      // console.log(
+      //   `\n--- Processing trip ${tripIdx + 1}: ${trip.trip_title} ---`
+      // );
+      // console.log("Raw trip data:", JSON.stringify(trip, null, 2));
 
       // Create a map of cities from trip_route
       const cityMap = new Map();
       if (trip.trip_route && Array.isArray(trip.trip_route)) {
-        console.log(`Trip route has ${trip.trip_route.length} cities`);
+        // console.log(`Trip route has ${trip.trip_route.length} cities`);
         trip.trip_route.forEach((city: any) => {
           const cityData = {
             name: city.place_name || city.name,
@@ -1414,10 +2423,10 @@ export default function FlightsPageAuthenticated() {
             place_id: city.place_id || "",
           };
           cityMap.set(city.place_name || city.name, cityData);
-          console.log(
-            `  - Mapped city: ${city.place_name || city.name}`,
-            cityData
-          );
+          // console.log(
+          //   `  - Mapped city: ${city.place_name || city.name}`,
+          //   cityData
+          // );
         });
       } else {
         console.log(
@@ -1431,9 +2440,9 @@ export default function FlightsPageAuthenticated() {
           const cities: any[] = [];
           let cityName = null;
 
-          console.log(`  Day ${day.day_number}:`);
-          console.log(`    - stay_details:`, day.stay_details);
-          console.log(`    - conveyance_details:`, day.conveyance_details);
+          // console.log(`  Day ${day.day_number}:`);
+          // console.log(`    - stay_details:`, day.stay_details);
+          // console.log(`    - conveyance_details:`, day.conveyance_details);
 
           // Extract city name with priority: stay_details > conveyance to_city
           if (
@@ -1442,14 +2451,14 @@ export default function FlightsPageAuthenticated() {
             day.stay_details.city !== "user_location"
           ) {
             cityName = day.stay_details.city;
-            console.log(`    - City from stay_details: ${cityName}`);
+            // console.log(`    - City from stay_details: ${cityName}`);
           } else if (
             day.conveyance_details?.is_required &&
             day.conveyance_details?.to_city &&
             day.conveyance_details.to_city !== "user_location"
           ) {
             cityName = day.conveyance_details.to_city;
-            console.log(`    - City from conveyance to_city: ${cityName}`);
+            // console.log(`    - City from conveyance to_city: ${cityName}`);
           } else if (
             day.conveyance_details?.is_required &&
             day.conveyance_details?.from_city &&
@@ -1459,14 +2468,14 @@ export default function FlightsPageAuthenticated() {
             day.conveyance_details.to_city !== "user_location"
           ) {
             cityName = day.conveyance_details.to_city;
-            console.log(`    - City from same from/to city: ${cityName}`);
+            // console.log(`    - City from same from/to city: ${cityName}`);
           } else if (
             day.conveyance_details?.is_required &&
             day.conveyance_details?.from_city &&
             day.conveyance_details.from_city !== "user_location"
           ) {
             cityName = day.conveyance_details.from_city;
-            console.log(`    - City from conveyance from_city: ${cityName}`);
+            // console.log(`    - City from conveyance from_city: ${cityName}`);
           }
 
           if (cityName) {
@@ -1474,7 +2483,7 @@ export default function FlightsPageAuthenticated() {
 
             if (cityInfo) {
               cities.push(cityInfo);
-              console.log(`    - Added city info from map: ${cityName}`);
+              // console.log(`    - Added city info from map: ${cityName}`);
             } else {
               // Create a basic city info if not found in trip_route
               const basicCityInfo = {
@@ -1487,12 +2496,12 @@ export default function FlightsPageAuthenticated() {
                 place_id: "",
               };
               cities.push(basicCityInfo);
-              console.log(`    - Created basic city info for: ${cityName}`);
+              // console.log(`    - Created basic city info for: ${cityName}`);
             }
           } else {
-            console.log(
-              `    - No city found for day ${day.day_number} - checking activities`
-            );
+            // console.log(
+            //   `    - No city found for day ${day.day_number} - checking activities`
+            // );
           }
 
           // If no city found yet, try to infer from must_do_activities or trip_route
@@ -1553,7 +2562,10 @@ export default function FlightsPageAuthenticated() {
       console.log("  - best_time_to_visit:", transformed.best_time_to_visit);
       console.log("  - theme:", transformed.theme);
       console.log("  - themes:", transformed.themes);
-      console.log("  - trip_route length:", transformed.trip_route?.length || 0);
+      console.log(
+        "  - trip_route length:",
+        transformed.trip_route?.length || 0
+      );
       console.log(
         "  - day_wise_plan length:",
         transformed.day_wise_plan.length
@@ -1643,12 +2655,15 @@ export default function FlightsPageAuthenticated() {
                 testEndResponse={testEndResponse}
                 onTestEndResponseToggle={() => {
                   setTestEndResponse(!testEndResponse);
-                  console.log("🧪 Test End Response toggled:", !testEndResponse);
+                  console.log(
+                    "🧪 Test End Response toggled:",
+                    !testEndResponse
+                  );
                 }}
                 onFlashcardsToggle={() => {
                   if (showFlashcards) {
                     setShowFlashcards(false);
-                    setSelectedTrip(null);
+                    // Keep selectedTrip for other widgets that might need it
                     if (flashcardsRef.current) {
                       flashcardsRef.current.clearSelection();
                     }
@@ -1682,7 +2697,7 @@ export default function FlightsPageAuthenticated() {
                     setShowStays(false);
                     setShowItinerary(false);
                     setShowDateSelector(false);
-                    setSelectedTrip(null);
+                    // setSelectedTrip(null);
                     if (flashcardsRef.current) {
                       flashcardsRef.current.clearSelection();
                     }
@@ -1695,7 +2710,7 @@ export default function FlightsPageAuthenticated() {
                     setShowFlights(false);
                     setShowItinerary(false);
                     setShowDateSelector(false);
-                    setSelectedTrip(null);
+                    // setSelectedTrip(null);
                     if (flashcardsRef.current) {
                       flashcardsRef.current.clearSelection();
                     }
@@ -1708,7 +2723,7 @@ export default function FlightsPageAuthenticated() {
                     setShowFlights(false);
                     setShowStays(false);
                     setShowDateSelector(false);
-                    setSelectedTrip(null);
+                    // setSelectedTrip(null);
                     if (flashcardsRef.current) {
                       flashcardsRef.current.clearSelection();
                     }
@@ -1721,7 +2736,7 @@ export default function FlightsPageAuthenticated() {
                     setShowFlights(false);
                     setShowStays(false);
                     setShowItinerary(false);
-                    setSelectedTrip(null);
+                    // setSelectedTrip(null);
                     if (flashcardsRef.current) {
                       flashcardsRef.current.clearSelection();
                     }
@@ -1745,6 +2760,10 @@ export default function FlightsPageAuthenticated() {
                           }
                         }, 100);
                       }}
+                      itineraryResponse={itineraryData}
+                      onRequestNextDay={handleRequestNextDay}
+                      totalDays={selectedTrip?.day_wise_plan?.length || 1}
+                      isLoadingNextDay={isLoadingItinerary}
                     />
                   </div>
                 ) : showDateSelector ? (
@@ -1755,6 +2774,7 @@ export default function FlightsPageAuthenticated() {
                       onDateSelected={handleDateSelection}
                       userId={userId}
                       sessionId={sessionId}
+                      selectedTrip={selectedTrip}
                     />
                   </div>
                 ) : (
@@ -1765,14 +2785,18 @@ export default function FlightsPageAuthenticated() {
                       <TripLoader
                         showTripLoader={showTripLoader}
                         duration={4000}
-                        customMessages={conveyanceLoaderMessages.length > 0 ? conveyanceLoaderMessages : undefined}
+                        customMessages={
+                          conveyanceLoaderMessages.length > 0
+                            ? conveyanceLoaderMessages
+                            : undefined
+                        }
                       />
                       {/* End Response Loader */}
                       <EndResponseLoader
                         showEndLoader={showEndLoader}
                         duration={4000}
                       />
-                      
+
                       {/* Test Mode Indicator */}
                       {testEndResponse && (
                         <div className="absolute top-4 right-4 z-40 bg-orange-100 border border-orange-300 rounded-lg px-3 py-2 shadow-lg">
@@ -1793,6 +2817,8 @@ export default function FlightsPageAuthenticated() {
                                 onToggle={() => setShowFlights(false)}
                                 initialFromCity={conveyanceFromCity}
                                 initialToCity={conveyanceToCity}
+                                initialDepartureDate={initialDepartureDate}
+                                autoFillMode={autoFillMode}
                                 userId={userId}
                                 sessionId={sessionId}
                                 currentDayNumber={currentDayNumber}
@@ -1807,6 +2833,9 @@ export default function FlightsPageAuthenticated() {
                                 isVisible={showStays}
                                 onToggle={() => setShowStays(false)}
                                 initialCity={stayCity}
+                                initialCheckInDate={stayCheckInDate}
+                                initialCheckOutDate={stayCheckOutDate}
+                                autoFillMode={autoFillStaysMode}
                                 userId={userId}
                                 sessionId={sessionId}
                                 currentDayNumber={currentDayNumber}
@@ -1822,7 +2851,7 @@ export default function FlightsPageAuthenticated() {
                                 isVisible={showFlashcards}
                                 onToggle={() => {
                                   setShowFlashcards(false);
-                                  setSelectedTrip(null);
+                                  // setSelectedTrip(null);
                                 }}
                                 trips={
                                   tripSuggestions.length > 0
@@ -1836,39 +2865,60 @@ export default function FlightsPageAuthenticated() {
                           </div>
                         ) : messages.length === 0 ? (
                           <div className="flex flex-col items-center justify-center h-full min-h-[400px]">
-                            <div className="text-center mb-6">
-                              <div className="relative w-16 h-16 mx-auto mb-4">
-                                <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl rotate-6 animate-pulse opacity-20"></div>
-                                <div className="relative w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg">
-                                  <MdChat className="text-white text-3xl" />
+                            {isInitializingSession ? (
+                              // Loading state when session is being initialized
+                              <div className="text-center">
+                                <div className="relative w-16 h-16 mx-auto mb-4">
+                                  <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl animate-spin opacity-20"></div>
+                                  <div className="relative w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg">
+                                    <div className="w-8 h-8 border-3 border-white border-t-transparent rounded-full animate-spin"></div>
+                                  </div>
                                 </div>
+                                <h2 className="text-xl font-semibold text-gray-900 mb-2">
+                                  Initializing your session...
+                                </h2>
+                                <p className="text-gray-500 text-sm">
+                                  Please wait while we set things up
+                                </p>
                               </div>
-                              <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                                How can I help you today?
-                              </h2>
-                              <p className="text-gray-500 text-sm">
-                                Ask me anything about your travel plans or use
-                                the toggles above
-                              </p>
-                            </div>
+                            ) : (
+                              // Normal empty state
+                              <>
+                                <div className="text-center mb-6">
+                                  <div className="relative w-16 h-16 mx-auto mb-4">
+                                    <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl rotate-6 animate-pulse opacity-20"></div>
+                                    <div className="relative w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg">
+                                      <MdChat className="text-white text-3xl" />
+                                    </div>
+                                  </div>
+                                  <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                                    How can I help you today?
+                                  </h2>
+                                  <p className="text-gray-500 text-sm">
+                                    Ask me anything about your travel plans or
+                                    use the toggles above
+                                  </p>
+                                </div>
 
-                            {/* Nudges */}
-                            <div className="w-full max-w-2xl px-4">
-                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                {nudges.map((nudge, index) => (
-                                  <button
-                                    key={index}
-                                    onClick={() => setChatInputText(nudge)}
-                                    className="px-4 py-3 text-sm text-left text-gray-700 bg-white border border-gray-200 rounded-xl hover:border-blue-300 hover:bg-blue-50 hover:shadow-md transition-all group"
-                                  >
-                                    <span className="text-blue-600 group-hover:text-blue-700 mr-2">
-                                      →
-                                    </span>
-                                    {nudge}
-                                  </button>
-                                ))}
-                              </div>
-                            </div>
+                                {/* Nudges */}
+                                <div className="w-full max-w-2xl px-4">
+                                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                    {nudges.map((nudge, index) => (
+                                      <button
+                                        key={index}
+                                        onClick={() => setChatInputText(nudge)}
+                                        className="px-4 py-3 text-sm text-left text-gray-700 bg-white border border-gray-200 rounded-xl hover:border-blue-300 hover:bg-blue-50 hover:shadow-md transition-all group"
+                                      >
+                                        <span className="text-blue-600 group-hover:text-blue-700 mr-2">
+                                          →
+                                        </span>
+                                        {nudge}
+                                      </button>
+                                    ))}
+                                  </div>
+                                </div>
+                              </>
+                            )}
                           </div>
                         ) : (
                           <div className="space-y-6 pb-4">
@@ -2025,7 +3075,7 @@ export default function FlightsPageAuthenticated() {
                               </div>
                               <button
                                 onClick={() => {
-                                  setSelectedTrip(null);
+                                  // setSelectedTrip(null);
                                   if (flashcardsRef.current) {
                                     flashcardsRef.current.clearSelection();
                                   }
@@ -2047,16 +3097,20 @@ export default function FlightsPageAuthenticated() {
                           onSubmit={handleChatSubmit}
                           onKeyDown={handleKeyDown}
                           placeholder={
-                            testEndResponse
+                            isInitializingSession
+                              ? "Initializing session..."
+                              : testEndResponse
                               ? "🧪 TEST MODE: Next message will trigger date selector"
                               : selectedTrip && showFlashcards
                               ? "Click send to confirm trip selection"
                               : "Ask ItinerAI"
                           }
                           disabled={
-                            isLoading || (selectedTrip && showFlashcards)
+                            isInitializingSession ||
+                            isLoading ||
+                            (selectedTrip && showFlashcards)
                           }
-                          isLoading={isLoading}
+                          isLoading={isLoading || isInitializingSession}
                           theme="default"
                           inputType="textarea"
                           allowEmptySubmit={selectedTrip && showFlashcards}
@@ -2093,6 +3147,11 @@ export default function FlightsPageAuthenticated() {
           onClearChatHistory={handleClearChatHistory}
         />
       )}
+
+      {/* Pre-Fetch Test Trigger (Dummy Test Button) */}
+      {/* {activeSection === "chat" && (
+        <PreFetchTestTrigger />
+      )} */}
 
       {/* Onboarding Modal */}
       {currentUser && (

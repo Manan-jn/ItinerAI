@@ -1,5 +1,6 @@
 // Types for API requests and responses
 export interface ConveyanceRequest {
+  conveyance_type: 'flights' | 'trains';
   departure_city: string;
   arrival_city: string;
   from_date: string; // YYYY-MM-DD format
@@ -42,6 +43,35 @@ export interface FlightData {
   travel_class_options: string[];
 }
 
+export interface TrainData {
+  train_id: string;
+  train_name: string;
+  train_number: string;
+  departure_station: {
+    code: string;
+    name: string;
+    city: string;
+  };
+  arrival_station: {
+    code: string;
+    name: string;
+    city: string;
+  };
+  departure_date: string;
+  arrival_date: string;
+  departure_time: string;
+  arrival_time: string;
+  duration: string;
+  price: {
+    '1AC': number | null;
+    '2AC': number | null;
+    '3AC': number | null;
+    'SL': number | null;
+  };
+  currency: string;
+  available_classes: string[];
+}
+
 export interface StayData {
   stay_id: string;
   property_name: string;
@@ -61,6 +91,7 @@ export interface StayData {
 export interface DatePriceInfo {
   date: string; // YYYY-MM-DD
   cheapestFlightPrice: number | null;
+  cheapestTrainPrice: number | null;
   cheapestStayPrice: number | null;
 }
 
@@ -218,6 +249,31 @@ export function findCheapestFlightPriceForDate(flights: FlightData[], date: stri
   return prices.length > 0 ? Math.min(...prices) : null;
 }
 
+export function findCheapestTrainPriceForDate(trains: TrainData[], date: string, trainClass: string = 'SL'): number | null {
+  const trainsForDate = trains.filter(train => train.departure_date === date);
+  
+  if (trainsForDate.length === 0) return null;
+  
+  // Map train class names to API keys
+  const classMapping: { [key: string]: keyof TrainData['price'] } = {
+    '1ac': '1AC',
+    '2ac': '2AC',
+    '3ac': '3AC',
+    'sl': 'SL',
+    'sleeper': 'SL'
+  };
+  
+  const classKey = classMapping[trainClass.toLowerCase()] || 'SL';
+  
+  const prices = trainsForDate
+    .map(train => train.price[classKey])
+    .filter(price => price !== null && price !== undefined) as number[];
+  
+  console.log(`Found ${prices.length} train prices for date ${date}, class ${trainClass}:`, prices);
+  
+  return prices.length > 0 ? Math.min(...prices) : null;
+}
+
 export function findCheapestStayPriceForDate(stays: StayData[], date: string): number | null {
   const staysForDate = stays.filter(stay => {
     const availableFrom = new Date(stay.available_from_date);
@@ -238,12 +294,14 @@ export function findCheapestStayPriceForDate(stays: StayData[], date: string): n
 
 export function processPriceDataForMonth(
   flights: FlightData[], 
+  trains: TrainData[],
   stays: StayData[], 
   year: number, 
   month: number,
-  flightClass: string = 'economy'
+  flightClass: string = 'economy',
+  trainClass: string = 'SL'
 ): DatePriceInfo[] {
-  console.log(`Processing price data for ${year}-${month}, flights: ${flights.length}, stays: ${stays.length}, class: ${flightClass}`);
+  console.log(`Processing price data for ${year}-${month}, flights: ${flights.length}, trains: ${trains.length}, stays: ${stays.length}, flightClass: ${flightClass}, trainClass: ${trainClass}`);
   
   const lastDay = new Date(year, month + 1, 0).getDate();
   const priceData: DatePriceInfo[] = [];
@@ -252,11 +310,13 @@ export function processPriceDataForMonth(
     const date = new Date(year, month, day).toISOString().split('T')[0];
     
     const flightPrice = findCheapestFlightPriceForDate(flights, date, flightClass);
+    const trainPrice = findCheapestTrainPriceForDate(trains, date, trainClass);
     const stayPrice = findCheapestStayPriceForDate(stays, date);
     
     priceData.push({
       date,
       cheapestFlightPrice: flightPrice,
+      cheapestTrainPrice: trainPrice,
       cheapestStayPrice: stayPrice,
     });
   }

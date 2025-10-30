@@ -17,6 +17,8 @@
 /coverage
 
 WARP.md
+*.md
+*.json
 
 # next.js
 /.next/

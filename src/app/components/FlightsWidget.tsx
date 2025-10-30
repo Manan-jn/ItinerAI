@@ -11,12 +11,15 @@ import {
   FiCheck,
 } from "react-icons/fi";
 import { MdFlight, MdTrain, MdDirectionsBus } from "react-icons/md";
+import { getConveyanceDataForWidget, formatConveyanceForDisplay } from "../utils/preFetchIntegration";
 
 interface FlightsWidgetProps {
   isVisible: boolean;
   onToggle: () => void;
   initialFromCity?: string;
   initialToCity?: string;
+  initialDepartureDate?: string; // NEW: Initial departure date in YYYY-MM-DD format
+  autoFillMode?: boolean; // NEW: If true, fields are auto-filled and disabled
   onContinue?: (selectedConveyanceData?: TransportOption) => void;
   userId?: string;
   sessionId?: string;
@@ -39,10 +42,12 @@ function CitySelector({
   value,
   onChange,
   label,
+  disabled,
 }: {
   value: string;
   onChange: (city: string) => void;
   label: string;
+  disabled?: boolean; // NEW: Disable the selector
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -66,8 +71,11 @@ function CitySelector({
   return (
     <div className="relative" ref={dropdownRef}>
       <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full text-left p-3 bg-white/50 backdrop-blur-sm rounded-xl hover:bg-white/70 transition-all border border-white/20"
+        onClick={() => !disabled && setIsOpen(!isOpen)}
+        disabled={disabled}
+        className={`w-full text-left p-3 bg-white/50 backdrop-blur-sm rounded-xl transition-all border border-white/20 ${
+          disabled ? "cursor-not-allowed opacity-60" : "hover:bg-white/70"
+        }`}
       >
         <div className="flex items-center gap-2">
           <MdFlight className="text-gray-500 flex-shrink-0" size={14} />
@@ -90,7 +98,7 @@ function CitySelector({
         </div>
       </button>
 
-      {isOpen && (
+      {isOpen && !disabled && (
         <div className="absolute top-full left-0 right-0 mt-2 bg-white/95 backdrop-blur-md rounded-xl shadow-2xl z-[100] border border-white/40">
           <div className="p-2 max-h-[250px] overflow-y-auto">
             {AVAILABLE_CITIES.map((city) => (
@@ -124,10 +132,12 @@ function DatePicker({
   value,
   onChange,
   placeholder,
+  disabled,
 }: {
   value: string;
   onChange: (date: string) => void;
   placeholder: string;
+  disabled?: boolean; // NEW: Disable the date picker
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(value);
@@ -210,8 +220,11 @@ function DatePicker({
   return (
     <div className="relative" ref={datePickerRef}>
       <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full text-left p-3 bg-white/50 backdrop-blur-sm rounded-xl hover:bg-white/70 transition-all border border-white/20"
+        onClick={() => !disabled && setIsOpen(!isOpen)}
+        disabled={disabled}
+        className={`w-full text-left p-3 bg-white/50 backdrop-blur-sm rounded-xl transition-all border border-white/20 ${
+          disabled ? "cursor-not-allowed opacity-60" : "hover:bg-white/70"
+        }`}
       >
         <div className="flex items-center gap-2">
           <FiCalendar className="text-gray-500 flex-shrink-0" size={14} />
@@ -238,7 +251,7 @@ function DatePicker({
         </div>
       </button>
 
-      {isOpen && (
+      {isOpen && !disabled && (
         <div className="absolute top-full left-auto right-0 mt-2 bg-white/95 backdrop-blur-md rounded-xl shadow-2xl z-[100] w-[280px] border border-white/40">
           <div className="p-3">
             <div className="flex items-center justify-between mb-3">
@@ -551,6 +564,72 @@ interface APIConveyanceResponse {
   };
 }
 
+// Utility API Response Types (from flights_date.json and trains_data.json)
+interface UtilityFlightData {
+  flight_id: string;
+  airline: string;
+  flight_number: string;
+  departure_airport: {
+    code: string;
+    name: string;
+    city: string;
+    country: string;
+  };
+  arrival_airport: {
+    code: string;
+    name: string;
+    city: string;
+    country: string;
+  };
+  departure_date: string;
+  arrival_date: string;
+  departure_time: string;
+  arrival_time: string;
+  duration: string;
+  price: {
+    economy: number;
+    business: number;
+    first: number | null;
+  };
+  currency: string;
+  travel_class_options: string[];
+}
+
+interface UtilityTrainData {
+  train_id: string;
+  operator: string;
+  train_number: string;
+  train_name: string;
+  departure_station: {
+    code: string;
+    name: string;
+    city: string;
+    country: string;
+  };
+  arrival_station: {
+    code: string;
+    name: string;
+    city: string;
+    country: string;
+  };
+  departure_date: string;
+  arrival_date: string;
+  departure_time: string;
+  arrival_time: string;
+  duration: string;
+  price: {
+    "1AC": number | null;
+    "2AC": number | null;
+    "3AC": number | null;
+    SL: number | null;
+    sleeper: number | null;
+    ac_chair: number | null;
+    executive: number | null;
+  };
+  currency: string;
+  travel_class_options: string[];
+}
+
 // Sample data for demonstration
 const sampleFlights: TransportOption[] = [
   {
@@ -689,6 +768,92 @@ const sampleTrains: TransportOption[] = [
     price: 1100,
   },
 ];
+
+// Parse utility flights data
+const parseUtilityFlightData = (flights: UtilityFlightData[]): TransportOption[] => {
+  return flights.map((flight) => {
+    // Get price based on travel class (default to economy)
+    const price = flight.price.economy || flight.price.business || flight.price.first || 0;
+
+    // Format date
+    const formatDate = (dateStr: string) => {
+      try {
+        const date = new Date(dateStr);
+        return date.toLocaleDateString("en-US", {
+          day: "numeric",
+          month: "short",
+          year: "numeric",
+        });
+      } catch {
+        return dateStr;
+      }
+    };
+
+    // Format time (remove +1 suffix if present)
+    const formatTime = (timeStr: string) => {
+      return timeStr.replace(/\+\d+$/, "");
+    };
+
+    return {
+      id: flight.flight_id,
+      number: flight.flight_number,
+      operator: flight.airline,
+      departureDate: formatDate(flight.departure_date),
+      arrivalDate: formatDate(flight.arrival_date),
+      departureTime: formatTime(flight.departure_time),
+      arrivalTime: formatTime(flight.arrival_time),
+      duration: flight.duration,
+      price: price,
+    };
+  });
+};
+
+// Parse utility trains data
+const parseUtilityTrainData = (trains: UtilityTrainData[]): TransportOption[] => {
+  return trains.map((train) => {
+    // Get price based on available class (priority: 3AC > 2AC > SL > 1AC)
+    const price =
+      train.price["3AC"] ||
+      train.price["2AC"] ||
+      train.price.SL ||
+      train.price["1AC"] ||
+      train.price.sleeper ||
+      train.price.ac_chair ||
+      train.price.executive ||
+      0;
+
+    // Format date
+    const formatDate = (dateStr: string) => {
+      try {
+        const date = new Date(dateStr);
+        return date.toLocaleDateString("en-US", {
+          day: "numeric",
+          month: "short",
+          year: "numeric",
+        });
+      } catch {
+        return dateStr;
+      }
+    };
+
+    // Format time (remove +1, +2 suffix if present)
+    const formatTime = (timeStr: string) => {
+      return timeStr.replace(/\+\d+$/, "");
+    };
+
+    return {
+      id: train.train_id,
+      number: train.train_number,
+      operator: `${train.train_name} (${train.operator})`,
+      departureDate: formatDate(train.departure_date),
+      arrivalDate: formatDate(train.arrival_date),
+      departureTime: formatTime(train.departure_time),
+      arrivalTime: formatTime(train.arrival_time),
+      duration: train.duration,
+      price: price,
+    };
+  });
+};
 
 const sampleBuses: TransportOption[] = [
   {
@@ -1306,6 +1471,8 @@ export default function FlightsWidget({
   onToggle,
   initialFromCity,
   initialToCity,
+  initialDepartureDate,
+  autoFillMode = false,
   onContinue,
   userId,
   sessionId,
@@ -1326,6 +1493,13 @@ export default function FlightsWidget({
     trains: [],
     buses: [],
   });
+  const [utilityResults, setUtilityResults] = useState<SearchResultsData>({
+    flights: [],
+    trains: [],
+    buses: [],
+  });
+  const [isLoadingUtility, setIsLoadingUtility] = useState(false);
+  const [isUtilityComplete, setIsUtilityComplete] = useState(false);
   const [fromCity, setFromCity] = useState(initialFromCity || "New Delhi");
   const [toCity, setToCity] = useState(initialToCity || "Mumbai");
   const [bookedOption, setBookedOption] = useState<string | null>(null);
@@ -1352,6 +1526,30 @@ export default function FlightsWidget({
       console.log("🛫 FlightsWidget is now visible. Current cities - From:", from, "To:", to);
     }
   }, [isVisible, from, to]);
+
+  // Auto-fill departure date when coming from date selector route
+  useEffect(() => {
+    if (isVisible && autoFillMode && initialDepartureDate && !departureDate) {
+      console.log("🚀 Auto-fill mode enabled - setting departure date...");
+      console.log("📅 Setting departure date to:", initialDepartureDate);
+      setDepartureDate(initialDepartureDate);
+    }
+  }, [isVisible, autoFillMode, initialDepartureDate, departureDate]);
+
+  // Auto-trigger search when all fields are ready in auto-fill mode
+  useEffect(() => {
+    if (isVisible && autoFillMode && from && to && departureDate && !showResults) {
+      console.log("✅ All fields ready for auto-search:", { from, to, departureDate });
+      
+      // Trigger search after a short delay
+      const timer = setTimeout(async () => {
+        console.log("🔍 Auto-triggering search with pre-filled data...");
+        await handleSearch();
+      }, 500);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [isVisible, autoFillMode, from, to, departureDate, showResults]);
 
   // Helper function to format date for display
   const formatDateForMessage = (dateStr: string) => {
@@ -1453,80 +1651,182 @@ export default function FlightsWidget({
   };
 
   const handleSearch = async () => {
+    console.log("🔍 handleSearch called - Current state:", { from, to, departureDate, fromCity, toCity });
+    
     if (!from || !to || !departureDate) {
+      console.error("❌ Missing required fields:", { from, to, departureDate });
       alert("Please fill in all required fields: From, To, and Departure Date");
       return;
     }
 
+    console.log("✅ All fields present, proceeding with search");
     setIsLoading(true);
     setIsLoadingComplete(false);
+    setIsLoadingUtility(true);
+    setIsUtilityComplete(false);
     setShowResults(false);
 
     try {
-      // Construct the message
-      const formattedDate = formatDateForMessage(departureDate);
-      const message = `Give me all the travel options from ${from} to ${to} on ${formattedDate}`;
+      // Prepare date range (from_date and to_date as same date for single day search)
+      const dateStr = departureDate; // Already in YYYY-MM-DD format
 
-      // Make API call through Next.js proxy
-      const response = await fetch("/api/conveyance", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user_id: userId || "user123",
-          session_id: sessionId || "session456",
-          message: message,
-        }),
+      console.log("🔍 Fetching conveyance data for:", {
+        from,
+        to,
+        date: dateStr,
+        dayNumber: currentDayNumber,
       });
 
-      if (!response.ok) {
-        const errorData = await response
-          .json()
-          .catch(() => ({ error: "Unknown error" }));
-        console.error("API Error:", errorData);
-        throw new Error(
-          `API error: ${response.status} - ${
-            errorData.error || "Unknown error"
-          }`
-        );
+      // Check for pre-fetched data if userId is available
+      if (userId) {
+        console.log(`🔍 Checking for pre-fetched data for route: ${from} → ${to} on ${dateStr}...`);
+        const cachedData = await getConveyanceDataForWidget(userId, from, to, dateStr);
+        
+        if (cachedData) {
+          console.log("✅ Found pre-fetched data! Using cached results.");
+          
+          // Parse pre-fetched data
+          const aiFlights = parseFlightData(cachedData.aiFlights);
+          const aiTrains = parseTrainData(cachedData.aiTrains);
+          const utilFlights = parseUtilityFlightData(cachedData.utilityFlights);
+          const utilTrains = parseUtilityTrainData(cachedData.utilityTrains);
+          
+          // Set results from pre-fetched data
+          setSearchResults({ flights: aiFlights, trains: aiTrains, buses: [] });
+          setUtilityResults({ flights: utilFlights, trains: utilTrains, buses: [] });
+          setShowResults(true);
+          setIsLoadingComplete(true);
+          setIsUtilityComplete(true);
+          setIsLoading(false);
+          setIsLoadingUtility(false);
+          
+          console.log("✅ Pre-fetched data loaded:", {
+            aiFlights: aiFlights.length,
+            aiTrains: aiTrains.length,
+            utilFlights: utilFlights.length,
+            utilTrains: utilTrains.length,
+            source: cachedData.isCached ? "cached" : "fresh",
+          });
+          
+          return; // Exit early, no need to make API calls
+        } else {
+          console.log("ℹ️ No pre-fetched data found, proceeding with API calls...");
+        }
       }
 
-      const data: APIConveyanceResponse = await response.json();
-      console.log("Received data:", data);
+      // Make parallel API calls to utility/conveyance for flights and trains
+      const [flightsResponse, trainsResponse, aiResponse] = await Promise.allSettled([
+        // Utility API call for flights
+        fetch("/api/utility/conveyance", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            conveyance_type: "flights",
+            departure_city: from,
+            arrival_city: to,
+            from_date: dateStr,
+            to_date: dateStr,
+          }),
+        }),
+        // Utility API call for trains
+        fetch("/api/utility/conveyance", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            conveyance_type: "trains",
+            departure_city: from,
+            arrival_city: to,
+            from_date: dateStr,
+            to_date: dateStr,
+          }),
+        }),
+        // AI recommendations call (existing)
+        fetch("/api/conveyance", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            user_id: userId || "user123",
+            session_id: sessionId || "session456",
+            message: `Give me all the travel options from ${from} to ${to} on ${formatDateForMessage(departureDate)}`,
+          }),
+        }),
+      ]);
 
-      // Validate response structure
-      if (
-        !data.message ||
-        !data.message.conveyances ||
-        !data.message.conveyances.conveyance_details
-      ) {
-        throw new Error("Invalid response structure from backend");
+      // Separate AI results from utility results
+      let aiFlights: TransportOption[] = [];
+      let aiTrains: TransportOption[] = [];
+      let utilFlights: TransportOption[] = [];
+      let utilTrains: TransportOption[] = [];
+
+      // Parse flights from utility API
+      if (flightsResponse.status === "fulfilled" && flightsResponse.value.ok) {
+        const flightsData = await flightsResponse.value.json();
+        if (Array.isArray(flightsData)) {
+          utilFlights = parseUtilityFlightData(flightsData);
+        }
       }
 
-      // Parse the response
-      const conveyanceDetails = data.message.conveyances.conveyance_details;
+      // Parse trains from utility API
+      if (trainsResponse.status === "fulfilled" && trainsResponse.value.ok) {
+        const trainsData = await trainsResponse.value.json();
+        if (Array.isArray(trainsData)) {
+          utilTrains = parseUtilityTrainData(trainsData);
+        }
+      }
 
-      const parsedResults: SearchResultsData = {
-        flights: conveyanceDetails.flights
-          ? parseFlightData(conveyanceDetails.flights)
-          : [],
-        trains: conveyanceDetails.trains
-          ? parseTrainData(conveyanceDetails.trains)
-          : [],
-        buses: [], // Commented out: buses functionality disabled
-        // buses: sampleBuses, // API doesn't provide buses yet, use sample data
+      // Parse AI recommendations
+      if (aiResponse.status === "fulfilled" && aiResponse.value.ok) {
+        const aiData: APIConveyanceResponse = await aiResponse.value.json();
+        if (
+          aiData.message &&
+          aiData.message.conveyances &&
+          aiData.message.conveyances.conveyance_details
+        ) {
+          const conveyanceDetails = aiData.message.conveyances.conveyance_details;
+          if (conveyanceDetails.flights) {
+            aiFlights = parseFlightData(conveyanceDetails.flights);
+          }
+          if (conveyanceDetails.trains) {
+            aiTrains = parseTrainData(conveyanceDetails.trains);
+          }
+        }
+      }
+
+      // Set AI results
+      const aiResults: SearchResultsData = {
+        flights: aiFlights,
+        trains: aiTrains,
+        buses: [],
       };
 
-      console.log("Parsed results:", parsedResults);
-      setSearchResults(parsedResults);
+      // Set utility results
+      const utilResults: SearchResultsData = {
+        flights: utilFlights,
+        trains: utilTrains,
+        buses: [],
+      };
+
+      console.log("✅ AI results:", {
+        flights: aiResults.flights.length,
+        trains: aiResults.trains.length,
+      });
+
+      console.log("✅ Utility results:", {
+        flights: utilResults.flights.length,
+        trains: utilResults.trains.length,
+      });
+
+      setSearchResults(aiResults);
+      setUtilityResults(utilResults);
       setShowResults(true);
       setIsLoadingComplete(true);
+      setIsUtilityComplete(true);
     } catch (error) {
-      console.error("Error fetching transport options:", error);
+      console.error("❌ Error fetching transport options:", error);
       alert("Failed to fetch transport options. Please try again.");
     } finally {
       setIsLoading(false);
+      setIsLoadingUtility(false);
     }
   };
 
@@ -1543,11 +1843,31 @@ export default function FlightsWidget({
     }
   };
 
+  const getFilteredUtilityResults = () => {
+    switch (selectedConveyance) {
+      case "Flight":
+        return utilityResults.flights;
+      case "Train":
+        return utilityResults.trains;
+      case "Bus":
+        return utilityResults.buses;
+      default:
+        return [];
+    }
+  };
+
   const handleBooking = (optionId: string) => {
     setBookedOption(optionId);
     
-    // Find the selected option from all results
-    const allResults = [...searchResults.flights, ...searchResults.trains, ...searchResults.buses];
+    // Find the selected option from all results (both AI and utility)
+    const allResults = [
+      ...searchResults.flights, 
+      ...searchResults.trains, 
+      ...searchResults.buses,
+      ...utilityResults.flights,
+      ...utilityResults.trains,
+      ...utilityResults.buses
+    ];
     const selectedOption = allResults.find(opt => opt.id === optionId);
     
     if (selectedOption) {
@@ -1586,7 +1906,7 @@ export default function FlightsWidget({
               <label className="block text-[10px] text-gray-600 mb-2 uppercase font-semibold tracking-wider">
                 FROM
               </label>
-              <CitySelector value={from} onChange={setFrom} label="From" />
+              <CitySelector value={from} onChange={setFrom} label="From" disabled={autoFillMode} />
             </div>
 
             {/* To */}
@@ -1594,7 +1914,7 @@ export default function FlightsWidget({
               <label className="block text-[10px] text-gray-600 mb-2 uppercase font-semibold tracking-wider">
                 TO
               </label>
-              <CitySelector value={to} onChange={setTo} label="To" />
+              <CitySelector value={to} onChange={setTo} label="To" disabled={autoFillMode} />
             </div>
 
             {/* Departure Date */}
@@ -1606,6 +1926,7 @@ export default function FlightsWidget({
                 value={departureDate}
                 onChange={setDepartureDate}
                 placeholder="Select date"
+                disabled={autoFillMode}
               />
             </div>
 
@@ -1626,7 +1947,10 @@ export default function FlightsWidget({
             {/* Smart Search Button */}
             <button
               onClick={handleSearch}
-              className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-semibold text-sm px-6 py-2.5 rounded-xl transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2 border-none transform hover:scale-105"
+              disabled={autoFillMode}
+              className={`bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold text-sm px-6 py-2.5 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 border-none ${
+                autoFillMode ? "cursor-not-allowed opacity-60" : "hover:from-blue-600 hover:to-indigo-700 hover:shadow-xl transform hover:scale-105"
+              }`}
             >
               <svg
                 className="w-5 h-5"
@@ -1802,23 +2126,70 @@ export default function FlightsWidget({
               </div>
             </div>
 
-            {/* Other Travel Options Box - Empty for now */}
+            {/* Other Travel Options Box - Utility API Results */}
             {showResults && (
               <div className="bg-white/80 backdrop-blur-md rounded-2xl shadow-xl border border-gray-200/40 overflow-hidden">
                 {/* Header */}
                 <div className="bg-gradient-to-r from-orange-500/10 to-pink-500/10 p-3 border-b border-gray-200/30">
-                  <span className="text-sm font-semibold text-gray-800">
-                    Other Travel Options
-                  </span>
+                  <div className="flex items-center gap-3">
+                    <div
+                      className={`w-6 h-6 rounded-full flex items-center justify-center ${
+                        isUtilityComplete
+                          ? "bg-green-500"
+                          : isLoadingUtility
+                          ? "bg-orange-500"
+                          : "bg-gray-300"
+                      }`}
+                    >
+                      {isUtilityComplete ? (
+                        <FiCheck className="text-white" size={12} />
+                      ) : isLoadingUtility ? (
+                        <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      ) : (
+                        <div className="w-2 h-2 bg-white rounded-full"></div>
+                      )}
+                    </div>
+                    <span className="text-sm font-semibold text-gray-800">
+                      Other Travel Options
+                    </span>
+                  </div>
                 </div>
 
-                {/* Content - Empty for now */}
+                {/* Content */}
                 <div className="p-3 max-h-[500px] overflow-y-auto">
-                  <div className="text-center py-12 text-gray-500">
-                    <p className="text-sm">
-                      Additional travel options will appear here
-                    </p>
-                  </div>
+                  {isLoadingUtility ? (
+                    <div className="flex flex-col items-center justify-center py-12">
+                      <div className="w-10 h-10 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
+                      <p className="mt-3 text-sm text-gray-600 font-medium">
+                        Finding best options...
+                      </p>
+                    </div>
+                  ) : getFilteredUtilityResults().length > 0 ? (
+                    <div className="space-y-3">
+                      {getFilteredUtilityResults().map((option) => (
+                        <TransportCard
+                          key={option.id}
+                          option={option}
+                          mode={
+                            selectedConveyance.toLowerCase() as
+                              | "flight"
+                              | "train"
+                              | "bus"
+                          }
+                          fromCity={from}
+                          toCity={to}
+                          isBooked={bookedOption === option.id}
+                          onBook={handleBooking}
+                        />
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-center py-12 text-gray-500">
+                      <p className="text-sm">
+                        No additional {selectedConveyance.toLowerCase()}s available
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
             )}

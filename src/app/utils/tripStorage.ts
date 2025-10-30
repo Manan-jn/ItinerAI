@@ -113,22 +113,23 @@ export async function storeSelectedDate(
     const userDocSnapshot = await getDoc(userDocRef);
     const existingData = userDocSnapshot.exists() ? userDocSnapshot.data() : {};
 
-    const dateISOString = selectedDate.toISOString();
+    // Convert date to strict YYYY-MM-DD format
+    const dateString = selectedDate.toISOString().split("T")[0];
 
     await setDoc(
       userDocRef,
       {
         ...existingData,
-        trip_date: dateISOString,
+        trip_date: dateString,
         date_updated_at: new Date().toISOString(),
       },
       { merge: true }
     );
 
-    console.log("Date stored successfully in Firestore");
+    console.log("Date stored successfully in Firestore as:", dateString);
 
     // Update memory API with the selected date
-    await updateMemoryWithDate(userId, sessionId, dateISOString);
+    await updateMemoryWithDate(userId, sessionId, dateString);
   } catch (error) {
     console.error("Error storing selected date:", error);
     throw error;

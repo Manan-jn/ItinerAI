@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { FiChevronLeft, FiChevronRight, FiChevronDown } from "react-icons/fi";
-import { MdFlight, MdHotel } from "react-icons/md";
+import { MdFlight, MdHotel, MdTrain } from "react-icons/md";
 import ItinerAIChatBox from "./ItinerAIChatBox";
 import { storeSelectedDate } from "../utils/tripStorage";
 import {
@@ -14,6 +14,7 @@ import {
   hasValidStayFilters,
   DatePriceInfo,
   FlightData,
+  TrainData,
   StayData,
 } from "../utils/priceApi";
 
@@ -23,11 +24,13 @@ interface DateSelectorWidgetProps {
   onDateSelected?: (date: Date) => void;
   userId?: string;
   sessionId?: string;
+  selectedTrip?: any; // NEW - Trip data to extract conveyance details
 }
 
 interface DateInfo {
   date: Date;
   flightPrice: number | null;
+  trainPrice: number | null;
   hotelPrice: number | null;
   isToday?: boolean;
   isSelected?: boolean;
@@ -89,6 +92,7 @@ export default function DateSelectorWidget({
   onDateSelected,
   userId,
   sessionId,
+  selectedTrip, // NEW
 }: DateSelectorWidgetProps) {
   const [chatInput, setChatInput] = useState("");
   // Set to December 2025 to match sample data
@@ -100,11 +104,147 @@ export default function DateSelectorWidget({
 
   // Price data states
   const [flightData, setFlightData] = useState<FlightData[]>([]);
+  const [trainData, setTrainData] = useState<TrainData[]>([]);
   const [stayData, setStayData] = useState<StayData[]>([]);
   const [priceData, setPriceData] = useState<DatePriceInfo[]>([]);
   const [isLoadingPrices, setIsLoadingPrices] = useState(false);
   const [lastFetchedMonth, setLastFetchedMonth] = useState<string | null>(null);
   const [apiError, setApiError] = useState<string | null>(null);
+
+  // Conveyance type selection states
+  const [selectedConveyanceTypes, setSelectedConveyanceTypes] = useState<Set<'flights' | 'trains'>>(new Set(['flights']));
+
+  // Filter states - Set defaults to empty for auto-fill
+  const [fromCity, setFromCity] = useState("");
+  const [toCity, setToCity] = useState("");
+  const [isAutoFilled, setIsAutoFilled] = useState(false); // Track if fields are auto-filled
+  const [isLoadingMemory, setIsLoadingMemory] = useState(false); // Loading state for memory fetch
+  const [flightClass, setFlightClass] = useState("Economy");
+  const [trainClass, setTrainClass] = useState("SL");
+  const [hotelRating, setHotelRating] = useState("3 Star");
+  const [showFromDropdown, setShowFromDropdown] = useState(false);
+  const [showToDropdown, setShowToDropdown] = useState(false);
+  const [showFlightClassDropdown, setShowFlightClassDropdown] = useState(false);
+  const [showTrainClassDropdown, setShowTrainClassDropdown] = useState(false);
+  const [showHotelRatingDropdown, setShowHotelRatingDropdown] = useState(false);
+
+  // Fetch memory data and pre-fill fields when widget becomes visible
+  useEffect(() => {
+    const fetchMemoryAndPrefill = async () => {
+      if (!isVisible || !userId || !sessionId || !selectedTrip) {
+        console.log("📋 DateSelector: Missing required props for auto-fill", {
+          isVisible,
+          userId: !!userId,
+          sessionId: !!sessionId,
+          selectedTrip: !!selectedTrip
+        });
+        return;
+      }
+
+      // Skip if already auto-filled
+      if (isAutoFilled) {
+        console.log("📋 DateSelector: Already auto-filled, skipping");
+        return;
+      }
+
+      console.log("📋 DateSelector: Starting memory data fetch for auto-fill");
+      setIsLoadingMemory(true);
+
+      try {
+        // Fetch memory data to get source_point
+        console.log("📋 DateSelector: Fetching memory data with:", { userId, sessionId });
+        const memoryResponse = await fetch("/api/memory/get", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            user_id: userId,
+            session_id: sessionId,
+          }),
+        });
+
+        let extractedFromCity = "";
+        let extractedToCity = "";
+
+        if (memoryResponse.ok) {
+          const memoryData = await memoryResponse.json();
+          console.log("✅ Memory data received:", memoryData);
+
+          // Extract source_point place_name
+          if (memoryData.source_point && memoryData.source_point.place_name) {
+            extractedFromCity = memoryData.source_point.place_name;
+            console.log("✅ Extracted from_city from source_point:", extractedFromCity);
+          } else {
+            console.log("⚠️ No source_point.place_name found in memory data");
+          }
+        } else {
+          console.warn("⚠️ Failed to fetch memory data, status:", memoryResponse.status);
+          const errorText = await memoryResponse.text();
+          console.warn("⚠️ Error response:", errorText);
+        }
+
+        // Extract to_city from Day 1 conveyance_details in selectedTrip
+        console.log("📋 DateSelector: Extracting to_city from selectedTrip:", selectedTrip);
+        if (selectedTrip.day_wise_plan && Array.isArray(selectedTrip.day_wise_plan)) {
+          const day1 = selectedTrip.day_wise_plan.find((day: any) => day.day_number === 1);
+          console.log("📋 DateSelector: Found Day 1:", day1);
+          
+          if (day1 && day1.conveyance_details && day1.conveyance_details.to_city) {
+            extractedToCity = day1.conveyance_details.to_city;
+            console.log("✅ Extracted to_city from Day 1:", extractedToCity);
+
+            // Handle city name formatting
+            if (extractedToCity) {
+              extractedToCity = extractedToCity.charAt(0).toUpperCase() + extractedToCity.slice(1).toLowerCase();
+              if (extractedToCity === "Delhi") extractedToCity = "New Delhi";
+              console.log("✅ Formatted to_city:", extractedToCity);
+            }
+          } else {
+            console.log("⚠️ No conveyance_details.to_city found in Day 1");
+          }
+        } else {
+          console.log("⚠️ No day_wise_plan found in selectedTrip");
+        }
+
+        // Handle city name formatting for from_city
+        if (extractedFromCity) {
+          extractedFromCity = extractedFromCity.charAt(0).toUpperCase() + extractedFromCity.slice(1).toLowerCase();
+          if (extractedFromCity === "Delhi") extractedFromCity = "New Delhi";
+          console.log("✅ Formatted from_city:", extractedFromCity);
+        }
+
+        // Set the extracted values
+        if (extractedFromCity) {
+          setFromCity(extractedFromCity);
+          console.log("📍 Set from_city to:", extractedFromCity);
+        }
+
+        if (extractedToCity) {
+          setToCity(extractedToCity);
+          console.log("📍 Set to_city to:", extractedToCity);
+        }
+
+        // Mark as auto-filled if both cities were extracted
+        if (extractedFromCity && extractedToCity) {
+          setIsAutoFilled(true);
+          console.log("✅ DateSelector fields auto-filled and locked");
+        } else {
+          console.log("⚠️ Could not auto-fill both cities:", {
+            fromCity: extractedFromCity,
+            toCity: extractedToCity
+          });
+        }
+
+      } catch (error) {
+        console.error("❌ Error fetching memory data:", error);
+      } finally {
+        setIsLoadingMemory(false);
+      }
+    };
+
+    fetchMemoryAndPrefill();
+  }, [isVisible, userId, sessionId, selectedTrip]); // Removed isAutoFilled from dependencies
 
   const handleChatSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -114,16 +254,6 @@ export default function DateSelectorWidget({
     }
   };
   const preferredTimeScrollRef = useRef<HTMLDivElement>(null);
-
-  // Filter states - Set defaults to match sample data for testing
-  const [fromCity, setFromCity] = useState("Leh");
-  const [toCity, setToCity] = useState("Mumbai");
-  const [flightClass, setFlightClass] = useState("Economy");
-  const [hotelRating, setHotelRating] = useState("3 Star");
-  const [showFromDropdown, setShowFromDropdown] = useState(false);
-  const [showToDropdown, setShowToDropdown] = useState(false);
-  const [showFlightClassDropdown, setShowFlightClassDropdown] = useState(false);
-  const [showHotelRatingDropdown, setShowHotelRatingDropdown] = useState(false);
 
   // Cities based on available data
   const cities = [
@@ -145,6 +275,7 @@ export default function DateSelectorWidget({
     "Business",
     "First Class",
   ];
+  const trainClasses = ["1AC", "2AC", "3AC", "SL"];
   const hotelRatings = ["Budget", "3 Star", "4 Star", "5 Star", "Luxury"];
 
   // Generate calendar dates for current month with API-fetched prices
@@ -171,6 +302,7 @@ export default function DateSelectorWidget({
       dates.push({
         date,
         flightPrice: priceInfo?.cheapestFlightPrice || null,
+        trainPrice: priceInfo?.cheapestTrainPrice || null,
         hotelPrice: priceInfo?.cheapestStayPrice || null,
         isToday: isToday(date),
         isSelected: selectedDate?.toDateString() === date.toDateString(),
@@ -221,10 +353,26 @@ export default function DateSelectorWidget({
       setApiError(null);
       const promises = [];
 
-      // Fetch flight data if filters are valid
-      if (hasValidFlightFilters(fromCity, toCity)) {
+      // Fetch flight data if flights selected and filters are valid
+      if (selectedConveyanceTypes.has('flights') && hasValidFlightFilters(fromCity, toCity)) {
         promises.push(
           fetchConveyanceData({
+            conveyance_type: 'flights',
+            departure_city: fromCity,
+            arrival_city: toCity,
+            from_date,
+            to_date,
+          })
+        );
+      } else {
+        promises.push(Promise.resolve([]));
+      }
+
+      // Fetch train data if trains selected and filters are valid
+      if (selectedConveyanceTypes.has('trains') && hasValidFlightFilters(fromCity, toCity)) {
+        promises.push(
+          fetchConveyanceData({
+            conveyance_type: 'trains',
             departure_city: fromCity,
             arrival_city: toCity,
             from_date,
@@ -248,29 +396,35 @@ export default function DateSelectorWidget({
         promises.push(Promise.resolve([]));
       }
 
-      const [flights, stays] = (await Promise.all(promises)) as [
+      const [flights, trains, stays] = (await Promise.all(promises)) as [
         FlightData[],
+        TrainData[],
         StayData[]
       ];
 
       console.log("Fetched data:", {
         flights: flights.length,
+        trains: trains.length,
         stays: stays.length,
         fromCity,
         toCity,
         flightClass,
+        trainClass,
       });
 
       setFlightData(flights);
+      setTrainData(trains);
       setStayData(stays);
 
       // Process price data for each date in the month
       const processedPrices = processPriceDataForMonth(
         flights,
+        trains,
         stays,
         year,
         month,
-        flightClass
+        flightClass,
+        trainClass
       );
 
       console.log("Processed prices for month:", processedPrices.slice(0, 5));
@@ -283,7 +437,7 @@ export default function DateSelectorWidget({
     } finally {
       setIsLoadingPrices(false);
     }
-  }, [currentMonth, fromCity, toCity, flightClass, lastFetchedMonth]);
+  }, [currentMonth, fromCity, toCity, flightClass, trainClass, selectedConveyanceTypes, lastFetchedMonth]);
 
   // Fetch price data when month or filters change
   useEffect(() => {
@@ -294,10 +448,23 @@ export default function DateSelectorWidget({
   useEffect(() => {
     setLastFetchedMonth(null);
     setPriceData([]);
-  }, [fromCity, toCity, flightClass]);
+  }, [fromCity, toCity, flightClass, trainClass, selectedConveyanceTypes]);
 
   const handleDateClick = (date: Date) => {
     setSelectedDate(date);
+  };
+
+  const toggleConveyanceType = (type: 'flights' | 'trains') => {
+    const newTypes = new Set(selectedConveyanceTypes);
+    if (newTypes.has(type)) {
+      // Don't allow deselecting if it's the only one selected
+      if (newTypes.size > 1) {
+        newTypes.delete(type);
+      }
+    } else {
+      newTypes.add(type);
+    }
+    setSelectedConveyanceTypes(newTypes);
   };
 
   const handleContinueClick = async () => {
@@ -372,29 +539,83 @@ export default function DateSelectorWidget({
         <div className="col-span-2 space-y-4">
           <h3 className="text-sm font-bold text-gray-800 mb-4">Filters</h3>
 
-          {/* Flights Section */}
+          {/* Conveyance Type Selection */}
+          <div className="bg-white/70 backdrop-blur-sm rounded-xl p-4 border border-gray-300 shadow-sm">
+            <h4 className="text-xs font-semibold text-gray-800 mb-3">Conveyance Type</h4>
+            <div className="flex gap-2">
+              <button
+                onClick={() => toggleConveyanceType('flights')}
+                className={`flex-1 flex items-center justify-center gap-1 px-3 py-2 rounded-lg text-xs font-medium transition-all ${
+                  selectedConveyanceTypes.has('flights')
+                    ? 'bg-blue-500 text-white shadow-md'
+                    : 'bg-white text-gray-600 border border-gray-200 hover:border-blue-300'
+                }`}
+              >
+                <MdFlight size={14} />
+                <span>Flights</span>
+              </button>
+              <button
+                onClick={() => toggleConveyanceType('trains')}
+                className={`flex-1 flex items-center justify-center gap-1 px-3 py-2 rounded-lg text-xs font-medium transition-all ${
+                  selectedConveyanceTypes.has('trains')
+                    ? 'bg-green-500 text-white shadow-md'
+                    : 'bg-white text-gray-600 border border-gray-200 hover:border-green-300'
+                }`}
+              >
+                <MdTrain size={14} />
+                <span>Trains</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Conveyance Filters Section */}
           <div className="bg-white/70 backdrop-blur-sm rounded-xl p-4 border border-blue-200 shadow-sm relative z-20 overflow-visible">
             <div className="flex items-center gap-2 mb-3">
-              <MdFlight className="text-blue-600" size={18} />
-              <h4 className="text-xs font-semibold text-gray-800">Flights</h4>
+              {selectedConveyanceTypes.has('flights') && selectedConveyanceTypes.has('trains') ? (
+                <>
+                  <MdFlight className="text-blue-600" size={16} />
+                  <MdTrain className="text-green-600" size={16} />
+                  <h4 className="text-xs font-semibold text-gray-800">Flights & Trains</h4>
+                </>
+              ) : selectedConveyanceTypes.has('flights') ? (
+                <>
+                  <MdFlight className="text-blue-600" size={18} />
+                  <h4 className="text-xs font-semibold text-gray-800">Flights</h4>
+                </>
+              ) : (
+                <>
+                  <MdTrain className="text-green-600" size={18} />
+                  <h4 className="text-xs font-semibold text-gray-800">Trains</h4>
+                </>
+              )}
             </div>
 
             {/* From City */}
             <div className="mb-3 relative">
               <label className="block text-[10px] text-gray-500 mb-1 uppercase font-medium">
+                {/* From {isAutoFilled && <span className="text-blue-600">(Auto-filled)</span>} */}
                 From
               </label>
               <button
-                onClick={() => setShowFromDropdown(!showFromDropdown)}
-                className="w-full text-left px-3 py-2 bg-white rounded-lg border border-gray-200 hover:border-blue-300 transition-all text-xs flex items-center justify-between"
+                onClick={() => !isAutoFilled && setShowFromDropdown(!showFromDropdown)}
+                disabled={isAutoFilled}
+                className={`w-full text-left px-3 py-2 rounded-lg border transition-all text-xs flex items-center justify-between ${
+                  isAutoFilled 
+                    ? "bg-gray-100 border-gray-300 cursor-not-allowed" 
+                    : "bg-white border-gray-200 hover:border-blue-300 cursor-pointer"
+                }`}
               >
-                <span className="truncate text-gray-700">{fromCity}</span>
-                <FiChevronDown
-                  className={`ml-2 transition-transform text-gray-500 ${
-                    showFromDropdown ? "rotate-180" : ""
-                  }`}
-                  size={12}
-                />
+                <span className={`truncate ${isAutoFilled ? "text-gray-600" : "text-gray-700"}`}>
+                  {fromCity || "Select city"}
+                </span>
+                {!isAutoFilled && (
+                  <FiChevronDown
+                    className={`ml-2 transition-transform text-gray-500 ${
+                      showFromDropdown ? "rotate-180" : ""
+                    }`}
+                    size={12}
+                  />
+                )}
               </button>
               {showFromDropdown && (
                 <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-40 overflow-y-auto">
@@ -417,19 +638,29 @@ export default function DateSelectorWidget({
             {/* To City */}
             <div className="mb-3 relative">
               <label className="block text-[10px] text-gray-500 mb-1 uppercase font-medium">
+                {/* To {isAutoFilled && <span className="text-blue-600">(Auto-filled)</span>} */}
                 To
               </label>
               <button
-                onClick={() => setShowToDropdown(!showToDropdown)}
-                className="w-full text-left px-3 py-2 bg-white rounded-lg border border-gray-200 hover:border-blue-300 transition-all text-xs flex items-center justify-between"
+                onClick={() => !isAutoFilled && setShowToDropdown(!showToDropdown)}
+                disabled={isAutoFilled}
+                className={`w-full text-left px-3 py-2 rounded-lg border transition-all text-xs flex items-center justify-between ${
+                  isAutoFilled 
+                    ? "bg-gray-100 border-gray-300 cursor-not-allowed" 
+                    : "bg-white border-gray-200 hover:border-blue-300 cursor-pointer"
+                }`}
               >
-                <span className="truncate text-gray-700">{toCity}</span>
-                <FiChevronDown
-                  className={`ml-2 transition-transform text-gray-500 ${
-                    showToDropdown ? "rotate-180" : ""
-                  }`}
-                  size={12}
-                />
+                <span className={`truncate ${isAutoFilled ? "text-gray-600" : "text-gray-700"}`}>
+                  {toCity || "Select city"}
+                </span>
+                {!isAutoFilled && (
+                  <FiChevronDown
+                    className={`ml-2 transition-transform text-gray-500 ${
+                      showToDropdown ? "rotate-180" : ""
+                    }`}
+                    size={12}
+                  />
+                )}
               </button>
               {showToDropdown && (
                 <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-40 overflow-y-auto">
@@ -449,42 +680,83 @@ export default function DateSelectorWidget({
               )}
             </div>
 
-            {/* Flight Class */}
-            <div className="relative">
-              <label className="block text-[10px] text-gray-500 mb-1 uppercase font-medium">
-                Class
-              </label>
-              <button
-                onClick={() =>
-                  setShowFlightClassDropdown(!showFlightClassDropdown)
-                }
-                className="w-full text-left px-3 py-2 bg-white rounded-lg border border-gray-200 hover:border-blue-300 transition-all text-xs flex items-center justify-between"
-              >
-                <span className="truncate text-gray-700">{flightClass}</span>
-                <FiChevronDown
-                  className={`ml-2 transition-transform text-gray-500 ${
-                    showFlightClassDropdown ? "rotate-180" : ""
-                  }`}
-                  size={12}
-                />
-              </button>
-              {showFlightClassDropdown && (
-                <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg">
-                  {flightClasses.map((cls) => (
-                    <button
-                      key={cls}
-                      onClick={() => {
-                        setFlightClass(cls);
-                        setShowFlightClassDropdown(false);
-                      }}
-                      className="w-full text-left px-3 py-2 text-xs text-gray-700 hover:bg-blue-50 transition-colors"
-                    >
-                      {cls}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
+            {/* Flight Class - Only show if flights selected */}
+            {selectedConveyanceTypes.has('flights') && (
+              <div className="mb-3 relative">
+                <label className="block text-[10px] text-gray-500 mb-1 uppercase font-medium">
+                  Flight Class
+                </label>
+                <button
+                  onClick={() =>
+                    setShowFlightClassDropdown(!showFlightClassDropdown)
+                  }
+                  className="w-full text-left px-3 py-2 bg-white rounded-lg border border-gray-200 hover:border-blue-300 transition-all text-xs flex items-center justify-between"
+                >
+                  <span className="truncate text-gray-700">{flightClass}</span>
+                  <FiChevronDown
+                    className={`ml-2 transition-transform text-gray-500 ${
+                      showFlightClassDropdown ? "rotate-180" : ""
+                    }`}
+                    size={12}
+                  />
+                </button>
+                {showFlightClassDropdown && (
+                  <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg">
+                    {flightClasses.map((cls) => (
+                      <button
+                        key={cls}
+                        onClick={() => {
+                          setFlightClass(cls);
+                          setShowFlightClassDropdown(false);
+                        }}
+                        className="w-full text-left px-3 py-2 text-xs text-gray-700 hover:bg-blue-50 transition-colors"
+                      >
+                        {cls}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Train Class - Only show if trains selected */}
+            {selectedConveyanceTypes.has('trains') && (
+              <div className="relative">
+                <label className="block text-[10px] text-gray-500 mb-1 uppercase font-medium">
+                  Train Class
+                </label>
+                <button
+                  onClick={() =>
+                    setShowTrainClassDropdown(!showTrainClassDropdown)
+                  }
+                  className="w-full text-left px-3 py-2 bg-white rounded-lg border border-gray-200 hover:border-green-300 transition-all text-xs flex items-center justify-between"
+                >
+                  <span className="truncate text-gray-700">{trainClass}</span>
+                  <FiChevronDown
+                    className={`ml-2 transition-transform text-gray-500 ${
+                      showTrainClassDropdown ? "rotate-180" : ""
+                    }`}
+                    size={12}
+                  />
+                </button>
+                {showTrainClassDropdown && (
+                  <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg">
+                    {trainClasses.map((cls) => (
+                      <button
+                        key={cls}
+                        onClick={() => {
+                          setTrainClass(cls);
+                          setShowTrainClassDropdown(false);
+                        }}
+                        className="w-full text-left px-3 py-2 text-xs text-gray-700 hover:bg-green-50 transition-colors"
+                      >
+                        {cls}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Stay Section */}
@@ -617,12 +889,18 @@ export default function DateSelectorWidget({
           {hasValidFlightFilters(fromCity, toCity) ||
           hasValidStayFilters(toCity) ? (
             <div className="mx-4 mt-2 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-              <div className="flex items-center justify-center gap-4 text-xs">
+              <div className="flex items-center justify-center gap-4 text-xs flex-wrap">
                 <span className="text-gray-600 font-medium">Price Legend:</span>
-                {hasValidFlightFilters(fromCity, toCity) && (
+                {selectedConveyanceTypes.has('flights') && hasValidFlightFilters(fromCity, toCity) && (
                   <div className="flex items-center gap-1">
                     <div className="w-2 h-2 rounded-full bg-red-500" />
                     <span className="text-red-700">Flights</span>
+                  </div>
+                )}
+                {selectedConveyanceTypes.has('trains') && hasValidFlightFilters(fromCity, toCity) && (
+                  <div className="flex items-center gap-1">
+                    <div className="w-2 h-2 rounded-full bg-green-500" />
+                    <span className="text-green-700">Trains</span>
                   </div>
                 )}
                 {hasValidStayFilters(toCity) && (
@@ -729,6 +1007,7 @@ export default function DateSelectorWidget({
                       <>
                         {/* Flight Price */}
                         {dateInfo.flightPrice !== null &&
+                          selectedConveyanceTypes.has('flights') &&
                           hasValidFlightFilters(fromCity, toCity) && (
                             <div className="flex items-center justify-center gap-1">
                               <div
@@ -746,6 +1025,30 @@ export default function DateSelectorWidget({
                                 }`}
                               >
                                 ₹{dateInfo.flightPrice.toLocaleString()}
+                              </span>
+                            </div>
+                          )}
+
+                        {/* Train Price */}
+                        {dateInfo.trainPrice !== null &&
+                          selectedConveyanceTypes.has('trains') &&
+                          hasValidFlightFilters(fromCity, toCity) && (
+                            <div className="flex items-center justify-center gap-1">
+                              <div
+                                className={`w-2 h-2 rounded-full ${
+                                  dateInfo.isSelected
+                                    ? "bg-green-400"
+                                    : "bg-green-500"
+                                }`}
+                              />
+                              <span
+                                className={`text-[9px] font-semibold ${
+                                  dateInfo.isSelected
+                                    ? "text-white"
+                                    : "text-green-700"
+                                }`}
+                              >
+                                ₹{dateInfo.trainPrice.toLocaleString()}
                               </span>
                             </div>
                           )}
@@ -775,6 +1078,7 @@ export default function DateSelectorWidget({
 
                         {/* Show placeholder when no data available */}
                         {dateInfo.flightPrice === null &&
+                          dateInfo.trainPrice === null &&
                           dateInfo.hotelPrice === null && (
                             <div className="flex items-center justify-center">
                               <span

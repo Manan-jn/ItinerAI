@@ -23,7 +23,7 @@ export function EndResponseLoader({
 
   useEffect(() => {
     if (showEndLoader) {
-      console.log("🎯 EndResponseLoader: Showing loader - setting visibility to true");
+      // console.log("🎯 EndResponseLoader: Showing loader - setting visibility to true");
       setIsVisible(true);
 
       // Set initial message
@@ -41,11 +41,11 @@ export function EndResponseLoader({
 
       return () => clearInterval(messageTimer);
     } else {
-      console.log("🎯 EndResponseLoader: Hiding loader - starting dissolve");
+      // console.log("🎯 EndResponseLoader: Hiding loader - starting dissolve");
       // allow a smooth dissolve before unmounting
       const t = setTimeout(() => {
         setIsVisible(false);
-        console.log("🎯 EndResponseLoader: Loader fully dissolved");
+        // console.log("🎯 EndResponseLoader: Loader fully dissolved");
       }, 650);
       return () => clearTimeout(t);
     }

@@ -27,7 +27,7 @@ export function TripLoader({
 
   useEffect(() => {
     if (showTripLoader) {
-      console.log("🎯 TripLoader: Showing loader - setting visibility to true");
+      // console.log("🎯 TripLoader: Showing loader - setting visibility to true");
       setIsVisible(true);
 
       // Set initial message
@@ -45,11 +45,11 @@ export function TripLoader({
 
       return () => clearInterval(messageTimer);
     } else {
-      console.log("🎯 TripLoader: Hiding loader - starting dissolve");
+      // console.log("🎯 TripLoader: Hiding loader - starting dissolve");
       // allow a smooth dissolve before unmounting
       const t = setTimeout(() => {
         setIsVisible(false);
-        console.log("🎯 TripLoader: Loader fully dissolved");
+        // console.log("🎯 TripLoader: Loader fully dissolved");
       }, 650);
       return () => clearTimeout(t);
     }

@@ -86,11 +86,11 @@ export const getThemeFallbackImage = (trip: any): string => {
 
 // Function to get trip image from photos in day_wise_plan or trip_route
 export const getTripImage = (trip: any, cachedUrls?: Map<string, string>): string => {
-  console.log(`getTripImage: Processing trip "${trip.trip_title}"`, {
-    hasTripRoute: !!trip.trip_route,
-    tripRouteLength: trip.trip_route?.length || 0,
-    hasDayWisePlan: !!trip.day_wise_plan,
-  });
+  // console.log(`getTripImage: Processing trip "${trip.trip_title}"`, {
+  //   hasTripRoute: !!trip.trip_route,
+  //   tripRouteLength: trip.trip_route?.length || 0,
+  //   hasDayWisePlan: !!trip.day_wise_plan,
+  // });
 
   // Helper function to process a photo URL
   const processPhotoUrl = (photo: string, source: string): string | null => {
@@ -99,66 +99,66 @@ export const getTripImage = (trip: any, cachedUrls?: Map<string, string>): strin
       return null;
     }
 
-    console.log(`getTripImage: Processing photo from ${source}`, { 
-      photoPreview: photo.substring(0, 80) + '...',
-      isGooglePlaces: isGooglePlacesPhotoUrl(photo)
-    });
+    // console.log(`getTripImage: Processing photo from ${source}`, { 
+    //   photoPreview: photo.substring(0, 80) + '...',
+    //   isGooglePlaces: isGooglePlacesPhotoUrl(photo)
+    // });
 
     // Check imageDownloader cache first (it handles Google Places URLs automatically)
     const downloadedImage = imageDownloader.getCachedImage(photo);
     if (downloadedImage) {
-      console.log(`getTripImage: Using imageDownloader cache for ${source}`);
+      // console.log(`getTripImage: Using imageDownloader cache for ${source}`);
       return downloadedImage;
     }
     
     // Return cached version from old cache if available
     if (cachedUrls && cachedUrls.has(photo)) {
-      console.log(`getTripImage: Using cachedUrls for ${source}`);
+      // console.log(`getTripImage: Using cachedUrls for ${source}`);
       return cachedUrls.get(photo)!;
     }
     
     // For Google Places photos, convert to proxy URL
     if (isGooglePlacesPhotoUrl(photo)) {
       const proxyUrl = convertToProxyUrl(photo, 400);
-      console.log(`getTripImage: Converted to proxy URL from ${source}`, { proxyUrl });
+      // console.log(`getTripImage: Converted to proxy URL from ${source}`, { proxyUrl });
       return proxyUrl;
     }
     
-    console.log(`getTripImage: Using original URL from ${source}`);
+    // console.log(`getTripImage: Using original URL from ${source}`);
     return photo;
   };
 
   try {
     // First, try to get photo from trip_route (new structure)
     if (trip.trip_route && trip.trip_route.length > 0) {
-      console.log(`getTripImage: Checking trip_route with ${trip.trip_route.length} places`);
+      // console.log(`getTripImage: Checking trip_route with ${trip.trip_route.length} places`);
       for (const place of trip.trip_route) {
         if (place.photos && place.photos.length > 0) {
-          console.log(`getTripImage: Found ${place.photos.length} photos for place "${place.place_name}"`);
+          // console.log(`getTripImage: Found ${place.photos.length} photos for place "${place.place_name}"`);
           for (const photo of place.photos) {
             const processedUrl = processPhotoUrl(photo, `trip_route:${place.place_name}`);
             if (processedUrl) {
-              console.log(`getTripImage: Using photo from trip_route for "${trip.trip_title}"`);
+              // console.log(`getTripImage: Using photo from trip_route for "${trip.trip_title}"`);
               return processedUrl;
             }
           }
         }
       }
-      console.log(`getTripImage: No valid photos found in trip_route`);
+      // console.log(`getTripImage: No valid photos found in trip_route`);
     }
 
     // Then try day_wise_plan structure (legacy support)
     if (trip.day_wise_plan && trip.day_wise_plan.length > 0) {
-      console.log(`getTripImage: Checking day_wise_plan with ${trip.day_wise_plan.length} days`);
+      // console.log(`getTripImage: Checking day_wise_plan with ${trip.day_wise_plan.length} days`);
       for (const day of trip.day_wise_plan) {
         if (day.cities && day.cities.length > 0) {
           for (const city of day.cities) {
             if (city.photos && city.photos.length > 0) {
-              console.log(`getTripImage: Found ${city.photos.length} photos in day_wise_plan for city`);
+              // console.log(`getTripImage: Found ${city.photos.length} photos in day_wise_plan for city`);
               for (const photo of city.photos) {
                 const processedUrl = processPhotoUrl(photo, `day_wise_plan:${city.name || 'unknown'}`);
                 if (processedUrl) {
-                  console.log(`getTripImage: Using photo from day_wise_plan for "${trip.trip_title}"`);
+                  // console.log(`getTripImage: Using photo from day_wise_plan for "${trip.trip_title}"`);
                   return processedUrl;
                 }
               }
@@ -166,14 +166,14 @@ export const getTripImage = (trip: any, cachedUrls?: Map<string, string>): strin
           }
         }
       }
-      console.log(`getTripImage: No valid photos found in day_wise_plan`);
+      // console.log(`getTripImage: No valid photos found in day_wise_plan`);
     }
   } catch (error) {
     console.warn("Error fetching trip image:", error);
   }
 
   // Fallback to theme-based Unsplash images
-  console.log(`getTripImage: Using fallback theme image for "${trip.trip_title}"`);
+  // console.log(`getTripImage: Using fallback theme image for "${trip.trip_title}"`);
   return getThemeFallbackImage(trip);
 };
 
@@ -223,22 +223,22 @@ export const getCityFallbackImage = (city: any): string => {
 // Function to get city image from photos or fallback
 export const getCityImage = (city: any, cachedUrls?: Map<string, string>): string => {
   const cityName = city.name || city.place_name || 'Unknown';
-  console.log(`getCityImage: Processing city "${cityName}"`, {
-    hasPhotos: !!(city.photos && city.photos.length > 0),
-    photoCount: city.photos?.length || 0
-  });
+  // console.log(`getCityImage: Processing city "${cityName}"`, {
+  //   hasPhotos: !!(city.photos && city.photos.length > 0),
+  //   photoCount: city.photos?.length || 0
+  // });
 
   // Helper function to process a photo URL
   const processPhotoUrl = (photo: string): string | null => {
     if (!isValidImageUrl(photo)) {
-      console.log(`getCityImage: Invalid URL for city "${cityName}":`, photo);
+      // console.log(`getCityImage: Invalid URL for city "${cityName}":`, photo);
       return null;
     }
 
-    console.log(`getCityImage: Processing photo for "${cityName}"`, { 
-      photoPreview: photo.substring(0, 80) + '...',
-      isGooglePlaces: isGooglePlacesPhotoUrl(photo)
-    });
+    // console.log(`getCityImage: Processing photo for "${cityName}"`, { 
+    //   photoPreview: photo.substring(0, 80) + '...',
+    //   isGooglePlaces: isGooglePlacesPhotoUrl(photo)
+    // });
 
     // Check imageDownloader cache first (it handles Google Places URLs automatically)
     const downloadedImage = imageDownloader.getCachedImage(photo);

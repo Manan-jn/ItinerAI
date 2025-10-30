@@ -66,7 +66,7 @@ class ImageDownloader {
 
     try {
       this.downloadQueue.add(processedUrl);
-      console.log(`Downloading image: ${processedUrl.substring(0, 100)}...`);
+      // console.log(`Downloading image: ${processedUrl.substring(0, 100)}...`);
 
       const response = await fetch(processedUrl, {
         method: 'GET',
@@ -251,19 +251,19 @@ export function validateAndPopulateTripData(tripData: any): any {
       const validatedDay = { ...day };
 
       // Ensure cities exist
-      if (!validatedDay.cities) {
-        validatedDay.cities = [];
-      }
+      // if (!validatedDay.cities) {
+      //   validatedDay.cities = [];
+      // }
 
-      validatedDay.cities = validatedDay.cities.map((city: any) => ({
-        name: city.name || 'Unknown City',
-        address: city.address || city.name || '',
-        map_url: city.map_url || '',
-        lat: city.lat || '0',
-        long: city.long || '0',
-        photos: city.photos || [],
-        place_id: city.place_id || '',
-      }));
+      // validatedDay.cities = validatedDay.cities.map((city: any) => ({
+      //   name: city.name || 'Unknown City',
+      //   address: city.address || city.name || '',
+      //   map_url: city.map_url || '',
+      //   lat: city.lat || '0',
+      //   long: city.long || '0',
+      //   photos: city.photos || [],
+      //   place_id: city.place_id || '',
+      // }));
 
       // Ensure must_do_activities exist
       if (!validatedDay.must_do_activities) {

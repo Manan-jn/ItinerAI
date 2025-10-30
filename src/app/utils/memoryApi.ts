@@ -22,7 +22,6 @@ interface MemoryUpdatePayload {
   user_id: string;
   session_id: string;
   updates: {
-    user_id: string;
     user_profile: {
       name: string;
       age: number;
@@ -99,7 +98,6 @@ function transformToMemoryFormat(
     user_id: userId,
     session_id: sessionId,
     updates: {
-      user_id: userId,
       user_profile: userProfile
     }
   };

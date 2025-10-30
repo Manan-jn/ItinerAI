@@ -12,11 +12,16 @@ import {
   FiStar,
 } from "react-icons/fi";
 import { MdHotel } from "react-icons/md";
+import { getStaysDataForWidget, formatStaysForDisplay } from "../utils/preFetchIntegration";
+import { getPreFetchedStaysData } from "../utils/preFetchStays";
 
 interface StaysWidgetProps {
   isVisible: boolean;
   onToggle: () => void;
   initialCity?: string;
+  initialCheckInDate?: string; // NEW - YYYY-MM-DD format
+  initialCheckOutDate?: string; // NEW - YYYY-MM-DD format
+  autoFillMode?: boolean; // NEW - Make fields fixed and auto-search
   onContinue?: (selectedStayData?: StayOption) => void;
   userId?: string;
   sessionId?: string;
@@ -537,14 +542,17 @@ export default function StaysWidget({
   isVisible,
   onToggle,
   initialCity,
+  initialCheckInDate,
+  initialCheckOutDate,
+  autoFillMode = false,
   onContinue,
   userId,
   sessionId,
   currentDayNumber,
 }: StaysWidgetProps) {
   const [city, setCity] = useState(initialCity || "Bangalore");
-  const [checkInDate, setCheckInDate] = useState("");
-  const [checkOutDate, setCheckOutDate] = useState("");
+  const [checkInDate, setCheckInDate] = useState(initialCheckInDate || "");
+  const [checkOutDate, setCheckOutDate] = useState(initialCheckOutDate || "");
   const [starRating, setStarRating] = useState("All");
   const [showResults, setShowResults] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -552,18 +560,42 @@ export default function StaysWidget({
   const [searchResults, setSearchResults] = useState<StayOption[]>([]);
   const [bookedOption, setBookedOption] = useState<string | null>(null);
   const [selectedStayData, setSelectedStayData] = useState<StayOption | null>(null);
+  const [hasAutoSearched, setHasAutoSearched] = useState(false);
 
+  // Update city when initial prop changes
   useEffect(() => {
-    console.log("🏨 StaysWidget received props - City:", initialCity);
+    console.log("🏨 StaysWidget received props - City:", initialCity, "CheckIn:", initialCheckInDate, "CheckOut:", initialCheckOutDate, "AutoFill:", autoFillMode);
     if (initialCity) {
       console.log("🏨 Setting city to:", initialCity);
       setCity(initialCity);
     }
-  }, [initialCity]);
+    if (initialCheckInDate) {
+      console.log("🏨 Setting check-in date to:", initialCheckInDate);
+      setCheckInDate(initialCheckInDate);
+    }
+    if (initialCheckOutDate) {
+      console.log("🏨 Setting check-out date to:", initialCheckOutDate);
+      setCheckOutDate(initialCheckOutDate);
+    }
+  }, [initialCity, initialCheckInDate, initialCheckOutDate, autoFillMode]);
 
+  // Auto-search when widget becomes visible in auto-fill mode
   useEffect(() => {
-    if (isVisible) {
-      console.log("🏨 StaysWidget is now visible. Current city:", city);
+    if (isVisible && autoFillMode && !hasAutoSearched && city && checkInDate && checkOutDate && userId) {
+      console.log("🏨 StaysWidget is now visible in AUTO-FILL mode. Auto-triggering search...");
+      console.log("🏨 Search params:", { city, checkInDate, checkOutDate });
+      setHasAutoSearched(true);
+      // Trigger search automatically
+      handleSearch();
+    } else if (isVisible && !autoFillMode) {
+      console.log("🏨 StaysWidget is now visible in MANUAL mode. Current city:", city);
+    }
+  }, [isVisible, autoFillMode, hasAutoSearched, city, checkInDate, checkOutDate, userId]);
+
+  // Reset auto-search flag when widget closes
+  useEffect(() => {
+    if (!isVisible) {
+      setHasAutoSearched(false);
     }
   }, [isVisible]);
 
@@ -583,6 +615,58 @@ export default function StaysWidget({
     setShowResults(false);
 
     try {
+      // Check for pre-fetched data if userId is available
+      if (userId) {
+        console.log(`🏨 Checking for pre-fetched stays data for: ${city} (${checkInDate} to ${checkOutDate})...`);
+        const cachedData = await getPreFetchedStaysData(userId, city, checkInDate, checkOutDate);
+        
+        if (cachedData) {
+          console.log("✅ Found pre-fetched stays data! Using cached results.");
+          console.log("📊 Cached data structure:", cachedData);
+          
+          // Combine AI recommendations and utility stays
+          const allStays: any[] = [
+            ...(cachedData.ai_recommendations || []),
+            ...(cachedData.utility_stays || [])
+          ];
+          
+          console.log(`📊 Total properties: ${allStays.length} (AI: ${cachedData.ai_recommendations?.length || 0}, Utility: ${cachedData.utility_stays?.length || 0})`);
+          
+          // Transform to StayOption format
+          const stayOptions: StayOption[] = allStays.map((stay: any, index: number) => ({
+            stay_id: `stay_${index}`,
+            property_name: stay.property_name,
+            property_address: stay.property_address,
+            property_location: stay.property_location || city,
+            city: stay.city || city,
+            state: stay.state || "",
+            country: stay.country || "India",
+            overall_rating: parseFloat(stay.overall_rating || 0),
+            starting_price: stay.price || stay.starting_price || "0",
+            currency: stay.currency || "INR",
+            available_rooms_total: parseInt(stay.available_rooms_total || 0),
+            available_from_date: stay.available_from_date,
+            available_until_date: stay.available_until_date,
+          }));
+          
+          setSearchResults(stayOptions);
+          setShowResults(true);
+          setIsLoadingComplete(true);
+          setIsLoading(false);
+          
+          console.log("✅ Pre-fetched stays data loaded:", {
+            total: stayOptions.length,
+            aiCount: cachedData.ai_recommendations?.length || 0,
+            utilityCount: cachedData.utility_stays?.length || 0,
+            source: "pre-fetched",
+          });
+          
+          return; // Exit early, no need to make API calls
+        } else {
+          console.log("ℹ️ No pre-fetched stays data found, proceeding with API call...");
+        }
+      }
+
       // Format dates for display in message
       const checkInFormatted = new Date(checkInDate).toLocaleDateString("en-US", {
         day: "2-digit",
@@ -697,33 +781,84 @@ export default function StaysWidget({
             {/* City */}
             <div className="relative">
               <label className="block text-[10px] text-gray-600 mb-2 uppercase font-semibold tracking-wider">
+                {/* CITY {autoFillMode && <span className="text-blue-600">(Auto-filled)</span>} */}
                 CITY
               </label>
-              <CitySelector value={city} onChange={setCity} label="City" />
+              {autoFillMode ? (
+                <div className="w-full text-left p-3 bg-gray-100/70 backdrop-blur-sm rounded-xl border border-gray-200 cursor-not-allowed">
+                  <div className="flex items-center gap-2">
+                    <FiMapPin className="text-gray-500 flex-shrink-0" size={14} />
+                    <div className="flex-1 min-w-0">
+                      <div className="text-xs font-semibold text-gray-900">{city}</div>
+                      <div className="text-[10px] text-gray-500">Fixed city</div>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <CitySelector value={city} onChange={setCity} label="City" />
+              )}
             </div>
 
             {/* Check-in Date */}
             <div className="relative">
               <label className="block text-[10px] text-gray-600 mb-2 uppercase font-semibold tracking-wider">
+                {/* CHECK-IN {autoFillMode && <span className="text-blue-600">(Auto-filled)</span>} */}
                 CHECK-IN
               </label>
-              <DatePicker
-                value={checkInDate}
-                onChange={setCheckInDate}
-                placeholder="Select date"
-              />
+              {autoFillMode ? (
+                <div className="w-full text-left p-3 bg-gray-100/70 backdrop-blur-sm rounded-xl border border-gray-200 cursor-not-allowed">
+                  <div className="flex items-center gap-2">
+                    <FiCalendar className="text-gray-500 flex-shrink-0" size={14} />
+                    <div className="flex-1 min-w-0">
+                      <div className="text-xs font-semibold text-gray-900">
+                        {checkInDate ? new Date(checkInDate).toLocaleDateString("en-US", {
+                          day: "2-digit",
+                          month: "short",
+                          year: "numeric",
+                        }) : "Not set"}
+                      </div>
+                      <div className="text-[10px] text-gray-500">Fixed date</div>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <DatePicker
+                  value={checkInDate}
+                  onChange={setCheckInDate}
+                  placeholder="Select date"
+                />
+              )}
             </div>
 
             {/* Check-out Date */}
             <div className="relative">
               <label className="block text-[10px] text-gray-600 mb-2 uppercase font-semibold tracking-wider">
-                CHECK-OUT DATE
+                {/* CHECK-OUT {autoFillMode && <span className="text-blue-600">(Auto-filled)</span>} */}
+                CHECK-OUT
               </label>
-              <DatePicker
-                value={checkOutDate}
-                onChange={setCheckOutDate}
-                placeholder="Select date"
-              />
+              {autoFillMode ? (
+                <div className="w-full text-left p-3 bg-gray-100/70 backdrop-blur-sm rounded-xl border border-gray-200 cursor-not-allowed">
+                  <div className="flex items-center gap-2">
+                    <FiCalendar className="text-gray-500 flex-shrink-0" size={14} />
+                    <div className="flex-1 min-w-0">
+                      <div className="text-xs font-semibold text-gray-900">
+                        {checkOutDate ? new Date(checkOutDate).toLocaleDateString("en-US", {
+                          day: "2-digit",
+                          month: "short",
+                          year: "numeric",
+                        }) : "Not set"}
+                      </div>
+                      <div className="text-[10px] text-gray-500">Fixed date</div>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <DatePicker
+                  value={checkOutDate}
+                  onChange={setCheckOutDate}
+                  placeholder="Select date"
+                />
+              )}
             </div>
 
             {/* Star Rating */}
