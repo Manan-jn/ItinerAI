@@ -242,26 +242,58 @@ export async function buildCompleteItinerary(
         (d) => d.day_number === dayNum
       );
 
-      // Merge trip plan with stored data (stored data takes precedence)
-      const completeDayData: DayItineraryData = {
-        day_number: dayNum,
-        // Start with trip plan data
-        ...(tripDayPlan.must_do_activities && {
-          must_do_activities: tripDayPlan.must_do_activities,
-        }),
-        ...(tripDayPlan.places_to_visit && {
-          places_to_visit: tripDayPlan.places_to_visit,
-        }),
-        // Base conveyance and stay from trip plan
-        ...(tripDayPlan.conveyance_details && {
-          conveyance_details: { ...tripDayPlan.conveyance_details },
-        }),
-        ...(tripDayPlan.stay_details && {
-          stay_details: { ...tripDayPlan.stay_details },
-        }),
-        // Override with stored data (user selections + API generated data)
-        ...storedDayData,
-      };
+      // Check if this is a newly added day (should only have minimal structure)
+      const isNewDay = (tripDayPlan as any).is_new_day === true;
+
+      console.log(
+        `🔍 Building day ${dayNum} - is_new_day: ${isNewDay}`
+      );
+
+      let completeDayData: DayItineraryData;
+
+      if (isNewDay) {
+        // For newly added days, ONLY include day_number, conveyance_details, and stay_details
+        // Do NOT include must_do_activities or places_to_visit
+        completeDayData = {
+          day_number: dayNum,
+          // Only include conveyance and stay details
+          ...(tripDayPlan.conveyance_details && {
+            conveyance_details: { ...tripDayPlan.conveyance_details },
+          }),
+          ...(tripDayPlan.stay_details && {
+            stay_details: { ...tripDayPlan.stay_details },
+          }),
+          // Override with stored data (user selections) if available
+          ...storedDayData,
+        };
+        console.log(
+          `📝 Minimal structure for newly added day ${dayNum} (conveyance + stay only)`
+        );
+      } else {
+        // For existing days, merge trip plan with stored data (stored data takes precedence)
+        completeDayData = {
+          day_number: dayNum,
+          // Start with trip plan data
+          ...(tripDayPlan.must_do_activities && {
+            must_do_activities: tripDayPlan.must_do_activities,
+          }),
+          ...(tripDayPlan.places_to_visit && {
+            places_to_visit: tripDayPlan.places_to_visit,
+          }),
+          // Base conveyance and stay from trip plan
+          ...(tripDayPlan.conveyance_details && {
+            conveyance_details: { ...tripDayPlan.conveyance_details },
+          }),
+          ...(tripDayPlan.stay_details && {
+            stay_details: { ...tripDayPlan.stay_details },
+          }),
+          // Override with stored data (user selections + API generated data)
+          ...storedDayData,
+        };
+        console.log(
+          `📝 Full structure for existing day ${dayNum} (all fields)`
+        );
+      }
 
       console.log(
         `📦 Day ${dayNum} complete data includes:`,

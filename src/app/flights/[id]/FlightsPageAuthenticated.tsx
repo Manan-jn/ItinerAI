@@ -1194,8 +1194,10 @@ export default function FlightsPageAuthenticated() {
       console.log(`🚗 Final from_city for new day: ${fromCity}`);
 
       // Create empty day structure
+      // Mark this as a newly added day (not part of original trip plan)
       const newDay: any = {
         day_number: newDayNumber,
+        is_new_day: true, // Flag to identify newly added days
         conveyance_details: {
           is_required: needsConveyance,
           from_city: fromCity,
@@ -2203,7 +2205,14 @@ export default function FlightsPageAuthenticated() {
       }
 
       // Build current_itinerary for current day with BOTH conveyance and stay
-      const currentItineraryDay = {
+      // Check if this is a newly added day (should only have minimal structure)
+      const isNewDay = currentDay.is_new_day === true;
+
+      console.log(`🔍 Day ${currentDayNumber} is_new_day flag:`, isNewDay);
+
+      // For newly added days, ONLY include day_number, conveyance_details, and stay_details
+      // For regular days, include all available information
+      const currentItineraryDay: any = {
         day_number: currentDayNumber,
         conveyance_details: {
           is_required: true,
@@ -2242,14 +2251,20 @@ export default function FlightsPageAuthenticated() {
           available_from_date: selectedStayData.available_from_date,
           available_until_date: selectedStayData.available_until_date,
         },
-        // Include other day info if present
-        ...(currentDay.must_do_activities && {
-          must_do_activities: currentDay.must_do_activities,
-        }),
-        ...(currentDay.places_to_visit && {
-          places_to_visit: currentDay.places_to_visit,
-        }),
       };
+
+      // Only include additional fields if this is NOT a newly added day
+      if (!isNewDay) {
+        if (currentDay.must_do_activities) {
+          currentItineraryDay.must_do_activities = currentDay.must_do_activities;
+        }
+        if (currentDay.places_to_visit) {
+          currentItineraryDay.places_to_visit = currentDay.places_to_visit;
+        }
+        console.log(`📝 Including additional fields for existing day ${currentDayNumber}`);
+      } else {
+        console.log(`📝 Minimal structure for newly added day ${currentDayNumber} (conveyance + stay only)`);
+      }
 
       console.log(
         "📤 Building complete day itinerary (conveyance + stay):",
