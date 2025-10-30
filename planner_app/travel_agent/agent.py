@@ -13,22 +13,27 @@ from .tools.places import map_tool
 from .sub_agents.onboarding.agent import onboarding_agent
 from .sub_agents.inspiration.agent import trip_agent
 from .sub_agents.origin.agent import origin_agent
+from ..shared.logging import logger
+
 from .shared_libraries.callbacks import (
     logger_before_agent,
     modify_state_after_agent,
     modify_output_after_agent,
 )
 
-
 root_agent = LlmAgent(
     name="root_agent",
     model="gemini-2.5-pro",
     description="Orchestrator Agent responsible for planning end-to-end dream vacation trip for the user.",
-    # global_instruction="""
-    # - You are not allowed to share your internal thoughts or reasoning with the user.
-    # - You must follow the optimal flow mentioned in the instruction and subtly nudge the user if they deviate from the flow.
-    # """,
-    instruction=prompt.ROOT_AGENT_INSTR,
+    static_instruction=prompt.ROOT_AGENT_INSTR,
+    instruction=""" 
+    ### CONTEXT BLOCK
+    <CURRENT_STATE>
+    <user_profile> {user_profile?} </user_profile>
+    <final_trip> {final_trip?} </final_trip>
+    <start_point> {start_point?} </start_point>
+    </CURRENT_STATE>
+    """,
     sub_agents=[onboarding_agent, trip_agent, origin_agent],
     before_agent_callback=[_set_initial_state, logger_before_agent],
     after_agent_callback=[modify_state_after_agent],

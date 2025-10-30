@@ -1,55 +1,57 @@
+import os
+import sys
+import time
 from fastapi import APIRouter, Depends
 from starlette.responses import JSONResponse
 from google.adk.runners import Runner
 from google.genai.types import Content, Part
-from google.adk.agents.context_cache_config import ContextCacheConfig
+# from google.adk.agents.context_cache_config import ContextCacheConfig
 from google.adk.apps.app import App
-from google.adk.sessions import InMemorySessionService
+from google.adk.sessions import Session
 
-from ..common import get_session_service
-from ..schema import ChatRequest, ChatResponse
-from ..models import SessionManager
+
+from ..common import get_session_service, get_session_manager
+from ..schema import ChatRequest, ChatResponse, ItineraryRequest
 from ..travel_agent import root_agent, conveyance_agent, stay_agent, itinerary_agent
+from ..controllers.memory_controller import delete_memory_controller, add_memory_controller
 
-import os 
-import sys
-import time
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 from shared.post_processor import string_to_json
+
 router = APIRouter()
 
 
 @router.post("/agents/chat", response_model=ChatResponse)
 async def root_agent_chat(
-    request: ChatRequest, session_service: SessionManager = Depends(get_session_service)
+    request: ChatRequest, session_service: Session = Depends(get_session_service)
 ):
-    try:
-        app = App(
-            name="planner_ai",
-            root_agent=root_agent,
-            # context_cache_config=ContextCacheConfig(
-            #     cache_intervals=10
-            # ),
-        )
+    # try:
         runner = Runner(
-            app=app,
-            session_service=session_service.session_service,
+            app=App(
+                name="agents",
+                root_agent=root_agent,
+                # context_cache_config=ContextCacheConfig(cache_intervals=10),
+            ),
+            session_service=session_service,
         )
-
-        await session_service.get_session(request.session_id, request.user_id)
-        user_message = Content(role="user", parts=[Part(text=request.message)])
-        final_text = None
         
-        start_time = time.time()    
-        for event in runner.run(
+        user_message = Content(role="user", parts=[Part(text=request.message)])
+
+        final_text = None
+        start_time = time.time()
+        async for event in runner.run_async(
             user_id=request.user_id,
             session_id=request.session_id,
             new_message=user_message,
         ):
             if event.is_final_response():
                 if event.content and event.content.parts:
-                    final_text = [part.text for part in event.content.parts if part.text and not part.thought]
-                    final_text = '\n'.join(final_text)
+                    final_text = [
+                        part.text
+                        for part in event.content.parts
+                        if part.text and not part.thought
+                    ]
+                    final_text = "\n".join(final_text)
 
         final_json_text = await string_to_json(final_text)
         print(f"Time taken: {time.time() - start_time} seconds")
@@ -62,40 +64,40 @@ async def root_agent_chat(
                 "message": final_json_text or final_text or "",
             },
         )
-    except Exception as e:
-        print(e)
-        return JSONResponse(status_code=500, content=str(e))
+    # except Exception as e:
+    #     print(e)
+    #     return JSONResponse(status_code=500, content=str(e))
 
 
 @router.post("/agents/conveyance")
 async def conveyance_agent_chat(
-    request: ChatRequest, session_service: SessionManager = Depends(get_session_service)
+    request: ChatRequest, session_service: Session = Depends(get_session_service)
 ):
     try:
-        app = App(
-            name="planner_ai",
-            root_agent=conveyance_agent,
-            # context_cache_config=ContextCacheConfig(
-            #     cache_intervals=10
-            # ),
-        )
         runner = Runner(
-            app=app,
-            session_service=session_service.session_service,
+            app=App(
+                name="agents",
+                root_agent=conveyance_agent,
+                # context_cache_config=ContextCacheConfig(cache_intervals=10),
+            ),
+            session_service=session_service,
         )
 
-        await session_service.get_session(request.session_id, request.user_id)
         user_message = Content(role="user", parts=[Part(text=request.message)])
         final_text = None
-        for event in runner.run(
+        async for event in runner.run_async(
             user_id=request.user_id,
             session_id=request.session_id,
             new_message=user_message,
         ):
             if event.is_final_response():
                 if event.content and event.content.parts:
-                    final_text = [part.text for part in event.content.parts if part.text and not part.thought]
-                    final_text = '\n'.join(final_text)
+                    final_text = [
+                        part.text
+                        for part in event.content.parts
+                        if part.text and not part.thought
+                    ]
+                    final_text = "\n".join(final_text)
 
         final_json_text = await string_to_json(final_text)
         return JSONResponse(
@@ -112,33 +114,33 @@ async def conveyance_agent_chat(
 
 @router.post("/agents/stay")
 async def stay_agent_chat(
-    request: ChatRequest, session_service: SessionManager = Depends(get_session_service)
+    request: ChatRequest, session_service: Session = Depends(get_session_service)
 ):
     try:
-        app = App(
-            name="planner_ai",
-            root_agent=stay_agent,
-            # context_cache_config=ContextCacheConfig(
-            #     cache_intervals=10
-            # ),
-        )
         runner = Runner(
-            app=app,
-            session_service=session_service.session_service,
+            app=App(
+                name="agents",
+                root_agent=stay_agent,
+                # context_cache_config=ContextCacheConfig(cache_intervals=10),
+            ),
+            session_service=session_service,
         )
 
-        await session_service.get_session(request.session_id, request.user_id)
         user_message = Content(role="user", parts=[Part(text=request.message)])
         final_text = None
-        for event in runner.run(
+        async for event in runner.run_async(
             user_id=request.user_id,
             session_id=request.session_id,
             new_message=user_message,
         ):
             if event.is_final_response():
                 if event.content and event.content.parts:
-                    final_text = [part.text for part in event.content.parts if part.text and not part.thought]
-                    final_text = '\n'.join(final_text)
+                    final_text = [
+                        part.text
+                        for part in event.content.parts
+                        if part.text and not part.thought
+                    ]
+                    final_text = "\n".join(final_text)
 
         final_json_text = await string_to_json(final_text)
         return JSONResponse(
@@ -151,36 +153,41 @@ async def stay_agent_chat(
         )
     except Exception as e:
         return JSONResponse(status_code=500, content=str(e))
-    
+
+
 @router.post("/agents/itinerary")
 async def itinerary_agent_chat(
-    request: ChatRequest, session_service: SessionManager = Depends(get_session_service)
+    request: ItineraryRequest, session_manager: Session = Depends(get_session_manager)
 ):
     try:
-        app = App(
-            name="planner_ai",
-            root_agent=itinerary_agent,
-            # context_cache_config=ContextCacheConfig(
-            #     cache_intervals=10
-            # ),
-        )
+        
         runner = Runner(
-            app=app,
-            session_service=session_service.session_service,
+            app=App(
+                name="agents",
+                root_agent=itinerary_agent,
+                # context_cache_config=ContextCacheConfig(cache_intervals=10),
+            ),
+            session_service=session_manager.session_service,
         )
+        
+        await delete_memory_controller(request.user_id, request.session_id, ["current_itinerary"], request.invocation_id, session_manager)
+        await add_memory_controller(request.user_id, request.session_id, {"current_itinerary": request.current_itinerary}, request.invocation_id, session_manager)
 
-        await session_service.get_session(request.session_id, request.user_id)
         user_message = Content(role="user", parts=[Part(text=request.message)])
         final_text = None
-        for event in runner.run(
+        async for event in runner.run_async(
             user_id=request.user_id,
             session_id=request.session_id,
             new_message=user_message,
         ):
             if event.is_final_response():
                 if event.content and event.content.parts:
-                    final_text = [part.text for part in event.content.parts if part.text and not part.thought]
-                    final_text = '\n'.join(final_text)
+                    final_text = [
+                        part.text
+                        for part in event.content.parts
+                        if part.text and not part.thought
+                    ]
+                    final_text = "\n".join(final_text)
 
         final_json_text = await string_to_json(final_text)
         return JSONResponse(

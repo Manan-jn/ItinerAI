@@ -5,6 +5,8 @@ from typing import Dict, List, Any
 from google.adk.tools import ToolContext
 from google.adk.agents.callback_context import CallbackContext
 
+from shared.logging import logger
+
 dotenv.load_dotenv('../../../.env')
 
 class PlacesService:
@@ -118,10 +120,13 @@ async def map_helper(data: Any):
             
         return data
     except Exception as e:
-        print("Error in map_helper: ", str(e))
+        logger.warning(f"Error in map_helper\nError:{str(e)}")
         return data
 
 async def map_tool(callback_context: CallbackContext):
-    state = callback_context.state.to_dict()
-    state = await map_helper(state)
-    callback_context.state.update(state)
+    try:
+        state = callback_context.state.to_dict()
+        state = await map_helper(state)
+        callback_context.state.update(state)
+    except Exception as e:
+        logger.warning(f"Error in map_tool", exc_info=True)

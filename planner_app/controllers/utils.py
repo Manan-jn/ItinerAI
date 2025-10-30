@@ -1,11 +1,14 @@
 from ..schema.utils_schema import ConveyanceSchema, StaySchema
+from ..shared.logging import logger
 
-import os 
+import os
 import sys
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 from shared.sql_query import execute_sql_query
 
-async def get_conveyances_controller(conveyance_details:ConveyanceSchema):
+
+async def get_conveyances_controller(conveyance_details: ConveyanceSchema):
     try:
         sql_query_flights = f"""
         SELECT *
@@ -33,17 +36,18 @@ async def get_conveyances_controller(conveyance_details:ConveyanceSchema):
                 AND
                 "{conveyance_details.to_date}"
         """
-        
+
         if conveyance_details.conveyance_type == "flights":
             result = await execute_sql_query(sql_query_flights)
         else:
             result = await execute_sql_query(sql_query_trains)
         return result
     except Exception as e:
-        print("Error in get_conveyance_controller: ", str(e))
+        logger.warning(f"Error in get_conveyances_controller\nError: {str(e)}")
         return []
-    
-async def get_stays_controller(stay_details:StaySchema):
+
+
+async def get_stays_controller(stay_details: StaySchema):
     try:
         sql_query = f"""
         SELECT * 
@@ -56,5 +60,5 @@ async def get_stays_controller(stay_details:StaySchema):
         result = await execute_sql_query(sql_query)
         return result
     except Exception as e:
-        print("Error in get_conveyance_controller: ", str(e))
+        logger.warning(f"Error in get_stays_controller\nError: {str(e)}")
         return []

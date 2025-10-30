@@ -98,10 +98,5 @@ Always respond in the following structured JSON format:
     "message": "", (The `message` field should contain your natural, conversational response to the user)
 }}
 ```
-
-### CONTEXT BLOCKS
-<USER_PROFILE>
-{user_profile?}
-</USER_PROFILE>
 """
 

@@ -1,12 +1,9 @@
-from google.adk.agents import LlmAgent, SequentialAgent
-from google.adk.tools.agent_tool import AgentTool
+from google.adk.agents import LlmAgent
 from google.genai.types import GenerateContentConfig
 from google.adk.tools.google_search_tool import google_search
 
 from . import prompt
-from ...tools.memory import memorize
 from ...tools.places import map_tool
-from ...tools.search import google_search_agent
 from ...shared_libraries import TripSuggestions, POISuggestions
 from ...shared_libraries.callbacks import (
     logger_before_agent,
@@ -18,7 +15,17 @@ trip_agent = LlmAgent(
     name="trip_agent",
     description="An agent who recommends trips to the user",
     model="gemini-2.5-pro",
-    instruction=prompt.TRIP_AGENT_INSTR,
+    static_instruction=prompt.TRIP_AGENT_INSTR,
+    instruction="""
+    ### CONTEXT BLOCKS
+    <FINAL_TRIP>
+    {final_trip?}
+    </FINAL_TRIP>
+
+    <USER_PROFILE>
+    <user_profile> {user_profile?} </user_profile>
+    </USER_PROFILE>
+    """,
     output_key="trip_suggestions",
     # output_schema = TripSuggestions,
     disallow_transfer_to_parent=True,
@@ -53,27 +60,3 @@ poi_agent = LlmAgent(
     #     google_search_agent
     # ]
 )
-
-# inspiration_agent = LlmAgent(
-#     name = "inspiration_agent",
-#     description = "An agent who recommends inspiration to the user",
-#     model = "gemini-2.5-flash",
-#     instruction = prompt.INSPIRATION_AGENT_INSTR,
-#     output_key = "inspiration",
-#     tools=[
-#         AgentTool(destination_agent),
-#         AgentTool(poi_agent),
-#         memorize
-#     ],
-#     after_agent_callback=[map_tool]
-# )
-
-# inspiration_agent = SequentialAgent(
-#     name = "inspiration_agent",
-#     description = "An agent who recommends inspiration to the user",
-#     sub_agents=[
-#         destination_agent,
-#         poi_agent,
-#     ],
-#     after_agent_callback=[map_tool]
-# )

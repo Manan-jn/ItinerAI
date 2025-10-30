@@ -1,13 +1,14 @@
+import os 
+import sys
 from typing import Any
 from google.adk.agents.callback_context import CallbackContext
 from google.adk.tools import ToolContext 
 
 from ..shared_libraries import State
 
-import os 
-import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 from shared.post_processor import merge_dict_intelligently
+from shared.logging import logger
 
 async def _set_initial_state(callback_context: CallbackContext):
     items = State.model_fields.items()
@@ -31,11 +32,11 @@ async def memorize(data: dict[str, Any], tool_context: ToolContext):
         agent_name = tool_context.agent_name
         invocation_id = tool_context.invocation_id
         
-        print('-'*100)
-        print(f'Called memorize from {agent_name} with invocation_id {invocation_id}')
-        print(f'Data: {data}')
-        print(f'State: {tool_context.state}')
-        print('-'*100)
+        logger.info('-'*100)
+        logger.info(f'Agent {agent_name} with invocation_id {invocation_id} invoked `memorize` tool')
+        logger.info(f'Data: {data}')
+        logger.info(f'State: {tool_context.state}')
+        logger.info('-'*100)
         
         if not data or len(data) == 0:
             return {
@@ -58,7 +59,7 @@ async def memorize(data: dict[str, Any], tool_context: ToolContext):
             'message': 'Data merged successfully into state'
         }
     except Exception as e:
-        print("Error in memorize: ", str(e))
+        logger.error("Error in `memorize` function", exc_info=True)
         return {
             'status': 'error',
             'message': str(e)

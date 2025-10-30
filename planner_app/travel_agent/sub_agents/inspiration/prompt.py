@@ -66,15 +66,6 @@ You have access to the following tool:
 - Do not include system or reasoning notes in the response.
 - Output must always be a valid JSON as per the schema below.
 
-### CONTEXT BLOCKS
-<FINAL_TRIP>
-{final_trip?}
-</FINAL_TRIP>
-
-<USER_PROFILE>
-<user_profile> {user_profile?} </user_profile>
-</USER_PROFILE>
-
 ### RESPONSE FORMAT
 Always reply in valid JSON with this structure:
 ```json

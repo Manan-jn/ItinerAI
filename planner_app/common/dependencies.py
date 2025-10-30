@@ -1,5 +1,22 @@
 from fastapi import Request
-from ..models import SessionManager
+from google.adk.sessions import Session
 
-async def get_session_service(request: Request) -> SessionManager:
-    return request.app.state.session_service
+
+from ..models import SessionManager
+from ..shared.logging import logger
+from ..exceptions.base import AppException
+
+
+async def get_session_service(request: Request) -> Session:
+    try:
+        return request.app.state.session_manager.session_service
+    except Exception as e:
+        logger.error("Error in get_session_service", exc_info=True)
+        raise AppException(message=str(e))
+
+async def get_session_manager(request: Request) -> SessionManager:
+    try:
+        return request.app.state.session_manager
+    except Exception as e:
+        logger.error("Error in get_session_service", exc_info=True)
+        raise AppException(message=str(e))

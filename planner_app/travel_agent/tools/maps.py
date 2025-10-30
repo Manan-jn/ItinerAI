@@ -2,6 +2,7 @@ from google.adk.agents.llm_agent import LlmAgent
 from google.adk.tools.mcp_tool.mcp_toolset import MCPToolset
 from google.adk.tools.mcp_tool.mcp_session_manager import StdioConnectionParams
 from mcp import StdioServerParameters
+from shutil import which
 import os
 
 google_maps_api_key = os.environ.get("GOOGLE_MAPS_API_KEY", "")
