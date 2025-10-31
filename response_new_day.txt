@@ -1,0 +1,303 @@
+{
+    "user_id": "gu1aKNfzK9Zze6w1hvzuHLnJ1Vz1",
+    "session_id": "1000039085689012224",
+    "message": {
+        "response_type": "itinerary",
+        "message": "I've planned your second day, which includes a tour of the most magnificent monasteries and palaces around Leh. I've also cleared up the incorrect travel and stay details for this day to align with your selected trip.",
+        "itinerary": [
+            {
+                "day_number": 2,
+                "date": "2025-12-22",
+                "title": "Monastery Trail: Thiksey, Hemis & Shey",
+                "themes": [
+                    "Spirituality",
+                    "History",
+                    "Culture"
+                ],
+                "estimated_total_cost": 3500,
+                "summary": "A full day dedicated to exploring the spiritual and historical heart of Ladakh. You will visit the grand Hemis and Thiksey monasteries and the ancient Shey Palace, the former summer capital of Ladakhi kings.",
+                "highlights": [
+                    "Exploring the vast Hemis Monastery, the largest in Ladakh",
+                    "Witnessing the stunning architecture of Thiksey Monastery",
+                    "Visiting the historic Shey Palace and its giant Buddha statue"
+                ],
+                "schedule": [
+                    {
+                        "start_time": "08:00",
+                        "end_time": "09:00",
+                        "description": "Enjoy a hearty breakfast at your hotel and prepare for a day of exploration.",
+                        "activity_type": "eat",
+                        "place_name": "Hotel Kidar",
+                        "address": "Fort Road, Leh, Ladakh, India",
+                        "meal_type": "breakfast",
+                        "cuisine": "Multi-cuisine",
+                        "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJBb6k_0jr_TgRGA1r6wPTsTc",
+                        "lat": "34.160576",
+                        "long": "77.574821",
+                        "photos": [
+                            "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU5L9Gy9hxGpVgOetWEU0eiTjAktkMgEBxPFEshjPwi-hzQZUCISguIXMKSVO7CyeEzZOsHOEkdnV4Tcyq7OgVP-30lYeLLRkcWl_oU4ncNKZPA1y9b9H7FXKaSoaRemVGRJe8xwHZ63N_ZaJk6P_1JLw4b1_1kpgmv04Z3glD11hZj2-iQCGa58wnU1VdJEVRQGHXN9-E1pCVSgH4Z6TPpLCX9LAW4eS47JcUxAbfHGDOJUbY5R0Ddaux3URZ9s6Dx0M-S_OMZC10ihKN8XS_H5OZoVhfdMu2BS1wjk6OhXLfgp_SE&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                        ],
+                        "place_id": "ChIJBb6k_0jr_TgRGA1r6wPTsTc"
+                    },
+                    {
+                        "start_time": "09:00",
+                        "end_time": "10:00",
+                        "description": "Hire a local cab for the day. Start your journey to Hemis Monastery, the largest and wealthiest in Ladakh.",
+                        "activity_type": "travel",
+                        "conveyance_type": "cab",
+                        "fare": 2000,
+                        "duration_minutes": 53,
+                        "from_location": {
+                            "place_name": "Hotel Kidar",
+                            "address": "Fort Road, Leh, Ladakh, India",
+                            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJBb6k_0jr_TgRGA1r6wPTsTc",
+                            "lat": "34.160576",
+                            "long": "77.574821",
+                            "photos": [
+                                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU5L9Gy9hxGpVgOetWEU0eiTjAktkMgEBxPFEshjPwi-hzQZUCISguIXMKSVO7CyeEzZOsHOEkdnV4Tcyq7OgVP-30lYeLLRkcWl_oU4ncNKZPA1y9b9H7FXKaSoaRemVGRJe8xwHZ63N_ZaJk6P_1JLw4b1_1kpgmv04Z3glD11hZj2-iQCGa58wnU1VdJEVRQGHXN9-E1pCVSgH4Z6TPpLCX9LAW4eS47JcUxAbfHGDOJUbY5R0Ddaux3URZ9s6Dx0M-S_OMZC10ihKN8XS_H5OZoVhfdMu2BS1wjk6OhXLfgp_SE&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                            ],
+                            "place_id": "ChIJBb6k_0jr_TgRGA1r6wPTsTc"
+                        },
+                        "to_location": {
+                            "place_name": "Hemis Monastery",
+                            "address": "Hemis, Ladakh, India",
+                            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJB2FYgOX3_TgRxkNSQazROQg",
+                            "lat": "33.91264",
+                            "long": "77.70322",
+                            "photos": [
+                                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU7sMT5l4XIWwES-Ni_fL_Q9Ws5bnuFCe84h0u6DpF9IZAFwk-CI1iAFmv9h9J6zN3QxOcpD6ld69NQZH4hjRy4NGfDQgOWaMkUS7YFWX3hLAX8NLVIQmGDdvgXtKjT9kkjy2mIxxYVqzJFOGcG0Sqkrkk_X40dUE8de9u49oW3ZrPPDDQ6IrpUtrYCaK6K7HfRUH0VzpvchdASzz3q4YnUrI8SWvhDZxichTkVKohAsnihrtoUjqvCRH4Krq_5LTY0To6OQLejMjf5iPzVZWEkiBJXRXek7l9UEhj798PwSUrmo89R6w-uL26uMuTroWCq6UjmBxU7LQiCicLADty1ReELQWL7k1glKZddOS3l25j0s5PzIX2ZkYlOOnTb82Ydfn1dncXGs8VYLB-kgbEIGXRv9O5MReopqBOP_YUTYrTUTlGwyXaHFJ1YoGFEQCW0rYs1jdG2gGqCqBAaOUoF89BSAFM2wjmkN5huKwtmMzJ2-azwz9F1ltgiNF26z5VkZVr9CtwpDcWsWKHYKmXxvN52DH4Nvgfbcfziuwsb16FhwlVA3O8cPFAEmz9wrKJhL-c53_QOuuQ&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                            ],
+                            "place_id": "ChIJB2FYgOX3_TgRxkNSQazROQg"
+                        }
+                    },
+                    {
+                        "start_time": "10:00",
+                        "end_time": "12:00",
+                        "description": "Immerse yourself in the tranquility of Hemis Monastery. Explore its vast courtyards and visit the museum showcasing a rich collection of ancient relics.",
+                        "activity_type": "visit",
+                        "place_name": "Hemis Monastery",
+                        "address": "Hemis, Ladakh, India",
+                        "fare": 100,
+                        "opening_hours": {
+                            "open": "08:00",
+                            "close": "18:00"
+                        },
+                        "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJB2FYgOX3_TgRxkNSQazROQg",
+                        "lat": "33.91264",
+                        "long": "77.70322",
+                        "photos": [
+                            "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU7sMT5l4XIWwES-Ni_fL_Q9Ws5bnuFCe84h0u6DpF9IZAFwk-CI1iAFmv9h9J6zN3QxOcpD6ld69NQZH4hjRy4NGfDQgOWaMkUS7YFWX3hLAX8NLVIQmGDdvgXtKjT9kkjy2mIxxYVqzJFOGcG0Sqkrkk_X40dUE8de9u49oW3ZrPPDDQ6IrpUtrYCaK6K7HfRUH0VzpvchdASzz3q4YnUrI8SWvhDZxichTkVKohAsnihrtoUjqvCRH4Krq_5LTY0To6OQLejMjf5iPzVZWEkiBJXRXek7l9UEhj798PwSUrmo89R6w-uL26uMuTroWCq6UjmBxU7LQiCicLADty1ReELQWL7k1glKZddOS3l25j0s5PzIX2ZkYlOOnTb82Ydfn1dncXGs8VYLB-kgbEIGXRv9O5MReopqBOP_YUTYrTUTlGwyXaHFJ1YoGFEQCW0rYs1jdG2gGqCqBAaOUoF89BSAFM2wjmkN5huKwtmMzJ2-azwz9F1ltgiNF26z5VkZVr9CtwpDcWsWKHYKmXxvN52DH4Nvgfbcfziuwsb16FhwlVA3O8cPFAEmz9wrKJhL-c53_QOuuQ&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                        ],
+                        "place_id": "ChIJB2FYgOX3_TgRxkNSQazROQg"
+                    },
+                    {
+                        "start_time": "12:00",
+                        "end_time": "12:45",
+                        "description": "Travel from Hemis to Thiksey, enjoying the scenic views of the Indus Valley.",
+                        "activity_type": "travel",
+                        "conveyance_type": "cab",
+                        "duration_minutes": 33,
+                        "from_location": {
+                            "place_name": "Hemis Monastery",
+                            "address": "Hemis, Ladakh, India",
+                            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJB2FYgOX3_TgRxkNSQazROQg",
+                            "lat": "33.91264",
+                            "long": "77.70322",
+                            "photos": [
+                                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU7sMT5l4XIWwES-Ni_fL_Q9Ws5bnuFCe84h0u6DpF9IZAFwk-CI1iAFmv9h9J6zN3QxOcpD6ld69NQZH4hjRy4NGfDQgOWaMkUS7YFWX3hLAX8NLVIQmGDdvgXtKjT9kkjy2mIxxYVqzJFOGcG0Sqkrkk_X40dUE8de9u49oW3ZrPPDDQ6IrpUtrYCaK6K7HfRUH0VzpvchdASzz3q4YnUrI8SWvhDZxichTkVKohAsnihrtoUjqvCRH4Krq_5LTY0To6OQLejMjf5iPzVZWEkiBJXRXek7l9UEhj798PwSUrmo89R6w-uL26uMuTroWCq6UjmBxU7LQiCicLADty1ReELQWL7k1glKZddOS3l25j0s5PzIX2ZkYlOOnTb82Ydfn1dncXGs8VYLB-kgbEIGXRv9O5MReopqBOP_YUTYrTUTlGwyXaHFJ1YoGFEQCW0rYs1jdG2gGqCqBAaOUoF89BSAFM2wjmkN5huKwtmMzJ2-azwz9F1ltgiNF26z5VkZVr9CtwpDcWsWKHYKmXxvN52DH4Nvgfbcfziuwsb16FhwlVA3O8cPFAEmz9wrKJhL-c53_QOuuQ&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                            ],
+                            "place_id": "ChIJB2FYgOX3_TgRxkNSQazROQg"
+                        },
+                        "to_location": {
+                            "place_name": "Thiksey Monastery",
+                            "address": "Thiksey, Ladakh, India",
+                            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJG3vDl-Tx_TgRSvq54UndDfw",
+                            "lat": "34.0559137",
+                            "long": "77.6677625",
+                            "photos": [
+                                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU7FFG58RMuirWoDKW2TTDiYwg4IuXxC9YlSDKaWL5imNz0TsnMOwr3GOXtg8Fo10VeS-bkpAAW3Dd6qmeKiMC-N6RIY0yPauF6wbP-fqJNCRT3oOrl75xVYSPLW7MZSdQvPl_NgcmFrmruyHQrCnm5lSmF4wYMyz2JA5UfR-bSUyaJoFLjqcisJF23vW6TYyRoDAWlYq5WAQ1cVYjTS_iNl0kmoLjQ6EM38vcUlLAS9bNr4MquOuDEYDVXUelt8kgBWrcPFtOFS8qDZFqj2yITMNdcyZ4DmVy-sibRXj6mXTWmUTkVVbYsJOIF1BEwgcgS7nYsVgFibModWKZHebjbDs2VwuUMpWR6wdHInxdyG4p7Q0JAKRvdBRYS-SfOAcazD3HNUubsNsi3e2XTaipE08uAPmB6ww1q_vpUiHsQiDKHyPf8J2r5FtyoekYz8k404A_7HO_qsE_Eaqo0lqlHH3kKpCq5-53fjje0wA6OJNAKfcb_R-DXxvsOd8VHLZ8iKIx7yaFx18pagD1LZeR4DjXKgUdqK1SuT_kS9jsHBDf5FNfubMRCs_1ERMt7hmSIJjl8O&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                            ],
+                            "place_id": "ChIJG3vDl-Tx_TgRSvq54UndDfw"
+                        }
+                    },
+                    {
+                        "start_time": "12:45",
+                        "end_time": "14:15",
+                        "description": "Visit the magnificent Thiksey Monastery, known for its resemblance to the Potala Palace. Don't miss the 15-meter high statue of Maitreya Buddha.",
+                        "activity_type": "visit",
+                        "place_name": "Thiksey Monastery",
+                        "address": "Thiksey, Ladakh, India",
+                        "fare": 30,
+                        "opening_hours": {
+                            "open": "07:00",
+                            "close": "19:00"
+                        },
+                        "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJG3vDl-Tx_TgRSvq54UndDfw",
+                        "lat": "34.0559137",
+                        "long": "77.6677625",
+                        "photos": [
+                            "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU7FFG58RMuirWoDKW2TTDiYwg4IuXxC9YlSDKaWL5imNz0TsnMOwr3GOXtg8Fo10VeS-bkpAAW3Dd6qmeKiMC-N6RIY0yPauF6wbP-fqJNCRT3oOrl75xVYSPLW7MZSdQvPl_NgcmFrmruyHQrCnm5lSmF4wYMyz2JA5UfR-bSUyaJoFLjqcisJF23vW6TYyRoDAWlYq5WAQ1cVYjTS_iNl0kmoLjQ6EM38vcUlLAS9bNr4MquOuDEYDVXUelt8kgBWrcPFtOFS8qDZFqj2yITMNdcyZ4DmVy-sibRXj6mXTWmUTkVVbYsJOIF1BEwgcgS7nYsVgFibModWKZHebjbDs2VwuUMpWR6wdHInxdyG4p7Q0JAKRvdBRYS-SfOAcazD3HNUubsNsi3e2XTaipE08uAPmB6ww1q_vpUiHsQiDKHyPf8J2r5FtyoekYz8k404A_7HO_qsE_Eaqo0lqlHH3kKpCq5-53fjje0wA6OJNAKfcb_R-DXxvsOd8VHLZ8iKIx7yaFx18pagD1LZeR4DjXKgUdqK1SuT_kS9jsHBDf5FNfubMRCs_1ERMt7hmSIJjl8O&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                        ],
+                        "place_id": "ChIJG3vDl-Tx_TgRSvq54UndDfw"
+                    },
+                    {
+                        "start_time": "14:15",
+                        "end_time": "15:15",
+                        "description": "Enjoy a traditional Ladakhi lunch at a restaurant near Thiksey Monastery.",
+                        "activity_type": "eat",
+                        "place_name": "Chamba Hotel Restaurant",
+                        "address": "Thiksey, Ladakh, India",
+                        "meal_type": "lunch",
+                        "cuisine": "Tibetan",
+                        "menu_highlights": [
+                            "Thukpa",
+                            "Momos",
+                            "Skyu"
+                        ],
+                        "fare": 600,
+                        "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJf-QEMuXx_TgRMYumyOi2ZMk",
+                        "lat": "34.0533883",
+                        "long": "77.66583949999999",
+                        "photos": [
+                            "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU4nhDjJCxBGrRapzOMMaP7_MWYzf8aid6kncKvHcB5_aSOv0NuqkkYyI3YO5yVo0Rlww76ZI5XGadhG0ifKpALqwZBkvZYfd7bCLV0tKmrNukl1kM2Zs4PH848lx6rV44XtnXsOb5h3VRwz-vqoJGgsEVAjkdxeTN8XgsPRxFN87YCIlfRkrqZFlJilqjMruVW_03k3efhiZ3othtfNeUhnrjYKvaQVwxS5dawG0RojzpKDa7OU3cENv5sworX4Ib8RQu24FTol2ViSILN3Y8drZW2-8KEo42bd2BA_jzb98WCfvOvhs3PRdVg5UWOmeSj15OmWamAb2GtN9Ikevu9F9avLlivathqtVx41qQqrDYhuLjIce6zIOFIghXE25lHB96SruPrOtanjkUf4KvkmT18pjqYO-JDIrtxjKih_k_AJZAg4xxaRFvrTRcde_CtDvuTVu6Y-9ePxOxUEY4h7Ief9daEpHLfK9fDfTfhxm8_0jrrhR4Jzxp1lDpD5uNmtIJVqU7ww2d8k321AMAJA4b7BnM7u-BATUuQIi8_ZyrW2SbmUak0nV2KBtw&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                        ],
+                        "place_id": "ChIJf-QEMuXx_TgRMYumyOi2ZMk"
+                    },
+                    {
+                        "start_time": "15:15",
+                        "end_time": "15:30",
+                        "description": "A short drive to the historic Shey Palace.",
+                        "activity_type": "travel",
+                        "conveyance_type": "cab",
+                        "duration_minutes": 6,
+                        "from_location": {
+                            "place_name": "Thiksey Monastery",
+                            "address": "Thiksey, Ladakh, India",
+                            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJG3vDl-Tx_TgRSvq54UndDfw",
+                            "lat": "34.0559137",
+                            "long": "77.6677625",
+                            "photos": [
+                                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU7FFG58RMuirWoDKW2TTDiYwg4IuXxC9YlSDKaWL5imNz0TsnMOwr3GOXtg8Fo10VeS-bkpAAW3Dd6qmeKiMC-N6RIY0yPauF6wbP-fqJNCRT3oOrl75xVYSPLW7MZSdQvPl_NgcmFrmruyHQrCnm5lSmF4wYMyz2JA5UfR-bSUyaJoFLjqcisJF23vW6TYyRoDAWlYq5WAQ1cVYjTS_iNl0kmoLjQ6EM38vcUlLAS9bNr4MquOuDEYDVXUelt8kgBWrcPFtOFS8qDZFqj2yITMNdcyZ4DmVy-sibRXj6mXTWmUTkVVbYsJOIF1BEwgcgS7nYsVgFibModWKZHebjbDs2VwuUMpWR6wdHInxdyG4p7Q0JAKRvdBRYS-SfOAcazD3HNUubsNsi3e2XTaipE08uAPmB6ww1q_vpUiHsQiDKHyPf8J2r5FtyoekYz8k404A_7HO_qsE_Eaqo0lqlHH3kKpCq5-53fjje0wA6OJNAKfcb_R-DXxvsOd8VHLZ8iKIx7yaFx18pagD1LZeR4DjXKgUdqK1SuT_kS9jsHBDf5FNfubMRCs_1ERMt7hmSIJjl8O&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                            ],
+                            "place_id": "ChIJG3vDl-Tx_TgRSvq54UndDfw"
+                        },
+                        "to_location": {
+                            "place_name": "Shey Palace",
+                            "address": "Shey, Ladakh, India",
+                            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJOQbLEe3t_TgRSB_dbCSlsK4",
+                            "lat": "34.071575",
+                            "long": "77.6327604",
+                            "photos": [
+                                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU4e5k8sQolUs35B1sQ0BqxFhgGp0Jnyt-Idb6cUzyZWtU6gdEnwiECCVkFRD9kGp2rMMgP5tjHIKIiYC1K5s4CCgGRB2NuFPhznIpPiCav7luUvfy4O15dXIow5dCJQ6VUCIXiQ3ZtP_yVK0xgDsDDx_TYroTe30Wa1rb73DVxKCpUwqlGUsB_1KCKf1Fwnzk6ALQr7CgoDbxrChEvGw5XpDj6hQtuIxO4dYq9QlXVtR7UO7-nSK_QUFkW3xx_NfItzev1rxb54YF_-JjzUUOwlgFtyZXdppItsdsE8W4u9SN7_AWJJ8UTp27ImytmIqGRgVvJucQWy0r1V6InaD3vTwMmPhc2mC5khxg-3qJ-WlDldnYN8nNwFzHANsvyntu0iZzAx1P7CoALddMcBYUfy7tNlWKk_T0y5Zdtns3a8ZzDvhL4COLfh2imERuhZbCaC6oFagzyqAnmLyyiUZ93sQQph2S8bg-GUj9lSLvMD5yeN_kta0Mh_wRpovsaxpYMD3IScPNAnYFLF17kHVaGWui5-Ccp5miSRcMJvKorkiMr509yy2WOPX5moRZr6D5iQU1JcC9GGJg&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                            ],
+                            "place_id": "ChIJOQbLEe3t_TgRSB_dbCSlsK4"
+                        }
+                    },
+                    {
+                        "start_time": "15:30",
+                        "end_time": "17:00",
+                        "description": "Explore the ruins of Shey Palace, the former summer capital of Ladakh. Visit the monastery to see the large copper-gilt statue of a seated Buddha.",
+                        "activity_type": "visit",
+                        "place_name": "Shey Palace and Monastery",
+                        "address": "Shey, Ladakh, India",
+                        "fare": 30,
+                        "opening_hours": {
+                            "open": "06:00",
+                            "close": "18:00"
+                        },
+                        "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJR7JZArTt_TgRGj3Y4SCecGg",
+                        "lat": "34.0716582",
+                        "long": "77.6327901",
+                        "photos": [
+                            "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU4Exusa7bgGepUyVa8Wy9RFdEN9rkqAOal_ovbbT_5QCafTke7xkjuLom1jkXziWmvgqUwaAOXXtLR9wDknBlppRc2hsLbOFLjp1pamGjRiHYgko-49ZlCYZfpCbJQFK79Uf_Z_ZiLhdI1L8JbUDft5nQSLryMVUq0uJkAo3xwCUbvosWuZ-D_HxsqSosTiwAdgYRAiaAPrsg9c2TfoWHgxsh71V4lvbOrFe5NEkUAPBhlKovoXFEuguupSPjPkmS-cPABTBK0JBXisZH1g3c5vYNe3TOmsCcsNw8pe6K6EDxia4p60VQOs7gIiatq_YTZPl9564n8As5oAlPoPadrYek1MwWy0iwS2CN5VGMI-0jiwow5kTCq4iPuChiwuYpRixrLVkrz4wInkqyLWxq1enHLz-lUXRR-CSfrhVU8hzLddwfJefZPD4OYoBXLeOxJFWWQxd-Qw1Mv2z3j416uM9vmOfT0xa3trJKhEAVeNFKE2FN3s1tAYoebYLvWxMrHqbb-c6ZfPM7sLlpLSAtfO7jp6x7abGmwTmXF2dgQkrYXVjKsPHoguTScPnFiI81JJ9UZS&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                        ],
+                        "place_id": "ChIJR7JZArTt_TgRGj3Y4SCecGg"
+                    },
+                    {
+                        "start_time": "17:00",
+                        "end_time": "17:45",
+                        "description": "Drive back to Leh after a fulfilling day of sightseeing.",
+                        "activity_type": "travel",
+                        "conveyance_type": "cab",
+                        "duration_minutes": 23,
+                        "from_location": {
+                            "place_name": "Shey Palace",
+                            "address": "Shey, Ladakh, India",
+                            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJOQbLEe3t_TgRSB_dbCSlsK4",
+                            "lat": "34.071575",
+                            "long": "77.6327604",
+                            "photos": [
+                                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU4e5k8sQolUs35B1sQ0BqxFhgGp0Jnyt-Idb6cUzyZWtU6gdEnwiECCVkFRD9kGp2rMMgP5tjHIKIiYC1K5s4CCgGRB2NuFPhznIpPiCav7luUvfy4O15dXIow5dCJQ6VUCIXiQ3ZtP_yVK0xgDsDDx_TYroTe30Wa1rb73DVxKCpUwqlGUsB_1KCKf1Fwnzk6ALQr7CgoDbxrChEvGw5XpDj6hQtuIxO4dYq9QlXVtR7UO7-nSK_QUFkW3xx_NfItzev1rxb54YF_-JjzUUOwlgFtyZXdppItsdsE8W4u9SN7_AWJJ8UTp27ImytmIqGRgVvJucQWy0r1V6InaD3vTwMmPhc2mC5khxg-3qJ-WlDldnYN8nNwFzHANsvyntu0iZzAx1P7CoALddMcBYUfy7tNlWKk_T0y5Zdtns3a8ZzDvhL4COLfh2imERuhZbCaC6oFagzyqAnmLyyiUZ93sQQph2S8bg-GUj9lSLvMD5yeN_kta0Mh_wRpovsaxpYMD3IScPNAnYFLF17kHVaGWui5-Ccp5miSRcMJvKorkiMr509yy2WOPX5moRZr6D5iQU1JcC9GGJg&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                            ],
+                            "place_id": "ChIJOQbLEe3t_TgRSB_dbCSlsK4"
+                        },
+                        "to_location": {
+                            "place_name": "Hotel Kidar",
+                            "address": "Fort Road, Leh, Ladakh, India",
+                            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJBb6k_0jr_TgRGA1r6wPTsTc",
+                            "lat": "34.160576",
+                            "long": "77.574821",
+                            "photos": [
+                                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU5L9Gy9hxGpVgOetWEU0eiTjAktkMgEBxPFEshjPwi-hzQZUCISguIXMKSVO7CyeEzZOsHOEkdnV4Tcyq7OgVP-30lYeLLRkcWl_oU4ncNKZPA1y9b9H7FXKaSoaRemVGRJe8xwHZ63N_ZaJk6P_1JLw4b1_1kpgmv04Z3glD11hZj2-iQCGa58wnU1VdJEVRQGHXN9-E1pCVSgH4Z6TPpLCX9LAW4eS47JcUxAbfHGDOJUbY5R0Ddaux3URZ9s6Dx0M-S_OMZC10ihKN8XS_H5OZoVhfdMu2BS1wjk6OhXLfgp_SE&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                            ],
+                            "place_id": "ChIJBb6k_0jr_TgRGA1r6wPTsTc"
+                        }
+                    },
+                    {
+                        "start_time": "17:45",
+                        "end_time": "19:30",
+                        "description": "Return to your hotel to relax and unwind.",
+                        "activity_type": "rest",
+                        "place_name": "Hotel Kidar",
+                        "address": "Fort Road, Leh, Ladakh, India",
+                        "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJBb6k_0jr_TgRGA1r6wPTsTc",
+                        "lat": "34.160576",
+                        "long": "77.574821",
+                        "photos": [
+                            "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU5L9Gy9hxGpVgOetWEU0eiTjAktkMgEBxPFEshjPwi-hzQZUCISguIXMKSVO7CyeEzZOsHOEkdnV4Tcyq7OgVP-30lYeLLRkcWl_oU4ncNKZPA1y9b9H7FXKaSoaRemVGRJe8xwHZ63N_ZaJk6P_1JLw4b1_1kpgmv04Z3glD11hZj2-iQCGa58wnU1VdJEVRQGHXN9-E1pCVSgH4Z6TPpLCX9LAW4eS47JcUxAbfHGDOJUbY5R0Ddaux3URZ9s6Dx0M-S_OMZC10ihKN8XS_H5OZoVhfdMu2BS1wjk6OhXLfgp_SE&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                        ],
+                        "place_id": "ChIJBb6k_0jr_TgRGA1r6wPTsTc"
+                    },
+                    {
+                        "start_time": "19:30",
+                        "end_time": "21:00",
+                        "description": "Have dinner at a popular restaurant in Leh, offering a mix of cuisines.",
+                        "activity_type": "eat",
+                        "place_name": "Gesmo Restaurant",
+                        "address": "Fort Road, Leh, Ladakh, India",
+                        "meal_type": "dinner",
+                        "cuisine": "Multi-cuisine",
+                        "menu_highlights": [
+                            "Pizza",
+                            "Paranthas",
+                            "Yak cheese toast"
+                        ],
+                        "fare": 700,
+                        "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJR50DhT_r_TgRnxbXmOFgHjA",
+                        "lat": "34.163717",
+                        "long": "77.5827949",
+                        "photos": [
+                            "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU43OJmGfDtAlOGUKbOpo-XrQQZXg5qJ2s6vmJFwrPuzH2UVLJy-xZu2O0OPcV-mvdAdASWQLXGP3nfcgi824brnOAhxyIvO3QfGG31a7NGlhP77FrgWu_q67_1o20SQwgEFKtuKyFzVp4kG6PsShhj44MYujA0o989btS5dfMx5dKjG2JF2qFpE84VIUzrg02PRfL1zRyA50IZpKa6KMtLzbo9GrkkpRLI8oaVySngUnsZEOGrb6vSUeGRse4n_GDDPPkGJWYVSixHizdbnhp13EU6ERY0CrP8Dk6HqPLRzYU1W2HI&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                        ],
+                        "place_id": "ChIJR50DhT_r_TgRnxbXmOFgHjA"
+                    },
+                    {
+                        "start_time": "21:00",
+                        "end_time": "23:59",
+                        "description": "Rest for the night at your hotel.",
+                        "activity_type": "rest",
+                        "place_name": "Hotel Kidar",
+                        "address": "Fort Road, Leh, Ladakh, India",
+                        "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJBb6k_0jr_TgRGA1r6wPTsTc",
+                        "lat": "34.160576",
+                        "long": "77.574821",
+                        "photos": [
+                            "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU5L9Gy9hxGpVgOetWEU0eiTjAktkMgEBxPFEshjPwi-hzQZUCISguIXMKSVO7CyeEzZOsHOEkdnV4Tcyq7OgVP-30lYeLLRkcWl_oU4ncNKZPA1y9b9H7FXKaSoaRemVGRJe8xwHZ63N_ZaJk6P_1JLw4b1_1kpgmv04Z3glD11hZj2-iQCGa58wnU1VdJEVRQGHXN9-E1pCVSgH4Z6TPpLCX9LAW4eS47JcUxAbfHGDOJUbY5R0Ddaux3URZ9s6Dx0M-S_OMZC10ihKN8XS_H5OZoVhfdMu2BS1wjk6OhXLfgp_SE&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                        ],
+                        "place_id": "ChIJBb6k_0jr_TgRGA1r6wPTsTc"
+                    }
+                ]
+            }
+        ]
+    }
+}

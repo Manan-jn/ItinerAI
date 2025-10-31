@@ -215,16 +215,20 @@ export async function getDaysItinerary(
 export async function buildCompleteItinerary(
   userId: string,
   selectedTrip: any,
-  upToDayNumber: number
+  upToDayNumber: number,
+  itinerariesGenerated: any[] = [] // NEW: Array of generated itineraries
 ): Promise<DayItineraryData[]> {
   try {
-    const storedItinerary = await getGeneratedItinerary(userId);
     const completeItinerary: DayItineraryData[] = [];
 
     if (!selectedTrip || !selectedTrip.day_wise_plan) {
       console.warn("⚠️ No selectedTrip or day_wise_plan available");
       return [];
     }
+
+    console.log(
+      `📦 Building complete itinerary for days 1-${upToDayNumber} with ${itinerariesGenerated.length} generated itineraries`
+    );
 
     for (let dayNum = 1; dayNum <= upToDayNumber; dayNum++) {
       // Get day plan from selectedTrip
@@ -237,61 +241,65 @@ export async function buildCompleteItinerary(
         continue;
       }
 
-      // Get stored data for this day (user selections + AI responses)
-      const storedDayData = storedItinerary?.days?.find(
-        (d) => d.day_number === dayNum
+      // Check if there's a generated itinerary for this day
+      const generatedItinerary = itinerariesGenerated.find(
+        (itinerary: any) => itinerary.day_number === dayNum
       );
 
       // Check if this is a newly added day (should only have minimal structure)
       const isNewDay = (tripDayPlan as any).is_new_day === true;
 
       console.log(
-        `🔍 Building day ${dayNum} - is_new_day: ${isNewDay}`
+        `🔍 Building day ${dayNum} - is_new_day: ${isNewDay}, has_generated: ${!!generatedItinerary}`
       );
 
       let completeDayData: DayItineraryData;
 
-      if (isNewDay) {
-        // For newly added days, ONLY include day_number, conveyance_details, and stay_details
-        // Do NOT include must_do_activities or places_to_visit
+      if (generatedItinerary) {
+        // CASE: Day has generated itinerary - use it completely
         completeDayData = {
           day_number: dayNum,
-          // Only include conveyance and stay details
+          ...generatedItinerary,
+        };
+        console.log(
+          `✅ Using generated itinerary for day ${dayNum}`
+        );
+      } else if (isNewDay) {
+        // CASE: Newly added day - ONLY include day_number, conveyance_details, and stay_details
+        completeDayData = {
+          day_number: dayNum,
+          // Only include conveyance and stay details from selectedTrip
           ...(tripDayPlan.conveyance_details && {
             conveyance_details: { ...tripDayPlan.conveyance_details },
           }),
           ...(tripDayPlan.stay_details && {
             stay_details: { ...tripDayPlan.stay_details },
           }),
-          // Override with stored data (user selections) if available
-          ...storedDayData,
         };
         console.log(
           `📝 Minimal structure for newly added day ${dayNum} (conveyance + stay only)`
         );
       } else {
-        // For existing days, merge trip plan with stored data (stored data takes precedence)
+        // CASE: Regular day with user selections - include conveyance, stay, and trip plan info
         completeDayData = {
           day_number: dayNum,
-          // Start with trip plan data
+          // Include conveyance and stay from trip plan (user selected)
+          ...(tripDayPlan.conveyance_details && {
+            conveyance_details: { ...tripDayPlan.conveyance_details },
+          }),
+          ...(tripDayPlan.stay_details && {
+            stay_details: { ...tripDayPlan.stay_details },
+          }),
+          // Include must_do_activities and places_to_visit if present in trip plan
           ...(tripDayPlan.must_do_activities && {
             must_do_activities: tripDayPlan.must_do_activities,
           }),
           ...(tripDayPlan.places_to_visit && {
             places_to_visit: tripDayPlan.places_to_visit,
           }),
-          // Base conveyance and stay from trip plan
-          ...(tripDayPlan.conveyance_details && {
-            conveyance_details: { ...tripDayPlan.conveyance_details },
-          }),
-          ...(tripDayPlan.stay_details && {
-            stay_details: { ...tripDayPlan.stay_details },
-          }),
-          // Override with stored data (user selections + API generated data)
-          ...storedDayData,
         };
         console.log(
-          `📝 Full structure for existing day ${dayNum} (all fields)`
+          `📝 Regular day ${dayNum} with user selections from selectedTrip`
         );
       }
 

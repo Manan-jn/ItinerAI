@@ -103,12 +103,14 @@ export default function FlightsPageAuthenticated() {
   const [stayCheckOutDate, setStayCheckOutDate] = useState<string>(""); // YYYY-MM-DD format
   const [autoFillStaysMode, setAutoFillStaysMode] = useState<boolean>(false);
   const [currentDayNumber, setCurrentDayNumber] = useState<number>(1);
+  const [navigateToDay, setNavigateToDay] = useState<number | null>(null); // Day number to navigate to in ItineraryWidget
   const [selectedConveyances, setSelectedConveyances] = useState<{
     [key: number]: any;
   }>({});
   const [tempConveyanceSelection, setTempConveyanceSelection] =
     useState<any>(null); // Temporary storage for current day's conveyance
   const [itineraryData, setItineraryData] = useState<any>(null); // Store itinerary response
+  const [itinerariesGenerated, setItinerariesGenerated] = useState<any[]>([]); // Track all generated itineraries by day
   const [autoFillMode, setAutoFillMode] = useState<boolean>(false); // NEW: Auto-fill mode for FlightsWidget
   const [partialAutoFillMode, setPartialAutoFillMode] =
     useState<boolean>(false); // NEW: Partial auto-fill mode (only FROM and DATE locked)
@@ -686,16 +688,23 @@ export default function FlightsPageAuthenticated() {
   // Call itinerary API to generate detailed itinerary for a specific day
   const callItineraryAPI = async (
     dayNumber: number,
-    showLoaderScreen: boolean = true
+    showLoaderScreen: boolean = true,
+    isAddDayFlow: boolean = false, // NEW: Flag to indicate add day flow for navigation
+    overrideTrip?: any, // NEW: Override selectedTrip with fresh data
+    overrideItineraries?: any[] // NEW: Override itinerariesGenerated with fresh data
   ) => {
-    if (!selectedTrip || !userId || !sessionId) {
+    // Use overrides if provided, otherwise use state
+    const tripToUse = overrideTrip || selectedTrip;
+    const itinerariesToUse = overrideItineraries || itinerariesGenerated;
+
+    if (!tripToUse || !userId || !sessionId) {
       console.error("❌ Missing required data for itinerary API call");
       return;
     }
 
     try {
       // Calculate total days from trip
-      const totalDays = selectedTrip.day_wise_plan?.length || 1;
+      const totalDays = tripToUse.day_wise_plan?.length || 1;
 
       // Show loader with itinerary messages
       setIsLoadingItinerary(true);
@@ -715,11 +724,12 @@ export default function FlightsPageAuthenticated() {
         `📤 Calling itinerary API for day ${dayNumber} of ${totalDays} days`
       );
 
-      // Build complete itinerary from Firestore (includes all completed days)
+      // Build complete itinerary using tripToUse and itinerariesToUse
       const completeItinerary = await buildCompleteItinerary(
         userId,
-        selectedTrip,
-        dayNumber
+        tripToUse,
+        dayNumber,
+        itinerariesToUse // Pass generated itineraries
       );
 
       console.log(
@@ -862,11 +872,13 @@ export default function FlightsPageAuthenticated() {
           "day(s)"
         );
 
-        // Store ALL received days in Firestore
-        console.log("💾 Storing all received days to Firestore...");
+        // Update itinerariesGenerated with new days
+        console.log("💾 Updating itinerariesGenerated with new days...");
+        const updatedItinerariesGenerated = [...itinerariesGenerated];
+
         for (const dayData of itineraryPayload.itinerary) {
           try {
-            // Extract only the day structure needed for Firestore
+            // Extract day structure
             const dayToStore: DayItineraryData = {
               day_number: dayData.day_number,
               // Store the complete day data including schedule
@@ -892,17 +904,37 @@ export default function FlightsPageAuthenticated() {
               highlights: dayData.highlights,
             };
 
+            // Update or add to itinerariesGenerated
+            const existingIndex = updatedItinerariesGenerated.findIndex(
+              (it) => it.day_number === dayData.day_number
+            );
+
+            if (existingIndex !== -1) {
+              // Replace existing day
+              updatedItinerariesGenerated[existingIndex] = dayToStore;
+              console.log(`✅ Updated day ${dayData.day_number} in itinerariesGenerated`);
+            } else {
+              // Add new day
+              updatedItinerariesGenerated.push(dayToStore);
+              console.log(`✅ Added day ${dayData.day_number} to itinerariesGenerated`);
+            }
+
+            // Also store in Firestore for backup
             await storeDayItinerary(userId, sessionId, dayToStore);
-            console.log(`✅ Stored day ${dayData.day_number} in Firestore`);
           } catch (storeError) {
             console.error(
-              `❌ Failed to store day ${dayData.day_number}:`,
+              `❌ Failed to process day ${dayData.day_number}:`,
               storeError
             );
-            // Continue storing other days even if one fails
+            // Continue processing other days even if one fails
           }
         }
-        console.log("✅ All days stored in Firestore");
+
+        // Update state with all generated itineraries
+        setItinerariesGenerated(updatedItinerariesGenerated);
+        console.log(
+          `✅ itinerariesGenerated now has ${updatedItinerariesGenerated.length} day(s)`
+        );
       } else {
         console.warn(
           "⚠️ Unexpected itinerary response format:",
@@ -911,23 +943,32 @@ export default function FlightsPageAuthenticated() {
         console.warn("⚠️ Payload structure:", itineraryPayload);
       }
 
-      if (showLoaderScreen) {
-        // Hide loader after minimum display time
-        setTimeout(() => {
-          setShowTripLoader(false);
-          setIsLoadingItinerary(false);
-
-          setTimeout(() => {
-            setIsParsingTrips(false);
-            // Show itinerary widget
-            setShowItinerary(true);
-            console.log("✅ Showing itinerary widget");
-          }, 700);
-        }, 4000);
-      } else {
-        // Just hide loading state if called from within itinerary
+      // Hide loader after minimum display time
+      setTimeout(() => {
+        setShowTripLoader(false);
         setIsLoadingItinerary(false);
-      }
+
+        setTimeout(() => {
+          setIsParsingTrips(false);
+          // Show itinerary widget
+          setShowItinerary(true);
+          console.log("✅ Showing itinerary widget");
+
+          // If this is add day flow, navigate to the newly added day
+          if (isAddDayFlow) {
+            console.log(`🔍 Setting navigation target to day ${dayNumber} (add day flow)`);
+            // Set navigation target after itinerary is shown
+            setTimeout(() => {
+              setNavigateToDay(dayNumber);
+
+              // Reset navigation target after a short delay to allow future navigation
+              setTimeout(() => {
+                setNavigateToDay(null);
+              }, 1000);
+            }, 100);
+          }
+        }, 700);
+      }, 4000);
     } catch (error) {
       console.error("❌ Error calling itinerary API:", error);
       setIsLoadingItinerary(false);
@@ -1225,6 +1266,36 @@ export default function FlightsPageAuthenticated() {
         `📊 Updated day_wise_plan has ${updatedTrip.day_wise_plan.length} days`
       );
 
+      // Also update itinerariesGenerated array - shift subsequent days
+      console.log("📦 Updating itinerariesGenerated to shift subsequent days...");
+      const updatedItinerariesGenerated = itinerariesGenerated.map(
+        (itinerary) => {
+          // If this itinerary is for a day >= newDayNumber, increment its day_number
+          if (itinerary.day_number >= newDayNumber) {
+            console.log(
+              `  Shifting day ${itinerary.day_number} → ${itinerary.day_number + 1}`
+            );
+            return {
+              ...itinerary,
+              day_number: itinerary.day_number + 1,
+            };
+          }
+          return itinerary;
+        }
+      );
+
+      // Insert empty placeholder for new day (will be filled after conveyance/stay selection)
+      const newDayItinerary = {
+        day_number: newDayNumber,
+        // Will be populated with conveyance_details and stay_details later
+      };
+      updatedItinerariesGenerated.splice(newDayNumber - 1, 0, newDayItinerary);
+
+      setItinerariesGenerated(updatedItinerariesGenerated);
+      console.log(
+        `✅ itinerariesGenerated updated, now has ${updatedItinerariesGenerated.length} day(s)`
+      );
+
       // Store updated trip in Firestore
       await storeSelectedTrip(userId, sessionId, updatedTrip);
       setSelectedTrip(updatedTrip);
@@ -1263,12 +1334,12 @@ export default function FlightsPageAuthenticated() {
             "Comparing prices and timings",
           ]);
 
-          console.log("🔄 Closing itinerary and showing loader");
+          console.log("🔄 Closing itinerary and showing loader for add day flow");
 
-          // Close itinerary widget
+          // Close itinerary widget to show FlightsWidget
           setShowItinerary(false);
 
-          // Show trip loader
+          // Show trip loader before FlightsWidget
           setShowTripLoader(true);
           setIsParsingTrips(true);
 
@@ -1813,20 +1884,23 @@ export default function FlightsPageAuthenticated() {
       );
       setTempConveyanceSelection(selectedConveyanceData);
 
-      // Add a message to chat
-      const conveyanceMessage = {
-        id: Date.now().toString(),
-        content: `Selected ${selectedConveyanceData.operator} ${selectedConveyanceData.number} for Day ${currentDayNumber} (${conveyanceFromCity} to ${conveyanceToCity})`,
-        role: "user" as const,
-        timestamp: new Date(),
-        metadata: {
-          action: "conveyance_selected",
-          day_number: currentDayNumber,
-          conveyance: selectedConveyanceData,
-        },
-      };
+      // Skip adding chat message for add day flow (in partial auto-fill mode)
+      // Only add chat messages for regular conveyance selection flow
+      if (!partialAutoFillMode) {
+        const conveyanceMessage = {
+          id: Date.now().toString(),
+          content: `Selected ${selectedConveyanceData.operator} ${selectedConveyanceData.number} for Day ${currentDayNumber} (${conveyanceFromCity} to ${conveyanceToCity})`,
+          role: "user" as const,
+          timestamp: new Date(),
+          metadata: {
+            action: "conveyance_selected",
+            day_number: currentDayNumber,
+            conveyance: selectedConveyanceData,
+          },
+        };
 
-      setMessages((prev) => [...prev, conveyanceMessage]);
+        setMessages((prev) => [...prev, conveyanceMessage]);
+      }
 
       // Close flights widget
       setShowFlights(false);
@@ -2005,6 +2079,40 @@ export default function FlightsPageAuthenticated() {
           `✅ Day ${currentDayNumber} requires stay, showing loader...`
         );
 
+        // Update selectedTrip with complete conveyance details
+        const updatedTrip = { ...selectedTrip };
+        const dayIndex = updatedTrip.day_wise_plan?.findIndex(
+          (d: any) => d.day_number === currentDayNumber
+        );
+
+        if (dayIndex !== -1 && updatedTrip.day_wise_plan) {
+          updatedTrip.day_wise_plan[dayIndex].conveyance_details = {
+            is_required: true,
+            from_city: selectedConveyanceData.from_city || conveyanceFromCity,
+            to_city: selectedConveyanceData.to_city || conveyanceToCity,
+            type: selectedConveyanceData.operator.includes("Train")
+              ? "train"
+              : selectedConveyanceData.operator.includes("Bus")
+              ? "bus"
+              : "flight",
+            number: selectedConveyanceData.number,
+            operator: selectedConveyanceData.operator,
+            departure_date: selectedConveyanceData.departureDate,
+            departure_time: selectedConveyanceData.departureTime,
+            arrival_date: selectedConveyanceData.arrivalDate,
+            arrival_time: selectedConveyanceData.arrivalTime,
+            duration: selectedConveyanceData.duration,
+            price: selectedConveyanceData.price,
+          };
+
+          // Store updated trip
+          await storeSelectedTrip(userId, sessionId, updatedTrip);
+          setSelectedTrip(updatedTrip);
+          console.log(
+            `✅ Updated selectedTrip with conveyance details for day ${currentDayNumber}`
+          );
+        }
+
         // Extract city for stay
         let stayCity = currentDay.stay_details.city || "";
 
@@ -2101,13 +2209,17 @@ export default function FlightsPageAuthenticated() {
         `❌ Day ${currentDayNumber} does not require stay - passing conveyance data to itinerary API`
       );
 
-      // Build current_itinerary for current day with conveyance only
-      const currentItineraryDay = {
-        day_number: currentDayNumber,
-        conveyance_details: {
+      // Update selectedTrip with complete conveyance details
+      const updatedTrip = { ...selectedTrip };
+      const dayIndex = updatedTrip.day_wise_plan?.findIndex(
+        (d: any) => d.day_number === currentDayNumber
+      );
+
+      if (dayIndex !== -1 && updatedTrip.day_wise_plan) {
+        updatedTrip.day_wise_plan[dayIndex].conveyance_details = {
           is_required: true,
-          from_city: currentDay.conveyance_details.from_city,
-          to_city: currentDay.conveyance_details.to_city,
+          from_city: selectedConveyanceData.from_city || conveyanceFromCity,
+          to_city: selectedConveyanceData.to_city || conveyanceToCity,
           type: selectedConveyanceData.operator.includes("Train")
             ? "train"
             : selectedConveyanceData.operator.includes("Bus")
@@ -2121,9 +2233,22 @@ export default function FlightsPageAuthenticated() {
           arrival_time: selectedConveyanceData.arrivalTime,
           duration: selectedConveyanceData.duration,
           price: selectedConveyanceData.price,
-          selected_from_city: conveyanceFromCity,
-          selected_to_city: conveyanceToCity,
-        },
+        };
+
+        // Store updated trip
+        await storeSelectedTrip(userId, sessionId, updatedTrip);
+        setSelectedTrip(updatedTrip);
+        console.log(
+          `✅ Updated selectedTrip with conveyance details for day ${currentDayNumber}`
+        );
+      }
+
+      // Build current_itinerary for current day with conveyance only
+      // Use updated trip data
+      const updatedCurrentDay = updatedTrip.day_wise_plan[dayIndex];
+      const currentItineraryDay = {
+        day_number: currentDayNumber,
+        conveyance_details: updatedCurrentDay.conveyance_details,
         // Include other day info if present
         ...(currentDay.must_do_activities && {
           must_do_activities: currentDay.must_do_activities,
@@ -2279,20 +2404,64 @@ export default function FlightsPageAuthenticated() {
       );
       console.log(`✅ Stored day ${currentDayNumber} itinerary in Firestore`);
 
-      // Add a message to chat
-      const stayMessage = {
-        id: Date.now().toString(),
-        content: `Selected ${selectedStayData.property_name} for Day ${currentDayNumber} in ${selectedStayData.city}`,
-        role: "user" as const,
-        timestamp: new Date(),
-        metadata: {
-          action: "stay_selected",
-          day_number: currentDayNumber,
-          stay: selectedStayData,
-        },
-      };
+      // Update selectedTrip with complete stay details
+      const updatedTrip = { ...selectedTrip };
+      const dayIndex = updatedTrip.day_wise_plan?.findIndex(
+        (d: any) => d.day_number === currentDayNumber
+      );
 
-      setMessages((prev) => [...prev, stayMessage]);
+      if (dayIndex !== -1 && updatedTrip.day_wise_plan) {
+        updatedTrip.day_wise_plan[dayIndex].stay_details = {
+          ...currentItineraryDay.stay_details,
+        };
+
+        // Store updated trip
+        await storeSelectedTrip(userId, sessionId, updatedTrip);
+        setSelectedTrip(updatedTrip);
+        console.log(
+          `✅ Updated selectedTrip with stay details for day ${currentDayNumber}`
+        );
+      }
+
+      // Update itinerariesGenerated with the new day's conveyance and stay details
+      if (isNewDay) {
+        console.log(`📦 Updating itinerariesGenerated for new day ${currentDayNumber}`);
+        const updatedItinerariesGenerated = [...itinerariesGenerated];
+        const dayIndex = updatedItinerariesGenerated.findIndex(
+          (it) => it.day_number === currentDayNumber
+        );
+
+        if (dayIndex !== -1) {
+          // Update the placeholder with actual data
+          updatedItinerariesGenerated[dayIndex] = {
+            day_number: currentDayNumber,
+            conveyance_details: currentItineraryDay.conveyance_details,
+            stay_details: currentItineraryDay.stay_details,
+          };
+          setItinerariesGenerated(updatedItinerariesGenerated);
+          console.log(`✅ Updated itinerariesGenerated for day ${currentDayNumber}`);
+        }
+      }
+
+      // Skip adding chat message for add day flow
+      // Check if this is from add day flow by looking at the day's is_new_day flag
+      if (!isNewDay) {
+        const stayMessage = {
+          id: Date.now().toString(),
+          content: `Selected ${selectedStayData.property_name} for Day ${currentDayNumber} in ${selectedStayData.city}`,
+          role: "user" as const,
+          timestamp: new Date(),
+          metadata: {
+            action: "stay_selected",
+            day_number: currentDayNumber,
+            stay: selectedStayData,
+          },
+        };
+
+        setMessages((prev) => [...prev, stayMessage]);
+      } else {
+        console.log("📝 Skipping chat message for add day flow");
+      }
 
       // Clear temporary conveyance selection
       setTempConveyanceSelection(null);
@@ -2300,9 +2469,57 @@ export default function FlightsPageAuthenticated() {
       // Close stays widget
       setShowStays(false);
 
-      // Call itinerary API (will retrieve complete itinerary from Firestore)
-      console.log("📞 Calling itinerary API for day", currentDayNumber);
-      await callItineraryAPI(currentDayNumber, true);
+      // For add day flow, show loader before calling itinerary API
+      if (isNewDay) {
+        console.log(`📝 Add day flow - showing loader before itinerary generation`);
+
+        // Set loader messages for itinerary generation
+        setConveyanceLoaderMessages([
+          `Creating your detailed itinerary for day ${currentDayNumber}`,
+          "Analyzing your preferences and selections",
+          "Optimizing your schedule",
+          "Adding personalized recommendations",
+        ]);
+
+        setShowTripLoader(true);
+        setIsParsingTrips(true);
+
+        // Get the updated itinerariesGenerated array after adding conveyance/stay
+        const updatedItinerariesGeneratedForAPI = [...itinerariesGenerated];
+        const apiDayIndex = updatedItinerariesGeneratedForAPI.findIndex(
+          (it) => it.day_number === currentDayNumber
+        );
+        if (apiDayIndex !== -1) {
+          updatedItinerariesGeneratedForAPI[apiDayIndex] = {
+            day_number: currentDayNumber,
+            conveyance_details: currentItineraryDay.conveyance_details,
+            stay_details: currentItineraryDay.stay_details,
+          };
+        }
+
+        // Wait for loader to show, then call API with fresh data
+        setTimeout(async () => {
+          console.log(`📞 Calling itinerary API for day ${currentDayNumber} (add day flow)`);
+          console.log(`📦 Passing updatedTrip and updatedItineraries to API`);
+          // Pass the updated trip and itineraries directly to avoid stale state
+          await callItineraryAPI(
+            currentDayNumber,
+            true,
+            true,
+            updatedTrip, // Pass fresh trip data
+            updatedItinerariesGeneratedForAPI // Pass fresh itineraries data
+          );
+        }, 500);
+      } else {
+        // Regular flow (not add day)
+        console.log(`📞 Calling itinerary API for day ${currentDayNumber} (regular flow)`);
+        await callItineraryAPI(
+          currentDayNumber,
+          true,
+          false,
+          updatedTrip // Pass fresh trip data
+        );
+      }
     } catch (error) {
       console.error("❌ Error handling stay selection:", error);
       alert("Failed to save stay selection. Please try again.");
@@ -3189,6 +3406,7 @@ export default function FlightsPageAuthenticated() {
                       totalDays={selectedTrip?.day_wise_plan?.length || 1}
                       isLoadingNextDay={isLoadingItinerary}
                       onAddDay={handleAddDay}
+                      navigateToDayNumber={navigateToDay}
                     />
                   </div>
                 ) : showDateSelector ? (

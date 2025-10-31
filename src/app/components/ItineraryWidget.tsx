@@ -74,6 +74,7 @@ interface ItineraryWidgetProps {
     needsConveyance: boolean,
     currentDayNumber: number
   ) => Promise<void>; // NEW: Callback to add new day
+  navigateToDayNumber?: number | null; // NEW: Day number to navigate to (1-based)
 }
 
 // Helper function to transform API response to display format
@@ -275,6 +276,7 @@ export default function ItineraryWidget({
   totalDays = 1,
   isLoadingNextDay = false,
   onAddDay,
+  navigateToDayNumber = null,
 }: ItineraryWidgetProps) {
   const [currentDayIndex, setCurrentDayIndex] = useState(0);
   const [chatInput, setChatInput] = useState("");
@@ -363,6 +365,22 @@ export default function ItineraryWidget({
       }
     }
   }, [itineraryResponse]);
+
+  // Handle navigation to specific day number (for add day flow)
+  useEffect(() => {
+    if (navigateToDayNumber !== null && itineraryData) {
+      // Convert day number (1-based) to array index (0-based)
+      const targetIndex = navigateToDayNumber - 1;
+
+      // Verify the day exists in the data
+      if (targetIndex >= 0 && targetIndex < itineraryData.days.length) {
+        console.log(`🔍 Navigating to day ${navigateToDayNumber} (index ${targetIndex})`);
+        setCurrentDayIndex(targetIndex);
+      } else {
+        console.warn(`⚠️ Cannot navigate to day ${navigateToDayNumber} - not found in itinerary data`);
+      }
+    }
+  }, [navigateToDayNumber, itineraryData]);
 
   if (!isVisible || !itineraryData) return null;
 
