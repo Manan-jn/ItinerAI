@@ -6,6 +6,7 @@ import ItinerAIChatBox from "./ItinerAIChatBox";
 import dynamic from "next/dynamic";
 import ExtendTripPopup from "./ExtendTripPopup";
 import ConveyanceRequirementPopup from "./ConveyanceRequirementPopup";
+import DaySlider from "./DaySlider";
 
 // Dynamically import the map component to avoid SSR issues
 const ItineraryMap = dynamic(() => import("./ItineraryMap"), {
@@ -285,6 +286,8 @@ export default function ItineraryWidget({
   const [showExtendTripPopup, setShowExtendTripPopup] = useState(false);
   const [showConveyancePopup, setShowConveyancePopup] = useState(false);
   const [pendingExtendTrip, setPendingExtendTrip] = useState(false);
+  const [loadingDayIndex, setLoadingDayIndex] = useState<number | null>(null);
+  const [pendingConveyanceDays, setPendingConveyanceDays] = useState<Set<number>>(new Set());
 
   // Load itinerary data from JSON or API response
   const [itineraryData, setItineraryData] = useState<ItineraryData | null>(
@@ -388,6 +391,11 @@ export default function ItineraryWidget({
   const hasNextDay = currentDayIndex < itineraryData.days.length - 1;
   const hasPrevDay = currentDayIndex > 0;
 
+  // Check if current day is a pending conveyance day
+  const currentDayNumber = currentDayIndex + 1;
+  const isPendingConveyanceDay = pendingConveyanceDays.has(currentDayNumber);
+  const isEmptyDay = !currentDay || isPendingConveyanceDay;
+
   const handleNextDay = async () => {
     if (hasNextDay) {
       setCurrentDayIndex(currentDayIndex + 1);
@@ -405,10 +413,90 @@ export default function ItineraryWidget({
     }
   };
 
-  // Handle add day button click
+  // Handle day selection from slider
+  const handleDaySelect = async (dayIndex: number) => {
+    const selectedDay = itineraryData!.days[dayIndex];
+
+    if (selectedDay) {
+      // Day data already exists, navigate immediately
+      setCurrentDayIndex(dayIndex);
+    } else {
+      // Day data doesn't exist, need to fetch it
+      const dayNumber = dayIndex + 1; // Convert to 1-based day number
+
+      if (dayNumber <= totalDays && onRequestNextDay) {
+        console.log(`🔄 Requesting itinerary for day ${dayNumber} from slider`);
+        setLoadingDayIndex(dayIndex);
+
+        try {
+          await onRequestNextDay(dayNumber);
+          // After successful fetch, navigate to the day
+          setCurrentDayIndex(dayIndex);
+        } catch (error) {
+          console.error(`❌ Failed to load day ${dayNumber}:`, error);
+        } finally {
+          setLoadingDayIndex(null);
+        }
+      }
+    }
+  };
+
+  // Handle add day button click (at end)
   const handleAddDayClick = () => {
     console.log("➕ Add day button clicked");
     setShowExtendTripPopup(true);
+  };
+
+  // Handle inserting a day after specific index
+  const handleInsertDay = (afterDayIndex: number) => {
+    const insertDayNumber = afterDayIndex + 2; // Insert after the day at afterDayIndex
+    console.log(`➕ Insert day ${insertDayNumber} after day ${afterDayIndex + 1}`);
+
+    // Mark this day as pending conveyance
+    setPendingConveyanceDays(prev => {
+      const newSet = new Set(prev);
+      newSet.add(insertDayNumber);
+      return newSet;
+    });
+
+    // Navigate to the newly inserted day after a brief delay for animation
+    setTimeout(() => {
+      setCurrentDayIndex(afterDayIndex + 1);
+    }, 300);
+  };
+
+  // Handle adding conveyance to pending day
+  const handleAddConveyanceToPendingDay = async (dayNumber: number) => {
+    console.log(`🚗 Adding conveyance for day ${dayNumber}`);
+
+    if (onAddDay) {
+      // Call the add day API with conveyance
+      await onAddDay(false, true, dayNumber - 1); // extendTrip=false, needsConveyance=true
+
+      // Remove from pending set
+      setPendingConveyanceDays(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(dayNumber);
+        return newSet;
+      });
+    }
+  };
+
+  // Handle removing pending day
+  const handleRemovePendingDay = (dayNumber: number) => {
+    console.log(`❌ Removing pending day ${dayNumber}`);
+
+    // Remove from pending set
+    setPendingConveyanceDays(prev => {
+      const newSet = new Set(prev);
+      newSet.delete(dayNumber);
+      return newSet;
+    });
+
+    // Navigate to previous day if we're on the removed day
+    if (currentDayIndex === dayNumber - 1 && currentDayIndex > 0) {
+      setCurrentDayIndex(currentDayIndex - 1);
+    }
   };
 
   // Handle extend trip popup - YES
@@ -487,53 +575,160 @@ export default function ItineraryWidget({
   };
 
   return (
-    <div className="h-full flex flex-col bg-white rounded-xl overflow-hidden">
-      {/* Main Content - Two Column Layout */}
-      <div className="flex-1 flex min-h-0">
-        {/* LEFT PANEL - Day Itinerary Details (Wider) */}
-        <div className="w-2/3 border-r border-gray-200 flex flex-col">
-          {/* Header Section - Enhanced */}
-          <div className="flex-shrink-0 p-6 border-b border-purple-100 bg-gradient-to-br from-purple-50 via-indigo-50 to-blue-50 relative overflow-hidden">
+    <div className="h-full flex flex-col bg-gradient-to-br from-gray-50 to-white rounded-xl overflow-hidden">
+      {/* Main Content - Two Column Layout with Reduced Height */}
+      <div className="flex-1 flex gap-4 p-4 min-h-0">
+        {/* LEFT PANEL - Day Itinerary Component (as separate styled component) */}
+        <div className="w-2/3 flex flex-col">
+          {/* Day Component - Separate styled container like Map */}
+          <div className="flex-1 bg-white rounded-2xl shadow-xl border-2 border-gray-200 overflow-hidden flex flex-col relative">
+            {isEmptyDay ? (
+              // Empty Day - Conveyance Card View
+              <>
+                {/* Empty State Content */}
+                <div className="flex-1 flex items-center justify-center p-8">
+                  <div className="max-w-md w-full">
+                    {/* Conveyance Card */}
+                    <div className="group relative bg-white/70 backdrop-blur-md rounded-2xl border-2 border-purple-300 shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden">
+                      {/* Remove Button - Corner on Card */}
+                      <button
+                        onClick={() => handleRemovePendingDay(currentDayNumber)}
+                        className="absolute -top-2 -right-2 z-50 w-9 h-9 bg-gradient-to-br from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 active:scale-95 flex items-center justify-center group/remove"
+                        title="Remove this day"
+                      >
+                        <svg
+                          className="w-4 h-4 text-white transition-transform group-hover/remove:rotate-90"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          strokeWidth={2.5}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M6 18L18 6M6 6l12 12"
+                          />
+                        </svg>
+                      </button>
+                      {/* Glassmorphic overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-purple-100/30 to-indigo-100/30 pointer-events-none"></div>
+
+                      <div className="relative z-10 p-6">
+                        {/* Icon */}
+                        <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg">
+                          <span className="text-3xl">🚗</span>
+                        </div>
+
+                        {/* Title */}
+                        <h3 className="text-lg font-bold text-gray-900 text-center mb-2">
+                          Day {currentDayNumber}
+                        </h3>
+
+                        {/* Message */}
+                        <p className="text-sm text-gray-600 text-center mb-6">
+                          Want to add conveyance options for this day?
+                        </p>
+
+                        {/* Important Note */}
+                        <div className="mb-4 p-3 bg-amber-50/80 backdrop-blur-sm border border-amber-300/50 rounded-lg">
+                          <div className="flex items-start gap-2">
+                            <div className="flex-shrink-0 mt-0.5">
+                              <svg
+                                className="w-4 h-4 text-amber-600"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                />
+                              </svg>
+                            </div>
+                            <p className="text-xs text-amber-900 font-medium leading-relaxed">
+                              <span className="font-bold">Note:</span> Adding conveyance will restructure the itinerary from this day onwards to optimize travel routes.
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Add Conveyance Button */}
+                        <button
+                          onClick={() => handleAddConveyanceToPendingDay(currentDayNumber)}
+                          className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white rounded-xl py-3 px-4 font-semibold shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 flex items-center justify-center gap-2 group/btn"
+                        >
+                          <svg
+                            className="w-5 h-5 transition-transform group-hover/btn:rotate-90"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            strokeWidth={2.5}
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M12 4v16m8-8H4"
+                            />
+                          </svg>
+                          <span>Add Conveyance</span>
+                        </button>
+                      </div>
+
+                      {/* Bottom accent */}
+                      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-indigo-600"></div>
+                    </div>
+                  </div>
+                </div>
+              </>
+            ) : (
+              // Normal Day View
+              <>
+            {/* Header Section - Compact */}
+            <div className="flex-shrink-0 p-4 border-b border-purple-100 bg-gradient-to-br from-purple-50 via-indigo-50 to-blue-50 relative overflow-hidden">
             {/* Background decoration */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-purple-200/30 to-transparent rounded-full blur-3xl"></div>
+            <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-br from-purple-200/20 to-transparent rounded-full blur-3xl"></div>
 
             <div className="relative z-10">
-              {/* Date Badge */}
-              <div className="inline-flex items-center gap-2 bg-white/90 backdrop-blur-md rounded-full px-4 py-2 mb-3 shadow-lg border-2 border-purple-200/50">
-                <span className="text-xs font-bold text-purple-600">
-                  📅 {currentDay.date}
-                </span>
+              {/* Date Badge and Title Row */}
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-3">
+                  <div className="inline-flex items-center gap-1.5 bg-white/90 backdrop-blur-md rounded-full px-3 py-1 shadow-md border border-purple-200/50">
+                    <span className="text-[10px] font-bold text-purple-600">
+                      📅 {currentDay.date}
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-extrabold text-gray-900 leading-tight">
+                    {currentDay.title}
+                  </h3>
+                </div>
               </div>
 
-              {/* Title */}
-              <h3 className="text-2xl font-extrabold text-gray-900 mb-2 leading-tight drop-shadow-sm">
-                {currentDay.title}
-              </h3>
-
-              {/* Subtitle */}
-              <p className="text-sm text-gray-700 mb-5 leading-relaxed font-medium">
-                {currentDay.subtitle}
-              </p>
-
-              {/* Stats Row - Enhanced */}
-              <div className="flex items-center gap-3 flex-wrap">
-                <div className="flex items-center gap-2 bg-white/80 backdrop-blur-md rounded-xl px-4 py-2 border-2 border-purple-200/50 shadow-md hover:shadow-lg transition-shadow">
-                  <span className="text-base">💰</span>
-                  <span className="text-xs font-bold text-gray-800">
-                    {currentDay.mapData.totalDistance}
-                  </span>
-                </div>
-                <div className="flex items-center gap-2 bg-white/80 backdrop-blur-md rounded-xl px-4 py-2 border-2 border-indigo-200/50 shadow-md hover:shadow-lg transition-shadow">
-                  <span className="text-base">📍</span>
-                  <span className="text-xs font-bold text-gray-800">
-                    {currentDay.mapData.plannedStops} stops
-                  </span>
-                </div>
-                <div className="flex items-center gap-2 bg-white/80 backdrop-blur-md rounded-xl px-4 py-2 border-2 border-blue-200/50 shadow-md hover:shadow-lg transition-shadow">
-                  <span className="text-base">🚗</span>
-                  <span className="text-xs font-bold text-gray-800">
-                    {currentDay.mapData.avgTravelTime}
-                  </span>
+              {/* Subtitle and Stats Row - Combined */}
+              <div className="flex items-center justify-between gap-3">
+                <p className="text-xs text-gray-600 leading-relaxed font-medium flex-1">
+                  {currentDay.subtitle}
+                </p>
+                {/* Stats Row - Compact */}
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1 bg-white/70 backdrop-blur-sm rounded-lg px-2 py-1 border border-purple-200/50">
+                    <span className="text-xs">💰</span>
+                    <span className="text-[10px] font-bold text-gray-800">
+                      {currentDay.mapData.totalDistance}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-1 bg-white/70 backdrop-blur-sm rounded-lg px-2 py-1 border border-indigo-200/50">
+                    <span className="text-xs">📍</span>
+                    <span className="text-[10px] font-bold text-gray-800">
+                      {currentDay.mapData.plannedStops}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-1 bg-white/70 backdrop-blur-sm rounded-lg px-2 py-1 border border-blue-200/50">
+                    <span className="text-xs">🚗</span>
+                    <span className="text-[10px] font-bold text-gray-800">
+                      {currentDay.mapData.avgTravelTime}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -986,162 +1181,57 @@ export default function ItineraryWidget({
               })}
             </div>
           </div>
-
-          {/* Bottom Navigation - Redesigned */}
-          <div className="flex-shrink-0 border-t border-gray-100 bg-gradient-to-r from-gray-50 to-white p-6">
-            <div className="flex items-center justify-between gap-4">
-              {/* Day Counter Badge */}
-              <div className="flex items-center gap-2 bg-gradient-to-r from-purple-50 to-indigo-50 border border-purple-200 rounded-full px-4 py-2 shadow-sm">
-                <span className="text-xs font-semibold text-gray-600">Day</span>
-                <span className="text-sm font-bold text-purple-600">
-                  {currentDay.day}/{totalDays}
-                </span>
-              </div>
-
-              {/* Center: Navigation Controls */}
-              <div className="flex items-center gap-3">
-                {/* Previous Arrow */}
-                <button
-                  onClick={handlePrevDay}
-                  disabled={!hasPrevDay}
-                  className={`group relative w-10 h-10 rounded-full transition-all duration-300 ${
-                    hasPrevDay
-                      ? "bg-white border-2 border-purple-300 hover:border-purple-500 hover:shadow-lg hover:scale-110 active:scale-95"
-                      : "bg-gray-100 border-2 border-gray-200 cursor-not-allowed opacity-50"
-                  }`}
-                  title="Previous Day"
-                >
-                  <svg
-                    className={`w-5 h-5 mx-auto transition-colors ${
-                      hasPrevDay
-                        ? "text-purple-600 group-hover:text-purple-700"
-                        : "text-gray-400"
-                    }`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    strokeWidth={2.5}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M15 19l-7-7 7-7"
-                    />
-                  </svg>
-                  {hasPrevDay && (
-                    <div className="absolute inset-0 rounded-full bg-purple-400 opacity-0 group-hover:opacity-20 transition-opacity"></div>
-                  )}
-                </button>
-
-                {/* Add Day Button */}
-                <button
-                  onClick={handleAddDayClick}
-                  className="group relative w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 shadow-md hover:shadow-xl transition-all duration-300 hover:scale-110 active:scale-95"
-                  title="Add New Day"
-                >
-                  <svg
-                    className="w-5 h-5 mx-auto text-white transition-transform group-hover:rotate-90"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    strokeWidth={2.5}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M12 4v16m8-8H4"
-                    />
-                  </svg>
-                  <div className="absolute inset-0 rounded-full bg-white opacity-0 group-hover:opacity-20 transition-opacity"></div>
-                </button>
-
-                {/* Next Arrow */}
-                <button
-                  onClick={handleNextDay}
-                  disabled={
-                    (!hasNextDay && currentDay.day >= totalDays) ||
-                    isLoadingNextDay
-                  }
-                  className={`group relative w-10 h-10 rounded-full transition-all duration-300 ${
-                    hasNextDay ||
-                    (currentDay.day < totalDays && !isLoadingNextDay)
-                      ? "bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 shadow-md hover:shadow-xl hover:scale-110 active:scale-95"
-                      : "bg-gray-100 border-2 border-gray-200 cursor-not-allowed opacity-50"
-                  }`}
-                  title="Next Day"
-                >
-                  {isLoadingNextDay ? (
-                    <div className="w-4 h-4 mx-auto border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                  ) : (
-                    <>
-                      <svg
-                        className={`w-5 h-5 mx-auto transition-colors ${
-                          hasNextDay || currentDay.day < totalDays
-                            ? "text-white"
-                            : "text-gray-400"
-                        }`}
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        strokeWidth={2.5}
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M9 5l7 7-7 7"
-                        />
-                      </svg>
-                      {(hasNextDay || currentDay.day < totalDays) && (
-                        <div className="absolute inset-0 rounded-full bg-white opacity-0 group-hover:opacity-20 transition-opacity"></div>
-                      )}
-                    </>
-                  )}
-                </button>
-              </div>
-
-              {/* Right: Ask ItinerAI Chatbox */}
-              <div className="flex-1 max-w-md">
-                <ItinerAIChatBox
-                  value={chatInput}
-                  onChange={setChatInput}
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    if (chatInput.trim()) {
-                      console.log("ItinerAI query:", chatInput);
-                      // Handle chat submission
-                      setChatInput("");
-                    }
-                  }}
-                  placeholder="Ask ItinerAI"
-                  theme="white"
-                  inputType="input"
-                />
-              </div>
-            </div>
+          </>
+            )}
           </div>
         </div>
 
         {/* RIGHT PANEL - Interactive Map */}
-        <div className="w-1/3 flex flex-col bg-gradient-to-br from-gray-50 to-gray-100">
-          {/* Map Section - Full Height with Glassmorphism */}
-          <div className="flex-1 p-4 flex-shrink-0">
-            <div className="relative h-full rounded-2xl overflow-hidden shadow-2xl border-2 border-white/50">
-              {/* Glassmorphic border effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-100/40 via-indigo-100/40 to-blue-100/40 backdrop-blur-3xl"></div>
-
-              {/* Map Component */}
-              <div className="relative h-full z-10">
-                <ItineraryMap
-                  stops={currentDay.stops}
-                  dayTitle={currentDay.title}
-                />
-              </div>
-
-              {/* Decorative glassmorphic corners */}
-              <div className="absolute top-0 left-0 w-24 h-24 bg-gradient-to-br from-purple-400/20 to-transparent rounded-br-full blur-2xl"></div>
-              <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-indigo-400/20 to-transparent rounded-tl-full blur-2xl"></div>
-            </div>
+        <div className="w-1/3 flex flex-col">
+          {/* Map Component - Separate styled container matching Day component */}
+          <div className="flex-1 bg-white rounded-2xl shadow-xl border-2 border-gray-200 overflow-hidden relative">
+            {/* Map */}
+            <ItineraryMap
+              stops={currentDay.stops}
+              dayTitle={currentDay.title}
+            />
           </div>
+        </div>
+      </div>
+
+      {/* Bottom Section - Day Slider and ChatBox */}
+      <div className="flex-shrink-0 p-4 pt-0">
+        {/* Day Slider - Styled Container */}
+        <div className="mb-3 bg-white/60 backdrop-blur-md rounded-2xl shadow-lg border border-gray-200/50 overflow-hidden">
+          <DaySlider
+            days={itineraryData.days}
+            currentDayIndex={currentDayIndex}
+            totalDays={totalDays}
+            onDaySelect={handleDaySelect}
+            onAddDay={handleAddDayClick}
+            onInsertDay={handleInsertDay}
+            loadingDayIndex={loadingDayIndex}
+            pendingConveyanceDays={pendingConveyanceDays}
+          />
+        </div>
+
+        {/* ChatBox - Centered */}
+        <div className="max-w-3xl mx-auto">
+          <ItinerAIChatBox
+            value={chatInput}
+            onChange={setChatInput}
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (chatInput.trim()) {
+                console.log("ItinerAI query:", chatInput);
+                // Handle chat submission
+                setChatInput("");
+              }
+            }}
+            placeholder="Ask ItinerAI about your itinerary..."
+            theme="white"
+            inputType="input"
+          />
         </div>
       </div>
 
