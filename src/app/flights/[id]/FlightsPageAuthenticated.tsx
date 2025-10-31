@@ -864,7 +864,47 @@ export default function FlightsPageAuthenticated() {
         itineraryPayload.response_type === "itinerary" &&
         itineraryPayload.itinerary
       ) {
-        setItineraryData(itineraryPayload);
+        // Merge with existing itineraryData instead of replacing
+        setItineraryData((prevData: any) => {
+          if (!prevData || !prevData.itinerary) {
+            // No previous data, use new data as-is
+            console.log("✅ Setting initial itinerary data");
+            return itineraryPayload;
+          }
+
+          // Merge itineraries: update existing days or add new days
+          const existingDays = prevData.itinerary;
+          const newDays = itineraryPayload.itinerary;
+
+          console.log(
+            `🔄 Merging itinerary data: ${existingDays.length} existing + ${newDays.length} new`
+          );
+
+          // Create a map of existing days by day_number
+          const dayMap = new Map();
+          existingDays.forEach((day: any) => dayMap.set(day.day_number, day));
+
+          // Update or add new days
+          newDays.forEach((day: any) => {
+            console.log(`📝 Updating/Adding day ${day.day_number}`);
+            dayMap.set(day.day_number, day);
+          });
+
+          // Convert back to array and sort by day_number
+          const mergedDays = Array.from(dayMap.values()).sort(
+            (a: any, b: any) => a.day_number - b.day_number
+          );
+
+          console.log(
+            `✅ Merged itinerary now has ${mergedDays.length} total day(s)`
+          );
+
+          return {
+            ...itineraryPayload,
+            itinerary: mergedDays,
+          };
+        });
+
         console.log("✅ Itinerary data stored successfully");
         console.log(
           "📊 Itinerary contains",
