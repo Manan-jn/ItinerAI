@@ -105,20 +105,22 @@ export default function DaySlider({
     };
   });
 
-  // Determine card size based on state
-  const getCardSize = (index: number, isActive: boolean) => {
+  // Use fixed size to prevent layout shifts - use transform scale instead
+  const getCardSize = () => {
+    return {
+      width: "w-28",
+      height: "h-24",
+    };
+  };
+
+  // Determine scale based on state
+  const getCardScale = (index: number, isActive: boolean) => {
     const isHovered = hoveredIndex === index;
 
     if (isExpanded || isActive || isHovered) {
-      return {
-        width: "w-28",
-        height: "h-24",
-      };
+      return "scale-100";
     }
-    return {
-      width: "w-20",
-      height: "h-16",
-    };
+    return "scale-[0.71]"; // 20/28 = 0.71 to achieve w-20 visual size
   };
 
   // Handle plus button click with animation
@@ -158,10 +160,12 @@ export default function DaySlider({
         >
           {allDayCards.map(
             ({ dayNumber, dayData, isActive, isLoading, isLoaded, isPending, index }, idx) => {
-              const size = getCardSize(index, isActive);
               const isHovered = hoveredIndex === index;
               const isPlusHovered = hoveredPlusIndex === idx;
               const isAnimating = animatingIndex === idx;
+
+              const size = getCardSize();
+              const scale = getCardScale(index, isActive);
 
               return (
                 <div
@@ -191,9 +195,12 @@ export default function DaySlider({
                           : "bg-gray-100/40 backdrop-blur-sm border border-dashed border-gray-300/50 hover:border-gray-400/50"
                       }
                       ${isLoading ? "cursor-wait" : "cursor-pointer"}
-                      ${isHovered && !isActive ? "scale-105" : "scale-100"}
-                      transform
+                      ${scale}
+                      transform will-change-transform
                     `}
+                    style={{
+                      transformOrigin: 'center'
+                    }}
                   >
                     {/* Glassmorphic overlay */}
                     <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-xl pointer-events-none"></div>
@@ -213,6 +220,32 @@ export default function DaySlider({
                           <div className="absolute inset-0 bg-purple-400 rounded-full animate-ping opacity-75"></div>
                         </div>
                       </div>
+                    )}
+
+                    {/* Delete Icon - Top Right */}
+                    {!isLoading && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          // TODO: Implement delete functionality
+                        }}
+                        className="absolute -top-2 -right-2 z-20 w-5 h-5 bg-gradient-to-br from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 rounded-full flex items-center justify-center shadow-md hover:shadow-lg transition-all duration-200 hover:scale-110 opacity-0 group-hover:opacity-100"
+                        title="Delete day"
+                      >
+                        <svg
+                          className="w-3 h-3 text-white"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          strokeWidth={2.5}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                          />
+                        </svg>
+                      </button>
                     )}
 
                     {/* Content */}

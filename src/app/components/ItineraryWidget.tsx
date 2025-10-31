@@ -590,10 +590,14 @@ export default function ItineraryWidget({
                   <div className="max-w-md w-full">
                     {/* Conveyance Card */}
                     <div className="group relative bg-white/70 backdrop-blur-md rounded-2xl border-2 border-purple-300 shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden">
-                      {/* Remove Button - Corner on Card */}
+                      {/* Remove Button - Corner on Card (1/4 inside, 3/4 outside) */}
                       <button
                         onClick={() => handleRemovePendingDay(currentDayNumber)}
-                        className="absolute -top-2 -right-2 z-50 w-9 h-9 bg-gradient-to-br from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 active:scale-95 flex items-center justify-center group/remove"
+                        className="absolute z-50 w-9 h-9 bg-gradient-to-br from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 active:scale-95 flex items-center justify-center group/remove"
+                        style={{
+                          top: '-1.6875rem',
+                          right: '-1.6875rem'
+                        }}
                         title="Remove this day"
                       >
                         <svg
@@ -614,13 +618,8 @@ export default function ItineraryWidget({
                       <div className="absolute inset-0 bg-gradient-to-br from-purple-100/30 to-indigo-100/30 pointer-events-none"></div>
 
                       <div className="relative z-10 p-6">
-                        {/* Icon */}
-                        <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg">
-                          <span className="text-3xl">🚗</span>
-                        </div>
-
                         {/* Title */}
-                        <h3 className="text-lg font-bold text-gray-900 text-center mb-2">
+                        <h3 className="text-lg font-bold text-gray-900 text-center mb-3 mt-2">
                           Day {currentDayNumber}
                         </h3>
 
