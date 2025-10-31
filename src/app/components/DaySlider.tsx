@@ -74,10 +74,10 @@ export default function DaySlider({
   const allDayNumbers = new Set<number>();
 
   // Add all existing day numbers
-  days.forEach(day => allDayNumbers.add(day.day));
+  days.forEach((day) => allDayNumbers.add(day.day));
 
   // Add all pending day numbers
-  pendingConveyanceDays.forEach(dayNum => allDayNumbers.add(dayNum));
+  pendingConveyanceDays.forEach((dayNum) => allDayNumbers.add(dayNum));
 
   // Add placeholder days up to totalDays
   for (let i = 1; i <= totalDays; i++) {
@@ -105,22 +105,21 @@ export default function DaySlider({
     };
   });
 
-  // Use fixed size to prevent layout shifts - use transform scale instead
-  const getCardSize = () => {
-    return {
-      width: "w-28",
-      height: "h-24",
-    };
-  };
-
-  // Determine scale based on state
-  const getCardScale = (index: number, isActive: boolean) => {
+  // Get actual card size (no scaling) to prevent layout shifts
+  const getCardSize = (index: number, isActive: boolean) => {
     const isHovered = hoveredIndex === index;
 
+    // Always use fixed sizes - no transform scaling
     if (isExpanded || isActive || isHovered) {
-      return "scale-100";
+      return {
+        width: "w-28",
+        height: "h-24",
+      };
     }
-    return "scale-[0.71]"; // 20/28 = 0.71 to achieve w-20 visual size
+    return {
+      width: "w-20",
+      height: "h-16",
+    };
   };
 
   // Handle plus button click with animation
@@ -138,7 +137,7 @@ export default function DaySlider({
 
   return (
     <div
-      className="relative transition-all duration-300 ease-out"
+      className="relative w-full"
       onMouseEnter={() => setIsExpanded(true)}
       onMouseLeave={() => {
         setIsExpanded(false);
@@ -146,11 +145,11 @@ export default function DaySlider({
         setHoveredPlusIndex(null);
       }}
     >
-      {/* Scroll Container - Centered with content width */}
-      <div className="flex justify-center">
+      {/* Scroll Container - Full width with horizontal scroll */}
+      <div className="w-full overflow-hidden">
         <div
           ref={scrollContainerRef}
-          className={`inline-flex items-center gap-2 overflow-x-auto scrollbar-hide scroll-smooth transition-all duration-300 max-w-full ${
+          className={`flex items-center gap-2 overflow-x-auto scrollbar-hide scroll-smooth w-full ${
             isExpanded ? "py-3 px-4" : "py-2 px-3"
           }`}
           style={{
@@ -159,13 +158,23 @@ export default function DaySlider({
           }}
         >
           {allDayCards.map(
-            ({ dayNumber, dayData, isActive, isLoading, isLoaded, isPending, index }, idx) => {
+            (
+              {
+                dayNumber,
+                dayData,
+                isActive,
+                isLoading,
+                isLoaded,
+                isPending,
+                index,
+              },
+              idx
+            ) => {
               const isHovered = hoveredIndex === index;
               const isPlusHovered = hoveredPlusIndex === idx;
               const isAnimating = animatingIndex === idx;
 
-              const size = getCardSize();
-              const scale = getCardScale(index, isActive);
+              const size = getCardSize(index, isActive);
 
               return (
                 <div
@@ -184,7 +193,7 @@ export default function DaySlider({
                     className={`
                       relative group flex flex-col items-center justify-center
                       ${size.width} ${size.height} rounded-xl
-                      transition-all duration-300 ease-out
+                      transition-all duration-200 ease-out
                       ${
                         isActive
                           ? "bg-white/80 backdrop-blur-md border-2 border-purple-500 shadow-lg shadow-purple-200/50 ring-2 ring-purple-300/30"
@@ -195,12 +204,7 @@ export default function DaySlider({
                           : "bg-gray-100/40 backdrop-blur-sm border border-dashed border-gray-300/50 hover:border-gray-400/50"
                       }
                       ${isLoading ? "cursor-wait" : "cursor-pointer"}
-                      ${scale}
-                      transform will-change-transform
                     `}
-                    style={{
-                      transformOrigin: 'center'
-                    }}
                   >
                     {/* Glassmorphic overlay */}
                     <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-xl pointer-events-none"></div>
@@ -251,7 +255,9 @@ export default function DaySlider({
                     {/* Content */}
                     <div
                       className={`text-center transition-all duration-200 relative z-10 ${
-                        (isExpanded || isActive || isHovered) ? "scale-100 opacity-100" : "scale-90 opacity-90"
+                        isExpanded || isActive || isHovered
+                          ? "scale-100 opacity-100"
+                          : "scale-90 opacity-90"
                       }`}
                     >
                       {isPending ? (
@@ -259,11 +265,11 @@ export default function DaySlider({
                           {/* Pending Day */}
                           <div
                             className={`font-bold mb-0.5 transition-all duration-200 ${
-                              (isExpanded || isActive || isHovered) ? "text-xs" : "text-[10px]"
+                              isExpanded || isActive || isHovered
+                                ? "text-xs"
+                                : "text-[10px]"
                             } ${
-                              isActive
-                                ? "text-purple-600"
-                                : "text-orange-600"
+                              isActive ? "text-purple-600" : "text-orange-600"
                             }`}
                           >
                             DAY {dayNumber}
@@ -291,7 +297,9 @@ export default function DaySlider({
                           {/* Day Number */}
                           <div
                             className={`font-bold mb-0.5 transition-all duration-200 ${
-                              (isExpanded || isActive || isHovered) ? "text-xs" : "text-[10px]"
+                              isExpanded || isActive || isHovered
+                                ? "text-xs"
+                                : "text-[10px]"
                             } ${
                               isActive
                                 ? "text-purple-600"
@@ -337,7 +345,9 @@ export default function DaySlider({
                           {/* Unloaded Day */}
                           <div
                             className={`font-bold text-gray-400 mb-0.5 ${
-                              (isExpanded || isHovered) ? "text-xs" : "text-[10px]"
+                              isExpanded || isHovered
+                                ? "text-xs"
+                                : "text-[10px]"
                             }`}
                           >
                             DAY {dayNumber}
@@ -357,38 +367,52 @@ export default function DaySlider({
                     )}
                   </button>
 
-                  {/* Plus Button Between Cards */}
+                  {/* Plus Button Between Cards - Fixed size to prevent layout shift */}
                   {idx < allDayCards.length - 1 ? (
-                    <button
-                      onClick={() => handlePlusClick(idx)}
-                      onMouseEnter={() => setHoveredPlusIndex(idx)}
-                      onMouseLeave={() => setHoveredPlusIndex(null)}
-                      className={`
-                        flex-shrink-0 rounded-full transition-all duration-300
-                        flex items-center justify-center group/plus
-                        ${isExpanded || isPlusHovered || isAnimating ? "mx-2 w-10 h-10 bg-gradient-to-br from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 shadow-md hover:shadow-lg" : "mx-0.5 w-6 h-6 bg-transparent"}
-                        ${isAnimating ? "scale-110 animate-pulse" : isPlusHovered ? "scale-110" : "scale-100"}
-                      `}
-                      title="Insert day here"
-                    >
-                      <svg
+                    <div className="flex-shrink-0 mx-2 w-10 h-10 flex items-center justify-center">
+                      <button
+                        onClick={() => handlePlusClick(idx)}
+                        onMouseEnter={() => setHoveredPlusIndex(idx)}
+                        onMouseLeave={() => setHoveredPlusIndex(null)}
                         className={`
+                          rounded-full transition-all duration-200
+                          flex items-center justify-center group/plus
+                          ${
+                            isExpanded || isPlusHovered || isAnimating
+                              ? "w-10 h-10 bg-gradient-to-br from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 shadow-md hover:shadow-lg"
+                              : "w-6 h-6 bg-gray-300/50"
+                          }
+                          ${
+                            isAnimating
+                              ? "scale-110 animate-pulse"
+                              : "scale-100"
+                          }
+                        `}
+                        title="Insert day here"
+                      >
+                        <svg
+                          className={`
                           transition-all duration-300
-                          ${isExpanded || isPlusHovered || isAnimating ? "w-5 h-5 text-white" : "w-3 h-3 text-gray-300"}
+                          ${
+                            isExpanded || isPlusHovered || isAnimating
+                              ? "w-5 h-5 text-white"
+                              : "w-3 h-3 text-gray-300"
+                          }
                           ${isPlusHovered ? "rotate-90" : "rotate-0"}
                         `}
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        strokeWidth={2.5}
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M12 4v16m8-8H4"
-                        />
-                      </svg>
-                    </button>
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          strokeWidth={2.5}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M12 4v16m8-8H4"
+                          />
+                        </svg>
+                      </button>
+                    </div>
                   ) : (
                     // Add Day Button (After last day)
                     <button

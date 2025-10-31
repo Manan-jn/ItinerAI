@@ -287,7 +287,9 @@ export default function ItineraryWidget({
   const [showConveyancePopup, setShowConveyancePopup] = useState(false);
   const [pendingExtendTrip, setPendingExtendTrip] = useState(false);
   const [loadingDayIndex, setLoadingDayIndex] = useState<number | null>(null);
-  const [pendingConveyanceDays, setPendingConveyanceDays] = useState<Set<number>>(new Set());
+  const [pendingConveyanceDays, setPendingConveyanceDays] = useState<
+    Set<number>
+  >(new Set());
 
   // Load itinerary data from JSON or API response
   const [itineraryData, setItineraryData] = useState<ItineraryData | null>(
@@ -377,10 +379,14 @@ export default function ItineraryWidget({
 
       // Verify the day exists in the data
       if (targetIndex >= 0 && targetIndex < itineraryData.days.length) {
-        console.log(`🔍 Navigating to day ${navigateToDayNumber} (index ${targetIndex})`);
+        console.log(
+          `🔍 Navigating to day ${navigateToDayNumber} (index ${targetIndex})`
+        );
         setCurrentDayIndex(targetIndex);
       } else {
-        console.warn(`⚠️ Cannot navigate to day ${navigateToDayNumber} - not found in itinerary data`);
+        console.warn(
+          `⚠️ Cannot navigate to day ${navigateToDayNumber} - not found in itinerary data`
+        );
       }
     }
   }, [navigateToDayNumber, itineraryData]);
@@ -450,10 +456,12 @@ export default function ItineraryWidget({
   // Handle inserting a day after specific index
   const handleInsertDay = (afterDayIndex: number) => {
     const insertDayNumber = afterDayIndex + 2; // Insert after the day at afterDayIndex
-    console.log(`➕ Insert day ${insertDayNumber} after day ${afterDayIndex + 1}`);
+    console.log(
+      `➕ Insert day ${insertDayNumber} after day ${afterDayIndex + 1}`
+    );
 
     // Mark this day as pending conveyance
-    setPendingConveyanceDays(prev => {
+    setPendingConveyanceDays((prev) => {
       const newSet = new Set(prev);
       newSet.add(insertDayNumber);
       return newSet;
@@ -474,7 +482,7 @@ export default function ItineraryWidget({
       await onAddDay(false, true, dayNumber - 1); // extendTrip=false, needsConveyance=true
 
       // Remove from pending set
-      setPendingConveyanceDays(prev => {
+      setPendingConveyanceDays((prev) => {
         const newSet = new Set(prev);
         newSet.delete(dayNumber);
         return newSet;
@@ -487,7 +495,7 @@ export default function ItineraryWidget({
     console.log(`❌ Removing pending day ${dayNumber}`);
 
     // Remove from pending set
-    setPendingConveyanceDays(prev => {
+    setPendingConveyanceDays((prev) => {
       const newSet = new Set(prev);
       newSet.delete(dayNumber);
       return newSet;
@@ -587,33 +595,34 @@ export default function ItineraryWidget({
               <>
                 {/* Empty State Content */}
                 <div className="flex-1 flex items-center justify-center p-8">
-                  <div className="max-w-md w-full">
+                  <div className="max-w-md w-full relative">
+                    {/* Remove Button - Corner on Container (Fully visible outside card) */}
+                    <button
+                      onClick={() => handleRemovePendingDay(currentDayNumber)}
+                      className="absolute z-50 w-9 h-9 bg-gradient-to-br from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 active:scale-95 flex items-center justify-center group/remove"
+                      style={{
+                        top: "-0.5rem",
+                        right: "-0.5rem",
+                      }}
+                      title="Remove this day"
+                    >
+                      <svg
+                        className="w-4 h-4 text-white transition-transform group-hover/remove:rotate-90"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        strokeWidth={2.5}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+
                     {/* Conveyance Card */}
                     <div className="group relative bg-white/70 backdrop-blur-md rounded-2xl border-2 border-purple-300 shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden">
-                      {/* Remove Button - Corner on Card (1/4 inside, 3/4 outside) */}
-                      <button
-                        onClick={() => handleRemovePendingDay(currentDayNumber)}
-                        className="absolute z-50 w-9 h-9 bg-gradient-to-br from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 active:scale-95 flex items-center justify-center group/remove"
-                        style={{
-                          top: '-1.6875rem',
-                          right: '-1.6875rem'
-                        }}
-                        title="Remove this day"
-                      >
-                        <svg
-                          className="w-4 h-4 text-white transition-transform group-hover/remove:rotate-90"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                          strokeWidth={2.5}
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M6 18L18 6M6 6l12 12"
-                          />
-                        </svg>
-                      </button>
                       {/* Glassmorphic overlay */}
                       <div className="absolute inset-0 bg-gradient-to-br from-purple-100/30 to-indigo-100/30 pointer-events-none"></div>
 
@@ -647,14 +656,18 @@ export default function ItineraryWidget({
                               </svg>
                             </div>
                             <p className="text-xs text-amber-900 font-medium leading-relaxed">
-                              <span className="font-bold">Note:</span> Adding conveyance will restructure the itinerary from this day onwards to optimize travel routes.
+                              <span className="font-bold">Note:</span> Adding
+                              conveyance will restructure the itinerary from
+                              this day onwards to optimize travel routes.
                             </p>
                           </div>
                         </div>
 
                         {/* Add Conveyance Button */}
                         <button
-                          onClick={() => handleAddConveyanceToPendingDay(currentDayNumber)}
+                          onClick={() =>
+                            handleAddConveyanceToPendingDay(currentDayNumber)
+                          }
                           className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white rounded-xl py-3 px-4 font-semibold shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 flex items-center justify-center gap-2 group/btn"
                         >
                           <svg
@@ -683,504 +696,509 @@ export default function ItineraryWidget({
             ) : (
               // Normal Day View
               <>
-            {/* Header Section - Compact */}
-            <div className="flex-shrink-0 p-4 border-b border-purple-100 bg-gradient-to-br from-purple-50 via-indigo-50 to-blue-50 relative overflow-hidden">
-            {/* Background decoration */}
-            <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-br from-purple-200/20 to-transparent rounded-full blur-3xl"></div>
+                {/* Header Section - Compact */}
+                <div className="flex-shrink-0 p-4 border-b border-purple-100 bg-gradient-to-br from-purple-50 via-indigo-50 to-blue-50 relative overflow-hidden">
+                  {/* Background decoration */}
+                  <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-br from-purple-200/20 to-transparent rounded-full blur-3xl"></div>
 
-            <div className="relative z-10">
-              {/* Date Badge and Title Row */}
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-3">
-                  <div className="inline-flex items-center gap-1.5 bg-white/90 backdrop-blur-md rounded-full px-3 py-1 shadow-md border border-purple-200/50">
-                    <span className="text-[10px] font-bold text-purple-600">
-                      📅 {currentDay.date}
-                    </span>
+                  <div className="relative z-10">
+                    {/* Date Badge and Title Row */}
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-3">
+                        <div className="inline-flex items-center gap-1.5 bg-white/90 backdrop-blur-md rounded-full px-3 py-1 shadow-md border border-purple-200/50">
+                          <span className="text-[10px] font-bold text-purple-600">
+                            📅 {currentDay.date}
+                          </span>
+                        </div>
+                        <h3 className="text-lg font-extrabold text-gray-900 leading-tight">
+                          {currentDay.title}
+                        </h3>
+                      </div>
+                    </div>
+
+                    {/* Subtitle and Stats Row - Combined */}
+                    <div className="flex items-center justify-between gap-3">
+                      <p className="text-xs text-gray-600 leading-relaxed font-medium flex-1">
+                        {currentDay.subtitle}
+                      </p>
+                      {/* Stats Row - Compact */}
+                      <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1 bg-white/70 backdrop-blur-sm rounded-lg px-2 py-1 border border-purple-200/50">
+                          <span className="text-xs">💰</span>
+                          <span className="text-[10px] font-bold text-gray-800">
+                            {currentDay.mapData.totalDistance}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-1 bg-white/70 backdrop-blur-sm rounded-lg px-2 py-1 border border-indigo-200/50">
+                          <span className="text-xs">📍</span>
+                          <span className="text-[10px] font-bold text-gray-800">
+                            {currentDay.mapData.plannedStops}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-1 bg-white/70 backdrop-blur-sm rounded-lg px-2 py-1 border border-blue-200/50">
+                          <span className="text-xs">🚗</span>
+                          <span className="text-[10px] font-bold text-gray-800">
+                            {currentDay.mapData.avgTravelTime}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <h3 className="text-lg font-extrabold text-gray-900 leading-tight">
-                    {currentDay.title}
-                  </h3>
                 </div>
-              </div>
 
-              {/* Subtitle and Stats Row - Combined */}
-              <div className="flex items-center justify-between gap-3">
-                <p className="text-xs text-gray-600 leading-relaxed font-medium flex-1">
-                  {currentDay.subtitle}
-                </p>
-                {/* Stats Row - Compact */}
-                <div className="flex items-center gap-2">
-                  <div className="flex items-center gap-1 bg-white/70 backdrop-blur-sm rounded-lg px-2 py-1 border border-purple-200/50">
-                    <span className="text-xs">💰</span>
-                    <span className="text-[10px] font-bold text-gray-800">
-                      {currentDay.mapData.totalDistance}
-                    </span>
+                {/* Scrollable Stops & Activities */}
+                <div
+                  className="flex-1 overflow-y-auto p-4 bg-gray-50 relative"
+                  onScroll={handleScroll}
+                >
+                  {/* Scroll Progress Indicator - Google Maps style dot */}
+                  <div className="absolute left-2 top-4 bottom-4 w-1 flex flex-col items-center z-20 pointer-events-none">
+                    {/* Track line */}
+                    <div className="w-[3px] h-full bg-gradient-to-b from-purple-200 via-indigo-200 to-purple-200 rounded-full opacity-30"></div>
+                    {/* Moving dot indicator */}
+                    <div
+                      className="absolute w-3 h-3 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-full shadow-lg border-2 border-white transition-all duration-200"
+                      style={{
+                        top: `${scrollProgress}%`,
+                        transform: "translateY(-50%)",
+                      }}
+                    >
+                      <div className="absolute inset-0 bg-purple-400 rounded-full animate-ping opacity-40"></div>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-1 bg-white/70 backdrop-blur-sm rounded-lg px-2 py-1 border border-indigo-200/50">
-                    <span className="text-xs">📍</span>
-                    <span className="text-[10px] font-bold text-gray-800">
-                      {currentDay.mapData.plannedStops}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1 bg-white/70 backdrop-blur-sm rounded-lg px-2 py-1 border border-blue-200/50">
-                    <span className="text-xs">🚗</span>
-                    <span className="text-[10px] font-bold text-gray-800">
-                      {currentDay.mapData.avgTravelTime}
-                    </span>
+
+                  {/* Timeline */}
+                  <div className="relative space-y-4 pl-6">
+                    {currentDay.stops.map((stop: any, index) => {
+                      const iconConfig = getStopIcon(stop.type);
+                      const isLast = index === currentDay.stops.length - 1;
+
+                      // Determine activity type from original data
+                      const activityType = stop.activity_type || "other";
+
+                      // Get image URL if available
+                      const imageUrl = stop.image_url || stop.photo_url || null;
+
+                      // Get location for maps URL
+                      const mapsUrl = getGoogleMapsUrl(
+                        stop.from_location || stop.to_location || stop
+                      );
+
+                      return (
+                        <div key={stop.id} className="relative">
+                          {/* Timeline connector */}
+                          {!isLast && (
+                            <div className="absolute left-10 top-20 bottom-[-16px] w-[2px] bg-gradient-to-b from-purple-300 via-indigo-200 to-purple-200 opacity-30"></div>
+                          )}
+
+                          {/* Category-Specific Activity Cards */}
+                          {activityType === "travel" ? (
+                            // TRAVEL CARD
+                            <div className="relative bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border-2 border-green-200 hover:border-green-400 group">
+                              <div className="flex items-start gap-3 p-4">
+                                {/* Time Badge */}
+                                <div className="flex flex-col items-center flex-shrink-0 w-14">
+                                  <div className="bg-gradient-to-br from-green-500 to-emerald-600 text-white rounded-xl px-2 py-1.5 text-center shadow-md">
+                                    <div className="text-[9px] font-bold uppercase tracking-wide opacity-90">
+                                      {parseInt(
+                                        stop.time.split(" - ")[0].split(":")[0]
+                                      ) >= 12
+                                        ? "PM"
+                                        : "AM"}
+                                    </div>
+                                    <div className="text-xs font-extrabold leading-tight">
+                                      {stop.time.split(" - ")[0]}
+                                    </div>
+                                  </div>
+                                  {stop.duration && (
+                                    <div className="mt-1.5 bg-green-100 rounded-md px-1.5 py-0.5 border border-green-300">
+                                      <span className="text-[8px] font-bold text-green-700">
+                                        {stop.duration}
+                                      </span>
+                                    </div>
+                                  )}
+                                </div>
+
+                                {/* Icon */}
+                                <div className="relative flex-shrink-0 mt-1">
+                                  <div className="w-11 h-11 bg-green-100 border-2 border-green-300 rounded-xl flex items-center justify-center text-lg shadow-md">
+                                    {stop.image}
+                                  </div>
+                                </div>
+
+                                {/* Content */}
+                                <div className="flex-1 min-w-0">
+                                  <div className="flex items-start justify-between gap-2 mb-1">
+                                    <h4 className="font-extrabold text-sm text-gray-900 leading-tight flex-1">
+                                      {stop.name}
+                                    </h4>
+                                    {imageUrl && (
+                                      <img
+                                        src={imageUrl}
+                                        alt={stop.name}
+                                        className="w-12 h-12 rounded-lg object-cover border-2 border-green-200 shadow-sm"
+                                      />
+                                    )}
+                                  </div>
+
+                                  {/* From → To */}
+                                  {(stop.from_location || stop.to_location) && (
+                                    <div className="flex items-center gap-1 mb-2 text-[10px] font-semibold text-gray-700">
+                                      <span className="bg-green-100 px-2 py-0.5 rounded-md">
+                                        {stop.from_location?.place_name ||
+                                          "Start"}
+                                      </span>
+                                      <span>→</span>
+                                      <span className="bg-emerald-100 px-2 py-0.5 rounded-md">
+                                        {stop.to_location?.place_name || "End"}
+                                      </span>
+                                    </div>
+                                  )}
+
+                                  <p className="text-xs text-gray-700 leading-relaxed mb-2 font-medium">
+                                    {stop.description}
+                                  </p>
+
+                                  {/* Travel Details */}
+                                  {stop.notes && (
+                                    <div className="bg-white/60 border border-green-300 rounded-lg px-2 py-1.5 mb-2">
+                                      <span className="text-[10px] text-green-900 font-bold leading-relaxed">
+                                        {stop.notes}
+                                      </span>
+                                    </div>
+                                  )}
+
+                                  {/* Maps Link */}
+                                  {mapsUrl && (
+                                    <a
+                                      href={mapsUrl}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="inline-flex items-center gap-1 text-[10px] font-bold text-green-700 hover:text-green-900 transition-colors"
+                                    >
+                                      <MdLocationOn size={12} />
+                                      <span>View on Google Maps</span>
+                                    </a>
+                                  )}
+                                </div>
+                              </div>
+                              <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-green-400 to-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            </div>
+                          ) : activityType === "eat" ? (
+                            // EAT/RESTAURANT CARD
+                            <div className="relative bg-gradient-to-br from-orange-50 to-red-50 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border-2 border-orange-200 hover:border-orange-400 group">
+                              <div className="flex items-start gap-3 p-4">
+                                {/* Time Badge */}
+                                <div className="flex flex-col items-center flex-shrink-0 w-14">
+                                  <div className="bg-gradient-to-br from-orange-500 to-red-600 text-white rounded-xl px-2 py-1.5 text-center shadow-md">
+                                    <div className="text-[9px] font-bold uppercase opacity-90">
+                                      {parseInt(
+                                        stop.time.split(" - ")[0].split(":")[0]
+                                      ) >= 12
+                                        ? "PM"
+                                        : "AM"}
+                                    </div>
+                                    <div className="text-xs font-extrabold leading-tight">
+                                      {stop.time.split(" - ")[0]}
+                                    </div>
+                                  </div>
+                                  {stop.duration && (
+                                    <div className="mt-1.5 bg-orange-100 rounded-md px-1.5 py-0.5 border border-orange-300">
+                                      <span className="text-[8px] font-bold text-orange-700">
+                                        {stop.duration}
+                                      </span>
+                                    </div>
+                                  )}
+                                </div>
+
+                                {/* Icon */}
+                                <div className="relative flex-shrink-0 mt-1">
+                                  <div className="w-11 h-11 bg-orange-100 border-2 border-orange-300 rounded-xl flex items-center justify-center text-lg shadow-md">
+                                    {stop.image}
+                                  </div>
+                                </div>
+
+                                {/* Content with Photo */}
+                                <div className="flex-1 min-w-0">
+                                  <div className="flex items-start justify-between gap-2 mb-1">
+                                    <h4 className="font-extrabold text-sm text-gray-900 leading-tight flex-1">
+                                      {stop.name}
+                                    </h4>
+                                    {imageUrl && (
+                                      <img
+                                        src={imageUrl}
+                                        alt={stop.name}
+                                        className="w-16 h-16 rounded-xl object-cover border-2 border-orange-200 shadow-sm"
+                                      />
+                                    )}
+                                  </div>
+
+                                  {stop.location &&
+                                    stop.location !==
+                                      "Location not specified" && (
+                                      <div className="flex items-start gap-1 mb-2">
+                                        <MdLocationOn
+                                          className="text-orange-400 mt-0.5 flex-shrink-0"
+                                          size={12}
+                                        />
+                                        <span className="text-[10px] text-gray-600 font-medium line-clamp-1">
+                                          {stop.location}
+                                        </span>
+                                      </div>
+                                    )}
+
+                                  <p className="text-xs text-gray-700 leading-relaxed font-medium">
+                                    {stop.description}
+                                  </p>
+
+                                  {stop.notes && (
+                                    <div className="mt-2 bg-white/60 border border-orange-300 rounded-lg px-2 py-1">
+                                      <span className="text-[10px] text-orange-900 font-bold">
+                                        {stop.notes}
+                                      </span>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                              <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-orange-400 to-red-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            </div>
+                          ) : activityType === "visit" ? (
+                            // VISIT/SIGHTSEEING CARD
+                            <div className="relative bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border-2 border-blue-200 hover:border-blue-400 group">
+                              <div className="flex items-start gap-3 p-4">
+                                <div className="flex flex-col items-center flex-shrink-0 w-14">
+                                  <div className="bg-gradient-to-br from-blue-500 to-indigo-600 text-white rounded-xl px-2 py-1.5 text-center shadow-md">
+                                    <div className="text-[9px] font-bold uppercase opacity-90">
+                                      {parseInt(
+                                        stop.time.split(" - ")[0].split(":")[0]
+                                      ) >= 12
+                                        ? "PM"
+                                        : "AM"}
+                                    </div>
+                                    <div className="text-xs font-extrabold leading-tight">
+                                      {stop.time.split(" - ")[0]}
+                                    </div>
+                                  </div>
+                                  {stop.duration && (
+                                    <div className="mt-1.5 bg-blue-100 rounded-md px-1.5 py-0.5 border border-blue-300">
+                                      <span className="text-[8px] font-bold text-blue-700">
+                                        {stop.duration}
+                                      </span>
+                                    </div>
+                                  )}
+                                </div>
+
+                                <div className="relative flex-shrink-0 mt-1">
+                                  <div className="w-11 h-11 bg-blue-100 border-2 border-blue-300 rounded-xl flex items-center justify-center text-lg shadow-md">
+                                    {stop.image}
+                                  </div>
+                                </div>
+
+                                <div className="flex-1 min-w-0">
+                                  <div className="flex items-start justify-between gap-2 mb-1">
+                                    <h4 className="font-extrabold text-sm text-gray-900 leading-tight flex-1">
+                                      {stop.name}
+                                    </h4>
+                                    {imageUrl && (
+                                      <img
+                                        src={imageUrl}
+                                        alt={stop.name}
+                                        className="w-16 h-16 rounded-xl object-cover border-2 border-blue-200 shadow-sm"
+                                      />
+                                    )}
+                                  </div>
+
+                                  {stop.location &&
+                                    stop.location !==
+                                      "Location not specified" && (
+                                      <div className="flex items-start gap-1 mb-2">
+                                        <MdLocationOn
+                                          className="text-blue-400 mt-0.5"
+                                          size={12}
+                                        />
+                                        <span className="text-[10px] text-gray-600 font-medium">
+                                          {stop.location}
+                                        </span>
+                                      </div>
+                                    )}
+
+                                  <p className="text-xs text-gray-700 leading-relaxed font-medium">
+                                    {stop.description}
+                                  </p>
+
+                                  {stop.notes && (
+                                    <div className="mt-2 bg-white/60 border border-blue-300 rounded-lg px-2 py-1">
+                                      <span className="text-[10px] text-blue-900 font-bold">
+                                        {stop.notes}
+                                      </span>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                              <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-400 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            </div>
+                          ) : activityType === "rest" ? (
+                            // REST/HOTEL CARD
+                            <div className="relative bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border-2 border-purple-200 hover:border-purple-400 group">
+                              <div className="flex items-start gap-3 p-4">
+                                <div className="flex flex-col items-center flex-shrink-0 w-14">
+                                  <div className="bg-gradient-to-br from-purple-500 to-pink-600 text-white rounded-xl px-2 py-1.5 text-center shadow-md">
+                                    <div className="text-[9px] font-bold uppercase opacity-90">
+                                      {parseInt(
+                                        stop.time.split(" - ")[0].split(":")[0]
+                                      ) >= 12
+                                        ? "PM"
+                                        : "AM"}
+                                    </div>
+                                    <div className="text-xs font-extrabold leading-tight">
+                                      {stop.time.split(" - ")[0]}
+                                    </div>
+                                  </div>
+                                  {stop.duration && (
+                                    <div className="mt-1.5 bg-purple-100 rounded-md px-1.5 py-0.5 border border-purple-300">
+                                      <span className="text-[8px] font-bold text-purple-700">
+                                        {stop.duration}
+                                      </span>
+                                    </div>
+                                  )}
+                                </div>
+
+                                <div className="relative flex-shrink-0 mt-1">
+                                  <div className="w-11 h-11 bg-purple-100 border-2 border-purple-300 rounded-xl flex items-center justify-center text-lg shadow-md">
+                                    {stop.image}
+                                  </div>
+                                </div>
+
+                                <div className="flex-1 min-w-0">
+                                  <div className="flex items-start justify-between gap-2 mb-1">
+                                    <h4 className="font-extrabold text-sm text-gray-900 leading-tight flex-1">
+                                      {stop.name}
+                                    </h4>
+                                    {imageUrl && (
+                                      <img
+                                        src={imageUrl}
+                                        alt={stop.name}
+                                        className="w-16 h-16 rounded-xl object-cover border-2 border-purple-200 shadow-sm"
+                                      />
+                                    )}
+                                  </div>
+
+                                  {stop.location &&
+                                    stop.location !==
+                                      "Location not specified" && (
+                                      <div className="flex items-start gap-1 mb-2">
+                                        <MdLocationOn
+                                          className="text-purple-400 mt-0.5"
+                                          size={12}
+                                        />
+                                        <span className="text-[10px] text-gray-600 font-medium">
+                                          {stop.location}
+                                        </span>
+                                      </div>
+                                    )}
+
+                                  <p className="text-xs text-gray-700 leading-relaxed font-medium">
+                                    {stop.description}
+                                  </p>
+
+                                  {stop.notes && (
+                                    <div className="mt-2 bg-white/60 border border-purple-300 rounded-lg px-2 py-1">
+                                      <span className="text-[10px] text-purple-900 font-bold">
+                                        {stop.notes}
+                                      </span>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                              <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-400 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            </div>
+                          ) : (
+                            // DEFAULT CARD (activity, shopping, event, etc.)
+                            <div className="relative bg-white/80 backdrop-blur-sm rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border-2 border-gray-200 hover:border-purple-300 group">
+                              <div className="flex items-start gap-3 p-4">
+                                <div className="flex flex-col items-center flex-shrink-0 w-14">
+                                  <div className="bg-gradient-to-br from-purple-500 via-indigo-500 to-purple-600 text-white rounded-xl px-2 py-1.5 text-center shadow-md">
+                                    <div className="text-[9px] font-bold uppercase opacity-90">
+                                      {parseInt(
+                                        stop.time.split(" - ")[0].split(":")[0]
+                                      ) >= 12
+                                        ? "PM"
+                                        : "AM"}
+                                    </div>
+                                    <div className="text-xs font-extrabold leading-tight">
+                                      {stop.time.split(" - ")[0]}
+                                    </div>
+                                  </div>
+                                  {stop.duration && (
+                                    <div className="mt-1.5 bg-blue-50 rounded-md px-1.5 py-0.5 border border-blue-200">
+                                      <span className="text-[8px] font-bold text-blue-700">
+                                        {stop.duration}
+                                      </span>
+                                    </div>
+                                  )}
+                                </div>
+
+                                <div className="relative flex-shrink-0 mt-1">
+                                  <div
+                                    className={`w-11 h-11 ${iconConfig.bg} border-2 ${iconConfig.border} rounded-xl flex items-center justify-center text-lg shadow-md`}
+                                  >
+                                    {stop.image}
+                                  </div>
+                                </div>
+
+                                <div className="flex-1 min-w-0">
+                                  <div className="flex items-start justify-between gap-2 mb-1">
+                                    <h4 className="font-extrabold text-sm text-gray-900 leading-tight group-hover:text-purple-700 transition-colors flex-1">
+                                      {stop.name}
+                                    </h4>
+                                    {imageUrl && (
+                                      <img
+                                        src={imageUrl}
+                                        alt={stop.name}
+                                        className="w-14 h-14 rounded-xl object-cover border-2 border-purple-200 shadow-sm"
+                                      />
+                                    )}
+                                  </div>
+
+                                  {stop.location &&
+                                    stop.location !==
+                                      "Location not specified" && (
+                                      <div className="flex items-start gap-1 mb-2">
+                                        <MdLocationOn
+                                          className="text-purple-400 mt-0.5"
+                                          size={12}
+                                        />
+                                        <span className="text-[10px] text-gray-600 font-medium line-clamp-1">
+                                          {stop.location}
+                                        </span>
+                                      </div>
+                                    )}
+
+                                  <p className="text-xs text-gray-700 leading-relaxed mb-2 font-medium">
+                                    {stop.description}
+                                  </p>
+
+                                  {stop.notes && (
+                                    <div className="mt-2 bg-gradient-to-r from-amber-50 via-yellow-50 to-orange-50 border border-amber-300 rounded-lg px-2 py-1.5">
+                                      <div className="flex items-start gap-1.5">
+                                        <span className="text-xs">💡</span>
+                                        <span className="text-[10px] text-amber-900 font-bold leading-relaxed">
+                                          {stop.notes}
+                                        </span>
+                                      </div>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                              <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-400 via-indigo-400 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Scrollable Stops & Activities */}
-          <div
-            className="flex-1 overflow-y-auto p-4 bg-gray-50 relative"
-            onScroll={handleScroll}
-          >
-            {/* Scroll Progress Indicator - Google Maps style dot */}
-            <div className="absolute left-2 top-4 bottom-4 w-1 flex flex-col items-center z-20 pointer-events-none">
-              {/* Track line */}
-              <div className="w-[3px] h-full bg-gradient-to-b from-purple-200 via-indigo-200 to-purple-200 rounded-full opacity-30"></div>
-              {/* Moving dot indicator */}
-              <div
-                className="absolute w-3 h-3 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-full shadow-lg border-2 border-white transition-all duration-200"
-                style={{
-                  top: `${scrollProgress}%`,
-                  transform: "translateY(-50%)",
-                }}
-              >
-                <div className="absolute inset-0 bg-purple-400 rounded-full animate-ping opacity-40"></div>
-              </div>
-            </div>
-
-            {/* Timeline */}
-            <div className="relative space-y-4 pl-6">
-              {currentDay.stops.map((stop: any, index) => {
-                const iconConfig = getStopIcon(stop.type);
-                const isLast = index === currentDay.stops.length - 1;
-
-                // Determine activity type from original data
-                const activityType = stop.activity_type || "other";
-
-                // Get image URL if available
-                const imageUrl = stop.image_url || stop.photo_url || null;
-
-                // Get location for maps URL
-                const mapsUrl = getGoogleMapsUrl(
-                  stop.from_location || stop.to_location || stop
-                );
-
-                return (
-                  <div key={stop.id} className="relative">
-                    {/* Timeline connector */}
-                    {!isLast && (
-                      <div className="absolute left-10 top-20 bottom-[-16px] w-[2px] bg-gradient-to-b from-purple-300 via-indigo-200 to-purple-200 opacity-30"></div>
-                    )}
-
-                    {/* Category-Specific Activity Cards */}
-                    {activityType === "travel" ? (
-                      // TRAVEL CARD
-                      <div className="relative bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border-2 border-green-200 hover:border-green-400 group">
-                        <div className="flex items-start gap-3 p-4">
-                          {/* Time Badge */}
-                          <div className="flex flex-col items-center flex-shrink-0 w-14">
-                            <div className="bg-gradient-to-br from-green-500 to-emerald-600 text-white rounded-xl px-2 py-1.5 text-center shadow-md">
-                              <div className="text-[9px] font-bold uppercase tracking-wide opacity-90">
-                                {parseInt(
-                                  stop.time.split(" - ")[0].split(":")[0]
-                                ) >= 12
-                                  ? "PM"
-                                  : "AM"}
-                              </div>
-                              <div className="text-xs font-extrabold leading-tight">
-                                {stop.time.split(" - ")[0]}
-                              </div>
-                            </div>
-                            {stop.duration && (
-                              <div className="mt-1.5 bg-green-100 rounded-md px-1.5 py-0.5 border border-green-300">
-                                <span className="text-[8px] font-bold text-green-700">
-                                  {stop.duration}
-                                </span>
-                              </div>
-                            )}
-                          </div>
-
-                          {/* Icon */}
-                          <div className="relative flex-shrink-0 mt-1">
-                            <div className="w-11 h-11 bg-green-100 border-2 border-green-300 rounded-xl flex items-center justify-center text-lg shadow-md">
-                              {stop.image}
-                            </div>
-                          </div>
-
-                          {/* Content */}
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-start justify-between gap-2 mb-1">
-                              <h4 className="font-extrabold text-sm text-gray-900 leading-tight flex-1">
-                                {stop.name}
-                              </h4>
-                              {imageUrl && (
-                                <img
-                                  src={imageUrl}
-                                  alt={stop.name}
-                                  className="w-12 h-12 rounded-lg object-cover border-2 border-green-200 shadow-sm"
-                                />
-                              )}
-                            </div>
-
-                            {/* From → To */}
-                            {(stop.from_location || stop.to_location) && (
-                              <div className="flex items-center gap-1 mb-2 text-[10px] font-semibold text-gray-700">
-                                <span className="bg-green-100 px-2 py-0.5 rounded-md">
-                                  {stop.from_location?.place_name || "Start"}
-                                </span>
-                                <span>→</span>
-                                <span className="bg-emerald-100 px-2 py-0.5 rounded-md">
-                                  {stop.to_location?.place_name || "End"}
-                                </span>
-                              </div>
-                            )}
-
-                            <p className="text-xs text-gray-700 leading-relaxed mb-2 font-medium">
-                              {stop.description}
-                            </p>
-
-                            {/* Travel Details */}
-                            {stop.notes && (
-                              <div className="bg-white/60 border border-green-300 rounded-lg px-2 py-1.5 mb-2">
-                                <span className="text-[10px] text-green-900 font-bold leading-relaxed">
-                                  {stop.notes}
-                                </span>
-                              </div>
-                            )}
-
-                            {/* Maps Link */}
-                            {mapsUrl && (
-                              <a
-                                href={mapsUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1 text-[10px] font-bold text-green-700 hover:text-green-900 transition-colors"
-                              >
-                                <MdLocationOn size={12} />
-                                <span>View on Google Maps</span>
-                              </a>
-                            )}
-                          </div>
-                        </div>
-                        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-green-400 to-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                      </div>
-                    ) : activityType === "eat" ? (
-                      // EAT/RESTAURANT CARD
-                      <div className="relative bg-gradient-to-br from-orange-50 to-red-50 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border-2 border-orange-200 hover:border-orange-400 group">
-                        <div className="flex items-start gap-3 p-4">
-                          {/* Time Badge */}
-                          <div className="flex flex-col items-center flex-shrink-0 w-14">
-                            <div className="bg-gradient-to-br from-orange-500 to-red-600 text-white rounded-xl px-2 py-1.5 text-center shadow-md">
-                              <div className="text-[9px] font-bold uppercase opacity-90">
-                                {parseInt(
-                                  stop.time.split(" - ")[0].split(":")[0]
-                                ) >= 12
-                                  ? "PM"
-                                  : "AM"}
-                              </div>
-                              <div className="text-xs font-extrabold leading-tight">
-                                {stop.time.split(" - ")[0]}
-                              </div>
-                            </div>
-                            {stop.duration && (
-                              <div className="mt-1.5 bg-orange-100 rounded-md px-1.5 py-0.5 border border-orange-300">
-                                <span className="text-[8px] font-bold text-orange-700">
-                                  {stop.duration}
-                                </span>
-                              </div>
-                            )}
-                          </div>
-
-                          {/* Icon */}
-                          <div className="relative flex-shrink-0 mt-1">
-                            <div className="w-11 h-11 bg-orange-100 border-2 border-orange-300 rounded-xl flex items-center justify-center text-lg shadow-md">
-                              {stop.image}
-                            </div>
-                          </div>
-
-                          {/* Content with Photo */}
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-start justify-between gap-2 mb-1">
-                              <h4 className="font-extrabold text-sm text-gray-900 leading-tight flex-1">
-                                {stop.name}
-                              </h4>
-                              {imageUrl && (
-                                <img
-                                  src={imageUrl}
-                                  alt={stop.name}
-                                  className="w-16 h-16 rounded-xl object-cover border-2 border-orange-200 shadow-sm"
-                                />
-                              )}
-                            </div>
-
-                            {stop.location &&
-                              stop.location !== "Location not specified" && (
-                                <div className="flex items-start gap-1 mb-2">
-                                  <MdLocationOn
-                                    className="text-orange-400 mt-0.5 flex-shrink-0"
-                                    size={12}
-                                  />
-                                  <span className="text-[10px] text-gray-600 font-medium line-clamp-1">
-                                    {stop.location}
-                                  </span>
-                                </div>
-                              )}
-
-                            <p className="text-xs text-gray-700 leading-relaxed font-medium">
-                              {stop.description}
-                            </p>
-
-                            {stop.notes && (
-                              <div className="mt-2 bg-white/60 border border-orange-300 rounded-lg px-2 py-1">
-                                <span className="text-[10px] text-orange-900 font-bold">
-                                  {stop.notes}
-                                </span>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-orange-400 to-red-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                      </div>
-                    ) : activityType === "visit" ? (
-                      // VISIT/SIGHTSEEING CARD
-                      <div className="relative bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border-2 border-blue-200 hover:border-blue-400 group">
-                        <div className="flex items-start gap-3 p-4">
-                          <div className="flex flex-col items-center flex-shrink-0 w-14">
-                            <div className="bg-gradient-to-br from-blue-500 to-indigo-600 text-white rounded-xl px-2 py-1.5 text-center shadow-md">
-                              <div className="text-[9px] font-bold uppercase opacity-90">
-                                {parseInt(
-                                  stop.time.split(" - ")[0].split(":")[0]
-                                ) >= 12
-                                  ? "PM"
-                                  : "AM"}
-                              </div>
-                              <div className="text-xs font-extrabold leading-tight">
-                                {stop.time.split(" - ")[0]}
-                              </div>
-                            </div>
-                            {stop.duration && (
-                              <div className="mt-1.5 bg-blue-100 rounded-md px-1.5 py-0.5 border border-blue-300">
-                                <span className="text-[8px] font-bold text-blue-700">
-                                  {stop.duration}
-                                </span>
-                              </div>
-                            )}
-                          </div>
-
-                          <div className="relative flex-shrink-0 mt-1">
-                            <div className="w-11 h-11 bg-blue-100 border-2 border-blue-300 rounded-xl flex items-center justify-center text-lg shadow-md">
-                              {stop.image}
-                            </div>
-                          </div>
-
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-start justify-between gap-2 mb-1">
-                              <h4 className="font-extrabold text-sm text-gray-900 leading-tight flex-1">
-                                {stop.name}
-                              </h4>
-                              {imageUrl && (
-                                <img
-                                  src={imageUrl}
-                                  alt={stop.name}
-                                  className="w-16 h-16 rounded-xl object-cover border-2 border-blue-200 shadow-sm"
-                                />
-                              )}
-                            </div>
-
-                            {stop.location &&
-                              stop.location !== "Location not specified" && (
-                                <div className="flex items-start gap-1 mb-2">
-                                  <MdLocationOn
-                                    className="text-blue-400 mt-0.5"
-                                    size={12}
-                                  />
-                                  <span className="text-[10px] text-gray-600 font-medium">
-                                    {stop.location}
-                                  </span>
-                                </div>
-                              )}
-
-                            <p className="text-xs text-gray-700 leading-relaxed font-medium">
-                              {stop.description}
-                            </p>
-
-                            {stop.notes && (
-                              <div className="mt-2 bg-white/60 border border-blue-300 rounded-lg px-2 py-1">
-                                <span className="text-[10px] text-blue-900 font-bold">
-                                  {stop.notes}
-                                </span>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-400 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                      </div>
-                    ) : activityType === "rest" ? (
-                      // REST/HOTEL CARD
-                      <div className="relative bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border-2 border-purple-200 hover:border-purple-400 group">
-                        <div className="flex items-start gap-3 p-4">
-                          <div className="flex flex-col items-center flex-shrink-0 w-14">
-                            <div className="bg-gradient-to-br from-purple-500 to-pink-600 text-white rounded-xl px-2 py-1.5 text-center shadow-md">
-                              <div className="text-[9px] font-bold uppercase opacity-90">
-                                {parseInt(
-                                  stop.time.split(" - ")[0].split(":")[0]
-                                ) >= 12
-                                  ? "PM"
-                                  : "AM"}
-                              </div>
-                              <div className="text-xs font-extrabold leading-tight">
-                                {stop.time.split(" - ")[0]}
-                              </div>
-                            </div>
-                            {stop.duration && (
-                              <div className="mt-1.5 bg-purple-100 rounded-md px-1.5 py-0.5 border border-purple-300">
-                                <span className="text-[8px] font-bold text-purple-700">
-                                  {stop.duration}
-                                </span>
-                              </div>
-                            )}
-                          </div>
-
-                          <div className="relative flex-shrink-0 mt-1">
-                            <div className="w-11 h-11 bg-purple-100 border-2 border-purple-300 rounded-xl flex items-center justify-center text-lg shadow-md">
-                              {stop.image}
-                            </div>
-                          </div>
-
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-start justify-between gap-2 mb-1">
-                              <h4 className="font-extrabold text-sm text-gray-900 leading-tight flex-1">
-                                {stop.name}
-                              </h4>
-                              {imageUrl && (
-                                <img
-                                  src={imageUrl}
-                                  alt={stop.name}
-                                  className="w-16 h-16 rounded-xl object-cover border-2 border-purple-200 shadow-sm"
-                                />
-                              )}
-                            </div>
-
-                            {stop.location &&
-                              stop.location !== "Location not specified" && (
-                                <div className="flex items-start gap-1 mb-2">
-                                  <MdLocationOn
-                                    className="text-purple-400 mt-0.5"
-                                    size={12}
-                                  />
-                                  <span className="text-[10px] text-gray-600 font-medium">
-                                    {stop.location}
-                                  </span>
-                                </div>
-                              )}
-
-                            <p className="text-xs text-gray-700 leading-relaxed font-medium">
-                              {stop.description}
-                            </p>
-
-                            {stop.notes && (
-                              <div className="mt-2 bg-white/60 border border-purple-300 rounded-lg px-2 py-1">
-                                <span className="text-[10px] text-purple-900 font-bold">
-                                  {stop.notes}
-                                </span>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-400 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                      </div>
-                    ) : (
-                      // DEFAULT CARD (activity, shopping, event, etc.)
-                      <div className="relative bg-white/80 backdrop-blur-sm rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border-2 border-gray-200 hover:border-purple-300 group">
-                        <div className="flex items-start gap-3 p-4">
-                          <div className="flex flex-col items-center flex-shrink-0 w-14">
-                            <div className="bg-gradient-to-br from-purple-500 via-indigo-500 to-purple-600 text-white rounded-xl px-2 py-1.5 text-center shadow-md">
-                              <div className="text-[9px] font-bold uppercase opacity-90">
-                                {parseInt(
-                                  stop.time.split(" - ")[0].split(":")[0]
-                                ) >= 12
-                                  ? "PM"
-                                  : "AM"}
-                              </div>
-                              <div className="text-xs font-extrabold leading-tight">
-                                {stop.time.split(" - ")[0]}
-                              </div>
-                            </div>
-                            {stop.duration && (
-                              <div className="mt-1.5 bg-blue-50 rounded-md px-1.5 py-0.5 border border-blue-200">
-                                <span className="text-[8px] font-bold text-blue-700">
-                                  {stop.duration}
-                                </span>
-                              </div>
-                            )}
-                          </div>
-
-                          <div className="relative flex-shrink-0 mt-1">
-                            <div
-                              className={`w-11 h-11 ${iconConfig.bg} border-2 ${iconConfig.border} rounded-xl flex items-center justify-center text-lg shadow-md`}
-                            >
-                              {stop.image}
-                            </div>
-                          </div>
-
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-start justify-between gap-2 mb-1">
-                              <h4 className="font-extrabold text-sm text-gray-900 leading-tight group-hover:text-purple-700 transition-colors flex-1">
-                                {stop.name}
-                              </h4>
-                              {imageUrl && (
-                                <img
-                                  src={imageUrl}
-                                  alt={stop.name}
-                                  className="w-14 h-14 rounded-xl object-cover border-2 border-purple-200 shadow-sm"
-                                />
-                              )}
-                            </div>
-
-                            {stop.location &&
-                              stop.location !== "Location not specified" && (
-                                <div className="flex items-start gap-1 mb-2">
-                                  <MdLocationOn
-                                    className="text-purple-400 mt-0.5"
-                                    size={12}
-                                  />
-                                  <span className="text-[10px] text-gray-600 font-medium line-clamp-1">
-                                    {stop.location}
-                                  </span>
-                                </div>
-                              )}
-
-                            <p className="text-xs text-gray-700 leading-relaxed mb-2 font-medium">
-                              {stop.description}
-                            </p>
-
-                            {stop.notes && (
-                              <div className="mt-2 bg-gradient-to-r from-amber-50 via-yellow-50 to-orange-50 border border-amber-300 rounded-lg px-2 py-1.5">
-                                <div className="flex items-start gap-1.5">
-                                  <span className="text-xs">💡</span>
-                                  <span className="text-[10px] text-amber-900 font-bold leading-relaxed">
-                                    {stop.notes}
-                                  </span>
-                                </div>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-400 via-indigo-400 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-          </>
+              </>
             )}
           </div>
         </div>
