@@ -3298,7 +3298,7 @@ export default function FlightsPageAuthenticated() {
   }
 
   return (
-    <div className="h-screen bg-white flex overflow-hidden">
+    <div className="h-screen w-screen bg-white flex overflow-hidden">
       {/* Left Sidebar */}
       <Sidebar
         activeSection={activeSection}
@@ -3307,9 +3307,9 @@ export default function FlightsPageAuthenticated() {
       />
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col bg-white min-h-0">
+      <div className="flex-1 flex flex-col bg-white min-h-0 min-w-0 max-w-full overflow-hidden">
         {/* Conditional rendering based on active section */}
-        <div className="flex-1 flex flex-col min-h-0 transition-all duration-500 ease-in-out">
+        <div className="flex-1 flex flex-col min-h-0 min-w-0 max-w-full overflow-hidden transition-all duration-500 ease-in-out">
           {activeSection === "dashboard" ? (
             <DashboardContent
               currentUser={currentUser}
@@ -3320,7 +3320,7 @@ export default function FlightsPageAuthenticated() {
             />
           ) : activeSection === "chat" ? (
             // Chat Content - Fixed height container with proper scrolling
-            <div className="flex-1 flex flex-col bg-white min-h-0">
+            <div className="flex-1 flex flex-col bg-white min-h-0 min-w-0 max-w-full overflow-hidden">
               <ChatNavbar
                 currentUser={currentUser}
                 showProfileDropdown={showProfileDropdown}

@@ -137,7 +137,7 @@ export default function DaySlider({
 
   return (
     <div
-      className="relative w-full"
+      className="relative w-full max-w-full"
       onMouseEnter={() => setIsExpanded(true)}
       onMouseLeave={() => {
         setIsExpanded(false);
@@ -145,16 +145,18 @@ export default function DaySlider({
         setHoveredPlusIndex(null);
       }}
     >
-      {/* Scroll Container - Full width with horizontal scroll */}
-      <div className="w-full overflow-hidden">
+      {/* Scroll Container - Strictly constrained with horizontal scroll */}
+      <div className="w-full max-w-full overflow-hidden">
         <div
           ref={scrollContainerRef}
-          className={`flex items-center gap-2 overflow-x-auto scrollbar-hide scroll-smooth w-full ${
+          className={`flex items-center gap-2 overflow-x-auto overflow-y-hidden scrollbar-hide scroll-smooth ${
             isExpanded ? "py-3 px-4" : "py-2 px-3"
           }`}
           style={{
             scrollbarWidth: "none",
             msOverflowStyle: "none",
+            width: "100%",
+            maxWidth: "100%",
           }}
         >
           {allDayCards.map(

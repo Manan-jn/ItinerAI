@@ -1217,9 +1217,9 @@ export default function ItineraryWidget({
       </div>
 
       {/* Bottom Section - Day Slider and ChatBox */}
-      <div className="flex-shrink-0 p-4 pt-0">
+      <div className="flex-shrink-0 p-4 pt-0 w-full max-w-full overflow-hidden">
         {/* Day Slider - Styled Container */}
-        <div className="mb-3 bg-white/60 backdrop-blur-md rounded-2xl shadow-lg border border-gray-200/50 overflow-hidden">
+        <div className="mb-3 bg-white/60 backdrop-blur-md rounded-2xl shadow-lg border border-gray-200/50 overflow-hidden w-full max-w-full">
           <DaySlider
             days={itineraryData.days}
             currentDayIndex={currentDayIndex}
