@@ -1,0 +1,274 @@
+{
+    "user_id": "zqh2H13LPvXWDkZjfFzthJCXktB3",
+    "session_id": "1579644441247875072",
+    "message": "{'role':'admin','day_number':2,'end_day':8,'query':'recommend the itinerary for day 2'}",
+    "current_itinerary": [
+      {
+        "day_number": 1,
+        "conveyance_details": {
+          "is_required": true,
+          "type": "flight",
+          "from_city": "Chhatrapati Shivaji International Airport",
+          "to_city": "Kushok Bakula Rimpochee Airport",
+          "departure_time": "05:30",
+          "arrival_time": "08:51",
+          "duration": "191 min",
+          "price": 13489
+        },
+        "stay_details": {
+          "is_required": true,
+          "property_name": "Hotel Kidar",
+          "property_address": "Fort Road, Leh, Ladakh, India",
+          "city": "Fort Road, Leh, Ladakh, India"
+        },
+        "schedule": [
+          {
+            "start_time": "05:30",
+            "end_time": "08:51",
+            "description": "Flight from Mumbai to Leh.",
+            "activity_type": "travel",
+            "conveyance_type": "flight",
+            "fare": 13489,
+            "distance_km": 1650,
+            "duration_minutes": 191,
+            "from_location": {
+              "place_name": "Chhatrapati Shivaji International Airport",
+              "address": "Mumbai, Maharashtra, India",
+              "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJRym9mVDI5zsRrqh0xGAazB4",
+              "lat": "19.0902177",
+              "long": "72.86281199999999",
+              "photos": [
+                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU4U2TgWsdlNuyZctljlwhccyhrbtnjcaSbaV5yoPIuZa7oWQ4cu825wBdklIDXRxx_u0DruGFeW7gBPC79JSQXrGpl83RIHahjlN9f-2CeZp8anB8IJ85CdNJpGtaPHXuCrTjbGk5WHFkiqwX0o5FSwrc_j8Hta5s-Bek1EtDduVcJKFzzIC17pV8XRg78wxIl7NzX1t225FFN5EqAHMdAtsyS4dXBQqzezDtpgaKHfzluHd-llc1MvEsqkMSbtXqUfrG44amvk5bzIJn_U5GD85sXjlr4yiMwL8lw_Rnnc8eonLYPxPaJa7q5ozCdzk66hA2wOTALTH6cFi_4hRLdtfnTHs92yNFwHzKqGqDSbd1xMuoBbGNIeyTUudnnlK4K9jgPPEyTHna_BgPA8zsTnI2V2iQu6Z5_rJRfuEzIO3BZ0U5xWmsQsXb0cCczCQRPQdm_TsrBcjrIUEc2lNw-6J6npuMV11BRzlLaiHYxNFNRTFgjbusV5saNyd51MkXWu9uh3Invbn-chCdaXu-jqz6nY6omMQVsMmtUk86UYPNWQEZr17v6Y6JIYA13fSyMabSsR&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+              ],
+              "place_id": "ChIJRym9mVDI5zsRrqh0xGAazB4"
+            },
+            "to_location": {
+              "place_name": "Kushok Bakula Rimpochee Airport",
+              "address": "Leh, Ladakh, India",
+              "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJJ7AKoViT_TgRBExmvIXBXT4",
+              "lat": "34.1425376",
+              "long": "77.5554792",
+              "photos": [
+                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6CuSiWlGFSRpfTS0kltAwvCanQjrbb5qvXdWOHXbncJpBW18NGoY70k29zDZqxMgsljqTcy1MbHQ0-QLNLNREQWrkWK-WxiBmc8vMA7YePyhzAL8u6KdAbwfVKBpYEXlrzQOZYNFoY5wwEb9idQBdNK8ujqpOqyrOYQA8QmFWO3kA_pLtp5yiVr7tnzzHLJVMOVR4NEvEhuNntSPFMXSFB7r4S_dBkV3kPiqasvFOzAxLwt-BgyCxLGI4-jZwd3Le5CD-FaYSSoJbV2eppO81KH89P5rEpoQcdygkrcqMTQBove403bvLaS3O4-hzxfnVBYkOcjZoKzToR6_io01fAMrIrGF_cSs6CMR6PYacJUbXCFmWoXF1KLAxxkf_kzTtrvD3qwvE_f--HEZn71Kfq20xc7diBupqmzaSTGtU-Lveta241ZmgR2YpgtrmL0Wh0xC6Tg5kwIdNHm-yKO2P4x6jFM3ahkqSwrM6PJoKvxG0mJduyNIyVbPdgyfbTAhyRAtjBP3gg_2s_RFIsUf97rEsuF-Ecflg_OX1Bo8wYV7QTtATeT7ZPwjZBHBu29ybQxQ&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+              ],
+              "place_id": "ChIJJ7AKoViT_TgRBExmvIXBXT4"
+            },
+            "flight_number": "UK9237",
+            "airline": "Vistara",
+            "departure_time": "05:30",
+            "arrival_time": "08:51"
+          },
+          {
+            "start_time": "08:51",
+            "end_time": "09:30",
+            "description": "Deplane and collect your luggage at the airport.",
+            "activity_type": "travel",
+            "conveyance_type": "walk",
+            "fare": 0,
+            "distance_km": 0,
+            "duration_minutes": 39,
+            "from_location": {
+              "place_name": "Kushok Bakula Rimpochee Airport",
+              "address": "Leh, Ladakh, India",
+              "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJJ7AKoViT_TgRBExmvIXBXT4",
+              "lat": "34.1425376",
+              "long": "77.5554792",
+              "photos": [
+                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6CuSiWlGFSRpfTS0kltAwvCanQjrbb5qvXdWOHXbncJpBW18NGoY70k29zDZqxMgsljqTcy1MbHQ0-QLNLNREQWrkWK-WxiBmc8vMA7YePyhzAL8u6KdAbwfVKBpYEXlrzQOZYNFoY5wwEb9idQBdNK8ujqpOqyrOYQA8QmFWO3kA_pLtp5yiVr7tnzzHLJVMOVR4NEvEhuNntSPFMXSFB7r4S_dBkV3kPiqasvFOzAxLwt-BgyCxLGI4-jZwd3Le5CD-FaYSSoJbV2eppO81KH89P5rEpoQcdygkrcqMTQBove403bvLaS3O4-hzxfnVBYkOcjZoKzToR6_io01fAMrIrGF_cSs6CMR6PYacJUbXCFmWoXF1KLAxxkf_kzTtrvD3qwvE_f--HEZn71Kfq20xc7diBupqmzaSTGtU-Lveta241ZmgR2YpgtrmL0Wh0xC6Tg5kwIdNHm-yKO2P4x6jFM3ahkqSwrM6PJoKvxG0mJduyNIyVbPdgyfbTAhyRAtjBP3gg_2s_RFIsUf97rEsuF-Ecflg_OX1Bo8wYV7QTtATeT7ZPwjZBHBu29ybQxQ&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+              ],
+              "place_id": "ChIJJ7AKoViT_TgRBExmvIXBXT4"
+            },
+            "to_location": {
+              "place_name": "Kushok Bakula Rimpochee Airport",
+              "address": "Leh, Ladakh, India",
+              "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJJ7AKoViT_TgRBExmvIXBXT4",
+              "lat": "34.1425376",
+              "long": "77.5554792",
+              "photos": [
+                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6CuSiWlGFSRpfTS0kltAwvCanQjrbb5qvXdWOHXbncJpBW18NGoY70k29zDZqxMgsljqTcy1MbHQ0-QLNLNREQWrkWK-WxiBmc8vMA7YePyhzAL8u6KdAbwfVKBpYEXlrzQOZYNFoY5wwEb9idQBdNK8ujqpOqyrOYQA8QmFWO3kA_pLtp5yiVr7tnzzHLJVMOVR4NEvEhuNntSPFMXSFB7r4S_dBkV3kPiqasvFOzAxLwt-BgyCxLGI4-jZwd3Le5CD-FaYSSoJbV2eppO81KH89P5rEpoQcdygkrcqMTQBove403bvLaS3O4-hzxfnVBYkOcjZoKzToR6_io01fAMrIrGF_cSs6CMR6PYacJUbXCFmWoXF1KLAxxkf_kzTtrvD3qwvE_f--HEZn71Kfq20xc7diBupqmzaSTGtU-Lveta241ZmgR2YpgtrmL0Wh0xC6Tg5kwIdNHm-yKO2P4x6jFM3ahkqSwrM6PJoKvxG0mJduyNIyVbPdgyfbTAhyRAtjBP3gg_2s_RFIsUf97rEsuF-Ecflg_OX1Bo8wYV7QTtATeT7ZPwjZBHBu29ybQxQ&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+              ],
+              "place_id": "ChIJJ7AKoViT_TgRBExmvIXBXT4"
+            }
+          },
+          {
+            "start_time": "09:30",
+            "end_time": "10:00",
+            "description": "Transfer from the airport to your hotel.",
+            "activity_type": "travel",
+            "conveyance_type": "cab",
+            "fare": 500,
+            "distance_km": 5,
+            "duration_minutes": 30,
+            "from_location": {
+              "place_name": "Kushok Bakula Rimpochee Airport",
+              "address": "Leh, Ladakh, India",
+              "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJJ7AKoViT_TgRBExmvIXBXT4",
+              "lat": "34.1425376",
+              "long": "77.5554792",
+              "photos": [
+                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6CuSiWlGFSRpfTS0kltAwvCanQjrbb5qvXdWOHXbncJpBW18NGoY70k29zDZqxMgsljqTcy1MbHQ0-QLNLNREQWrkWK-WxiBmc8vMA7YePyhzAL8u6KdAbwfVKBpYEXlrzQOZYNFoY5wwEb9idQBdNK8ujqpOqyrOYQA8QmFWO3kA_pLtp5yiVr7tnzzHLJVMOVR4NEvEhuNntSPFMXSFB7r4S_dBkV3kPiqasvFOzAxLwt-BgyCxLGI4-jZwd3Le5CD-FaYSSoJbV2eppO81KH89P5rEpoQcdygkrcqMTQBove403bvLaS3O4-hzxfnVBYkOcjZoKzToR6_io01fAMrIrGF_cSs6CMR6PYacJUbXCFmWoXF1KLAxxkf_kzTtrvD3qwvE_f--HEZn71Kfq20xc7diBupqmzaSTGtU-Lveta241ZmgR2YpgtrmL0Wh0xC6Tg5kwIdNHm-yKO2P4x6jFM3ahkqSwrM6PJoKvxG0mJduyNIyVbPdgyfbTAhyRAtjBP3gg_2s_RFIsUf97rEsuF-Ecflg_OX1Bo8wYV7QTtATeT7ZPwjZBHBu29ybQxQ&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+              ],
+              "place_id": "ChIJJ7AKoViT_TgRBExmvIXBXT4"
+            },
+            "to_location": {
+              "place_name": "Hotel Kidar",
+              "address": "Fort Road, Leh, Ladakh, India",
+              "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJBb6k_0jr_TgRGA1r6wPTsTc",
+              "lat": "34.160576",
+              "long": "77.574821",
+              "photos": [
+                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU7H9Ez4bGIF-2gaVQ4xnTVnU7Vt8TgkL0JXgabOq43lmXaYxRsr114s2SlK8J3k9isSbyRHu7xwyNYT7l5jXYeMWZBjlimCNPrpMoN5TIx3nkgvS2Xyf1oErD923cslvaTI3yB5lijtDuocacQAWsSTVwmSbTMuXOCHNIWL3fvfkkDcOmbhtpWpn5tj-9eOZmjPV6a7k1tzUjS9QcY526E7WocpD3y-0Yw3hXHY95RhIJqa7qfMa-Ir9EWZ32lRVlB864G5pF9ELoZPKTQN6kOuxz-Xx4gT8dwBOE0rjezlhdKbSbs&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+              ],
+              "place_id": "ChIJBb6k_0jr_TgRGA1r6wPTsTc"
+            }
+          },
+          {
+            "start_time": "10:00",
+            "end_time": "13:00",
+            "description": "Check into your hotel and get some rest. It is critical to acclimatize to the high altitude. Drink plenty of water and avoid any strenuous activity.",
+            "activity_type": "rest",
+            "place_name": "Hotel Kidar",
+            "address": "Fort Road, Leh, Ladakh, India",
+            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJBb6k_0jr_TgRGA1r6wPTsTc",
+            "lat": "34.160576",
+            "long": "77.574821",
+            "photos": [
+              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU7H9Ez4bGIF-2gaVQ4xnTVnU7Vt8TgkL0JXgabOq43lmXaYxRsr114s2SlK8J3k9isSbyRHu7xwyNYT7l5jXYeMWZBjlimCNPrpMoN5TIx3nkgvS2Xyf1oErD923cslvaTI3yB5lijtDuocacQAWsSTVwmSbTMuXOCHNIWL3fvfkkDcOmbhtpWpn5tj-9eOZmjPV6a7k1tzUjS9QcY526E7WocpD3y-0Yw3hXHY95RhIJqa7qfMa-Ir9EWZ32lRVlB864G5pF9ELoZPKTQN6kOuxz-Xx4gT8dwBOE0rjezlhdKbSbs&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+            ],
+            "place_id": "ChIJBb6k_0jr_TgRGA1r6wPTsTc"
+          },
+          {
+            "start_time": "13:00",
+            "end_time": "14:00",
+            "description": "Have a light lunch at a restaurant near your hotel. Ladakhi cuisine is unique and delicious, so this is a great opportunity to try some local flavors.",
+            "activity_type": "eat",
+            "place_name": "The Tibetan Kitchen",
+            "address": "Fort Road, Leh, Ladakh, India",
+            "meal_type": "lunch",
+            "cuisine": "Tibetan, Indian",
+            "menu_highlights": [
+              "Thukpa",
+              "Momos",
+              "Skyu"
+            ],
+            "fare": 500,
+            "reservation_required": false,
+            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJx5SjnvXr_TgRq2VbpHF2bCw",
+            "lat": "34.1648157",
+            "long": "77.5854066",
+            "photos": [
+              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU7q4Sjyb_hm8NkhOBzVp1FU_l8yBTCseGM1eMwYQ3bv6E72m5UpEcm0blCKZc1OCM60-Puy-deEEU7DjPbeQ1JTg8iTS3IthbDoVvCWM5jt8xPmAtmuSPK3fLx9HdAdRfvYnbx33K5U8H9wd7j1EiVt8H48B5j_ZY9EWvYxr4Hq_5WR2GaJbTlUgojaJUUawoM3cegmOOxLmd90rMB3iYb1fElwJ1ugaZIZFcXmAe4I6bo0kVcB0145Ow8XEiSpM7MJgwch4VOJ6Pd7SANhko7RrJu7CP_eymmf59dlJo1w4yXDVzU&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+            ],
+            "place_id": "ChIJx5SjnvXr_TgRq2VbpHF2bCw"
+          },
+          {
+            "start_time": "14:00",
+            "end_time": "19:00",
+            "description": "Continue to rest and acclimatize at your hotel. You can read a book, watch a movie, or simply relax and enjoy the views from your room.",
+            "activity_type": "rest",
+            "place_name": "Hotel Kidar",
+            "address": "Fort Road, Leh, Ladakh, India",
+            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJBb6k_0jr_TgRGA1r6wPTsTc",
+            "lat": "34.160576",
+            "long": "77.574821",
+            "photos": [
+              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU7H9Ez4bGIF-2gaVQ4xnTVnU7Vt8TgkL0JXgabOq43lmXaYxRsr114s2SlK8J3k9isSbyRHu7xwyNYT7l5jXYeMWZBjlimCNPrpMoN5TIx3nkgvS2Xyf1oErD923cslvaTI3yB5lijtDuocacQAWsSTVwmSbTMuXOCHNIWL3fvfkkDcOmbhtpWpn5tj-9eOZmjPV6a7k1tzUjS9QcY526E7WocpD3y-0Yw3hXHY95RhIJqa7qfMa-Ir9EWZ32lRVlB864G5pF9ELoZPKTQN6kOuxz-Xx4gT8dwBOE0rjezlhdKbSbs&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+            ],
+            "place_id": "ChIJBb6k_0jr_TgRGA1r6wPTsTc"
+          },
+          {
+            "start_time": "19:00",
+            "end_time": "20:00",
+            "description": "Enjoy dinner at a local restaurant. There are many great options to choose from on Fort Road.",
+            "activity_type": "eat",
+            "place_name": "Lamayuru Restaurant",
+            "address": "Old Fort Road, Leh, Ladakh, India",
+            "meal_type": "dinner",
+            "cuisine": "Indian, Tibetan, Asian",
+            "menu_highlights": [
+              "Vegetable Momos",
+              "Chicken Thukpa",
+              "Paneer Butter Masala"
+            ],
+            "fare": 500,
+            "reservation_required": false,
+            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJM0QWhT_r_TgRoCqlyEp6UmI",
+            "lat": "34.1635459",
+            "long": "77.58238290000001",
+            "photos": [
+              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU4EpCScU2JrY_SDNVwTgicIYdMGXKYN8QMQTrOy7EU5zr4-O7DWlyO_c8m8-ROcwLxMfneepLLEtT0kejqI0CJ_XtlVY1Ed79UqvNI81lo8awjntZBYH5CU_KEKjYbUvxL-dyAiRL_5sYxIPdhqvdxAACPnRNFuK5iLXRiYhiN7oP1ZuFQEp4ytQEW60MYtI5Lyd8QHni882Fcu3C9ci4yzpFK6llq_-OOEIdt5ZN7AtYfitEwYV7X2Q701tMBsCdhcJ7a2bjnjfUXUXH7aETkbjcWSE4cOOmMwK1gNRemT0ylKd3I&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+            ],
+            "place_id": "ChIJM0QWhT_r_TgRoCqlyEp6UmI"
+          },
+          {
+            "start_time": "20:00",
+            "end_time": "23:59",
+            "description": "Get a good night's sleep to ensure you are well-rested for the days ahead. Proper rest is the key to a successful trip in Ladakh.",
+            "activity_type": "rest",
+            "place_name": "Hotel Kidar",
+            "address": "Fort Road, Leh, Ladakh, India",
+            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJBb6k_0jr_TgRGA1r6wPTsTc",
+            "lat": "34.160576",
+            "long": "77.574821",
+            "photos": [
+              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU7H9Ez4bGIF-2gaVQ4xnTVnU7Vt8TgkL0JXgabOq43lmXaYxRsr114s2SlK8J3k9isSbyRHu7xwyNYT7l5jXYeMWZBjlimCNPrpMoN5TIx3nkgvS2Xyf1oErD923cslvaTI3yB5lijtDuocacQAWsSTVwmSbTMuXOCHNIWL3fvfkkDcOmbhtpWpn5tj-9eOZmjPV6a7k1tzUjS9QcY526E7WocpD3y-0Yw3hXHY95RhIJqa7qfMa-Ir9EWZ32lRVlB864G5pF9ELoZPKTQN6kOuxz-Xx4gT8dwBOE0rjezlhdKbSbs&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+            ],
+            "place_id": "ChIJBb6k_0jr_TgRGA1r6wPTsTc"
+          }
+        ],
+        "title": "Arrival in Leh & Acclimatization",
+        "date": "2025-12-21",
+        "summary": "Your first day in Leh is dedicated to arriving and acclimatizing. After your morning flight from Mumbai, you will transfer to your hotel and spend the day resting to adjust to the high altitude. Meals will be at local restaurants near your hotel.",
+        "themes": [
+          "Relaxation",
+          "Culture"
+        ],
+        "estimated_total_cost": 14489,
+        "highlights": [
+          "Arrival at Kushok Bakula Rimpochee Airport",
+          "Checking into Hotel Kidar",
+          "Crucial acclimatization and rest"
+        ]
+      },
+      {
+        "day_number": 2,
+        "conveyance_details": {
+          "is_required": true,
+          "from_city": "Leh",
+          "to_city": "Agra",
+          "type": "flight",
+          "number": "UK9938",
+          "operator": "Vistara",
+          "departure_date": "Dec 22, 2025",
+          "departure_time": "17:00",
+          "arrival_date": "Dec 22, 2025",
+          "arrival_time": "18:19",
+          "duration": "1h 19m",
+          "price": 10360,
+          "selected_from_city": "Leh",
+          "selected_to_city": "Agra"
+        },
+        "stay_details": {
+          "is_required": true,
+          "city": "Agra",
+          "check_in_day": 2,
+          "check_out_day": 3,
+          "property_name": "Courtyard by Marriott Agra",
+          "property_address": "Taj Nagari Phase II, Agra",
+          "property_location": "Agra",
+          "state": "Uttar Pradesh",
+          "country": "India",
+          "overall_rating": 4.8,
+          "starting_price": "8082",
+          "currency": "INR",
+          "available_rooms_total": 22,
+          "available_from_date": "2025-12-22",
+          "available_until_date": "2025-12-29"
+        }
+      }
+    ],
+    "role": "admin",
+    "current_day": 2,
+    "trip_duration": 8,
+    "request_type": "add"
+  }

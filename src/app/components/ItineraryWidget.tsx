@@ -384,18 +384,19 @@ export default function ItineraryWidget({
   // Handle navigation to specific day number (for add day flow)
   useEffect(() => {
     if (navigateToDayNumber !== null && itineraryData) {
-      // Convert day number (1-based) to array index (0-based)
-      const targetIndex = navigateToDayNumber - 1;
-
-      // Verify the day exists in the data
-      if (targetIndex >= 0 && targetIndex < itineraryData.days.length) {
+      // Find the day by day_number to handle shifted days correctly
+      const dayExists = itineraryData.days.some(day => day.day === navigateToDayNumber);
+      
+      if (dayExists) {
+        // Convert day number (1-based) to array index (0-based)
+        const targetIndex = navigateToDayNumber - 1;
         console.log(
           `🔍 Navigating to day ${navigateToDayNumber} (index ${targetIndex})`
         );
         setCurrentDayIndex(targetIndex);
       } else {
         console.warn(
-          `⚠️ Cannot navigate to day ${navigateToDayNumber} - not found in itinerary data`
+          `⚠️ Cannot navigate to day ${navigateToDayNumber} - not found in itinerary data (has ${itineraryData.days.length} days)`
         );
       }
     }
@@ -403,12 +404,16 @@ export default function ItineraryWidget({
 
   if (!isVisible || !itineraryData) return null;
 
-  const currentDay = itineraryData.days[currentDayIndex];
+  // Calculate current day number from index
+  const currentDayNumber = currentDayIndex + 1;
+  
+  // Find current day by day_number (not array index) to handle shifted days correctly
+  const currentDay = itineraryData.days.find(day => day.day === currentDayNumber);
+  
   const hasNextDay = currentDayIndex < itineraryData.days.length - 1;
   const hasPrevDay = currentDayIndex > 0;
 
   // Check if current day is a pending conveyance day
-  const currentDayNumber = currentDayIndex + 1;
   const isPendingConveyanceDay = pendingConveyanceDays.has(currentDayNumber);
   const isEmptyDay = !currentDay || isPendingConveyanceDay;
 
@@ -445,12 +450,13 @@ export default function ItineraryWidget({
       return;
     }
 
-    // Not a pending day - check if we have data for it
-    const selectedDay = itineraryData!.days[dayIndex];
+    // Not a pending day - check if we have data for it by day_number (not array index)
+    // This is critical after day insertions where day numbers and indices may not align
+    const selectedDay = itineraryData!.days.find(day => day.day === dayNumber);
 
     if (selectedDay) {
       // Day data already exists, navigate immediately
-      console.log(`✅ Day ${dayNumber} has data - navigating`);
+      console.log(`✅ Day ${dayNumber} has data (found by day_number) - navigating`);
       setCurrentDayIndex(dayIndex);
     } else {
       // Day data doesn't exist and it's not pending - need to fetch it

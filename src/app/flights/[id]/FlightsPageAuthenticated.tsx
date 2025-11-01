@@ -1108,7 +1108,10 @@ export default function FlightsPageAuthenticated() {
       setIsParsingTrips(true);
 
       // Build payload for insert flow
-      // Include: days BEFORE + new day + days AFTER (with shifted day_number)
+      // IMPORTANT: itinerariesData is already shifted by handleAddDay
+      // We just need to build the payload: days BEFORE insertion + new day ONLY
+      // Days after insertion should NOT be included in the payload as per requirements
+
       const itinerariesBeforeInsertion = itinerariesData
         .filter((it) => it.day_number < insertDayNumber)
         .map((it) => ({ ...it }));
@@ -1128,23 +1131,15 @@ export default function FlightsPageAuthenticated() {
         };
       }
 
-      // Shift day numbers for days after insertion point
-      const itinerariesAfterInsertion = itinerariesData
-        .filter((it) => it.day_number > insertDayNumber)
-        .map((it) => ({
-          ...it,
-          day_number: it.day_number + 1,
-        }));
-
-      // Build complete current_itinerary array: before + new + after (shifted)
+      // Build complete current_itinerary array: ONLY days before + new day
+      // Do NOT include days after insertion as per user requirements
       const currentItineraryForAPI = [
         ...itinerariesBeforeInsertion,
         newDayItinerary,
-        ...itinerariesAfterInsertion, // Include shifted days
       ].filter((it) => it !== null && it !== undefined); // Filter out any null/undefined
 
       console.log(
-        `📊 Insert payload: ${itinerariesBeforeInsertion.length} days before + 1 new day + ${itinerariesAfterInsertion.length} days after (shifted) = ${currentItineraryForAPI.length} total`
+        `📊 Insert payload: ${itinerariesBeforeInsertion.length} days before + 1 new day = ${currentItineraryForAPI.length} total (days after insertion excluded)`
       );
 
       // Calculate new trip duration
@@ -1208,20 +1203,38 @@ export default function FlightsPageAuthenticated() {
             return itineraryPayload;
           }
 
-          // Merge with existing data
+          // Handle INSERT response with special merging logic
           const existingDays = prevData.itinerary;
           const newDays = itineraryPayload.itinerary;
 
           console.log(`🔄 Merging insert response: ${existingDays.length} existing + ${newDays.length} new`);
+          console.log(`📌 Insert day number: ${insertDayNumber}`);
+
+          // Build result based on user requirements:
+          // 1. Days <= insertDayNumber from response REPLACE existing
+          // 2. Days > insertDayNumber from response OVERRIDE existing
+          // 3. Days > insertDayNumber NOT in response are REMOVED
 
           const dayMap = new Map();
-          existingDays.forEach((day: any) => dayMap.set(day.day_number, day));
-          
-          // Update or add new days from API response
+
+          // First, add all days <= insertDayNumber from existing (as baseline)
+          existingDays
+            .filter((day: any) => day.day_number <= insertDayNumber)
+            .forEach((day: any) => dayMap.set(day.day_number, day));
+
+          // Then, add/replace days from API response
           newDays.forEach((day: any) => {
-            console.log(`📝 Updating/Adding day ${day.day_number} from insert response`);
-            dayMap.set(day.day_number, day);
+            if (day.day_number <= insertDayNumber) {
+              console.log(`📝 Replacing day ${day.day_number} (≤ insert day)`);
+              dayMap.set(day.day_number, day);
+            } else {
+              console.log(`📝 Overriding day ${day.day_number} (> insert day)`);
+              dayMap.set(day.day_number, day);
+            }
           });
+
+          // IMPORTANT: Days > insertDayNumber NOT in response are automatically excluded
+          // because we don't add them to the map
 
           const mergedDays = Array.from(dayMap.values()).sort(
             (a: any, b: any) => a.day_number - b.day_number
@@ -1339,11 +1352,40 @@ export default function FlightsPageAuthenticated() {
           }
         }
 
-        // Sort by day_number to maintain order
-        itinerariesData.sort((a, b) => a.day_number - b.day_number);
+        // Apply same merging logic to itinerariesGenerated as we did for itineraryData
+        // Remove days > insertDayNumber that were NOT in the API response
+        const responseDayNumbers = new Set(
+          itineraryPayload.itinerary.map((d: any) => d.day_number)
+        );
 
-        setItinerariesGenerated([...itinerariesData]);
-        console.log(`✅ itinerariesGenerated updated with ${itinerariesData.length} days after insert`);
+        const filteredItineraries = itinerariesData.filter((it) => {
+          if (it.day_number <= insertDayNumber) {
+            return true; // Keep all days <= insert day
+          } else {
+            // For days > insert day, only keep if in API response
+            const shouldKeep = responseDayNumbers.has(it.day_number);
+            if (!shouldKeep) {
+              console.log(`🗑️ Removing day ${it.day_number} (> insert day, not in response)`);
+            }
+            return shouldKeep;
+          }
+        });
+
+        // Sort by day_number to maintain order
+        filteredItineraries.sort((a, b) => a.day_number - b.day_number);
+
+        setItinerariesGenerated([...filteredItineraries]);
+        console.log(`✅ itinerariesGenerated updated with ${filteredItineraries.length} days after insert`);
+
+        // Update selectedTrip with new total days count
+        const updatedTrip = { ...tripData };
+        if (updatedTrip.day_wise_plan) {
+          const newTotalDays = updatedTrip.day_wise_plan.length;
+          updatedTrip.no_of_days = newTotalDays;
+          setSelectedTrip(updatedTrip);
+          await storeSelectedTrip(userId, sessionId, updatedTrip);
+          console.log(`✅ Updated totalDays globally to ${newTotalDays}`);
+        }
 
         // Remove the inserted day from pending set since it now has data
         handleRemovePendingDay(insertDayNumber);
