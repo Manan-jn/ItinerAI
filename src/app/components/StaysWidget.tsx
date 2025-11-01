@@ -28,14 +28,19 @@ interface StaysWidgetProps {
   currentDayNumber?: number;
 }
 
-// Available cities
-const AVAILABLE_CITIES = [
-  { name: "Mumbai", code: "BOM" },
-  { name: "Bangalore", code: "BLR" },
-  { name: "New Delhi", code: "DEL" },
-  { name: "Agra", code: "AGR" },
-  { name: "Leh", code: "IXL" },
-];
+import { getPopularIndianCities } from "../utils/placesData";
+
+// Get initial cities list - will be populated from placesData utility
+const getInitialCities = () => {
+  const popularCities = getPopularIndianCities();
+  return popularCities.map(c => ({
+    name: c.city,
+    code: c.code
+  }));
+};
+
+// Available cities - using popular Indian cities as default
+const AVAILABLE_CITIES = getInitialCities();
 
 // City Selector Component
 function CitySelector({

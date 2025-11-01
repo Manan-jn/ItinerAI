@@ -194,9 +194,13 @@ export default function DateSelectorWidget({
             extractedToCity = day1.conveyance_details.to_city;
             console.log("✅ Extracted to_city from Day 1:", extractedToCity);
 
-            // Handle city name formatting
+            // Handle city name formatting for to_city
             if (extractedToCity) {
-              extractedToCity = extractedToCity.charAt(0).toUpperCase() + extractedToCity.slice(1).toLowerCase();
+              // Properly capitalize multi-word city names
+              extractedToCity = extractedToCity
+                .split(' ')
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                .join(' ');
               if (extractedToCity === "Delhi") extractedToCity = "New Delhi";
               console.log("✅ Formatted to_city:", extractedToCity);
             }
@@ -209,7 +213,11 @@ export default function DateSelectorWidget({
 
         // Handle city name formatting for from_city
         if (extractedFromCity) {
-          extractedFromCity = extractedFromCity.charAt(0).toUpperCase() + extractedFromCity.slice(1).toLowerCase();
+          // Properly capitalize multi-word city names
+          extractedFromCity = extractedFromCity
+            .split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+            .join(' ');
           if (extractedFromCity === "Delhi") extractedFromCity = "New Delhi";
           console.log("✅ Formatted from_city:", extractedFromCity);
         }
@@ -255,20 +263,12 @@ export default function DateSelectorWidget({
   };
   const preferredTimeScrollRef = useRef<HTMLDivElement>(null);
 
-  // Cities based on available data
-  const cities = [
-    "Leh",
-    "Mumbai",
-    "New Delhi",
-    "Bangalore",
-    "Kolkata",
-    "Chennai",
-    "Hyderabad",
-    "Pune",
-    "Ahmedabad",
-    "Jaipur",
-    "Lucknow",
-  ];
+  // Import popular cities utility
+  const {getPopularIndianCities} = require("../utils/placesData");
+
+  // Cities based on popular Indian cities from placesData
+  const popularCitiesData = getPopularIndianCities();
+  const cities = popularCitiesData.map((c: any) => c.city);
   const flightClasses = [
     "Economy",
     "Premium Economy",
@@ -619,7 +619,7 @@ export default function DateSelectorWidget({
               </button>
               {showFromDropdown && (
                 <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-40 overflow-y-auto">
-                  {cities.map((city) => (
+                  {cities.map((city: string) => (
                     <button
                       key={city}
                       onClick={() => {
@@ -664,7 +664,7 @@ export default function DateSelectorWidget({
               </button>
               {showToDropdown && (
                 <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-40 overflow-y-auto">
-                  {cities.map((city) => (
+                  {cities.map((city: string) => (
                     <button
                       key={city}
                       onClick={() => {

@@ -117,7 +117,9 @@ export default function FlightsPageAuthenticated() {
   const [initialDepartureDate, setInitialDepartureDate] = useState<string>(""); // NEW: Initial departure date for FlightsWidget
   const [isInsertDayFlow, setIsInsertDayFlow] = useState<boolean>(false); // NEW: Track if we're in insert day flow
   const [isLoadingItinerary, setIsLoadingItinerary] = useState(false); // Loading state for itinerary
-  const [pendingConveyanceDays, setPendingConveyanceDays] = useState<Set<number>>(new Set()); // NEW: Track pending insert days
+  const [pendingConveyanceDays, setPendingConveyanceDays] = useState<
+    Set<number>
+  >(new Set()); // NEW: Track pending insert days
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const flashcardsRef = useRef<FlashcardsWidgetRef>(null);
@@ -927,7 +929,8 @@ export default function FlightsPageAuthenticated() {
             // If schedule exists, extract conveyance/stay from it
             if (dayData.schedule && Array.isArray(dayData.schedule)) {
               const conveyanceActivities = dayData.schedule.filter(
-                (item: any) => item.activity_type === "travel" && item.conveyance_type
+                (item: any) =>
+                  item.activity_type === "travel" && item.conveyance_type
               );
               const stayActivities = dayData.schedule.filter(
                 (item: any) => item.activity_type === "rest" && item.place_name
@@ -938,19 +941,32 @@ export default function FlightsPageAuthenticated() {
                 conveyanceDetails = {
                   is_required: true,
                   type: primaryConveyance.conveyance_type,
-                  from_city: primaryConveyance.from_location?.place_name || primaryConveyance.from_location?.address,
-                  to_city: primaryConveyance.to_location?.place_name || primaryConveyance.to_location?.address,
-                  departure_time: primaryConveyance.departure_time || primaryConveyance.start_time,
-                  arrival_time: primaryConveyance.arrival_time || primaryConveyance.end_time,
-                  duration: primaryConveyance.duration_minutes ? `${primaryConveyance.duration_minutes} min` : undefined,
+                  from_city:
+                    primaryConveyance.from_location?.place_name ||
+                    primaryConveyance.from_location?.address,
+                  to_city:
+                    primaryConveyance.to_location?.place_name ||
+                    primaryConveyance.to_location?.address,
+                  departure_time:
+                    primaryConveyance.departure_time ||
+                    primaryConveyance.start_time,
+                  arrival_time:
+                    primaryConveyance.arrival_time ||
+                    primaryConveyance.end_time,
+                  duration: primaryConveyance.duration_minutes
+                    ? `${primaryConveyance.duration_minutes} min`
+                    : undefined,
                   price: primaryConveyance.fare,
                 };
               }
 
               if (!stayDetails && stayActivities.length > 0) {
-                const primaryStay = stayActivities.find((s: any) =>
-                  s.place_name && s.place_name.toLowerCase().includes('hotel')
-                ) || stayActivities[0];
+                const primaryStay =
+                  stayActivities.find(
+                    (s: any) =>
+                      s.place_name &&
+                      s.place_name.toLowerCase().includes("hotel")
+                  ) || stayActivities[0];
 
                 if (primaryStay) {
                   stayDetails = {
@@ -969,7 +985,10 @@ export default function FlightsPageAuthenticated() {
             };
 
             // Add optional fields only if they have values
-            if (dayData.must_do_activities && dayData.must_do_activities.length > 0) {
+            if (
+              dayData.must_do_activities &&
+              dayData.must_do_activities.length > 0
+            ) {
               dayToStore.must_do_activities = dayData.must_do_activities;
             }
 
@@ -979,7 +998,9 @@ export default function FlightsPageAuthenticated() {
 
             if (conveyanceDetails) {
               dayToStore.conveyance_details = Object.fromEntries(
-                Object.entries(conveyanceDetails).filter(([_, v]) => v !== undefined)
+                Object.entries(conveyanceDetails).filter(
+                  ([_, v]) => v !== undefined
+                )
               );
             }
 
@@ -995,10 +1016,14 @@ export default function FlightsPageAuthenticated() {
             if (dayData.date) dayToStore.date = dayData.date;
             if (dayData.summary) dayToStore.summary = dayData.summary;
             if (dayData.themes) dayToStore.themes = dayData.themes;
-            if (dayData.estimated_total_cost) dayToStore.estimated_total_cost = dayData.estimated_total_cost;
+            if (dayData.estimated_total_cost)
+              dayToStore.estimated_total_cost = dayData.estimated_total_cost;
             if (dayData.highlights) dayToStore.highlights = dayData.highlights;
 
-            console.log(`📦 Storing day ${dayData.day_number} with fields:`, Object.keys(dayToStore));
+            console.log(
+              `📦 Storing day ${dayData.day_number} with fields:`,
+              Object.keys(dayToStore)
+            );
 
             // Update or add to itinerariesGenerated
             const existingIndex = updatedItinerariesGenerated.findIndex(
@@ -1020,7 +1045,11 @@ export default function FlightsPageAuthenticated() {
             }
 
             // Also store in Firestore for backup
-            await storeDayItinerary(userId, sessionId, dayToStore as DayItineraryData);
+            await storeDayItinerary(
+              userId,
+              sessionId,
+              dayToStore as DayItineraryData
+            );
           } catch (storeError) {
             console.error(
               `❌ Failed to process day ${dayData.day_number}:`,
@@ -1122,7 +1151,9 @@ export default function FlightsPageAuthenticated() {
 
       // If new day doesn't exist in itinerariesData, create it with minimal structure
       if (!newDayItinerary) {
-        console.log(`📝 Creating new day ${insertDayNumber} with minimal structure`);
+        console.log(
+          `📝 Creating new day ${insertDayNumber} with minimal structure`
+        );
         newDayItinerary = {
           day_number: insertDayNumber,
           conveyance_details: { is_required: false },
@@ -1147,7 +1178,8 @@ export default function FlightsPageAuthenticated() {
       );
 
       // Calculate new trip duration
-      const newTripDuration = (tripData.no_of_days || tripData.day_wise_plan?.length || 0) + 1;
+      const newTripDuration =
+        (tripData.no_of_days || tripData.day_wise_plan?.length || 0) + 1;
 
       // Prepare the message
       const itineraryMessage = `{'role':'admin','day_number':${insertDayNumber},'end_day':${newTripDuration},'query':'recommend the itinerary for day ${insertDayNumber}'}`;
@@ -1164,7 +1196,10 @@ export default function FlightsPageAuthenticated() {
         request_type: "add", // IMPORTANT: Use "add" for insert flow
       };
 
-      console.log("📤 Insert API Request body:", JSON.stringify(requestBody, null, 2));
+      console.log(
+        "📤 Insert API Request body:",
+        JSON.stringify(requestBody, null, 2)
+      );
 
       const response = await fetch("/api/itinerary", {
         method: "POST",
@@ -1211,7 +1246,9 @@ export default function FlightsPageAuthenticated() {
           const existingDays = prevData.itinerary;
           const newDays = itineraryPayload.itinerary;
 
-          console.log(`🔄 Merging insert response: ${existingDays.length} existing + ${newDays.length} new`);
+          console.log(
+            `🔄 Merging insert response: ${existingDays.length} existing + ${newDays.length} new`
+          );
           console.log(`📌 Insert day number: ${insertDayNumber}`);
 
           // Build result based on user requirements:
@@ -1244,7 +1281,9 @@ export default function FlightsPageAuthenticated() {
             (a: any, b: any) => a.day_number - b.day_number
           );
 
-          console.log(`✅ Merged itinerary after insert has ${mergedDays.length} total day(s)`);
+          console.log(
+            `✅ Merged itinerary after insert has ${mergedDays.length} total day(s)`
+          );
 
           return {
             ...prevData,
@@ -1265,7 +1304,8 @@ export default function FlightsPageAuthenticated() {
           if (dayData.schedule && Array.isArray(dayData.schedule)) {
             // Find conveyance activities (travel type)
             const conveyanceActivities = dayData.schedule.filter(
-              (item: any) => item.activity_type === "travel" && item.conveyance_type
+              (item: any) =>
+                item.activity_type === "travel" && item.conveyance_type
             );
 
             // Find stay activities
@@ -1279,20 +1319,31 @@ export default function FlightsPageAuthenticated() {
               conveyanceDetails = {
                 is_required: true,
                 type: primaryConveyance.conveyance_type,
-                from_city: primaryConveyance.from_location?.place_name || primaryConveyance.from_location?.address,
-                to_city: primaryConveyance.to_location?.place_name || primaryConveyance.to_location?.address,
-                departure_time: primaryConveyance.departure_time || primaryConveyance.start_time,
-                arrival_time: primaryConveyance.arrival_time || primaryConveyance.end_time,
-                duration: primaryConveyance.duration_minutes ? `${primaryConveyance.duration_minutes} min` : undefined,
+                from_city:
+                  primaryConveyance.from_location?.place_name ||
+                  primaryConveyance.from_location?.address,
+                to_city:
+                  primaryConveyance.to_location?.place_name ||
+                  primaryConveyance.to_location?.address,
+                departure_time:
+                  primaryConveyance.departure_time ||
+                  primaryConveyance.start_time,
+                arrival_time:
+                  primaryConveyance.arrival_time || primaryConveyance.end_time,
+                duration: primaryConveyance.duration_minutes
+                  ? `${primaryConveyance.duration_minutes} min`
+                  : undefined,
                 price: primaryConveyance.fare,
               };
             }
 
             // Build stay_details if not present
             if (!stayDetails && stayActivities.length > 0) {
-              const primaryStay = stayActivities.find((s: any) =>
-                s.place_name && s.place_name.toLowerCase().includes('hotel')
-              ) || stayActivities[0];
+              const primaryStay =
+                stayActivities.find(
+                  (s: any) =>
+                    s.place_name && s.place_name.toLowerCase().includes("hotel")
+                ) || stayActivities[0];
 
               if (primaryStay) {
                 stayDetails = {
@@ -1311,7 +1362,10 @@ export default function FlightsPageAuthenticated() {
           };
 
           // Add optional fields only if they exist and are not undefined
-          if (dayData.must_do_activities && dayData.must_do_activities.length > 0) {
+          if (
+            dayData.must_do_activities &&
+            dayData.must_do_activities.length > 0
+          ) {
             dayToStore.must_do_activities = dayData.must_do_activities;
           }
 
@@ -1322,7 +1376,9 @@ export default function FlightsPageAuthenticated() {
           if (conveyanceDetails) {
             // Filter out undefined values from conveyanceDetails
             dayToStore.conveyance_details = Object.fromEntries(
-              Object.entries(conveyanceDetails).filter(([_, v]) => v !== undefined)
+              Object.entries(conveyanceDetails).filter(
+                ([_, v]) => v !== undefined
+              )
             );
           }
 
@@ -1339,9 +1395,16 @@ export default function FlightsPageAuthenticated() {
             ...dayData, // Include all other fields like schedule, title, summary, etc.
           };
 
-          console.log(`📦 Storing day ${dayData.day_number} with fields:`, Object.keys(dayToStore));
+          console.log(
+            `📦 Storing day ${dayData.day_number} with fields:`,
+            Object.keys(dayToStore)
+          );
 
-          await storeDayItinerary(userId, sessionId, dayToStore as DayItineraryData);
+          await storeDayItinerary(
+            userId,
+            sessionId,
+            dayToStore as DayItineraryData
+          );
 
           // Update itinerariesGenerated with complete data
           const existingIndex = itinerariesData.findIndex(
@@ -1349,10 +1412,14 @@ export default function FlightsPageAuthenticated() {
           );
           if (existingIndex !== -1) {
             itinerariesData[existingIndex] = completeDayData;
-            console.log(`✅ Updated day ${dayData.day_number} in itinerariesData`);
+            console.log(
+              `✅ Updated day ${dayData.day_number} in itinerariesData`
+            );
           } else {
             itinerariesData.push(completeDayData);
-            console.log(`✅ Added day ${dayData.day_number} to itinerariesData`);
+            console.log(
+              `✅ Added day ${dayData.day_number} to itinerariesData`
+            );
           }
         }
 
@@ -1369,7 +1436,9 @@ export default function FlightsPageAuthenticated() {
             // For days > insert day, only keep if in API response
             const shouldKeep = responseDayNumbers.has(it.day_number);
             if (!shouldKeep) {
-              console.log(`🗑️ Removing day ${it.day_number} (> insert day, not in response)`);
+              console.log(
+                `🗑️ Removing day ${it.day_number} (> insert day, not in response)`
+              );
             }
             return shouldKeep;
           }
@@ -1379,7 +1448,9 @@ export default function FlightsPageAuthenticated() {
         filteredItineraries.sort((a, b) => a.day_number - b.day_number);
 
         setItinerariesGenerated([...filteredItineraries]);
-        console.log(`✅ itinerariesGenerated updated with ${filteredItineraries.length} days after insert`);
+        console.log(
+          `✅ itinerariesGenerated updated with ${filteredItineraries.length} days after insert`
+        );
 
         // Update selectedTrip with new total days count
         const updatedTrip = { ...tripData };
@@ -1475,7 +1546,10 @@ export default function FlightsPageAuthenticated() {
         request_type: "remove", // IMPORTANT: Use "remove" for delete flow
       };
 
-      console.log("📤 Delete API Request body:", JSON.stringify(requestBody, null, 2));
+      console.log(
+        "📤 Delete API Request body:",
+        JSON.stringify(requestBody, null, 2)
+      );
 
       const response = await fetch("/api/itinerary", {
         method: "POST",
@@ -1522,7 +1596,9 @@ export default function FlightsPageAuthenticated() {
           const existingDays = prevData.itinerary;
           const newDays = itineraryPayload.itinerary;
 
-          console.log(`🔄 Merging delete response: ${existingDays.length} existing + ${newDays.length} new`);
+          console.log(
+            `🔄 Merging delete response: ${existingDays.length} existing + ${newDays.length} new`
+          );
           console.log(`📌 Deleted day number: ${deleteDayNumber}`);
 
           // Build result based on user requirements:
@@ -1543,7 +1619,9 @@ export default function FlightsPageAuthenticated() {
               console.log(`📝 Replacing day ${day.day_number} (< deleted day)`);
               dayMap.set(day.day_number, day); // REPLACE
             } else {
-              console.log(`📝 Adding new day ${day.day_number} (> deleted day)`);
+              console.log(
+                `📝 Adding new day ${day.day_number} (> deleted day)`
+              );
               dayMap.set(day.day_number, day); // OVERRIDE/ADD
             }
           });
@@ -1555,7 +1633,9 @@ export default function FlightsPageAuthenticated() {
             (a: any, b: any) => a.day_number - b.day_number
           );
 
-          console.log(`✅ Merged itinerary after delete has ${mergedDays.length} total day(s)`);
+          console.log(
+            `✅ Merged itinerary after delete has ${mergedDays.length} total day(s)`
+          );
 
           return {
             ...prevData,
@@ -1605,11 +1685,14 @@ export default function FlightsPageAuthenticated() {
         // Update selectedTrip's no_of_days and day_wise_plan
         if (selectedTrip) {
           // Remove deleted day and all days after it from day_wise_plan
-          const updatedDayWisePlan = (selectedTrip.day_wise_plan || [])
-            .filter((d: any) => d.day_number < deleteDayNumber);
+          const updatedDayWisePlan = (selectedTrip.day_wise_plan || []).filter(
+            (d: any) => d.day_number < deleteDayNumber
+          );
 
           console.log(
-            `📦 Updated day_wise_plan: removed ${selectedTrip.day_wise_plan?.length - updatedDayWisePlan.length} days`
+            `📦 Updated day_wise_plan: removed ${
+              selectedTrip.day_wise_plan?.length - updatedDayWisePlan.length
+            } days`
           );
 
           const updatedTrip = {
@@ -1663,33 +1746,49 @@ export default function FlightsPageAuthenticated() {
 
   // Handler to delete a day (CASE 1: API call)
   const handleDeleteDay = async (dayNumber: number) => {
-    console.log(`\n🔥 ========== CASE 1: API DELETE for Day ${dayNumber} ==========`);
+    console.log(
+      `\n🔥 ========== CASE 1: API DELETE for Day ${dayNumber} ==========`
+    );
     console.log(`📍 FlightsPageAuthenticated.handleDeleteDay called`);
-    console.log(`📊 Current itinerariesGenerated:`, itinerariesGenerated.map(it => `Day ${it.day_number}`).join(', '));
+    console.log(
+      `📊 Current itinerariesGenerated:`,
+      itinerariesGenerated.map((it) => `Day ${it.day_number}`).join(", ")
+    );
 
     try {
       // Call the delete API
       console.log(`📤 Calling callItineraryAPIForDelete...`);
       await callItineraryAPIForDelete(dayNumber);
       console.log(`✅ Successfully deleted day ${dayNumber} via API`);
-      console.log(`========== END CASE 1 DELETE for Day ${dayNumber} ==========\n`);
+      console.log(
+        `========== END CASE 1 DELETE for Day ${dayNumber} ==========\n`
+      );
     } catch (error) {
       console.error(`❌ Failed to delete day ${dayNumber}:`, error);
-      console.log(`========== END CASE 1 DELETE (FAILED) for Day ${dayNumber} ==========\n`);
+      console.log(
+        `========== END CASE 1 DELETE (FAILED) for Day ${dayNumber} ==========\n`
+      );
       throw error; // Re-throw to let ItineraryWidget handle the error
     }
   };
 
   // Handler for local delete without API (CASE 2: is_required: false)
   const handleLocalDeleteDay = (dayNumber: number) => {
-    console.log(`\n🔄 ========== CASE 2: LOCAL DELETE for Day ${dayNumber} ==========`);
+    console.log(
+      `\n🔄 ========== CASE 2: LOCAL DELETE for Day ${dayNumber} ==========`
+    );
     console.log(`📍 FlightsPageAuthenticated.handleLocalDeleteDay called`);
-    console.log(`📊 Current itinerariesGenerated:`, itinerariesGenerated.map(it => `Day ${it.day_number}`).join(', '));
+    console.log(
+      `📊 Current itinerariesGenerated:`,
+      itinerariesGenerated.map((it) => `Day ${it.day_number}`).join(", ")
+    );
     console.log(`📊 Current trip days: ${selectedTrip?.no_of_days}`);
 
     if (!selectedTrip || !userId || !sessionId) {
       console.error("❌ Missing required data for local delete");
-      console.log(`========== END CASE 2 DELETE (FAILED) for Day ${dayNumber} ==========\n`);
+      console.log(
+        `========== END CASE 2 DELETE (FAILED) for Day ${dayNumber} ==========\n`
+      );
       return;
     }
 
@@ -1702,7 +1801,9 @@ export default function FlightsPageAuthenticated() {
           return prevData;
         }
 
-        console.log(`🔄 Updating itineraryData: removing day ${dayNumber} and re-aligning`);
+        console.log(
+          `🔄 Updating itineraryData: removing day ${dayNumber} and re-aligning`
+        );
 
         // Remove deleted day and re-align subsequent days
         const updatedItinerary = prevData.itinerary
@@ -1798,25 +1899,39 @@ export default function FlightsPageAuthenticated() {
       // Store updated trip in Firestore
       storeSelectedTrip(userId, sessionId, updatedTrip)
         .then(() => {
-          console.log(`✅ Stored updated trip after local delete of day ${dayNumber}`);
+          console.log(
+            `✅ Stored updated trip after local delete of day ${dayNumber}`
+          );
         })
         .catch((error) => {
           console.error("❌ Error storing updated trip:", error);
         });
 
       console.log(`✅ Local delete completed for day ${dayNumber}`);
-      console.log(`📊 Updated itinerariesGenerated:`, updatedItineraries.map(it => `Day ${it.day_number}`).join(', '));
+      console.log(
+        `📊 Updated itinerariesGenerated:`,
+        updatedItineraries.map((it) => `Day ${it.day_number}`).join(", ")
+      );
       console.log(`📊 Updated trip days: ${updatedTrip.no_of_days}`);
-      console.log(`========== END CASE 2 DELETE for Day ${dayNumber} ==========\n`);
+      console.log(
+        `========== END CASE 2 DELETE for Day ${dayNumber} ==========\n`
+      );
     } catch (error) {
       console.error(`❌ Failed to locally delete day ${dayNumber}:`, error);
-      console.log(`========== END CASE 2 DELETE (ERROR) for Day ${dayNumber} ==========\n`);
+      console.log(
+        `========== END CASE 2 DELETE (ERROR) for Day ${dayNumber} ==========\n`
+      );
     }
   };
 
   // Handler for chat message submission from ItineraryWidget
-  const handleItineraryChatSubmit = async (message: string, currentDay: number) => {
-    console.log(`💬 Itinerary chat message submitted: "${message}" for day ${currentDay}`);
+  const handleItineraryChatSubmit = async (
+    message: string,
+    currentDay: number
+  ) => {
+    console.log(
+      `💬 Itinerary chat message submitted: "${message}" for day ${currentDay}`
+    );
 
     if (!selectedTrip || !userId || !sessionId) {
       console.error("❌ Missing required data for chat API call");
@@ -1867,7 +1982,9 @@ export default function FlightsPageAuthenticated() {
         itineraryPayload.response_type === "itinerary" &&
         itineraryPayload.itinerary
       ) {
-        console.log(`📦 Processing ${itineraryPayload.itinerary.length} itinerary update(s)`);
+        console.log(
+          `📦 Processing ${itineraryPayload.itinerary.length} itinerary update(s)`
+        );
 
         // Update itineraryData state - OVERRIDE strategy
         setItineraryData((prevData: any) => {
@@ -1898,7 +2015,9 @@ export default function FlightsPageAuthenticated() {
             (a: any, b: any) => a.day_number - b.day_number
           );
 
-          console.log(`✅ Updated itinerary has ${mergedDays.length} total day(s)`);
+          console.log(
+            `✅ Updated itinerary has ${mergedDays.length} total day(s)`
+          );
 
           return {
             ...prevData,
@@ -1929,11 +2048,15 @@ export default function FlightsPageAuthenticated() {
           if (existingIndex !== -1) {
             // Override existing
             updatedItinerariesGenerated[existingIndex] = dayToStore;
-            console.log(`📝 Overrode day ${dayItinerary.day_number} in itinerariesGenerated`);
+            console.log(
+              `📝 Overrode day ${dayItinerary.day_number} in itinerariesGenerated`
+            );
           } else {
             // Add new
             updatedItinerariesGenerated.push(dayToStore);
-            console.log(`➕ Added day ${dayItinerary.day_number} to itinerariesGenerated`);
+            console.log(
+              `➕ Added day ${dayItinerary.day_number} to itinerariesGenerated`
+            );
           }
         });
 
@@ -1947,11 +2070,7 @@ export default function FlightsPageAuthenticated() {
 
         // Store updated itineraries in Firestore
         updatedItinerariesGenerated.forEach((dayItinerary: any) => {
-          storeDayItinerary(
-            userId,
-            sessionId,
-            dayItinerary
-          ).catch((error) => {
+          storeDayItinerary(userId, sessionId, dayItinerary).catch((error) => {
             console.error(
               `❌ Error storing day ${dayItinerary.day_number}:`,
               error
@@ -1959,7 +2078,9 @@ export default function FlightsPageAuthenticated() {
           });
         });
 
-        console.log("✅ Chat message processed successfully - itineraries updated");
+        console.log(
+          "✅ Chat message processed successfully - itineraries updated"
+        );
       }
     } catch (error) {
       console.error("❌ Error in chat submission:", error);
@@ -2371,7 +2492,9 @@ export default function FlightsPageAuthenticated() {
 
         // Set insert flow flag if this is an insert operation (CRITICAL FIX)
         if (isInsertFlow) {
-          console.log(`🔄 Setting insert flow flag for day ${newDayNumber} (CASE 2)`);
+          console.log(
+            `🔄 Setting insert flow flag for day ${newDayNumber} (CASE 2)`
+          );
           setIsInsertDayFlow(true);
         }
 
@@ -2416,16 +2539,24 @@ export default function FlightsPageAuthenticated() {
               is_required: false,
             },
           };
-          console.log(`✅ Updated day ${newDayNumber} placeholder with conveyance/stay details`);
+          console.log(
+            `✅ Updated day ${newDayNumber} placeholder with conveyance/stay details`
+          );
         } else {
-          console.error(`❌ Day ${newDayNumber} placeholder not found in updatedItinerariesGenerated`);
+          console.error(
+            `❌ Day ${newDayNumber} placeholder not found in updatedItinerariesGenerated`
+          );
         }
 
         // Update state again with the complete details
         setItinerariesGenerated(updatedItinerariesGenerated);
 
-        console.log(`📊 updatedItinerariesGenerated has ${updatedItinerariesGenerated.length} days:`,
-          updatedItinerariesGenerated.map(it => `day ${it.day_number}`).join(', '));
+        console.log(
+          `📊 updatedItinerariesGenerated has ${updatedItinerariesGenerated.length} days:`,
+          updatedItinerariesGenerated
+            .map((it) => `day ${it.day_number}`)
+            .join(", ")
+        );
 
         // Check if this is insert flow - if so, use request_type="add"
         if (isInsertFlow) {
@@ -2438,7 +2569,11 @@ export default function FlightsPageAuthenticated() {
 
           // Call API with special insert flow logic
           // Pass the complete array including all shifted days + new day
-          await callItineraryAPIForInsert(newDayNumber, updatedTrip, updatedItinerariesGenerated);
+          await callItineraryAPIForInsert(
+            newDayNumber,
+            updatedTrip,
+            updatedItinerariesGenerated
+          );
         } else {
           // Regular flow - extend trip
           await callItineraryAPI(newDayNumber, true);
@@ -2517,10 +2652,12 @@ export default function FlightsPageAuthenticated() {
           correctedTrip.day_wise_plan &&
           Array.isArray(correctedTrip.day_wise_plan)
         ) {
+          console.log("correctedTrip", correctedTrip);
+
           correctedTrip.day_wise_plan.forEach((day: any) => {
             if (day.conveyance_details && day.conveyance_details.from_city) {
               let fromCity = day.conveyance_details.from_city;
-
+              console.log("fromCity", fromCity);
               // Check if it's a supported city
               const normalizedFromCity =
                 fromCity.charAt(0).toUpperCase() +
@@ -2592,30 +2729,39 @@ export default function FlightsPageAuthenticated() {
 
               // Add source_point to the trip
               correctedTrip.source_point = memoryData.source_point;
+              console.log("✅ Adding source_point to correctedTrip:", correctedTrip.source_point);
 
-              // Update all days with from_city = "user_location" to use source_point
+              // Update both FIRST and LAST day conveyance details
               if (
                 correctedTrip.day_wise_plan &&
-                Array.isArray(correctedTrip.day_wise_plan)
+                Array.isArray(correctedTrip.day_wise_plan) &&
+                correctedTrip.day_wise_plan.length > 0
               ) {
-                // UPDATE THE FIRST DAY FROM CITY TO THE SOURCE POINT
-                if (correctedTrip.day_wise_plan[0].conveyance_details && correctedTrip.day_wise_plan[0].conveyance_details.from_city) {
-                  correctedTrip.day_wise_plan[0].conveyance_details.from_city = memoryData.source_point.place_name;
+                // UPDATE THE FIRST DAY FROM_CITY TO THE SOURCE POINT
+                const firstDay = correctedTrip.day_wise_plan[0];
+                if (firstDay.conveyance_details) {
+                  firstDay.conveyance_details.from_city = memoryData.source_point.place_name;
+                  console.log(`🔄 Day 1: Updated from_city to "${memoryData.source_point.place_name}"`);
+                } else {
+                  firstDay.conveyance_details = {
+                    from_city: memoryData.source_point.place_name,
+                    is_required: true
+                  };
+                  console.log(`🔄 Day 1: Created conveyance_details with from_city "${memoryData.source_point.place_name}"`);
                 }
-                // UPDATE THE REMAINING DAYS FROM CITY TO THE SOURCE POINT
-                // correctedTrip.day_wise_plan.forEach((day: any) => {
-                //   if (
-                //     day.conveyance_details &&
-                //     (day.conveyance_details.from_city === "user_location" ||
-                //       day.conveyance_details.from_city === "User Location" || day.conveyance_details.from_city === "user_location")
-                //   ) {
-                //     console.log(
-                //       `🔄 Day ${day.day_number}: Updating from_city from "${day.conveyance_details.from_city}" to "${memoryData.source_point.place_name}"`
-                //     );
-                //     day.conveyance_details.from_city =
-                //       memoryData.source_point.place_name;
-                //   }
-                // });
+
+                // UPDATE THE LAST DAY TO_CITY TO THE SOURCE POINT (return journey)
+                const lastDay = correctedTrip.day_wise_plan[correctedTrip.day_wise_plan.length - 1];
+                if (lastDay.conveyance_details) {
+                  lastDay.conveyance_details.to_city = memoryData.source_point.place_name;
+                  console.log(`🔄 Day ${lastDay.day_number}: Updated to_city to "${memoryData.source_point.place_name}" (return journey)`);
+                } else {
+                  lastDay.conveyance_details = {
+                    to_city: memoryData.source_point.place_name,
+                    is_required: true
+                  };
+                  console.log(`🔄 Day ${lastDay.day_number}: Created conveyance_details with to_city "${memoryData.source_point.place_name}"`);
+                }
               }
 
               // Store updated trip with source_point (trip_date already added above)
@@ -2623,7 +2769,7 @@ export default function FlightsPageAuthenticated() {
 
               // Update local state
               setSelectedTrip(correctedTrip);
-              console.log("✅ Trip updated with source_point");
+              console.log("✅ Trip updated with source_point and conveyance details");
             } else {
               console.log("⚠️ No source_point in memory, using default Mumbai");
               // Default to Mumbai if no source_point
@@ -2632,23 +2778,29 @@ export default function FlightsPageAuthenticated() {
                 address: "Mumbai, India",
               };
 
-              // Update all days with from_city = "user_location" to Mumbai
+              // Update first and last day with Mumbai
               if (
                 correctedTrip.day_wise_plan &&
-                Array.isArray(correctedTrip.day_wise_plan)
+                Array.isArray(correctedTrip.day_wise_plan) &&
+                correctedTrip.day_wise_plan.length > 0
               ) {
-                correctedTrip.day_wise_plan.forEach((day: any) => {
-                  if (
-                    day.conveyance_details &&
-                    (day.conveyance_details.from_city === "user_location" ||
-                      day.conveyance_details.from_city === "User Location")
-                  ) {
-                    console.log(
-                      `🔄 Day ${day.day_number}: Updating from_city from "${day.conveyance_details.from_city}" to Mumbai (default)`
-                    );
-                    day.conveyance_details.from_city = "Mumbai";
-                  }
-                });
+                // First day from_city
+                const firstDay = correctedTrip.day_wise_plan[0];
+                if (firstDay.conveyance_details) {
+                  firstDay.conveyance_details.from_city = "Mumbai";
+                } else {
+                  firstDay.conveyance_details = { from_city: "Mumbai", is_required: true };
+                }
+
+                // Last day to_city
+                const lastDay = correctedTrip.day_wise_plan[correctedTrip.day_wise_plan.length - 1];
+                if (lastDay.conveyance_details) {
+                  lastDay.conveyance_details.to_city = "Mumbai";
+                } else {
+                  lastDay.conveyance_details = { to_city: "Mumbai", is_required: true };
+                }
+
+                console.log(`🔄 Updated first day from_city and last day to_city to Mumbai (default)`);
               }
 
               // Store updated trip with default source_point (trip_date already added above)
@@ -2783,33 +2935,39 @@ export default function FlightsPageAuthenticated() {
             // Handle "user_location" and other placeholder values
             // Check if fromCity is not one of the supported cities
             if (fromCity) {
-              // Capitalize for comparison
-              const normalizedFromCity =
-                fromCity.charAt(0).toUpperCase() +
-                fromCity.slice(1).toLowerCase();
-              const isSupported = supportedCities.some(
-                (city) =>
-                  city.toLowerCase() === normalizedFromCity.toLowerCase()
+              // Find exact match in supported cities (case-insensitive)
+              const matchedCity = supportedCities.find(
+                (city) => city.toLowerCase() === fromCity.toLowerCase()
               );
 
-              if (!isSupported) {
+              if (matchedCity) {
+                // Use the exact spelling from supportedCities to preserve "New Delhi" format
+                fromCity = matchedCity;
+                console.log(`✅ Matched from_city to supported city: ${fromCity}`);
+              } else {
                 console.log(
                   `🔄 "${fromCity}" is not a supported city, defaulting to Mumbai`
                 );
                 fromCity = "Mumbai";
-              } else {
-                fromCity = normalizedFromCity;
               }
             } else {
               fromCity = "Mumbai"; // Default if empty
               console.log("🔄 Empty from_city, defaulting to Mumbai");
             }
 
-            // Capitalize city names properly for toCity
+            // Capitalize city names properly for toCity - match against supported cities
             if (toCity) {
-              toCity =
-                toCity.charAt(0).toUpperCase() + toCity.slice(1).toLowerCase();
-              if (toCity === "Delhi") toCity = "New Delhi"; // Match FlightsWidget format
+              const matchedToCity = supportedCities.find(
+                (city) => city.toLowerCase() === toCity.toLowerCase()
+              );
+              if (matchedToCity) {
+                toCity = matchedToCity;
+                console.log(`✅ Matched to_city to supported city: ${toCity}`);
+              } else {
+                // If not in supported list, try basic capitalization
+                toCity = toCity.charAt(0).toUpperCase() + toCity.slice(1).toLowerCase();
+                if (toCity === "Delhi") toCity = "New Delhi";
+              }
             }
 
             console.log(
@@ -4505,7 +4663,9 @@ export default function FlightsPageAuthenticated() {
                       onRemovePendingDay={handleRemovePendingDay}
                       onAddPendingDay={handleAddPendingDay}
                       pendingConveyanceDaysFromParent={pendingConveyanceDays}
-                      isLoadingPendingDay={isLoadingItinerary && isInsertDayFlow}
+                      isLoadingPendingDay={
+                        isLoadingItinerary && isInsertDayFlow
+                      }
                       onDeleteDay={handleDeleteDay}
                       onLocalDeleteDay={handleLocalDeleteDay}
                       onChatSubmit={handleItineraryChatSubmit}

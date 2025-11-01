@@ -32,14 +32,20 @@ interface FlightsWidgetProps {
 
 type ConveyanceType = "Flight" | "Train" | "Bus";
 
-// Available cities
-const AVAILABLE_CITIES = [
-  { name: "Mumbai", code: "BOM", airport: "Chhatrapati Shivaji Intl" },
-  { name: "Bangalore", code: "BLR", airport: "Kempegowda International" },
-  { name: "New Delhi", code: "DEL", airport: "Indira Gandhi Intl" },
-  { name: "Agra", code: "AGR", airport: "Agra Airport" },
-  { name: "Leh", code: "IXL", airport: "Kushok Bakula Rimpochee" },
-];
+import { getPopularIndianCities, searchCities } from "../utils/placesData";
+
+// Get initial cities list - will be populated from placesData utility
+const getInitialCities = () => {
+  const popularCities = getPopularIndianCities();
+  return popularCities.map(c => ({
+    name: c.city,
+    code: c.code,
+    airport: `${c.city} Airport` // Generic airport name
+  }));
+};
+
+// Available cities - using popular Indian cities as default
+const AVAILABLE_CITIES = getInitialCities();
 
 // City Selector Component
 function CitySelector({
@@ -1557,19 +1563,21 @@ export default function FlightsWidget({
     if (
       isVisible &&
       (autoFillMode || partialAutoFillMode) &&
-      initialDepartureDate &&
-      !departureDate
+      initialDepartureDate
     ) {
-      console.log("🚀 Auto-fill mode enabled - setting departure date...");
-      console.log("📅 Setting departure date to:", initialDepartureDate);
-      setDepartureDate(initialDepartureDate);
+      // Update departure date if it's different from current value
+      if (departureDate !== initialDepartureDate) {
+        console.log("🚀 Auto-fill mode enabled - setting departure date...");
+        console.log("📅 Setting departure date to:", initialDepartureDate);
+        console.log("📅 Previous departure date was:", departureDate);
+        setDepartureDate(initialDepartureDate);
+      }
     }
   }, [
     isVisible,
     autoFillMode,
     partialAutoFillMode,
     initialDepartureDate,
-    departureDate,
   ]);
 
   // Auto-trigger search when all fields are ready in auto-fill mode

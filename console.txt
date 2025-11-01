@@ -1,0 +1,589 @@
+main-app.js?v=1762038711918:1160 Download the React DevTools for a better development experience: https://react.dev/link/react-devtools
+FlightsPageAuthenticated.tsx:163 🔄 Creating new session via API for user: zqh2H13LPvXWDkZjfFzthJCXktB3
+FlightsPageAuthenticated.tsx:288 ⏳ Waiting for userId to restore trip
+FlightsPageAuthenticated.tsx:288 ⏳ Waiting for userId to restore trip
+FlightsPageAuthenticated.tsx:185 ✅ Session created via API: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '1430533072335405056'}
+FlightsPageAuthenticated.tsx:195 Authenticated flights session initialized: {sessionId: '1430533072335405056', userId: 'zqh2H13LPvXWDkZjfFzthJCXktB3', userEmail: 'manan.nitdl@gmail.com', isAuthenticated: true}
+FlightsPageAuthenticated.tsx:301 🔄 Attempting to restore selected trip from Firestore for user: zqh2H13LPvXWDkZjfFzthJCXktB3
+tripStorage.ts:196 Retrieved trip from Firestore: {trip_date: '2025-12-21', source_point: {…}, themes: Array(3), trip_title: "Ladakh's Monastic Heart & Winter Culture", best_time_to_visit: 'December to February', …}
+FlightsPageAuthenticated.tsx:310 ✅ Successfully restored trip from Firestore: Ladakh's Monastic Heart & Winter Culture
+FlightsPageAuthenticated.tsx:3813 First message detected, updating memory before sending...
+memoryApi.ts:145 Updating memory for session change: {userId: 'zqh2H13LPvXWDkZjfFzthJCXktB3', sessionId: '1430533072335405056'}
+memoryApi.ts:184 Sending user profile to memory API: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '1430533072335405056', updates: {…}}
+memoryApi.ts:201 Memory API success: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '1430533072335405056', message: 'Memory added successfully'}
+memoryApi.ts:165 Memory updated successfully for session change
+FlightsPageAuthenticated.tsx:3823 Memory updated successfully for first message
+FlightsPageAuthenticated.tsx:475 Making API call...
+FlightsPageAuthenticated.tsx:492 API Request sent: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '1430533072335405056', message: 'manan, 25, male, indian solo trip to leh in decemb…ctly no emergency number. move to trip suggestion'}
+FlightsPageAuthenticated.tsx:497 API Response status: 200
+FlightsPageAuthenticated.tsx:508 API Response received (raw): {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '1430533072335405056', message: {…}}
+FlightsPageAuthenticated.tsx:512 API Response (cleaned): {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '1430533072335405056', message: {…}}
+FlightsPageAuthenticated.tsx:3861 Full API response data: {
+  "user_id": "zqh2H13LPvXWDkZjfFzthJCXktB3",
+  "session_id": "1430533072335405056",
+  "message": {
+    "response_type": "trip",
+    "message": "",
+    "trips": [
+      {
+        "trip_title": "Leh's Winter Wonderland & Monastic Marvels",
+        "no_of_days": 7,
+        "estimated_budget": 95000,
+        "best_time_to_visit": "December to February",
+        "themes": [
+          "Adventure",
+          "Culture",
+          "Nature"
+        ],
+        "trip_route": [
+          {
+            "place_name": "Leh",
+            "address": "Ladakh, India",
+            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJhe1fRCHr_TgREPeGUJcJu9E",
+            "lat": "34.1525864",
+            "long": "77.57705349999999",
+            "photos": [
+              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6wu1V4AT4n-_WEmx8wOdNWYfyxB__KQNw15q2FsM6ZwqMPirYWCB75yYerxQ2nooKWgQ_8QfvvO-7ZWWzkym7COn2F-Nf0Ck4qPSP0Fudy5wpUF0XxwMSKG0BS6qabYuoq83CeWyDYTljKNLunTkqP7fOk7WivJhVXLFLZF1N2gckL-OMXsFVISicK2UqswSNwAlOxT6Q-6poJUi-n04aJf2s4v2gWB5vB_Zft2KcKuXt0P5TfAiQbUk891rbp1XaB4ax_RvFe6pM3rShkR7YmZrIEMSPN3lCdAjjZ5MLzsqFyrA-rpHXwlZqQJKFRsRFXte8j3nlRl7tEG1IDhOAtunhoA7zTJXl7jkJ5UgHEfpIjg1aKrnfC8u7YW8kJ8zO_gwCYBK_ZFpewc4plk1tI_Ln_2MZ78mZgQNktsnrW9BGrikuxzdnif0znEz_KjT2uMLsCnMa9_lEvzrIdSNhZGWpgq4ArIpSrWOJ0HtNdILWAfNxhYBgRk-hoGPsvZ74IFnUwjuBb_-X0uALPzO9FkEqI8orqCG4WWAsvyQIHVcAPhRAQhQIXkYu9xXzHPOWSsrdF&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+            ],
+            "place_id": "ChIJhe1fRCHr_TgREPeGUJcJu9E"
+          },
+          {
+            "place_name": "Sham Valley",
+            "address": "Ladakh, India",
+            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJfSTkZQCh_TgR--R_mCvrKXk",
+            "lat": "34.273393",
+            "long": "77.19984099999999",
+            "photos": [],
+            "place_id": "ChIJfSTkZQCh_TgR--R_mCvrKXk"
+          }
+        ],
+        "day_wise_plan": [
+          {
+            "day_number": 1,
+            "conveyance_details": {
+              "is_required": true,
+              "travel_timing": "morning",
+              "from_city": "user_location",
+              "to_city": "Leh"
+            },
+            "stay_details": {
+              "is_required": true,
+              "city": "Leh",
+              "check_in_day": "1",
+              "check_out_day": "8"
+            },
+            "must_do_activities": [
+              {
+                "type": "activity",
+                "category": "wellness",
+                "name": "Acclimatization Day",
+                "description": "Arrive in Leh and rest completely to acclimatize to the high altitude and cold. This is crucial to prevent Acute Mountain Sickness (AMS)."
+              }
+            ]
+          },
+          {
+            "day_number": 2,
+            "conveyance_details": {
+              "is_required": false
+            },
+            "stay_details": {
+              "is_required": false
+            },
+            "must_do_activities": [
+              {
+                "type": "place",
+                "category": "cultural_site",
+                "name": "Explore Leh Town",
+                "description": "Gently explore the snow-dusted Leh Market, visit the historic Leh Palace for panoramic views, and find peace at the Shanti Stupa overlooking the valley. [6]"
+              },
+              {
+                "type": "food",
+                "category": "cafe",
+                "name": "Winter Cafe Hopping",
+                "description": "Find a cozy, heated cafe in Leh market to enjoy hot butter tea or a comforting bowl of Thukpa."
+              }
+            ]
+          },
+          {
+            "day_number": 3,
+            "conveyance_details": {
+              "is_required": false
+            },
+            "stay_details": {
+              "is_required": false
+            },
+            "must_do_activities": [
+              {
+                "type": "place",
+                "category": "monastery",
+                "name": "Monastery Tour: Thiksey & Hemis",
+                "description": "Visit the grand Thiksey Monastery, resembling the Potala Palace, and the wealthy Hemis Monastery, the largest in Ladakh. Both are serene and accessible in winter. [5, 14]"
+              }
+            ]
+          },
+          {
+            "day_number": 4,
+            "conveyance_details": {
+              "is_required": false
+            },
+            "stay_details": {
+              "is_required": false
+            },
+            "must_do_activities": [
+              {
+                "type": "place",
+                "category": "scenic_drive",
+                "name": "Sham Valley Excursion",
+                "description": "Drive along the Srinagar-Leh highway to witness the confluence of the Indus and Zanskar rivers (Sangam), experience the gravity-defying Magnetic Hill, and visit the sacred Gurudwara Pathar Sahib. [4, 5]"
+              }
+            ]
+          },
+          {
+            "day_number"
+FlightsPageAuthenticated.tsx:3864 🔍 End response detection: {root_response_type: undefined, nested_response_type: 'trip', isEndResponse: false, full_data_structure: '{\n  "user_id": "zqh2H13LPvXWDkZjfFzthJCXktB3",\n  "…      ]\n          }\n        ]\n      }\n    ]\n  }\n}'}
+FlightsPageAuthenticated.tsx:3873 🎯 Trip response detected - showing loader immediately
+FlightsPageAuthenticated.tsx:3874 🎯 Response data: {root_response_type: undefined, nested_response_type: 'trip'}
+FlightsPageAuthenticated.tsx:4004 Checking nested message format
+FlightsPageAuthenticated.tsx:4025 Detected trip response in nested format
+FlightsPageAuthenticated.tsx:4026 messageData structure: (3) ['response_type', 'message', 'trips']
+FlightsPageAuthenticated.tsx:4036 Found trips array directly under messageData
+FlightsPageAuthenticated.tsx:4046 Parsed 5 trip suggestions from messageData.trips
+FlightsPageAuthenticated.tsx:4049 Validated trip suggestions: (5) [{…}, {…}, {…}, {…}, {…}]
+FlightsPageAuthenticated.tsx:4129 🎯 Starting trip loader for 4 seconds minimum
+FlightsPageAuthenticated.tsx:4135 Found 9 images to download
+imageDownloader.ts:110 Starting download of 5 images...
+FlightsPageAuthenticated.tsx:4296 === TRANSFORMING TRIPS DATA ===
+FlightsPageAuthenticated.tsx:4297 Number of trips to transform: 5
+FlightsPageAuthenticated.tsx:4421     - Fallback: Using first city from trip_route: Leh
+FlightsPageAuthenticated.tsx:4421     - Fallback: Using first city from trip_route: Leh
+FlightsPageAuthenticated.tsx:4421     - Fallback: Using first city from trip_route: Leh
+FlightsPageAuthenticated.tsx:4421     - Fallback: Using first city from trip_route: Leh
+FlightsPageAuthenticated.tsx:4421     - Fallback: Using first city from trip_route: Leh
+FlightsPageAuthenticated.tsx:4436 Transformed 7 days for trip 1
+FlightsPageAuthenticated.tsx:4452 Final transformed trip 1:
+FlightsPageAuthenticated.tsx:4453   - trip_title: Leh's Winter Wonderland & Monastic Marvels
+FlightsPageAuthenticated.tsx:4454   - no_of_days: 7
+FlightsPageAuthenticated.tsx:4455   - estimated_budget: 95000
+FlightsPageAuthenticated.tsx:4456   - best_time_to_visit: December to February
+FlightsPageAuthenticated.tsx:4457   - theme: (3) ['Adventure', 'Culture', 'Nature']
+FlightsPageAuthenticated.tsx:4458   - themes: (3) ['Adventure', 'Culture', 'Nature']
+FlightsPageAuthenticated.tsx:4459   - trip_route length: 2
+FlightsPageAuthenticated.tsx:4463   - day_wise_plan length: 7
+FlightsPageAuthenticated.tsx:4421     - Fallback: Using first city from trip_route: Leh
+FlightsPageAuthenticated.tsx:4421     - Fallback: Using first city from trip_route: Leh
+FlightsPageAuthenticated.tsx:4421     - Fallback: Using first city from trip_route: Leh
+FlightsPageAuthenticated.tsx:4436 Transformed 7 days for trip 2
+FlightsPageAuthenticated.tsx:4452 Final transformed trip 2:
+FlightsPageAuthenticated.tsx:4453   - trip_title: Quest for the Frozen Lake: Leh to Pangong Tso
+FlightsPageAuthenticated.tsx:4454   - no_of_days: 7
+FlightsPageAuthenticated.tsx:4455   - estimated_budget: 120000
+FlightsPageAuthenticated.tsx:4456   - best_time_to_visit: December to February
+FlightsPageAuthenticated.tsx:4457   - theme: (3) ['Adventure', 'Nature', 'Road Trip']
+FlightsPageAuthenticated.tsx:4458   - themes: (3) ['Adventure', 'Nature', 'Road Trip']
+FlightsPageAuthenticated.tsx:4459   - trip_route length: 2
+FlightsPageAuthenticated.tsx:4463   - day_wise_plan length: 7
+FlightsPageAuthenticated.tsx:4421     - Fallback: Using first city from trip_route: Leh
+FlightsPageAuthenticated.tsx:4421     - Fallback: Using first city from trip_route: Leh
+FlightsPageAuthenticated.tsx:4421     - Fallback: Using first city from trip_route: Leh
+FlightsPageAuthenticated.tsx:4436 Transformed 7 days for trip 3
+FlightsPageAuthenticated.tsx:4452 Final transformed trip 3:
+FlightsPageAuthenticated.tsx:4453   - trip_title: High-Altitude Adventure: Khardung La & Nubra Valley
+FlightsPageAuthenticated.tsx:4454   - no_of_days: 7
+FlightsPageAuthenticated.tsx:4455   - estimated_budget: 130000
+FlightsPageAuthenticated.tsx:4456   - best_time_to_visit: December to February
+FlightsPageAuthenticated.tsx:4457   - theme: (3) ['Adventure', 'Road Trip', 'Nature']
+FlightsPageAuthenticated.tsx:4458   - themes: (3) ['Adventure', 'Road Trip', 'Nature']
+FlightsPageAuthenticated.tsx:4459   - trip_route length: 2
+FlightsPageAuthenticated.tsx:4463   - day_wise_plan length: 7
+FlightsPageAuthenticated.tsx:4421     - Fallback: Using first city from trip_route: Leh
+FlightsPageAuthenticated.tsx:4421     - Fallback: Using first city from trip_route: Leh
+FlightsPageAuthenticated.tsx:4421     - Fallback: Using first city from trip_route: Leh
+FlightsPageAuthenticated.tsx:4421     - Fallback: Using first city from trip_route: Leh
+FlightsPageAuthenticated.tsx:4421     - Fallback: Using first city from trip_route: Leh
+FlightsPageAuthenticated.tsx:4436 Transformed 7 days for trip 4
+FlightsPageAuthenticated.tsx:4452 Final transformed trip 4:
+FlightsPageAuthenticated.tsx:4453   - trip_title: Spiritual Winter Sojourn in Ladakh
+FlightsPageAuthenticated.tsx:4454   - no_of_days: 7
+FlightsPageAuthenticated.tsx:4455   - estimated_budget: 85000
+FlightsPageAuthenticated.tsx:4456   - best_time_to_visit: December to February
+FlightsPageAuthenticated.tsx:4457   - theme: (3) ['Culture', 'Spirituality', 'Relaxation']
+FlightsPageAuthenticated.tsx:4458   - themes: (3) ['Culture', 'Spirituality', 'Relaxation']
+FlightsPageAuthenticated.tsx:4459   - trip_route length: 1
+FlightsPageAuthenticated.tsx:4463   - day_wise_plan length: 7
+FlightsPageAuthenticated.tsx:4421     - Fallback: Using first city from trip_route: Leh
+FlightsPageAuthenticated.tsx:4421     - Fallback: Using first city from trip_route: Leh
+FlightsPageAuthenticated.tsx:4436 Transformed 7 days for trip 5
+FlightsPageAuthenticated.tsx:4452 Final transformed trip 5:
+FlightsPageAuthenticated.tsx:4453   - trip_title: Ladakh's 'Baby Trek': A Glimpse into Sham Valley
+FlightsPageAuthenticated.tsx:4454   - no_of_days: 7
+FlightsPageAuthenticated.tsx:4455   - estimated_budget: 110000
+FlightsPageAuthenticated.tsx:4456   - best_time_to_visit: December
+FlightsPageAuthenticated.tsx:4457   - theme: (3) ['Trekking', 'Adventure', 'Culture']
+FlightsPageAuthenticated.tsx:4458   - themes: (3) ['Trekking', 'Adventure', 'Culture']
+FlightsPageAuthenticated.tsx:4459   - trip_route length: 3
+FlightsPageAuthenticated.tsx:4463   - day_wise_plan length: 7
+FlightsPageAuthenticated.tsx:4154 Original trip suggestions: (5) [{…}, {…}, {…}, {…}, {…}]
+FlightsPageAuthenticated.tsx:4155 Transformed trip suggestions: (5) [{…}, {…}, {…}, {…}, {…}]
+FlightsPageAuthenticated.tsx:3885 🎯 Safety check: Ensuring loader is still visible
+FlightsPageAuthenticated.tsx:3887 🎯 Safety: Loader was hidden prematurely, re-showing
+imageDownloader.ts:94 Successfully downloaded image: /api/place-photo?photoreference=AWn5SU5K6GxYVvgFnx5modDyYv9a0PtcyPvGeeewW2CbRtBINQ4NYdAkvt1_dQKWw6Vx...
+imageDownloader.ts:94 Successfully downloaded image: /api/place-photo?photoreference=AWn5SU6Qmizoicn82G-1um9-dD88vkyqDQNIqhEGi2oTe5B8sGmE9Q2Esx3Mhvvf8B0g...
+imageDownloader.ts:94 Successfully downloaded image: /api/place-photo?photoreference=AWn5SU6wu1V4AT4n-_WEmx8wOdNWYfyxB__KQNw15q2FsM6ZwqMPirYWCB75yYerxQ2n...
+imageDownloader.ts:94 Successfully downloaded image: /api/place-photo?photoreference=AWn5SU7NuF7ofKxWvtfz1XzVRkjLsHSOqqdE9lAXueE4xoHTrd7-1QXMiVMcUiFXYdto...
+imageDownloader.ts:94 Successfully downloaded image: /api/place-photo?photoreference=AWn5SU6UJON7RCvUHC8kBT8HuUSvD9M19vxSB3dNA9ZJm58hHD9Fg1Rlh37FGruR-1Yd...
+imageDownloader.ts:138 Downloaded 5 images successfully
+FlightsPageAuthenticated.tsx:4141 Successfully downloaded 5 images
+FlightsPageAuthenticated.tsx:4167 🎯 Trip loader minimum duration completed, hiding loader
+FlightsPageAuthenticated.tsx:4189 Places widget activated with trip suggestions
+FlashcardsWidget.tsx:115 FlashcardsWidget trips data with images from JSON:
+FlashcardsWidget.tsx:127 Trip 1: Leh's Winter Wonderland & Monastic Marvels
+FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6wu1V4AT4n-_WEmx8wOdNWYfyxB__KQNw15q2FsM6ZwqMPirYWCB75yYerxQ2nooKWgQ_8QfvvO-7ZWWzkym7COn2F-Nf0Ck4qPSP0Fudy5wpUF0XxwMSKG0BS6qabYuoq83CeWyDYTljKNLunTkqP7fOk7WivJhVXLFLZF1N2gckL-OMXsFVISicK2UqswSNwAlOxT6Q-6poJUi-n04aJf2s4v2gWB5vB_Zft2KcKuXt0P5TfAiQbUk891rbp1XaB4ax_RvFe6pM3rShkR7YmZrIEMSPN3lCdAjjZ5MLzsqFyrA-rpHXwlZqQJKFRsRFXte8j3nlRl7tEG1IDhOAtunhoA7zTJXl7jkJ5UgHEfpIjg1aKrnfC8u7YW8kJ8zO_gwCYBK_ZFpewc4plk1tI_Ln_2MZ78mZgQNktsnrW9BGrikuxzdnif0znEz_KjT2uMLsCnMa9_lEvzrIdSNhZGWpgq4ArIpSrWOJ0HtNdILWAfNxhYBgRk-hoGPsvZ74IFnUwjuBb_-X0uALPzO9FkEqI8orqCG4WWAsvyQIHVcAPhRAQhQIXkYu9xXzHPOWSsrdF&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
+FlashcardsWidget.tsx:129   - Is Google Places photo: true
+FlashcardsWidget.tsx:130   - Using image: undefined
+FlashcardsWidget.tsx:131   - Source: Google Places API
+FlashcardsWidget.tsx:140   - Themes: Adventure, Culture, Nature
+FlashcardsWidget.tsx:127 Trip 2: Quest for the Frozen Lake: Leh to Pangong Tso
+FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6wu1V4AT4n-_WEmx8wOdNWYfyxB__KQNw15q2FsM6ZwqMPirYWCB75yYerxQ2nooKWgQ_8QfvvO-7ZWWzkym7COn2F-Nf0Ck4qPSP0Fudy5wpUF0XxwMSKG0BS6qabYuoq83CeWyDYTljKNLunTkqP7fOk7WivJhVXLFLZF1N2gckL-OMXsFVISicK2UqswSNwAlOxT6Q-6poJUi-n04aJf2s4v2gWB5vB_Zft2KcKuXt0P5TfAiQbUk891rbp1XaB4ax_RvFe6pM3rShkR7YmZrIEMSPN3lCdAjjZ5MLzsqFyrA-rpHXwlZqQJKFRsRFXte8j3nlRl7tEG1IDhOAtunhoA7zTJXl7jkJ5UgHEfpIjg1aKrnfC8u7YW8kJ8zO_gwCYBK_ZFpewc4plk1tI_Ln_2MZ78mZgQNktsnrW9BGrikuxzdnif0znEz_KjT2uMLsCnMa9_lEvzrIdSNhZGWpgq4ArIpSrWOJ0HtNdILWAfNxhYBgRk-hoGPsvZ74IFnUwjuBb_-X0uALPzO9FkEqI8orqCG4WWAsvyQIHVcAPhRAQhQIXkYu9xXzHPOWSsrdF&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
+FlashcardsWidget.tsx:129   - Is Google Places photo: true
+FlashcardsWidget.tsx:130   - Using image: undefined
+FlashcardsWidget.tsx:131   - Source: Google Places API
+FlashcardsWidget.tsx:140   - Themes: Adventure, Nature, Road Trip
+FlashcardsWidget.tsx:127 Trip 3: High-Altitude Adventure: Khardung La & Nubra Valley
+FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6wu1V4AT4n-_WEmx8wOdNWYfyxB__KQNw15q2FsM6ZwqMPirYWCB75yYerxQ2nooKWgQ_8QfvvO-7ZWWzkym7COn2F-Nf0Ck4qPSP0Fudy5wpUF0XxwMSKG0BS6qabYuoq83CeWyDYTljKNLunTkqP7fOk7WivJhVXLFLZF1N2gckL-OMXsFVISicK2UqswSNwAlOxT6Q-6poJUi-n04aJf2s4v2gWB5vB_Zft2KcKuXt0P5TfAiQbUk891rbp1XaB4ax_RvFe6pM3rShkR7YmZrIEMSPN3lCdAjjZ5MLzsqFyrA-rpHXwlZqQJKFRsRFXte8j3nlRl7tEG1IDhOAtunhoA7zTJXl7jkJ5UgHEfpIjg1aKrnfC8u7YW8kJ8zO_gwCYBK_ZFpewc4plk1tI_Ln_2MZ78mZgQNktsnrW9BGrikuxzdnif0znEz_KjT2uMLsCnMa9_lEvzrIdSNhZGWpgq4ArIpSrWOJ0HtNdILWAfNxhYBgRk-hoGPsvZ74IFnUwjuBb_-X0uALPzO9FkEqI8orqCG4WWAsvyQIHVcAPhRAQhQIXkYu9xXzHPOWSsrdF&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
+FlashcardsWidget.tsx:129   - Is Google Places photo: true
+FlashcardsWidget.tsx:130   - Using image: undefined
+FlashcardsWidget.tsx:131   - Source: Google Places API
+FlashcardsWidget.tsx:140   - Themes: Adventure, Road Trip, Nature
+FlashcardsWidget.tsx:127 Trip 4: Spiritual Winter Sojourn in Ladakh
+FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6wu1V4AT4n-_WEmx8wOdNWYfyxB__KQNw15q2FsM6ZwqMPirYWCB75yYerxQ2nooKWgQ_8QfvvO-7ZWWzkym7COn2F-Nf0Ck4qPSP0Fudy5wpUF0XxwMSKG0BS6qabYuoq83CeWyDYTljKNLunTkqP7fOk7WivJhVXLFLZF1N2gckL-OMXsFVISicK2UqswSNwAlOxT6Q-6poJUi-n04aJf2s4v2gWB5vB_Zft2KcKuXt0P5TfAiQbUk891rbp1XaB4ax_RvFe6pM3rShkR7YmZrIEMSPN3lCdAjjZ5MLzsqFyrA-rpHXwlZqQJKFRsRFXte8j3nlRl7tEG1IDhOAtunhoA7zTJXl7jkJ5UgHEfpIjg1aKrnfC8u7YW8kJ8zO_gwCYBK_ZFpewc4plk1tI_Ln_2MZ78mZgQNktsnrW9BGrikuxzdnif0znEz_KjT2uMLsCnMa9_lEvzrIdSNhZGWpgq4ArIpSrWOJ0HtNdILWAfNxhYBgRk-hoGPsvZ74IFnUwjuBb_-X0uALPzO9FkEqI8orqCG4WWAsvyQIHVcAPhRAQhQIXkYu9xXzHPOWSsrdF&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
+FlashcardsWidget.tsx:129   - Is Google Places photo: true
+FlashcardsWidget.tsx:130   - Using image: undefined
+FlashcardsWidget.tsx:131   - Source: Google Places API
+FlashcardsWidget.tsx:140   - Themes: Culture, Spirituality, Relaxation
+FlashcardsWidget.tsx:127 Trip 5: Ladakh's 'Baby Trek': A Glimpse into Sham Valley
+FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6wu1V4AT4n-_WEmx8wOdNWYfyxB__KQNw15q2FsM6ZwqMPirYWCB75yYerxQ2nooKWgQ_8QfvvO-7ZWWzkym7COn2F-Nf0Ck4qPSP0Fudy5wpUF0XxwMSKG0BS6qabYuoq83CeWyDYTljKNLunTkqP7fOk7WivJhVXLFLZF1N2gckL-OMXsFVISicK2UqswSNwAlOxT6Q-6poJUi-n04aJf2s4v2gWB5vB_Zft2KcKuXt0P5TfAiQbUk891rbp1XaB4ax_RvFe6pM3rShkR7YmZrIEMSPN3lCdAjjZ5MLzsqFyrA-rpHXwlZqQJKFRsRFXte8j3nlRl7tEG1IDhOAtunhoA7zTJXl7jkJ5UgHEfpIjg1aKrnfC8u7YW8kJ8zO_gwCYBK_ZFpewc4plk1tI_Ln_2MZ78mZgQNktsnrW9BGrikuxzdnif0znEz_KjT2uMLsCnMa9_lEvzrIdSNhZGWpgq4ArIpSrWOJ0HtNdILWAfNxhYBgRk-hoGPsvZ74IFnUwjuBb_-X0uALPzO9FkEqI8orqCG4WWAsvyQIHVcAPhRAQhQIXkYu9xXzHPOWSsrdF&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
+FlashcardsWidget.tsx:129   - Is Google Places photo: true
+FlashcardsWidget.tsx:130   - Using image: undefined
+FlashcardsWidget.tsx:131   - Source: Google Places API
+FlashcardsWidget.tsx:140   - Themes: Trekking, Adventure, Culture
+FlashcardsWidget.tsx:152 Starting image preloading...
+FlashcardsWidget.tsx:157 Found 10 images to preload
+FlashcardsWidget.tsx:115 FlashcardsWidget trips data with images from JSON:
+FlashcardsWidget.tsx:127 Trip 1: Leh's Winter Wonderland & Monastic Marvels
+FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6wu1V4AT4n-_WEmx8wOdNWYfyxB__KQNw15q2FsM6ZwqMPirYWCB75yYerxQ2nooKWgQ_8QfvvO-7ZWWzkym7COn2F-Nf0Ck4qPSP0Fudy5wpUF0XxwMSKG0BS6qabYuoq83CeWyDYTljKNLunTkqP7fOk7WivJhVXLFLZF1N2gckL-OMXsFVISicK2UqswSNwAlOxT6Q-6poJUi-n04aJf2s4v2gWB5vB_Zft2KcKuXt0P5TfAiQbUk891rbp1XaB4ax_RvFe6pM3rShkR7YmZrIEMSPN3lCdAjjZ5MLzsqFyrA-rpHXwlZqQJKFRsRFXte8j3nlRl7tEG1IDhOAtunhoA7zTJXl7jkJ5UgHEfpIjg1aKrnfC8u7YW8kJ8zO_gwCYBK_ZFpewc4plk1tI_Ln_2MZ78mZgQNktsnrW9BGrikuxzdnif0znEz_KjT2uMLsCnMa9_lEvzrIdSNhZGWpgq4ArIpSrWOJ0HtNdILWAfNxhYBgRk-hoGPsvZ74IFnUwjuBb_-X0uALPzO9FkEqI8orqCG4WWAsvyQIHVcAPhRAQhQIXkYu9xXzHPOWSsrdF&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
+FlashcardsWidget.tsx:129   - Is Google Places photo: true
+FlashcardsWidget.tsx:130   - Using image: undefined
+FlashcardsWidget.tsx:131   - Source: Google Places API
+FlashcardsWidget.tsx:140   - Themes: Adventure, Culture, Nature
+FlashcardsWidget.tsx:127 Trip 2: Quest for the Frozen Lake: Leh to Pangong Tso
+FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6wu1V4AT4n-_WEmx8wOdNWYfyxB__KQNw15q2FsM6ZwqMPirYWCB75yYerxQ2nooKWgQ_8QfvvO-7ZWWzkym7COn2F-Nf0Ck4qPSP0Fudy5wpUF0XxwMSKG0BS6qabYuoq83CeWyDYTljKNLunTkqP7fOk7WivJhVXLFLZF1N2gckL-OMXsFVISicK2UqswSNwAlOxT6Q-6poJUi-n04aJf2s4v2gWB5vB_Zft2KcKuXt0P5TfAiQbUk891rbp1XaB4ax_RvFe6pM3rShkR7YmZrIEMSPN3lCdAjjZ5MLzsqFyrA-rpHXwlZqQJKFRsRFXte8j3nlRl7tEG1IDhOAtunhoA7zTJXl7jkJ5UgHEfpIjg1aKrnfC8u7YW8kJ8zO_gwCYBK_ZFpewc4plk1tI_Ln_2MZ78mZgQNktsnrW9BGrikuxzdnif0znEz_KjT2uMLsCnMa9_lEvzrIdSNhZGWpgq4ArIpSrWOJ0HtNdILWAfNxhYBgRk-hoGPsvZ74IFnUwjuBb_-X0uALPzO9FkEqI8orqCG4WWAsvyQIHVcAPhRAQhQIXkYu9xXzHPOWSsrdF&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
+FlashcardsWidget.tsx:129   - Is Google Places photo: true
+FlashcardsWidget.tsx:130   - Using image: undefined
+FlashcardsWidget.tsx:131   - Source: Google Places API
+FlashcardsWidget.tsx:140   - Themes: Adventure, Nature, Road Trip
+FlashcardsWidget.tsx:127 Trip 3: High-Altitude Adventure: Khardung La & Nubra Valley
+FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6wu1V4AT4n-_WEmx8wOdNWYfyxB__KQNw15q2FsM6ZwqMPirYWCB75yYerxQ2nooKWgQ_8QfvvO-7ZWWzkym7COn2F-Nf0Ck4qPSP0Fudy5wpUF0XxwMSKG0BS6qabYuoq83CeWyDYTljKNLunTkqP7fOk7WivJhVXLFLZF1N2gckL-OMXsFVISicK2UqswSNwAlOxT6Q-6poJUi-n04aJf2s4v2gWB5vB_Zft2KcKuXt0P5TfAiQbUk891rbp1XaB4ax_RvFe6pM3rShkR7YmZrIEMSPN3lCdAjjZ5MLzsqFyrA-rpHXwlZqQJKFRsRFXte8j3nlRl7tEG1IDhOAtunhoA7zTJXl7jkJ5UgHEfpIjg1aKrnfC8u7YW8kJ8zO_gwCYBK_ZFpewc4plk1tI_Ln_2MZ78mZgQNktsnrW9BGrikuxzdnif0znEz_KjT2uMLsCnMa9_lEvzrIdSNhZGWpgq4ArIpSrWOJ0HtNdILWAfNxhYBgRk-hoGPsvZ74IFnUwjuBb_-X0uALPzO9FkEqI8orqCG4WWAsvyQIHVcAPhRAQhQIXkYu9xXzHPOWSsrdF&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
+FlashcardsWidget.tsx:129   - Is Google Places photo: true
+FlashcardsWidget.tsx:130   - Using image: undefined
+FlashcardsWidget.tsx:131   - Source: Google Places API
+FlashcardsWidget.tsx:140   - Themes: Adventure, Road Trip, Nature
+FlashcardsWidget.tsx:127 Trip 4: Spiritual Winter Sojourn in Ladakh
+FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6wu1V4AT4n-_WEmx8wOdNWYfyxB__KQNw15q2FsM6ZwqMPirYWCB75yYerxQ2nooKWgQ_8QfvvO-7ZWWzkym7COn2F-Nf0Ck4qPSP0Fudy5wpUF0XxwMSKG0BS6qabYuoq83CeWyDYTljKNLunTkqP7fOk7WivJhVXLFLZF1N2gckL-OMXsFVISicK2UqswSNwAlOxT6Q-6poJUi-n04aJf2s4v2gWB5vB_Zft2KcKuXt0P5TfAiQbUk891rbp1XaB4ax_RvFe6pM3rShkR7YmZrIEMSPN3lCdAjjZ5MLzsqFyrA-rpHXwlZqQJKFRsRFXte8j3nlRl7tEG1IDhOAtunhoA7zTJXl7jkJ5UgHEfpIjg1aKrnfC8u7YW8kJ8zO_gwCYBK_ZFpewc4plk1tI_Ln_2MZ78mZgQNktsnrW9BGrikuxzdnif0znEz_KjT2uMLsCnMa9_lEvzrIdSNhZGWpgq4ArIpSrWOJ0HtNdILWAfNxhYBgRk-hoGPsvZ74IFnUwjuBb_-X0uALPzO9FkEqI8orqCG4WWAsvyQIHVcAPhRAQhQIXkYu9xXzHPOWSsrdF&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
+FlashcardsWidget.tsx:129   - Is Google Places photo: true
+FlashcardsWidget.tsx:130   - Using image: undefined
+FlashcardsWidget.tsx:131   - Source: Google Places API
+FlashcardsWidget.tsx:140   - Themes: Culture, Spirituality, Relaxation
+FlashcardsWidget.tsx:127 Trip 5: Ladakh's 'Baby Trek': A Glimpse into Sham Valley
+FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6wu1V4AT4n-_WEmx8wOdNWYfyxB__KQNw15q2FsM6ZwqMPirYWCB75yYerxQ2nooKWgQ_8QfvvO-7ZWWzkym7COn2F-Nf0Ck4qPSP0Fudy5wpUF0XxwMSKG0BS6qabYuoq83CeWyDYTljKNLunTkqP7fOk7WivJhVXLFLZF1N2gckL-OMXsFVISicK2UqswSNwAlOxT6Q-6poJUi-n04aJf2s4v2gWB5vB_Zft2KcKuXt0P5TfAiQbUk891rbp1XaB4ax_RvFe6pM3rShkR7YmZrIEMSPN3lCdAjjZ5MLzsqFyrA-rpHXwlZqQJKFRsRFXte8j3nlRl7tEG1IDhOAtunhoA7zTJXl7jkJ5UgHEfpIjg1aKrnfC8u7YW8kJ8zO_gwCYBK_ZFpewc4plk1tI_Ln_2MZ78mZgQNktsnrW9BGrikuxzdnif0znEz_KjT2uMLsCnMa9_lEvzrIdSNhZGWpgq4ArIpSrWOJ0HtNdILWAfNxhYBgRk-hoGPsvZ74IFnUwjuBb_-X0uALPzO9FkEqI8orqCG4WWAsvyQIHVcAPhRAQhQIXkYu9xXzHPOWSsrdF&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
+FlashcardsWidget.tsx:129   - Is Google Places photo: true
+FlashcardsWidget.tsx:130   - Using image: undefined
+FlashcardsWidget.tsx:131   - Source: Google Places API
+FlashcardsWidget.tsx:140   - Themes: Trekking, Adventure, Culture
+FlashcardsWidget.tsx:152 Starting image preloading...
+FlashcardsWidget.tsx:157 Found 10 images to preload
+FlashcardsWidget.tsx:162 Image preloading complete: 10 successful, 0 failed
+FlashcardsWidget.tsx:162 Image preloading complete: 10 successful, 0 failed
+FlashcardsWidget.tsx:182 All images loaded and cached
+FlashcardsWidget.tsx:182 All images loaded and cached
+FlightsPageAuthenticated.tsx:546 Selected original trip: {trip_title: "Leh's Winter Wonderland & Monastic Marvels", no_of_days: 7, estimated_budget: 95000, best_time_to_visit: 'December to February', themes: Array(3), …}
+FlightsPageAuthenticated.tsx:567 Sending trip to memory API and Firestore: {trip_title: "Leh's Winter Wonderland & Monastic Marvels", no_of_days: 7, estimated_budget: 95000, best_time_to_visit: 'December to February', themes: Array(3), …}
+tripStorage.ts:28 Storing trip in Firestore for user: zqh2H13LPvXWDkZjfFzthJCXktB3
+tripStorage.ts:48 Trip stored successfully in Firestore
+tripStorage.ts:61 Storing trip in code memory: {trip_title: "Leh's Winter Wonderland & Monastic Marvels", no_of_days: 7, estimated_budget: 95000, best_time_to_visit: 'December to February', themes: Array(3), …}
+tripStorage.ts:92 Trip stored in both Firestore and memory: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '1430533072335405056', trip_data: {…}}
+FlightsPageAuthenticated.tsx:571 ✅ Trip stored in Firestore successfully: Leh's Winter Wonderland & Monastic Marvels
+FlightsPageAuthenticated.tsx:575 📌 Trip remains in component state for subsequent operations
+FlightsPageAuthenticated.tsx:605 Memory API success: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '1430533072335405056', message: 'Memory added successfully'}
+FlightsPageAuthenticated.tsx:632 Making chat API call after memory update
+FlightsPageAuthenticated.tsx:659 Chat API response received: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '1430533072335405056', message: "Hello Manan! Let's find the best place for you to …reference, and I'll finalize your starting point."}
+FlightsPageAuthenticated.tsx:475 Making API call...
+FlightsPageAuthenticated.tsx:492 API Request sent: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '1430533072335405056', message: 'Delhi'}
+FlightsPageAuthenticated.tsx:497 API Response status: 200
+FlightsPageAuthenticated.tsx:508 API Response received (raw): {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '1430533072335405056', message: {…}}
+FlightsPageAuthenticated.tsx:512 API Response (cleaned): {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '1430533072335405056', message: {…}}
+FlightsPageAuthenticated.tsx:3861 Full API response data: {
+  "user_id": "zqh2H13LPvXWDkZjfFzthJCXktB3",
+  "session_id": "1430533072335405056",
+  "message": {
+    "response_type": "end",
+    "message": ""
+  }
+}
+FlightsPageAuthenticated.tsx:3864 🔍 End response detection: {root_response_type: undefined, nested_response_type: 'end', isEndResponse: true, full_data_structure: '{\n  "user_id": "zqh2H13LPvXWDkZjfFzthJCXktB3",\n  "…  "response_type": "end",\n    "message": ""\n  }\n}'}
+FlightsPageAuthenticated.tsx:3896 🎯 End response detected - showing end loader immediately
+FlightsPageAuthenticated.tsx:3900 🎯 End response data: {root_response_type: undefined, nested_response_type: 'end'}
+FlightsPageAuthenticated.tsx:4004 Checking nested message format
+FlightsPageAuthenticated.tsx:4013 Detected end response in nested format
+FlightsPageAuthenticated.tsx:4211 🎯 End response detected - showing EndResponseLoader
+FlightsPageAuthenticated.tsx:4212 🎯 End response data: {root_response_type: undefined, nested_response_type: 'end', message_content: "Let's call the smart date recommender now"}
+FlightsPageAuthenticated.tsx:4221 🎯 Starting end loader for 4 seconds minimum
+FlightsPageAuthenticated.tsx:3910 🎯 Safety check: Ensuring end loader is still visible
+FlightsPageAuthenticated.tsx:3914 🎯 Safety: End loader was hidden prematurely, re-showing
+FlightsPageAuthenticated.tsx:4225 🎯 End loader minimum duration completed, hiding loader
+FlightsPageAuthenticated.tsx:4247 Date selector widget activated after end response
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:150 📋 DateSelector: Starting memory data fetch for auto-fill
+DateSelectorWidget.tsx:155 📋 DateSelector: Fetching memory data with: {userId: 'zqh2H13LPvXWDkZjfFzthJCXktB3', sessionId: '1430533072335405056'}
+priceApi.ts:174 Fetching stay data with request: {city: '', from_date: '2025-11-30', to_date: '2025-12-30'}
+DateSelectorWidget.tsx:150 📋 DateSelector: Starting memory data fetch for auto-fill
+DateSelectorWidget.tsx:155 📋 DateSelector: Fetching memory data with: {userId: 'zqh2H13LPvXWDkZjfFzthJCXktB3', sessionId: '1430533072335405056'}
+priceApi.ts:174 Fetching stay data with request: {city: '', from_date: '2025-11-30', to_date: '2025-12-30'}
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=undefined, stay=undefined
+priceApi.ts:187 Received stay data from API: 0 stays
+DateSelectorWidget.tsx:405 Fetched data: {flights: 0, trains: 0, stays: 0, fromCity: '', toCity: '', …}
+priceApi.ts:304 Processing price data for 2025-11, flights: 0, trains: 0, stays: 0, flightClass: Economy, trainClass: SL
+priceApi.ts:324 Processed price data sample: (5) [{…}, {…}, {…}, {…}, {…}]
+DateSelectorWidget.tsx:430 Processed prices for month: (5) [{…}, {…}, {…}, {…}, {…}]
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=null, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=null, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=null, stay=null
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=null, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=null, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=null, stay=null
+priceApi.ts:187 Received stay data from API: 0 stays
+DateSelectorWidget.tsx:405 Fetched data: {flights: 0, trains: 0, stays: 0, fromCity: '', toCity: '', …}
+priceApi.ts:304 Processing price data for 2025-11, flights: 0, trains: 0, stays: 0, flightClass: Economy, trainClass: SL
+priceApi.ts:324 Processed price data sample: (5) [{…}, {…}, {…}, {…}, {…}]
+DateSelectorWidget.tsx:430 Processed prices for month: (5) [{…}, {…}, {…}, {…}, {…}]
+DateSelectorWidget.tsx:172 ✅ Memory data received: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', user_profile: {…}, current_datetime: '2025-11-02 04:47:12', trip_suggestions: {…}, final_trip: {…}, …}
+DateSelectorWidget.tsx:177 ✅ Extracted from_city from source_point: Delhi
+DateSelectorWidget.tsx:188 📋 DateSelector: Extracting to_city from selectedTrip: {trip_title: "Leh's Winter Wonderland & Monastic Marvels", no_of_days: 7, estimated_budget: 95000, best_time_to_visit: 'December to February', themes: Array(3), …}
+DateSelectorWidget.tsx:191 📋 DateSelector: Found Day 1: {day_number: 1, conveyance_details: {…}, stay_details: {…}, must_do_activities: Array(1)}
+DateSelectorWidget.tsx:195 ✅ Extracted to_city from Day 1: Leh
+DateSelectorWidget.tsx:205 ✅ Formatted to_city: Leh
+DateSelectorWidget.tsx:222 ✅ Formatted from_city: New Delhi
+DateSelectorWidget.tsx:228 📍 Set from_city to: New Delhi
+DateSelectorWidget.tsx:233 📍 Set to_city to: Leh
+DateSelectorWidget.tsx:239 ✅ DateSelector fields auto-filled and locked
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=null, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=null, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=null, stay=null
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=null, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=null, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=null, stay=null
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=undefined, stay=undefined
+priceApi.ts:115 Fetching conveyance data with request: {conveyance_type: 'flights', departure_city: 'New Delhi', arrival_city: 'Leh', from_date: '2025-11-30', to_date: '2025-12-30'}
+priceApi.ts:174 Fetching stay data with request: {city: 'Leh', from_date: '2025-11-30', to_date: '2025-12-30'}
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:172 ✅ Memory data received: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', user_profile: {…}, current_datetime: '2025-11-02 04:47:12', trip_suggestions: {…}, final_trip: {…}, …}
+DateSelectorWidget.tsx:177 ✅ Extracted from_city from source_point: Delhi
+DateSelectorWidget.tsx:188 📋 DateSelector: Extracting to_city from selectedTrip: {trip_title: "Leh's Winter Wonderland & Monastic Marvels", no_of_days: 7, estimated_budget: 95000, best_time_to_visit: 'December to February', themes: Array(3), …}
+DateSelectorWidget.tsx:191 📋 DateSelector: Found Day 1: {day_number: 1, conveyance_details: {…}, stay_details: {…}, must_do_activities: Array(1)}
+DateSelectorWidget.tsx:195 ✅ Extracted to_city from Day 1: Leh
+DateSelectorWidget.tsx:205 ✅ Formatted to_city: Leh
+DateSelectorWidget.tsx:222 ✅ Formatted from_city: New Delhi
+DateSelectorWidget.tsx:228 📍 Set from_city to: New Delhi
+DateSelectorWidget.tsx:233 📍 Set to_city to: Leh
+DateSelectorWidget.tsx:239 ✅ DateSelector fields auto-filled and locked
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=undefined, stay=undefined
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=undefined, stay=undefined
+priceApi.ts:128 Received conveyance data from API: 84 flights
+priceApi.ts:187 Received stay data from API: 80 stays
+DateSelectorWidget.tsx:405 Fetched data: {flights: 84, trains: 0, stays: 80, fromCity: 'New Delhi', toCity: 'Leh', …}
+priceApi.ts:304 Processing price data for 2025-11, flights: 84, trains: 0, stays: 80, flightClass: Economy, trainClass: SL
+priceApi.ts:247 Found 3 prices for date 2025-12-01, class Economy: (3) [7403, 4305, 6506]
+priceApi.ts:247 Found 2 prices for date 2025-12-02, class Economy: (2) [5871, 4407]
+priceApi.ts:247 Found 3 prices for date 2025-12-03, class Economy: (3) [5956, 5059, 7512]
+priceApi.ts:247 Found 4 prices for date 2025-12-04, class Economy: (4) [5803, 8701, 7526, 7220]
+priceApi.ts:247 Found 2 prices for date 2025-12-05, class Economy: (2) [7367, 6800]
+priceApi.ts:247 Found 3 prices for date 2025-12-06, class Economy: (3) [6968, 8406, 9227]
+priceApi.ts:247 Found 3 prices for date 2025-12-07, class Economy: (3) [8362, 9942, 8364]
+priceApi.ts:247 Found 2 prices for date 2025-12-08, class Economy: (2) [7540, 6106]
+priceApi.ts:247 Found 2 prices for date 2025-12-09, class Economy: (2) [5679, 6541]
+priceApi.ts:247 Found 4 prices for date 2025-12-10, class Economy: (4) [5772, 4417, 4306, 7317]
+priceApi.ts:247 Found 2 prices for date 2025-12-11, class Economy: (2) [6962, 6926]
+priceApi.ts:247 Found 2 prices for date 2025-12-12, class Economy: (2) [6276, 7527]
+priceApi.ts:247 Found 2 prices for date 2025-12-13, class Economy: (2) [9757, 7517]
+priceApi.ts:247 Found 3 prices for date 2025-12-14, class Economy: (3) [8340, 8230, 7584]
+priceApi.ts:247 Found 2 prices for date 2025-12-15, class Economy: (2) [8741, 7709]
+priceApi.ts:247 Found 3 prices for date 2025-12-16, class Economy: (3) [6983, 5695, 8273]
+priceApi.ts:247 Found 2 prices for date 2025-12-17, class Economy: (2) [8847, 5412]
+priceApi.ts:247 Found 4 prices for date 2025-12-18, class Economy: (4) [5965, 10116, 4671, 7974]
+priceApi.ts:247 Found 3 prices for date 2025-12-19, class Economy: (3) [6870, 4307, 5701]
+priceApi.ts:247 Found 3 prices for date 2025-12-20, class Economy: (3) [6999, 8586, 8662]
+priceApi.ts:247 Found 4 prices for date 2025-12-21, class Economy: (4) [8975, 7187, 6413, 5597]
+priceApi.ts:247 Found 2 prices for date 2025-12-22, class Economy: (2) [7068, 6687]
+priceApi.ts:247 Found 2 prices for date 2025-12-23, class Economy: (2) [5353, 8576]
+priceApi.ts:247 Found 4 prices for date 2025-12-24, class Economy: (4) [10983, 13149, 10921, 8538]
+priceApi.ts:247 Found 4 prices for date 2025-12-25, class Economy: (4) [6583, 8924, 11364, 9263]
+priceApi.ts:247 Found 2 prices for date 2025-12-26, class Economy: (2) [7493, 9940]
+priceApi.ts:247 Found 4 prices for date 2025-12-27, class Economy: (4) [6652, 5353, 7113, 5093]
+priceApi.ts:247 Found 2 prices for date 2025-12-28, class Economy: (2) [10710, 7075]
+priceApi.ts:247 Found 2 prices for date 2025-12-29, class Economy: (2) [7872, 5834]
+priceApi.ts:247 Found 4 prices for date 2025-12-30, class Economy: (4) [8930, 9763, 9797, 8204]
+priceApi.ts:324 Processed price data sample: (5) [{…}, {…}, {…}, {…}, {…}]
+DateSelectorWidget.tsx:430 Processed prices for month: (5) [{…}, {…}, {…}, {…}, {…}]
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=null, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=4305, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=4407, stay=null
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=null, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=4305, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=4407, stay=null
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=null, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=4305, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=4407, stay=null
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=null, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=4305, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=4407, stay=null
+DateSelectorWidget.tsx:479 Storing selected date: Mon Dec 22 2025 00:00:00 GMT+0530 (India Standard Time)
+tripStorage.ts:109 Storing selected date for user: zqh2H13LPvXWDkZjfFzthJCXktB3 Date: Mon Dec 22 2025 00:00:00 GMT+0530 (India Standard Time)
+tripStorage.ts:129 Date stored successfully in Firestore as: 2025-12-21
+tripStorage.ts:148 Updating memory API with selected date: 2025-12-21
+tripStorage.ts:175 Memory API updated successfully with date: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '1430533072335405056', message: 'Memory added successfully'}
+DateSelectorWidget.tsx:481 Date stored successfully
+FlightsPageAuthenticated.tsx:2590 🎯 handleDateSelection called with date: Mon Dec 22 2025 00:00:00 GMT+0530 (India Standard Time)
+FlightsPageAuthenticated.tsx:2591 🔍 Current state at entry:
+FlightsPageAuthenticated.tsx:2592    - userId: zqh2H13LPvXWDkZjfFzthJCXktB3
+FlightsPageAuthenticated.tsx:2593    - sessionId: 1430533072335405056
+FlightsPageAuthenticated.tsx:2594    - selectedTrip: Present (Leh's Winter Wonderland & Monastic Marvels)
+FlightsPageAuthenticated.tsx:2607 ✅ Date selected: 12/22/2025
+FlightsPageAuthenticated.tsx:2613 ✅ Trip already in memory: Leh's Winter Wonderland & Monastic Marvels
+FlightsPageAuthenticated.tsx:2636 Storing trip with selected date: Leh's Winter Wonderland & Monastic Marvels
+FlightsPageAuthenticated.tsx:2655 correctedTrip {trip_title: "Leh's Winter Wonderland & Monastic Marvels", no_of_days: 7, estimated_budget: 95000, best_time_to_visit: 'December to February', themes: Array(3), …}
+FlightsPageAuthenticated.tsx:2660 fromCity user_location
+FlightsPageAuthenticated.tsx:2671 🔄 Day 1: Converting "user_location" to Mumbai in trip JSON
+FlightsPageAuthenticated.tsx:2660 fromCity Leh
+tripStorage.ts:28 Storing trip in Firestore for user: zqh2H13LPvXWDkZjfFzthJCXktB3
+tripStorage.ts:48 Trip stored successfully in Firestore
+tripStorage.ts:61 Storing trip in code memory: {trip_title: "Leh's Winter Wonderland & Monastic Marvels", no_of_days: 7, estimated_budget: 95000, best_time_to_visit: 'December to February', themes: Array(3), …}
+tripStorage.ts:92 Trip stored in both Firestore and memory: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '1430533072335405056', trip_data: {…}}
+FlightsPageAuthenticated.tsx:2707 🔍 Fetching source_point from memory API...
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=null, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=4305, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=4407, stay=null
+DateSelectorWidget.tsx:297 Date 2025-11-30: flight=null, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-01: flight=4305, stay=null
+DateSelectorWidget.tsx:297 Date 2025-12-02: flight=4407, stay=null
+DateSelectorWidget.tsx:146 📋 DateSelector: Already auto-filled, skipping
+FlightsPageAuthenticated.tsx:2721 ✅ Memory data received: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', user_profile: {…}, current_datetime: '2025-11-02 04:47:12', trip_suggestions: {…}, final_trip: {…}, …}
+FlightsPageAuthenticated.tsx:2725 ✅ Found source_point: Delhi
+FlightsPageAuthenticated.tsx:2732 ✅ Adding source_point to correctedTrip: {address: 'Delhi, India', place_name: 'Delhi', map_url: 'https://www.google.com/maps/place/?q=place_id:ChIJLbZ-NFv9DDkRQJY4FbcFcgM', lat: '28.7040592', long: '77.10249019999999', …}
+FlightsPageAuthenticated.tsx:2744 🔄 Day 1: Updated from_city to "Delhi"
+FlightsPageAuthenticated.tsx:2757 🔄 Day 7: Updated to_city to "Delhi" (return journey)
+tripStorage.ts:28 Storing trip in Firestore for user: zqh2H13LPvXWDkZjfFzthJCXktB3
+tripStorage.ts:48 Trip stored successfully in Firestore
+tripStorage.ts:61 Storing trip in code memory: {trip_title: "Leh's Winter Wonderland & Monastic Marvels", no_of_days: 7, estimated_budget: 95000, best_time_to_visit: 'December to February', themes: Array(3), …}
+tripStorage.ts:92 Trip stored in both Firestore and memory: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '1430533072335405056', trip_data: {…}}
+FlightsPageAuthenticated.tsx:2772 ✅ Trip updated with source_point and conveyance details
+FlightsPageAuthenticated.tsx:2836 🔍 Day-wise plan: (7) [{…}, {…}, {…}, {…}, {…}, {…}, {…}]
+FlightsPageAuthenticated.tsx:2898 🔍 Checking Day 1 conveyance details: {day_number: 1, conveyance_details: {…}, stay_details: {…}, must_do_activities: Array(1)}
+FlightsPageAuthenticated.tsx:2899 🔍 Day 1 conveyance_details: {is_required: true, travel_timing: 'morning', from_city: 'Delhi', to_city: 'Leh'}
+FlightsPageAuthenticated.tsx:2900 🔍 Day 1 conveyance is_required: true
+FlightsPageAuthenticated.tsx:2904 🔍 Day 1 conveyance is_required type: boolean
+FlightsPageAuthenticated.tsx:2914 ✅✅✅ Day 1 conveyance is required, showing loader and flights
+FlightsPageAuthenticated.tsx:2946 ✅ Matched from_city to supported city: Delhi
+FlightsPageAuthenticated.tsx:2965 ✅ Matched to_city to supported city: Leh
+FlightsPageAuthenticated.tsx:2973 🎯 Setting conveyance cities - From: Delhi To: Leh
+FlightsPageAuthenticated.tsx:2987 📅 Set auto-fill mode with departure date: 2025-12-21
+FlightsPageAuthenticated.tsx:3000 🔄 Closing date selector and showing loader
+FlightsPageAuthenticated.tsx:3009 ⏱️ Starting 4-second timer for loader
+FlightsPageAuthenticated.tsx:3013 ⏱️ 4 seconds elapsed, hiding loader
+FlightsPageAuthenticated.tsx:3017 ✈️ Showing FlightsWidget with cities: Delhi to Leh
+FlightsWidget.tsx:1531 🛫 FlightsWidget received props - From: Delhi To: Leh
+FlightsWidget.tsx:1538 🛫 Setting FROM city to: Delhi
+FlightsWidget.tsx:1543 🛫 Setting TO city to: Leh
+FlightsWidget.tsx:1552 🛫 FlightsWidget is now visible. Current cities - From: Delhi To: Leh
+FlightsWidget.tsx:1570 🚀 Auto-fill mode enabled - setting departure date...
+FlightsWidget.tsx:1571 📅 Setting departure date to: 2025-12-21
+FlightsWidget.tsx:1572 📅 Previous departure date was: 
+FlightsWidget.tsx:1531 🛫 FlightsWidget received props - From: Delhi To: Leh
+FlightsWidget.tsx:1538 🛫 Setting FROM city to: Delhi
+FlightsWidget.tsx:1543 🛫 Setting TO city to: Leh
+FlightsWidget.tsx:1552 🛫 FlightsWidget is now visible. Current cities - From: Delhi To: Leh
+FlightsWidget.tsx:1570 🚀 Auto-fill mode enabled - setting departure date...
+FlightsWidget.tsx:1571 📅 Setting departure date to: 2025-12-21
+FlightsWidget.tsx:1572 📅 Previous departure date was: 
+FlightsWidget.tsx:1593 ✅ All fields ready for auto-search (full auto-fill): {from: 'Delhi', to: 'Leh', departureDate: '2025-12-21'}
+FlightsWidget.tsx:1601 🔍 Auto-triggering search with pre-filled data...
+FlightsWidget.tsx:1726 🔍 handleSearch called - Current state: {from: 'Delhi', to: 'Leh', departureDate: '2025-12-21', fromCity: 'Delhi', toCity: 'Leh'}
+FlightsWidget.tsx:1740 ✅ All fields present, proceeding with search
+FlightsWidget.tsx:1751 🔍 Fetching conveyance data for: {from: 'Delhi', to: 'Leh', date: '2025-12-21', dayNumber: 1}
+FlightsWidget.tsx:1760 🔍 Checking for pre-fetched data for route: Delhi → Leh on 2025-12-21...
+preFetchConveyance.ts:328 🔍 Retrieving pre-fetched data for route: New Delhi|Leh|2025-12-21
+preFetchConveyance.ts:347 ℹ️ No pre-fetched data collection found for user: zqh2H13LPvXWDkZjfFzthJCXktB3
+preFetchIntegration.ts:52 ℹ️ No cached conveyance data for Delhi → Leh
+FlightsWidget.tsx:1802 ℹ️ No pre-fetched data found, proceeding with API calls...
+FlightsWidget.tsx:1904 ✅ AI results: {flights: 4, trains: 0}
+FlightsWidget.tsx:1909 ✅ Utility results: {flights: 0, trains: 0}
+FlightsWidget.tsx:1977 ✅ Selected conveyance data: {id: 'F1', number: 'I55146', operator: 'AirAsia India', departureDate: 'Dec 21, 2025', arrivalDate: 'Dec 21, 2025', …}
+FlightsWidget.tsx:2322 🚀 Continue clicked with selected data: {id: 'F1', number: 'I55146', operator: 'AirAsia India', departureDate: 'Dec 21, 2025', arrivalDate: 'Dec 21, 2025', …}
+FlightsPageAuthenticated.tsx:3087 🚀 Continue clicked from FlightsWidget with data: {id: 'F1', number: 'I55146', operator: 'AirAsia India', departureDate: 'Dec 21, 2025', arrivalDate: 'Dec 21, 2025', …}
+FlightsPageAuthenticated.tsx:3105 💾 Storing conveyance temporarily for day 1: {id: 'F1', number: 'I55146', operator: 'AirAsia India', departureDate: 'Dec 21, 2025', arrivalDate: 'Dec 21, 2025', …}
+FlightsPageAuthenticated.tsx:3144 🔍 Checking if day 1 requires stay...
+FlightsPageAuthenticated.tsx:3145 🔍 Partial auto-fill mode: false
+FlightsPageAuthenticated.tsx:3302 ✅ Day 1 requires stay, showing loader...
+tripStorage.ts:28 Storing trip in Firestore for user: zqh2H13LPvXWDkZjfFzthJCXktB3
+tripStorage.ts:48 Trip stored successfully in Firestore
+tripStorage.ts:61 Storing trip in code memory: {trip_title: "Leh's Winter Wonderland & Monastic Marvels", no_of_days: 7, estimated_budget: 95000, best_time_to_visit: 'December to February', themes: Array(3), …}
+tripStorage.ts:92 Trip stored in both Firestore and memory: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '1430533072335405056', trip_data: {…}}
+FlightsPageAuthenticated.tsx:3335 ✅ Updated selectedTrip with conveyance details for day 1
+FlightsPageAuthenticated.tsx:3373 📅 Check-in day: 1, Check-out day: 8
+FlightsPageAuthenticated.tsx:3387 📅 Check-in date: 2025-12-21, Check-out date: 2025-12-28
+FlightsPageAuthenticated.tsx:3404 🏨 Setting auto-fill mode for StaysWidget: {stayCity: 'Leh', checkInDate: '', checkOutDate: '', autoFillMode: true}
+FlightsPageAuthenticated.tsx:3420 🏨 Showing StaysWidget for day 1 in Leh with auto-fill mode: false
+StaysWidget.tsx:572 🏨 StaysWidget received props - City: Leh CheckIn: 2025-12-21 CheckOut: 2025-12-28 AutoFill: true
+StaysWidget.tsx:574 🏨 Setting city to: Leh
+StaysWidget.tsx:578 🏨 Setting check-in date to: 2025-12-21
+StaysWidget.tsx:582 🏨 Setting check-out date to: 2025-12-28
+StaysWidget.tsx:590 🏨 StaysWidget is now visible in AUTO-FILL mode. Auto-triggering search...
+StaysWidget.tsx:591 🏨 Search params: {city: 'Leh', checkInDate: '2025-12-21', checkOutDate: '2025-12-28'}
+StaysWidget.tsx:625 🏨 Checking for pre-fetched stays data for: Leh (2025-12-21 to 2025-12-28)...
+preFetchStays.ts:332 🔍 Retrieving pre-fetched stays data for: Leh|2025-12-21|2025-12-28
+StaysWidget.tsx:572 🏨 StaysWidget received props - City: Leh CheckIn: 2025-12-21 CheckOut: 2025-12-28 AutoFill: true
+StaysWidget.tsx:574 🏨 Setting city to: Leh
+StaysWidget.tsx:578 🏨 Setting check-in date to: 2025-12-21
+StaysWidget.tsx:582 🏨 Setting check-out date to: 2025-12-28
+StaysWidget.tsx:590 🏨 StaysWidget is now visible in AUTO-FILL mode. Auto-triggering search...
+StaysWidget.tsx:591 🏨 Search params: {city: 'Leh', checkInDate: '2025-12-21', checkOutDate: '2025-12-28'}
+StaysWidget.tsx:625 🏨 Checking for pre-fetched stays data for: Leh (2025-12-21 to 2025-12-28)...
+preFetchStays.ts:332 🔍 Retrieving pre-fetched stays data for: Leh|2025-12-21|2025-12-28
+preFetchStays.ts:351 ℹ️ No pre-fetched stays data collection found for user: zqh2H13LPvXWDkZjfFzthJCXktB3
+StaysWidget.tsx:671 ℹ️ No pre-fetched stays data found, proceeding with API call...
+preFetchStays.ts:351 ℹ️ No pre-fetched stays data collection found for user: zqh2H13LPvXWDkZjfFzthJCXktB3
+StaysWidget.tsx:671 ℹ️ No pre-fetched stays data found, proceeding with API call...
+hot-reloader-app.js:197 [Fast Refresh] rebuilding
+report-hmr-latency.js:14 [Fast Refresh] done in 398ms
