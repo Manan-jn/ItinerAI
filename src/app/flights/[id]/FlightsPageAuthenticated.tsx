@@ -115,6 +115,7 @@ export default function FlightsPageAuthenticated() {
   const [partialAutoFillMode, setPartialAutoFillMode] =
     useState<boolean>(false); // NEW: Partial auto-fill mode (only FROM and DATE locked)
   const [initialDepartureDate, setInitialDepartureDate] = useState<string>(""); // NEW: Initial departure date for FlightsWidget
+  const [isInsertDayFlow, setIsInsertDayFlow] = useState<boolean>(false); // NEW: Track if we're in insert day flow
   const [isLoadingItinerary, setIsLoadingItinerary] = useState(false); // Loading state for itinerary
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -917,31 +918,85 @@ export default function FlightsPageAuthenticated() {
 
         for (const dayData of itineraryPayload.itinerary) {
           try {
-            // Extract day structure
-            const dayToStore: DayItineraryData = {
+            // Parse the API response - extract conveyance/stay from schedule if needed
+            let conveyanceDetails = dayData.conveyance_details;
+            let stayDetails = dayData.stay_details;
+
+            // If schedule exists, extract conveyance/stay from it
+            if (dayData.schedule && Array.isArray(dayData.schedule)) {
+              const conveyanceActivities = dayData.schedule.filter(
+                (item: any) => item.activity_type === "travel" && item.conveyance_type
+              );
+              const stayActivities = dayData.schedule.filter(
+                (item: any) => item.activity_type === "rest" && item.place_name
+              );
+
+              if (!conveyanceDetails && conveyanceActivities.length > 0) {
+                const primaryConveyance = conveyanceActivities[0];
+                conveyanceDetails = {
+                  is_required: true,
+                  type: primaryConveyance.conveyance_type,
+                  from_city: primaryConveyance.from_location?.place_name || primaryConveyance.from_location?.address,
+                  to_city: primaryConveyance.to_location?.place_name || primaryConveyance.to_location?.address,
+                  departure_time: primaryConveyance.departure_time || primaryConveyance.start_time,
+                  arrival_time: primaryConveyance.arrival_time || primaryConveyance.end_time,
+                  duration: primaryConveyance.duration_minutes ? `${primaryConveyance.duration_minutes} min` : undefined,
+                  price: primaryConveyance.fare,
+                };
+              }
+
+              if (!stayDetails && stayActivities.length > 0) {
+                const primaryStay = stayActivities.find((s: any) =>
+                  s.place_name && s.place_name.toLowerCase().includes('hotel')
+                ) || stayActivities[0];
+
+                if (primaryStay) {
+                  stayDetails = {
+                    is_required: true,
+                    property_name: primaryStay.place_name,
+                    property_address: primaryStay.address,
+                    city: primaryStay.address,
+                  };
+                }
+              }
+            }
+
+            // Build dayToStore - only include non-undefined fields
+            const dayToStore: any = {
               day_number: dayData.day_number,
-              // Store the complete day data including schedule
-              ...(dayData.conveyance_details && {
-                conveyance_details: dayData.conveyance_details,
-              }),
-              ...(dayData.stay_details && {
-                stay_details: dayData.stay_details,
-              }),
-              ...(dayData.must_do_activities && {
-                must_do_activities: dayData.must_do_activities,
-              }),
-              ...(dayData.places_to_visit && {
-                places_to_visit: dayData.places_to_visit,
-              }),
-              // Store complete API response for this day
-              schedule: dayData.schedule,
-              title: dayData.title,
-              date: dayData.date,
-              summary: dayData.summary,
-              themes: dayData.themes,
-              estimated_total_cost: dayData.estimated_total_cost,
-              highlights: dayData.highlights,
             };
+
+            // Add optional fields only if they have values
+            if (dayData.must_do_activities && dayData.must_do_activities.length > 0) {
+              dayToStore.must_do_activities = dayData.must_do_activities;
+            }
+
+            if (dayData.places_to_visit && dayData.places_to_visit.length > 0) {
+              dayToStore.places_to_visit = dayData.places_to_visit;
+            }
+
+            if (conveyanceDetails) {
+              dayToStore.conveyance_details = Object.fromEntries(
+                Object.entries(conveyanceDetails).filter(([_, v]) => v !== undefined)
+              );
+            }
+
+            if (stayDetails) {
+              dayToStore.stay_details = Object.fromEntries(
+                Object.entries(stayDetails).filter(([_, v]) => v !== undefined)
+              );
+            }
+
+            // Add other fields if they exist
+            if (dayData.schedule) dayToStore.schedule = dayData.schedule;
+            if (dayData.title) dayToStore.title = dayData.title;
+            if (dayData.date) dayToStore.date = dayData.date;
+            if (dayData.summary) dayToStore.summary = dayData.summary;
+            if (dayData.themes) dayToStore.themes = dayData.themes;
+            if (dayData.estimated_total_cost) dayToStore.estimated_total_cost = dayData.estimated_total_cost;
+            if (dayData.highlights) dayToStore.highlights = dayData.highlights;
+
+            console.log(`📦 Storing day ${dayData.day_number} with fields:`, Object.keys(dayToStore));
 
             // Update or add to itinerariesGenerated
             const existingIndex = updatedItinerariesGenerated.findIndex(
@@ -963,7 +1018,7 @@ export default function FlightsPageAuthenticated() {
             }
 
             // Also store in Firestore for backup
-            await storeDayItinerary(userId, sessionId, dayToStore);
+            await storeDayItinerary(userId, sessionId, dayToStore as DayItineraryData);
           } catch (storeError) {
             console.error(
               `❌ Failed to process day ${dayData.day_number}:`,
@@ -1020,6 +1075,259 @@ export default function FlightsPageAuthenticated() {
       setShowTripLoader(false);
       setIsParsingTrips(false);
       alert("Failed to generate itinerary. Please try again.");
+    }
+  };
+
+  // Call itinerary API with insert flow logic (request_type="add")
+  const callItineraryAPIForInsert = async (
+    insertDayNumber: number,
+    tripData: any,
+    itinerariesData: any[]
+  ) => {
+    if (!tripData || !userId || !sessionId) {
+      console.error("❌ Missing required data for insert itinerary API call");
+      return;
+    }
+
+    try {
+      console.log(
+        `📤 Calling itinerary API for INSERT day ${insertDayNumber} with request_type="add"`
+      );
+
+      // Show loader
+      setIsLoadingItinerary(true);
+      setConveyanceLoaderMessages([
+        `Creating your detailed itinerary for day ${insertDayNumber}`,
+        "Analyzing your preferences and selections",
+        "Optimizing your schedule",
+        "Adding personalized recommendations",
+      ]);
+      setShowTripLoader(true);
+      setIsParsingTrips(true);
+
+      // Build payload for insert flow
+      // Only include days BEFORE the insertion point + the new day
+      // Days after insertion will have their day_number shifted by +1
+      const itinerariesBeforeInsertion = itinerariesData
+        .filter((it) => it.day_number < insertDayNumber)
+        .map((it) => ({ ...it }));
+
+      // Add the new day
+      const newDayItinerary = itinerariesData.find(
+        (it) => it.day_number === insertDayNumber
+      );
+
+      const currentItineraryForAPI = [
+        ...itinerariesBeforeInsertion,
+        newDayItinerary,
+      ];
+
+      // Shift day numbers for days after insertion point
+      const itinerariesAfterInsertion = itinerariesData
+        .filter((it) => it.day_number > insertDayNumber)
+        .map((it) => ({
+          ...it,
+          day_number: it.day_number + 1,
+        }));
+
+      console.log(
+        `📊 Insert payload: ${itinerariesBeforeInsertion.length} days before + 1 new day + ${itinerariesAfterInsertion.length} days after (shifted)`
+      );
+
+      // Calculate new trip duration
+      const newTripDuration = (tripData.no_of_days || tripData.day_wise_plan?.length || 0) + 1;
+
+      // Prepare the message
+      const itineraryMessage = `{'role':'admin','day_number':${insertDayNumber},'end_day':${newTripDuration},'query':'recommend the itinerary for day ${insertDayNumber}'}`;
+
+      // Build request body with request_type="add"
+      const requestBody: any = {
+        user_id: userId,
+        session_id: sessionId,
+        message: itineraryMessage,
+        current_itinerary: currentItineraryForAPI,
+        role: "admin",
+        current_day: insertDayNumber,
+        trip_duration: newTripDuration,
+        request_type: "add", // IMPORTANT: Use "add" for insert flow
+      };
+
+      console.log("📤 Insert API Request body:", JSON.stringify(requestBody, null, 2));
+
+      const response = await fetch("/api/itinerary", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("❌ Itinerary API error:", response.status, errorText);
+        throw new Error(`API request failed: ${response.status}`);
+      }
+
+      const itineraryResponse = await response.json();
+      console.log("✅ Insert API Response:", itineraryResponse);
+
+      // Hide loader
+      setShowTripLoader(false);
+      setIsParsingTrips(false);
+      setIsLoadingItinerary(false);
+
+      // Process response and update state
+      let itineraryPayload = itineraryResponse;
+      if (
+        itineraryResponse.message &&
+        typeof itineraryResponse.message === "object"
+      ) {
+        itineraryPayload = itineraryResponse.message;
+      }
+
+      // Store itinerary data
+      if (
+        itineraryPayload.response_type === "itinerary" &&
+        itineraryPayload.itinerary
+      ) {
+        setItineraryData((prevData: any) => {
+          if (!prevData || !prevData.itinerary) {
+            return itineraryPayload;
+          }
+
+          // Merge with existing data
+          const existingDays = prevData.itinerary;
+          const newDays = itineraryPayload.itinerary;
+
+          const dayMap = new Map();
+          existingDays.forEach((day: any) => dayMap.set(day.day_number, day));
+          newDays.forEach((day: any) => dayMap.set(day.day_number, day));
+
+          const mergedDays = Array.from(dayMap.values()).sort(
+            (a: any, b: any) => a.day_number - b.day_number
+          );
+
+          return {
+            ...prevData,
+            itinerary: mergedDays,
+          };
+        });
+
+        // Store all days from response
+        for (const dayData of itineraryPayload.itinerary) {
+          // Parse the API response which has the new format with "schedule" array
+          // Extract conveyance and stay details from schedule if not directly present
+
+          let conveyanceDetails = dayData.conveyance_details;
+          let stayDetails = dayData.stay_details;
+
+          // If schedule exists, extract conveyance/stay from it
+          if (dayData.schedule && Array.isArray(dayData.schedule)) {
+            // Find conveyance activities (travel type)
+            const conveyanceActivities = dayData.schedule.filter(
+              (item: any) => item.activity_type === "travel" && item.conveyance_type
+            );
+
+            // Find stay activities
+            const stayActivities = dayData.schedule.filter(
+              (item: any) => item.activity_type === "rest" && item.place_name
+            );
+
+            // Build conveyance_details if not present
+            if (!conveyanceDetails && conveyanceActivities.length > 0) {
+              const primaryConveyance = conveyanceActivities[0];
+              conveyanceDetails = {
+                is_required: true,
+                type: primaryConveyance.conveyance_type,
+                from_city: primaryConveyance.from_location?.place_name || primaryConveyance.from_location?.address,
+                to_city: primaryConveyance.to_location?.place_name || primaryConveyance.to_location?.address,
+                departure_time: primaryConveyance.departure_time || primaryConveyance.start_time,
+                arrival_time: primaryConveyance.arrival_time || primaryConveyance.end_time,
+                duration: primaryConveyance.duration_minutes ? `${primaryConveyance.duration_minutes} min` : undefined,
+                price: primaryConveyance.fare,
+              };
+            }
+
+            // Build stay_details if not present
+            if (!stayDetails && stayActivities.length > 0) {
+              const primaryStay = stayActivities.find((s: any) =>
+                s.place_name && s.place_name.toLowerCase().includes('hotel')
+              ) || stayActivities[0];
+
+              if (primaryStay) {
+                stayDetails = {
+                  is_required: true,
+                  property_name: primaryStay.place_name,
+                  property_address: primaryStay.address,
+                  city: primaryStay.address,
+                };
+              }
+            }
+          }
+
+          // Build the day object to store - only include fields that have values
+          const dayToStore: any = {
+            day_number: dayData.day_number,
+          };
+
+          // Add optional fields only if they exist and are not undefined
+          if (dayData.must_do_activities && dayData.must_do_activities.length > 0) {
+            dayToStore.must_do_activities = dayData.must_do_activities;
+          }
+
+          if (dayData.places_to_visit && dayData.places_to_visit.length > 0) {
+            dayToStore.places_to_visit = dayData.places_to_visit;
+          }
+
+          if (conveyanceDetails) {
+            // Filter out undefined values from conveyanceDetails
+            dayToStore.conveyance_details = Object.fromEntries(
+              Object.entries(conveyanceDetails).filter(([_, v]) => v !== undefined)
+            );
+          }
+
+          if (stayDetails) {
+            // Filter out undefined values from stayDetails
+            dayToStore.stay_details = Object.fromEntries(
+              Object.entries(stayDetails).filter(([_, v]) => v !== undefined)
+            );
+          }
+
+          // Add the entire day data for itinerariesGenerated (includes schedule, title, etc.)
+          const completeDayData = {
+            ...dayToStore,
+            ...dayData, // Include all other fields like schedule, title, summary, etc.
+          };
+
+          console.log(`📦 Storing day ${dayData.day_number} with fields:`, Object.keys(dayToStore));
+
+          await storeDayItinerary(userId, sessionId, dayToStore as DayItineraryData);
+
+          // Update itinerariesGenerated with complete data
+          const existingIndex = itinerariesData.findIndex(
+            (it) => it.day_number === dayData.day_number
+          );
+          if (existingIndex !== -1) {
+            itinerariesData[existingIndex] = completeDayData;
+          } else {
+            itinerariesData.push(completeDayData);
+          }
+        }
+
+        setItinerariesGenerated([...itinerariesData]);
+
+        // Clear insert flow flag
+        setIsInsertDayFlow(false);
+
+        // Navigate back to itinerary
+        setShowItinerary(true);
+      }
+    } catch (error) {
+      console.error("❌ Error in insert itinerary API call:", error);
+      setShowTripLoader(false);
+      setIsParsingTrips(false);
+      setIsLoadingItinerary(false);
+      setIsInsertDayFlow(false);
     }
   };
 
@@ -1162,12 +1470,14 @@ export default function FlightsPageAuthenticated() {
   const handleAddDay = async (
     extendTrip: boolean,
     needsConveyance: boolean,
-    currentDayNumber: number
+    currentDayNumber: number,
+    isInsertFlow: boolean = false // NEW: Flag for insert day flow
   ) => {
     console.log("➕ handleAddDay called:", {
       extendTrip,
       needsConveyance,
       currentDayNumber,
+      isInsertFlow,
     });
 
     if (!selectedTrip || !userId || !sessionId) {
@@ -1354,6 +1664,12 @@ export default function FlightsPageAuthenticated() {
         // CASE 1: User needs conveyance - redirect to FlightsWidget
         console.log(`✈️ Redirecting to FlightsWidget for day ${newDayNumber}`);
 
+        // Set insert flow flag if this is an insert operation
+        if (isInsertFlow) {
+          console.log(`🔄 Setting insert flow flag for day ${newDayNumber}`);
+          setIsInsertDayFlow(true);
+        }
+
         // Calculate departure date for the new day
         const tripDate = selectedTrip.trip_date;
         console.log("trip date", tripDate);
@@ -1420,6 +1736,9 @@ export default function FlightsPageAuthenticated() {
           conveyance_details: {
             is_required: false,
           },
+          stay_details: {
+            is_required: false,
+          },
         };
 
         await storeDayItinerary(
@@ -1431,8 +1750,36 @@ export default function FlightsPageAuthenticated() {
           `✅ Stored day ${newDayNumber} with no conveyance requirement`
         );
 
-        // Call itinerary API
-        await callItineraryAPI(newDayNumber, true);
+        // Update itinerariesGenerated with the new day
+        const updatedItinerariesGenerated = [...itinerariesGenerated];
+        const dayIndex = updatedItinerariesGenerated.findIndex(
+          (it) => it.day_number === newDayNumber
+        );
+        if (dayIndex !== -1) {
+          updatedItinerariesGenerated[dayIndex] = {
+            day_number: newDayNumber,
+            conveyance_details: {
+              is_required: false,
+            },
+            stay_details: {
+              is_required: false,
+            },
+          };
+          setItinerariesGenerated(updatedItinerariesGenerated);
+        }
+
+        // Check if this is insert flow - if so, use request_type="add"
+        if (isInsertFlow) {
+          console.log(
+            `🔄 Insert flow detected - calling API with request_type="add"`
+          );
+
+          // Call API with special insert flow logic
+          await callItineraryAPIForInsert(newDayNumber, updatedTrip, updatedItinerariesGenerated);
+        } else {
+          // Regular flow - extend trip
+          await callItineraryAPI(newDayNumber, true);
+        }
       }
     } catch (error) {
       console.error("❌ Error adding new day:", error);
@@ -2561,18 +2908,32 @@ export default function FlightsPageAuthenticated() {
 
         // Wait for loader to show, then call API with fresh data
         setTimeout(async () => {
-          console.log(
-            `📞 Calling itinerary API for day ${currentDayNumber} (add day flow)`
-          );
-          console.log(`📦 Passing updatedTrip and updatedItineraries to API`);
-          // Pass the updated trip and itineraries directly to avoid stale state
-          await callItineraryAPI(
-            currentDayNumber,
-            true,
-            true,
-            updatedTrip, // Pass fresh trip data
-            updatedItinerariesGeneratedForAPI // Pass fresh itineraries data
-          );
+          // Check if this is insert flow (CASE 1)
+          if (isInsertDayFlow) {
+            console.log(
+              `📞 Calling INSERT itinerary API for day ${currentDayNumber} (CASE 1: with conveyance)`
+            );
+            console.log(`📦 Using request_type="add" with day number shifting`);
+            // Call insert API with special logic
+            await callItineraryAPIForInsert(
+              currentDayNumber,
+              updatedTrip,
+              updatedItinerariesGeneratedForAPI
+            );
+          } else {
+            console.log(
+              `📞 Calling itinerary API for day ${currentDayNumber} (regular add day flow)`
+            );
+            console.log(`📦 Passing updatedTrip and updatedItineraries to API`);
+            // Regular add day flow (extend trip)
+            await callItineraryAPI(
+              currentDayNumber,
+              true,
+              true,
+              updatedTrip, // Pass fresh trip data
+              updatedItinerariesGeneratedForAPI // Pass fresh itineraries data
+            );
+          }
         }, 500);
       } else {
         // Regular flow (not add day)

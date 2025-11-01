@@ -73,7 +73,8 @@ interface ItineraryWidgetProps {
   onAddDay?: (
     extendTrip: boolean,
     needsConveyance: boolean,
-    currentDayNumber: number
+    currentDayNumber: number,
+    isInsertFlow?: boolean // NEW: Flag for insert day flow vs extend flow
   ) => Promise<void>; // NEW: Callback to add new day
   navigateToDayNumber?: number | null; // NEW: Day number to navigate to (1-based)
 }
@@ -473,37 +474,34 @@ export default function ItineraryWidget({
     }, 300);
   };
 
-  // Handle adding conveyance to pending day
+  // Handle adding conveyance to pending day - CASE 1
   const handleAddConveyanceToPendingDay = async (dayNumber: number) => {
-    console.log(`🚗 Adding conveyance for day ${dayNumber}`);
+    console.log(`🚗 CASE 1: Adding conveyance for inserted day ${dayNumber}`);
 
     if (onAddDay) {
-      // Call the add day API with conveyance
-      await onAddDay(false, true, dayNumber - 1); // extendTrip=false, needsConveyance=true
+      // Call the add day handler with isInsertFlow=true
+      // This will trigger FlightsWidget → StaysWidget flow
+      // After completion, it will call API with request_type="add"
+      await onAddDay(false, true, dayNumber - 1, true); // extendTrip=false, needsConveyance=true, isInsertFlow=true
 
-      // Remove from pending set
-      setPendingConveyanceDays((prev) => {
-        const newSet = new Set(prev);
-        newSet.delete(dayNumber);
-        return newSet;
-      });
+      // NOTE: We DO NOT remove from pending set
+      // The pending day will be populated with the API response
+      console.log(`✅ Conveyance flow completed for day ${dayNumber}, keeping pending state`);
     }
   };
 
-  // Handle removing pending day
-  const handleRemovePendingDay = (dayNumber: number) => {
-    console.log(`❌ Removing pending day ${dayNumber}`);
+  // Handle removing pending day - CASE 2
+  const handleRemovePendingDay = async (dayNumber: number) => {
+    console.log(`❌ CASE 2: Skipping conveyance for inserted day ${dayNumber}`);
 
-    // Remove from pending set
-    setPendingConveyanceDays((prev) => {
-      const newSet = new Set(prev);
-      newSet.delete(dayNumber);
-      return newSet;
-    });
+    if (onAddDay) {
+      // Call the add day handler with needsConveyance=false and isInsertFlow=true
+      // This will skip FlightsWidget/StaysWidget and directly call API with request_type="add"
+      await onAddDay(false, false, dayNumber - 1, true); // extendTrip=false, needsConveyance=false, isInsertFlow=true
 
-    // Navigate to previous day if we're on the removed day
-    if (currentDayIndex === dayNumber - 1 && currentDayIndex > 0) {
-      setCurrentDayIndex(currentDayIndex - 1);
+      // NOTE: We DO NOT remove from pending set
+      // The pending day will be populated with the API response
+      console.log(`✅ Day ${dayNumber} added without conveyance, keeping pending state`);
     }
   };
 
@@ -1207,11 +1205,25 @@ export default function ItineraryWidget({
         <div className="w-1/3 flex flex-col">
           {/* Map Component - Separate styled container matching Day component */}
           <div className="flex-1 bg-white rounded-2xl shadow-xl border-2 border-gray-200 overflow-hidden relative">
-            {/* Map */}
-            <ItineraryMap
-              stops={currentDay.stops}
-              dayTitle={currentDay.title}
-            />
+            {/* Map - Only render when currentDay exists and has stops */}
+            {!isEmptyDay && currentDay && currentDay.stops ? (
+              <ItineraryMap
+                stops={currentDay.stops}
+                dayTitle={currentDay.title}
+              />
+            ) : (
+              // Empty map placeholder for pending days
+              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-purple-100 via-indigo-50 to-blue-100">
+                <div className="text-center">
+                  <div className="w-16 h-16 border-4 border-purple-200 border-t-purple-600 rounded-full animate-spin mx-auto mb-4"></div>
+                  <p className="text-sm font-bold text-gray-700">
+                    {isPendingConveyanceDay
+                      ? "Waiting for day details..."
+                      : "Map loading..."}
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
