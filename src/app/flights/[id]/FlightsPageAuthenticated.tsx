@@ -1109,8 +1109,7 @@ export default function FlightsPageAuthenticated() {
 
       // Build payload for insert flow
       // IMPORTANT: itinerariesData is already shifted by handleAddDay
-      // We just need to build the payload: days BEFORE insertion + new day ONLY
-      // Days after insertion should NOT be included in the payload as per requirements
+      // Include ALL days: before + new + after (already shifted)
 
       const itinerariesBeforeInsertion = itinerariesData
         .filter((it) => it.day_number < insertDayNumber)
@@ -1131,15 +1130,20 @@ export default function FlightsPageAuthenticated() {
         };
       }
 
-      // Build complete current_itinerary array: ONLY days before + new day
-      // Do NOT include days after insertion as per user requirements
+      // Include days AFTER insertion (already shifted by handleAddDay)
+      const itinerariesAfterInsertion = itinerariesData
+        .filter((it) => it.day_number > insertDayNumber)
+        .map((it) => ({ ...it }));
+
+      // Build complete current_itinerary array: days before + new day + days after (already shifted)
       const currentItineraryForAPI = [
         ...itinerariesBeforeInsertion,
         newDayItinerary,
+        ...itinerariesAfterInsertion,
       ].filter((it) => it !== null && it !== undefined); // Filter out any null/undefined
 
       console.log(
-        `📊 Insert payload: ${itinerariesBeforeInsertion.length} days before + 1 new day = ${currentItineraryForAPI.length} total (days after insertion excluded)`
+        `📊 Insert payload: ${itinerariesBeforeInsertion.length} days before + 1 new day + ${itinerariesAfterInsertion.length} days after = ${currentItineraryForAPI.length} total`
       );
 
       // Calculate new trip duration
@@ -1833,6 +1837,12 @@ export default function FlightsPageAuthenticated() {
           `📋 No conveyance needed for day ${newDayNumber}, calling itinerary API`
         );
 
+        // Set insert flow flag if this is an insert operation (CRITICAL FIX)
+        if (isInsertFlow) {
+          console.log(`🔄 Setting insert flow flag for day ${newDayNumber} (CASE 2)`);
+          setIsInsertDayFlow(true);
+        }
+
         // Store the new day with is_required: false
         const dayToStore = {
           day_number: newDayNumber,
@@ -1853,12 +1863,18 @@ export default function FlightsPageAuthenticated() {
           `✅ Stored day ${newDayNumber} with no conveyance requirement`
         );
 
-        // Update itinerariesGenerated with the new day
-        const updatedItinerariesGenerated = [...itinerariesGenerated];
+        // IMPORTANT: Use the updatedItinerariesGenerated array that was created earlier (line 1732)
+        // This array already has:
+        // 1. All days shifted (days >= newDayNumber have day_number + 1)
+        // 2. Empty placeholder for newDayNumber inserted (line 1758)
+
+        // Update the placeholder with conveyance and stay details
         const dayIndex = updatedItinerariesGenerated.findIndex(
           (it) => it.day_number === newDayNumber
         );
+
         if (dayIndex !== -1) {
+          // Update the placeholder with actual details
           updatedItinerariesGenerated[dayIndex] = {
             day_number: newDayNumber,
             conveyance_details: {
@@ -1868,8 +1884,16 @@ export default function FlightsPageAuthenticated() {
               is_required: false,
             },
           };
-          setItinerariesGenerated(updatedItinerariesGenerated);
+          console.log(`✅ Updated day ${newDayNumber} placeholder with conveyance/stay details`);
+        } else {
+          console.error(`❌ Day ${newDayNumber} placeholder not found in updatedItinerariesGenerated`);
         }
+
+        // Update state again with the complete details
+        setItinerariesGenerated(updatedItinerariesGenerated);
+
+        console.log(`📊 updatedItinerariesGenerated has ${updatedItinerariesGenerated.length} days:`,
+          updatedItinerariesGenerated.map(it => `day ${it.day_number}`).join(', '));
 
         // Check if this is insert flow - if so, use request_type="add"
         if (isInsertFlow) {
@@ -1877,7 +1901,11 @@ export default function FlightsPageAuthenticated() {
             `🔄 Insert flow detected - calling API with request_type="add"`
           );
 
+          // Set loading state before API call (CRITICAL FIX)
+          setIsLoadingItinerary(true);
+
           // Call API with special insert flow logic
+          // Pass the complete array including all shifted days + new day
           await callItineraryAPIForInsert(newDayNumber, updatedTrip, updatedItinerariesGenerated);
         } else {
           // Regular flow - extend trip
@@ -3940,6 +3968,7 @@ export default function FlightsPageAuthenticated() {
                       onRemovePendingDay={handleRemovePendingDay}
                       onAddPendingDay={handleAddPendingDay}
                       pendingConveyanceDaysFromParent={pendingConveyanceDays}
+                      isLoadingPendingDay={isLoadingItinerary && isInsertDayFlow}
                     />
                   </div>
                 ) : showDateSelector ? (

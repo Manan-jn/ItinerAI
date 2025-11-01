@@ -80,6 +80,7 @@ interface ItineraryWidgetProps {
   onRemovePendingDay?: (dayNumber: number) => void; // NEW: Callback to remove day from pending set
   onAddPendingDay?: (dayNumber: number) => void; // NEW: Callback to add day to pending set
   pendingConveyanceDaysFromParent?: Set<number>; // NEW: Pending days from parent component
+  isLoadingPendingDay?: boolean; // NEW: Loading state for pending day API call
 }
 
 // Helper function to transform API response to display format
@@ -285,6 +286,7 @@ export default function ItineraryWidget({
   onRemovePendingDay,
   onAddPendingDay,
   pendingConveyanceDaysFromParent,
+  isLoadingPendingDay = false,
 }: ItineraryWidgetProps) {
   const [currentDayIndex, setCurrentDayIndex] = useState(0);
   const [chatInput, setChatInput] = useState("");
@@ -652,36 +654,64 @@ export default function ItineraryWidget({
             {isEmptyDay ? (
               // Empty Day - Conveyance Card View
               <>
-                {/* Empty State Content */}
-                <div className="flex-1 flex items-center justify-center p-8">
-                  <div className="max-w-md w-full relative">
-                    {/* Remove Button - Corner on Container (Fully visible outside card) */}
-                    <button
-                      onClick={() => handleRemovePendingDay(currentDayNumber)}
-                      className="absolute z-50 w-9 h-9 bg-gradient-to-br from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 active:scale-95 flex items-center justify-center group/remove"
-                      style={{
-                        top: "-0.5rem",
-                        right: "-0.5rem",
-                      }}
-                      title="Remove this day"
-                    >
-                      <svg
-                        className="w-4 h-4 text-white transition-transform group-hover/remove:rotate-90"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        strokeWidth={2.5}
+                {isLoadingPendingDay ? (
+                  // Loading State for Pending Day
+                  <div className="flex-1 flex items-center justify-center p-8">
+                    <div className="max-w-md w-full text-center">
+                      <div className="w-16 h-16 border-4 border-purple-200 border-t-purple-600 rounded-full animate-spin mx-auto mb-4"></div>
+                      <h3 className="text-lg font-bold text-gray-900 mb-2">
+                        Creating Day {currentDayNumber} Itinerary
+                      </h3>
+                      <p className="text-sm text-gray-600 mb-4">
+                        Analyzing your preferences and optimizing your schedule...
+                      </p>
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-center gap-2 text-xs text-purple-600 font-medium">
+                          <div className="w-2 h-2 bg-purple-600 rounded-full animate-pulse"></div>
+                          <span>Finding best activities</span>
+                        </div>
+                        <div className="flex items-center justify-center gap-2 text-xs text-indigo-600 font-medium">
+                          <div className="w-2 h-2 bg-indigo-600 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
+                          <span>Optimizing travel routes</span>
+                        </div>
+                        <div className="flex items-center justify-center gap-2 text-xs text-blue-600 font-medium">
+                          <div className="w-2 h-2 bg-blue-600 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
+                          <span>Adding personalized recommendations</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  // Normal Pending State - Show Conveyance Card
+                  <div className="flex-1 flex items-center justify-center p-8">
+                    <div className="max-w-md w-full relative">
+                      {/* Remove Button - Corner on Container (Fully visible outside card) */}
+                      <button
+                        onClick={() => handleRemovePendingDay(currentDayNumber)}
+                        className="absolute z-50 w-9 h-9 bg-gradient-to-br from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 active:scale-95 flex items-center justify-center group/remove"
+                        style={{
+                          top: "-0.5rem",
+                          right: "-0.5rem",
+                        }}
+                        title="Remove this day"
                       >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M6 18L18 6M6 6l12 12"
-                        />
-                      </svg>
-                    </button>
+                        <svg
+                          className="w-4 h-4 text-white transition-transform group-hover/remove:rotate-90"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          strokeWidth={2.5}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M6 18L18 6M6 6l12 12"
+                          />
+                        </svg>
+                      </button>
 
-                    {/* Conveyance Card */}
-                    <div className="group relative bg-white/70 backdrop-blur-md rounded-2xl border-2 border-purple-300 shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden">
+                      {/* Conveyance Card */}
+                      <div className="group relative bg-white/70 backdrop-blur-md rounded-2xl border-2 border-purple-300 shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden">
                       {/* Glassmorphic overlay */}
                       <div className="absolute inset-0 bg-gradient-to-br from-purple-100/30 to-indigo-100/30 pointer-events-none"></div>
 
@@ -749,8 +779,9 @@ export default function ItineraryWidget({
                       {/* Bottom accent */}
                       <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-indigo-600"></div>
                     </div>
+                    </div>
                   </div>
-                </div>
+                )}
               </>
             ) : (
               // Normal Day View
