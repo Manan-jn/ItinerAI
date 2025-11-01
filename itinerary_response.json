@@ -1,0 +1,236 @@
+{
+    "user_id": "zqh2H13LPvXWDkZjfFzthJCXktB3",
+    "session_id": "3204164075193892864",
+    "message": {
+        "response_type": "itinerary",
+        "message": "Your detailed itinerary for Day 1 is ready, focusing on proper acclimatization to the high altitude of Leh.",
+        "itinerary": [
+            {
+                "day_number": 1,
+                "date": "2025-12-21",
+                "title": "Arrival and Acclimatization in Leh",
+                "themes": [
+                    "Wellness",
+                    "Relaxation"
+                ],
+                "estimated_total_cost": 27489,
+                "summary": "Arrive in the high-altitude city of Leh and dedicate the entire day to acclimatization. After checking into your hotel, the day is scheduled for complete rest to allow your body to adjust to the thin air, which is crucial for a healthy and enjoyable trip ahead.",
+                "highlights": [
+                    "Arrival at Leh's scenic airport",
+                    "Complete day of rest for acclimatization",
+                    "Comfortable stay at Hotel Kidar"
+                ],
+                "schedule": [
+                    {
+                        "start_time": "00:00",
+                        "end_time": "05:29",
+                        "description": "Rest before your early morning flight.",
+                        "activity_type": "rest",
+                        "place_name": "User's Origin City",
+                        "address": "Mumbai",
+                        "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJRz2J77nP5zsRPAem-X2d_SY",
+                        "lat": "19.2029253",
+                        "long": "72.8484986",
+                        "photos": [
+                            "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU4GGPVvucbjmq3LAHBkCMYQTXCDCcnOZLyDu9kvnGn0oRifaLT-TlTVdAKjiLVEQfmrRWpqljtQykNuB4n2JI3kJ0alTk_uH_NMVPy8oSzXHBBW4PHfcVwtvbz4M-7WQi-MoI1ZOqWP_PXE2GaOs6ZEOFcgvn52ZwgHOdFmCoYOuvGOaN8Qb1AFVSe3vg6rVnkyBJJtOAuFjKXhiMtvR9YRUnJZcLRRNM3Nk7zu4QeVVJ1PCkFB1NEfYO2QteoUst6rVI0jlhY2Cm7iDe4CkLzEm_wnrCeVfSYjJ4HnPjMhMJZoBks&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                        ],
+                        "place_id": "ChIJRz2J77nP5zsRPAem-X2d_SY"
+                    },
+                    {
+                        "start_time": "05:30",
+                        "end_time": "08:51",
+                        "description": "Flight from Mumbai to Leh.",
+                        "activity_type": "travel",
+                        "conveyance_type": "flight",
+                        "fare": 13489,
+                        "distance_km": 1660,
+                        "duration_minutes": 191,
+                        "from_location": {
+                            "place_name": "Chhatrapati Shivaji International Airport",
+                            "address": "Mumbai, Maharashtra",
+                            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJRym9mVDI5zsRrqh0xGAazB4",
+                            "lat": "19.0902177",
+                            "long": "72.86281199999999",
+                            "photos": [
+                                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6ajDvJ5aAgLWZnMJ__ONwvIRKUpH0mR0cakze9k5TpZ6gGNf9_iBDYfRglXemMFQrjPosloZleLdqBxRNCkhPntBrgBJx5_1TcpJT55dkll6NoqDHY5T1s3756g3Q_X5E0F2xpKLWf5Jg0f03Ix-Gu_qTbUvVIpKgUig3eyf_h3lnouC8yfD0-ElR9gfx9buEQR4XSNzvIldj9f-R3CzPHPdYbxpFiMfqxoGfQhkALgW3kgh0mEyNtpf9SZ3NGyfdt_v-U68RS1UcAfzILFJjTk7tAtUpF9MhcmeI-GKVj-y5tW_sXcyXpvdSIx8LakF3QQcTOePea6U_DmWfIU-NkqwvvtPvaLO0kqNHa1dCAMLdjuZU0p9D_3uChEtw7QxbnT9ob5f0zgcd0fmuSeq29nFo-IbJP6ssMZcTw3MIiNB7IyXSeGW-mrZTAve1_h8ytS2i2OzgaI4NTfOq0Zsp-Nm_4s5of_7i9YXnN-4iiJ21WNFsHhIqffCcgIw7NA9uWS9GLaAxNUoIAGl2bbINSai1VdJzMkxK1sD17viAH5eo9WCWqKb5xz3NRgQMXdcwXu-5W&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                            ],
+                            "place_id": "ChIJRym9mVDI5zsRrqh0xGAazB4"
+                        },
+                        "to_location": {
+                            "place_name": "Leh Kushok Bakula Rimpochee Airport",
+                            "address": "Leh, Ladakh",
+                            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJJ7AKoViT_TgRBExmvIXBXT4",
+                            "lat": "34.1425376",
+                            "long": "77.5554792",
+                            "photos": [
+                                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU5_VNTio-HIicqvL18-W-Ze7Qb7RSxUrJJqirh0vh8g5lRw4r6szHufLRZEx5ySyXhNbojMho4XHdB2FQrTWdMgmo2jq89wDLhODkmux-zZ4XwcDATAObc2sgX3Bx9a1aGBX4ZqJbcUdDls_xkhOUT7uAzSI5eb00mjj6KaKaa1a2mThkNZDcbXaNrn39EpuhqmFfQQEpp6d91d0GyqWhJZ1RfDKAebRULbW479ySdFYU3kHmlI6reGE0wGvnGpdg6NORv3bSq7lubfGOK-yHBeCOn6vv3mjZgUqgKeUUEN2RvfyVPrJ_z4CeBdmSICGmlhYJa72dM-PR3IW4AHR09uB7B5HffBKn9C1AyZJR18JW6X0NQgbHRQVKKVdGy-wkEQTKg3tJM0byozBC7LBaU1azFxM-TSYrtjADItJWLJUPRVIUHW0TM1eaN5OtAieNGKb3EE3ceFjr3K0CulGZawx7UgYYOCSlVoMaBJC6-fz_3rwInYZWyC3xo45ETOi9cmdxanI6JqdIRIhlrxOAVdo9SXXp48B6FF39gP32xkMd1YnvBS7PHny5_0v2in4_ZBdg&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                            ],
+                            "place_id": "ChIJJ7AKoViT_TgRBExmvIXBXT4"
+                        },
+                        "flight_number": "UK9237",
+                        "airline": "Vistara",
+                        "departure_time": "05:30",
+                        "arrival_time": "08:51"
+                    },
+                    {
+                        "start_time": "08:51",
+                        "end_time": "09:30",
+                        "description": "Deplane, collect your baggage, and exit the airport. Take a moment to breathe in the crisp mountain air.",
+                        "activity_type": "travel",
+                        "conveyance_type": "walk",
+                        "fare": 0,
+                        "distance_km": 0,
+                        "duration_minutes": 39,
+                        "from_location": {
+                            "place_name": "Leh Kushok Bakula Rimpochee Airport",
+                            "address": "Leh, Ladakh",
+                            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJJ7AKoViT_TgRBExmvIXBXT4",
+                            "lat": "34.1425376",
+                            "long": "77.5554792",
+                            "photos": [
+                                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU5_VNTio-HIicqvL18-W-Ze7Qb7RSxUrJJqirh0vh8g5lRw4r6szHufLRZEx5ySyXhNbojMho4XHdB2FQrTWdMgmo2jq89wDLhODkmux-zZ4XwcDATAObc2sgX3Bx9a1aGBX4ZqJbcUdDls_xkhOUT7uAzSI5eb00mjj6KaKaa1a2mThkNZDcbXaNrn39EpuhqmFfQQEpp6d91d0GyqWhJZ1RfDKAebRULbW479ySdFYU3kHmlI6reGE0wGvnGpdg6NORv3bSq7lubfGOK-yHBeCOn6vv3mjZgUqgKeUUEN2RvfyVPrJ_z4CeBdmSICGmlhYJa72dM-PR3IW4AHR09uB7B5HffBKn9C1AyZJR18JW6X0NQgbHRQVKKVdGy-wkEQTKg3tJM0byozBC7LBaU1azFxM-TSYrtjADItJWLJUPRVIUHW0TM1eaN5OtAieNGKb3EE3ceFjr3K0CulGZawx7UgYYOCSlVoMaBJC6-fz_3rwInYZWyC3xo45ETOi9cmdxanI6JqdIRIhlrxOAVdo9SXXp48B6FF39gP32xkMd1YnvBS7PHny5_0v2in4_ZBdg&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                            ],
+                            "place_id": "ChIJJ7AKoViT_TgRBExmvIXBXT4"
+                        },
+                        "to_location": {
+                            "place_name": "Leh Kushok Bakula Rimpochee Airport",
+                            "address": "Leh, Ladakh",
+                            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJJ7AKoViT_TgRBExmvIXBXT4",
+                            "lat": "34.1425376",
+                            "long": "77.5554792",
+                            "photos": [
+                                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU5_VNTio-HIicqvL18-W-Ze7Qb7RSxUrJJqirh0vh8g5lRw4r6szHufLRZEx5ySyXhNbojMho4XHdB2FQrTWdMgmo2jq89wDLhODkmux-zZ4XwcDATAObc2sgX3Bx9a1aGBX4ZqJbcUdDls_xkhOUT7uAzSI5eb00mjj6KaKaa1a2mThkNZDcbXaNrn39EpuhqmFfQQEpp6d91d0GyqWhJZ1RfDKAebRULbW479ySdFYU3kHmlI6reGE0wGvnGpdg6NORv3bSq7lubfGOK-yHBeCOn6vv3mjZgUqgKeUUEN2RvfyVPrJ_z4CeBdmSICGmlhYJa72dM-PR3IW4AHR09uB7B5HffBKn9C1AyZJR18JW6X0NQgbHRQVKKVdGy-wkEQTKg3tJM0byozBC7LBaU1azFxM-TSYrtjADItJWLJUPRVIUHW0TM1eaN5OtAieNGKb3EE3ceFjr3K0CulGZawx7UgYYOCSlVoMaBJC6-fz_3rwInYZWyC3xo45ETOi9cmdxanI6JqdIRIhlrxOAVdo9SXXp48B6FF39gP32xkMd1YnvBS7PHny5_0v2in4_ZBdg&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                            ],
+                            "place_id": "ChIJJ7AKoViT_TgRBExmvIXBXT4"
+                        }
+                    },
+                    {
+                        "start_time": "09:30",
+                        "end_time": "10:00",
+                        "description": "Take a pre-paid taxi from the airport to your hotel. The short drive will give you your first glimpse of the stunning Ladakhi landscape.",
+                        "activity_type": "travel",
+                        "conveyance_type": "cab",
+                        "fare": 800,
+                        "distance_km": 5,
+                        "duration_minutes": 15,
+                        "from_location": {
+                            "place_name": "Leh Kushok Bakula Rimpochee Airport",
+                            "address": "Leh, Ladakh",
+                            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJJ7AKoViT_TgRBExmvIXBXT4",
+                            "lat": "34.1425376",
+                            "long": "77.5554792",
+                            "photos": [
+                                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU5_VNTio-HIicqvL18-W-Ze7Qb7RSxUrJJqirh0vh8g5lRw4r6szHufLRZEx5ySyXhNbojMho4XHdB2FQrTWdMgmo2jq89wDLhODkmux-zZ4XwcDATAObc2sgX3Bx9a1aGBX4ZqJbcUdDls_xkhOUT7uAzSI5eb00mjj6KaKaa1a2mThkNZDcbXaNrn39EpuhqmFfQQEpp6d91d0GyqWhJZ1RfDKAebRULbW479ySdFYU3kHmlI6reGE0wGvnGpdg6NORv3bSq7lubfGOK-yHBeCOn6vv3mjZgUqgKeUUEN2RvfyVPrJ_z4CeBdmSICGmlhYJa72dM-PR3IW4AHR09uB7B5HffBKn9C1AyZJR18JW6X0NQgbHRQVKKVdGy-wkEQTKg3tJM0byozBC7LBaU1azFxM-TSYrtjADItJWLJUPRVIUHW0TM1eaN5OtAieNGKb3EE3ceFjr3K0CulGZawx7UgYYOCSlVoMaBJC6-fz_3rwInYZWyC3xo45ETOi9cmdxanI6JqdIRIhlrxOAVdo9SXXp48B6FF39gP32xkMd1YnvBS7PHny5_0v2in4_ZBdg&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                            ],
+                            "place_id": "ChIJJ7AKoViT_TgRBExmvIXBXT4"
+                        },
+                        "to_location": {
+                            "place_name": "Hotel Kidar",
+                            "address": "Fort Road, Leh",
+                            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJBb6k_0jr_TgRGA1r6wPTsTc",
+                            "lat": "34.160576",
+                            "long": "77.574821",
+                            "photos": [
+                                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU4lrcXq0XbxEZS06QhPAcv4DRHFXsbwDCfeIFiZYZbY6KEA9u2YbRHKWTikfNkPwSi7JDrdqHhqZw8PalSy5U9w_w-OE2QeCJYX8X_VadpEam474wk1_V-Dx2_2yjyDHxz6nMHRE7mgQzDWPCY_c997B-vuB4FZIt9f-kBPlzNaRXhkHqQ0P6EZEcFuvcV64s3ZrKNXQruJGeKy_fRTD-fneicBvFfNiJZ9NAg4KBT4raJix5uX0Usq96HpLReCBUtuW5zbd_BO0skCWqU56QWpsAuEmROxedawjjm3QafcGpz_tq4&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                            ],
+                            "place_id": "ChIJBb6k_0jr_TgRGA1r6wPTsTc"
+                        }
+                    },
+                    {
+                        "start_time": "10:00",
+                        "end_time": "13:00",
+                        "description": "Arrive at Hotel Kidar. Complete check-in formalities and settle into your room. It is highly recommended to take complete rest.",
+                        "activity_type": "rest",
+                        "place_name": "Hotel Kidar",
+                        "address": "Fort Road, Leh",
+                        "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJBb6k_0jr_TgRGA1r6wPTsTc",
+                        "lat": "34.160576",
+                        "long": "77.574821",
+                        "photos": [
+                            "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU4lrcXq0XbxEZS06QhPAcv4DRHFXsbwDCfeIFiZYZbY6KEA9u2YbRHKWTikfNkPwSi7JDrdqHhqZw8PalSy5U9w_w-OE2QeCJYX8X_VadpEam474wk1_V-Dx2_2yjyDHxz6nMHRE7mgQzDWPCY_c997B-vuB4FZIt9f-kBPlzNaRXhkHqQ0P6EZEcFuvcV64s3ZrKNXQruJGeKy_fRTD-fneicBvFfNiJZ9NAg4KBT4raJix5uX0Usq96HpLReCBUtuW5zbd_BO0skCWqU56QWpsAuEmROxedawjjm3QafcGpz_tq4&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                        ],
+                        "place_id": "ChIJBb6k_0jr_TgRGA1r6wPTsTc"
+                    },
+                    {
+                        "start_time": "13:00",
+                        "end_time": "14:00",
+                        "description": "Have a light lunch. It's advisable to eat simple and stay hydrated. The hotel's in-house restaurant is a convenient option.",
+                        "activity_type": "eat",
+                        "place_name": "Hotel Kidar Restaurant",
+                        "address": "Fort Road, Leh",
+                        "meal_type": "lunch",
+                        "cuisine": "Multi-cuisine",
+                        "menu_highlights": [
+                            "Dal and Rice",
+                            "Simple Vegetable Curry",
+                            "Soup"
+                        ],
+                        "fare": 700,
+                        "reservation_required": false,
+                        "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJBb6k_0jr_TgRGA1r6wPTsTc",
+                        "lat": "34.160576",
+                        "long": "77.574821",
+                        "photos": [
+                            "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU7YdQlaY4wFa_nfvdk6U951ei4_x_TFvKKga-gq_YIMHet2I32IK11KhntIliujxUMixo9bDtIk4a4HiFTlyNAB_mAEFamN0A3mG3cNCszvXjsVKRkpsYrjL2aCO4v7O4ZsWydP4iI0OVgrkRDu1a7qx9uB8g_Kk721auIVQuG7WkzgiHhQNMsmXcnWw4IIZULJ08_Sg00PkzJ_-ZoxcGpWvDzEcF8tSG8vAUyoHS0B6iwcOt3Cbm69sEXkF8Dw8FFpY9V5YGCj7THd63RiRfIhSgfDZQH3VOf4tsW4l137N636s7w&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                        ],
+                        "place_id": "ChIJBb6k_0jr_TgRGA1r6wPTsTc"
+                    },
+                    {
+                        "start_time": "14:00",
+                        "end_time": "19:00",
+                        "description": "Crucial rest period for acclimatization. Avoid any strenuous activity. Drink plenty of water, take a nap, and allow your body to adjust to the low oxygen levels. This is the most important activity of the day.",
+                        "activity_type": "rest",
+                        "place_name": "Hotel Kidar",
+                        "address": "Fort Road, Leh",
+                        "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJBb6k_0jr_TgRGA1r6wPTsTc",
+                        "lat": "34.160576",
+                        "long": "77.574821",
+                        "photos": [
+                            "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU4lrcXq0XbxEZS06QhPAcv4DRHFXsbwDCfeIFiZYZbY6KEA9u2YbRHKWTikfNkPwSi7JDrdqHhqZw8PalSy5U9w_w-OE2QeCJYX8X_VadpEam474wk1_V-Dx2_2yjyDHxz6nMHRE7mgQzDWPCY_c997B-vuB4FZIt9f-kBPlzNaRXhkHqQ0P6EZEcFuvcV64s3ZrKNXQruJGeKy_fRTD-fneicBvFfNiJZ9NAg4KBT4raJix5uX0Usq96HpLReCBUtuW5zbd_BO0skCWqU56QWpsAuEmROxedawjjm3QafcGpz_tq4&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                        ],
+                        "place_id": "ChIJBb6k_0jr_TgRGA1r6wPTsTc"
+                    },
+                    {
+                        "start_time": "19:00",
+                        "end_time": "20:30",
+                        "description": "For dinner, take a very short and gentle walk to a nearby restaurant. This will help your body adjust without over-exerting. Tibetan Kitchen is a popular choice offering authentic local food.",
+                        "activity_type": "eat",
+                        "place_name": "The Tibetan Kitchen",
+                        "address": "Fort Road, Leh, 194101",
+                        "meal_type": "dinner",
+                        "cuisine": "Tibetan",
+                        "menu_highlights": [
+                            "Thukpa (Noodle Soup)",
+                            "Skyu (Hearty Stew)",
+                            "Vegetable Momos"
+                        ],
+                        "fare": 1000,
+                        "reservation_required": false,
+                        "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJx5SjnvXr_TgRq2VbpHF2bCw",
+                        "lat": "34.1648157",
+                        "long": "77.5854066",
+                        "photos": [
+                            "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU451Q35nvBgmi8FkOwdPIpnIMhlcS9Qc8VvyJrm7-QqUMQTV1jopUsaNW88_g6NMPZpZpwSdrnghFl5Z9Cups9kRDL0ncmG6206DOZIte-bAuknybA2GgG2OQpuoaxqsBTO_SKivmVk6doQvygAu2QEpD9ZzZz9GP7TioKQJjLkg1edEVeKZNbWu1yqiFbY6jHGrETWwtYm_ucXWJQ3jR8pl05vH4CdQSzSzPVc7mFFB7LSNKhfp0Q2KRJCxVdYwelTT7tvzk9rWOudiG8OK-S01VsN1bZpc6w-dWJp88iU7Su_SSo&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                        ],
+                        "place_id": "ChIJx5SjnvXr_TgRq2VbpHF2bCw"
+                    },
+                    {
+                        "start_time": "20:30",
+                        "end_time": "23:59",
+                        "description": "Return to your hotel for a good night's sleep. Ensure you are warm and comfortable. A full night's rest is essential to feel fresh and acclimatized for the days ahead.",
+                        "activity_type": "rest",
+                        "place_name": "Hotel Kidar",
+                        "address": "Fort Road, Leh",
+                        "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJBb6k_0jr_TgRGA1r6wPTsTc",
+                        "lat": "34.160576",
+                        "long": "77.574821",
+                        "photos": [
+                            "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU4lrcXq0XbxEZS06QhPAcv4DRHFXsbwDCfeIFiZYZbY6KEA9u2YbRHKWTikfNkPwSi7JDrdqHhqZw8PalSy5U9w_w-OE2QeCJYX8X_VadpEam474wk1_V-Dx2_2yjyDHxz6nMHRE7mgQzDWPCY_c997B-vuB4FZIt9f-kBPlzNaRXhkHqQ0P6EZEcFuvcV64s3ZrKNXQruJGeKy_fRTD-fneicBvFfNiJZ9NAg4KBT4raJix5uX0Usq96HpLReCBUtuW5zbd_BO0skCWqU56QWpsAuEmROxedawjjm3QafcGpz_tq4&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                        ],
+                        "place_id": "ChIJBb6k_0jr_TgRGA1r6wPTsTc"
+                    }
+                ]
+            }
+        ]
+    }
+}

@@ -5,6 +5,10 @@ interface ItineraryRequest {
   session_id: string;
   user_id: string;
   current_itinerary?: any[]; // Array of day itinerary objects
+  role: string;
+  current_day: number;
+  trip_duration: number;
+  request_type: string;
 }
 
 const BACKEND_API_URL = process.env.BACKEND_API_URL || "http://127.0.0.1:8000";
@@ -12,8 +16,8 @@ const BACKEND_API_URL = process.env.BACKEND_API_URL || "http://127.0.0.1:8000";
 export async function POST(request: NextRequest) {
   try {
     const body: ItineraryRequest = await request.json();
-    const { message, session_id, user_id, current_itinerary } = body;
-
+    const { message, session_id, user_id, current_itinerary, role, current_day, trip_duration, request_type } = body;
+    console.log("Itinerary request body:", JSON.stringify(body, null, 2));
     // Validate input
     if (!message) {
       return NextResponse.json(
@@ -43,6 +47,10 @@ export async function POST(request: NextRequest) {
       session_id,
       message: message.substring(0, 100) + (message.length > 100 ? "..." : ""),
       current_itinerary: current_itinerary,
+      role: role,
+      current_day: current_day,
+      trip_duration: trip_duration,
+      request_type: request_type,
     });
 
     // Proxy the request to the FastAPI backend
@@ -56,6 +64,10 @@ export async function POST(request: NextRequest) {
         session_id,
         message,
         current_itinerary, // ✅ Forward current_itinerary to backend
+        role,
+        current_day,
+        trip_duration,
+        request_type,
       }),
     });
 

@@ -748,13 +748,12 @@ export default function FlightsPageAuthenticated() {
         session_id: sessionId,
         message: itineraryMessage,
         current_itinerary: completeItinerary || [], // Ensure it's always an array
+        role: "admin",
+        current_day: dayNumber,
+        trip_duration: totalDays,
+        request_type: "generate",
       };
-      console.log("📤 Request body:", {
-        user_id: userId,
-        session_id: sessionId,
-        message: itineraryMessage,
-        current_itinerary: completeItinerary,
-      });
+      console.log("📤 Request body:", JSON.stringify(requestBody, null, 2));
       // Retry configuration
       const MAX_RETRIES = 2;
       const RETRY_DELAY = 5000; // 5 seconds
@@ -952,11 +951,15 @@ export default function FlightsPageAuthenticated() {
             if (existingIndex !== -1) {
               // Replace existing day
               updatedItinerariesGenerated[existingIndex] = dayToStore;
-              console.log(`✅ Updated day ${dayData.day_number} in itinerariesGenerated`);
+              console.log(
+                `✅ Updated day ${dayData.day_number} in itinerariesGenerated`
+              );
             } else {
               // Add new day
               updatedItinerariesGenerated.push(dayToStore);
-              console.log(`✅ Added day ${dayData.day_number} to itinerariesGenerated`);
+              console.log(
+                `✅ Added day ${dayData.day_number} to itinerariesGenerated`
+              );
             }
 
             // Also store in Firestore for backup
@@ -996,7 +999,9 @@ export default function FlightsPageAuthenticated() {
 
           // If this is add day flow, navigate to the newly added day
           if (isAddDayFlow) {
-            console.log(`🔍 Setting navigation target to day ${dayNumber} (add day flow)`);
+            console.log(
+              `🔍 Setting navigation target to day ${dayNumber} (add day flow)`
+            );
             // Set navigation target after itinerary is shown
             setTimeout(() => {
               setNavigateToDay(dayNumber);
@@ -1307,13 +1312,17 @@ export default function FlightsPageAuthenticated() {
       );
 
       // Also update itinerariesGenerated array - shift subsequent days
-      console.log("📦 Updating itinerariesGenerated to shift subsequent days...");
+      console.log(
+        "📦 Updating itinerariesGenerated to shift subsequent days..."
+      );
       const updatedItinerariesGenerated = itinerariesGenerated.map(
         (itinerary) => {
           // If this itinerary is for a day >= newDayNumber, increment its day_number
           if (itinerary.day_number >= newDayNumber) {
             console.log(
-              `  Shifting day ${itinerary.day_number} → ${itinerary.day_number + 1}`
+              `  Shifting day ${itinerary.day_number} → ${
+                itinerary.day_number + 1
+              }`
             );
             return {
               ...itinerary,
@@ -1374,7 +1383,9 @@ export default function FlightsPageAuthenticated() {
             "Comparing prices and timings",
           ]);
 
-          console.log("🔄 Closing itinerary and showing loader for add day flow");
+          console.log(
+            "🔄 Closing itinerary and showing loader for add day flow"
+          );
 
           // Close itinerary widget to show FlightsWidget
           setShowItinerary(false);
@@ -2421,14 +2432,19 @@ export default function FlightsPageAuthenticated() {
       // Only include additional fields if this is NOT a newly added day
       if (!isNewDay) {
         if (currentDay.must_do_activities) {
-          currentItineraryDay.must_do_activities = currentDay.must_do_activities;
+          currentItineraryDay.must_do_activities =
+            currentDay.must_do_activities;
         }
         if (currentDay.places_to_visit) {
           currentItineraryDay.places_to_visit = currentDay.places_to_visit;
         }
-        console.log(`📝 Including additional fields for existing day ${currentDayNumber}`);
+        console.log(
+          `📝 Including additional fields for existing day ${currentDayNumber}`
+        );
       } else {
-        console.log(`📝 Minimal structure for newly added day ${currentDayNumber} (conveyance + stay only)`);
+        console.log(
+          `📝 Minimal structure for newly added day ${currentDayNumber} (conveyance + stay only)`
+        );
       }
 
       console.log(
@@ -2465,7 +2481,9 @@ export default function FlightsPageAuthenticated() {
 
       // Update itinerariesGenerated with the new day's conveyance and stay details
       if (isNewDay) {
-        console.log(`📦 Updating itinerariesGenerated for new day ${currentDayNumber}`);
+        console.log(
+          `📦 Updating itinerariesGenerated for new day ${currentDayNumber}`
+        );
         const updatedItinerariesGenerated = [...itinerariesGenerated];
         const dayIndex = updatedItinerariesGenerated.findIndex(
           (it) => it.day_number === currentDayNumber
@@ -2479,7 +2497,9 @@ export default function FlightsPageAuthenticated() {
             stay_details: currentItineraryDay.stay_details,
           };
           setItinerariesGenerated(updatedItinerariesGenerated);
-          console.log(`✅ Updated itinerariesGenerated for day ${currentDayNumber}`);
+          console.log(
+            `✅ Updated itinerariesGenerated for day ${currentDayNumber}`
+          );
         }
       }
 
@@ -2511,7 +2531,9 @@ export default function FlightsPageAuthenticated() {
 
       // For add day flow, show loader before calling itinerary API
       if (isNewDay) {
-        console.log(`📝 Add day flow - showing loader before itinerary generation`);
+        console.log(
+          `📝 Add day flow - showing loader before itinerary generation`
+        );
 
         // Set loader messages for itinerary generation
         setConveyanceLoaderMessages([
@@ -2539,7 +2561,9 @@ export default function FlightsPageAuthenticated() {
 
         // Wait for loader to show, then call API with fresh data
         setTimeout(async () => {
-          console.log(`📞 Calling itinerary API for day ${currentDayNumber} (add day flow)`);
+          console.log(
+            `📞 Calling itinerary API for day ${currentDayNumber} (add day flow)`
+          );
           console.log(`📦 Passing updatedTrip and updatedItineraries to API`);
           // Pass the updated trip and itineraries directly to avoid stale state
           await callItineraryAPI(
@@ -2552,7 +2576,9 @@ export default function FlightsPageAuthenticated() {
         }, 500);
       } else {
         // Regular flow (not add day)
-        console.log(`📞 Calling itinerary API for day ${currentDayNumber} (regular flow)`);
+        console.log(
+          `📞 Calling itinerary API for day ${currentDayNumber} (regular flow)`
+        );
         await callItineraryAPI(
           currentDayNumber,
           true,
