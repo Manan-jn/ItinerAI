@@ -77,6 +77,9 @@ interface ItineraryWidgetProps {
     isInsertFlow?: boolean // NEW: Flag for insert day flow vs extend flow
   ) => Promise<void>; // NEW: Callback to add new day
   navigateToDayNumber?: number | null; // NEW: Day number to navigate to (1-based)
+  onRemovePendingDay?: (dayNumber: number) => void; // NEW: Callback to remove day from pending set
+  onAddPendingDay?: (dayNumber: number) => void; // NEW: Callback to add day to pending set
+  pendingConveyanceDaysFromParent?: Set<number>; // NEW: Pending days from parent component
 }
 
 // Helper function to transform API response to display format
@@ -279,6 +282,9 @@ export default function ItineraryWidget({
   isLoadingNextDay = false,
   onAddDay,
   navigateToDayNumber = null,
+  onRemovePendingDay,
+  onAddPendingDay,
+  pendingConveyanceDaysFromParent,
 }: ItineraryWidgetProps) {
   const [currentDayIndex, setCurrentDayIndex] = useState(0);
   const [chatInput, setChatInput] = useState("");
@@ -288,9 +294,9 @@ export default function ItineraryWidget({
   const [showConveyancePopup, setShowConveyancePopup] = useState(false);
   const [pendingExtendTrip, setPendingExtendTrip] = useState(false);
   const [loadingDayIndex, setLoadingDayIndex] = useState<number | null>(null);
-  const [pendingConveyanceDays, setPendingConveyanceDays] = useState<
-    Set<number>
-  >(new Set());
+
+  // Use pending days from parent - single source of truth
+  const pendingConveyanceDays = pendingConveyanceDaysFromParent || new Set<number>();
 
   // Load itinerary data from JSON or API response
   const [itineraryData, setItineraryData] = useState<ItineraryData | null>(
@@ -344,7 +350,7 @@ export default function ItineraryWidget({
           const dayMap = new Map<number, DayItinerary>();
           existingDays.forEach((day) => dayMap.set(day.day, day));
 
-          // Update or add new days
+          // Update or add new days (this will replace days with same day number)
           newDays.forEach((day) => {
             console.log(`📝 Updating/Adding day ${day.day}`);
             dayMap.set(day.day, day);
@@ -359,10 +365,13 @@ export default function ItineraryWidget({
             `✅ Merged itinerary has ${mergedDays.length} total days`
           );
 
+          // Calculate new total_days (max of current length or highest day number)
+          const maxDayNumber = Math.max(...mergedDays.map(d => d.day), prevData.total_days);
+
           return {
             ...prevData,
             days: mergedDays,
-            total_days: mergedDays.length,
+            total_days: maxDayNumber,
             end_date:
               mergedDays[mergedDays.length - 1]?.date || prevData.end_date,
           };
@@ -422,17 +431,31 @@ export default function ItineraryWidget({
 
   // Handle day selection from slider
   const handleDaySelect = async (dayIndex: number) => {
+    const dayNumber = dayIndex + 1; // Convert to 1-based day number
+
+    // CRITICAL: Check if this is a pending day FIRST, before checking selectedDay
+    // Pending days won't have data in itineraryData.days, so we must check pending status first
+    const isPendingDay = pendingConveyanceDays.has(dayNumber);
+
+    if (isPendingDay) {
+      // For pending days, just navigate to show the pending state
+      // DO NOT trigger API call with response_type='generate'
+      console.log(`📌 Day ${dayNumber} is pending - showing pending state without API call`);
+      setCurrentDayIndex(dayIndex);
+      return;
+    }
+
+    // Not a pending day - check if we have data for it
     const selectedDay = itineraryData!.days[dayIndex];
 
     if (selectedDay) {
       // Day data already exists, navigate immediately
+      console.log(`✅ Day ${dayNumber} has data - navigating`);
       setCurrentDayIndex(dayIndex);
     } else {
-      // Day data doesn't exist, need to fetch it
-      const dayNumber = dayIndex + 1; // Convert to 1-based day number
-
+      // Day data doesn't exist and it's not pending - need to fetch it
       if (dayNumber <= totalDays && onRequestNextDay) {
-        console.log(`🔄 Requesting itinerary for day ${dayNumber} from slider`);
+        console.log(`🔄 Requesting itinerary for day ${dayNumber} from slider (response_type='generate')`);
         setLoadingDayIndex(dayIndex);
 
         try {
@@ -461,14 +484,45 @@ export default function ItineraryWidget({
       `➕ Insert day ${insertDayNumber} after day ${afterDayIndex + 1}`
     );
 
-    // Mark this day as pending conveyance
-    setPendingConveyanceDays((prev) => {
-      const newSet = new Set(prev);
-      newSet.add(insertDayNumber);
-      return newSet;
-    });
+    // STEP 1: Shift all subsequent days in itineraryData
+    if (itineraryData) {
+      setItineraryData((prevData) => {
+        if (!prevData) return prevData;
 
-    // Navigate to the newly inserted day after a brief delay for animation
+        console.log(`🔄 Shifting days >= ${insertDayNumber} by +1 in itineraryData`);
+
+        // Shift day numbers for all days >= insertDayNumber
+        const updatedDays = prevData.days.map((day) => {
+          if (day.day >= insertDayNumber) {
+            console.log(`  Shifting day ${day.day} → ${day.day + 1}`);
+            return {
+              ...day,
+              day: day.day + 1,
+            };
+          }
+          return day;
+        });
+
+        // Sort by day number to maintain order
+        updatedDays.sort((a, b) => a.day - b.day);
+
+        console.log(`✅ Shifted ${updatedDays.length} days in itineraryData`);
+
+        return {
+          ...prevData,
+          days: updatedDays,
+          total_days: prevData.total_days + 1,
+        };
+      });
+    }
+
+    // STEP 2: Mark this day as pending in parent's state
+    if (onAddPendingDay) {
+      onAddPendingDay(insertDayNumber);
+      console.log(`✅ Added day ${insertDayNumber} to pending set in parent`);
+    }
+
+    // STEP 3: Navigate to the newly inserted day after a brief delay for animation
     setTimeout(() => {
       setCurrentDayIndex(afterDayIndex + 1);
     }, 300);
@@ -499,8 +553,9 @@ export default function ItineraryWidget({
       // This will skip FlightsWidget/StaysWidget and directly call API with request_type="add"
       await onAddDay(false, false, dayNumber - 1, true); // extendTrip=false, needsConveyance=false, isInsertFlow=true
 
-      // NOTE: We DO NOT remove from pending set
+      // NOTE: We DO NOT remove from pending set here
       // The pending day will be populated with the API response
+      // The parent component will handle removing it from pending set after API success
       console.log(`✅ Day ${dayNumber} added without conveyance, keeping pending state`);
     }
   };

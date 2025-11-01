@@ -117,6 +117,7 @@ export default function FlightsPageAuthenticated() {
   const [initialDepartureDate, setInitialDepartureDate] = useState<string>(""); // NEW: Initial departure date for FlightsWidget
   const [isInsertDayFlow, setIsInsertDayFlow] = useState<boolean>(false); // NEW: Track if we're in insert day flow
   const [isLoadingItinerary, setIsLoadingItinerary] = useState(false); // Loading state for itinerary
+  const [pendingConveyanceDays, setPendingConveyanceDays] = useState<Set<number>>(new Set()); // NEW: Track pending insert days
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const flashcardsRef = useRef<FlashcardsWidgetRef>(null);
@@ -900,8 +901,9 @@ export default function FlightsPageAuthenticated() {
           );
 
           return {
-            ...itineraryPayload,
+            ...prevData,
             itinerary: mergedDays,
+            response_type: itineraryPayload.response_type,
           };
         });
 
@@ -1106,21 +1108,25 @@ export default function FlightsPageAuthenticated() {
       setIsParsingTrips(true);
 
       // Build payload for insert flow
-      // Only include days BEFORE the insertion point + the new day
-      // Days after insertion will have their day_number shifted by +1
+      // Include: days BEFORE + new day + days AFTER (with shifted day_number)
       const itinerariesBeforeInsertion = itinerariesData
         .filter((it) => it.day_number < insertDayNumber)
         .map((it) => ({ ...it }));
 
-      // Add the new day
-      const newDayItinerary = itinerariesData.find(
+      // Find or create the new day itinerary
+      let newDayItinerary = itinerariesData.find(
         (it) => it.day_number === insertDayNumber
       );
 
-      const currentItineraryForAPI = [
-        ...itinerariesBeforeInsertion,
-        newDayItinerary,
-      ];
+      // If new day doesn't exist in itinerariesData, create it with minimal structure
+      if (!newDayItinerary) {
+        console.log(`📝 Creating new day ${insertDayNumber} with minimal structure`);
+        newDayItinerary = {
+          day_number: insertDayNumber,
+          conveyance_details: { is_required: false },
+          stay_details: { is_required: false },
+        };
+      }
 
       // Shift day numbers for days after insertion point
       const itinerariesAfterInsertion = itinerariesData
@@ -1130,8 +1136,15 @@ export default function FlightsPageAuthenticated() {
           day_number: it.day_number + 1,
         }));
 
+      // Build complete current_itinerary array: before + new + after (shifted)
+      const currentItineraryForAPI = [
+        ...itinerariesBeforeInsertion,
+        newDayItinerary,
+        ...itinerariesAfterInsertion, // Include shifted days
+      ].filter((it) => it !== null && it !== undefined); // Filter out any null/undefined
+
       console.log(
-        `📊 Insert payload: ${itinerariesBeforeInsertion.length} days before + 1 new day + ${itinerariesAfterInsertion.length} days after (shifted)`
+        `📊 Insert payload: ${itinerariesBeforeInsertion.length} days before + 1 new day + ${itinerariesAfterInsertion.length} days after (shifted) = ${currentItineraryForAPI.length} total`
       );
 
       // Calculate new trip duration
@@ -1199,17 +1212,27 @@ export default function FlightsPageAuthenticated() {
           const existingDays = prevData.itinerary;
           const newDays = itineraryPayload.itinerary;
 
+          console.log(`🔄 Merging insert response: ${existingDays.length} existing + ${newDays.length} new`);
+
           const dayMap = new Map();
           existingDays.forEach((day: any) => dayMap.set(day.day_number, day));
-          newDays.forEach((day: any) => dayMap.set(day.day_number, day));
+          
+          // Update or add new days from API response
+          newDays.forEach((day: any) => {
+            console.log(`📝 Updating/Adding day ${day.day_number} from insert response`);
+            dayMap.set(day.day_number, day);
+          });
 
           const mergedDays = Array.from(dayMap.values()).sort(
             (a: any, b: any) => a.day_number - b.day_number
           );
 
+          console.log(`✅ Merged itinerary after insert has ${mergedDays.length} total day(s)`);
+
           return {
             ...prevData,
             itinerary: mergedDays,
+            total_days: mergedDays.length,
           };
         });
 
@@ -1309,18 +1332,33 @@ export default function FlightsPageAuthenticated() {
           );
           if (existingIndex !== -1) {
             itinerariesData[existingIndex] = completeDayData;
+            console.log(`✅ Updated day ${dayData.day_number} in itinerariesData`);
           } else {
             itinerariesData.push(completeDayData);
+            console.log(`✅ Added day ${dayData.day_number} to itinerariesData`);
           }
         }
 
+        // Sort by day_number to maintain order
+        itinerariesData.sort((a, b) => a.day_number - b.day_number);
+
         setItinerariesGenerated([...itinerariesData]);
+        console.log(`✅ itinerariesGenerated updated with ${itinerariesData.length} days after insert`);
+
+        // Remove the inserted day from pending set since it now has data
+        handleRemovePendingDay(insertDayNumber);
 
         // Clear insert flow flag
         setIsInsertDayFlow(false);
 
-        // Navigate back to itinerary
+        // Navigate back to itinerary and to the newly added day
         setShowItinerary(true);
+
+        // Navigate to the newly inserted day after a short delay
+        setTimeout(() => {
+          setNavigateToDay(insertDayNumber);
+          setTimeout(() => setNavigateToDay(null), 1000);
+        }, 100);
       }
     } catch (error) {
       console.error("❌ Error in insert itinerary API call:", error);
@@ -1329,6 +1367,26 @@ export default function FlightsPageAuthenticated() {
       setIsLoadingItinerary(false);
       setIsInsertDayFlow(false);
     }
+  };
+
+  // Handler to add day to pending set
+  const handleAddPendingDay = (dayNumber: number) => {
+    setPendingConveyanceDays((prev) => {
+      const newSet = new Set(prev);
+      newSet.add(dayNumber);
+      console.log(`✅ Added day ${dayNumber} to pending set`);
+      return newSet;
+    });
+  };
+
+  // Handler to remove day from pending set
+  const handleRemovePendingDay = (dayNumber: number) => {
+    setPendingConveyanceDays((prev) => {
+      const newSet = new Set(prev);
+      newSet.delete(dayNumber);
+      console.log(`✅ Removed day ${dayNumber} from pending set`);
+      return newSet;
+    });
   };
 
   // Handler for requesting next day itinerary from ItineraryWidget
@@ -1642,6 +1700,9 @@ export default function FlightsPageAuthenticated() {
           return itinerary;
         }
       );
+
+      // Sort by day_number to maintain order after shifting
+      updatedItinerariesGenerated.sort((a, b) => a.day_number - b.day_number);
 
       // Insert empty placeholder for new day (will be filled after conveyance/stay selection)
       const newDayItinerary = {
@@ -3834,6 +3895,9 @@ export default function FlightsPageAuthenticated() {
                       isLoadingNextDay={isLoadingItinerary}
                       onAddDay={handleAddDay}
                       navigateToDayNumber={navigateToDay}
+                      onRemovePendingDay={handleRemovePendingDay}
+                      onAddPendingDay={handleAddPendingDay}
+                      pendingConveyanceDaysFromParent={pendingConveyanceDays}
                     />
                   </div>
                 ) : showDateSelector ? (
