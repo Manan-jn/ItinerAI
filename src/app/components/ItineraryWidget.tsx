@@ -83,6 +83,7 @@ interface ItineraryWidgetProps {
   isLoadingPendingDay?: boolean; // NEW: Loading state for pending day API call
   onDeleteDay?: (dayNumber: number) => Promise<void>; // NEW: Callback to delete a day (CASE 1: API call)
   onLocalDeleteDay?: (dayNumber: number) => void; // NEW: Callback for local delete without API (CASE 2)
+  onChatSubmit?: (message: string, currentDay: number) => Promise<void>; // NEW: Callback for chat message submission
 }
 
 // Helper function to transform API response to display format
@@ -291,6 +292,7 @@ export default function ItineraryWidget({
   isLoadingPendingDay = false,
   onDeleteDay,
   onLocalDeleteDay,
+  onChatSubmit,
 }: ItineraryWidgetProps) {
   const [currentDayIndex, setCurrentDayIndex] = useState(0);
   const [chatInput, setChatInput] = useState("");
@@ -303,6 +305,8 @@ export default function ItineraryWidget({
   const [showDeleteWarning, setShowDeleteWarning] = useState(false); // NEW: Show delete warning alert
   const [dayToDelete, setDayToDelete] = useState<number | null>(null); // NEW: Day number to delete
   const [deletingDayNumber, setDeletingDayNumber] = useState<number | null>(null); // NEW: Day being deleted (for animation)
+  const [isChatLoading, setIsChatLoading] = useState(false); // NEW: Loading state for chat API call
+  const [showUpdateNotification, setShowUpdateNotification] = useState(false); // NEW: Show update notification
 
   // Use pending days from parent - single source of truth
   const pendingConveyanceDays = pendingConveyanceDaysFromParent || new Set<number>();
@@ -598,60 +602,147 @@ export default function ItineraryWidget({
 
   // Handle delete day button click
   const handleDeleteDayClick = (dayNumber: number) => {
-    console.log(`🗑️ Delete day ${dayNumber} button clicked`);
+    console.log(`\n🗑️ ========== DELETE DAY ${dayNumber} BUTTON CLICKED ==========`);
+    console.log(`📍 Current day index: ${currentDayIndex}, Current day number: ${currentDayNumber}`);
 
-    // Check if day exists and has itinerary data
+    // Check if day exists in transformed itinerary data
     const dayData = itineraryData?.days.find(day => day.day === dayNumber);
 
     if (!dayData) {
-      console.log(`⚠️ Day ${dayNumber} has no itinerary data, cannot delete`);
+      console.log(`⚠️ Day ${dayNumber} has no itinerary data in transformed format, cannot delete`);
       return;
     }
 
-    // CASE 1: Check if day has conveyance with is_required: true
-    // This requires showing warning because it will delete all days ahead
-    const hasRequiredConveyance = dayData.conveyance_details?.is_required === true;
+    console.log(`✅ Found day ${dayNumber} in transformed itinerary data`);
+
+    // IMPORTANT: We need to check conveyance_details from the ORIGINAL API response
+    // The transformed dayData doesn't have conveyance_details
+    // Access it from itineraryResponse which has the raw API format
+    let hasRequiredConveyance = false;
+
+    if (itineraryResponse) {
+      console.log(`📦 Checking itineraryResponse for day ${dayNumber}...`);
+
+      // Extract itinerary array from response (handle both message wrapper and direct format)
+      const apiItinerary = itineraryResponse?.message?.itinerary || itineraryResponse?.itinerary;
+
+      if (apiItinerary && Array.isArray(apiItinerary)) {
+        console.log(`📊 Found ${apiItinerary.length} days in API itinerary`);
+
+        // Find the day in the API response by day_number
+        const apiDayData = apiItinerary.find((day: any) => day.day_number === dayNumber);
+
+        if (apiDayData) {
+          console.log(`✅ Found day ${dayNumber} in API response`);
+          console.log(`📋 API day data:`, JSON.stringify({
+            day_number: apiDayData.day_number,
+            has_conveyance: !!apiDayData.conveyance_details,
+            conveyance_details: apiDayData.conveyance_details
+          }, null, 2));
+
+          if (apiDayData.conveyance_details) {
+            hasRequiredConveyance = apiDayData.conveyance_details.is_required === true;
+            console.log(`📊 Day ${dayNumber} conveyance check: is_required = ${apiDayData.conveyance_details.is_required}`);
+          } else {
+            console.log(`📊 Day ${dayNumber} has NO conveyance_details in API response`);
+          }
+        } else {
+          console.log(`⚠️ Day ${dayNumber} NOT FOUND in API response by day_number`);
+          console.log(`Available day numbers in API:`, apiItinerary.map((d: any) => d.day_number));
+        }
+      } else {
+        console.log(`⚠️ API itinerary is not an array or is missing`);
+      }
+    } else {
+      console.log(`⚠️ No itineraryResponse available`);
+    }
 
     if (hasRequiredConveyance) {
       // CASE 1: Day with is_required: true - show warning and use API call
-      console.log(`⚠️ CASE 1: Day ${dayNumber} has required conveyance, showing warning`);
+      console.log(`🚨 CASE 1: Day ${dayNumber} has REQUIRED conveyance`);
+      console.log(`   → Showing warning alert`);
+      console.log(`   → Will call onDeleteDay (API delete) after confirmation`);
       setDayToDelete(dayNumber);
       setShowDeleteWarning(true);
     } else {
       // CASE 2: Day with is_required: false - local delete with re-alignment
-      console.log(`✅ CASE 2: Day ${dayNumber} has no required conveyance, deleting locally`);
+      console.log(`✅ CASE 2: Day ${dayNumber} has NO required conveyance`);
+      console.log(`   → Calling handleLocalDelete immediately`);
+      console.log(`   → Will call onLocalDeleteDay (local re-alignment)`);
       handleLocalDelete(dayNumber);
     }
+
+    console.log(`========== END DELETE DAY ${dayNumber} ==========\n`);
   };
 
   // Handle local delete for CASE 2 (is_required: false)
   const handleLocalDelete = (dayNumber: number) => {
-    console.log(`🗑️ CASE 2: Starting local delete for day ${dayNumber}`);
+    console.log(`\n🔄 ========== LOCAL DELETE CASE 2 for Day ${dayNumber} ==========`);
+    console.log(`🎬 Starting animation...`);
 
     // Set deleting state for animation
     setDeletingDayNumber(dayNumber);
 
     // Wait for animation to complete (300ms), then perform the deletion
     setTimeout(() => {
+      console.log(`⏱️ Animation complete, calling onLocalDeleteDay handler...`);
+
       if (onLocalDeleteDay) {
         onLocalDeleteDay(dayNumber);
-        console.log(`✅ Local delete completed for day ${dayNumber}`);
+        console.log(`✅ Called parent's onLocalDeleteDay for day ${dayNumber}`);
+      } else {
+        console.error(`❌ onLocalDeleteDay callback is not defined!`);
       }
 
       // Clear deleting state
       setDeletingDayNumber(null);
+      console.log(`========== END LOCAL DELETE for Day ${dayNumber} ==========\n`);
     }, 300);
+  };
+
+  // Handle chat message submission
+  const handleChatSubmit = async (message: string) => {
+    if (!message.trim() || !onChatSubmit) {
+      console.warn("⚠️ Missing required data for chat submission");
+      return;
+    }
+
+    console.log(`💬 Chat message submitted: "${message}" for day ${currentDayNumber}`);
+
+    try {
+      // Set loading state
+      setIsChatLoading(true);
+
+      // Call parent callback which will handle API and response
+      await onChatSubmit(message, currentDayNumber);
+
+      // Show success notification
+      setShowUpdateNotification(true);
+      setTimeout(() => {
+        setShowUpdateNotification(false);
+      }, 3000); // Hide after 3 seconds
+
+      console.log("✅ Chat message processed successfully");
+    } catch (error) {
+      console.error("❌ Error in chat submission:", error);
+      alert("Failed to process your message. Please try again.");
+    } finally {
+      // Clear loading state
+      setIsChatLoading(false);
+    }
   };
 
   // Handle delete warning - Continue
   const handleDeleteContinue = async () => {
     if (dayToDelete !== null && onDeleteDay) {
-      console.log(`🗑️ Continuing with delete for day ${dayToDelete}`);
+      console.log(`🗑️ CASE 1: Continuing with API delete for day ${dayToDelete}`);
       setShowDeleteWarning(false);
 
       try {
+        // IMPORTANT: Call parent's onDeleteDay handler which does the API call
+        // This is FlightsPageAuthenticated.handleDeleteDay
         await onDeleteDay(dayToDelete);
-        console.log(`✅ Successfully deleted day ${dayToDelete}`);
+        console.log(`✅ Successfully deleted day ${dayToDelete} via API`);
       } catch (error) {
         console.error(`❌ Failed to delete day ${dayToDelete}:`, error);
       } finally {
@@ -1442,17 +1533,19 @@ export default function ItineraryWidget({
           <ItinerAIChatBox
             value={chatInput}
             onChange={setChatInput}
-            onSubmit={(e) => {
+            onSubmit={async (e) => {
               e.preventDefault();
               if (chatInput.trim()) {
-                console.log("ItinerAI query:", chatInput);
-                // Handle chat submission
-                setChatInput("");
+                const message = chatInput;
+                setChatInput(""); // Clear input immediately
+                await handleChatSubmit(message);
               }
             }}
             placeholder="Ask ItinerAI about your itinerary..."
             theme="white"
             inputType="input"
+            isLoading={isChatLoading}
+            disabled={isChatLoading}
           />
         </div>
       </div>
@@ -1517,6 +1610,30 @@ export default function ItineraryWidget({
                   Decline
                 </button>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Success Notification - Top Right */}
+      {showUpdateNotification && (
+        <div className="fixed top-4 right-4 z-50 max-w-sm">
+          <div className="bg-white rounded-xl shadow-2xl border-2 border-green-400 overflow-hidden animate-slide-in-right">
+            {/* Notification Header */}
+            <div className="bg-gradient-to-r from-green-500 to-green-600 px-4 py-3 flex items-center gap-3">
+              <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/>
+                </svg>
+              </div>
+              <h3 className="text-lg font-bold text-white">Success</h3>
+            </div>
+
+            {/* Notification Body */}
+            <div className="p-4">
+              <p className="text-sm text-gray-800 leading-relaxed font-medium">
+                The itineraries are updated
+              </p>
             </div>
           </div>
         </div>

@@ -1,0 +1,1283 @@
+{
+    "user_id": "zqh2H13LPvXWDkZjfFzthJCXktB3",
+    "user_profile": {
+        "name": "Manan Jain",
+        "age": 25,
+        "gender": "male",
+        "passport_nationality": "indian",
+        "trip_type": "solo",
+        "group_size": 1,
+        "budget": 200000,
+        "trip_duration": "7 days"
+    },
+    "current_datetime": "2025-11-02 01:34:35",
+    "onboarding_agent": "Understood, Manan! No worries if you'd rather not share your travel history.\n\nLastly, do you have any general preferences I should keep in mind, like specific types of food you enjoy, activities you love, or even destinations you dream of visiting? This helps me get a better sense of what makes a perfect trip for you!",
+    "trip_suggestions": {
+        "response_type": "trip",
+        "message": "",
+        "trips": [
+            {
+                "trip_title": "Classic Winter Wonderland: Leh, Nubra & Pangong",
+                "no_of_days": 7,
+                "estimated_budget": 85000,
+                "best_time_to_visit": "December to February",
+                "themes": [
+                    "Adventure",
+                    "Nature",
+                    "Landscape"
+                ],
+                "trip_route": [
+                    {
+                        "place_name": "Leh",
+                        "address": "Ladakh, India",
+                        "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJhe1fRCHr_TgREPeGUJcJu9E",
+                        "lat": "34.1525864",
+                        "long": "77.57705349999999",
+                        "photos": [
+                            "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU7MGRK6Tb8Dflazs8NFZhZq9reBYJEKmYms4ouptUYycxoBITmrT158KyWatCLDknZBC5sMmWeQHSGMPiO0GfQjKTflluOi5-yD_uXq17dcKkMeqWyizKjiWi0s9pr0_iNzB4avFzok9W099RBZ3Y36r2Mkrnf2MPd2icx6QEAW2ROi5Mn_uBE3grr0VuuYQvZQzqGPHF3w_qzezDOIfE6YJ5Zo_owHzjMgtXgETamQp-hlUGvbzGK3baGWrTv7aHLo4vFSU2MUST9fasdRtfRLQ1eB3MLc0DIojfAmAgQKlJdsNsk8vlWiC30QnME1f54g_PJapYLxl7dyP20sN3hEMvLM1We3cqmkBb38tFOKzQqE96ukYccdxJstX3HB16vhvyq9JmYXZr7sZHbOTqmUzeqlVjKU8XWKe9h3M1wChi1H3BDWn9L8tydMKAb4BlZ5n5BScRSerzpE5jZ_F37tYLZxPewBozynlgVshK_aeI8lw6NV2NP7brd2MjdTxIS82EkoSpv8K6RW9VWtUfgaAU5weSGuwCDbwpNsL-udmEqiGJOTNRkLEPIXlV9wAxjM8MJY&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                        ],
+                        "place_id": "ChIJhe1fRCHr_TgREPeGUJcJu9E"
+                    },
+                    {
+                        "place_name": "Nubra Valley",
+                        "address": "Ladakh, India",
+                        "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJkWUXVHM2_DgR6cojq2tVxIs",
+                        "lat": "34.6863146",
+                        "long": "77.567288",
+                        "photos": [
+                            "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU4ygAZc3X5Xiwn76Vacoup1qUg8G1b2vVevUhetRCSk0jWNDu3cO1CFiobtfMZUXiOPuvMY41XYMxElrv6ajnREe3V0cqjl-SPXqnMBAxWtTsgekDdO58CebakGeLfnEIQE-zEB3xImyeoYo5P8SwO18mIDDGQEm8pFJteeizdpOWEDDXnWl-6EkXHExVyJ1eTGKiudOfDJyv-EPSqnaieaqe9z59TDW1D9Y6gF9i_wJxf_76cXm3Tsd2bpq26cBk9FJ5zM9bTCNTNYijF7-9QNGZzpHIv86KJE-mZJ49v11WpqVUvad3diCexv2_PT3K3C-M7kRmXa4ZezcR9bGPySZCXFi5qVE4xNABllhumr43comkg3xQCGyuM7Xu9BAh3SNBwahYji7gBP5inD-zJgwaQvrUXiQ5Yvt5hHFf4-BUxiiJOQ1WNW8LoNiD1xovb7l9H4woiIj5S2DpO4UfU7Qy6eTzNQIxsGCFLtdXrwOwUe9ZSuVABCGEoEULdtoEwSZcHKVgGBg_h1j8tq7Y2-3HdeskJisT2kvxALX2VWxhsO_94g7sZdMGb9UKQsyPnM7imx&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                        ],
+                        "place_id": "ChIJkWUXVHM2_DgR6cojq2tVxIs"
+                    },
+                    {
+                        "place_name": "Pangong Tso",
+                        "address": "Ladakh, India",
+                        "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJlyoItmktADkRqRbAyOMXurc",
+                        "lat": "33.7595131",
+                        "long": "78.66744039999999",
+                        "photos": [
+                            "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU66JE0VYJyMr-g1fBY-4XCPujv-00slfxY1QjDJCpLaWfF9EzFVtaux_-UL4nGdUQAg8dOLbxMwEeO-HbnzkmdUVjyaczDY_5w4-K24UNP27mRnBbyKpG43sZVIW-VY-LSinD4wwZHKtTZaov25CREn44ES7hnXQU4Wap6GT0GjF1xPe6Pu3TrwgkhQHoETM0V5Un6f_GtGGmCwwrPfy5QGM5bSNJnOnLLyg06y0bRvsX9Xl6hHvzxmN0SaUld4ZCWn4oI7XJ67G0T-46Kj5l0RVpSHEgZrX3hlzVsG9h0mTtWPl5fw95caa9t9fSaME-t-Y_kQeSdXlwxlj9IdGBk2vPOjl57EJ1M63BogIjN9ZAFqkqA1fY1VVj6YhrTWUkg7YCtOuV1H5dxxCHQmJiYjbj4013Faf5tAh0ZPtaXtpmfQ_f1Wiz0Q8ZeI99gLgoX-NdpM1xCwBzuIRJ-0D1FXqw8xycN7OuvB7Lx3-W6LRfOL0_RYuJLvgVoj8IP2ZjMGIlEXTSRyrm4uWB7fEu2-aRBIrWf6TnXe1nSgeu_OEz_8EHaKFnqZaVIK1Is3vyrpzbTm&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                        ],
+                        "place_id": "ChIJlyoItmktADkRqRbAyOMXurc"
+                    }
+                ],
+                "day_wise_plan": [
+                    {
+                        "day_number": 1,
+                        "conveyance_details": {
+                            "is_required": true,
+                            "travel_timing": "morning",
+                            "from_city": "user_location",
+                            "to_city": "Leh"
+                        },
+                        "stay_details": {
+                            "is_required": true,
+                            "city": "Leh",
+                            "check_in_day": "1",
+                            "check_out_day": "2"
+                        },
+                        "must_do_activities": [
+                            {
+                                "type": "activity",
+                                "category": "wellness",
+                                "name": "Acclimatization Day",
+                                "description": "Arrive at Leh airport and transfer to your pre-booked hotel. Rest for the entire day to acclimatize to the high altitude (3500m) and cold weather. This is crucial for your health and safety. [9, 28]"
+                            }
+                        ]
+                    },
+                    {
+                        "day_number": 2,
+                        "conveyance_details": {
+                            "is_required": false
+                        },
+                        "stay_details": {
+                            "is_required": true,
+                            "city": "Leh",
+                            "check_in_day": "2",
+                            "check_out_day": "3"
+                        },
+                        "must_do_activities": [
+                            {
+                                "type": "place",
+                                "category": "cultural_site",
+                                "name": "Leh Local Sightseeing",
+                                "description": "Explore the snow-covered Leh town. Visit the historic Leh Palace for panoramic views and the serene Shanti Stupa. [5, 26]"
+                            },
+                            {
+                                "type": "food",
+                                "category": "cafe",
+                                "name": "Warm Up at a Local Cafe",
+                                "description": "Experience the local cafe culture in Leh market and enjoy a hot cup of butter tea or coffee to stay warm."
+                            }
+                        ]
+                    },
+                    {
+                        "day_number": 3,
+                        "conveyance_details": {
+                            "is_required": true,
+                            "travel_timing": "morning",
+                            "from_city": "Leh",
+                            "to_city": "Nubra Valley"
+                        },
+                        "stay_details": {
+                            "is_required": true,
+                            "city": "Nubra Valley",
+                            "check_in_day": "3",
+                            "check_out_day": "4"
+                        },
+                        "must_do_activities": [
+                            {
+                                "type": "place",
+                                "category": "scenic_drive",
+                                "name": "Khardung La Pass",
+                                "description": "Drive over the mighty Khardung La, one of the world's highest motorable passes, which is kept open in winter by the BRO. [2, 12]"
+                            },
+                            {
+                                "type": "place",
+                                "category": "monastery",
+                                "name": "Diskit Monastery",
+                                "description": "Visit the Diskit Monastery, known for its towering 100-foot Maitreya Buddha statue overlooking the valley. [7, 12]"
+                            }
+                        ]
+                    },
+                    {
+                        "day_number": 4,
+                        "conveyance_details": {
+                            "is_required": true,
+                            "travel_timing": "evening",
+                            "from_city": "Nubra Valley",
+                            "to_city": "Leh"
+                        },
+                        "stay_details": {
+                            "is_required": true,
+                            "city": "Leh",
+                            "check_in_day": "4",
+                            "check_out_day": "5"
+                        },
+                        "must_do_activities": [
+                            {
+                                "type": "activity",
+                                "category": "adventure",
+                                "name": "Bactrian Camel Safari",
+                                "description": "Experience a unique ride on the double-humped Bactrian camels on the white sand dunes of Hunder. [2]"
+                            }
+                        ]
+                    },
+                    {
+                        "day_number": 5,
+                        "conveyance_details": {
+                            "is_required": true,
+                            "travel_timing": "morning",
+                            "from_city": "Leh",
+                            "to_city": "Pangong Tso"
+                        },
+                        "stay_details": {
+                            "is_required": true,
+                            "city": "Pangong Tso",
+                            "check_in_day": "5",
+                            "check_out_day": "6"
+                        },
+                        "must_do_activities": [
+                            {
+                                "type": "place",
+                                "category": "scenic_drive",
+                                "name": "Drive via Chang La Pass",
+                                "description": "Travel through the challenging and scenic Chang La Pass to reach Pangong Lake. The journey offers stunning winter vistas."
+                            },
+                            {
+                                "type": "place",
+                                "category": "lake",
+                                "name": "Frozen Pangong Lake",
+                                "description": "Witness the breathtaking sight of the completely or partially frozen Pangong Tso, a surreal and unforgettable experience. [5, 11]"
+                            }
+                        ]
+                    },
+                    {
+                        "day_number": 6,
+                        "conveyance_details": {
+                            "is_required": true,
+                            "travel_timing": "morning",
+                            "from_city": "Pangong Tso",
+                            "to_city": "Leh"
+                        },
+                        "stay_details": {
+                            "is_required": true,
+                            "city": "Leh",
+                            "check_in_day": "6",
+                            "check_out_day": "7"
+                        },
+                        "must_do_activities": [
+                            {
+                                "type": "place",
+                                "category": "monastery",
+                                "name": "Thiksey Monastery",
+                                "description": "On your way back to Leh, visit the magnificent Thiksey Monastery, which resembles the Potala Palace in Lhasa. [7, 18]"
+                            }
+                        ]
+                    },
+                    {
+                        "day_number": 7,
+                        "conveyance_details": {
+                            "is_required": true,
+                            "travel_timing": "morning",
+                            "from_city": "Leh",
+                            "to_city": "user_location"
+                        },
+                        "stay_details": {
+                            "is_required": false
+                        },
+                        "must_do_activities": [
+                            {
+                                "type": "transport",
+                                "category": "flight",
+                                "name": "Departure from Leh",
+                                "description": "Transfer to Kushok Bakula Rimpochee Airport for your flight back home, with memories of a stark and beautiful winter landscape."
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "trip_title": "Indus Valley & Sham: A Cultural Sojourn",
+                "no_of_days": 7,
+                "estimated_budget": 70000,
+                "best_time_to_visit": "October to April",
+                "themes": [
+                    "Culture",
+                    "History",
+                    "Spirituality"
+                ],
+                "trip_route": [
+                    {
+                        "place_name": "Leh",
+                        "address": "Ladakh, India",
+                        "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJhe1fRCHr_TgREPeGUJcJu9E",
+                        "lat": "34.1525864",
+                        "long": "77.57705349999999",
+                        "photos": [
+                            "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU7MGRK6Tb8Dflazs8NFZhZq9reBYJEKmYms4ouptUYycxoBITmrT158KyWatCLDknZBC5sMmWeQHSGMPiO0GfQjKTflluOi5-yD_uXq17dcKkMeqWyizKjiWi0s9pr0_iNzB4avFzok9W099RBZ3Y36r2Mkrnf2MPd2icx6QEAW2ROi5Mn_uBE3grr0VuuYQvZQzqGPHF3w_qzezDOIfE6YJ5Zo_owHzjMgtXgETamQp-hlUGvbzGK3baGWrTv7aHLo4vFSU2MUST9fasdRtfRLQ1eB3MLc0DIojfAmAgQKlJdsNsk8vlWiC30QnME1f54g_PJapYLxl7dyP20sN3hEMvLM1We3cqmkBb38tFOKzQqE96ukYccdxJstX3HB16vhvyq9JmYXZr7sZHbOTqmUzeqlVjKU8XWKe9h3M1wChi1H3BDWn9L8tydMKAb4BlZ5n5BScRSerzpE5jZ_F37tYLZxPewBozynlgVshK_aeI8lw6NV2NP7brd2MjdTxIS82EkoSpv8K6RW9VWtUfgaAU5weSGuwCDbwpNsL-udmEqiGJOTNRkLEPIXlV9wAxjM8MJY&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                        ],
+                        "place_id": "ChIJhe1fRCHr_TgREPeGUJcJu9E"
+                    },
+                    {
+                        "place_name": "Sham Valley",
+                        "address": "Ladakh, India",
+                        "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJfSTkZQCh_TgR--R_mCvrKXk",
+                        "lat": "34.273393",
+                        "long": "77.19984099999999",
+                        "photos": [],
+                        "place_id": "ChIJfSTkZQCh_TgR--R_mCvrKXk"
+                    }
+                ],
+                "day_wise_plan": [
+                    {
+                        "day_number": 1,
+                        "conveyance_details": {
+                            "is_required": true,
+                            "travel_timing": "morning",
+                            "from_city": "user_location",
+                            "to_city": "Leh"
+                        },
+                        "stay_details": {
+                            "is_required": true,
+                            "city": "Leh",
+                            "check_in_day": "1",
+                            "check_out_day": "3"
+                        },
+                        "must_do_activities": [
+                            {
+                                "type": "activity",
+                                "category": "wellness",
+                                "name": "Arrival and Acclimatization",
+                                "description": "Arrive in Leh and transfer to your hotel. Dedicate the day to resting and acclimatizing to the high altitude, which is essential for a winter trip. [9, 28]"
+                            }
+                        ]
+                    },
+                    {
+                        "day_number": 2,
+                        "conveyance_details": {
+                            "is_required": false
+                        },
+                        "stay_details": {
+                            "is_required": false
+                        },
+                        "must_do_activities": [
+                            {
+                                "type": "place",
+                                "category": "monastery",
+                                "name": "Monastery Tour around Leh",
+                                "description": "Visit the grand monasteries near Leh. Explore Hemis, the largest and wealthiest monastery, and Thiksey, known for its impressive architecture. [18, 29]"
+                            },
+                            {
+                                "type": "place",
+                                "category": "palace",
+                                "name": "Shey Palace and Monastery",
+                                "description": "Visit the former summer palace of the Ladakhi kings and see the large Shakyamuni Buddha statue. [18]"
+                            }
+                        ]
+                    },
+                    {
+                        "day_number": 3,
+                        "conveyance_details": {
+                            "is_required": true,
+                            "travel_timing": "morning",
+                            "from_city": "Leh",
+                            "to_city": "Sham Valley"
+                        },
+                        "stay_details": {
+                            "is_required": true,
+                            "city": "Sham Valley",
+                            "check_in_day": "3",
+                            "check_out_day": "5"
+                        },
+                        "must_do_activities": [
+                            {
+                                "type": "place",
+                                "category": "monastery",
+                                "name": "Alchi Monastery",
+                                "description": "Drive to the Sham Valley and visit the ancient Alchi Monastery, a UNESCO heritage site famous for its 11th-century murals and Kashmiri-influenced art. [28]"
+                            },
+                            {
+                                "type": "place",
+                                "category": "monastery",
+                                "name": "Likir Monastery",
+                                "description": "Visit Likir Monastery, home to a 75-foot-tall gold-plated statue of Maitreya Buddha, offering stunning views of the valley. [18]"
+                            }
+                        ]
+                    },
+                    {
+                        "day_number": 4,
+                        "conveyance_details": {
+                            "is_required": false
+                        },
+                        "stay_details": {
+                            "is_required": false
+                        },
+                        "must_do_activities": [
+                            {
+                                "type": "place",
+                                "category": "natural_wonder",
+                                "name": "Magnetic Hill & Sangam Point",
+                                "description": "Experience the gravity-defying phenomenon of Magnetic Hill and witness the spectacular confluence of the Indus and Zanskar rivers (Sangam). [7]"
+                            },
+                            {
+                                "type": "place",
+                                "category": "religious_site",
+                                "name": "Gurudwara Pathar Sahib",
+                                "description": "Visit the revered Gurudwara maintained by the Indian Army, a place of great spiritual significance."
+                            }
+                        ]
+                    },
+                    {
+                        "day_number": 5,
+                        "conveyance_details": {
+                            "is_required": true,
+                            "travel_timing": "evening",
+                            "from_city": "Sham Valley",
+                            "to_city": "Leh"
+                        },
+                        "stay_details": {
+                            "is_required": true,
+                            "city": "Leh",
+                            "check_in_day": "5",
+                            "check_out_day": "7"
+                        },
+                        "must_do_activities": [
+                            {
+                                "type": "place",
+                                "category": "monastery",
+                                "name": "Spituk and Phyang Monasteries",
+                                "description": "Explore Spituk Monastery overlooking the Leh airport and Phyang Monastery, known for its collection of bronzes and paintings. [18]"
+                            }
+                        ]
+                    },
+                    {
+                        "day_number": 6,
+                        "conveyance_details": {
+                            "is_required": false
+                        },
+                        "stay_details": {
+                            "is_required": false
+                        },
+                        "must_do_activities": [
+                            {
+                                "type": "shopping",
+                                "category": "market",
+                                "name": "Leisure Day in Leh",
+                                "description": "Spend the day at your own pace. Revisit a favorite spot, or explore the Leh market for souvenirs like pashmina shawls and local handicrafts."
+                            },
+                            {
+                                "type": "place",
+                                "category": "museum",
+                                "name": "Hall of Fame",
+                                "description": "Visit the Hall of Fame museum, built by the Indian Army, to learn about Ladakhi culture and the bravery of soldiers. [7]"
+                            }
+                        ]
+                    },
+                    {
+                        "day_number": 7,
+                        "conveyance_details": {
+                            "is_required": true,
+                            "travel_timing": "morning",
+                            "from_city": "Leh",
+                            "to_city": "user_location"
+                        },
+                        "stay_details": {
+                            "is_required": false
+                        },
+                        "must_do_activities": [
+                            {
+                                "type": "transport",
+                                "category": "flight",
+                                "name": "Fly from Leh",
+                                "description": "Depart from Leh with a deeper understanding of its rich cultural and spiritual heritage."
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "trip_title": "Winter Adventure: The Sham Valley 'Baby' Trek",
+                "no_of_days": 7,
+                "estimated_budget": 95000,
+                "best_time_to_visit": "Accessible year-round",
+                "themes": [
+                    "Adventure",
+                    "Trekking",
+                    "Culture"
+                ],
+                "trip_route": [
+                    {
+                        "place_name": "Leh",
+                        "address": "Ladakh, India",
+                        "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJhe1fRCHr_TgREPeGUJcJu9E",
+                        "lat": "34.1525864",
+                        "long": "77.57705349999999",
+                        "photos": [
+                            "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU7MGRK6Tb8Dflazs8NFZhZq9reBYJEKmYms4ouptUYycxoBITmrT158KyWatCLDknZBC5sMmWeQHSGMPiO0GfQjKTflluOi5-yD_uXq17dcKkMeqWyizKjiWi0s9pr0_iNzB4avFzok9W099RBZ3Y36r2Mkrnf2MPd2icx6QEAW2ROi5Mn_uBE3grr0VuuYQvZQzqGPHF3w_qzezDOIfE6YJ5Zo_owHzjMgtXgETamQp-hlUGvbzGK3baGWrTv7aHLo4vFSU2MUST9fasdRtfRLQ1eB3MLc0DIojfAmAgQKlJdsNsk8vlWiC30QnME1f54g_PJapYLxl7dyP20sN3hEMvLM1We3cqmkBb38tFOKzQqE96ukYccdxJstX3HB16vhvyq9JmYXZr7sZHbOTqmUzeqlVjKU8XWKe9h3M1wChi1H3BDWn9L8tydMKAb4BlZ5n5BScRSerzpE5jZ_F37tYLZxPewBozynlgVshK_aeI8lw6NV2NP7brd2MjdTxIS82EkoSpv8K6RW9VWtUfgaAU5weSGuwCDbwpNsL-udmEqiGJOTNRkLEPIXlV9wAxjM8MJY&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                        ],
+                        "place_id": "ChIJhe1fRCHr_TgREPeGUJcJu9E"
+                    },
+                    {
+                        "place_name": "Likir",
+                        "address": "Ladakh, India",
+                        "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJSaxlFUCn_TgRm-NWEAOG_SI",
+                        "lat": "34.2903203",
+                        "long": "77.2132106",
+                        "photos": [
+                            "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU4kHwp01LKkXqW9esAqHOwtESWIhLi7uh0Z6wtgWlAwQv2Tl3uWrVoqtWTdexTjbufsO0iG8sn0qpq5sNeKHZrotdOFXtD6A4XaZvNzX94zvtoK6Ufsioccv0pWLKT010igtdpNl-Rf0tf6Oai7SSqqHkYWYYeimpng_6p6HkITMC1XidZ6oXsP6xXbl4aKvhRhQVR2UL9VCdkyqrF08FpgxswGmpXa9eADCC8apANMScn2oDBgFaOe2KQFabD7jJ_be_zZ5Fav4PTdCenAVq0PF18mPnhiCK5VpDgxKhs7dwwu77YduyPHR51Zdy3Jh39yGpespv_JZS9Mr_Spd2NS9ZROUXW93qoz8yLLvKYDkATq4oJ2QNB3vln-pyAFEi_1eRhQZ8zzmyA_Bpuhj8NvXjW0zQNH_2yaMlPGtUPrTHv5hZ_E99rJlUJ4kTYno-BWer73-rs-HkjLT5apSTL3Zx5n3Nj6H0asWri3or0l8aaeVlq_e7ipmc4CCV_Kj6ZnlZsBMEYW6cS2mQAgNrTXV7AkK-bALFAtwvwl1tWXhRNTbd2Xf1TkGeem8_3LyfmC_yUjYmHPiQ&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                        ],
+                        "place_id": "ChIJSaxlFUCn_TgRm-NWEAOG_SI"
+                    },
+                    {
+                        "place_name": "Yangthang",
+                        "address": "Ladakh, India",
+                        "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJaeGN4t3r_TgRz3t5M_0AwC0",
+                        "lat": "34.1525864",
+                        "long": "77.57705349999999",
+                        "photos": [
+                            "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU5CtZFPdLkMOVHwdv_oO4P38tzbksCGBHFlTNo9yVz7cILeFdmwLBWx6l_9cPcb5sA70Oj_GWz3gNpi4pmKae-AK4xAbBf68CUB4tY5tsmzg-8LzXFiERNDj2hWBfd3BDge3IPs-irpYBrAy2X1wgx4dSYue2jod2kuNLJ7TYPRPaXjrnQcV5-ODMc_FPBVuQcfqnrGH-XmANpHJDqE34D0EEnABw17swlFpAgmqzZXEGa4yyMse_3Oqj6iLWGJ4_eX96T_1I1LOPIne4-hplmjjnL82218xjosJv9Bt4nkRo24d53QEWyRH-FsdXW3QPR06oLfvgx7otC9ZuzjrXvjVs3WxDdqP_vcLFYOo3wbqpez0sI1zg2LwCkLnVPh6YIt5YzQSaohpK73Tu77C3_HoY3K5gfZRUVMycVA5CqOXyv_38WgFoTtdq3JbplWtJTjjyG8hF0k_Mf5ofhhbLD6wKUoYKHTOAodieyKP4fA1HctIQlJvTKciwQ7zi7VjgBBEHnW1ism7-YbQ10NFDynTz6YNM-My8N-tx53laJgKO_eszs8H6s4uMMe7zN64Sm35Vcxi4vUSQ&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                        ],
+                        "place_id": "ChIJaeGN4t3r_TgRz3t5M_0AwC0"
+                    },
+                    {
+                        "place_name": "Hemis Shukpachen",
+                        "address": "Ladakh, India",
+                        "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJeye7DB8P_TgRsqyJp0bItW0",
+                        "lat": "34.3138806",
+                        "long": "77.0751538",
+                        "photos": [
+                            "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU600nX7w9pbqHmK6BDBPl_gahPAX9MlCxkmGYqv89UARi-iJiL9wJ5yoVTq2C0iToOQVhHC5j-Gm8FB-T2fR0mAORLmXzkugYsPGd_ArkjaRXgHl47tt8FpJPdQEkcdL0xeWJuhYJ88mXI_dqYGNSBQJ_cijemAeD2AZClfqKgX6uM9TLGTTsKuvCaIWLQV3HfMZ3z_CfZNF3TD76xL3W7f_PgvRqbzHjXH2YK2JUYP6ax-AGbLm_Mccme4gk4s9x0Y3ri8ceHigBdXGda7jQLA2rOkhX_zH7S0rf5HQhmpywEBj_w61_68pslntM_2pslldjciaLt-3jDMo5FoTrKlDHIpLjVZzro3bsY75WET5RFv20wcoN6t-8c6tRt8cnpUVyJ9M_8Lrg-xGAy-7AWiV5AoMsW4-xbPVImLnykVjqni8v9_R4gzF8LXvPwfecYvEzO2Wfo1dp_ijToJAtXMXXjoxnuNLwi_KrwGgUUwwJUiMUwaELtsnpSxRSn8fI4vvoAEI_8f2vM4ECCNDWt31TXKnrZA37l21YVVJbls0cFRnlyfudXWWb8wVAIS1c9aGpSW&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                        ],
+                        "place_id": "ChIJeye7DB8P_TgRsqyJp0bItW0"
+                    }
+                ],
+                "day_wise_plan": [
+                    {
+                        "day_number": 1,
+                        "conveyance_details": {
+                            "is_required": true,
+                            "travel_timing": "morning",
+                            "from_city": "user_location",
+                            "to_city": "Leh"
+                        },
+                        "stay_details": {
+                            "is_required": true,
+                            "city": "Leh",
+                            "check_in_day": "1",
+                            "check_out_day": "2"
+                        },
+                        "must_do_activities": [
+                            {
+                                "type": "activity",
+                                "category": "wellness",
+                                "name": "Arrival & Acclimatization",
+                                "description": "Fly into Leh. Spend the entire day resting to acclimatize to the high altitude, a critical first step before any trek. [15]"
+                            }
+                        ]
+                    },
+                    {
+                        "day_number": 2,
+                        "conveyance_details": {
+                            "is_required": true,
+                            "travel_timing": "morning",
+                            "from_city": "Leh",
+                            "to_city": "Likir"
+                        },
+                        "stay_details": {
+                            "is_required": true,
+                            "city": "Likir",
+                            "check_in_day": "2",
+                            "check_out_day": "3"
+                        },
+                        "must_do_activities": [
+                            {
+                                "type": "activity",
+                                "category": "trekking",
+                                "name": "Drive to Likir & Acclimatization Walk",
+                                "description": "Drive to Likir, the starting point of the trek. Visit the Likir monastery and take a short acclimatization walk around the village. [15]"
+                            }
+                        ]
+                    },
+                    {
+                        "day_number": 3,
+                        "conveyance_details": {
+                            "is_required": true,
+                            "travel_timing": "morning",
+                            "from_city": "Likir",
+                            "to_city": "Yangthang"
+                        },
+                        "stay_details": {
+                            "is_required": true,
+                            "city": "Yangthang",
+                            "check_in_day": "3",
+                            "check_out_day": "4"
+                        },
+                        "must_do_activities": [
+                            {
+                                "type": "activity",
+                                "category": "trekking",
+                                "name": "Trek to Yangthang via Phobe La",
+                                "description": "Begin your trek, crossing the small pass of Phobe La (3580m). This is the first day of the 'Baby Trek', offering beautiful views of the lower Ladakhi landscape. [15, 20]"
+                            }
+                        ]
+                    },
+                    {
+                        "day_number": 4,
+                        "conveyance_details": {
+                            "is_required": true,
+                            "travel_timing": "morning",
+                            "from_city": "Yangthang",
+                            "to_city": "Hemis Shukpachen"
+                        },
+                        "stay_details": {
+                            "is_required": true,
+                            "city": "Hemis Shukpachen",
+                            "check_in_day": "4",
+                            "check_out_day": "5"
+                        },
+                        "must_do_activities": [
+                            {
+                                "type": "activity",
+                                "category": "trekking",
+                                "name": "Trek to Hemis Shukpachen via Tsermangchan La",
+                                "description": "Trek to the beautiful village of Hemis Shukpachen, crossing the Tsermangchan La pass. The village is known for its sacred cedar grove. [27]"
+                            }
+                        ]
+                    },
+                    {
+                        "day_number": 5,
+                        "conveyance_details": {
+                            "is_required": true,
+                            "travel_timing": "morning",
+                            "from_city": "Hemis Shukpachen",
+                            "to_city": "Leh"
+                        },
+                        "stay_details": {
+                            "is_required": true,
+                            "city": "Leh",
+                            "check_in_day": "5",
+                            "check_out_day": "7"
+                        },
+                        "must_do_activities": [
+                            {
+                                "type": "activity",
+                                "category": "trekking",
+                                "name": "Trek to Ang and Drive to Leh",
+                                "description": "A short trek to the village of Ang, crossing the Meptak La pass. From there, drive back to Leh, visiting Alchi monastery en route. [15]"
+                            }
+                        ]
+                    },
+                    {
+                        "day_number": 6,
+                        "conveyance_details": {
+                            "is_required": false
+                        },
+                        "stay_details": {
+                            "is_required": false
+                        },
+                        "must_do_activities": [
+                            {
+                                "type": "wellness",
+                                "category": "relaxation",
+                                "name": "Rest and Recovery in Leh",
+                                "description": "A well-deserved rest day in Leh. Relax at your hotel, enjoy a good meal, and do some last-minute souvenir shopping in the market."
+                            }
+                        ]
+                    },
+                    {
+                        "day_number": 7,
+                        "conveyance_details": {
+                            "is_required": true,
+                            "travel_timing": "morning",
+                            "from_city": "Leh",
+                            "to_city": "user_location"
+                        },
+                        "stay_details": {
+                            "is_required": false
+                        },
+                        "must_do_activities": [
+                            {
+                                "type": "transport",
+                                "category": "flight",
+                                "name": "Departure",
+                                "description": "Transfer to the airport for your flight home, concluding your winter trekking adventure."
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "trip_title": "Frozen Spectacles: A Photographer's Dream",
+                "no_of_days": 7,
+                "estimated_budget": 110000,
+                "best_time_to_visit": "December to January",
+                "themes": [
+                    "Photography",
+                    "Landscape",
+                    "Nature"
+                ],
+                "trip_route": [
+                    {
+                        "place_name": "Leh",
+                        "address": "Ladakh, India",
+                        "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJhe1fRCHr_TgREPeGUJcJu9E",
+                        "lat": "34.1525864",
+                        "long": "77.57705349999999",
+                        "photos": [
+                            "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU7MGRK6Tb8Dflazs8NFZhZq9reBYJEKmYms4ouptUYycxoBITmrT158KyWatCLDknZBC5sMmWeQHSGMPiO0GfQjKTflluOi5-yD_uXq17dcKkMeqWyizKjiWi0s9pr0_iNzB4avFzok9W099RBZ3Y36r2Mkrnf2MPd2icx6QEAW2ROi5Mn_uBE3grr0VuuYQvZQzqGPHF3w_qzezDOIfE6YJ5Zo_owHzjMgtXgETamQp-hlUGvbzGK3baGWrTv7aHLo4vFSU2MUST9fasdRtfRLQ1eB3MLc0DIojfAmAgQKlJdsNsk8vlWiC30QnME1f54g_PJapYLxl7dyP20sN3hEMvLM1We3cqmkBb38tFOKzQqE96ukYccdxJstX3HB16vhvyq9JmYXZr7sZHbOTqmUzeqlVjKU8XWKe9h3M1wChi1H3BDWn9L8tydMKAb4BlZ5n5BScRSerzpE5jZ_F37tYLZxPewBozynlgVshK_aeI8lw6NV2NP7brd2MjdTxIS82EkoSpv8K6RW9VWtUfgaAU5weSGuwCDbwpNsL-udmEqiGJOTNRkLEPIXlV9wAxjM8MJY&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                        ],
+                        "place_id": "ChIJhe1fRCHr_TgREPeGUJcJu9E"
+                    },
+                    {
+                        "place_name": "Pangong Tso",
+                        "address": "Ladakh, India",
+                        "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJlyoItmktADkRqRbAyOMXurc",
+                        "lat": "33.7595131",
+                        "long": "78.66744039999999",
+                        "photos": [
+                            "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU66JE0VYJyMr-g1fBY-4XCPujv-00slfxY1QjDJCpLaWfF9EzFVtaux_-UL4nGdUQAg8dOLbxMwEeO-HbnzkmdUVjyaczDY_5w4-K24UNP27mRnBbyKpG43sZVIW-VY-LSinD4wwZHKtTZaov25CREn44ES7hnXQU4Wap6GT0GjF1xPe6Pu3TrwgkhQHoETM0V5Un6f_GtGGmCwwrPfy5QGM5bSNJnOnLLyg06y0bRvsX9Xl6hHvzxmN0SaUld4ZCWn4oI7XJ67G0T-46Kj5l0RVpSHEgZrX3hlzVsG9h0mTtWPl5fw95caa9t9fSaME-t-Y_kQeSdXlwxlj9IdGBk2vPOjl57EJ1M63BogIjN9ZAFqkqA1fY1VVj6YhrTWUkg7YCtOuV1H5dxxCHQmJiYjbj4013Faf5tAh0ZPtaXtpmfQ_f1Wiz0Q8ZeI99gLgoX-NdpM1xCwBzuIRJ-0D1FXqw8xycN7OuvB7Lx3-W6LRfOL0_RYuJLvgVoj8IP2ZjMGIlEXTSRyrm4uWB7fEu2-aRBIrWf6TnXe1nSgeu_OEz_8EHaKFnqZaVIK1Is3vyrpzbTm&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                        ],
+                        "place_id": "ChIJlyoItmktADkRqRbAyOMXurc"
+                    }
+                ],
+                "day_wise_plan": [
+                    {
+                        "day_number": 1,
+                        "conveyance_details": {
+                            "is_required": true,
+                            "travel_timing": "morning",
+                            "from_city": "user_location",
+                            "to_city": "Leh"
+                        },
+                        "stay_details": {
+                            "is_required": true,
+                            "city": "Leh",
+                            "check_in_day": "1",
+                            "check_out_day": "3"
+                        },
+                        "must_do_activities": [
+                            {
+                                "type": "activity",
+                                "category": "wellness",
+                                "name": "Arrival & Acclimatization",
+                                "description": "Arrive in Leh and check into a comfortable, well-heated hotel. Rest completely to acclimatize to the altitude and extreme cold. [9]"
+                            }
+                        ]
+                    },
+                    {
+                        "day_number": 2,
+                        "conveyance_details": {
+                            "is_required": false
+                        },
+                        "stay_details": {
+                            "is_required": false
+                        },
+                        "must_do_activities": [
+                            {
+                                "type": "place",
+                                "category": "cultural_site",
+                                "name": "Sunrise at Shanti Stupa",
+                                "description": "Capture the golden hour light over the snow-dusted Leh valley from the vantage point of Shanti Stupa. [5]"
+                            },
+                            {
+                                "type": "place",
+                                "category": "palace",
+                                "name": "Leh Palace Exploration",
+                                "description": "Photograph the ancient architecture and panoramic views from the historic Leh Palace. [26]"
+                            }
+                        ]
+                    },
+                    {
+                        "day_number": 3,
+                        "conveyance_details": {
+                            "is_required": true,
+                            "travel_timing": "morning",
+                            "from_city": "Leh",
+                            "to_city": "Pangong Tso"
+                        },
+                        "stay_details": {
+                            "is_required": true,
+                            "city": "Pangong Tso",
+                            "check_in_day": "3",
+                            "check_out_day": "4"
+                        },
+                        "must_do_activities": [
+                            {
+                                "type": "place",
+                                "category": "scenic_drive",
+                                "name": "Photographic Drive to Pangong",
+                                "description": "Embark on a scenic drive to Pangong, stopping frequently to capture the dramatic winter landscapes and frozen streams along the way."
+                            },
+                            {
+                                "type": "place",
+                                "category": "lake",
+                                "name": "Sunset over Frozen Pangong",
+                                "description": "Witness and photograph the surreal beauty of the frozen Pangong Lake as the sun sets, casting long shadows and a golden glow on the ice. [5]"
+                            }
+                        ]
+                    },
+                    {
+                        "day_number": 4,
+                        "conveyance_details": {
+                            "is_required": true,
+                            "travel_timing": "morning",
+                            "from_city": "Pangong Tso",
+                            "to_city": "Leh"
+                        },
+                        "stay_details": {
+                            "is_required": true,
+                            "city": "Leh",
+                            "check_in_day": "4",
+                            "check_out_day": "7"
+                        },
+                        "must_do_activities": [
+                            {
+                                "type": "place",
+                                "category": "lake",
+                                "name": "Sunrise and Morning Shoot at Pangong",
+                                "description": "Capture the morning light on the frozen lake before starting the drive back to Leh."
+                            },
+                            {
+                                "type": "place",
+                                "category": "monastery",
+                                "name": "Thiksey Monastery Photo Stop",
+                                "description": "On the return journey, stop to photograph the grand Thiksey Monastery from various perspectives. [7]"
+                            }
+                        ]
+                    },
+                    {
+                        "day_number": 5,
+                        "conveyance_details": {
+                            "is_required": false
+                        },
+                        "stay_details": {
+                            "is_required": false
+                        },
+                        "must_do_activities": [
+                            {
+                                "type": "place",
+                                "category": "natural_wonder",
+                                "name": "Indus-Zanskar Confluence",
+                                "description": "Drive to Sangam to photograph the stunning confluence where the dark blue waters of the Indus meet the frozen Zanskar River. [7]"
+                            },
+                            {
+                                "type": "place",
+                                "category": "monastery",
+                                "name": "Stakna Monastery",
+                                "description": "Visit and photograph the picturesque Stakna Monastery, perched on a tiger-nosed hill overlooking the Indus River. [28]"
+                            }
+                        ]
+                    },
+                    {
+                        "day_number": 6,
+                        "conveyance_details": {
+                            "is_required": false
+                        },
+                        "stay_details": {
+                            "is_required": false
+                        },
+                        "must_do_activities": [
+                            {
+                                "type": "activity",
+                                "category": "photography",
+                                "name": "Buffer Day & Photo Editing",
+                                "description": "Use this as a buffer day in case of weather delays. [21] Otherwise, spend the day reviewing and editing your photos, or exploring Leh's old town for some street photography."
+                            }
+                        ]
+                    },
+                    {
+                        "day_number": 7,
+                        "conveyance_details": {
+                            "is_required": true,
+                            "travel_timing": "morning",
+                            "from_city": "Leh",
+                            "to_city": "user_location"
+                        },
+                        "stay_details": {
+                            "is_required": false
+                        },
+                        "must_do_activities": [
+                            {
+                                "type": "transport",
+                                "category": "flight",
+                                "name": "Departure",
+                                "description": "Fly out of Leh, carrying a portfolio of incredible winter photographs."
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "trip_title": "High-Altitude Thrills & Spiritual Peaks",
+                "no_of_days": 7,
+                "estimated_budget": 75000,
+                "best_time_to_visit": "December to February",
+                "themes": [
+                    "Adventure",
+                    "Spirituality",
+                    "Road Trip"
+                ],
+                "trip_route": [
+                    {
+                        "place_name": "Leh",
+                        "address": "Ladakh, India",
+                        "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJhe1fRCHr_TgREPeGUJcJu9E",
+                        "lat": "34.1525864",
+                        "long": "77.57705349999999",
+                        "photos": [
+                            "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU7MGRK6Tb8Dflazs8NFZhZq9reBYJEKmYms4ouptUYycxoBITmrT158KyWatCLDknZBC5sMmWeQHSGMPiO0GfQjKTflluOi5-yD_uXq17dcKkMeqWyizKjiWi0s9pr0_iNzB4avFzok9W099RBZ3Y36r2Mkrnf2MPd2icx6QEAW2ROi5Mn_uBE3grr0VuuYQvZQzqGPHF3w_qzezDOIfE6YJ5Zo_owHzjMgtXgETamQp-hlUGvbzGK3baGWrTv7aHLo4vFSU2MUST9fasdRtfRLQ1eB3MLc0DIojfAmAgQKlJdsNsk8vlWiC30QnME1f54g_PJapYLxl7dyP20sN3hEMvLM1We3cqmkBb38tFOKzQqE96ukYccdxJstX3HB16vhvyq9JmYXZr7sZHbOTqmUzeqlVjKU8XWKe9h3M1wChi1H3BDWn9L8tydMKAb4BlZ5n5BScRSerzpE5jZ_F37tYLZxPewBozynlgVshK_aeI8lw6NV2NP7brd2MjdTxIS82EkoSpv8K6RW9VWtUfgaAU5weSGuwCDbwpNsL-udmEqiGJOTNRkLEPIXlV9wAxjM8MJY&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                        ],
+                        "place_id": "ChIJhe1fRCHr_TgREPeGUJcJu9E"
+                    }
+                ],
+                "day_wise_plan": [
+                    {
+                        "day_number": 1,
+                        "conveyance_details": {
+                            "is_required": true,
+                            "travel_timing": "morning",
+                            "from_city": "user_location",
+                            "to_city": "Leh"
+                        },
+                        "stay_details": {
+                            "is_required": true,
+                            "city": "Leh",
+                            "check_in_day": "1",
+                            "check_out_day": "2"
+                        },
+                        "must_do_activities": [
+                            {
+                                "type": "activity",
+                                "category": "wellness",
+                                "name": "High Altitude Arrival",
+                                "description": "Fly into Leh and transfer to your hotel. Full day of rest is mandatory to acclimatize to the thin air and cold. [9]"
+                            }
+                        ]
+                    },
+                    {
+                        "day_number": 2,
+                        "conveyance_details": {
+                            "is_required": false
+                        },
+                        "stay_details": {
+                            "is_required": true,
+                            "city": "Leh",
+                            "check_in_day": "2",
+                            "check_out_day": "3"
+                        },
+                        "must_do_activities": [
+                            {
+                                "type": "place",
+                                "category": "monastery",
+                                "name": "Spituk Monastery & Kali Mata Mandir",
+                                "description": "Visit Spituk Monastery near the airport and the powerful Kali Mata temple within its complex. [28]"
+                            },
+                            {
+                                "type": "place",
+                                "category": "museum",
+                                "name": "Hall of Fame Museum",
+                                "description": "Pay homage to the Indian Army and learn about Ladakhi culture at this well-maintained museum. [7]"
+                            }
+                        ]
+                    },
+                    {
+                        "day_number": 3,
+                        "conveyance_details": {
+                            "is_required": false
+                        },
+                        "stay_details": {
+                            "is_required": true,
+                            "city": "Leh",
+                            "check_in_day": "3",
+                            "check_out_day": "4"
+                        },
+                        "must_do_activities": [
+                            {
+                                "type": "place",
+                                "category": "scenic_drive",
+                                "name": "Journey to Khardung La Top",
+                                "description": "Take a thrilling drive to the top of Khardung La pass (5,359m). Experience the biting cold and incredible views from one of the world's highest motorable points. [7]"
+                            },
+                            {
+                                "type": "food",
+                                "category": "local_street_food",
+                                "name": "Hot Maggi at the Top",
+                                "description": "Enjoy a classic bowl of hot Maggi noodles at the cafe on Khardung La, a quintessential high-altitude experience."
+                            }
+                        ]
+                    },
+                    {
+                        "day_number": 4,
+                        "conveyance_details": {
+                            "is_required": false
+                        },
+                        "stay_details": {
+                            "is_required": true,
+                            "city": "Leh",
+                            "check_in_day": "4",
+                            "check_out_day": "5"
+                        },
+                        "must_do_activities": [
+                            {
+                                "type": "place",
+                                "category": "natural_wonder",
+                                "name": "Magnetic Hill & River Confluence",
+                                "description": "Drive on the Leh-Srinagar highway to witness the optical illusion of Magnetic Hill and the frozen confluence of the Indus and Zanskar rivers. [7]"
+                            },
+                            {
+                                "type": "place",
+                                "category": "religious_site",
+                                "name": "Gurudwara Pathar Sahib",
+                                "description": "Visit the serene and spiritually charged Gurudwara maintained by the army, a symbol of faith and resilience. [7]"
+                            }
+                        ]
+                    },
+                    {
+                        "day_number": 5,
+                        "conveyance_details": {
+                            "is_required": false
+                        },
+                        "stay_details": {
+                            "is_required": true,
+                            "city": "Leh",
+                            "check_in_day": "5",
+                            "check_out_day": "6"
+                        },
+                        "must_do_activities": [
+                            {
+                                "type": "place",
+                                "category": "monastery",
+                                "name": "Hemis and Thiksey Monasteries",
+                                "description": "Explore the spiritual heart of Ladakh by visiting Hemis, the region's largest monastery, and the iconic, multi-tiered Thiksey Monastery. [29]"
+                            }
+                        ]
+                    },
+                    {
+                        "day_number": 6,
+                        "conveyance_details": {
+                            "is_required": false
+                        },
+                        "stay_details": {
+                            "is_required": true,
+                            "city": "Leh",
+                            "check_in_day": "6",
+                            "check_out_day": "7"
+                        },
+                        "must_do_activities": [
+                            {
+                                "type": "activity",
+                                "category": "adventure",
+                                "name": "Glimpse of the Chadar",
+                                "description": "Depending on conditions, take a drive towards Chilling, the starting point of the Chadar Trek, to get a glimpse of the Zanskar River as it begins to freeze. [4]"
+                            },
+                            {
+                                "type": "shopping",
+                                "category": "market",
+                                "name": "Explore Leh Market",
+                                "description": "Spend the evening exploring the main market, shopping for local crafts and enjoying the crisp winter air."
+                            }
+                        ]
+                    },
+                    {
+                        "day_number": 7,
+                        "conveyance_details": {
+                            "is_required": true,
+                            "travel_timing": "morning",
+                            "from_city": "Leh",
+                            "to_city": "user_location"
+                        },
+                        "stay_details": {
+                            "is_required": false
+                        },
+                        "must_do_activities": [
+                            {
+                                "type": "transport",
+                                "category": "flight",
+                                "name": "Departure from Leh",
+                                "description": "Transfer to the airport for your flight, concluding a trip full of high-altitude adventures and spiritual insights."
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "final_trip": {
+        "trip_title": "Classic Winter Wonderland: Leh, Nubra & Pangong",
+        "no_of_days": 7,
+        "estimated_budget": 85000,
+        "best_time_to_visit": "December to February",
+        "themes": [
+            "Adventure",
+            "Nature",
+            "Landscape"
+        ],
+        "trip_route": [
+            {
+                "place_name": "Leh",
+                "address": "Ladakh, India",
+                "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJhe1fRCHr_TgREPeGUJcJu9E",
+                "lat": "34.1525864",
+                "long": "77.57705349999999",
+                "photos": [
+                    "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU7MGRK6Tb8Dflazs8NFZhZq9reBYJEKmYms4ouptUYycxoBITmrT158KyWatCLDknZBC5sMmWeQHSGMPiO0GfQjKTflluOi5-yD_uXq17dcKkMeqWyizKjiWi0s9pr0_iNzB4avFzok9W099RBZ3Y36r2Mkrnf2MPd2icx6QEAW2ROi5Mn_uBE3grr0VuuYQvZQzqGPHF3w_qzezDOIfE6YJ5Zo_owHzjMgtXgETamQp-hlUGvbzGK3baGWrTv7aHLo4vFSU2MUST9fasdRtfRLQ1eB3MLc0DIojfAmAgQKlJdsNsk8vlWiC30QnME1f54g_PJapYLxl7dyP20sN3hEMvLM1We3cqmkBb38tFOKzQqE96ukYccdxJstX3HB16vhvyq9JmYXZr7sZHbOTqmUzeqlVjKU8XWKe9h3M1wChi1H3BDWn9L8tydMKAb4BlZ5n5BScRSerzpE5jZ_F37tYLZxPewBozynlgVshK_aeI8lw6NV2NP7brd2MjdTxIS82EkoSpv8K6RW9VWtUfgaAU5weSGuwCDbwpNsL-udmEqiGJOTNRkLEPIXlV9wAxjM8MJY&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                ],
+                "place_id": "ChIJhe1fRCHr_TgREPeGUJcJu9E"
+            },
+            {
+                "place_name": "Nubra Valley",
+                "address": "Ladakh, India",
+                "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJkWUXVHM2_DgR6cojq2tVxIs",
+                "lat": "34.6863146",
+                "long": "77.567288",
+                "photos": [
+                    "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU4ygAZc3X5Xiwn76Vacoup1qUg8G1b2vVevUhetRCSk0jWNDu3cO1CFiobtfMZUXiOPuvMY41XYMxElrv6ajnREe3V0cqjl-SPXqnMBAxWtTsgekDdO58CebakGeLfnEIQE-zEB3xImyeoYo5P8SwO18mIDDGQEm8pFJteeizdpOWEDDXnWl-6EkXHExVyJ1eTGKiudOfDJyv-EPSqnaieaqe9z59TDW1D9Y6gF9i_wJxf_76cXm3Tsd2bpq26cBk9FJ5zM9bTCNTNYijF7-9QNGZzpHIv86KJE-mZJ49v11WpqVUvad3diCexv2_PT3K3C-M7kRmXa4ZezcR9bGPySZCXFi5qVE4xNABllhumr43comkg3xQCGyuM7Xu9BAh3SNBwahYji7gBP5inD-zJgwaQvrUXiQ5Yvt5hHFf4-BUxiiJOQ1WNW8LoNiD1xovb7l9H4woiIj5S2DpO4UfU7Qy6eTzNQIxsGCFLtdXrwOwUe9ZSuVABCGEoEULdtoEwSZcHKVgGBg_h1j8tq7Y2-3HdeskJisT2kvxALX2VWxhsO_94g7sZdMGb9UKQsyPnM7imx&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                ],
+                "place_id": "ChIJkWUXVHM2_DgR6cojq2tVxIs"
+            },
+            {
+                "place_name": "Pangong Tso",
+                "address": "Ladakh, India",
+                "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJlyoItmktADkRqRbAyOMXurc",
+                "lat": "33.7595131",
+                "long": "78.66744039999999",
+                "photos": [
+                    "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU66JE0VYJyMr-g1fBY-4XCPujv-00slfxY1QjDJCpLaWfF9EzFVtaux_-UL4nGdUQAg8dOLbxMwEeO-HbnzkmdUVjyaczDY_5w4-K24UNP27mRnBbyKpG43sZVIW-VY-LSinD4wwZHKtTZaov25CREn44ES7hnXQU4Wap6GT0GjF1xPe6Pu3TrwgkhQHoETM0V5Un6f_GtGGmCwwrPfy5QGM5bSNJnOnLLyg06y0bRvsX9Xl6hHvzxmN0SaUld4ZCWn4oI7XJ67G0T-46Kj5l0RVpSHEgZrX3hlzVsG9h0mTtWPl5fw95caa9t9fSaME-t-Y_kQeSdXlwxlj9IdGBk2vPOjl57EJ1M63BogIjN9ZAFqkqA1fY1VVj6YhrTWUkg7YCtOuV1H5dxxCHQmJiYjbj4013Faf5tAh0ZPtaXtpmfQ_f1Wiz0Q8ZeI99gLgoX-NdpM1xCwBzuIRJ-0D1FXqw8xycN7OuvB7Lx3-W6LRfOL0_RYuJLvgVoj8IP2ZjMGIlEXTSRyrm4uWB7fEu2-aRBIrWf6TnXe1nSgeu_OEz_8EHaKFnqZaVIK1Is3vyrpzbTm&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                ],
+                "place_id": "ChIJlyoItmktADkRqRbAyOMXurc"
+            }
+        ],
+        "day_wise_plan": [
+            {
+                "day_number": 1,
+                "conveyance_details": {
+                    "is_required": true,
+                    "travel_timing": "morning",
+                    "from_city": "user_location",
+                    "to_city": "Leh"
+                },
+                "stay_details": {
+                    "is_required": true,
+                    "city": "Leh",
+                    "check_in_day": "1",
+                    "check_out_day": "2"
+                },
+                "must_do_activities": [
+                    {
+                        "type": "activity",
+                        "category": "wellness",
+                        "name": "Acclimatization Day",
+                        "description": "Arrive at Leh airport and transfer to your pre-booked hotel. Rest for the entire day to acclimatize to the high altitude (3500m) and cold weather. This is crucial for your health and safety. [9, 28]"
+                    }
+                ]
+            },
+            {
+                "day_number": 2,
+                "conveyance_details": {
+                    "is_required": false
+                },
+                "stay_details": {
+                    "is_required": true,
+                    "city": "Leh",
+                    "check_in_day": "2",
+                    "check_out_day": "3"
+                },
+                "must_do_activities": [
+                    {
+                        "type": "place",
+                        "category": "cultural_site",
+                        "name": "Leh Local Sightseeing",
+                        "description": "Explore the snow-covered Leh town. Visit the historic Leh Palace for panoramic views and the serene Shanti Stupa. [5, 26]"
+                    },
+                    {
+                        "type": "food",
+                        "category": "cafe",
+                        "name": "Warm Up at a Local Cafe",
+                        "description": "Experience the local cafe culture in Leh market and enjoy a hot cup of butter tea or coffee to stay warm."
+                    }
+                ]
+            },
+            {
+                "day_number": 3,
+                "conveyance_details": {
+                    "is_required": true,
+                    "travel_timing": "morning",
+                    "from_city": "Leh",
+                    "to_city": "Nubra Valley"
+                },
+                "stay_details": {
+                    "is_required": true,
+                    "city": "Nubra Valley",
+                    "check_in_day": "3",
+                    "check_out_day": "4"
+                },
+                "must_do_activities": [
+                    {
+                        "type": "place",
+                        "category": "scenic_drive",
+                        "name": "Khardung La Pass",
+                        "description": "Drive over the mighty Khardung La, one of the world's highest motorable passes, which is kept open in winter by the BRO. [2, 12]"
+                    },
+                    {
+                        "type": "place",
+                        "category": "monastery",
+                        "name": "Diskit Monastery",
+                        "description": "Visit the Diskit Monastery, known for its towering 100-foot Maitreya Buddha statue overlooking the valley. [7, 12]"
+                    }
+                ]
+            },
+            {
+                "day_number": 4,
+                "conveyance_details": {
+                    "is_required": true,
+                    "travel_timing": "evening",
+                    "from_city": "Nubra Valley",
+                    "to_city": "Leh"
+                },
+                "stay_details": {
+                    "is_required": true,
+                    "city": "Leh",
+                    "check_in_day": "4",
+                    "check_out_day": "5"
+                },
+                "must_do_activities": [
+                    {
+                        "type": "activity",
+                        "category": "adventure",
+                        "name": "Bactrian Camel Safari",
+                        "description": "Experience a unique ride on the double-humped Bactrian camels on the white sand dunes of Hunder. [2]"
+                    }
+                ]
+            },
+            {
+                "day_number": 5,
+                "conveyance_details": {
+                    "is_required": true,
+                    "travel_timing": "morning",
+                    "from_city": "Leh",
+                    "to_city": "Pangong Tso"
+                },
+                "stay_details": {
+                    "is_required": true,
+                    "city": "Pangong Tso",
+                    "check_in_day": "5",
+                    "check_out_day": "6"
+                },
+                "must_do_activities": [
+                    {
+                        "type": "place",
+                        "category": "scenic_drive",
+                        "name": "Drive via Chang La Pass",
+                        "description": "Travel through the challenging and scenic Chang La Pass to reach Pangong Lake. The journey offers stunning winter vistas."
+                    },
+                    {
+                        "type": "place",
+                        "category": "lake",
+                        "name": "Frozen Pangong Lake",
+                        "description": "Witness the breathtaking sight of the completely or partially frozen Pangong Tso, a surreal and unforgettable experience. [5, 11]"
+                    }
+                ]
+            },
+            {
+                "day_number": 6,
+                "conveyance_details": {
+                    "is_required": true,
+                    "travel_timing": "morning",
+                    "from_city": "Pangong Tso",
+                    "to_city": "Leh"
+                },
+                "stay_details": {
+                    "is_required": true,
+                    "city": "Leh",
+                    "check_in_day": "6",
+                    "check_out_day": "7"
+                },
+                "must_do_activities": [
+                    {
+                        "type": "place",
+                        "category": "monastery",
+                        "name": "Thiksey Monastery",
+                        "description": "On your way back to Leh, visit the magnificent Thiksey Monastery, which resembles the Potala Palace in Lhasa. [7, 18]"
+                    }
+                ]
+            },
+            {
+                "day_number": 7,
+                "conveyance_details": {
+                    "is_required": true,
+                    "travel_timing": "morning",
+                    "from_city": "Leh",
+                    "to_city": "user_location"
+                },
+                "stay_details": {
+                    "is_required": false
+                },
+                "must_do_activities": [
+                    {
+                        "type": "transport",
+                        "category": "flight",
+                        "name": "Departure from Leh",
+                        "description": "Transfer to Kushok Bakula Rimpochee Airport for your flight back home, with memories of a stark and beautiful winter landscape."
+                    }
+                ]
+            }
+        ]
+    },
+    "origin_agent": {
+        "response_type": "text",
+        "message": "Let’s find the best place for you to start your journey, Manan. For your trip to Leh in December 2025, the most practical way to reach there, especially during winter, is by air. While specific flight schedules for December 2025 are not yet released, major Indian cities generally offer the best connectivity to Leh.\n\nConsidering this, I recommend **Delhi** as the most optimal starting point due to its excellent air connectivity and generally higher frequency of flights to Leh. Alternatively, **Mumbai** and **Chandigarh** also have direct flights to Leh and could be suitable options depending on your preference.\n\nWould you prefer to start your trip from Delhi? It generally offers better connectivity and a wider range of flight options for Leh."
+    },
+    "source_point": {
+        "address": "Delhi, India",
+        "place_name": "Delhi",
+        "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJLbZ-NFv9DDkRQJY4FbcFcgM",
+        "lat": "28.7040592",
+        "long": "77.10249019999999",
+        "photos": [
+            "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6HPBhhaigrQ3831wozmJ1ddju2YO00uGd84sqDMWAHuVxdwSsmjxIUV5rPWFgvcSFAfzOxjwLp4jI65EdKTVoGtDrmIxWCtHESFdPFxGGs-Ab-2geUdZnn2CCx3NSHeCWyj4VXd6TuthvAb6sSupv39r42WoprMtk9-VUe3phAOKvAl11JZPviNXEPY4xo6gA1SJYy1ikz3pnF0x_HQfboscp-SnPvQhYg5GEwUNnVav1cPpp68-MBjHNxqn0HufBqjxd6rcI5YC_flOTPkYeCewBZUpMs1wmSLPeHQFjbYmW36SFmLYYMiDLTJTNKoLOJJ3LrbyeDB0EyNTEFd6jBqspA1012wD3JBa76kGgrmsezKne9VaCZZldTsXXd2yki644dI0ofvWjCDhw8zql57CPgpDvQ5zm8zdYL7hP5CfFoO7iLFyaZlz2PxQRPxGLRhXsi24I_A5vEYJrRsPhZi2qYxFQSEqk2t7-stUGf_6ncrSZiS_uZjJBBZESh8Fb88Q9R44DPPd44rPT7sFjLtYI7LRyOGfxjuGUvp-zHlAe-Y8hFT0mf_qPtPpTjfty_hsucWBoGEA&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+        ],
+        "place_id": "ChIJLbZ-NFv9DDkRQJY4FbcFcgM"
+    },
+    "trip_date": "2025-12-21"
+}
