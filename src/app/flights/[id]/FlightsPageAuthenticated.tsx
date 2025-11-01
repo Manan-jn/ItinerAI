@@ -1415,6 +1415,232 @@ export default function FlightsPageAuthenticated() {
     }
   };
 
+  // Call itinerary API to delete a day (request_type="remove")
+  const callItineraryAPIForDelete = async (deleteDayNumber: number) => {
+    if (!selectedTrip || !userId || !sessionId) {
+      console.error("❌ Missing required data for delete itinerary API call");
+      return;
+    }
+
+    try {
+      console.log(
+        `📤 Calling itinerary API to DELETE day ${deleteDayNumber} with request_type="remove"`
+      );
+
+      // Show loader
+      setIsLoadingItinerary(true);
+      setConveyanceLoaderMessages([
+        `Deleting day ${deleteDayNumber} and updating itinerary`,
+        "Reorganizing your schedule",
+        "Optimizing remaining days",
+      ]);
+      setShowTripLoader(true);
+      setIsParsingTrips(true);
+
+      // Build payload for delete flow
+      // Include days BEFORE the deleted day only (NOT including the deleted day itself)
+      const itinerariesBeforeDeletion = itinerariesGenerated
+        .filter((it) => it.day_number < deleteDayNumber)
+        .map((it) => ({ ...it }));
+
+      // Do NOT include the deleted day or any days after it
+      const currentItineraryForAPI = [...itinerariesBeforeDeletion];
+
+      console.log(
+        `📊 Delete payload: ${itinerariesBeforeDeletion.length} days before day ${deleteDayNumber} (excluding day ${deleteDayNumber} and all after)`
+      );
+
+      // Calculate new trip duration (reduced by number of days deleted)
+      const daysDeleted = itinerariesGenerated.filter(
+        (it) => it.day_number >= deleteDayNumber
+      ).length;
+      const newTripDuration = selectedTrip.no_of_days - daysDeleted;
+
+      console.log(
+        `📉 Trip duration: ${selectedTrip.no_of_days} → ${newTripDuration} (deleted ${daysDeleted} days)`
+      );
+
+      // Prepare the message
+      const itineraryMessage = `{'role':'admin','day_number':${deleteDayNumber},'end_day':${newTripDuration},'query':'removed day ${deleteDayNumber}'}`;
+
+      // Build request body with request_type="remove"
+      const requestBody: any = {
+        user_id: userId,
+        session_id: sessionId,
+        message: itineraryMessage,
+        current_itinerary: currentItineraryForAPI,
+        role: "admin",
+        current_day: deleteDayNumber,
+        trip_duration: newTripDuration,
+        request_type: "remove", // IMPORTANT: Use "remove" for delete flow
+      };
+
+      console.log("📤 Delete API Request body:", JSON.stringify(requestBody, null, 2));
+
+      const response = await fetch("/api/itinerary", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("❌ Itinerary API error:", response.status, errorText);
+        throw new Error(`API request failed: ${response.status}`);
+      }
+
+      const itineraryResponse = await response.json();
+      console.log("✅ Delete API Response:", itineraryResponse);
+
+      // Hide loader
+      setShowTripLoader(false);
+      setIsParsingTrips(false);
+      setIsLoadingItinerary(false);
+
+      // Process response and update state
+      let itineraryPayload = itineraryResponse;
+      if (
+        itineraryResponse.message &&
+        typeof itineraryResponse.message === "object"
+      ) {
+        itineraryPayload = itineraryResponse.message;
+      }
+
+      // Store itinerary data
+      if (
+        itineraryPayload.response_type === "itinerary" &&
+        itineraryPayload.itinerary
+      ) {
+        setItineraryData((prevData: any) => {
+          if (!prevData || !prevData.itinerary) {
+            return itineraryPayload;
+          }
+
+          // Handle DELETE response with special merging logic
+          const existingDays = prevData.itinerary;
+          const newDays = itineraryPayload.itinerary;
+
+          console.log(`🔄 Merging delete response: ${existingDays.length} existing + ${newDays.length} new`);
+          console.log(`📌 Deleted day number: ${deleteDayNumber}`);
+
+          // Build result based on user requirements:
+          // 1. Days <= deleteDayNumber from response REPLACE existing
+          // 2. Days > deleteDayNumber from response OVERRIDE existing
+          // 3. ALL days >= deleteDayNumber from existing are REMOVED (deleted)
+
+          const dayMap = new Map();
+
+          // First, add all days < deleteDayNumber from existing (as baseline)
+          existingDays
+            .filter((day: any) => day.day_number < deleteDayNumber)
+            .forEach((day: any) => dayMap.set(day.day_number, day));
+
+          // Then, add/replace days from API response
+          newDays.forEach((day: any) => {
+            if (day.day_number < deleteDayNumber) {
+              console.log(`📝 Replacing day ${day.day_number} (< deleted day)`);
+              dayMap.set(day.day_number, day); // REPLACE
+            } else {
+              console.log(`📝 Adding new day ${day.day_number} (> deleted day)`);
+              dayMap.set(day.day_number, day); // OVERRIDE/ADD
+            }
+          });
+
+          // IMPORTANT: Days >= deleteDayNumber from existing are automatically excluded
+          // because we filtered them out and only included response days
+
+          const mergedDays = Array.from(dayMap.values()).sort(
+            (a: any, b: any) => a.day_number - b.day_number
+          );
+
+          console.log(`✅ Merged itinerary after delete has ${mergedDays.length} total day(s)`);
+
+          return {
+            ...prevData,
+            itinerary: mergedDays,
+          };
+        });
+
+        // Update itinerariesGenerated state
+        // Remove deleted day and all days after it, then update with API response
+        const updatedItinerariesGenerated = itinerariesGenerated.filter(
+          (it) => it.day_number < deleteDayNumber
+        );
+
+        // Add response days
+        itineraryPayload.itinerary.forEach((dayItinerary: any) => {
+          const dayToStore: any = {
+            day_number: dayItinerary.day_number,
+            conveyance_details: dayItinerary.conveyance_details,
+            stay_details: dayItinerary.stay_details,
+            schedule: dayItinerary.schedule,
+            title: dayItinerary.title,
+          };
+
+          // Add optional fields if present
+          if (dayItinerary.date) dayToStore.date = dayItinerary.date;
+          if (dayItinerary.summary) dayToStore.summary = dayItinerary.summary;
+
+          const existingIndex = updatedItinerariesGenerated.findIndex(
+            (it) => it.day_number === dayItinerary.day_number
+          );
+
+          if (existingIndex !== -1) {
+            updatedItinerariesGenerated[existingIndex] = dayToStore;
+          } else {
+            updatedItinerariesGenerated.push(dayToStore);
+          }
+        });
+
+        // Sort by day number
+        updatedItinerariesGenerated.sort((a, b) => a.day_number - b.day_number);
+
+        setItinerariesGenerated(updatedItinerariesGenerated);
+        console.log(
+          `✅ itinerariesGenerated updated after delete, now has ${updatedItinerariesGenerated.length} day(s)`
+        );
+
+        // Update selectedTrip's no_of_days and day_wise_plan
+        if (selectedTrip) {
+          // Remove deleted day and all days after it from day_wise_plan
+          const updatedDayWisePlan = (selectedTrip.day_wise_plan || [])
+            .filter((d: any) => d.day_number < deleteDayNumber);
+
+          console.log(
+            `📦 Updated day_wise_plan: removed ${selectedTrip.day_wise_plan?.length - updatedDayWisePlan.length} days`
+          );
+
+          const updatedTrip = {
+            ...selectedTrip,
+            no_of_days: newTripDuration,
+            day_wise_plan: updatedDayWisePlan,
+          };
+          setSelectedTrip(updatedTrip);
+          await storeSelectedTrip(userId, sessionId, updatedTrip);
+          console.log(`✅ Updated trip duration to ${newTripDuration} days`);
+        }
+
+        // Navigate to previous day if current day was deleted or after
+        if (currentDayNumber >= deleteDayNumber) {
+          const newCurrentDay = Math.max(1, deleteDayNumber - 1);
+          console.log(`🔍 Navigating to day ${newCurrentDay} after delete`);
+          setTimeout(() => {
+            setNavigateToDay(newCurrentDay);
+            setTimeout(() => setNavigateToDay(null), 1000);
+          }, 100);
+        }
+      }
+    } catch (error) {
+      console.error("❌ Error in delete itinerary API call:", error);
+      setShowTripLoader(false);
+      setIsParsingTrips(false);
+      setIsLoadingItinerary(false);
+      alert("Failed to delete day. Please try again.");
+    }
+  };
+
   // Handler to add day to pending set
   const handleAddPendingDay = (dayNumber: number) => {
     setPendingConveyanceDays((prev) => {
@@ -1433,6 +1659,145 @@ export default function FlightsPageAuthenticated() {
       console.log(`✅ Removed day ${dayNumber} from pending set`);
       return newSet;
     });
+  };
+
+  // Handler to delete a day (CASE 1: API call)
+  const handleDeleteDay = async (dayNumber: number) => {
+    console.log(`🗑️ handleDeleteDay called for day ${dayNumber}`);
+
+    try {
+      // Call the delete API
+      await callItineraryAPIForDelete(dayNumber);
+      console.log(`✅ Successfully deleted day ${dayNumber}`);
+    } catch (error) {
+      console.error(`❌ Failed to delete day ${dayNumber}:`, error);
+      throw error; // Re-throw to let ItineraryWidget handle the error
+    }
+  };
+
+  // Handler for local delete without API (CASE 2: is_required: false)
+  const handleLocalDeleteDay = (dayNumber: number) => {
+    console.log(`🗑️ CASE 2: handleLocalDeleteDay called for day ${dayNumber}`);
+
+    if (!selectedTrip || !userId || !sessionId) {
+      console.error("❌ Missing required data for local delete");
+      return;
+    }
+
+    try {
+      // CRITICAL: Update itineraryData first - this drives the UI
+      setItineraryData((prevData: any) => {
+        if (!prevData || !prevData.itinerary) {
+          console.warn("⚠️ No itineraryData to update");
+          return prevData;
+        }
+
+        console.log(`🔄 Updating itineraryData: removing day ${dayNumber} and re-aligning`);
+
+        // Remove deleted day and re-align subsequent days
+        const updatedItinerary = prevData.itinerary
+          .filter((day: any) => day.day_number !== dayNumber)
+          .map((day: any) => {
+            if (day.day_number > dayNumber) {
+              return {
+                ...day,
+                day_number: day.day_number - 1,
+              };
+            }
+            return day;
+          })
+          .sort((a: any, b: any) => a.day_number - b.day_number);
+
+        console.log(
+          `✅ itineraryData updated: ${prevData.itinerary.length} → ${updatedItinerary.length} days`
+        );
+
+        return {
+          ...prevData,
+          itinerary: updatedItinerary,
+        };
+      });
+
+      // Update itinerariesGenerated - remove the day and re-align subsequent days
+      const updatedItineraries = itinerariesGenerated
+        .filter((it) => it.day_number !== dayNumber) // Remove the deleted day
+        .map((it) => {
+          // Re-align day numbers for days after the deleted one
+          if (it.day_number > dayNumber) {
+            return {
+              ...it,
+              day_number: it.day_number - 1,
+            };
+          }
+          return it;
+        })
+        .sort((a, b) => a.day_number - b.day_number);
+
+      console.log(
+        `📦 Re-aligned ${updatedItineraries.length} itineraries after deleting day ${dayNumber}`
+      );
+
+      // Update selectedTrip - remove from day_wise_plan and re-align
+      const updatedDayWisePlan = (selectedTrip.day_wise_plan || [])
+        .filter((d: any) => d.day_number !== dayNumber) // Remove the deleted day
+        .map((d: any) => {
+          // Re-align day numbers for days after the deleted one
+          if (d.day_number > dayNumber) {
+            return {
+              ...d,
+              day_number: d.day_number - 1,
+            };
+          }
+          return d;
+        })
+        .sort((a: any, b: any) => a.day_number - b.day_number);
+
+      const updatedTrip = {
+        ...selectedTrip,
+        no_of_days: selectedTrip.no_of_days - 1,
+        day_wise_plan: updatedDayWisePlan,
+      };
+
+      console.log(
+        `📦 Updated trip duration from ${selectedTrip.no_of_days} to ${updatedTrip.no_of_days} days`
+      );
+
+      // Update states
+      setItinerariesGenerated(updatedItineraries);
+      setSelectedTrip(updatedTrip);
+
+      // Navigate to appropriate day after deletion
+      // If viewing the deleted day or a day after it, navigate to the day before the deleted one
+      // If viewing a day before the deleted day, stay on that day (but its number may have shifted)
+      if (currentDayNumber >= dayNumber) {
+        // User is viewing the deleted day or a day after it
+        const newCurrentDay = Math.max(1, dayNumber - 1);
+        console.log(
+          `🔍 Current day ${currentDayNumber} >= deleted day ${dayNumber}. Navigating to day ${newCurrentDay}`
+        );
+        setTimeout(() => {
+          setNavigateToDay(newCurrentDay);
+          setTimeout(() => setNavigateToDay(null), 1000);
+        }, 350); // After animation completes
+      } else {
+        console.log(
+          `✅ Current day ${currentDayNumber} < deleted day ${dayNumber}. No navigation needed (day will re-render with updated data).`
+        );
+      }
+
+      // Store updated trip in Firestore
+      storeSelectedTrip(userId, sessionId, updatedTrip)
+        .then(() => {
+          console.log(`✅ Stored updated trip after local delete of day ${dayNumber}`);
+        })
+        .catch((error) => {
+          console.error("❌ Error storing updated trip:", error);
+        });
+
+      console.log(`✅ Local delete completed for day ${dayNumber}`);
+    } catch (error) {
+      console.error(`❌ Failed to locally delete day ${dayNumber}:`, error);
+    }
   };
 
   // Handler for requesting next day itinerary from ItineraryWidget
@@ -3969,6 +4334,8 @@ export default function FlightsPageAuthenticated() {
                       onAddPendingDay={handleAddPendingDay}
                       pendingConveyanceDaysFromParent={pendingConveyanceDays}
                       isLoadingPendingDay={isLoadingItinerary && isInsertDayFlow}
+                      onDeleteDay={handleDeleteDay}
+                      onLocalDeleteDay={handleLocalDeleteDay}
                     />
                   </div>
                 ) : showDateSelector ? (

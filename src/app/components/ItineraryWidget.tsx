@@ -81,6 +81,8 @@ interface ItineraryWidgetProps {
   onAddPendingDay?: (dayNumber: number) => void; // NEW: Callback to add day to pending set
   pendingConveyanceDaysFromParent?: Set<number>; // NEW: Pending days from parent component
   isLoadingPendingDay?: boolean; // NEW: Loading state for pending day API call
+  onDeleteDay?: (dayNumber: number) => Promise<void>; // NEW: Callback to delete a day (CASE 1: API call)
+  onLocalDeleteDay?: (dayNumber: number) => void; // NEW: Callback for local delete without API (CASE 2)
 }
 
 // Helper function to transform API response to display format
@@ -287,6 +289,8 @@ export default function ItineraryWidget({
   onAddPendingDay,
   pendingConveyanceDaysFromParent,
   isLoadingPendingDay = false,
+  onDeleteDay,
+  onLocalDeleteDay,
 }: ItineraryWidgetProps) {
   const [currentDayIndex, setCurrentDayIndex] = useState(0);
   const [chatInput, setChatInput] = useState("");
@@ -296,6 +300,9 @@ export default function ItineraryWidget({
   const [showConveyancePopup, setShowConveyancePopup] = useState(false);
   const [pendingExtendTrip, setPendingExtendTrip] = useState(false);
   const [loadingDayIndex, setLoadingDayIndex] = useState<number | null>(null);
+  const [showDeleteWarning, setShowDeleteWarning] = useState(false); // NEW: Show delete warning alert
+  const [dayToDelete, setDayToDelete] = useState<number | null>(null); // NEW: Day number to delete
+  const [deletingDayNumber, setDeletingDayNumber] = useState<number | null>(null); // NEW: Day being deleted (for animation)
 
   // Use pending days from parent - single source of truth
   const pendingConveyanceDays = pendingConveyanceDaysFromParent || new Set<number>();
@@ -340,13 +347,34 @@ export default function ItineraryWidget({
             return transformed;
           }
 
-          // Merge days: replace existing days with same day_number, add new days
           const existingDays = prevData.days;
           const newDays = transformed.days;
 
           console.log(
-            `🔄 Merging itinerary: ${existingDays.length} existing days + ${newDays.length} new days`
+            `🔄 Merging itinerary: ${existingDays.length} existing days → ${newDays.length} new days`
           );
+
+          // CRITICAL: Detect if this is a deletion scenario
+          // If new day count is less than existing, we should REPLACE not merge
+          // This handles both CASE 1 (API delete) and CASE 2 (local delete)
+          const isDeletion = newDays.length < existingDays.length;
+
+          if (isDeletion) {
+            console.log(
+              `🗑️ DELETION detected: ${existingDays.length} → ${newDays.length} days. Using REPLACE strategy.`
+            );
+
+            // REPLACE: Use only the new days, completely discard existing
+            return {
+              ...prevData,
+              days: newDays,
+              total_days: newDays.length,
+              end_date: newDays[newDays.length - 1]?.date || prevData.end_date,
+            };
+          }
+
+          // MERGE: For additions/updates, use merge strategy
+          console.log("➕ ADDITION/UPDATE detected. Using MERGE strategy.");
 
           // Create a map of existing days by day number
           const dayMap = new Map<number, DayItinerary>();
@@ -566,6 +594,77 @@ export default function ItineraryWidget({
       // The parent component will handle removing it from pending set after API success
       console.log(`✅ Day ${dayNumber} added without conveyance, keeping pending state`);
     }
+  };
+
+  // Handle delete day button click
+  const handleDeleteDayClick = (dayNumber: number) => {
+    console.log(`🗑️ Delete day ${dayNumber} button clicked`);
+
+    // Check if day exists and has itinerary data
+    const dayData = itineraryData?.days.find(day => day.day === dayNumber);
+
+    if (!dayData) {
+      console.log(`⚠️ Day ${dayNumber} has no itinerary data, cannot delete`);
+      return;
+    }
+
+    // CASE 1: Check if day has conveyance with is_required: true
+    // This requires showing warning because it will delete all days ahead
+    const hasRequiredConveyance = dayData.conveyance_details?.is_required === true;
+
+    if (hasRequiredConveyance) {
+      // CASE 1: Day with is_required: true - show warning and use API call
+      console.log(`⚠️ CASE 1: Day ${dayNumber} has required conveyance, showing warning`);
+      setDayToDelete(dayNumber);
+      setShowDeleteWarning(true);
+    } else {
+      // CASE 2: Day with is_required: false - local delete with re-alignment
+      console.log(`✅ CASE 2: Day ${dayNumber} has no required conveyance, deleting locally`);
+      handleLocalDelete(dayNumber);
+    }
+  };
+
+  // Handle local delete for CASE 2 (is_required: false)
+  const handleLocalDelete = (dayNumber: number) => {
+    console.log(`🗑️ CASE 2: Starting local delete for day ${dayNumber}`);
+
+    // Set deleting state for animation
+    setDeletingDayNumber(dayNumber);
+
+    // Wait for animation to complete (300ms), then perform the deletion
+    setTimeout(() => {
+      if (onLocalDeleteDay) {
+        onLocalDeleteDay(dayNumber);
+        console.log(`✅ Local delete completed for day ${dayNumber}`);
+      }
+
+      // Clear deleting state
+      setDeletingDayNumber(null);
+    }, 300);
+  };
+
+  // Handle delete warning - Continue
+  const handleDeleteContinue = async () => {
+    if (dayToDelete !== null && onDeleteDay) {
+      console.log(`🗑️ Continuing with delete for day ${dayToDelete}`);
+      setShowDeleteWarning(false);
+
+      try {
+        await onDeleteDay(dayToDelete);
+        console.log(`✅ Successfully deleted day ${dayToDelete}`);
+      } catch (error) {
+        console.error(`❌ Failed to delete day ${dayToDelete}:`, error);
+      } finally {
+        setDayToDelete(null);
+      }
+    }
+  };
+
+  // Handle delete warning - Decline
+  const handleDeleteDecline = () => {
+    console.log(`❌ User declined delete for day ${dayToDelete}`);
+    setShowDeleteWarning(false);
+    setDayToDelete(null);
   };
 
   // Handle extend trip popup - YES
@@ -1333,6 +1432,8 @@ export default function ItineraryWidget({
             onInsertDay={handleInsertDay}
             loadingDayIndex={loadingDayIndex}
             pendingConveyanceDays={pendingConveyanceDays}
+            onDeleteDay={handleDeleteDayClick}
+            deletingDayNumber={deletingDayNumber}
           />
         </div>
 
@@ -1370,6 +1471,74 @@ export default function ItineraryWidget({
         onYes={handleConveyanceYes}
         onNo={handleConveyanceNo}
       />
+
+      {/* Delete Warning Alert - Top Right Corner */}
+      {showDeleteWarning && (
+        <div className="fixed top-4 right-4 z-50 max-w-md">
+          <div className="bg-white rounded-xl shadow-2xl border-2 border-red-400 overflow-hidden animate-slide-in-right">
+            {/* Alert Header */}
+            <div className="bg-gradient-to-r from-red-500 to-red-600 px-4 py-3 flex items-center gap-3">
+              <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                <svg
+                  className="w-5 h-5 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  strokeWidth={2.5}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                  />
+                </svg>
+              </div>
+              <h3 className="text-lg font-bold text-white">Warning: Delete Day</h3>
+            </div>
+
+            {/* Alert Body */}
+            <div className="p-5">
+              <p className="text-sm text-gray-800 leading-relaxed mb-4 font-medium">
+                Deleting this will delete all the itineraries generated ahead of it. Are you sure you want to continue?
+              </p>
+
+              {/* Buttons */}
+              <div className="flex gap-3">
+                <button
+                  onClick={handleDeleteContinue}
+                  className="flex-1 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-lg py-2.5 px-4 font-semibold shadow-md hover:shadow-lg transition-all duration-200 hover:scale-105 active:scale-95"
+                >
+                  Continue
+                </button>
+                <button
+                  onClick={handleDeleteDecline}
+                  className="flex-1 bg-gradient-to-r from-gray-200 to-gray-300 hover:from-gray-300 hover:to-gray-400 text-gray-800 rounded-lg py-2.5 px-4 font-semibold shadow-md hover:shadow-lg transition-all duration-200 hover:scale-105 active:scale-95"
+                >
+                  Decline
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Add animation styles */}
+      <style jsx>{`
+        @keyframes slide-in-right {
+          from {
+            transform: translateX(100%);
+            opacity: 0;
+          }
+          to {
+            transform: translateX(0);
+            opacity: 1;
+          }
+        }
+
+        .animate-slide-in-right {
+          animation: slide-in-right 0.3s ease-out forwards;
+        }
+      `}</style>
     </div>
   );
 }

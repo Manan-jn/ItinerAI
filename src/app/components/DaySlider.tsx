@@ -12,6 +12,8 @@ interface DaySliderProps {
   onInsertDay: (afterDayIndex: number) => void; // NEW: Insert day after specific index
   loadingDayIndex: number | null;
   pendingConveyanceDays: Set<number>; // NEW: Set of pending day numbers
+  onDeleteDay?: (dayNumber: number) => void; // NEW: Delete day callback
+  deletingDayNumber?: number | null; // NEW: Day number being deleted (for animation)
 }
 
 export default function DaySlider({
@@ -23,6 +25,8 @@ export default function DaySlider({
   onInsertDay,
   loadingDayIndex,
   pendingConveyanceDays,
+  onDeleteDay,
+  deletingDayNumber = null,
 }: DaySliderProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [isScrolling, setIsScrolling] = useState(false);
@@ -175,6 +179,7 @@ export default function DaySlider({
               const isHovered = hoveredIndex === index;
               const isPlusHovered = hoveredPlusIndex === idx;
               const isAnimating = animatingIndex === idx;
+              const isDeleting = deletingDayNumber === dayNumber; // NEW: Check if this day is being deleted
 
               const size = getCardSize(index, isActive);
 
@@ -183,7 +188,7 @@ export default function DaySlider({
                   key={dayNumber}
                   className={`flex items-center flex-shrink-0 ${
                     isPending ? "animate-fade-in-scale" : ""
-                  }`}
+                  } ${isDeleting ? "animate-delete-fade-out" : ""}`}
                 >
                   {/* Day Card */}
                   <button
@@ -229,11 +234,11 @@ export default function DaySlider({
                     )}
 
                     {/* Delete Icon - Top Right */}
-                    {!isLoading && (
+                    {!isLoading && isLoaded && onDeleteDay && (
                       <div
                         onClick={(e) => {
                           e.stopPropagation();
-                          // TODO: Implement delete functionality
+                          onDeleteDay(dayNumber);
                         }}
                         className="absolute -top-2 -right-2 z-20 w-5 h-5 bg-gradient-to-br from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 rounded-full flex items-center justify-center shadow-md hover:shadow-lg transition-all duration-200 hover:scale-110 opacity-0 group-hover:opacity-100 cursor-pointer"
                         title="Delete day"
@@ -483,6 +488,25 @@ export default function DaySlider({
 
         .animate-fade-in-scale {
           animation: fade-in-scale 0.5s ease-out forwards;
+        }
+
+        @keyframes delete-fade-out {
+          0% {
+            opacity: 1;
+            transform: scale(1) translateX(0);
+          }
+          50% {
+            opacity: 0.5;
+            transform: scale(0.9) translateX(-10px);
+          }
+          100% {
+            opacity: 0;
+            transform: scale(0.7) translateX(-20px);
+          }
+        }
+
+        .animate-delete-fade-out {
+          animation: delete-fade-out 0.3s ease-in forwards;
         }
       `}</style>
     </div>
