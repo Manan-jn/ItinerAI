@@ -11,6 +11,8 @@ import FlightsWidget from "../../components/FlightsWidget";
 import StaysWidget from "../../components/StaysWidget";
 import ItineraryWidget from "../../components/ItineraryWidget";
 import DateSelectorWidget from "../../components/DateSelectorWidget";
+import ConveyanceTab from "../../components/ConveyanceTab";
+import StaysTab from "../../components/StaysTab";
 import OnboardingModalWhite from "../../components/auth/OnboardingModalWhite";
 import ItinerAIChatBox from "../../components/ItinerAIChatBox";
 import MessageResponseOverlay from "../../components/MessageResponseOverlay";
@@ -48,7 +50,8 @@ import { ChatNavbar } from "../../components/flights-page/ChatNavbar";
 import PreFetchTestTrigger from "../../components/PreFetchTestTrigger";
 
 type SectionType =
-  | "flights"
+  | "conveyance"
+  | "stays"
   | "dashboard"
   | "chat"
   | "explore"
@@ -5111,18 +5114,26 @@ export default function FlightsPageAuthenticated() {
                 )}
               </div>
             </div>
+          ) : activeSection === "conveyance" ? (
+            // Conveyance Tab
+            <ConveyanceTab
+              userId={currentUser?.uid}
+              sessionId={sessionId}
+            />
+          ) : activeSection === "stays" ? (
+            // Stays Tab
+            <StaysTab
+              userId={currentUser?.uid}
+              sessionId={sessionId}
+            />
           ) : (
-            // Flights Content
-            <FlightsContent
+            // Default: Dashboard if no section matches
+            <DashboardContent
               currentUser={currentUser}
               showProfileDropdown={showProfileDropdown}
               setShowProfileDropdown={setShowProfileDropdown}
               onSettings={() => router.push("/flights/settings")}
               onLogout={logout}
-              tripType={tripType}
-              setTripType={setTripType}
-              travellers={travellers}
-              travelClass={travelClass}
             />
           )}
         </div>

@@ -6,11 +6,14 @@ import {
   MdExplore,
   MdBook,
   MdPeople,
+  MdHotel,
+  MdDirectionsBus,
 } from "react-icons/md";
 import { SidebarButton } from "./UIComponents";
 
 type SectionType =
-  | "flights"
+  | "conveyance"
+  | "stays"
   | "dashboard"
   | "chat"
   | "explore"
@@ -69,10 +72,16 @@ export function Sidebar({
             onClick={() => onSectionChange("chat")}
           />
           <SidebarButton
-            icon={<MdFlight className="w-4 h-4" />}
-            text="Flights"
-            active={activeSection === "flights"}
-            onClick={() => onSectionChange("flights")}
+            icon={<MdDirectionsBus className="w-4 h-4" />}
+            text="Conveyance"
+            active={activeSection === "conveyance"}
+            onClick={() => onSectionChange("conveyance")}
+          />
+          <SidebarButton
+            icon={<MdHotel className="w-4 h-4" />}
+            text="Stays"
+            active={activeSection === "stays"}
+            onClick={() => onSectionChange("stays")}
           />
         </div>
 
