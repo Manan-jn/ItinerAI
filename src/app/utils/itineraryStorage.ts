@@ -345,3 +345,51 @@ export async function clearGeneratedItinerary(userId: string): Promise<void> {
   }
 }
 
+/**
+ * Finalize and store complete itinerary for all days
+ * This function is called when user clicks "Continue" after all days are generated
+ * @param userId - User UUID
+ * @param sessionId - Session UUID
+ * @param tripTitle - Title of the trip
+ * @param tripDate - Start date of trip (YYYY-MM-DD)
+ * @param totalDays - Total number of days in the trip
+ * @param itinerariesGenerated - Array of all generated day itineraries
+ */
+export async function finalizeAndStoreCompleteItinerary(
+  userId: string,
+  sessionId: string,
+  tripTitle: string,
+  tripDate: string,
+  totalDays: number,
+  itinerariesGenerated: DayItineraryData[]
+): Promise<void> {
+  try {
+    console.log(`📋 Finalizing complete itinerary for user ${userId}`);
+    console.log(`📊 Total days: ${totalDays}, Generated: ${itinerariesGenerated.length}`);
+
+    // Sort days by day_number to ensure correct order
+    const sortedDays = [...itinerariesGenerated].sort(
+      (a, b) => a.day_number - b.day_number
+    );
+
+    const completeItinerary: StoredItinerary = {
+      userId,
+      sessionId,
+      tripTitle,
+      tripDate,
+      totalDays,
+      days: sortedDays,
+      lastUpdated: new Date().toISOString(),
+    };
+
+    const docRef = doc(db, "generated_itineraries", userId);
+    await setDoc(docRef, completeItinerary);
+
+    console.log("✅ Successfully finalized and stored complete itinerary");
+    console.log(`📦 Stored ${sortedDays.length} days for trip: ${tripTitle}`);
+  } catch (error) {
+    console.error("❌ Error finalizing itinerary:", error);
+    throw error;
+  }
+}
+

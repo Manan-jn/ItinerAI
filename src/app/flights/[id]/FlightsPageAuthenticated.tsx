@@ -15,6 +15,8 @@ import OnboardingModalWhite from "../../components/auth/OnboardingModalWhite";
 import ItinerAIChatBox from "../../components/ItinerAIChatBox";
 import MessageResponseOverlay from "../../components/MessageResponseOverlay";
 import ChatLoadingIndicator from "../../components/ChatLoadingIndicator";
+import BookingWidget from "../../components/BookingWidget";
+import FinalizeLoader from "../../components/FinalizeLoader";
 import { getSessionId } from "../../utils/sessionManager";
 import { updateMemoryOnSessionChange } from "../../utils/memoryApi";
 import {
@@ -33,6 +35,7 @@ import {
   storeDayItinerary,
   buildCompleteItinerary,
   DayItineraryData,
+  finalizeAndStoreCompleteItinerary,
 } from "../../utils/itineraryStorage";
 // New component imports
 import { Sidebar } from "../../components/flights-page/Sidebar";
@@ -126,6 +129,8 @@ export default function FlightsPageAuthenticated() {
   const [overlayMessage, setOverlayMessage] = useState<string | null>(null); // NEW: Message for overlay
   const [showOverlay, setShowOverlay] = useState(false); // NEW: Show message overlay
   const [isCardManuallySelected, setIsCardManuallySelected] = useState(false); // NEW: Track if card was manually selected by user
+  const [showBooking, setShowBooking] = useState(false); // NEW: Show booking widget
+  const [showFinalizeLoader, setShowFinalizeLoader] = useState(false); // NEW: Show finalize loader
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const flashcardsRef = useRef<FlashcardsWidgetRef>(null);
@@ -2108,6 +2113,48 @@ export default function FlightsPageAuthenticated() {
     } catch (error) {
       console.error("❌ Error in chat submission:", error);
       throw error; // Re-throw to let ItineraryWidget handle the error
+    }
+  };
+
+  // Handler for Continue to Booking button
+  const handleContinueToBooking = async () => {
+    try {
+      console.log("📋 Continue to booking clicked");
+
+      if (!userId || !sessionId || !selectedTrip) {
+        console.error("❌ Missing required data for finalization");
+        setOverlayMessage("Unable to finalize itinerary. Please try again.");
+        setShowOverlay(true);
+        return;
+      }
+
+      // Show loader
+      setShowFinalizeLoader(true);
+
+      // Store complete itinerary in Firestore
+      await finalizeAndStoreCompleteItinerary(
+        userId,
+        sessionId,
+        selectedTrip.trip_title || "My Trip",
+        selectedTrip.trip_date || new Date().toISOString().split("T")[0],
+        selectedTrip.no_of_days || itinerariesGenerated.length,
+        itinerariesGenerated
+      );
+
+      console.log("✅ Itinerary finalized and stored");
+
+      // Wait for loader animation (3 seconds)
+      setTimeout(() => {
+        setShowFinalizeLoader(false);
+        setShowItinerary(false);
+        setShowBooking(true);
+        console.log("✅ Switched to booking view");
+      }, 3000);
+    } catch (error) {
+      console.error("❌ Error finalizing itinerary:", error);
+      setOverlayMessage("Failed to finalize itinerary. Please try again.");
+      setShowOverlay(true);
+      setShowFinalizeLoader(false);
     }
   };
 
@@ -4627,7 +4674,17 @@ export default function FlightsPageAuthenticated() {
 
               {/* Chat Container - Scrollable messages area with fixed input */}
               <div className="flex-1 flex flex-col min-h-0">
-                {showItinerary ? (
+                {showBooking ? (
+                  <div className="flex-1 overflow-hidden">
+                    <BookingWidget
+                      isVisible={showBooking}
+                      onToggle={() => setShowBooking(false)}
+                      itinerariesData={itinerariesGenerated}
+                      tripTitle={selectedTrip?.trip_title || "My Trip"}
+                      totalDays={selectedTrip?.no_of_days || itinerariesGenerated.length}
+                    />
+                  </div>
+                ) : showItinerary ? (
                   <div className="flex-1 overflow-hidden">
                     <ItineraryWidget
                       isVisible={showItinerary}
@@ -4655,6 +4712,10 @@ export default function FlightsPageAuthenticated() {
                       onDeleteDay={handleDeleteDay}
                       onLocalDeleteDay={handleLocalDeleteDay}
                       onChatSubmit={handleItineraryChatSubmit}
+                      allDaysGenerated={
+                        itinerariesGenerated.length === (selectedTrip?.no_of_days || selectedTrip?.day_wise_plan?.length || 0)
+                      }
+                      onContinue={handleContinueToBooking}
                     />
                   </div>
                 ) : showDateSelector ? (
@@ -5077,6 +5138,12 @@ export default function FlightsPageAuthenticated() {
           autoHideDuration={8000}
         />
       )}
+
+      {/* Finalize Loader - Full Screen Overlay */}
+      <FinalizeLoader
+        showLoader={showFinalizeLoader}
+        duration={3000}
+      />
     </div>
   );
 }

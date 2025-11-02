@@ -84,6 +84,8 @@ interface ItineraryWidgetProps {
   onDeleteDay?: (dayNumber: number) => Promise<void>; // NEW: Callback to delete a day (CASE 1: API call)
   onLocalDeleteDay?: (dayNumber: number) => void; // NEW: Callback for local delete without API (CASE 2)
   onChatSubmit?: (message: string, currentDay: number) => Promise<void>; // NEW: Callback for chat message submission
+  allDaysGenerated?: boolean; // NEW: Flag to enable Continue button
+  onContinue?: () => void; // NEW: Callback for Continue button click
 }
 
 // Helper function to transform API response to display format
@@ -293,6 +295,8 @@ export default function ItineraryWidget({
   onDeleteDay,
   onLocalDeleteDay,
   onChatSubmit,
+  allDaysGenerated = false,
+  onContinue,
 }: ItineraryWidgetProps) {
   const [currentDayIndex, setCurrentDayIndex] = useState(0);
   const [chatInput, setChatInput] = useState("");
@@ -1528,8 +1532,8 @@ export default function ItineraryWidget({
           />
         </div>
 
-        {/* ChatBox - Centered */}
-        <div className="max-w-3xl mx-auto">
+        {/* ChatBox and Continue Button - Centered */}
+        <div className="max-w-3xl mx-auto relative">
           <ItinerAIChatBox
             value={chatInput}
             onChange={setChatInput}
@@ -1547,6 +1551,31 @@ export default function ItineraryWidget({
             isLoading={isChatLoading}
             disabled={isChatLoading}
           />
+
+          {/* Continue Button - Bottom Right */}
+          {onContinue && (
+            <button
+              onClick={onContinue}
+              disabled={!allDaysGenerated}
+              className={`continue-button ${!allDaysGenerated ? "disabled" : ""}`}
+              aria-label="Continue to booking"
+            >
+              <span>Continue</span>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </button>
+          )}
         </div>
       </div>
 
@@ -1654,6 +1683,68 @@ export default function ItineraryWidget({
 
         .animate-slide-in-right {
           animation: slide-in-right 0.3s ease-out forwards;
+        }
+
+        /* Continue Button Styles */
+        .continue-button {
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 12px 24px;
+          background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.75) 0%,
+            rgba(255, 255, 255, 0.6) 100%
+          );
+          backdrop-filter: blur(32px) saturate(200%);
+          -webkit-backdrop-filter: blur(32px) saturate(200%);
+          border-radius: 16px;
+          border: 1px solid rgba(255, 255, 255, 0.6);
+          box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.06),
+            inset 0 1px 0 rgba(255, 255, 255, 0.9), inset 0 -1px 0 rgba(0, 0, 0, 0.03);
+          font-size: 0.9375rem;
+          font-weight: 600;
+          color: #1f2937;
+          font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto,
+            sans-serif;
+          cursor: pointer;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          outline: none;
+        }
+
+        .continue-button:not(.disabled):hover {
+          background: linear-gradient(135deg, rgba(59, 130, 246, 0.85) 0%, rgba(37, 99, 235, 0.75) 100%);
+          color: white;
+          transform: translateY(-2px);
+          box-shadow: 0 8px 32px rgba(59, 130, 246, 0.3), 0 4px 12px rgba(59, 130, 246, 0.2);
+        }
+
+        .continue-button:not(.disabled):active {
+          transform: translateY(0);
+          box-shadow: 0 4px 16px rgba(59, 130, 246, 0.2);
+        }
+
+        .continue-button.disabled {
+          opacity: 0.5;
+          filter: blur(2px);
+          cursor: not-allowed;
+          pointer-events: none;
+        }
+
+        .continue-button span {
+          font-weight: 600;
+        }
+
+        .continue-button svg {
+          flex-shrink: 0;
+          transition: transform 0.3s ease;
+        }
+
+        .continue-button:not(.disabled):hover svg {
+          transform: translateX(4px);
         }
       `}</style>
     </div>
