@@ -124,6 +124,7 @@ export default function FlightsPageAuthenticated() {
   >(new Set()); // NEW: Track pending insert days
   const [overlayMessage, setOverlayMessage] = useState<string | null>(null); // NEW: Message for overlay
   const [showOverlay, setShowOverlay] = useState(false); // NEW: Show message overlay
+  const [isCardManuallySelected, setIsCardManuallySelected] = useState(false); // NEW: Track if card was manually selected by user
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const flashcardsRef = useRef<FlashcardsWidgetRef>(null);
@@ -538,6 +539,7 @@ export default function FlightsPageAuthenticated() {
   const handleTripSelect = (transformedTrip: any | null) => {
     if (transformedTrip === null) {
       setSelectedTrip(null);
+      setIsCardManuallySelected(false); // Clear manual selection flag
       return;
     }
 
@@ -549,12 +551,14 @@ export default function FlightsPageAuthenticated() {
     if (originalTrip) {
       console.log("Selected original trip:", originalTrip);
       setSelectedTrip(originalTrip);
+      setIsCardManuallySelected(true); // User manually selected this trip
     } else {
       console.warn(
         "Could not find original trip for:",
         transformedTrip.trip_title
       );
       setSelectedTrip(transformedTrip); // Fallback to transformed trip
+      setIsCardManuallySelected(true); // User manually selected this trip
     }
   };
 
@@ -3740,8 +3744,8 @@ export default function FlightsPageAuthenticated() {
   const handleChatSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Special handling when a trip is selected
-    if (selectedTrip && showFlashcards) {
+    // Special handling when a trip is manually selected
+    if (selectedTrip && showFlashcards && isCardManuallySelected) {
       await handleTripMemoryUpdate();
       return;
     }
@@ -4930,7 +4934,7 @@ export default function FlightsPageAuthenticated() {
                     {/* Chat Input - Fixed at bottom */}
                     <div className="flex-shrink-0 bg-gradient-to-t from-white to-blue-50/20 border-t border-blue-100 px-6 py-6 relative">
                       {/* Selected Trip Snippet */}
-                      {selectedTrip && showFlashcards && (
+                      {selectedTrip && showFlashcards && isCardManuallySelected && (
                         <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-full max-w-md px-6 z-10 animate-slideUp">
                           <div className="p-3 bg-white border-2 border-blue-400 rounded-xl shadow-2xl backdrop-blur-lg">
                             <div className="flex items-center justify-between">
@@ -4945,7 +4949,8 @@ export default function FlightsPageAuthenticated() {
                               </div>
                               <button
                                 onClick={() => {
-                                  // setSelectedTrip(null);
+                                  setSelectedTrip(null);
+                                  setIsCardManuallySelected(false);
                                   if (flashcardsRef.current) {
                                     flashcardsRef.current.clearSelection();
                                   }
@@ -4971,19 +4976,19 @@ export default function FlightsPageAuthenticated() {
                               ? "Initializing session..."
                               : testEndResponse
                               ? "🧪 TEST MODE: Next message will trigger date selector"
-                              : selectedTrip && showFlashcards
+                              : selectedTrip && showFlashcards && isCardManuallySelected
                               ? "Click send to confirm trip selection"
                               : "Ask ItinerAI"
                           }
                           disabled={
                             isInitializingSession ||
                             isLoading ||
-                            (selectedTrip && showFlashcards)
+                            (selectedTrip && showFlashcards && isCardManuallySelected)
                           }
                           isLoading={isLoading || isInitializingSession}
                           theme="default"
                           inputType="textarea"
-                          allowEmptySubmit={selectedTrip && showFlashcards}
+                          allowEmptySubmit={selectedTrip && showFlashcards && isCardManuallySelected}
                         />
                       </div>
                     </div>

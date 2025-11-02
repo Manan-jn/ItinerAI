@@ -53,7 +53,8 @@ export default function MessageResponseOverlay({
     }, 300);
   };
 
-  if (!isVisible || !displayMessage) return null;
+  // Only show if visible, has a message, and message is not empty string
+  if (!isVisible || !displayMessage || displayMessage.trim() === "") return null;
 
   return (
     <>
@@ -88,35 +89,35 @@ export default function MessageResponseOverlay({
       <style jsx>{`
         .message-response-overlay {
           position: fixed;
-          top: 24px;
-          right: 24px;
-          max-width: 420px;
-          min-width: 280px;
+          top: 20px;
+          right: 20px;
+          max-width: 380px;
+          min-width: 260px;
           z-index: 9999;
 
-          /* Glassmorphic Background - Siri-inspired */
+          /* Enhanced Glassmorphic Background - More transparent, more blur */
           background: linear-gradient(
             135deg,
-            rgba(255, 255, 255, 0.85) 0%,
-            rgba(255, 255, 255, 0.7) 100%
+            rgba(255, 255, 255, 0.75) 0%,
+            rgba(255, 255, 255, 0.6) 100%
           );
-          backdrop-filter: blur(40px) saturate(180%);
-          -webkit-backdrop-filter: blur(40px) saturate(180%);
+          backdrop-filter: blur(32px) saturate(200%);
+          -webkit-backdrop-filter: blur(32px) saturate(200%);
 
-          /* Border & Shadow - Apple style */
-          border-radius: 20px;
-          border: 1px solid rgba(255, 255, 255, 0.5);
+          /* Border & Shadow - More compact, subtle */
+          border-radius: 16px;
+          border: 1px solid rgba(255, 255, 255, 0.6);
           box-shadow:
-            0 8px 32px rgba(0, 0, 0, 0.12),
-            0 2px 8px rgba(0, 0, 0, 0.08),
-            inset 0 1px 0 rgba(255, 255, 255, 0.8),
-            inset 0 -1px 0 rgba(0, 0, 0, 0.02);
+            0 6px 24px rgba(0, 0, 0, 0.1),
+            0 2px 6px rgba(0, 0, 0, 0.06),
+            inset 0 1px 0 rgba(255, 255, 255, 0.9),
+            inset 0 -1px 0 rgba(0, 0, 0, 0.03);
 
-          /* Layout */
-          padding: 20px 24px;
+          /* Layout - More compact padding */
+          padding: 14px 18px;
           display: flex;
           align-items: flex-start;
-          gap: 12px;
+          gap: 10px;
 
           /* Animation */
           opacity: 0;
@@ -139,8 +140,8 @@ export default function MessageResponseOverlay({
 
         .message-text {
           margin: 0;
-          font-size: 15px;
-          line-height: 1.5;
+          font-size: 14px;
+          line-height: 1.4;
           color: #1d1d1f;
           font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
           font-weight: 500;
@@ -148,7 +149,7 @@ export default function MessageResponseOverlay({
           word-wrap: break-word;
 
           /* Subtle text shadow for depth */
-          text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+          text-shadow: 0 0.5px 1px rgba(255, 255, 255, 0.8);
         }
 
         .close-button {
@@ -202,24 +203,24 @@ export default function MessageResponseOverlay({
           }
         }
 
-        /* Dark mode support (optional - if needed later) */
+        /* Dark mode support - More compact and glassmorphic */
         @media (prefers-color-scheme: dark) {
           .message-response-overlay {
             background: linear-gradient(
               135deg,
-              rgba(30, 30, 30, 0.85) 0%,
-              rgba(20, 20, 20, 0.7) 100%
+              rgba(30, 30, 30, 0.75) 0%,
+              rgba(20, 20, 20, 0.6) 100%
             );
-            border-color: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.15);
             box-shadow:
-              0 8px 32px rgba(0, 0, 0, 0.4),
-              0 2px 8px rgba(0, 0, 0, 0.3),
+              0 6px 24px rgba(0, 0, 0, 0.3),
+              0 2px 6px rgba(0, 0, 0, 0.2),
               inset 0 1px 0 rgba(255, 255, 255, 0.1);
           }
 
           .message-text {
             color: #f5f5f7;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+            text-shadow: 0 0.5px 1px rgba(0, 0, 0, 0.5);
           }
 
           .close-button {
