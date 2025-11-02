@@ -1,354 +1,63 @@
-main-app.js?v=1762060777031:1160 Download the React DevTools for a better development experience: https://react.dev/link/react-devtools
+main-app.js?v=1762062827038:1160 Download the React DevTools for a better development experience: https://react.dev/link/react-devtools
 FlightsPageAuthenticated.tsx:164 🔄 Creating new session via API for user: zqh2H13LPvXWDkZjfFzthJCXktB3
 FlightsPageAuthenticated.tsx:289 ⏳ Waiting for userId to restore trip
 FlightsPageAuthenticated.tsx:289 ⏳ Waiting for userId to restore trip
-FlightsPageAuthenticated.tsx:186 ✅ Session created via API: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '5883326466409627648'}
-FlightsPageAuthenticated.tsx:196 Authenticated flights session initialized: {sessionId: '5883326466409627648', userId: 'zqh2H13LPvXWDkZjfFzthJCXktB3', userEmail: 'manan.nitdl@gmail.com', isAuthenticated: true}
+hot-reloader-app.js:197 [Fast Refresh] rebuilding
+report-hmr-latency.js:14 [Fast Refresh] done in 308ms
+FlightsPageAuthenticated.tsx:186 ✅ Session created via API: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '8575916093623762944'}
+FlightsPageAuthenticated.tsx:196 Authenticated flights session initialized: {sessionId: '8575916093623762944', userId: 'zqh2H13LPvXWDkZjfFzthJCXktB3', userEmail: 'manan.nitdl@gmail.com', isAuthenticated: true}
 FlightsPageAuthenticated.tsx:302 🔄 Attempting to restore selected trip from Firestore for user: zqh2H13LPvXWDkZjfFzthJCXktB3
-tripStorage.ts:196 Retrieved trip from Firestore: {trip_title: 'The Classic Golden Triangle', source_point: {…}, themes: Array(3), no_of_days: 7, best_time_to_visit: 'October to March', …}
-FlightsPageAuthenticated.tsx:311 ✅ Successfully restored trip from Firestore: The Classic Golden Triangle
+tripStorage.ts:196 Retrieved trip from Firestore: {trip_route: Array(3), day_wise_plan: Array(7), best_time_to_visit: 'December', no_of_days: 7, trip_date: '2025-12-21', …}
+FlightsPageAuthenticated.tsx:311 ✅ Successfully restored trip from Firestore: Classic Vietnam: From Northern Peaks to Southern Bustle
 FlightsPageAuthenticated.tsx:3761 First message detected, updating memory before sending...
-memoryApi.ts:145 Updating memory for session change: {userId: 'zqh2H13LPvXWDkZjfFzthJCXktB3', sessionId: '5883326466409627648'}
-memoryApi.ts:184 Sending user profile to memory API: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '5883326466409627648', updates: {…}}
-memoryApi.ts:201 Memory API success: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '5883326466409627648', message: 'Memory added successfully'}
+memoryApi.ts:145 Updating memory for session change: {userId: 'zqh2H13LPvXWDkZjfFzthJCXktB3', sessionId: '8575916093623762944'}
+memoryApi.ts:184 Sending user profile to memory API: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '8575916093623762944', updates: {…}}
+hot-reloader-app.js:197 [Fast Refresh] rebuilding
+report-hmr-latency.js:14 [Fast Refresh] done in 203ms
+memoryApi.ts:201 Memory API success: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '8575916093623762944', message: 'Memory added successfully'}
 memoryApi.ts:165 Memory updated successfully for session change
 FlightsPageAuthenticated.tsx:3771 Memory updated successfully for first message
 FlightsPageAuthenticated.tsx:476 Making API call...
-FlightsPageAuthenticated.tsx:493 API Request sent: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '5883326466409627648', message: 'hi,manan,25, male, indian, solo trip to vietnam in december 2025, budget -2,00,000'}
+hot-reloader-app.js:197 [Fast Refresh] rebuilding
+report-hmr-latency.js:14 [Fast Refresh] done in 254ms
+FlightsPageAuthenticated.tsx:493 API Request sent: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '8575916093623762944', message: 'hi, manan, 25, male, indian, solo trip to vietnam … no allergies, no preferences, recommend me trips'}
 FlightsPageAuthenticated.tsx:498 API Response status: 200
-FlightsPageAuthenticated.tsx:509 API Response received (raw): {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '5883326466409627648', message: "That's great! I've noted down your age, gender, na…ll me the expected duration of your trip in days?"}
-FlightsPageAuthenticated.tsx:513 API Response (cleaned): {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '5883326466409627648', message: "That's great! I've noted down your age, gender, na…ll me the expected duration of your trip in days?"}
+FlightsPageAuthenticated.tsx:509 API Response received (raw): {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '8575916093623762944', message: {…}}
+FlightsPageAuthenticated.tsx:513 API Response (cleaned): {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '8575916093623762944', message: {…}}
 FlightsPageAuthenticated.tsx:3809 Full API response data: {
   "user_id": "zqh2H13LPvXWDkZjfFzthJCXktB3",
-  "session_id": "5883326466409627648",
-  "message": "That's great! I've noted down your age, gender, nationality, solo trip preference, and budget.\n\nTo help me plan your trip to Vietnam, could you please tell me the expected duration of your trip in days?"
+  "session_id": "8575916093623762944",
+  "message": {
+    "response_type": "text",
+    "message": "Thanks for sharing, Manan! A solo trip to Vietnam for 7 days with a budget of 2,00,000 INR sounds like a fantastic adventure. Are you ready to dive in and explore some exciting trip ideas?"
+  }
 }
-FlightsPageAuthenticated.tsx:3812 🔍 End response detection: {root_response_type: undefined, nested_response_type: undefined, isEndResponse: false, full_data_structure: '{\n  "user_id": "zqh2H13LPvXWDkZjfFzthJCXktB3",\n  "…me the expected duration of your trip in days?"\n}'}
-FlightsPageAuthenticated.tsx:3869 ❌ No trip or end response detected {root_response_type: undefined, nested_response_type: undefined}
-content.js:10 Uncaught Error: Extension context invalidated.
-    at o (content.js:10:5711)
-    at content.js:10:5622
-o @ content.js:10
-(anonymous) @ content.js:10
-setTimeout
-n @ content.js:10
-content.js:10 Uncaught Error: Extension context invalidated.
-    at o (content.js:10:5711)
-    at content.js:10:5622
-o @ content.js:10
-(anonymous) @ content.js:10
-setTimeout
-n @ content.js:10
-content.js:10 Uncaught Error: Extension context invalidated.
-    at o (content.js:10:5711)
-    at content.js:10:5622
-o @ content.js:10
-(anonymous) @ content.js:10
-setTimeout
-n @ content.js:10
-content.js:10 Uncaught Error: Extension context invalidated.
-    at o (content.js:10:5711)
-    at content.js:10:5622
-o @ content.js:10
-(anonymous) @ content.js:10
-setTimeout
-n @ content.js:10
-content.js:10 Uncaught Error: Extension context invalidated.
-    at o (content.js:10:5711)
-    at content.js:10:5622
-o @ content.js:10
-(anonymous) @ content.js:10
-setTimeout
-n @ content.js:10
-content.js:10 Uncaught Error: Extension context invalidated.
-    at o (content.js:10:5711)
-    at content.js:10:5622
-o @ content.js:10
-(anonymous) @ content.js:10
-setTimeout
-n @ content.js:10
-content.js:10 Uncaught Error: Extension context invalidated.
-    at o (content.js:10:5711)
-    at content.js:10:5622
-o @ content.js:10
-(anonymous) @ content.js:10
-setTimeout
-n @ content.js:10
-content.js:10 Uncaught Error: Extension context invalidated.
-    at o (content.js:10:5711)
-    at content.js:10:5622
-o @ content.js:10
-(anonymous) @ content.js:10
-setTimeout
-n @ content.js:10
-content.js:10 Uncaught Error: Extension context invalidated.
-    at o (content.js:10:5711)
-    at content.js:10:5622
-o @ content.js:10
-(anonymous) @ content.js:10
-setTimeout
-n @ content.js:10
-content.js:10 Uncaught Error: Extension context invalidated.
-    at o (content.js:10:5711)
-    at content.js:10:5622
-o @ content.js:10
-(anonymous) @ content.js:10
-setTimeout
-n @ content.js:10
-content.js:10 Uncaught Error: Extension context invalidated.
-    at o (content.js:10:5711)
-    at content.js:10:5622
-o @ content.js:10
-(anonymous) @ content.js:10
-setTimeout
-n @ content.js:10
-content.js:10 Uncaught Error: Extension context invalidated.
-    at o (content.js:10:5711)
-    at content.js:10:5622
-o @ content.js:10
-(anonymous) @ content.js:10
-setTimeout
-n @ content.js:10
-content.js:10 Uncaught Error: Extension context invalidated.
-    at o (content.js:10:5711)
-    at content.js:10:5622
-o @ content.js:10
-(anonymous) @ content.js:10
-setTimeout
-n @ content.js:10
-content.js:10 Uncaught Error: Extension context invalidated.
-    at o (content.js:10:5711)
-    at content.js:10:5622
-o @ content.js:10
-(anonymous) @ content.js:10
-setTimeout
-n @ content.js:10
+FlightsPageAuthenticated.tsx:3812 🔍 End response detection: {root_response_type: undefined, nested_response_type: 'text', isEndResponse: false, full_data_structure: '{\n  "user_id": "zqh2H13LPvXWDkZjfFzthJCXktB3",\n  "…e in and explore some exciting trip ideas?"\n  }\n}'}
+FlightsPageAuthenticated.tsx:3869 ❌ No trip or end response detected {root_response_type: undefined, nested_response_type: 'text'}
+FlightsPageAuthenticated.tsx:3952 Checking nested message format
+FlightsPageAuthenticated.tsx:3955 Detected text response
 FlightsPageAuthenticated.tsx:476 Making API call...
-content.js:10 Uncaught Error: Extension context invalidated.
-    at o (content.js:10:5711)
-    at content.js:10:5622
-o @ content.js:10
-(anonymous) @ content.js:10
-setTimeout
-n @ content.js:10
-selectionchange
-set @ react-dom-client.development.js:1618
-updateTextarea @ react-dom-client.development.js:1903
-updateProperties @ react-dom-client.development.js:18833
-commitUpdate @ react-dom-client.development.js:19950
-runWithFiberInDEV @ react-dom-client.development.js:872
-commitHostUpdate @ react-dom-client.development.js:12731
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13857
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13840
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13840
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13840
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13840
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13840
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13840
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13840
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13840
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13840
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13640
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13640
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13640
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13640
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13640
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13640
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13640
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13825
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13825
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13640
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13640
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13640
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13640
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13898
-flushMutationEffects @ react-dom-client.development.js:16022
-commitRoot @ react-dom-client.development.js:15996
-commitRootWhenReady @ react-dom-client.development.js:15228
-performWorkOnRoot @ react-dom-client.development.js:15147
-performSyncWorkOnRoot @ react-dom-client.development.js:16831
-flushSyncWorkAcrossRoots_impl @ react-dom-client.development.js:16677
-processRootScheduleInMicrotask @ react-dom-client.development.js:16715
-eval @ react-dom-client.development.js:16850
-FlightsPageAuthenticated.tsx:493 API Request sent: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '5883326466409627648', message: '7 days, no allergies, no emergency number, move to trip sugestion'}
+FlightsPageAuthenticated.tsx:493 API Request sent: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '8575916093623762944', message: 'yes'}
 FlightsPageAuthenticated.tsx:498 API Response status: 200
-FlightsPageAuthenticated.tsx:509 API Response received (raw): {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '5883326466409627648', message: {…}}
-FlightsPageAuthenticated.tsx:513 API Response (cleaned): {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '5883326466409627648', message: {…}}
-FlightsPageAuthenticated.tsx:3809 Full API response data: {
+ API Response received (raw): {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '8575916093623762944', message: {…}}
+ API Response (cleaned): {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '8575916093623762944', message: {…}}
+ Full API response data: {
   "user_id": "zqh2H13LPvXWDkZjfFzthJCXktB3",
-  "session_id": "5883326466409627648",
+  "session_id": "8575916093623762944",
   "message": {
     "response_type": "trip",
     "message": "",
     "trips": [
       {
-        "trip_title": "Classic Vietnam: From Northern Peaks to Southern Bustle",
+        "trip_title": "Northern Wonders: Hanoi's Culture & Halong's Majesty",
         "no_of_days": 7,
-        "estimated_budget": 180000,
-        "best_time_to_visit": "December",
+        "estimated_budget": 85000,
+        "best_time_to_visit": "October to April",
         "themes": [
           "Culture",
-          "History",
-          "Nature"
+          "Nature",
+          "Food",
+          "Relaxation"
         ],
         "trip_route": [
           {
@@ -358,31 +67,20 @@ FlightsPageAuthenticated.tsx:3809 Full API response data: {
             "lat": "21.0277644",
             "long": "105.8341598",
             "photos": [
-              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6msI0vtORHUNNctqG8qQH-TFNnEkCxbb8MmDtSWTFiQuPGFCHSxsF9jR1g9Ui68Cf25teKN1nMFA36VAQncggLz0Aa530bKl352yp3vHeIaDmd67wLHfVY2B1C080GMfsK7Pprdai6FiG8WE-KK39gEcE_n7_t2MLY1XhttCfTeou4Bq1VC-Kmecg3vm5BYoNNSvHgSf6OL31UeorH4_OClNMHdS7nffdL82xYsNdM6AvH4hfzx2OWTVx5Ox3mjvBdHAED_UAhJ9Jn2oVMgHOimlEZtYClVFHbQp_UG2u7eq0MgGm3cc-4MVAR624zmWNkL-19N-HCs_s6EJqMQ6n3Nqza5S0259HYxVpXdzmKTwU6izpmSFeYbkFdka7BJ6XDk-UKlFWpoyBE01K01YFxiNs7rwmFUsxMsjz-TH0juKdtOI1gyvzZ6eUY2kA_XIhHWZsUetiVj7cs7a1xZ-ADVgexnPSMaJodRPJ20qYdUeD_8uV_bP06102YpqXBbeOrpHev1ZmNsk9AcsPr9xlRTj_EKm_1GvtEALv3AnpAip6b0TCOfCw3FGmB02P2nQpYEg&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU5ah92eTFaBxLvrmCkgrIQv9R19qRQBFTFDqyjHhWNbVWgOGnH9oBDXvdNJ9OqOBaVuICGZ3LjaQkyQRMLHRTJLQlRylWzSmbh8JTZS1zwNbbp9hwrIkVofDYco47-GdpeDrH3EkvvVDqfXuRa4OmamZ028g_dzD73ixFxD0DltNrqM-T-fBkxGrsamRwauXjY2SeK08jqrtI2wtUuV1oEbkETN3H4wP3S8wLnb4PhJjgMo-YotO-l9euB4ZlG63C9yC7YkIuCzjtYX0b7qn5iIbk5e0EYdyTgTZgUifG62Bhrdn9x2mSCxzZUbtZKPhC6aMvAxrJtAlWTl0zTT-dUpF_8NB0SmHq3IMtUiyJCNpwXDzk3fdCuoTW67jXWDXu4gLa0Pcv0guxuErSTO1at0jlknfhHFDoZSamBpMY7c2fZdPiWR-kB9ZYXAPSwjTWjsTI_GZMmqecpjGOPznFSQDVMZJYzCAV460CoDUQQ0d3gdNKLHhJof7UZ9xwQGcJ2gLwnsmMwMLCs37ZRlE-K1smFwIbOeZwzekMWBeSWJfMJwa5npOWY-7q7H6jGJv-NDCg&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
             ],
             "place_id": "ChIJoRyG2ZurNTERqRfKcnt_iOc"
           },
           {
             "place_name": "Ha Long Bay",
-            "address": "Quảng Ninh Province, Vietnam",
+            "address": "Quang Ninh Province, Vietnam",
             "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJh-6MUZZXSjER23hUyLywxlU",
             "lat": "20.9100512",
             "long": "107.1839024",
             "photos": [
-              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU7EW9XzZ_TwkLRGNlPBnGBJJvCRaiZWb2h2ARx8jsCrRkTCOBNcQXBwYF877MzUnGzNQpYWqK8aeSXyWl27b7cTBwRCzbcAmI-2ULXxT21o7O1TQQoMsucg4cjPDbbjIxDTd6jZsSzXbnRzSdh8992NaT-VgcbUPBDvlN4fJkE0iRc_3OOuu1bd5hChFL8KP12vd7LiToPI1f5U1ycf8wl42wsz3eqQHpkvn5Rpe_LsIb9P535Z_yyD0NmnQ2zBJ58ODzCWSR3KvbLUaf9pSTcqn58bfu7rbZo-QQH3KNqucwa_vXGMAQwfnvsOky4OE2V4hfIV711eKKz-YPLchqQ591KMMy8mh48AqC_oSVwRUTBNHYX4nczDTMKUg-2gkeXWY9rpuS5eFYEmIw77Q3b7f6wj9uINxIaSFTmnGovKIQJzx2PY1kuc0xx4PpMw3ml13ASJyEMjUv1bYQSOjRv7VjHawiMsb38xtZe7W5z9FJhOSw26haVync1SjZMTXhCfr-NiKXVJ6KXm08P3PoBGOUczaMRGm-M7ddirnbldrjicD5IPYf-R3ELxgLnFivmXl2TR&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU7k1gO74sF7qYyv-ZLvsMTh0yB9gKwTZ3H3XosUuJuFlEP1RFg2R6yCUkYMAC2PWcaYxF1AdxWRYoy9BS8srbzrJoPrCMF-sT5s35rsScmeg9bowFMgjWXPStZm-hnLmd7aebv9zaxg5IeG5JSiS2Pzupml2xrF1shll1JxaZy-t09Sze5fcTyDjbjw7df1QMP8bxmXFhsRQXMaVnMWkv0l4NhRBeEVYjRZMOts-MDC1figEz-3hEHTn4regfNtSA8cfFQ6eSBnpjQfvGlOnaaFpxxogV6MNlzPPvqPMufypK81nzW-X49NOasQm7IF1NP-zyzq4i8yspeSTIep6jiqey75Xfs8DSuBhmMk2tgV0eXDtWF8tclNBZM0tItr1mzr1pSFBfu3TiWUWly8C6VEjIFYydz82BFQ9F7BjGg29TURGF6Z236oh_dfJS94o5aQOBlNZyiD54lHh7casiK4AF8NcP24SouK10QK42H1PjkqQBunwuYcT4ul_wXardBeamtANdhX4tR7Mc7dGq7zoFbc1dlz1jNdoXOBALkDs4slNBriRpkVWNjGrl5PlgXiXCPH&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
             ],
             "place_id": "ChIJh-6MUZZXSjER23hUyLywxlU"
-          },
-          {
-            "place_name": "Ho Chi Minh City",
-            "address": "Ho Chi Minh City, Vietnam",
-            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJ0T2NLikpdTERKxE8d61aX_E",
-            "lat": "10.8230989",
-            "long": "106.6296638",
-            "photos": [
-              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6jQWxxHOU0m4L961akBUD40qhs2ySqJUXUD5wnznXCDR0jXFT8NYicdzpfJdxgXh3swPbDcDmG34rTEGqsxlxQGGmQF_zEfqcQAxVSJtDvIL1weml4BUtTP_r7Owb5PIQVkjkJK9cGfKLKtXx2seuKYJcjlLGu-c055SjKtdsdZCZfuw6D17NI83di6eeSz-u-C7Ve8itvqcj486fgZVuPJHsT36tvzmVtG0YQy7PO_uvynSutI-6GrSc85GY4FaGYfmsasUD2yoHvgffXvVbQsu6OnDRzxmbkStbYzgIbYy7l4d8mVzv5pD4VuPuWGAUJS0SrlGFRWGBIcZJjByeXUpwX0xDG9Cq8xrQBjFbvAxgy_leIt3cwCKHKMplFNy6V9rrKWEj3socOMpZ9tCBVWCx_4u7Rs_jeeduLVVGIml1qbW9CxdBJLm6GIWPZ0vI_Bm5vX30SUyBPFjy9roeWWGHXS5XtnLY6Qu03c071Z3dyS8OqcKvJzUQsf7a8WUcpqnEZO3ZBT_XUPQkX7iZCo2v-nCRpquVG1IVRKGHJWo2dkZEn5ptkBzX5xeVUUtuF2Q&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
-            ],
-            "place_id": "ChIJ0T2NLikpdTERKxE8d61aX_E"
           }
         ],
         "day_wise_plan": [
@@ -404,14 +102,20 @@ FlightsPageAuthenticated.tsx:3809 Full API response data: {
               {
                 "type": "place",
                 "category": "cultural_site",
-                "name": "Hanoi Old Quarter",
-                "description": "Explore the bustling streets, colonial architecture, and ancient temples of this historic area. [6]"
+                "name": "Explore the Old Quarter",
+                "description": "Get lost in the bustling, narrow streets of Hanoi's historic heart, filled with shops, street vendors, and ancient architecture. [33, 43]"
               },
               {
                 "type": "food",
                 "category": "local_street_food",
                 "name": "Street Food Tour",
-                "description": "Embark on a guided food tour to savor iconic dishes like Pho, Banh Mi, and Egg Coffee. [8]"
+                "description": "Join a guided tour to sample iconic dishes like Pho, Bun Cha, and the famous Vietnamese egg coffee. [13, 30]"
+              },
+              {
+                "type": "place",
+                "category": "nightlife",
+                "name": "Ta Hien Beer Street",
+                "description": "Experience the lively nightlife by grabbing a stool and enjoying fresh, cheap local beer (Bia Hoi) with locals and travelers. [13, 36]"
               }
             ]
           },
@@ -420,448 +124,206 @@ FlightsPageAuthenticated.tsx:3809 Full API response data: {
             "conveyance_details": {
               "is_required": false
             },
-  
-FlightsPageAuthenticated.tsx:3812 🔍 End response detection: {root_response_type: undefined, nested_response_type: 'trip', isEndResponse: false, full_data_structure: '{\n  "user_id": "zqh2H13LPvXWDkZjfFzthJCXktB3",\n  "…      ]\n          }\n        ]\n      }\n    ]\n  }\n}'}
-FlightsPageAuthenticated.tsx:3821 🎯 Trip response detected - showing loader immediately
-FlightsPageAuthenticated.tsx:3822 🎯 Response data: {root_response_type: undefined, nested_response_type: 'trip'}
-FlightsPageAuthenticated.tsx:3952 Checking nested message format
-FlightsPageAuthenticated.tsx:3973 Detected trip response in nested format
-FlightsPageAuthenticated.tsx:3974 messageData structure: (3) ['response_type', 'message', 'trips']
-FlightsPageAuthenticated.tsx:3984 Found trips array directly under messageData
-FlightsPageAuthenticated.tsx:3994 Parsed 5 trip suggestions from messageData.trips
-FlightsPageAuthenticated.tsx:3997 Validated trip suggestions: (5) [{…}, {…}, {…}, {…}, {…}]
+            "stay_details": {
+              "is_required": false
+            },
+            "must_do_activities": [
+              {
+                "type": "place",
+                "category": "cultural_site",
+                "name": "Ho Chi Minh Mausoleum Complex",
+                "description": "Visit the final resting place of Vietnam's revered leader, Ho Chi Minh, and explore the surrounding complex. [8, 43]"
+              },
+              {
+                "type": "place",
+                "category": "lake",
+                "name": "Walk around Hoan Kiem Lake",
+                "description": "Take a peaceful stroll around this serene lake, visit the Ngoc Son Temple on the island, and see
+ 🔍 End response detection: {root_response_type: undefined, nested_response_type: 'trip', isEndResponse: false, full_data_structure: '{\n  "user_id": "zqh2H13LPvXWDkZjfFzthJCXktB3",\n  "…      ]\n          }\n        ]\n      }\n    ]\n  }\n}'}
+ 🎯 Trip response detected - showing loader immediately
+ 🎯 Response data: {root_response_type: undefined, nested_response_type: 'trip'}
+ Checking nested message format
+ Detected trip response in nested format
+ messageData structure: (3) ['response_type', 'message', 'trips']
+ Found trips array directly under messageData
+ Parsed 5 trip suggestions from messageData.trips
+ Validated trip suggestions: (5) [{…}, {…}, {…}, {…}, {…}]
 FlightsPageAuthenticated.tsx:4077 🎯 Starting trip loader for 4 seconds minimum
-FlightsPageAuthenticated.tsx:4083 Found 15 images to download
-imageDownloader.ts:110 Starting download of 13 images...
+FlightsPageAuthenticated.tsx:4083 Found 10 images to download
+imageDownloader.ts:110 Starting download of 7 images...
 FlightsPageAuthenticated.tsx:4244 === TRANSFORMING TRIPS DATA ===
 FlightsPageAuthenticated.tsx:4245 Number of trips to transform: 5
+FlightsPageAuthenticated.tsx:4369     - Fallback: Using first city from trip_route: Hanoi
+FlightsPageAuthenticated.tsx:4369     - Fallback: Using first city from trip_route: Hanoi
+FlightsPageAuthenticated.tsx:4369     - Fallback: Using first city from trip_route: Hanoi
 FlightsPageAuthenticated.tsx:4384 Transformed 7 days for trip 1
 FlightsPageAuthenticated.tsx:4400 Final transformed trip 1:
-FlightsPageAuthenticated.tsx:4401   - trip_title: Classic Vietnam: From Northern Peaks to Southern Bustle
+FlightsPageAuthenticated.tsx:4401   - trip_title: Northern Wonders: Hanoi's Culture & Halong's Majesty
 FlightsPageAuthenticated.tsx:4402   - no_of_days: 7
-FlightsPageAuthenticated.tsx:4403   - estimated_budget: 180000
-FlightsPageAuthenticated.tsx:4404   - best_time_to_visit: December
-FlightsPageAuthenticated.tsx:4405   - theme: (3) ['Culture', 'History', 'Nature']
-FlightsPageAuthenticated.tsx:4406   - themes: (3) ['Culture', 'History', 'Nature']
-FlightsPageAuthenticated.tsx:4407   - trip_route length: 3
+FlightsPageAuthenticated.tsx:4403   - estimated_budget: 85000
+FlightsPageAuthenticated.tsx:4404   - best_time_to_visit: October to April
+FlightsPageAuthenticated.tsx:4405   - theme: (4) ['Culture', 'Nature', 'Food', 'Relaxation']
+FlightsPageAuthenticated.tsx:4406   - themes: (4) ['Culture', 'Nature', 'Food', 'Relaxation']
+FlightsPageAuthenticated.tsx:4407   - trip_route length: 2
 FlightsPageAuthenticated.tsx:4411   - day_wise_plan length: 7
+FlightsPageAuthenticated.tsx:4369     - Fallback: Using first city from trip_route: Ho Chi Minh City
+FlightsPageAuthenticated.tsx:4369     - Fallback: Using first city from trip_route: Ho Chi Minh City
+FlightsPageAuthenticated.tsx:4369     - Fallback: Using first city from trip_route: Ho Chi Minh City
 FlightsPageAuthenticated.tsx:4384 Transformed 7 days for trip 2
 FlightsPageAuthenticated.tsx:4400 Final transformed trip 2:
-FlightsPageAuthenticated.tsx:4401   - trip_title: Northern Vietnam: Adventure and Culture
+FlightsPageAuthenticated.tsx:4401   - trip_title: Southern Charm: Saigon & the Mekong Delta
 FlightsPageAuthenticated.tsx:4402   - no_of_days: 7
-FlightsPageAuthenticated.tsx:4403   - estimated_budget: 150000
-FlightsPageAuthenticated.tsx:4404   - best_time_to_visit: September to November or March to May
-FlightsPageAuthenticated.tsx:4405   - theme: (3) ['Adventure', 'Nature', 'Culture']
-FlightsPageAuthenticated.tsx:4406   - themes: (3) ['Adventure', 'Nature', 'Culture']
-FlightsPageAuthenticated.tsx:4407   - trip_route length: 3
+FlightsPageAuthenticated.tsx:4403   - estimated_budget: 90000
+FlightsPageAuthenticated.tsx:4404   - best_time_to_visit: November to April
+FlightsPageAuthenticated.tsx:4405   - theme: (4) ['History', 'Culture', 'Food', 'River Cruise']
+FlightsPageAuthenticated.tsx:4406   - themes: (4) ['History', 'Culture', 'Food', 'River Cruise']
+FlightsPageAuthenticated.tsx:4407   - trip_route length: 2
 FlightsPageAuthenticated.tsx:4411   - day_wise_plan length: 7
+FlightsPageAuthenticated.tsx:4369     - Fallback: Using first city from trip_route: Da Nang
+FlightsPageAuthenticated.tsx:4369     - Fallback: Using first city from trip_route: Da Nang
+FlightsPageAuthenticated.tsx:4369     - Fallback: Using first city from trip_route: Da Nang
+FlightsPageAuthenticated.tsx:4369     - Fallback: Using first city from trip_route: Da Nang
 FlightsPageAuthenticated.tsx:4384 Transformed 7 days for trip 3
 FlightsPageAuthenticated.tsx:4400 Final transformed trip 3:
-FlightsPageAuthenticated.tsx:4401   - trip_title: Central Vietnam: Heritage and Beaches
+FlightsPageAuthenticated.tsx:4401   - trip_title: Central Coast Bliss: Da Nang & Hoi An's Ancient Charm
 FlightsPageAuthenticated.tsx:4402   - no_of_days: 7
-FlightsPageAuthenticated.tsx:4403   - estimated_budget: 160000
+FlightsPageAuthenticated.tsx:4403   - estimated_budget: 95000
 FlightsPageAuthenticated.tsx:4404   - best_time_to_visit: February to August
-FlightsPageAuthenticated.tsx:4405   - theme: (3) ['History', 'Beach', 'Culture']
-FlightsPageAuthenticated.tsx:4406   - themes: (3) ['History', 'Beach', 'Culture']
-FlightsPageAuthenticated.tsx:4407   - trip_route length: 3
+FlightsPageAuthenticated.tsx:4405   - theme: (4) ['Beach', 'History', 'Culture', 'Relaxation']
+FlightsPageAuthenticated.tsx:4406   - themes: (4) ['Beach', 'History', 'Culture', 'Relaxation']
+FlightsPageAuthenticated.tsx:4407   - trip_route length: 2
 FlightsPageAuthenticated.tsx:4411   - day_wise_plan length: 7
+FlightsPageAuthenticated.tsx:4369     - Fallback: Using first city from trip_route: Hanoi
 FlightsPageAuthenticated.tsx:4384 Transformed 7 days for trip 4
 FlightsPageAuthenticated.tsx:4400 Final transformed trip 4:
-FlightsPageAuthenticated.tsx:4401   - trip_title: Southern Vietnam: City, Delta, and Island
+FlightsPageAuthenticated.tsx:4401   - trip_title: Northern Highlands Adventure: Hanoi & Sapa Trekking
 FlightsPageAuthenticated.tsx:4402   - no_of_days: 7
-FlightsPageAuthenticated.tsx:4403   - estimated_budget: 190000
-FlightsPageAuthenticated.tsx:4404   - best_time_to_visit: December to April
-FlightsPageAuthenticated.tsx:4405   - theme: (3) ['City Life', 'Nature', 'Beach']
-FlightsPageAuthenticated.tsx:4406   - themes: (3) ['City Life', 'Nature', 'Beach']
-FlightsPageAuthenticated.tsx:4407   - trip_route length: 3
+FlightsPageAuthenticated.tsx:4403   - estimated_budget: 75000
+FlightsPageAuthenticated.tsx:4404   - best_time_to_visit: September to November or March to May
+FlightsPageAuthenticated.tsx:4405   - theme: (4) ['Adventure', 'Nature', 'Culture', 'Trekking']
+FlightsPageAuthenticated.tsx:4406   - themes: (4) ['Adventure', 'Nature', 'Culture', 'Trekking']
+FlightsPageAuthenticated.tsx:4407   - trip_route length: 2
 FlightsPageAuthenticated.tsx:4411   - day_wise_plan length: 7
+FlightsPageAuthenticated.tsx:4369     - Fallback: Using first city from trip_route: Hanoi
+FlightsPageAuthenticated.tsx:4369     - Fallback: Using first city from trip_route: Hanoi
+FlightsPageAuthenticated.tsx:4369     - Fallback: Using first city from trip_route: Hanoi
+FlightsPageAuthenticated.tsx:4369     - Fallback: Using first city from trip_route: Hanoi
 FlightsPageAuthenticated.tsx:4384 Transformed 7 days for trip 5
 FlightsPageAuthenticated.tsx:4400 Final transformed trip 5:
-FlightsPageAuthenticated.tsx:4401   - trip_title: Vietnam's Coastal Charm and Highland Cool
+FlightsPageAuthenticated.tsx:4401   - trip_title: Vietnam Express: Highlights of North & South
 FlightsPageAuthenticated.tsx:4402   - no_of_days: 7
-FlightsPageAuthenticated.tsx:4403   - estimated_budget: 170000
-FlightsPageAuthenticated.tsx:4404   - best_time_to_visit: December to April
-FlightsPageAuthenticated.tsx:4405   - theme: (3) ['Beach', 'Nature', 'Adventure']
-FlightsPageAuthenticated.tsx:4406   - themes: (3) ['Beach', 'Nature', 'Adventure']
-FlightsPageAuthenticated.tsx:4407   - trip_route length: 3
+FlightsPageAuthenticated.tsx:4403   - estimated_budget: 120000
+FlightsPageAuthenticated.tsx:4404   - best_time_to_visit: December to March
+FlightsPageAuthenticated.tsx:4405   - theme: (4) ['Culture', 'History', 'City Life', 'Food']
+FlightsPageAuthenticated.tsx:4406   - themes: (4) ['Culture', 'History', 'City Life', 'Food']
+FlightsPageAuthenticated.tsx:4407   - trip_route length: 2
 FlightsPageAuthenticated.tsx:4411   - day_wise_plan length: 7
 FlightsPageAuthenticated.tsx:4102 Original trip suggestions: (5) [{…}, {…}, {…}, {…}, {…}]
 FlightsPageAuthenticated.tsx:4103 Transformed trip suggestions: (5) [{…}, {…}, {…}, {…}, {…}]
 FlightsPageAuthenticated.tsx:3833 🎯 Safety check: Ensuring loader is still visible
 FlightsPageAuthenticated.tsx:3835 🎯 Safety: Loader was hidden prematurely, re-showing
-imageDownloader.ts:94 Successfully downloaded image: /api/place-photo?photoreference=AWn5SU4CxMPn8JSrOV0BOHYMh7AEa8LjOjI2qhGNG5X3532BdQRP4BBJMsoH7hcS9Qow...
-imageDownloader.ts:94 Successfully downloaded image: /api/place-photo?photoreference=AWn5SU6jQWxxHOU0m4L961akBUD40qhs2ySqJUXUD5wnznXCDR0jXFT8NYicdzpfJdxg...
-imageDownloader.ts:94 Successfully downloaded image: /api/place-photo?photoreference=AWn5SU4LoqRskEAY0IQSJ_rFU_e62y6XGBWSihKtdmGdhmOQF_QlOH1-s52pWP6bGSYt...
-imageDownloader.ts:94 Successfully downloaded image: /api/place-photo?photoreference=AWn5SU6msI0vtORHUNNctqG8qQH-TFNnEkCxbb8MmDtSWTFiQuPGFCHSxsF9jR1g9Ui6...
-imageDownloader.ts:94 Successfully downloaded image: /api/place-photo?photoreference=AWn5SU7EW9XzZ_TwkLRGNlPBnGBJJvCRaiZWb2h2ARx8jsCrRkTCOBNcQXBwYF877MzU...
-imageDownloader.ts:94 Successfully downloaded image: /api/place-photo?photoreference=AWn5SU7g8U8t_Y2ABemZCeisu8bipCNdbcvmVbS0aKCvavkmfqlZuTcTzJSxhZ63kO4t...
-imageDownloader.ts:94 Successfully downloaded image: /api/place-photo?photoreference=AWn5SU7Hmdda_Vq9-c3moeBf_mUWkFnpve6NTzf6HFdbqQROn3uVIWIAvVWm6ny77AaU...
-imageDownloader.ts:94 Successfully downloaded image: /api/place-photo?photoreference=AWn5SU4tyG3wUyx-pZ5okeOkVxMXXg69BqtVvJxl6YPXZBFonA-N25i5SYjMjN0fjQvi...
-imageDownloader.ts:94 Successfully downloaded image: /api/place-photo?photoreference=AWn5SU5jNkStC5dPvxC0YMgOL7y9H3j4JFal-3b_AuWbdO7hvLurSlyUjQ6fQo9QLdFV...
-imageDownloader.ts:94 Successfully downloaded image: /api/place-photo?photoreference=AWn5SU7eYNYOD6J8p3yZMaE0ZKmkRd9tV-r4LIl3opDCdrSnUJICBfRxRP9M5_K2Ada-...
-imageDownloader.ts:94 Successfully downloaded image: /api/place-photo?photoreference=AWn5SU68Jo2I7DwUcoK7N-jndft_Ev4joEaNiYCscb5mu3weD3BNOpcm7gQ9amk5ecKN...
-imageDownloader.ts:94 Successfully downloaded image: /api/place-photo?photoreference=AWn5SU5XUCPjyFX9zcEHKlvKwTT0Taf5B0D_c_JXk-uP7r44LkfQb4ywsVIVW0AKB08i...
-imageDownloader.ts:94 Successfully downloaded image: /api/place-photo?photoreference=AWn5SU4iF8bTCpj-gRQ7rWo4Msk5__qBcG0m82T4HnS6wQp6Hvt2aUdDHrhB46CJKtnM...
-imageDownloader.ts:138 Downloaded 13 images successfully
-FlightsPageAuthenticated.tsx:4089 Successfully downloaded 13 images
+hot-reloader-app.js:197 [Fast Refresh] rebuilding
+report-hmr-latency.js:14 [Fast Refresh] done in 313ms
+imageDownloader.ts:94 Successfully downloaded image: /api/place-photo?photoreference=AWn5SU7Z5_mP4s1vfLI4ooX_SqS-DetNA9GjXmzTi3f0T55_bmV6tThiKTHWKRu3M_4Z...
+imageDownloader.ts:94 Successfully downloaded image: /api/place-photo?photoreference=AWn5SU68pDkEfPiu0OfT_Usdwh3x0B46XZERrXmomJaBRJratN2CklOyQIU3rkt3B-6M...
+imageDownloader.ts:94 Successfully downloaded image: /api/place-photo?photoreference=AWn5SU5ah92eTFaBxLvrmCkgrIQv9R19qRQBFTFDqyjHhWNbVWgOGnH9oBDXvdNJ9OqO...
+imageDownloader.ts:94 Successfully downloaded image: /api/place-photo?photoreference=AWn5SU7k1gO74sF7qYyv-ZLvsMTh0yB9gKwTZ3H3XosUuJuFlEP1RFg2R6yCUkYMAC2P...
+imageDownloader.ts:94 Successfully downloaded image: /api/place-photo?photoreference=AWn5SU6pBM4oQ7IABqscb5JgT1mtW457PI_3w-wiahdiyJG3Di9Nh5to6BGkVN2u3hPw...
+imageDownloader.ts:94 Successfully downloaded image: /api/place-photo?photoreference=AWn5SU40h363UknjnM_xvIFGaYf3opqGqm8CcvOJZ6Efwr4KoqKh6usAg3CzPCpp7kIl...
+imageDownloader.ts:94 Successfully downloaded image: /api/place-photo?photoreference=AWn5SU7uVQopmWoHTyDnDm6HTcoTCY47s3n16__CFtgpZCWJt45px9EjXxBhkUH5sTTz...
+imageDownloader.ts:138 Downloaded 7 images successfully
+FlightsPageAuthenticated.tsx:4089 Successfully downloaded 7 images
 FlightsPageAuthenticated.tsx:4115 🎯 Trip loader minimum duration completed, hiding loader
 FlightsPageAuthenticated.tsx:4137 Places widget activated with trip suggestions
 FlashcardsWidget.tsx:115 FlashcardsWidget trips data with images from JSON:
-FlashcardsWidget.tsx:127 Trip 1: Classic Vietnam: From Northern Peaks to Southern Bustle
-FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6msI0vtORHUNNctqG8qQH-TFNnEkCxbb8MmDtSWTFiQuPGFCHSxsF9jR1g9Ui68Cf25teKN1nMFA36VAQncggLz0Aa530bKl352yp3vHeIaDmd67wLHfVY2B1C080GMfsK7Pprdai6FiG8WE-KK39gEcE_n7_t2MLY1XhttCfTeou4Bq1VC-Kmecg3vm5BYoNNSvHgSf6OL31UeorH4_OClNMHdS7nffdL82xYsNdM6AvH4hfzx2OWTVx5Ox3mjvBdHAED_UAhJ9Jn2oVMgHOimlEZtYClVFHbQp_UG2u7eq0MgGm3cc-4MVAR624zmWNkL-19N-HCs_s6EJqMQ6n3Nqza5S0259HYxVpXdzmKTwU6izpmSFeYbkFdka7BJ6XDk-UKlFWpoyBE01K01YFxiNs7rwmFUsxMsjz-TH0juKdtOI1gyvzZ6eUY2kA_XIhHWZsUetiVj7cs7a1xZ-ADVgexnPSMaJodRPJ20qYdUeD_8uV_bP06102YpqXBbeOrpHev1ZmNsk9AcsPr9xlRTj_EKm_1GvtEALv3AnpAip6b0TCOfCw3FGmB02P2nQpYEg&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
+FlashcardsWidget.tsx:127 Trip 1: Northern Wonders: Hanoi's Culture & Halong's Majesty
+FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU5ah92eTFaBxLvrmCkgrIQv9R19qRQBFTFDqyjHhWNbVWgOGnH9oBDXvdNJ9OqOBaVuICGZ3LjaQkyQRMLHRTJLQlRylWzSmbh8JTZS1zwNbbp9hwrIkVofDYco47-GdpeDrH3EkvvVDqfXuRa4OmamZ028g_dzD73ixFxD0DltNrqM-T-fBkxGrsamRwauXjY2SeK08jqrtI2wtUuV1oEbkETN3H4wP3S8wLnb4PhJjgMo-YotO-l9euB4ZlG63C9yC7YkIuCzjtYX0b7qn5iIbk5e0EYdyTgTZgUifG62Bhrdn9x2mSCxzZUbtZKPhC6aMvAxrJtAlWTl0zTT-dUpF_8NB0SmHq3IMtUiyJCNpwXDzk3fdCuoTW67jXWDXu4gLa0Pcv0guxuErSTO1at0jlknfhHFDoZSamBpMY7c2fZdPiWR-kB9ZYXAPSwjTWjsTI_GZMmqecpjGOPznFSQDVMZJYzCAV460CoDUQQ0d3gdNKLHhJof7UZ9xwQGcJ2gLwnsmMwMLCs37ZRlE-K1smFwIbOeZwzekMWBeSWJfMJwa5npOWY-7q7H6jGJv-NDCg&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
 FlashcardsWidget.tsx:129   - Is Google Places photo: true
 FlashcardsWidget.tsx:130   - Using image: undefined
 FlashcardsWidget.tsx:131   - Source: Google Places API
-FlashcardsWidget.tsx:140   - Themes: Culture, History, Nature
-FlashcardsWidget.tsx:127 Trip 2: Northern Vietnam: Adventure and Culture
-FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6msI0vtORHUNNctqG8qQH-TFNnEkCxbb8MmDtSWTFiQuPGFCHSxsF9jR1g9Ui68Cf25teKN1nMFA36VAQncggLz0Aa530bKl352yp3vHeIaDmd67wLHfVY2B1C080GMfsK7Pprdai6FiG8WE-KK39gEcE_n7_t2MLY1XhttCfTeou4Bq1VC-Kmecg3vm5BYoNNSvHgSf6OL31UeorH4_OClNMHdS7nffdL82xYsNdM6AvH4hfzx2OWTVx5Ox3mjvBdHAED_UAhJ9Jn2oVMgHOimlEZtYClVFHbQp_UG2u7eq0MgGm3cc-4MVAR624zmWNkL-19N-HCs_s6EJqMQ6n3Nqza5S0259HYxVpXdzmKTwU6izpmSFeYbkFdka7BJ6XDk-UKlFWpoyBE01K01YFxiNs7rwmFUsxMsjz-TH0juKdtOI1gyvzZ6eUY2kA_XIhHWZsUetiVj7cs7a1xZ-ADVgexnPSMaJodRPJ20qYdUeD_8uV_bP06102YpqXBbeOrpHev1ZmNsk9AcsPr9xlRTj_EKm_1GvtEALv3AnpAip6b0TCOfCw3FGmB02P2nQpYEg&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
+FlashcardsWidget.tsx:140   - Themes: Culture, Nature, Food, Relaxation
+FlashcardsWidget.tsx:127 Trip 2: Southern Charm: Saigon & the Mekong Delta
+FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6pBM4oQ7IABqscb5JgT1mtW457PI_3w-wiahdiyJG3Di9Nh5to6BGkVN2u3hPwi2jL3b6C_h8SfsMD9ZwF9AnH80LYinOuOYMvJLH2Q9j1Pbw6pGYfE2eRG8ZlyZivnU6h72Q1sIG19vQGcgXlKmM-1ziecgSvLc1sJr6Fi2KgyzBQMbEIpgpvltncMp6-Kb3y5crWW_UzwRYMqO8M-a_suuCiC7IySf38g1zg1lDgShljsTJiT_drfvi8LPsDkipW3Us_ZirVMyqHnssu9rtvw5Lnco_pSrcUdTRPnG-9YvuJqvAXBogbLZcjGAOx3_zSfBGovdOxRVtSrghwdBcTcb9CcgWbnFOv36p34IgsOcm9EDeKQFUznwPJPFLtSHyBYqhN9NiC-V3MaO0nQVFbmgpMNa76j3320lXseATVldEs54iyTwC3iuj8L8KShWort4cg72e-Wgkswi2_5PAkFQ5HMVn5aARlD7JgImNF4L_LzY16WPVFBw36hXrtboUD28uP6MqVF_azS_Up8fONv_GvsgYL592G4f6rp8zjMWPEEHY4pG9k7MmTGOAzjzsP9Q&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
 FlashcardsWidget.tsx:129   - Is Google Places photo: true
 FlashcardsWidget.tsx:130   - Using image: undefined
 FlashcardsWidget.tsx:131   - Source: Google Places API
-FlashcardsWidget.tsx:140   - Themes: Adventure, Nature, Culture
-FlashcardsWidget.tsx:127 Trip 3: Central Vietnam: Heritage and Beaches
-FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU7g8U8t_Y2ABemZCeisu8bipCNdbcvmVbS0aKCvavkmfqlZuTcTzJSxhZ63kO4tJoBDwx9OCNkHdhftrgf87mxZPk7tDf1YQP2Nnf8yZ8TzTBpyLPgoJS3MSByCht_zIUztnUPIUPzh4KYX0cL05lRn9-bsG4Kf1EBdO3Q6RxTexjWSqO4DuTJfHscS96HnjIGutAX_ojqLlmJnKYfsaVPHi-qi2OMYgQzuNSffqP2EhScSyVu4NpsqdUuVN3lcB-qNnVOgqIXkaGmjJft1bIMDmXNVFRmLTHSynryJX9lU-WpRY6XI6g1hE-V3DI7iq2UxXBClHk2MoK_tLWnOySNWsNlqnsFb0_K3i-oYtu4kz_BdpHiA0jAsYx334cwppmTbtYMbY-eVZvXFuPWiL59dsduOvBTOdAFXPpjF-9h86w58Lz7qc3-B6ShH-diGpVIUCFA4NoTHN0HAxFc0JHcbmpb1Yhx102pZqRPfPRxAfr7mNQKq9jpjANSqp3hNicy0H2lBFbpQuBPJwtNGmXyq8GPETCrHl-xKcJnBxfPlYH1Vw0TB62fR9lwT4kIEPJiY6z-c&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
+FlashcardsWidget.tsx:140   - Themes: History, Culture, Food, River Cruise
+FlashcardsWidget.tsx:127 Trip 3: Central Coast Bliss: Da Nang & Hoi An's Ancient Charm
+FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU7Z5_mP4s1vfLI4ooX_SqS-DetNA9GjXmzTi3f0T55_bmV6tThiKTHWKRu3M_4ZMCbnJajjUgLEhrsCO96pFSWYM8Dn8yMNf24CtZDl4P_J1jr8B9oj4VHSQS3cylaEBmRyazojXquGg8AaDhAQQutAk8NC9a4fXDsoM5x9YA1EOdB2Evb_XUnfk-qCUEBG7ivicZKuvCvKzsvQ8JshA-Z77KE8lS7tbXb5sLlJKagmkWhOnszEgaNlIyCeswVgULrtNH5kl_K-nfFdcEcn6bqxVz4dCakI3j7MY7zMlaHUKTIhyRd5YgRyS8wbPVhwLcCEqTtnH-Ulfj_Zev7Vv50SlxHOCrh0qoIbMlppeIEa1ugGnlhtP2ly2QaYxUOMbKAuzPkI0pw2MJkvN_AAGWU08oXkCq8F3SXxt_zteHx5QgUnV8VOzQmauxCJM1D_UZCy7X1gQif12RXsw3mytsP6A2DYh0k9fEX9lgXvjE_xFddJfe4ep3Za32jszKSYfIR0EQmL4EynSsb4a8f6TApvbIlsV07joonz1mwHdt9BZ-iVLy8xIDteAYbZN8QdfdWg2K33&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
 FlashcardsWidget.tsx:129   - Is Google Places photo: true
 FlashcardsWidget.tsx:130   - Using image: undefined
 FlashcardsWidget.tsx:131   - Source: Google Places API
-FlashcardsWidget.tsx:140   - Themes: History, Beach, Culture
-FlashcardsWidget.tsx:127 Trip 4: Southern Vietnam: City, Delta, and Island
-FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6jQWxxHOU0m4L961akBUD40qhs2ySqJUXUD5wnznXCDR0jXFT8NYicdzpfJdxgXh3swPbDcDmG34rTEGqsxlxQGGmQF_zEfqcQAxVSJtDvIL1weml4BUtTP_r7Owb5PIQVkjkJK9cGfKLKtXx2seuKYJcjlLGu-c055SjKtdsdZCZfuw6D17NI83di6eeSz-u-C7Ve8itvqcj486fgZVuPJHsT36tvzmVtG0YQy7PO_uvynSutI-6GrSc85GY4FaGYfmsasUD2yoHvgffXvVbQsu6OnDRzxmbkStbYzgIbYy7l4d8mVzv5pD4VuPuWGAUJS0SrlGFRWGBIcZJjByeXUpwX0xDG9Cq8xrQBjFbvAxgy_leIt3cwCKHKMplFNy6V9rrKWEj3socOMpZ9tCBVWCx_4u7Rs_jeeduLVVGIml1qbW9CxdBJLm6GIWPZ0vI_Bm5vX30SUyBPFjy9roeWWGHXS5XtnLY6Qu03c071Z3dyS8OqcKvJzUQsf7a8WUcpqnEZO3ZBT_XUPQkX7iZCo2v-nCRpquVG1IVRKGHJWo2dkZEn5ptkBzX5xeVUUtuF2Q&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
+FlashcardsWidget.tsx:140   - Themes: Beach, History, Culture, Relaxation
+FlashcardsWidget.tsx:127 Trip 4: Northern Highlands Adventure: Hanoi & Sapa Trekking
+FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU5ah92eTFaBxLvrmCkgrIQv9R19qRQBFTFDqyjHhWNbVWgOGnH9oBDXvdNJ9OqOBaVuICGZ3LjaQkyQRMLHRTJLQlRylWzSmbh8JTZS1zwNbbp9hwrIkVofDYco47-GdpeDrH3EkvvVDqfXuRa4OmamZ028g_dzD73ixFxD0DltNrqM-T-fBkxGrsamRwauXjY2SeK08jqrtI2wtUuV1oEbkETN3H4wP3S8wLnb4PhJjgMo-YotO-l9euB4ZlG63C9yC7YkIuCzjtYX0b7qn5iIbk5e0EYdyTgTZgUifG62Bhrdn9x2mSCxzZUbtZKPhC6aMvAxrJtAlWTl0zTT-dUpF_8NB0SmHq3IMtUiyJCNpwXDzk3fdCuoTW67jXWDXu4gLa0Pcv0guxuErSTO1at0jlknfhHFDoZSamBpMY7c2fZdPiWR-kB9ZYXAPSwjTWjsTI_GZMmqecpjGOPznFSQDVMZJYzCAV460CoDUQQ0d3gdNKLHhJof7UZ9xwQGcJ2gLwnsmMwMLCs37ZRlE-K1smFwIbOeZwzekMWBeSWJfMJwa5npOWY-7q7H6jGJv-NDCg&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
 FlashcardsWidget.tsx:129   - Is Google Places photo: true
 FlashcardsWidget.tsx:130   - Using image: undefined
 FlashcardsWidget.tsx:131   - Source: Google Places API
-FlashcardsWidget.tsx:140   - Themes: City Life, Nature, Beach
-FlashcardsWidget.tsx:127 Trip 5: Vietnam's Coastal Charm and Highland Cool
-FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU5XUCPjyFX9zcEHKlvKwTT0Taf5B0D_c_JXk-uP7r44LkfQb4ywsVIVW0AKB08iqsw3VH0Pbg3JrISSLWciHz_McJ3cC1KI3t0jNBgbw3t26RdwldVkHzZdpTtz5vOyeIbYrwQYTpf8yCt0MuJkmYOmeiknITNEuE568a-xJ31tzxulL7LCGn0foSbGsxBHRuXOuSFd27VEhZ5X5oMsCPQOVDq8CIjMEIYEQrS2OmxnSGG-lkXp2oL1kpDNhBflrdbPLsqb0PWel_j2eMcMoK4wQEA3do5Gi55kV5Gls_kPKYtaJJ4Y2QnXY2tRJFRQoRy75VgmNSz6zvMPX3x4kKtRXdEsi1cthM2nG7pcknceLr-YjdHHGezvxFomYr79oPxlHtPtaA0F-khyYatgYtpfwiGLQX29bcNxgz7xDJ1vC4uZxAogn6KQKz3pDfm981WJKFefd1RO31m-o5b1wv2UaMG51IIdEoH9deEdSqqHMmdT_t-9nvhvRRgCtdI8qr6bRL3z51TknLGSNv9UGk183LRkt0hgQe4Tc_mJYWsn7exe0I8NffZ8tr08RTBGkCZ5E6NE&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
+FlashcardsWidget.tsx:140   - Themes: Adventure, Nature, Culture, Trekking
+FlashcardsWidget.tsx:127 Trip 5: Vietnam Express: Highlights of North & South
+FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU5ah92eTFaBxLvrmCkgrIQv9R19qRQBFTFDqyjHhWNbVWgOGnH9oBDXvdNJ9OqOBaVuICGZ3LjaQkyQRMLHRTJLQlRylWzSmbh8JTZS1zwNbbp9hwrIkVofDYco47-GdpeDrH3EkvvVDqfXuRa4OmamZ028g_dzD73ixFxD0DltNrqM-T-fBkxGrsamRwauXjY2SeK08jqrtI2wtUuV1oEbkETN3H4wP3S8wLnb4PhJjgMo-YotO-l9euB4ZlG63C9yC7YkIuCzjtYX0b7qn5iIbk5e0EYdyTgTZgUifG62Bhrdn9x2mSCxzZUbtZKPhC6aMvAxrJtAlWTl0zTT-dUpF_8NB0SmHq3IMtUiyJCNpwXDzk3fdCuoTW67jXWDXu4gLa0Pcv0guxuErSTO1at0jlknfhHFDoZSamBpMY7c2fZdPiWR-kB9ZYXAPSwjTWjsTI_GZMmqecpjGOPznFSQDVMZJYzCAV460CoDUQQ0d3gdNKLHhJof7UZ9xwQGcJ2gLwnsmMwMLCs37ZRlE-K1smFwIbOeZwzekMWBeSWJfMJwa5npOWY-7q7H6jGJv-NDCg&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
 FlashcardsWidget.tsx:129   - Is Google Places photo: true
 FlashcardsWidget.tsx:130   - Using image: undefined
 FlashcardsWidget.tsx:131   - Source: Google Places API
-FlashcardsWidget.tsx:140   - Themes: Beach, Nature, Adventure
+FlashcardsWidget.tsx:140   - Themes: Culture, History, City Life, Food
 FlashcardsWidget.tsx:152 Starting image preloading...
 FlashcardsWidget.tsx:157 Found 10 images to preload
 FlashcardsWidget.tsx:115 FlashcardsWidget trips data with images from JSON:
-FlashcardsWidget.tsx:127 Trip 1: Classic Vietnam: From Northern Peaks to Southern Bustle
-FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6msI0vtORHUNNctqG8qQH-TFNnEkCxbb8MmDtSWTFiQuPGFCHSxsF9jR1g9Ui68Cf25teKN1nMFA36VAQncggLz0Aa530bKl352yp3vHeIaDmd67wLHfVY2B1C080GMfsK7Pprdai6FiG8WE-KK39gEcE_n7_t2MLY1XhttCfTeou4Bq1VC-Kmecg3vm5BYoNNSvHgSf6OL31UeorH4_OClNMHdS7nffdL82xYsNdM6AvH4hfzx2OWTVx5Ox3mjvBdHAED_UAhJ9Jn2oVMgHOimlEZtYClVFHbQp_UG2u7eq0MgGm3cc-4MVAR624zmWNkL-19N-HCs_s6EJqMQ6n3Nqza5S0259HYxVpXdzmKTwU6izpmSFeYbkFdka7BJ6XDk-UKlFWpoyBE01K01YFxiNs7rwmFUsxMsjz-TH0juKdtOI1gyvzZ6eUY2kA_XIhHWZsUetiVj7cs7a1xZ-ADVgexnPSMaJodRPJ20qYdUeD_8uV_bP06102YpqXBbeOrpHev1ZmNsk9AcsPr9xlRTj_EKm_1GvtEALv3AnpAip6b0TCOfCw3FGmB02P2nQpYEg&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
+FlashcardsWidget.tsx:127 Trip 1: Northern Wonders: Hanoi's Culture & Halong's Majesty
+FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU5ah92eTFaBxLvrmCkgrIQv9R19qRQBFTFDqyjHhWNbVWgOGnH9oBDXvdNJ9OqOBaVuICGZ3LjaQkyQRMLHRTJLQlRylWzSmbh8JTZS1zwNbbp9hwrIkVofDYco47-GdpeDrH3EkvvVDqfXuRa4OmamZ028g_dzD73ixFxD0DltNrqM-T-fBkxGrsamRwauXjY2SeK08jqrtI2wtUuV1oEbkETN3H4wP3S8wLnb4PhJjgMo-YotO-l9euB4ZlG63C9yC7YkIuCzjtYX0b7qn5iIbk5e0EYdyTgTZgUifG62Bhrdn9x2mSCxzZUbtZKPhC6aMvAxrJtAlWTl0zTT-dUpF_8NB0SmHq3IMtUiyJCNpwXDzk3fdCuoTW67jXWDXu4gLa0Pcv0guxuErSTO1at0jlknfhHFDoZSamBpMY7c2fZdPiWR-kB9ZYXAPSwjTWjsTI_GZMmqecpjGOPznFSQDVMZJYzCAV460CoDUQQ0d3gdNKLHhJof7UZ9xwQGcJ2gLwnsmMwMLCs37ZRlE-K1smFwIbOeZwzekMWBeSWJfMJwa5npOWY-7q7H6jGJv-NDCg&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
 FlashcardsWidget.tsx:129   - Is Google Places photo: true
 FlashcardsWidget.tsx:130   - Using image: undefined
 FlashcardsWidget.tsx:131   - Source: Google Places API
-FlashcardsWidget.tsx:140   - Themes: Culture, History, Nature
-FlashcardsWidget.tsx:127 Trip 2: Northern Vietnam: Adventure and Culture
-FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6msI0vtORHUNNctqG8qQH-TFNnEkCxbb8MmDtSWTFiQuPGFCHSxsF9jR1g9Ui68Cf25teKN1nMFA36VAQncggLz0Aa530bKl352yp3vHeIaDmd67wLHfVY2B1C080GMfsK7Pprdai6FiG8WE-KK39gEcE_n7_t2MLY1XhttCfTeou4Bq1VC-Kmecg3vm5BYoNNSvHgSf6OL31UeorH4_OClNMHdS7nffdL82xYsNdM6AvH4hfzx2OWTVx5Ox3mjvBdHAED_UAhJ9Jn2oVMgHOimlEZtYClVFHbQp_UG2u7eq0MgGm3cc-4MVAR624zmWNkL-19N-HCs_s6EJqMQ6n3Nqza5S0259HYxVpXdzmKTwU6izpmSFeYbkFdka7BJ6XDk-UKlFWpoyBE01K01YFxiNs7rwmFUsxMsjz-TH0juKdtOI1gyvzZ6eUY2kA_XIhHWZsUetiVj7cs7a1xZ-ADVgexnPSMaJodRPJ20qYdUeD_8uV_bP06102YpqXBbeOrpHev1ZmNsk9AcsPr9xlRTj_EKm_1GvtEALv3AnpAip6b0TCOfCw3FGmB02P2nQpYEg&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
+FlashcardsWidget.tsx:140   - Themes: Culture, Nature, Food, Relaxation
+FlashcardsWidget.tsx:127 Trip 2: Southern Charm: Saigon & the Mekong Delta
+FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6pBM4oQ7IABqscb5JgT1mtW457PI_3w-wiahdiyJG3Di9Nh5to6BGkVN2u3hPwi2jL3b6C_h8SfsMD9ZwF9AnH80LYinOuOYMvJLH2Q9j1Pbw6pGYfE2eRG8ZlyZivnU6h72Q1sIG19vQGcgXlKmM-1ziecgSvLc1sJr6Fi2KgyzBQMbEIpgpvltncMp6-Kb3y5crWW_UzwRYMqO8M-a_suuCiC7IySf38g1zg1lDgShljsTJiT_drfvi8LPsDkipW3Us_ZirVMyqHnssu9rtvw5Lnco_pSrcUdTRPnG-9YvuJqvAXBogbLZcjGAOx3_zSfBGovdOxRVtSrghwdBcTcb9CcgWbnFOv36p34IgsOcm9EDeKQFUznwPJPFLtSHyBYqhN9NiC-V3MaO0nQVFbmgpMNa76j3320lXseATVldEs54iyTwC3iuj8L8KShWort4cg72e-Wgkswi2_5PAkFQ5HMVn5aARlD7JgImNF4L_LzY16WPVFBw36hXrtboUD28uP6MqVF_azS_Up8fONv_GvsgYL592G4f6rp8zjMWPEEHY4pG9k7MmTGOAzjzsP9Q&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
 FlashcardsWidget.tsx:129   - Is Google Places photo: true
 FlashcardsWidget.tsx:130   - Using image: undefined
 FlashcardsWidget.tsx:131   - Source: Google Places API
-FlashcardsWidget.tsx:140   - Themes: Adventure, Nature, Culture
-FlashcardsWidget.tsx:127 Trip 3: Central Vietnam: Heritage and Beaches
-FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU7g8U8t_Y2ABemZCeisu8bipCNdbcvmVbS0aKCvavkmfqlZuTcTzJSxhZ63kO4tJoBDwx9OCNkHdhftrgf87mxZPk7tDf1YQP2Nnf8yZ8TzTBpyLPgoJS3MSByCht_zIUztnUPIUPzh4KYX0cL05lRn9-bsG4Kf1EBdO3Q6RxTexjWSqO4DuTJfHscS96HnjIGutAX_ojqLlmJnKYfsaVPHi-qi2OMYgQzuNSffqP2EhScSyVu4NpsqdUuVN3lcB-qNnVOgqIXkaGmjJft1bIMDmXNVFRmLTHSynryJX9lU-WpRY6XI6g1hE-V3DI7iq2UxXBClHk2MoK_tLWnOySNWsNlqnsFb0_K3i-oYtu4kz_BdpHiA0jAsYx334cwppmTbtYMbY-eVZvXFuPWiL59dsduOvBTOdAFXPpjF-9h86w58Lz7qc3-B6ShH-diGpVIUCFA4NoTHN0HAxFc0JHcbmpb1Yhx102pZqRPfPRxAfr7mNQKq9jpjANSqp3hNicy0H2lBFbpQuBPJwtNGmXyq8GPETCrHl-xKcJnBxfPlYH1Vw0TB62fR9lwT4kIEPJiY6z-c&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
+FlashcardsWidget.tsx:140   - Themes: History, Culture, Food, River Cruise
+FlashcardsWidget.tsx:127 Trip 3: Central Coast Bliss: Da Nang & Hoi An's Ancient Charm
+FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU7Z5_mP4s1vfLI4ooX_SqS-DetNA9GjXmzTi3f0T55_bmV6tThiKTHWKRu3M_4ZMCbnJajjUgLEhrsCO96pFSWYM8Dn8yMNf24CtZDl4P_J1jr8B9oj4VHSQS3cylaEBmRyazojXquGg8AaDhAQQutAk8NC9a4fXDsoM5x9YA1EOdB2Evb_XUnfk-qCUEBG7ivicZKuvCvKzsvQ8JshA-Z77KE8lS7tbXb5sLlJKagmkWhOnszEgaNlIyCeswVgULrtNH5kl_K-nfFdcEcn6bqxVz4dCakI3j7MY7zMlaHUKTIhyRd5YgRyS8wbPVhwLcCEqTtnH-Ulfj_Zev7Vv50SlxHOCrh0qoIbMlppeIEa1ugGnlhtP2ly2QaYxUOMbKAuzPkI0pw2MJkvN_AAGWU08oXkCq8F3SXxt_zteHx5QgUnV8VOzQmauxCJM1D_UZCy7X1gQif12RXsw3mytsP6A2DYh0k9fEX9lgXvjE_xFddJfe4ep3Za32jszKSYfIR0EQmL4EynSsb4a8f6TApvbIlsV07joonz1mwHdt9BZ-iVLy8xIDteAYbZN8QdfdWg2K33&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
 FlashcardsWidget.tsx:129   - Is Google Places photo: true
 FlashcardsWidget.tsx:130   - Using image: undefined
 FlashcardsWidget.tsx:131   - Source: Google Places API
-FlashcardsWidget.tsx:140   - Themes: History, Beach, Culture
-FlashcardsWidget.tsx:127 Trip 4: Southern Vietnam: City, Delta, and Island
-FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6jQWxxHOU0m4L961akBUD40qhs2ySqJUXUD5wnznXCDR0jXFT8NYicdzpfJdxgXh3swPbDcDmG34rTEGqsxlxQGGmQF_zEfqcQAxVSJtDvIL1weml4BUtTP_r7Owb5PIQVkjkJK9cGfKLKtXx2seuKYJcjlLGu-c055SjKtdsdZCZfuw6D17NI83di6eeSz-u-C7Ve8itvqcj486fgZVuPJHsT36tvzmVtG0YQy7PO_uvynSutI-6GrSc85GY4FaGYfmsasUD2yoHvgffXvVbQsu6OnDRzxmbkStbYzgIbYy7l4d8mVzv5pD4VuPuWGAUJS0SrlGFRWGBIcZJjByeXUpwX0xDG9Cq8xrQBjFbvAxgy_leIt3cwCKHKMplFNy6V9rrKWEj3socOMpZ9tCBVWCx_4u7Rs_jeeduLVVGIml1qbW9CxdBJLm6GIWPZ0vI_Bm5vX30SUyBPFjy9roeWWGHXS5XtnLY6Qu03c071Z3dyS8OqcKvJzUQsf7a8WUcpqnEZO3ZBT_XUPQkX7iZCo2v-nCRpquVG1IVRKGHJWo2dkZEn5ptkBzX5xeVUUtuF2Q&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
+FlashcardsWidget.tsx:140   - Themes: Beach, History, Culture, Relaxation
+FlashcardsWidget.tsx:127 Trip 4: Northern Highlands Adventure: Hanoi & Sapa Trekking
+FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU5ah92eTFaBxLvrmCkgrIQv9R19qRQBFTFDqyjHhWNbVWgOGnH9oBDXvdNJ9OqOBaVuICGZ3LjaQkyQRMLHRTJLQlRylWzSmbh8JTZS1zwNbbp9hwrIkVofDYco47-GdpeDrH3EkvvVDqfXuRa4OmamZ028g_dzD73ixFxD0DltNrqM-T-fBkxGrsamRwauXjY2SeK08jqrtI2wtUuV1oEbkETN3H4wP3S8wLnb4PhJjgMo-YotO-l9euB4ZlG63C9yC7YkIuCzjtYX0b7qn5iIbk5e0EYdyTgTZgUifG62Bhrdn9x2mSCxzZUbtZKPhC6aMvAxrJtAlWTl0zTT-dUpF_8NB0SmHq3IMtUiyJCNpwXDzk3fdCuoTW67jXWDXu4gLa0Pcv0guxuErSTO1at0jlknfhHFDoZSamBpMY7c2fZdPiWR-kB9ZYXAPSwjTWjsTI_GZMmqecpjGOPznFSQDVMZJYzCAV460CoDUQQ0d3gdNKLHhJof7UZ9xwQGcJ2gLwnsmMwMLCs37ZRlE-K1smFwIbOeZwzekMWBeSWJfMJwa5npOWY-7q7H6jGJv-NDCg&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
 FlashcardsWidget.tsx:129   - Is Google Places photo: true
 FlashcardsWidget.tsx:130   - Using image: undefined
 FlashcardsWidget.tsx:131   - Source: Google Places API
-FlashcardsWidget.tsx:140   - Themes: City Life, Nature, Beach
-FlashcardsWidget.tsx:127 Trip 5: Vietnam's Coastal Charm and Highland Cool
-FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU5XUCPjyFX9zcEHKlvKwTT0Taf5B0D_c_JXk-uP7r44LkfQb4ywsVIVW0AKB08iqsw3VH0Pbg3JrISSLWciHz_McJ3cC1KI3t0jNBgbw3t26RdwldVkHzZdpTtz5vOyeIbYrwQYTpf8yCt0MuJkmYOmeiknITNEuE568a-xJ31tzxulL7LCGn0foSbGsxBHRuXOuSFd27VEhZ5X5oMsCPQOVDq8CIjMEIYEQrS2OmxnSGG-lkXp2oL1kpDNhBflrdbPLsqb0PWel_j2eMcMoK4wQEA3do5Gi55kV5Gls_kPKYtaJJ4Y2QnXY2tRJFRQoRy75VgmNSz6zvMPX3x4kKtRXdEsi1cthM2nG7pcknceLr-YjdHHGezvxFomYr79oPxlHtPtaA0F-khyYatgYtpfwiGLQX29bcNxgz7xDJ1vC4uZxAogn6KQKz3pDfm981WJKFefd1RO31m-o5b1wv2UaMG51IIdEoH9deEdSqqHMmdT_t-9nvhvRRgCtdI8qr6bRL3z51TknLGSNv9UGk183LRkt0hgQe4Tc_mJYWsn7exe0I8NffZ8tr08RTBGkCZ5E6NE&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
+FlashcardsWidget.tsx:140   - Themes: Adventure, Nature, Culture, Trekking
+FlashcardsWidget.tsx:127 Trip 5: Vietnam Express: Highlights of North & South
+FlashcardsWidget.tsx:128   - JSON photo URL: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU5ah92eTFaBxLvrmCkgrIQv9R19qRQBFTFDqyjHhWNbVWgOGnH9oBDXvdNJ9OqOBaVuICGZ3LjaQkyQRMLHRTJLQlRylWzSmbh8JTZS1zwNbbp9hwrIkVofDYco47-GdpeDrH3EkvvVDqfXuRa4OmamZ028g_dzD73ixFxD0DltNrqM-T-fBkxGrsamRwauXjY2SeK08jqrtI2wtUuV1oEbkETN3H4wP3S8wLnb4PhJjgMo-YotO-l9euB4ZlG63C9yC7YkIuCzjtYX0b7qn5iIbk5e0EYdyTgTZgUifG62Bhrdn9x2mSCxzZUbtZKPhC6aMvAxrJtAlWTl0zTT-dUpF_8NB0SmHq3IMtUiyJCNpwXDzk3fdCuoTW67jXWDXu4gLa0Pcv0guxuErSTO1at0jlknfhHFDoZSamBpMY7c2fZdPiWR-kB9ZYXAPSwjTWjsTI_GZMmqecpjGOPznFSQDVMZJYzCAV460CoDUQQ0d3gdNKLHhJof7UZ9xwQGcJ2gLwnsmMwMLCs37ZRlE-K1smFwIbOeZwzekMWBeSWJfMJwa5npOWY-7q7H6jGJv-NDCg&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk
 FlashcardsWidget.tsx:129   - Is Google Places photo: true
 FlashcardsWidget.tsx:130   - Using image: undefined
 FlashcardsWidget.tsx:131   - Source: Google Places API
-FlashcardsWidget.tsx:140   - Themes: Beach, Nature, Adventure
+FlashcardsWidget.tsx:140   - Themes: Culture, History, City Life, Food
 FlashcardsWidget.tsx:152 Starting image preloading...
 FlashcardsWidget.tsx:157 Found 10 images to preload
 FlashcardsWidget.tsx:162 Image preloading complete: 10 successful, 0 failed
 FlashcardsWidget.tsx:162 Image preloading complete: 10 successful, 0 failed
 FlashcardsWidget.tsx:182 All images loaded and cached
 FlashcardsWidget.tsx:182 All images loaded and cached
-FlightsPageAuthenticated.tsx:547 Selected original trip: {trip_title: 'Classic Vietnam: From Northern Peaks to Southern Bustle', no_of_days: 7, estimated_budget: 180000, best_time_to_visit: 'December', themes: Array(3), …}
-content.js:10 Uncaught Error: Extension context invalidated.
-    at o (content.js:10:5711)
-    at content.js:10:5622
-o @ content.js:10
-(anonymous) @ content.js:10
-setTimeout
-n @ content.js:10
-(anonymous) @ content.js:10
-setTimeout
-s @ content.js:10
-FlightsPageAuthenticated.tsx:568 Sending trip to memory API and Firestore: {trip_title: 'Classic Vietnam: From Northern Peaks to Southern Bustle', no_of_days: 7, estimated_budget: 180000, best_time_to_visit: 'December', themes: Array(3), …}
+FlightsPageAuthenticated.tsx:547 Selected original trip: {trip_title: "Northern Wonders: Hanoi's Culture & Halong's Majesty", no_of_days: 7, estimated_budget: 85000, best_time_to_visit: 'October to April', themes: Array(4), …}
+FlightsPageAuthenticated.tsx:568 Sending trip to memory API and Firestore: {trip_title: "Northern Wonders: Hanoi's Culture & Halong's Majesty", no_of_days: 7, estimated_budget: 85000, best_time_to_visit: 'October to April', themes: Array(4), …}
 tripStorage.ts:28 Storing trip in Firestore for user: zqh2H13LPvXWDkZjfFzthJCXktB3
-content.js:10 Uncaught Error: Extension context invalidated.
-    at o (content.js:10:5711)
-    at content.js:10:5622
-o @ content.js:10
-(anonymous) @ content.js:10
-setTimeout
-n @ content.js:10
-(anonymous) @ content.js:10
-setTimeout
-s @ content.js:10
 tripStorage.ts:48 Trip stored successfully in Firestore
-tripStorage.ts:61 Storing trip in code memory: {trip_title: 'Classic Vietnam: From Northern Peaks to Southern Bustle', no_of_days: 7, estimated_budget: 180000, best_time_to_visit: 'December', themes: Array(3), …}best_time_to_visit: "December"day_wise_plan: Array(7)0: conveyance_details: {is_required: true, travel_timing: 'morning', from_city: 'user_location', to_city: 'Hanoi'}day_number: 1must_do_activities: (2) [{…}, {…}]stay_details: {is_required: true, city: 'Hanoi', check_in_day: '1', check_out_day: '3'}[[Prototype]]: Object1: conveyance_details: {is_required: false}day_number: 2must_do_activities: (3) [{…}, {…}, {…}]stay_details: {is_required: true, city: 'Hanoi', check_in_day: '1', check_out_day: '3'}[[Prototype]]: Object2: {day_number: 3, conveyance_details: {…}, stay_details: {…}, must_do_activities: Array(2)}3: {day_number: 4, conveyance_details: {…}, stay_details: {…}, must_do_activities: Array(2)}4: {day_number: 5, conveyance_details: {…}, stay_details: {…}, must_do_activities: Array(2)}5: {day_number: 6, conveyance_details: {…}, stay_details: {…}, must_do_activities: Array(2)}6: conveyance_details: {is_required: true, travel_timing: 'evening', from_city: 'Ho Chi Minh City', to_city: 'user_location'}day_number: 7must_do_activities: (2) [{…}, {…}]stay_details: {is_required: false}[[Prototype]]: Objectlength: 7[[Prototype]]: Array(0)estimated_budget: 180000no_of_days: 7themes: (3) ['Culture', 'History', 'Nature']trip_route: (3) [{…}, {…}, {…}]trip_title: "Classic Vietnam: From Northern Peaks to Southern Bustle"[[Prototype]]: Object
-tripStorage.ts:92 Trip stored in both Firestore and memory: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '5883326466409627648', trip_data: {…}}
-FlightsPageAuthenticated.tsx:572 ✅ Trip stored in Firestore successfully: Classic Vietnam: From Northern Peaks to Southern Bustle
+tripStorage.ts:61 Storing trip in code memory: {trip_title: "Northern Wonders: Hanoi's Culture & Halong's Majesty", no_of_days: 7, estimated_budget: 85000, best_time_to_visit: 'October to April', themes: Array(4), …}
+tripStorage.ts:92 Trip stored in both Firestore and memory: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '8575916093623762944', trip_data: {…}}
+FlightsPageAuthenticated.tsx:572 ✅ Trip stored in Firestore successfully: Northern Wonders: Hanoi's Culture & Halong's Majesty
 FlightsPageAuthenticated.tsx:576 📌 Trip remains in component state for subsequent operations
-FlightsPageAuthenticated.tsx:606 Memory API success: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '5883326466409627648', message: 'Memory added successfully'}
+FlightsPageAuthenticated.tsx:606 Memory API success: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '8575916093623762944', message: 'Memory added successfully'}message: "Memory added successfully"session_id: "8575916093623762944"user_id: "zqh2H13LPvXWDkZjfFzthJCXktB3"[[Prototype]]: Objectconstructor: ƒ Object()hasOwnProperty: ƒ hasOwnProperty()isPrototypeOf: ƒ isPrototypeOf()propertyIsEnumerable: ƒ propertyIsEnumerable()toLocaleString: ƒ toLocaleString()toString: ƒ toString()valueOf: ƒ valueOf()__defineGetter__: ƒ __defineGetter__()__defineSetter__: ƒ __defineSetter__()__lookupGetter__: ƒ __lookupGetter__()__lookupSetter__: ƒ __lookupSetter__()__proto__: (...)get __proto__: ƒ __proto__()set __proto__: ƒ __proto__()
 FlightsPageAuthenticated.tsx:633 Making chat API call after memory update
-FlightsPageAuthenticated.tsx:660 Chat API response received: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '5883326466409627648', message: {…}}
-content.js:10 Uncaught Error: Extension context invalidated.
-    at o (content.js:10:5711)
-    at content.js:10:5622
-o @ content.js:10
-(anonymous) @ content.js:10
-setTimeout
-n @ content.js:10
-content.js:10 Uncaught Error: Extension context invalidated.
-    at o (content.js:10:5711)
-    at content.js:10:5622
-o @ content.js:10
-(anonymous) @ content.js:10
-setTimeout
-n @ content.js:10
-content.js:10 Uncaught Error: Extension context invalidated.
-    at o (content.js:10:5711)
-    at content.js:10:5622
-o @ content.js:10
-(anonymous) @ content.js:10
-setTimeout
-n @ content.js:10
-content.js:10 Uncaught Error: Extension context invalidated.
-    at o (content.js:10:5711)
-    at content.js:10:5622
-o @ content.js:10
-(anonymous) @ content.js:10
-setTimeout
-n @ content.js:10
-content.js:10 Uncaught Error: Extension context invalidated.
-    at o (content.js:10:5711)
-    at content.js:10:5622
-o @ content.js:10
-(anonymous) @ content.js:10
-setTimeout
-n @ content.js:10
-content.js:10 Uncaught Error: Extension context invalidated.
-    at o (content.js:10:5711)
-    at content.js:10:5622
-o @ content.js:10
-(anonymous) @ content.js:10
-setTimeout
-n @ content.js:10
+FlightsPageAuthenticated.tsx:660 Chat API response received: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '8575916093623762944', message: "Manan, let's find the best place for you to start … Or would you like me to look into other options?"}
 FlightsPageAuthenticated.tsx:476 Making API call...
-content.js:10 Uncaught Error: Extension context invalidated.
-    at o (content.js:10:5711)
-    at content.js:10:5622
-o @ content.js:10
-(anonymous) @ content.js:10
-setTimeout
-n @ content.js:10
-selectionchange
-set @ react-dom-client.development.js:1618
-updateTextarea @ react-dom-client.development.js:1903
-updateProperties @ react-dom-client.development.js:18833
-commitUpdate @ react-dom-client.development.js:19950
-runWithFiberInDEV @ react-dom-client.development.js:872
-commitHostUpdate @ react-dom-client.development.js:12731
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13857
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13840
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13840
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13840
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13840
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13840
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13840
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13840
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13840
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13840
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13640
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13640
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13640
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13640
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13640
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13640
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13640
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13825
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13825
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13640
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13640
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13640
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13640
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13624
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:14092
-recursivelyTraverseMutationEffects @ react-dom-client.development.js:13612
-commitMutationEffectsOnFiber @ react-dom-client.development.js:13898
-flushMutationEffects @ react-dom-client.development.js:16022
-commitRoot @ react-dom-client.development.js:15996
-commitRootWhenReady @ react-dom-client.development.js:15228
-performWorkOnRoot @ react-dom-client.development.js:15147
-performSyncWorkOnRoot @ react-dom-client.development.js:16831
-flushSyncWorkAcrossRoots_impl @ react-dom-client.development.js:16677
-processRootScheduleInMicrotask @ react-dom-client.development.js:16715
-eval @ react-dom-client.development.js:16850
-FlightsPageAuthenticated.tsx:493 API Request sent: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '5883326466409627648', message: 'Bengaluru'}
+FlightsPageAuthenticated.tsx:493 API Request sent: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '8575916093623762944', message: 'Delhi'}
 FlightsPageAuthenticated.tsx:498 API Response status: 200
-FlightsPageAuthenticated.tsx:509 API Response received (raw): {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '5883326466409627648', message: {…}}
-FlightsPageAuthenticated.tsx:513 API Response (cleaned): {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '5883326466409627648', message: {…}}
+FlightsPageAuthenticated.tsx:509 API Response received (raw): {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '8575916093623762944', message: {…}}
+FlightsPageAuthenticated.tsx:513 API Response (cleaned): {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '8575916093623762944', message: {…}}
 FlightsPageAuthenticated.tsx:3809 Full API response data: {
   "user_id": "zqh2H13LPvXWDkZjfFzthJCXktB3",
-  "session_id": "5883326466409627648",
+  "session_id": "8575916093623762944",
   "message": {
     "response_type": "end",
     "message": ""
@@ -886,10 +348,10 @@ DateSelectorWidget.tsx:297 Date 2025-11-30: flight=undefined, stay=undefined
 DateSelectorWidget.tsx:297 Date 2025-12-01: flight=undefined, stay=undefined
 DateSelectorWidget.tsx:297 Date 2025-12-02: flight=undefined, stay=undefined
 DateSelectorWidget.tsx:150 📋 DateSelector: Starting memory data fetch for auto-fill
-DateSelectorWidget.tsx:155 📋 DateSelector: Fetching memory data with: {userId: 'zqh2H13LPvXWDkZjfFzthJCXktB3', sessionId: '5883326466409627648'}
+DateSelectorWidget.tsx:155 📋 DateSelector: Fetching memory data with: {userId: 'zqh2H13LPvXWDkZjfFzthJCXktB3', sessionId: '8575916093623762944'}
 priceApi.ts:174 Fetching stay data with request: {city: '', from_date: '2025-11-30', to_date: '2025-12-30'}
 DateSelectorWidget.tsx:150 📋 DateSelector: Starting memory data fetch for auto-fill
-DateSelectorWidget.tsx:155 📋 DateSelector: Fetching memory data with: {userId: 'zqh2H13LPvXWDkZjfFzthJCXktB3', sessionId: '5883326466409627648'}
+DateSelectorWidget.tsx:155 📋 DateSelector: Fetching memory data with: {userId: 'zqh2H13LPvXWDkZjfFzthJCXktB3', sessionId: '8575916093623762944'}
 priceApi.ts:174 Fetching stay data with request: {city: '', from_date: '2025-11-30', to_date: '2025-12-30'}
 DateSelectorWidget.tsx:297 Date 2025-11-30: flight=undefined, stay=undefined
 DateSelectorWidget.tsx:297 Date 2025-12-01: flight=undefined, stay=undefined
@@ -897,6 +359,10 @@ DateSelectorWidget.tsx:297 Date 2025-12-02: flight=undefined, stay=undefined
 DateSelectorWidget.tsx:297 Date 2025-11-30: flight=undefined, stay=undefined
 DateSelectorWidget.tsx:297 Date 2025-12-01: flight=undefined, stay=undefined
 DateSelectorWidget.tsx:297 Date 2025-12-02: flight=undefined, stay=undefined
+hot-reloader-app.js:197 [Fast Refresh] rebuilding
+report-hmr-latency.js:14 [Fast Refresh] done in 254ms
+hot-reloader-app.js:197 [Fast Refresh] rebuilding
+report-hmr-latency.js:14 [Fast Refresh] done in 145ms
 priceApi.ts:187 Received stay data from API: 0 stays
 DateSelectorWidget.tsx:405 Fetched data: {flights: 0, trains: 0, stays: 0, fromCity: '', toCity: '', …}
 priceApi.ts:304 Processing price data for 2025-11, flights: 0, trains: 0, stays: 0, flightClass: Economy, trainClass: SL
@@ -919,14 +385,14 @@ DateSelectorWidget.tsx:297 Date 2025-12-02: flight=null, stay=null
 DateSelectorWidget.tsx:297 Date 2025-11-30: flight=null, stay=null
 DateSelectorWidget.tsx:297 Date 2025-12-01: flight=null, stay=null
 DateSelectorWidget.tsx:297 Date 2025-12-02: flight=null, stay=null
-DateSelectorWidget.tsx:172 ✅ Memory data received: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', user_profile: {…}, current_datetime: '2025-11-02 10:54:55', onboarding_agent: "That's great! I've noted down your age, gender, na…ll me the expected duration of your trip in days?", trip_suggestions: {…}, …}
-DateSelectorWidget.tsx:177 ✅ Extracted from_city from source_point: Bengaluru
-DateSelectorWidget.tsx:188 📋 DateSelector: Extracting to_city from selectedTrip: {trip_title: 'Classic Vietnam: From Northern Peaks to Southern Bustle', no_of_days: 7, estimated_budget: 180000, best_time_to_visit: 'December', themes: Array(3), …}
-DateSelectorWidget.tsx:191 📋 DateSelector: Found Day 1: {day_number: 1, conveyance_details: {…}, stay_details: {…}, must_do_activities: Array(2)}
+DateSelectorWidget.tsx:172 ✅ Memory data received: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', user_profile: {…}, current_datetime: '2025-11-02 11:27:16', trip_suggestions: {…}, final_trip: {…}, …}
+DateSelectorWidget.tsx:177 ✅ Extracted from_city from source_point: Delhi
+DateSelectorWidget.tsx:188 📋 DateSelector: Extracting to_city from selectedTrip: {trip_title: "Northern Wonders: Hanoi's Culture & Halong's Majesty", no_of_days: 7, estimated_budget: 85000, best_time_to_visit: 'October to April', themes: Array(4), …}
+DateSelectorWidget.tsx:191 📋 DateSelector: Found Day 1: {day_number: 1, conveyance_details: {…}, stay_details: {…}, must_do_activities: Array(3)}
 DateSelectorWidget.tsx:195 ✅ Extracted to_city from Day 1: Hanoi
 DateSelectorWidget.tsx:205 ✅ Formatted to_city: Hanoi
-DateSelectorWidget.tsx:222 ✅ Formatted from_city: Bengaluru
-DateSelectorWidget.tsx:228 📍 Set from_city to: Bengaluru
+DateSelectorWidget.tsx:222 ✅ Formatted from_city: New Delhi
+DateSelectorWidget.tsx:228 📍 Set from_city to: New Delhi
 DateSelectorWidget.tsx:233 📍 Set to_city to: Hanoi
 DateSelectorWidget.tsx:239 ✅ DateSelector fields auto-filled and locked
 DateSelectorWidget.tsx:297 Date 2025-11-30: flight=null, stay=null
@@ -941,7 +407,7 @@ DateSelectorWidget.tsx:297 Date 2025-12-02: flight=undefined, stay=undefined
 DateSelectorWidget.tsx:297 Date 2025-11-30: flight=undefined, stay=undefined
 DateSelectorWidget.tsx:297 Date 2025-12-01: flight=undefined, stay=undefined
 DateSelectorWidget.tsx:297 Date 2025-12-02: flight=undefined, stay=undefined
-priceApi.ts:115 Fetching conveyance data with request: {conveyance_type: 'flights', departure_city: 'Bengaluru', arrival_city: 'Hanoi', from_date: '2025-11-30', to_date: '2025-12-30'}
+priceApi.ts:115 Fetching conveyance data with request: {conveyance_type: 'flights', departure_city: 'New Delhi', arrival_city: 'Hanoi', from_date: '2025-11-30', to_date: '2025-12-30'}
 priceApi.ts:174 Fetching stay data with request: {city: 'Hanoi', from_date: '2025-11-30', to_date: '2025-12-30'}
 DateSelectorWidget.tsx:297 Date 2025-11-30: flight=undefined, stay=undefined
 DateSelectorWidget.tsx:297 Date 2025-12-01: flight=undefined, stay=undefined
@@ -949,14 +415,15 @@ DateSelectorWidget.tsx:297 Date 2025-12-02: flight=undefined, stay=undefined
 DateSelectorWidget.tsx:297 Date 2025-11-30: flight=undefined, stay=undefined
 DateSelectorWidget.tsx:297 Date 2025-12-01: flight=undefined, stay=undefined
 DateSelectorWidget.tsx:297 Date 2025-12-02: flight=undefined, stay=undefined
-DateSelectorWidget.tsx:172 ✅ Memory data received: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', user_profile: {…}, current_datetime: '2025-11-02 10:54:55', onboarding_agent: "That's great! I've noted down your age, gender, na…ll me the expected duration of your trip in days?", trip_suggestions: {…}, …}
-DateSelectorWidget.tsx:177 ✅ Extracted from_city from source_point: Bengaluru
-DateSelectorWidget.tsx:188 📋 DateSelector: Extracting to_city from selectedTrip: {trip_title: 'Classic Vietnam: From Northern Peaks to Southern Bustle', no_of_days: 7, estimated_budget: 180000, best_time_to_visit: 'December', themes: Array(3), …}
-DateSelectorWidget.tsx:191 📋 DateSelector: Found Day 1: {day_number: 1, conveyance_details: {…}, stay_details: {…}, must_do_activities: Array(2)}
+hot-reloader-app.js:197 [Fast Refresh] rebuilding
+DateSelectorWidget.tsx:172 ✅ Memory data received: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', user_profile: {…}, current_datetime: '2025-11-02 11:27:16', trip_suggestions: {…}, final_trip: {…}, …}
+DateSelectorWidget.tsx:177 ✅ Extracted from_city from source_point: Delhi
+DateSelectorWidget.tsx:188 📋 DateSelector: Extracting to_city from selectedTrip: {trip_title: "Northern Wonders: Hanoi's Culture & Halong's Majesty", no_of_days: 7, estimated_budget: 85000, best_time_to_visit: 'October to April', themes: Array(4), …}
+DateSelectorWidget.tsx:191 📋 DateSelector: Found Day 1: {day_number: 1, conveyance_details: {…}, stay_details: {…}, must_do_activities: Array(3)}
 DateSelectorWidget.tsx:195 ✅ Extracted to_city from Day 1: Hanoi
 DateSelectorWidget.tsx:205 ✅ Formatted to_city: Hanoi
-DateSelectorWidget.tsx:222 ✅ Formatted from_city: Bengaluru
-DateSelectorWidget.tsx:228 📍 Set from_city to: Bengaluru
+DateSelectorWidget.tsx:222 ✅ Formatted from_city: New Delhi
+DateSelectorWidget.tsx:228 📍 Set from_city to: New Delhi
 DateSelectorWidget.tsx:233 📍 Set to_city to: Hanoi
 DateSelectorWidget.tsx:239 ✅ DateSelector fields auto-filled and locked
 DateSelectorWidget.tsx:297 Date 2025-11-30: flight=undefined, stay=undefined
@@ -965,9 +432,10 @@ DateSelectorWidget.tsx:297 Date 2025-12-02: flight=undefined, stay=undefined
 DateSelectorWidget.tsx:297 Date 2025-11-30: flight=undefined, stay=undefined
 DateSelectorWidget.tsx:297 Date 2025-12-01: flight=undefined, stay=undefined
 DateSelectorWidget.tsx:297 Date 2025-12-02: flight=undefined, stay=undefined
-priceApi.ts:128 Received conveyance data from API: 0 flights
+report-hmr-latency.js:14 [Fast Refresh] done in 132ms
 priceApi.ts:187 Received stay data from API: 0 stays
-DateSelectorWidget.tsx:405 Fetched data: {flights: 0, trains: 0, stays: 0, fromCity: 'Bengaluru', toCity: 'Hanoi', …}
+priceApi.ts:128 Received conveyance data from API: 0 flights
+DateSelectorWidget.tsx:405 Fetched data: {flights: 0, trains: 0, stays: 0, fromCity: 'New Delhi', toCity: 'Hanoi', …}
 priceApi.ts:304 Processing price data for 2025-11, flights: 0, trains: 0, stays: 0, flightClass: Economy, trainClass: SL
 priceApi.ts:324 Processed price data sample: (5) [{…}, {…}, {…}, {…}, {…}]
 DateSelectorWidget.tsx:430 Processed prices for month: (5) [{…}, {…}, {…}, {…}, {…}]
@@ -983,45 +451,25 @@ DateSelectorWidget.tsx:297 Date 2025-12-02: flight=null, stay=null
 DateSelectorWidget.tsx:297 Date 2025-11-30: flight=null, stay=null
 DateSelectorWidget.tsx:297 Date 2025-12-01: flight=null, stay=null
 DateSelectorWidget.tsx:297 Date 2025-12-02: flight=null, stay=null
-content.js:10 Uncaught Error: Extension context invalidated.
-    at o (content.js:10:5711)
-    at content.js:10:5622
-o @ content.js:10
-(anonymous) @ content.js:10
-setTimeout
-n @ content.js:10
-(anonymous) @ content.js:10
-setTimeout
-s @ content.js:10
 DateSelectorWidget.tsx:479 Storing selected date: Mon Dec 22 2025 00:00:00 GMT+0530 (India Standard Time)
 tripStorage.ts:109 Storing selected date for user: zqh2H13LPvXWDkZjfFzthJCXktB3 Date: Mon Dec 22 2025 00:00:00 GMT+0530 (India Standard Time)
-content.js:10 Uncaught Error: Extension context invalidated.
-    at o (content.js:10:5711)
-    at content.js:10:5622
-o @ content.js:10
-(anonymous) @ content.js:10
-setTimeout
-n @ content.js:10
-(anonymous) @ content.js:10
-setTimeout
-s @ content.js:10
 tripStorage.ts:129 Date stored successfully in Firestore as: 2025-12-21
 tripStorage.ts:148 Updating memory API with selected date: 2025-12-21
-tripStorage.ts:175 Memory API updated successfully with date: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '5883326466409627648', message: 'Memory added successfully'}
+tripStorage.ts:175 Memory API updated successfully with date: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '8575916093623762944', message: 'Memory added successfully'}
 DateSelectorWidget.tsx:481 Date stored successfully
 FlightsPageAuthenticated.tsx:2591 🎯 handleDateSelection called with date: Mon Dec 22 2025 00:00:00 GMT+0530 (India Standard Time)
 FlightsPageAuthenticated.tsx:2592 🔍 Current state at entry:
 FlightsPageAuthenticated.tsx:2593    - userId: zqh2H13LPvXWDkZjfFzthJCXktB3
-FlightsPageAuthenticated.tsx:2594    - sessionId: 5883326466409627648
-FlightsPageAuthenticated.tsx:2595    - selectedTrip: Present (Classic Vietnam: From Northern Peaks to Southern Bustle)
+FlightsPageAuthenticated.tsx:2594    - sessionId: 8575916093623762944
+FlightsPageAuthenticated.tsx:2595    - selectedTrip: Present (Northern Wonders: Hanoi's Culture & Halong's Majesty)
 FlightsPageAuthenticated.tsx:2608 ✅ Date selected: 12/22/2025
-FlightsPageAuthenticated.tsx:2614 ✅ Trip already in memory: Classic Vietnam: From Northern Peaks to Southern Bustle
-FlightsPageAuthenticated.tsx:2637 Storing trip with selected date: Classic Vietnam: From Northern Peaks to Southern Bustle
-FlightsPageAuthenticated.tsx:2646 📋 correctedTrip before source_point update: {day1_from: 'user_location', day1_to: 'Hanoi', lastDay_from: 'Ho Chi Minh City', lastDay_to: 'user_location'}
+FlightsPageAuthenticated.tsx:2614 ✅ Trip already in memory: Northern Wonders: Hanoi's Culture & Halong's Majesty
+FlightsPageAuthenticated.tsx:2637 Storing trip with selected date: Northern Wonders: Hanoi's Culture & Halong's Majesty
+FlightsPageAuthenticated.tsx:2646 📋 correctedTrip before source_point update: {day1_from: 'user_location', day1_to: 'Hanoi', lastDay_from: 'Hanoi', lastDay_to: 'user_location'}
 tripStorage.ts:28 Storing trip in Firestore for user: zqh2H13LPvXWDkZjfFzthJCXktB3
 tripStorage.ts:48 Trip stored successfully in Firestore
-tripStorage.ts:61 Storing trip in code memory: {trip_title: 'Classic Vietnam: From Northern Peaks to Southern Bustle', no_of_days: 7, estimated_budget: 180000, best_time_to_visit: 'December', themes: Array(3), …}
-tripStorage.ts:92 Trip stored in both Firestore and memory: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '5883326466409627648', trip_data: {…}}
+tripStorage.ts:61 Storing trip in code memory: {trip_title: "Northern Wonders: Hanoi's Culture & Halong's Majesty", no_of_days: 7, estimated_budget: 85000, best_time_to_visit: 'October to April', themes: Array(4), …}
+tripStorage.ts:92 Trip stored in both Firestore and memory: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '8575916093623762944', trip_data: {…}}
 FlightsPageAuthenticated.tsx:2675 🔍 Fetching source_point from memory API...
 DateSelectorWidget.tsx:297 Date 2025-11-30: flight=null, stay=null
 DateSelectorWidget.tsx:297 Date 2025-12-01: flight=null, stay=null
@@ -1030,62 +478,57 @@ DateSelectorWidget.tsx:297 Date 2025-11-30: flight=null, stay=null
 DateSelectorWidget.tsx:297 Date 2025-12-01: flight=null, stay=null
 DateSelectorWidget.tsx:297 Date 2025-12-02: flight=null, stay=null
 DateSelectorWidget.tsx:146 📋 DateSelector: Already auto-filled, skipping
-FlightsPageAuthenticated.tsx:2689 ✅ Memory data received: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', user_profile: {…}, current_datetime: '2025-11-02 10:54:55', onboarding_agent: "That's great! I've noted down your age, gender, na…ll me the expected duration of your trip in days?", trip_suggestions: {…}, …}
-FlightsPageAuthenticated.tsx:2693 ✅ Found source_point: Bengaluru
-FlightsPageAuthenticated.tsx:2700 ✅ Adding source_point to correctedTrip: {place_name: 'Bengaluru', address: 'Bengaluru, Karnataka, India', map_url: 'https://www.google.com/maps/place/?q=place_id:ChIJbU60yXAWrjsR4E9-UejD3_g', lat: '12.9628669', long: '77.57750899999999', …}
-FlightsPageAuthenticated.tsx:2714 🔄 Day 1: Updated ONLY from_city to "Bengaluru"
+FlightsPageAuthenticated.tsx:2689 ✅ Memory data received: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', user_profile: {…}, current_datetime: '2025-11-02 11:27:16', trip_suggestions: {…}, final_trip: {…}, …}
+FlightsPageAuthenticated.tsx:2693 ✅ Found source_point: Delhi
+FlightsPageAuthenticated.tsx:2700 ✅ Adding source_point to correctedTrip: {address: 'Delhi, India', place_name: 'Delhi', map_url: 'https://www.google.com/maps/place/?q=place_id:ChIJLbZ-NFv9DDkRQJY4FbcFcgM', lat: '28.7040592', long: '77.10249019999999', …}
+FlightsPageAuthenticated.tsx:2714 🔄 Day 1: Updated ONLY from_city to "Delhi"
 FlightsPageAuthenticated.tsx:2715    Day 1 to_city remains: "Hanoi"
-FlightsPageAuthenticated.tsx:2734 🔄 Day 7: Updated ONLY to_city to "Bengaluru" (return journey)
-FlightsPageAuthenticated.tsx:2735    Day 7 from_city remains: "Ho Chi Minh City"
+FlightsPageAuthenticated.tsx:2734 🔄 Day 7: Updated ONLY to_city to "Delhi" (return journey)
+FlightsPageAuthenticated.tsx:2735    Day 7 from_city remains: "Hanoi"
 tripStorage.ts:28 Storing trip in Firestore for user: zqh2H13LPvXWDkZjfFzthJCXktB3
 tripStorage.ts:48 Trip stored successfully in Firestore
-tripStorage.ts:61 Storing trip in code memory: {trip_title: 'Classic Vietnam: From Northern Peaks to Southern Bustle', no_of_days: 7, estimated_budget: 180000, best_time_to_visit: 'December', themes: Array(3), …}
-tripStorage.ts:92 Trip stored in both Firestore and memory: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '5883326466409627648', trip_data: {…}}
+tripStorage.ts:61 Storing trip in code memory: {trip_title: "Northern Wonders: Hanoi's Culture & Halong's Majesty", no_of_days: 7, estimated_budget: 85000, best_time_to_visit: 'October to April', themes: Array(4), …}
+tripStorage.ts:92 Trip stored in both Firestore and memory: {user_id: 'zqh2H13LPvXWDkZjfFzthJCXktB3', session_id: '8575916093623762944', trip_data: {…}}
 FlightsPageAuthenticated.tsx:2752 ✅ Trip updated with source_point and conveyance details
 FlightsPageAuthenticated.tsx:2816 🔍 Day-wise plan: (7) [{…}, {…}, {…}, {…}, {…}, {…}, {…}]
-FlightsPageAuthenticated.tsx:2878 🔍 Checking Day 1 conveyance details: {day_number: 1, conveyance_details: {…}, stay_details: {…}, must_do_activities: Array(2)}
-FlightsPageAuthenticated.tsx:2879 🔍 Day 1 conveyance_details: {is_required: true, travel_timing: 'morning', from_city: 'Bengaluru', to_city: 'Hanoi'}
+FlightsPageAuthenticated.tsx:2878 🔍 Checking Day 1 conveyance details: {day_number: 1, conveyance_details: {…}, stay_details: {…}, must_do_activities: Array(3)}
+FlightsPageAuthenticated.tsx:2879 🔍 Day 1 conveyance_details: {is_required: true, travel_timing: 'morning', from_city: 'Delhi', to_city: 'Hanoi'}
 FlightsPageAuthenticated.tsx:2880 🔍 Day 1 conveyance is_required: true
 FlightsPageAuthenticated.tsx:2884 🔍 Day 1 conveyance is_required type: boolean
 FlightsPageAuthenticated.tsx:2894 ✅✅✅ Day 1 conveyance is required, showing loader and flights
-FlightsPageAuthenticated.tsx:2909 ✅ Normalized from_city: "Bengaluru" → "Bengaluru"
+FlightsPageAuthenticated.tsx:2909 ✅ Normalized from_city: "Delhi" → "Delhi"
 FlightsPageAuthenticated.tsx:2918 ✅ Normalized to_city: "Hanoi" → "Hanoi"
-FlightsPageAuthenticated.tsx:2921 🎯 Setting conveyance cities - From: Bengaluru To: Hanoi
+FlightsPageAuthenticated.tsx:2921 🎯 Setting conveyance cities - From: Delhi To: Hanoi
 FlightsPageAuthenticated.tsx:2935 📅 Set auto-fill mode with departure date: 2025-12-21
 FlightsPageAuthenticated.tsx:2948 🔄 Closing date selector and showing loader
 FlightsPageAuthenticated.tsx:2957 ⏱️ Starting 4-second timer for loader
 FlightsPageAuthenticated.tsx:2961 ⏱️ 4 seconds elapsed, hiding loader
-FlightsPageAuthenticated.tsx:2965 ✈️ Showing FlightsWidget with cities: Bengaluru to Hanoi
-FlightsWidget.tsx:1531 🛫 FlightsWidget received props - From: Bengaluru To: Hanoi
-FlightsWidget.tsx:1538 🛫 Setting FROM city to: Bengaluru
-FlightsWidget.tsx:1543 🛫 Setting TO city to: Hanoi
-FlightsWidget.tsx:1552 🛫 FlightsWidget is now visible. Current cities - From: Bengaluru To: Hanoi
-FlightsWidget.tsx:1570 🚀 Auto-fill mode enabled - setting departure date...
-FlightsWidget.tsx:1571 📅 Setting departure date to: 2025-12-21
-FlightsWidget.tsx:1572 📅 Previous departure date was: 
-FlightsWidget.tsx:1531 🛫 FlightsWidget received props - From: Bengaluru To: Hanoi
-FlightsWidget.tsx:1538 🛫 Setting FROM city to: Bengaluru
-FlightsWidget.tsx:1543 🛫 Setting TO city to: Hanoi
-FlightsWidget.tsx:1552 🛫 FlightsWidget is now visible. Current cities - From: Bengaluru To: Hanoi
-FlightsWidget.tsx:1570 🚀 Auto-fill mode enabled - setting departure date...
-FlightsWidget.tsx:1571 📅 Setting departure date to: 2025-12-21
-FlightsWidget.tsx:1572 📅 Previous departure date was: 
-FlightsWidget.tsx:1593 ✅ All fields ready for auto-search (full auto-fill): {from: 'Bengaluru', to: 'Hanoi', departureDate: '2025-12-21'}departureDate: "2025-12-21"from: "Bengaluru"to: "Hanoi"[[Prototype]]: Object
-FlightsWidget.tsx:1601 🔍 Auto-triggering search with pre-filled data...
-FlightsWidget.tsx:1726 🔍 handleSearch called - Current state: {from: 'Bengaluru', to: 'Hanoi', departureDate: '2025-12-21', fromCity: 'Bengaluru', toCity: 'Hanoi'}departureDate: "2025-12-21"from: "Bengaluru"fromCity: "Bengaluru"to: "Hanoi"toCity: "Hanoi"[[Prototype]]: Object
-FlightsWidget.tsx:1740 ✅ All fields present, proceeding with search
-FlightsWidget.tsx:1751 🔍 Fetching conveyance data for: {from: 'Bengaluru', to: 'Hanoi', date: '2025-12-21', dayNumber: 1}date: "2025-12-21"dayNumber: 1from: "Bengaluru"to: "Hanoi"[[Prototype]]: Object
-FlightsWidget.tsx:1760 🔍 Checking for pre-fetched data for route: Bengaluru → Hanoi on 2025-12-21...
-preFetchConveyance.ts:328 🔍 Retrieving pre-fetched data for route: Bengaluru|Hanoi|2025-12-21
+FlightsPageAuthenticated.tsx:2965 ✈️ Showing FlightsWidget with cities: Delhi to Hanoi
+FlightsWidget.tsx:1603 🛫 FlightsWidget received props - From: Delhi To: Hanoi
+FlightsWidget.tsx:1610 🛫 Setting FROM city to: Delhi
+FlightsWidget.tsx:1615 🛫 Setting TO city to: Hanoi
+FlightsWidget.tsx:1624 🛫 FlightsWidget is now visible. Current cities - From: Delhi To: Hanoi
+FlightsWidget.tsx:1642 🚀 Auto-fill mode enabled - setting departure date...
+FlightsWidget.tsx:1643 📅 Setting departure date to: 2025-12-21
+FlightsWidget.tsx:1644 📅 Previous departure date was: 
+FlightsWidget.tsx:1603 🛫 FlightsWidget received props - From: Delhi To: Hanoi
+FlightsWidget.tsx:1610 🛫 Setting FROM city to: Delhi
+FlightsWidget.tsx:1615 🛫 Setting TO city to: Hanoi
+FlightsWidget.tsx:1624 🛫 FlightsWidget is now visible. Current cities - From: Delhi To: Hanoi
+FlightsWidget.tsx:1642 🚀 Auto-fill mode enabled - setting departure date...
+FlightsWidget.tsx:1643 📅 Setting departure date to: 2025-12-21
+FlightsWidget.tsx:1644 📅 Previous departure date was: 
+FlightsWidget.tsx:1665 ✅ All fields ready for auto-search (full auto-fill): {from: 'Delhi', to: 'Hanoi', departureDate: '2025-12-21'}
+FlightsWidget.tsx:1673 🔍 Auto-triggering search with pre-filled data...
+FlightsWidget.tsx:1798 🔍 handleSearch called - Current state: {from: 'Delhi', to: 'Hanoi', departureDate: '2025-12-21', fromCity: 'Delhi', toCity: 'Hanoi'}
+FlightsWidget.tsx:1812 ✅ All fields present, proceeding with search
+FlightsWidget.tsx:1823 🔍 Fetching conveyance data for: {from: 'Delhi', to: 'Hanoi', date: '2025-12-21', dayNumber: 1}
+FlightsWidget.tsx:1832 🔍 Checking for pre-fetched data for route: Delhi → Hanoi on 2025-12-21...
+preFetchConveyance.ts:328 🔍 Retrieving pre-fetched data for route: New Delhi|Hanoi|2025-12-21
 preFetchConveyance.ts:347 ℹ️ No pre-fetched data collection found for user: zqh2H13LPvXWDkZjfFzthJCXktB3
-preFetchIntegration.ts:52 ℹ️ No cached conveyance data for Bengaluru → Hanoi
-FlightsWidget.tsx:1802 ℹ️ No pre-fetched data found, proceeding with API calls...
-content.js:10 Uncaught Error: Extension context invalidated.
-    at o (content.js:10:5711)
-    at content.js:10:5622
-o @ content.js:10
-(anonymous) @ content.js:10
-setTimeout
-n @ content.js:10
-FlightsWidget.tsx:1904 ✅ AI results: {flights: 0, trains: 0}
-FlightsWidget.tsx:1909 ✅ Utility results: {flights: 0, trains: 0}
+preFetchIntegration.ts:52 ℹ️ No cached conveyance data for Delhi → Hanoi
+FlightsWidget.tsx:1874 ℹ️ No pre-fetched data found, proceeding with API calls...
+hot-reloader-app.js:197 [Fast Refresh] rebuilding
+report-hmr-latency.js:14 [Fast Refresh] done in 220ms
+FlightsWidget.tsx:1976 ✅ AI results: {flights: 0, trains: 0}
+FlightsWidget.tsx:1981 ✅ Utility results: {flights: 0, trains: 0}

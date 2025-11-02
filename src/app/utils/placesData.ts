@@ -58,6 +58,7 @@ export async function findPlaceByCity(cityName: string): Promise<PlaceData | nul
 /**
  * Get all unique cities from places.json, sorted alphabetically
  * Optional: filter by country
+ * WARNING: This returns 40K+ cities, use searchCities() for better performance
  */
 export async function getAllCities(country?: string): Promise<Array<{city: string, code: string, state: string}>> {
   const places = await loadPlacesData();
@@ -85,19 +86,84 @@ export async function getAllCities(country?: string): Promise<Array<{city: strin
 }
 
 /**
- * Get cities filtered by a search term
+ * Get unique cities from places.json synchronously (for immediate use)
+ * Returns all unique cities by parsing places.json in memory
+ * Note: This is expensive, use sparingly or cache the result
  */
-export async function searchCities(searchTerm: string, country?: string): Promise<Array<{city: string, code: string, state: string}>> {
-  const allCities = await getAllCities(country);
+let allCitiesCache: Array<{city: string, code: string, state: string}> | null = null;
+
+export async function getAllCitiesOnce(): Promise<Array<{city: string, code: string, state: string}>> {
+  if (allCitiesCache) {
+    return allCitiesCache;
+  }
+
+  const cities = await getAllCities();
+  allCitiesCache = cities;
+  return cities;
+}
+
+/**
+ * Get cities filtered by a search term (with limit for performance)
+ * Returns popular cities + matching cities from full dataset
+ * @param searchTerm - The search string
+ * @param limit - Maximum results to return (default: 50)
+ * @param country - Optional country filter
+ */
+export async function searchCities(
+  searchTerm: string,
+  limit: number = 50,
+  country?: string
+): Promise<Array<{city: string, code: string, state: string}>> {
   const normalized = searchTerm.trim().toLowerCase();
 
-  if (!normalized) return allCities;
+  // If no search term, return popular cities
+  if (!normalized) {
+    return getPopularIndianCities();
+  }
 
-  return allCities.filter(c =>
+  // First, check popular cities for quick matches
+  const popularCities = getPopularIndianCities();
+  const popularMatches = popularCities.filter(c =>
     c.city.toLowerCase().includes(normalized) ||
     c.code.toLowerCase().includes(normalized) ||
     c.state.toLowerCase().includes(normalized)
   );
+
+  // If we found enough in popular cities, return them
+  if (popularMatches.length >= limit) {
+    return popularMatches.slice(0, limit);
+  }
+
+  // Otherwise, search the full dataset
+  const places = await loadPlacesData();
+  const filtered = country
+    ? places.filter(p => p.country.toLowerCase() === country.toLowerCase())
+    : places;
+
+  const cityMap = new Map<string, {city: string, code: string, state: string}>();
+
+  // Add popular matches first
+  popularMatches.forEach(c => cityMap.set(c.city, c));
+
+  // Search through all places
+  for (const place of filtered) {
+    if (cityMap.size >= limit) break;
+
+    const matches =
+      place.city.toLowerCase().includes(normalized) ||
+      place.code.toLowerCase().includes(normalized) ||
+      place.state?.toLowerCase().includes(normalized);
+
+    if (matches && !cityMap.has(place.city)) {
+      cityMap.set(place.city, {
+        city: place.city,
+        code: place.code,
+        state: place.state
+      });
+    }
+  }
+
+  return Array.from(cityMap.values()).sort((a, b) => a.city.localeCompare(b.city));
 }
 
 /**

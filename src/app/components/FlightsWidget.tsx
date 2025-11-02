@@ -47,7 +47,7 @@ const getInitialCities = () => {
 // Available cities - using popular Indian cities as default
 const AVAILABLE_CITIES = getInitialCities();
 
-// City Selector Component
+// City Selector Component with Search (loads from places.json)
 function CitySelector({
   value,
   onChange,
@@ -57,11 +57,16 @@ function CitySelector({
   value: string;
   onChange: (city: string) => void;
   label: string;
-  disabled?: boolean; // NEW: Disable the selector
+  disabled?: boolean;
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [cities, setCities] = useState(AVAILABLE_CITIES);
+  const [isLoading, setIsLoading] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
+  // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -69,6 +74,7 @@ function CitySelector({
         !dropdownRef.current.contains(event.target as Node)
       ) {
         setIsOpen(false);
+        setSearchTerm("");
       }
     }
 
@@ -76,13 +82,54 @@ function CitySelector({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const selectedCity = AVAILABLE_CITIES.find((city) => city.name === value);
+  // Focus search input when dropdown opens
+  useEffect(() => {
+    if (isOpen && searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  }, [isOpen]);
+
+  // Search cities from places.json as user types
+  useEffect(() => {
+    if (!searchTerm.trim()) {
+      setCities(AVAILABLE_CITIES);
+      return;
+    }
+
+    const searchCitiesFromPlaces = async () => {
+      setIsLoading(true);
+      try {
+        const results = await searchCities(searchTerm, 50); // Limit to 50 results
+        const formattedCities = results.map(c => ({
+          name: c.city,
+          code: c.code,
+          airport: `${c.city} Airport` // Generic airport name
+        }));
+        setCities(formattedCities);
+      } catch (error) {
+        console.error("Error searching cities:", error);
+        // Fallback to popular cities on error
+        const filtered = AVAILABLE_CITIES.filter(city =>
+          city.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setCities(filtered);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    const debounceTimer = setTimeout(searchCitiesFromPlaces, 300); // Debounce 300ms
+    return () => clearTimeout(debounceTimer);
+  }, [searchTerm]);
+
+  const selectedCity = cities.find((city) => city.name === value);
 
   return (
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => !disabled && setIsOpen(!isOpen)}
         disabled={disabled}
+        type="button"
         className={`w-full text-left p-3 bg-white/50 backdrop-blur-sm rounded-xl transition-all border border-white/20 ${
           disabled ? "cursor-not-allowed opacity-60" : "hover:bg-white/70"
         }`}
@@ -91,12 +138,12 @@ function CitySelector({
           <MdFlight className="text-gray-500 flex-shrink-0" size={14} />
           <div className="flex-1 min-w-0">
             <div className="text-xs font-semibold text-gray-900">
-              {selectedCity?.name || "Select City"}
+              {value || "Select City"}
             </div>
             <div className="text-[10px] text-gray-500 truncate">
               {selectedCity
-                ? `[${selectedCity.code}] ${selectedCity.airport}`
-                : "Choose from available cities"}
+                ? `[${selectedCity.code}]`
+                : "Search from 40K+ cities"}
             </div>
           </div>
           <FiChevronDown
@@ -110,26 +157,51 @@ function CitySelector({
 
       {isOpen && !disabled && (
         <div className="absolute top-full left-0 right-0 mt-2 bg-white/95 backdrop-blur-md rounded-xl shadow-2xl z-[100] border border-white/40">
+          {/* Search Input */}
+          <div className="p-2 border-b border-gray-200/50">
+            <input
+              ref={searchInputRef}
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search cities..."
+              className="w-full px-3 py-2 text-xs text-gray-900 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+            />
+          </div>
+
+          {/* Cities List */}
           <div className="p-2 max-h-[250px] overflow-y-auto">
-            {AVAILABLE_CITIES.map((city) => (
-              <button
-                key={city.code}
-                onClick={() => {
-                  onChange(city.name);
-                  setIsOpen(false);
-                }}
-                className={`w-full text-left px-3 py-2 rounded-lg transition-all ${
-                  value === city.name
-                    ? "bg-blue-500/20 text-blue-700"
-                    : "hover:bg-gray-100/50 text-gray-700"
-                }`}
-              >
-                <div className="text-xs font-semibold">{city.name}</div>
-                <div className="text-[10px] text-gray-500">
-                  [{city.code}] {city.airport}
-                </div>
-              </button>
-            ))}
+            {isLoading ? (
+              <div className="text-center py-4 text-xs text-gray-500">
+                Searching...
+              </div>
+            ) : cities.length > 0 ? (
+              cities.map((city, index) => (
+                <button
+                  key={`${city.code}-${index}`}
+                  type="button"
+                  onClick={() => {
+                    onChange(city.name);
+                    setIsOpen(false);
+                    setSearchTerm("");
+                  }}
+                  className={`w-full text-left px-3 py-2 rounded-lg transition-all ${
+                    value === city.name
+                      ? "bg-blue-500/20 text-blue-700"
+                      : "hover:bg-gray-100/50 text-gray-700"
+                  }`}
+                >
+                  <div className="text-xs font-semibold">{city.name}</div>
+                  <div className="text-[10px] text-gray-500">
+                    [{city.code}]
+                  </div>
+                </button>
+              ))
+            ) : (
+              <div className="text-center py-4 text-xs text-gray-500">
+                No cities found
+              </div>
+            )}
           </div>
         </div>
       )}
