@@ -14,6 +14,7 @@ import DateSelectorWidget from "../../components/DateSelectorWidget";
 import OnboardingModalWhite from "../../components/auth/OnboardingModalWhite";
 import ItinerAIChatBox from "../../components/ItinerAIChatBox";
 import MessageResponseOverlay from "../../components/MessageResponseOverlay";
+import ChatLoadingIndicator from "../../components/ChatLoadingIndicator";
 import { getSessionId } from "../../utils/sessionManager";
 import { updateMemoryOnSessionChange } from "../../utils/memoryApi";
 import {
@@ -1988,6 +1989,13 @@ export default function FlightsPageAuthenticated() {
       // Extract and show message in overlay if present
       const responseMessage = itineraryPayload.message || apiResponse.message;
       if (responseMessage && typeof responseMessage === "string" && responseMessage.trim()) {
+        console.log("📨 Setting overlay message from itinerary chat:", responseMessage);
+        console.log("🔍 Current context:", {
+          activeSection,
+          showFlashcards,
+          showItinerary,
+          willShowOverlay: activeSection === "chat" && (showFlashcards || showItinerary)
+        });
         setOverlayMessage(responseMessage);
         setShowOverlay(true);
       }
@@ -4079,6 +4087,16 @@ export default function FlightsPageAuthenticated() {
 
       // Show message in overlay if there's content
       if (messageContent && messageContent.trim()) {
+        console.log("📨 Setting overlay message from main chat:", messageContent);
+        console.log("🔍 Current context:", {
+          activeSection,
+          showFlashcards,
+          showItinerary,
+          showFlights,
+          showStays,
+          showDateSelector,
+          willShowOverlay: activeSection === "chat" && (showFlashcards || showItinerary)
+        });
         setOverlayMessage(messageContent);
         setShowOverlay(true);
       }
@@ -5037,16 +5055,28 @@ export default function FlightsPageAuthenticated() {
         />
       )}
 
-      {/* Message Response Overlay */}
-      <MessageResponseOverlay
-        message={overlayMessage}
-        isVisible={showOverlay}
-        onClose={() => {
-          setShowOverlay(false);
-          setOverlayMessage(null);
-        }}
-        autoHideDuration={8000}
-      />
+      {/* Chat Loading Indicator - Top Right (Only for Flashcards/Itinerary) */}
+      {activeSection === "chat" && (showFlashcards || showItinerary) && (
+        <div className="fixed top-5 right-5 z-[9998]">
+          <ChatLoadingIndicator
+            isVisible={isLoading && !isInitializingSession && !showOverlay}
+            theme={showItinerary ? "white" : "default"}
+          />
+        </div>
+      )}
+
+      {/* Message Response Overlay - Only for Flashcards/Itinerary */}
+      {activeSection === "chat" && (showFlashcards || showItinerary) && (
+        <MessageResponseOverlay
+          message={overlayMessage}
+          isVisible={showOverlay}
+          onClose={() => {
+            setShowOverlay(false);
+            setOverlayMessage(null);
+          }}
+          autoHideDuration={8000}
+        />
+      )}
     </div>
   );
 }
