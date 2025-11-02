@@ -3,6 +3,7 @@
 import React, {
   useState,
   useEffect,
+  useCallback,
   useImperativeHandle,
   forwardRef,
 } from "react";
@@ -50,6 +51,8 @@ const FlashcardsWidget = forwardRef<FlashcardsWidgetRef, FlashcardsWidgetProps>(
     },
     ref
   ) => {
+    // Make trips mutable with state
+    const [tripsState, setTripsState] = useState<TripInfo[]>(trips);
     const [activeSlide, setActiveSlide] = useState<number | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [photoGallery, setPhotoGallery] = useState<PhotoGalleryState | null>(
@@ -66,6 +69,23 @@ const FlashcardsWidget = forwardRef<FlashcardsWidgetRef, FlashcardsWidgetProps>(
       },
     }));
 
+    // Handler to update trip data when activities are added/removed
+    // Use useCallback to maintain stable reference and prevent infinite loops
+    const handleTripUpdate = useCallback((updatedTrip: TripInfo) => {
+      setTripsState(prevTrips =>
+        prevTrips.map((trip, idx) =>
+          idx === activeSlide ? updatedTrip : trip
+        )
+      );
+      console.log('Trip updated in FlashcardsWidget:', updatedTrip.trip_title);
+
+      // Also notify parent component about the update
+      if (onTripSelect && activeSlide !== null) {
+        console.log('Notifying parent of trip update via onTripSelect');
+        onTripSelect(updatedTrip);
+      }
+    }, [activeSlide, onTripSelect]);
+
     // Image preloading states
     const [isLoadingImages, setIsLoadingImages] = useState(true);
     const [cachedImageUrls, setCachedImageUrls] = useState<Map<string, string>>(
@@ -76,12 +96,12 @@ const FlashcardsWidget = forwardRef<FlashcardsWidgetRef, FlashcardsWidgetProps>(
      * Index of the centred slide **within the extended array** (includes clones).
      * We keep this separate from the real index to simplify distance calculations.
      */
-    const numClones = Math.min(2, trips.length);
+    const numClones = Math.min(2, tripsState.length);
     const [centerExtendedIdx, setCenterExtendedIdx] = useState(numClones); // Start at first real card
 
     // Derived real index for consumers (modal, click etc.)
     const centerCardIndex =
-      (centerExtendedIdx - numClones + trips.length) % trips.length;
+      (centerExtendedIdx - numClones + tripsState.length) % tripsState.length;
 
     const scrollContainerRef = React.useRef<HTMLDivElement>(null);
     // Throttle flag to allow only one slide movement per wheel gesture
@@ -95,14 +115,14 @@ const FlashcardsWidget = forwardRef<FlashcardsWidgetRef, FlashcardsWidgetProps>(
     // Memoised trips with cached images
     const tripsWithCachedImages = React.useMemo(() => {
       if (cachedImageUrls.size === 0) {
-        return trips;
+        return tripsState;
       }
 
-      return trips.map((trip) => ({
+      return tripsState.map((trip) => ({
         ...trip,
         image: getTripImage(trip, cachedImageUrls),
       }));
-    }, [trips, cachedImageUrls]);
+    }, [tripsState, cachedImageUrls]);
 
     // Memoised extended trips to avoid rebuilding on every render
     const extendedTrips = React.useMemo(
@@ -113,7 +133,7 @@ const FlashcardsWidget = forwardRef<FlashcardsWidgetRef, FlashcardsWidgetProps>(
     // Debug: Log the trips data to ensure images are mapped correctly
     React.useEffect(() => {
       console.log("FlashcardsWidget trips data with images from JSON:");
-      trips.forEach((trip, index) => {
+      tripsState.forEach((trip, index) => {
         // Check both new trip_route structure and legacy day_wise_plan structure
         const rawPhotoFromRoute = trip.trip_route?.[0]?.photos?.[0];
         const rawPhotoFromDayPlan =
@@ -143,7 +163,7 @@ const FlashcardsWidget = forwardRef<FlashcardsWidgetRef, FlashcardsWidgetProps>(
           }`
         );
       });
-    }, [trips]);
+    }, [tripsState]);
 
     // Preload all images from final_response.json on component mount
     React.useEffect(() => {
@@ -238,7 +258,7 @@ const FlashcardsWidget = forwardRef<FlashcardsWidgetRef, FlashcardsWidgetProps>(
 
       // Calculate boundaries for real cards
       const firstRealIdx = numClones;
-      const lastRealIdx = numClones + trips.length - 1;
+      const lastRealIdx = numClones + tripsState.length - 1;
 
       // wrap handling - check if we need to teleport
       if (targetIdx < numClones) {
@@ -565,7 +585,7 @@ const FlashcardsWidget = forwardRef<FlashcardsWidgetRef, FlashcardsWidgetProps>(
     }, [isModalOpen]);
 
     const handleSlideClick = (idxExt: number) => {
-      const realIdx = (idxExt - numClones + trips.length) % trips.length;
+      const realIdx = (idxExt - numClones + tripsState.length) % tripsState.length;
       if (idxExt === centerExtendedIdx) {
         setActiveSlide(realIdx);
         setIsModalOpen(true);
@@ -582,14 +602,14 @@ const FlashcardsWidget = forwardRef<FlashcardsWidgetRef, FlashcardsWidgetProps>(
 
     const handleSelectCard = (idxExt: number, e: React.MouseEvent) => {
       e.stopPropagation(); // Prevent triggering slide click
-      const realIdx = (idxExt - numClones + trips.length) % trips.length;
+      const realIdx = (idxExt - numClones + tripsState.length) % tripsState.length;
       // Toggle selection: if already selected, deselect; otherwise select
       const newSelectedCard = selectedCard === realIdx ? null : realIdx;
       setSelectedCard(newSelectedCard);
 
       // Notify parent component about trip selection
       if (onTripSelect) {
-        onTripSelect(newSelectedCard !== null ? trips[newSelectedCard] : null);
+        onTripSelect(newSelectedCard !== null ? tripsState[newSelectedCard] : null);
       }
     };
 
@@ -731,7 +751,7 @@ const FlashcardsWidget = forwardRef<FlashcardsWidgetRef, FlashcardsWidgetProps>(
                 const isCenter = index === centerExtendedIdx;
                 const distance = Math.abs(index - centerExtendedIdx);
                 const realIdx =
-                  (index - numClones + trips.length) % trips.length;
+                  (index - numClones + tripsState.length) % tripsState.length;
                 const isSelected = selectedCard === realIdx;
 
                 return (
@@ -791,8 +811,9 @@ const FlashcardsWidget = forwardRef<FlashcardsWidgetRef, FlashcardsWidgetProps>(
         {/* Modal for expanded trip details */}
         {isModalOpen && activeSlide !== null && (
           <TripExpandedView
-            trip={trips[activeSlide] as any}
+            trip={tripsState[activeSlide] as any}
             onClose={handleCloseModal}
+            onTripUpdate={handleTripUpdate}
           />
         )}
 

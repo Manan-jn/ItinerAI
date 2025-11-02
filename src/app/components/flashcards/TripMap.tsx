@@ -29,13 +29,15 @@ export function TripMap({ places }: TripMapProps) {
       }
 
       // Check if script is already being loaded or exists
-      const existingScript = document.querySelector('script[src*="maps.googleapis.com"]');
+      const existingScript = document.querySelector(
+        'script[src*="maps.googleapis.com"]'
+      );
       if (existingScript) {
         // Script already exists, wait for it to load
         if (window.google && window.google.maps) {
           initializeMap();
         } else {
-          existingScript.addEventListener('load', () => {
+          existingScript.addEventListener("load", () => {
             setMapLoaded(true);
             initializeMap();
           });
@@ -44,7 +46,7 @@ export function TripMap({ places }: TripMapProps) {
       }
 
       const script = document.createElement("script");
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY}&libraries=places`;
+      script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyA1nWwaai3ct-XD_sJQnPzVLrOExgomZjM&libraries=places`;
       script.async = true;
       script.defer = true;
       script.onload = () => {
@@ -62,8 +64,12 @@ export function TripMap({ places }: TripMapProps) {
 
       try {
         // Calculate center point (average of all coordinates)
-        const avgLat = places.reduce((sum, place) => sum + parseFloat(place.lat), 0) / places.length;
-        const avgLng = places.reduce((sum, place) => sum + parseFloat(place.long), 0) / places.length;
+        const avgLat =
+          places.reduce((sum, place) => sum + parseFloat(place.lat), 0) /
+          places.length;
+        const avgLng =
+          places.reduce((sum, place) => sum + parseFloat(place.long), 0) /
+          places.length;
 
         // Create map
         const map = new google.maps.Map(mapRef.current, {
@@ -73,23 +79,23 @@ export function TripMap({ places }: TripMapProps) {
             {
               featureType: "all",
               elementType: "geometry",
-              stylers: [{ color: "#f0f9ff" }]
+              stylers: [{ color: "#f0f9ff" }],
             },
             {
               featureType: "water",
               elementType: "geometry",
-              stylers: [{ color: "#bfdbfe" }]
+              stylers: [{ color: "#bfdbfe" }],
             },
             {
               featureType: "road",
               elementType: "geometry",
-              stylers: [{ color: "#ffffff" }]
+              stylers: [{ color: "#ffffff" }],
             },
             {
               featureType: "poi",
               elementType: "labels",
-              stylers: [{ visibility: "off" }]
-            }
+              stylers: [{ visibility: "off" }],
+            },
           ],
           disableDefaultUI: false,
           zoomControl: true,
@@ -109,8 +115,8 @@ export function TripMap({ places }: TripMapProps) {
           };
 
           // Create custom HTML marker
-          const markerDiv = document.createElement('div');
-          markerDiv.className = 'custom-map-marker';
+          const markerDiv = document.createElement("div");
+          markerDiv.className = "custom-map-marker";
           markerDiv.innerHTML = `
             <div class="marker-pin">
               <div class="marker-number">${index + 1}</div>
@@ -119,7 +125,7 @@ export function TripMap({ places }: TripMapProps) {
           `;
 
           // Add styles for custom marker
-          const style = document.createElement('style');
+          const style = document.createElement("style");
           style.textContent = `
             .custom-map-marker {
               position: relative;
@@ -172,8 +178,8 @@ export function TripMap({ places }: TripMapProps) {
               box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), 0 0 0 2px rgba(59, 130, 246, 0.4);
             }
           `;
-          if (!document.querySelector('#map-marker-styles')) {
-            style.id = 'map-marker-styles';
+          if (!document.querySelector("#map-marker-styles")) {
+            style.id = "map-marker-styles";
             document.head.appendChild(style);
           }
 
@@ -195,7 +201,7 @@ export function TripMap({ places }: TripMapProps) {
               panes?.overlayMouseTarget.appendChild(this.div);
 
               // Add click listener
-              this.div.addEventListener('click', () => {
+              this.div.addEventListener("click", () => {
                 infoWindow.setPosition(this.position);
                 infoWindow.open(map);
               });
@@ -203,11 +209,13 @@ export function TripMap({ places }: TripMapProps) {
 
             draw() {
               if (this.div) {
-                const point = this.getProjection().fromLatLngToDivPixel(this.position);
+                const point = this.getProjection().fromLatLngToDivPixel(
+                  this.position
+                );
                 if (point) {
-                  this.div.style.left = point.x + 'px';
-                  this.div.style.top = point.y + 'px';
-                  this.div.style.position = 'absolute';
+                  this.div.style.left = point.x + "px";
+                  this.div.style.top = point.y + "px";
+                  this.div.style.position = "absolute";
                 }
               }
             }
@@ -239,14 +247,17 @@ export function TripMap({ places }: TripMapProps) {
             `,
           });
 
-          new CustomMarker(new google.maps.LatLng(position.lat, position.lng), map);
+          new CustomMarker(
+            new google.maps.LatLng(position.lat, position.lng),
+            map
+          );
 
           bounds.extend(position);
         });
 
         // Draw polyline connecting the places
         if (places.length > 1) {
-          const path = places.map(place => ({
+          const path = places.map((place) => ({
             lat: parseFloat(place.lat),
             lng: parseFloat(place.long),
           }));
@@ -267,7 +278,6 @@ export function TripMap({ places }: TripMapProps) {
         // Add some padding
         const padding = { top: 50, right: 50, bottom: 50, left: 50 };
         map.fitBounds(bounds, padding);
-
       } catch (err) {
         console.error("Error initializing map:", err);
         setError("Failed to initialize map");
@@ -304,7 +314,11 @@ export function TripMap({ places }: TripMapProps) {
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          background: linear-gradient(135deg, rgba(239, 68, 68, 0.05) 0%, rgba(239, 68, 68, 0.02) 100%);
+          background: linear-gradient(
+            135deg,
+            rgba(239, 68, 68, 0.05) 0%,
+            rgba(239, 68, 68, 0.02) 100%
+          );
           border: 2px dashed rgba(239, 68, 68, 0.2);
           border-radius: 12px;
           color: #dc2626;

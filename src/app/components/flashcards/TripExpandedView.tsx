@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { TripInfo, DayPlan } from "./types";
 import { TripMap } from "./TripMap";
@@ -8,9 +8,12 @@ import { TripMap } from "./TripMap";
 interface TripExpandedViewProps {
   trip: TripInfo;
   onClose: () => void;
+  onTripUpdate?: (updatedTrip: TripInfo) => void;
 }
 
-export function TripExpandedView({ trip, onClose }: TripExpandedViewProps) {
+export function TripExpandedView({ trip, onClose, onTripUpdate }: TripExpandedViewProps) {
+  // Make trip data mutable with state
+  const [tripData, setTripData] = useState<TripInfo>(trip);
   const [searchQuery, setSearchQuery] = useState("");
   // Initialize with all days expanded
   const [expandedDays, setExpandedDays] = useState<Set<number>>(() => {
@@ -20,8 +23,14 @@ export function TripExpandedView({ trip, onClose }: TripExpandedViewProps) {
   });
   const [mounted, setMounted] = useState(false);
   const [searchPanelOpen, setSearchPanelOpen] = useState(false);
+  const [selectedDayForActivity, setSelectedDayForActivity] = useState<number | null>(null);
   const [isAnimatingIn, setIsAnimatingIn] = useState(true);
   const [isClosing, setIsClosing] = useState(false);
+  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
+
+  // Ref to track if this is the initial mount
+  const isInitialMount = useRef(true);
 
   useEffect(() => {
     setMounted(true);
@@ -35,6 +44,20 @@ export function TripExpandedView({ trip, onClose }: TripExpandedViewProps) {
       document.body.style.overflow = 'unset';
     };
   }, []);
+
+  // Call onTripUpdate whenever tripData changes (skip initial mount)
+  useEffect(() => {
+    // Skip the initial mount to prevent infinite loop
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+
+    // Only call onTripUpdate for actual changes after mount
+    if (onTripUpdate) {
+      onTripUpdate(tripData);
+    }
+  }, [tripData, onTripUpdate]);
 
   const handleClose = () => {
     setIsClosing(true);
@@ -144,6 +167,116 @@ export function TripExpandedView({ trip, onClose }: TripExpandedViewProps) {
     return photoUrl;
   };
 
+  // Search for places using Google Places API
+  useEffect(() => {
+    if (!searchQuery.trim() || !searchPanelOpen) {
+      setSearchResults([]);
+      return;
+    }
+
+    const searchTimer = setTimeout(async () => {
+      setIsSearching(true);
+      try {
+        const response = await fetch(
+          `/api/places-autocomplete?input=${encodeURIComponent(searchQuery)}`
+        );
+        const data = await response.json();
+
+        if (data.predictions) {
+          setSearchResults(data.predictions);
+        }
+      } catch (error) {
+        console.error('Search error:', error);
+        setSearchResults([]);
+      } finally {
+        setIsSearching(false);
+      }
+    }, 500); // Debounce 500ms
+
+    return () => clearTimeout(searchTimer);
+  }, [searchQuery, searchPanelOpen]);
+
+  // Add activity to a specific day
+  const handleAddActivity = async (placeId: string, placeName: string) => {
+    if (selectedDayForActivity === null) {
+      console.error('No day selected for activity');
+      return;
+    }
+
+    try {
+      // Fetch place details from Google Places API
+      const response = await fetch(
+        `/api/place-details?place_id=${encodeURIComponent(placeId)}`
+      );
+      const activityData = await response.json();
+
+      if (activityData.error) {
+        console.error('Error fetching place details:', activityData.error);
+        return;
+      }
+
+      // Update trip data with new activity
+      setTripData((prevTrip) => {
+        const newTrip = { ...prevTrip };
+        if (newTrip.day_wise_plan) {
+          const dayIndex = newTrip.day_wise_plan.findIndex(
+            (d) => d.day_number === selectedDayForActivity
+          );
+
+          if (dayIndex !== -1) {
+            const updatedDay = { ...newTrip.day_wise_plan[dayIndex] };
+            updatedDay.must_do_activities = [
+              ...updatedDay.must_do_activities,
+              {
+                type: activityData.type,
+                category: activityData.category,
+                name: activityData.name,
+                description: activityData.description,
+              },
+            ];
+
+            newTrip.day_wise_plan = [...newTrip.day_wise_plan];
+            newTrip.day_wise_plan[dayIndex] = updatedDay;
+          }
+        }
+        return newTrip;
+      });
+
+      console.log(`✅ Added activity "${placeName}" to Day ${selectedDayForActivity}`);
+
+      // Clear search and close panel
+      setSearchQuery('');
+      setSearchResults([]);
+    } catch (error) {
+      console.error('Error adding activity:', error);
+    }
+  };
+
+  // Remove activity from a specific day
+  const handleRemoveActivity = (dayNumber: number, activityIndex: number) => {
+    setTripData((prevTrip) => {
+      const newTrip = { ...prevTrip };
+      if (newTrip.day_wise_plan) {
+        const dayIndex = newTrip.day_wise_plan.findIndex(
+          (d) => d.day_number === dayNumber
+        );
+
+        if (dayIndex !== -1) {
+          const updatedDay = { ...newTrip.day_wise_plan[dayIndex] };
+          updatedDay.must_do_activities = updatedDay.must_do_activities.filter(
+            (_, idx) => idx !== activityIndex
+          );
+
+          newTrip.day_wise_plan = [...newTrip.day_wise_plan];
+          newTrip.day_wise_plan[dayIndex] = updatedDay;
+        }
+      }
+      return newTrip;
+    });
+
+    console.log(`🗑️ Removed activity from Day ${dayNumber}`);
+  };
+
   if (!mounted) return null;
 
   const modalContent = (
@@ -206,7 +339,7 @@ export function TripExpandedView({ trip, onClose }: TripExpandedViewProps) {
 
           {/* Day-wise Plan */}
           <div className="trip-days-container">
-            {(trip.day_wise_plan || []).map((day, dayIndex) => {
+            {(tripData.day_wise_plan || []).map((day, dayIndex) => {
               const cityName = getCityForDay(day, dayIndex);
               const cityImage = getCityImage(cityName);
               const isExpanded = expandedDays.has(day.day_number);
@@ -243,14 +376,24 @@ export function TripExpandedView({ trip, onClose }: TripExpandedViewProps) {
                       {day.stay_details?.is_required && day.stay_details.city && (
                         <span className="day-badge stay-badge">Stay</span>
                       )}
-                      <button 
-                        className={`day-add-btn ${searchPanelOpen ? 'active' : ''}`}
+                      <button
+                        className={`day-add-btn ${searchPanelOpen && selectedDayForActivity === day.day_number ? 'active' : ''}`}
                         onClick={(e) => {
                           e.stopPropagation();
-                          setSearchPanelOpen(!searchPanelOpen);
+                          if (searchPanelOpen && selectedDayForActivity === day.day_number) {
+                            // Close if clicking the same day
+                            setSearchPanelOpen(false);
+                            setSelectedDayForActivity(null);
+                            setSearchQuery('');
+                          } else {
+                            // Open for this day
+                            setSearchPanelOpen(true);
+                            setSelectedDayForActivity(day.day_number);
+                            setSearchQuery('');
+                          }
                         }}
-                        aria-label={searchPanelOpen ? "Close search panel" : "Open search panel"}
-                        title={searchPanelOpen ? "Close search panel" : "Open search panel"}
+                        aria-label={searchPanelOpen && selectedDayForActivity === day.day_number ? "Close search panel" : "Open search panel"}
+                        title={searchPanelOpen && selectedDayForActivity === day.day_number ? "Close search panel" : `Add activity to Day ${day.day_number}`}
                       >
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                           {searchPanelOpen ? (
@@ -308,7 +451,15 @@ export function TripExpandedView({ trip, onClose }: TripExpandedViewProps) {
                                    activity.type === 'transport' ? '🚗' :
                                    activity.type === 'shopping' ? '🛍️' : '✨'}
                                 </div>
-                                <button className="activity-remove-btn" aria-label="Remove activity">
+                                <button
+                                  className="activity-remove-btn"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleRemoveActivity(day.day_number, idx);
+                                  }}
+                                  aria-label="Remove activity"
+                                  title={`Remove ${activity.name}`}
+                                >
                                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                                     <line x1="5" y1="12" x2="19" y2="12" />
                                   </svg>
@@ -336,9 +487,13 @@ export function TripExpandedView({ trip, onClose }: TripExpandedViewProps) {
           <div className="trip-expanded-search">
             <div className="search-header">
               <h3>Search Activities</h3>
-              <button 
-                className="search-close-btn" 
-                onClick={() => setSearchPanelOpen(false)}
+              <button
+                className="search-close-btn"
+                onClick={() => {
+                  setSearchPanelOpen(false);
+                  setSelectedDayForActivity(null);
+                  setSearchQuery('');
+                }}
                 aria-label="Close search"
                 title="Close search panel"
               >
@@ -348,14 +503,62 @@ export function TripExpandedView({ trip, onClose }: TripExpandedViewProps) {
                 </svg>
               </button>
             </div>
+            {selectedDayForActivity && (
+              <div className="search-day-indicator">
+                Adding to <strong>Day {selectedDayForActivity}</strong>
+              </div>
+            )}
             <div className="search-input-container">
               <input
                 type="text"
                 className="search-input"
-                placeholder="Search for activities..."
+                placeholder="Search for places, restaurants, activities..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
+                autoFocus
               />
+              {isSearching && (
+                <div className="search-loading">Searching...</div>
+              )}
+            </div>
+
+            {/* Search Results */}
+            <div className="search-results-container">
+              {searchResults.length > 0 ? (
+                <div className="search-results">
+                  {searchResults.map((result) => (
+                    <div
+                      key={result.place_id}
+                      className="search-result-item"
+                      onClick={() => handleAddActivity(result.place_id, result.description)}
+                    >
+                      <div className="result-icon">📍</div>
+                      <div className="result-content">
+                        <div className="result-title">{result.structured_formatting?.main_text || result.description}</div>
+                        {result.structured_formatting?.secondary_text && (
+                          <div className="result-subtitle">{result.structured_formatting.secondary_text}</div>
+                        )}
+                      </div>
+                      <button className="result-add-btn" aria-label="Add activity">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                          <line x1="12" y1="5" x2="12" y2="19" />
+                          <line x1="5" y1="12" x2="19" y2="12" />
+                        </svg>
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              ) : searchQuery.trim() && !isSearching ? (
+                <div className="search-empty">
+                  <p>No results found for "{searchQuery}"</p>
+                  <p className="search-empty-hint">Try a different search term</p>
+                </div>
+              ) : !searchQuery.trim() ? (
+                <div className="search-empty">
+                  <p>🔍 Start typing to search</p>
+                  <p className="search-empty-hint">Search for places, restaurants, museums, parks, and more...</p>
+                </div>
+              ) : null}
             </div>
           </div>
         )}
@@ -1093,6 +1296,140 @@ export function TripExpandedView({ trip, onClose }: TripExpandedViewProps) {
         }
 
         .search-input::placeholder {
+          color: #94a3b8;
+        }
+
+        .search-day-indicator {
+          padding: 10px 14px;
+          background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(147, 197, 253, 0.2) 100%);
+          border: 1px solid rgba(59, 130, 246, 0.3);
+          border-radius: 8px;
+          font-size: 13px;
+          color: #1e40af;
+          text-align: center;
+        }
+
+        .search-day-indicator strong {
+          font-weight: 700;
+        }
+
+        .search-loading {
+          margin-top: 8px;
+          font-size: 13px;
+          color: #64748b;
+          text-align: center;
+        }
+
+        .search-results-container {
+          flex: 1;
+          overflow-y: auto;
+          min-height: 200px;
+        }
+
+        .search-results-container::-webkit-scrollbar {
+          width: 6px;
+        }
+
+        .search-results-container::-webkit-scrollbar-track {
+          background: rgba(59, 130, 246, 0.05);
+          border-radius: 3px;
+        }
+
+        .search-results-container::-webkit-scrollbar-thumb {
+          background: rgba(59, 130, 246, 0.3);
+          border-radius: 3px;
+        }
+
+        .search-results {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+
+        .search-result-item {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 12px;
+          background: rgba(255, 255, 255, 0.7);
+          border: 2px solid rgba(59, 130, 246, 0.15);
+          border-radius: 10px;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        .search-result-item:hover {
+          background: rgba(255, 255, 255, 0.9);
+          border-color: rgba(59, 130, 246, 0.35);
+          transform: translateX(4px);
+          box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+        }
+
+        .result-icon {
+          font-size: 24px;
+          flex-shrink: 0;
+        }
+
+        .result-content {
+          flex: 1;
+          min-width: 0;
+        }
+
+        .result-title {
+          font-size: 14px;
+          font-weight: 600;
+          color: #0f172a;
+          margin-bottom: 2px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .result-subtitle {
+          font-size: 12px;
+          color: #64748b;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .result-add-btn {
+          width: 32px;
+          height: 32px;
+          border-radius: 8px;
+          background: rgba(34, 197, 94, 0.15);
+          border: 1.5px solid rgba(34, 197, 94, 0.3);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          flex-shrink: 0;
+        }
+
+        .result-add-btn:hover {
+          background: rgba(34, 197, 94, 0.25);
+          border-color: rgba(34, 197, 94, 0.5);
+          transform: scale(1.08);
+        }
+
+        .result-add-btn svg {
+          color: #059669;
+        }
+
+        .search-empty {
+          padding: 40px 20px;
+          text-align: center;
+        }
+
+        .search-empty p {
+          font-size: 14px;
+          color: #64748b;
+          margin: 0 0 8px 0;
+        }
+
+        .search-empty-hint {
+          font-size: 12px;
           color: #94a3b8;
         }
 

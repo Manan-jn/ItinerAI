@@ -67,19 +67,19 @@ export function Sidebar({
           />
           <SidebarButton
             icon={<MdChat className="w-4 h-4" />}
-            text="Chat"
+            text="Trip Planner"
             active={activeSection === "chat"}
             onClick={() => onSectionChange("chat")}
           />
           <SidebarButton
             icon={<MdDirectionsBus className="w-4 h-4" />}
-            text="Conveyance"
+            text="Conveyance Finder"
             active={activeSection === "conveyance"}
             onClick={() => onSectionChange("conveyance")}
           />
           <SidebarButton
             icon={<MdHotel className="w-4 h-4" />}
-            text="Stays"
+            text="Stay Finder"
             active={activeSection === "stays"}
             onClick={() => onSectionChange("stays")}
           />

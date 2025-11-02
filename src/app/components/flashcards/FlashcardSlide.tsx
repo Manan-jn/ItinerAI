@@ -87,7 +87,7 @@ export function FlashcardSlide({
                 </div>
                 <div className="info-text">
                   <span className="info-label">Budget</span>
-                  <span className="info-value">${trip.estimated_budget}</span>
+                  <span className="info-value">₹{trip.estimated_budget}</span>
                 </div>
               </div>
             </div>

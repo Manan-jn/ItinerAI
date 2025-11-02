@@ -61,7 +61,7 @@ export function TripLoader({
 
   return (
     <div
-      className={`absolute inset-0 z-50 flex items-center justify-center transition-all duration-700 ease-out overflow-hidden ${
+      className={`fixed inset-0 z-50 flex items-center justify-center transition-all duration-700 ease-out overflow-hidden ${
         showTripLoader && isVisible
           ? "opacity-100 pointer-events-auto"
           : "opacity-0 pointer-events-none"
