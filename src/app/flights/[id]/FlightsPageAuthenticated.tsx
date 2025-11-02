@@ -26,6 +26,7 @@ import {
   extractImageUrls,
   validateAndPopulateTripData,
 } from "../../utils/imageDownloader";
+import { normalizeCityNameSync } from "../../utils/placesData";
 import {
   storeDayItinerary,
   buildCompleteItinerary,
@@ -2637,50 +2638,17 @@ export default function FlightsPageAuthenticated() {
         // Convert date to strict YYYY-MM-DD format
         const dateString = selectedDate.toISOString().split("T")[0];
 
-        // Validate and correct from_city in all days before storing
-        const supportedCities = [
-          "Mumbai",
-          "Bangalore",
-          "Delhi",
-          "New Delhi",
-          "Leh",
-          "Agra",
-        ];
         const correctedTrip = JSON.parse(JSON.stringify(tripToUse)); // Deep copy
-
-        if (
-          correctedTrip.day_wise_plan &&
-          Array.isArray(correctedTrip.day_wise_plan)
-        ) {
-          console.log("correctedTrip", correctedTrip);
-
-          correctedTrip.day_wise_plan.forEach((day: any) => {
-            if (day.conveyance_details && day.conveyance_details.from_city) {
-              let fromCity = day.conveyance_details.from_city;
-              console.log("fromCity", fromCity);
-              // Check if it's a supported city
-              const normalizedFromCity =
-                fromCity.charAt(0).toUpperCase() +
-                fromCity.slice(1).toLowerCase();
-              const isSupported = supportedCities.some(
-                (city) =>
-                  city.toLowerCase() === normalizedFromCity.toLowerCase()
-              );
-
-              if (!isSupported) {
-                console.log(
-                  `🔄 Day ${day.day_number}: Converting "${fromCity}" to Mumbai in trip JSON`
-                );
-                day.conveyance_details.from_city = "Mumbai";
-              } else {
-                day.conveyance_details.from_city = normalizedFromCity;
-              }
-            }
-          });
-        }
 
         // Add trip_date to correctedTrip
         correctedTrip.trip_date = dateString;
+
+        console.log("📋 correctedTrip before source_point update:", {
+          day1_from: correctedTrip.day_wise_plan?.[0]?.conveyance_details?.from_city,
+          day1_to: correctedTrip.day_wise_plan?.[0]?.conveyance_details?.to_city,
+          lastDay_from: correctedTrip.day_wise_plan?.[correctedTrip.day_wise_plan.length - 1]?.conveyance_details?.from_city,
+          lastDay_to: correctedTrip.day_wise_plan?.[correctedTrip.day_wise_plan.length - 1]?.conveyance_details?.to_city,
+        });
 
         await storeSelectedTrip(userId, sessionId, correctedTrip);
 
@@ -2731,7 +2699,8 @@ export default function FlightsPageAuthenticated() {
               correctedTrip.source_point = memoryData.source_point;
               console.log("✅ Adding source_point to correctedTrip:", correctedTrip.source_point);
 
-              // Update both FIRST and LAST day conveyance details
+              // Update ONLY Day 1's from_city and last day's to_city
+              // DO NOT touch other days or other fields
               if (
                 correctedTrip.day_wise_plan &&
                 Array.isArray(correctedTrip.day_wise_plan) &&
@@ -2740,23 +2709,34 @@ export default function FlightsPageAuthenticated() {
                 // UPDATE THE FIRST DAY FROM_CITY TO THE SOURCE POINT
                 const firstDay = correctedTrip.day_wise_plan[0];
                 if (firstDay.conveyance_details) {
+                  // ONLY update from_city, preserve all other fields
                   firstDay.conveyance_details.from_city = memoryData.source_point.place_name;
-                  console.log(`🔄 Day 1: Updated from_city to "${memoryData.source_point.place_name}"`);
+                  console.log(`🔄 Day 1: Updated ONLY from_city to "${memoryData.source_point.place_name}"`);
+                  console.log(`   Day 1 to_city remains: "${firstDay.conveyance_details.to_city}"`);
                 } else {
+                  // Create conveyance_details if it doesn't exist
                   firstDay.conveyance_details = {
                     from_city: memoryData.source_point.place_name,
+                    to_city: firstDay.conveyance_details?.to_city || '',
                     is_required: true
                   };
                   console.log(`🔄 Day 1: Created conveyance_details with from_city "${memoryData.source_point.place_name}"`);
                 }
 
                 // UPDATE THE LAST DAY TO_CITY TO THE SOURCE POINT (return journey)
-                const lastDay = correctedTrip.day_wise_plan[correctedTrip.day_wise_plan.length - 1];
+                const lastDayIndex = correctedTrip.day_wise_plan.length - 1;
+                const lastDay = correctedTrip.day_wise_plan[lastDayIndex];
+
                 if (lastDay.conveyance_details) {
+                  // ONLY update to_city, preserve from_city and all other fields
+                  const originalFromCity = lastDay.conveyance_details.from_city;
                   lastDay.conveyance_details.to_city = memoryData.source_point.place_name;
-                  console.log(`🔄 Day ${lastDay.day_number}: Updated to_city to "${memoryData.source_point.place_name}" (return journey)`);
+                  console.log(`🔄 Day ${lastDay.day_number}: Updated ONLY to_city to "${memoryData.source_point.place_name}" (return journey)`);
+                  console.log(`   Day ${lastDay.day_number} from_city remains: "${originalFromCity}"`);
                 } else {
+                  // Create conveyance_details if it doesn't exist, but preserve from_city if it exists
                   lastDay.conveyance_details = {
+                    from_city: lastDay.conveyance_details?.from_city || '',
                     to_city: memoryData.source_point.place_name,
                     is_required: true
                   };
@@ -2922,52 +2902,20 @@ export default function FlightsPageAuthenticated() {
             let fromCity = day1.conveyance_details.from_city || "";
             let toCity = day1.conveyance_details.to_city || "";
 
-            // Define supported cities (5 cities we have data for)
-            const supportedCities = [
-              "Mumbai",
-              "Bangalore",
-              "Agra",
-              "New Delhi",
-              "Leh",
-              "Delhi",
-            ];
-
-            // Handle "user_location" and other placeholder values
-            // Check if fromCity is not one of the supported cities
+            // Normalize city names using places.json matching
             if (fromCity) {
-              // Find exact match in supported cities (case-insensitive)
-              const matchedCity = supportedCities.find(
-                (city) => city.toLowerCase() === fromCity.toLowerCase()
-              );
-
-              if (matchedCity) {
-                // Use the exact spelling from supportedCities to preserve "New Delhi" format
-                fromCity = matchedCity;
-                console.log(`✅ Matched from_city to supported city: ${fromCity}`);
-              } else {
-                console.log(
-                  `🔄 "${fromCity}" is not a supported city, defaulting to Mumbai`
-                );
-                fromCity = "Mumbai";
-              }
+              const originalFromCity = fromCity;
+              fromCity = normalizeCityNameSync(fromCity);
+              console.log(`✅ Normalized from_city: "${originalFromCity}" → "${fromCity}"`);
             } else {
               fromCity = "Mumbai"; // Default if empty
               console.log("🔄 Empty from_city, defaulting to Mumbai");
             }
 
-            // Capitalize city names properly for toCity - match against supported cities
             if (toCity) {
-              const matchedToCity = supportedCities.find(
-                (city) => city.toLowerCase() === toCity.toLowerCase()
-              );
-              if (matchedToCity) {
-                toCity = matchedToCity;
-                console.log(`✅ Matched to_city to supported city: ${toCity}`);
-              } else {
-                // If not in supported list, try basic capitalization
-                toCity = toCity.charAt(0).toUpperCase() + toCity.slice(1).toLowerCase();
-                if (toCity === "Delhi") toCity = "New Delhi";
-              }
+              const originalToCity = toCity;
+              toCity = normalizeCityNameSync(toCity);
+              console.log(`✅ Normalized to_city: "${originalToCity}" → "${toCity}"`);
             }
 
             console.log(

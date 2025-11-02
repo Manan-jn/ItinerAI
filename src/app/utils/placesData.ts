@@ -109,6 +109,76 @@ export async function isCityValid(cityName: string): Promise<boolean> {
 }
 
 /**
+ * Normalize city name to match the format in places.json
+ * First tries to find exact match in places.json, then falls back to popular cities
+ * @param cityName - The city name to normalize (can be any case, e.g., "new delhi", "NEW DELHI", "mumbai")
+ * @returns The properly formatted city name from places.json or popular cities list
+ */
+export async function normalizeCityName(cityName: string): Promise<string> {
+  if (!cityName || cityName.trim() === '') {
+    return cityName;
+  }
+
+  // Handle special placeholder values
+  if (cityName.toLowerCase() === 'user_location' || cityName.toLowerCase() === 'user location') {
+    return cityName; // Return as-is, caller will replace with actual location
+  }
+
+  // First, try to find in places.json
+  const place = await findPlaceByCity(cityName);
+  if (place) {
+    return place.city; // Return the exact spelling from places.json
+  }
+
+  // If not found in places.json, check popular cities
+  const popularCities = getPopularIndianCities();
+  const matchedCity = popularCities.find(
+    c => c.city.toLowerCase() === cityName.toLowerCase()
+  );
+
+  if (matchedCity) {
+    return matchedCity.city; // Return exact spelling from popular cities
+  }
+
+  // If still not found, return with proper capitalization
+  return cityName
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+}
+
+/**
+ * Synchronous version of normalizeCityName using only popular cities
+ * Use this for performance when you don't need the full places.json lookup
+ */
+export function normalizeCityNameSync(cityName: string): string {
+  if (!cityName || cityName.trim() === '') {
+    return cityName;
+  }
+
+  // Handle special placeholder values
+  if (cityName.toLowerCase() === 'user_location' || cityName.toLowerCase() === 'user location') {
+    return cityName;
+  }
+
+  // Check popular cities
+  const popularCities = getPopularIndianCities();
+  const matchedCity = popularCities.find(
+    c => c.city.toLowerCase() === cityName.toLowerCase()
+  );
+
+  if (matchedCity) {
+    return matchedCity.city;
+  }
+
+  // Return with proper capitalization
+  return cityName
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+}
+
+/**
  * Get popular Indian cities for initial dropdown (fallback if places.json fails to load)
  */
 export function getPopularIndianCities(): Array<{city: string, code: string, state: string}> {
