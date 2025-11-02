@@ -1,20 +1,21 @@
-import json
 import os
-from typing import Any, Literal
-import dotenv
+import sys
+from typing import Literal
+from datetime import datetime
+
 # from google.adk.agents import LlmAgent
 # from google.adk.tools import AgentTool
-from google.oauth2 import service_account
-from google.adk.tools.bigquery import BigQueryToolset
-from google.adk.tools.bigquery.config import BigQueryToolConfig
-from google.adk.tools.bigquery.config import WriteMode
-from google.adk.tools.bigquery import BigQueryCredentialsConfig
-from google.cloud import bigquery
+# from google.oauth2 import service_account
+# from google.adk.tools.bigquery import BigQueryToolset
+# from google.adk.tools.bigquery.config import BigQueryToolConfig
+# from google.adk.tools.bigquery.config import WriteMode
+# from google.adk.tools.bigquery import BigQueryCredentialsConfig
+# from google.cloud import bigquery
 
-import os 
-import sys
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
-from shared.sql_query import execute_sql_query
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+from shared.sql_query import fetch_flight_data, fetch_train_data, fetch_stay_data
+from shared.log_config import logger
+
 # from ...shared.sql_query import execute_sql_query
 
 # dotenv.load_dotenv()
@@ -125,91 +126,109 @@ from shared.sql_query import execute_sql_query
 # client = bigquery.Client(project="itinerai-41751", credentials=credentials)
 
 async def conveyance_query_tool(
+    user_id: str,
     conveyance_type: Literal["flights", "trains"],
     departure_city: str,
     arrival_city: str,
-    preferred_start_date: str,
-    preferred_end_date: str,
+    departure_country: str,
+    arrival_country: str,
+    departure_date: str,
 ) -> dict:
     """
     Tool to get records from the BigQuery Database.
-    
+
     Args:
-        conveyance_type (Literal["flights", "trains"]): 
+        user_id (str):
+            User ID.
+        conveyance_type (Literal["flights", "trains"]):
             Type of transportation to query data for — either "flights" or "trains".
-        departure_city (str): 
+        departure_city (str):
             Name of the departure city.
-        arrival_city (str): 
+        arrival_city (str):
             Name of the arrival city.
-        preferred_start_date (str): 
+        departure_country (str):
+            Name of the departure country.
+        arrival_country (str):
+            Name of the arrival country.
+        preferred_start_date (str):
             Earliest acceptable departure date (in 'YYYY-MM-DD' format).
-        preferred_end_date (str): 
+        preferred_end_date (str):
             Latest acceptable departure date (in 'YYYY-MM-DD' format).
-            
+
     Returns:
         dict:
-            Returns a dictionary containing 'status' & 'response' 
+            Returns a dictionary containing 'status' & 'response'
     """
     try:
-        table_name = "itinerai-41751.flightsdata.dectable" if conveyance_type == 'flights' else "itinerai-41751.trainsdata.mytable"
-        tranportation_hub = "airport" if conveyance_type == 'flights' else "station"
-        QUERY = f"""
-        SELECT * 
-        FROM `{table_name}` 
-        WHERE
-            LOWER(departure_{tranportation_hub}.city) = LOWER("{departure_city}")
-            AND LOWER(arrival_{tranportation_hub}.city) = LOWER("{arrival_city}")
-            AND departure_date BETWEEN "{preferred_start_date}" AND "{preferred_end_date}"
-        LIMIT 10
-        """
-        result = await execute_sql_query(QUERY)
-        return {
-            "status": "success",
-            "response": result
-        }
+        logger.info(f"Fetching conveyance data for user id: {user_id}, conveyance type: {conveyance_type}, departure city: {departure_city}, arrival city: {arrival_city}, departure country: {departure_country}, arrival country: {arrival_country}, departure date: {departure_date}")
+        if conveyance_type == "flights":
+            result = await fetch_flight_data(
+                user_id,
+                departure_date,
+                departure_date, 
+                departure_city,
+                departure_country,
+                arrival_city,
+                arrival_country,
+            )
+        else:
+            result = await fetch_train_data(
+                user_id,
+                departure_date,
+                departure_date,
+                departure_city,
+                departure_country,
+                arrival_city,
+                arrival_country,
+            )
+        return {"status": "success", "response": result}
     except Exception as e:
-        print("Error in conveyace_query_tool: ", str(e))
+        logger.error(f"Error in conveyace_query_tool", exc_info=True)
         return {"status": "error", "error": str(e)}
-    
+
+
 async def stay_query_tool(
+    user_id: str,
     city: str,
+    state: str,
+    country: str,
     check_in_date: str,
     check_out_date: str,
 ) -> dict:
     """
     Tool to get records from the BigQuery Database.
-    
+
     Args:
-        city (str): 
+        user_id (str):
+            User ID.
+        city (str):
             Name of the city.
-        check_in_date (str): 
+        state (str):
+            Name of the state.
+        country (str):
+            Name of the country.
+        check_in_date (str):
             Check-in date (in 'YYYY-MM-DD' format).
-        check_out_date (str): 
+        check_out_date (str):
             Check-out date (in 'YYYY-MM-DD' format).
-            
+
     Returns:
         dict:
-            Returns a dictionary containing 'status' & 'response' 
+            Returns a dictionary containing 'status' & 'response'
     """
     try:
-        QUERY = f"""
-        SELECT * 
-        FROM `itinerai-41751.hotelsdata.dectable`
-        WHERE
-            LOWER(city) = LOWER("{city}")
-            AND available_from_date >= "{check_in_date}"
-            AND available_until_date >= "{check_out_date}"
-        LIMIT 15
-        """
-        result = await execute_sql_query(QUERY)
-        return {
-            "status": "success",
-            "response": result
-        }
+        logger.info(f"Fetching stay data for user id: {user_id}, city: {city}, state: {state}, country: {country}, check-in date: {check_in_date}, check-out date: {check_out_date}")
+        duration = (datetime.strptime(check_out_date, "%Y-%m-%d") - datetime.strptime(check_in_date, "%Y-%m-%d")).days + 1
+        result = await fetch_stay_data(
+            user_id,
+            check_in_date,
+            check_in_date,
+            duration,
+            city,
+            state,
+            country,
+        )
+        return {"status": "success", "response": result}
     except Exception as e:
         print("Error in stay_query_tool: ", str(e))
-        return {"status": "error", "error": str(e)}    
-
-
-# print(query_tool('trains', 'agra', 'new delhi', '2025-12-01', '2025-12-31'))
-# print(stay_query_tool('agra', '2025-12-01', '2025-12-03'))
+        return {"status": "error", "error": str(e)}

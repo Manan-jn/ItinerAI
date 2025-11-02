@@ -1,11 +1,12 @@
+from datetime import datetime
 from google.adk.events import Event, EventActions
 
 from ..models.session import SessionManager
 from ..shared.post_processor import merge_dict_intelligently
-from ..shared.logging import logger
+from ..shared.log_config import logger
 from ..exceptions.base import AppException
 
-async def add_memory_controller(user_id: str, session_id: str, updates: dict, invocation_id: str, session_manager: SessionManager):
+async def add_memory_controller(user_id: str, session_id: str, updates: dict, session_manager: SessionManager):
     try:
         session = await session_manager.get_session(
             user_id, session_id
@@ -15,7 +16,7 @@ async def add_memory_controller(user_id: str, session_id: str, updates: dict, in
         system_event = Event(
             author="system",
             actions=action_with_update,
-            invocation_id=invocation_id,
+            invocation_id=f"update_memory:{datetime.now().strftime('%Y%m%d%H%M%S')}",
         )
         await session_manager.append_event(
             session, system_event
@@ -25,7 +26,7 @@ async def add_memory_controller(user_id: str, session_id: str, updates: dict, in
         logger.error(f"Error in add_memory_controller: {e}")
         raise AppException(f"Error in add_memory_controller: {e}")
     
-async def delete_memory_controller(user_id: str, session_id: str, memory_keys: list[str], invocation_id: str, session_manager: SessionManager):
+async def delete_memory_controller(user_id: str, session_id: str, memory_keys: list[str], session_manager: SessionManager):
     try:
         session = await session_manager.get_session(
             user_id, session_id
@@ -40,7 +41,7 @@ async def delete_memory_controller(user_id: str, session_id: str, memory_keys: l
         system_event = Event(
             author="system",
             actions=action_with_update,
-            invocation_id=invocation_id,
+            invocation_id=f"delete_memory:{datetime.now().strftime('%Y%m%d%H%M%S')}",
         )
         await session_manager.append_event(
             session, system_event

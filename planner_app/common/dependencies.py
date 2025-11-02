@@ -3,7 +3,7 @@ from google.adk.sessions import Session
 
 
 from ..models import SessionManager
-from ..shared.logging import logger
+from ..shared.log_config import logger
 from ..exceptions.base import AppException
 
 

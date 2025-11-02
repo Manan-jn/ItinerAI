@@ -63,3 +63,22 @@ async def delete_memory(
         await session_manager.delete_session(request.user_id, request.session_id)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+@router.post("/session/history")
+async def get_session_history(
+    request: SessionSchema,
+    session_manager: SessionManager = Depends(get_session_manager),
+):
+    try:
+        session = await session_manager.get_session(request.user_id, request.session_id)
+        events = session.events
+        print(events[-1])
+        return JSONResponse(
+            status_code=200,
+            content={
+                "message": "Session history fetched successfully",
+                "body": events,
+            },
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

@@ -5,7 +5,7 @@ from typing import Dict, List, Any
 from google.adk.tools import ToolContext
 from google.adk.agents.callback_context import CallbackContext
 
-from shared.logging import logger
+from shared.log_config import logger
 
 dotenv.load_dotenv('../../../.env')
 
@@ -120,7 +120,7 @@ async def map_helper(data: Any):
             
         return data
     except Exception as e:
-        logger.warning(f"Error in map_helper\nError:{str(e)}")
+        logger.error(f"Error in map_helper\nError:{str(e)}")
         return data
 
 async def map_tool(callback_context: CallbackContext):
@@ -129,4 +129,4 @@ async def map_tool(callback_context: CallbackContext):
         state = await map_helper(state)
         callback_context.state.update(state)
     except Exception as e:
-        logger.warning(f"Error in map_tool", exc_info=True)
+        logger.error(f"Error in map_tool", exc_info=True)

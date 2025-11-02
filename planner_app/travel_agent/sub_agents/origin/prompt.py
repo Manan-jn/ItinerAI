@@ -188,11 +188,13 @@ Your decisions must be *data-driven* and grounded in real-world information obta
 1. conveyance_query_tool:
    • Used to query BigQuery database for available conveyance schedules (flights & trains) between given source and destination.
    • Args:
+       - user_id (str): user id.
        - conveyance_type (Literal["flights", "trains"]): type of transportation to query.
        - departure_city (str): name of departure city.
+       - departure_country (str): name of departure country.
        - arrival_city (str): name of arrival city.
-       - preferred_start_date (str): earliest acceptable departure date in 'YYYY-MM-DD' format.
-       - preferred_end_date (str): latest acceptable departure date in 'YYYY-MM-DD' format.
+       - arrival_country (str): name of arrival country.
+       - departure_date (str): earliest acceptable departure date in 'YYYY-MM-DD' format.
    • Guidelines:
        - In case of empty `response`, retry with alternate variations of city names 
          (e.g., “Delhi” → “New Delhi”, “Bombay” → “Mumbai”).

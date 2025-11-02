@@ -8,7 +8,7 @@ from ..shared_libraries import State
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 from shared.post_processor import merge_dict_intelligently
-from shared.logging import logger
+from shared.log_config import logger
 
 async def _set_initial_state(callback_context: CallbackContext):
     items = State.model_fields.items()
@@ -32,15 +32,17 @@ async def memorize(data: dict[str, Any], tool_context: ToolContext):
         agent_name = tool_context.agent_name
         invocation_id = tool_context.invocation_id
         
-        logger.info('-'*100)
-        logger.info(f'Agent {agent_name} with invocation_id {invocation_id} invoked `memorize` tool')
-        logger.info(f'Data: {data}')
-        logger.info(f'State: {tool_context.state}')
-        logger.info('-'*100)
-        
+        logger.info(f"""
+        User ID: {tool_context.session.user_id} 
+        Session ID: {tool_context.session.id}
+        Agent Name: {agent_name} 
+        Invocation ID: {invocation_id} 
+        Function Name: memorize
+        Data: {data}
+        """)
         if not data or len(data) == 0:
             return {
-                'status': 'warning', 
+                'status': 'error', 
                 'message': '`data` is empty or None, so no data to merge into state'
             }
         

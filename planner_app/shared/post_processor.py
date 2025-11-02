@@ -2,7 +2,7 @@ import re
 import json
 from typing import Any, Dict, Optional
 
-from .logging import logger
+from .log_config import logger
 from exceptions.base import AppException
 
 
@@ -43,6 +43,7 @@ async def string_to_json(response_text: str) -> Optional[dict]:
     """Extract JSON from markdown code blocks."""
     # Try to find JSON in code blocks first
     try:
+        logger.info(f"Converting string to JSON: {response_text}")
         json_match = re.search(r"``````", response_text, re.DOTALL)
         if json_match:
             return json.loads(json_match.group(1))
@@ -54,7 +55,7 @@ async def string_to_json(response_text: str) -> Optional[dict]:
 
         return response_text
     except Exception as e:
-        logger.warning(
+        logger.error(
             f"Error in string_to_json for input: {response_text}\nError: {str(e)}"
         )
         return response_text

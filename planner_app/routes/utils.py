@@ -2,7 +2,7 @@ from fastapi import APIRouter
 from starlette.responses import JSONResponse
 
 from planner_app.schema.utils_schema import ConveyanceSchema, StaySchema
-from planner_app.controllers.utils import get_conveyances_controller, get_stays_controller
+from planner_app.controllers.utils import *
 
 router = APIRouter()
 
