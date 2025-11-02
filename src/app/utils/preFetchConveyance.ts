@@ -1,5 +1,6 @@
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
+import { findPlaceByCity } from "./placesData";
 
 // Type definitions
 interface ConveyanceDayDetails {
@@ -89,6 +90,18 @@ async function fetchConveyanceForDay(
   const normalizedFromCity = normalizeCityName(fromCity);
   const normalizedToCity = normalizeCityName(toCity);
 
+  // Fetch country data for departure and arrival cities from places.json
+  const [departurePlace, arrivalPlace] = await Promise.all([
+    findPlaceByCity(normalizedFromCity),
+    findPlaceByCity(normalizedToCity),
+  ]);
+
+  const departureCountry = departurePlace?.country || "India";
+  const arrivalCountry = arrivalPlace?.country || "India";
+
+  console.log(`🌍 Day ${dayNumber} - Departure: ${normalizedFromCity}, ${departureCountry}`);
+  console.log(`🌍 Day ${dayNumber} - Arrival: ${normalizedToCity}, ${arrivalCountry}`);
+
   // Make 3 parallel API calls
   const [aiResponse, utilityFlightsResponse, utilityTrainsResponse] = await Promise.allSettled([
     // AI Recommendations
@@ -108,11 +121,14 @@ async function fetchConveyanceForDay(
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
+        user_id: userId,
         conveyance_type: "flights",
         departure_city: normalizedFromCity,
+        departure_country: departureCountry,
         arrival_city: normalizedToCity,
-        from_date: travelDate,
-        to_date: travelDate,
+        arrival_country: arrivalCountry,
+        start_date: travelDate,
+        end_date: travelDate,
       }),
     }),
     // Utility Trains
@@ -120,11 +136,14 @@ async function fetchConveyanceForDay(
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
+        user_id: userId,
         conveyance_type: "trains",
         departure_city: normalizedFromCity,
+        departure_country: departureCountry,
         arrival_city: normalizedToCity,
-        from_date: travelDate,
-        to_date: travelDate,
+        arrival_country: arrivalCountry,
+        start_date: travelDate,
+        end_date: travelDate,
       }),
     }),
   ]);

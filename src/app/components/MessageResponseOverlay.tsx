@@ -89,7 +89,7 @@ export default function MessageResponseOverlay({
       <style jsx>{`
         .message-response-overlay {
           position: fixed;
-          top: 20px;
+          top: 80px;
           right: 20px;
           max-width: 380px;
           min-width: 260px;

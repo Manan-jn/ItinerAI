@@ -1,5 +1,6 @@
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
+import { findPlaceByCity } from "./placesData";
 
 // Type definitions
 interface StayDayDetails {
@@ -97,6 +98,18 @@ async function fetchStaysForDay(
   const checkInFormatted = formatDateForAPI(checkInDate);
   const checkOutFormatted = formatDateForAPI(checkOutDate);
 
+  // Fetch state and country from places.json
+  const placeData = await findPlaceByCity(normalizedCity);
+  const state = placeData?.state || "Unknown";
+  const country = placeData?.country || "India";
+
+  console.log(`🌍 Stay location: ${normalizedCity}, ${state}, ${country}`);
+
+  // Calculate duration in days
+  const checkIn = new Date(checkInDate);
+  const checkOut = new Date(checkOutDate);
+  const durationDays = Math.ceil((checkOut.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24));
+
   // Make 2 parallel API calls (AI Recommendations and Utility Stays)
   const [aiResponse, utilityResponse] = await Promise.allSettled([
     // AI Recommendations
@@ -114,9 +127,13 @@ async function fetchStaysForDay(
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
+        user_id: userId,
         city: normalizedCity,
-        from_date: checkInDate,
-        to_date: checkOutDate,
+        state: state,
+        country: country,
+        start_check_in_date: checkInDate,
+        end_check_in_date: checkOutDate,
+        duration: durationDays,
       }),
     }),
   ]);

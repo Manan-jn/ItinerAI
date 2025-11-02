@@ -17,6 +17,7 @@ import MessageResponseOverlay from "../../components/MessageResponseOverlay";
 import ChatLoadingIndicator from "../../components/ChatLoadingIndicator";
 import BookingWidget from "../../components/BookingWidget";
 import FinalizeLoader from "../../components/FinalizeLoader";
+import CongratulationsLoader from "../../components/CongratulationsLoader";
 import { getSessionId } from "../../utils/sessionManager";
 import { updateMemoryOnSessionChange } from "../../utils/memoryApi";
 import {
@@ -131,6 +132,7 @@ export default function FlightsPageAuthenticated() {
   const [isCardManuallySelected, setIsCardManuallySelected] = useState(false); // NEW: Track if card was manually selected by user
   const [showBooking, setShowBooking] = useState(false); // NEW: Show booking widget
   const [showFinalizeLoader, setShowFinalizeLoader] = useState(false); // NEW: Show finalize loader
+  const [showCongratsLoader, setShowCongratsLoader] = useState(false); // NEW: Show congratulations loader
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const flashcardsRef = useRef<FlashcardsWidgetRef>(null);
@@ -2155,6 +2157,38 @@ export default function FlightsPageAuthenticated() {
       setOverlayMessage("Failed to finalize itinerary. Please try again.");
       setShowOverlay(true);
       setShowFinalizeLoader(false);
+    }
+  };
+
+  // Handler for Continue from BookingWidget (after all bookings done)
+  const handleBookingContinue = async () => {
+    try {
+      console.log("🎉 All bookings completed, proceeding to congratulations");
+
+      if (!userId || !sessionId) {
+        console.error("❌ Missing user data");
+        return;
+      }
+
+      // Show congratulations loader
+      setShowCongratsLoader(true);
+
+      // Save bookings information to Firestore
+      // This would typically update the generated_itineraries document with booking status
+      // For now, we'll just wait for the animation
+
+      // Wait for congratulations animation (4 seconds)
+      setTimeout(() => {
+        setShowCongratsLoader(false);
+        setShowBooking(false);
+
+        // Redirect to dashboard
+        console.log("🏠 Redirecting to dashboard");
+        setActiveSection("dashboard");
+      }, 4000);
+    } catch (error) {
+      console.error("❌ Error in booking continuation:", error);
+      setShowCongratsLoader(false);
     }
   };
 
@@ -4682,6 +4716,7 @@ export default function FlightsPageAuthenticated() {
                       itinerariesData={itinerariesGenerated}
                       tripTitle={selectedTrip?.trip_title || "My Trip"}
                       totalDays={selectedTrip?.no_of_days || itinerariesGenerated.length}
+                      onContinue={handleBookingContinue}
                     />
                   </div>
                 ) : showItinerary ? (
@@ -5116,9 +5151,9 @@ export default function FlightsPageAuthenticated() {
         />
       )}
 
-      {/* Chat Loading Indicator - Top Right (Only for Flashcards/Itinerary) */}
+      {/* Chat Loading Indicator - Top Right Below Navbar (Only for Flashcards/Itinerary) */}
       {activeSection === "chat" && (showFlashcards || showItinerary) && (
-        <div className="fixed top-5 right-5 z-[9998]">
+        <div className="fixed top-20 right-5 z-[9998]">
           <ChatLoadingIndicator
             isVisible={isLoading && !isInitializingSession && !showOverlay}
             theme={showItinerary ? "white" : "default"}
@@ -5143,6 +5178,12 @@ export default function FlightsPageAuthenticated() {
       <FinalizeLoader
         showLoader={showFinalizeLoader}
         duration={3000}
+      />
+
+      {/* Congratulations Loader - Full Screen Overlay */}
+      <CongratulationsLoader
+        showLoader={showCongratsLoader}
+        duration={4000}
       />
     </div>
   );

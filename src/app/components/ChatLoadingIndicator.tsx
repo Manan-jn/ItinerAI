@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import GlowBorder from "./GlowBorder";
 
 export interface ChatLoadingIndicatorProps {
   isVisible: boolean;
@@ -75,29 +76,37 @@ export default function ChatLoadingIndicator({
 
   return (
     <>
-      <div className={`${themeClasses.container} ${isAnimating ? "visible" : ""}`}>
-        {/* Rotating Spinner Icon */}
-        <svg
-          className="chat-loader-spinner"
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2.5"
-        >
-          <circle cx="12" cy="12" r="10" strokeOpacity="0.25"></circle>
-          <path
-            d="M12 2a10 10 0 0 1 10 10"
-            strokeLinecap="round"
-          ></path>
-        </svg>
+      <GlowBorder
+        glowColors={["#9333ea", "#7c3aed", "#6d28d9", "#5b21b6", "#9333ea"]}
+        glowSize="1rem"
+        glowIntensity="0.2"
+        borderWidth="2px"
+        className="glow-wrapper"
+      >
+        <div className={`${themeClasses.container} ${isAnimating ? "visible" : ""}`}>
+          {/* Rotating Spinner Icon */}
+          <svg
+            className="chat-loader-spinner"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+          >
+            <circle cx="12" cy="12" r="10" strokeOpacity="0.25"></circle>
+            <path
+              d="M12 2a10 10 0 0 1 10 10"
+              strokeLinecap="round"
+            ></path>
+          </svg>
 
-        {/* Dynamic Loading Text */}
-        <span className={themeClasses.text}>
-          {loadingMessages[messageIndex]}
-        </span>
-      </div>
+          {/* Dynamic Loading Text */}
+          <span className={themeClasses.text}>
+            {loadingMessages[messageIndex]}
+          </span>
+        </div>
+      </GlowBorder>
 
       <style jsx>{`
         /* Default Theme */

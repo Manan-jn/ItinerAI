@@ -29,6 +29,7 @@ interface StaysWidgetProps {
 }
 
 import { getPopularIndianCities, searchCities } from "../utils/placesData";
+import GlowBorder from "./GlowBorder";
 
 // Get initial cities list - will be populated from placesData utility
 const getInitialCities = () => {
@@ -976,37 +977,14 @@ export default function StaysWidget({
         {/* Results Section */}
         {(showResults || isLoading) && (
           <div className="space-y-4 relative z-10">
-            {/* AI Recommendations Box with RGB Glowing Border */}
-            <div className="relative">
-              {/* RGB Continuous Flowing Border */}
-              <div className="absolute -inset-[3px] rounded-2xl pointer-events-none">
-                <div
-                  className="absolute inset-0 rounded-2xl border-4 border-transparent animate-rgb-flow"
-                  style={{
-                    background:
-                      "linear-gradient(90deg, #ff0000, #ff8000, #ffff00, #80ff00, #00ff00, #00ff80, #00ffff, #0080ff, #0000ff, #8000ff, #ff00ff, #ff0080, #ff0000) border-box",
-                    WebkitMask:
-                      "linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0)",
-                    WebkitMaskComposite: "xor",
-                    maskComposite: "exclude",
-                  }}
-                ></div>
-
-                {/* Flowing Glow Overlay */}
-                <div className="absolute inset-0 rounded-2xl animate-rgb-glow-continuous">
-                  <div
-                    className="absolute inset-0 rounded-2xl border-2 border-transparent bg-gradient-to-r from-red-500/60 via-green-500/60 via-blue-500/60 to-red-500/60 blur-sm shadow-[0_0_25px_rgba(255,0,0,0.8),0_0_25px_rgba(0,255,0,0.8),0_0_25px_rgba(0,0,255,0.8)]"
-                    style={{
-                      WebkitMask:
-                        "linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0)",
-                      WebkitMaskComposite: "xor",
-                      maskComposite: "exclude",
-                    }}
-                  ></div>
-                </div>
-              </div>
-
-              {/* Content Box */}
+            {/* AI Recommendations Box with Glow Border */}
+            <GlowBorder
+              glowColors={["#9333ea", "#7c3aed", "#6d28d9", "#5b21b6", "#9333ea"]}
+              glowSize="1.2rem"
+              glowIntensity="0.15"
+              borderWidth="3px"
+              className="rounded-2xl"
+            >
               <div className="relative bg-white/90 backdrop-blur-md rounded-2xl shadow-xl overflow-hidden">
                 {/* Header */}
                 <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 p-3 border-b border-gray-200/30">
@@ -1071,7 +1049,7 @@ export default function StaysWidget({
                   )}
                 </div>
               </div>
-            </div>
+            </GlowBorder>
           </div>
         )}
       </div>

@@ -1,16 +1,27 @@
 // Types for API requests and responses
 export interface ConveyanceRequest {
+  user_id?: string;
   conveyance_type: 'flights' | 'trains';
   departure_city: string;
+  departure_country?: string;
   arrival_city: string;
-  from_date: string; // YYYY-MM-DD format
-  to_date: string;   // YYYY-MM-DD format
+  arrival_country?: string;
+  from_date?: string; // YYYY-MM-DD format (deprecated, use start_date)
+  to_date?: string;   // YYYY-MM-DD format (deprecated, use end_date)
+  start_date?: string; // YYYY-MM-DD format
+  end_date?: string;   // YYYY-MM-DD format
 }
 
 export interface StayRequest {
+  user_id?: string;
   city: string;
-  from_date: string; // YYYY-MM-DD format
-  to_date: string;   // YYYY-MM-DD format
+  state?: string;
+  country?: string;
+  from_date?: string; // YYYY-MM-DD format (deprecated)
+  to_date?: string;   // YYYY-MM-DD format (deprecated)
+  start_check_in_date?: string; // YYYY-MM-DD format
+  end_check_in_date?: string;   // YYYY-MM-DD format
+  duration?: number; // -1 for full calendar, otherwise days count
 }
 
 export interface FlightData {

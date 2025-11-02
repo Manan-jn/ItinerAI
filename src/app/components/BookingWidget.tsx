@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
+import BookingConfirmationModal from "./BookingConfirmationModal";
 
 export interface BookingWidgetProps {
   isVisible: boolean;
@@ -8,6 +9,7 @@ export interface BookingWidgetProps {
   itinerariesData: any[];
   tripTitle: string;
   totalDays: number;
+  onContinue?: () => void;
 }
 
 type ActivityType =
@@ -65,7 +67,17 @@ export default function BookingWidget({
   itinerariesData,
   tripTitle,
   totalDays,
+  onContinue,
 }: BookingWidgetProps) {
+  // Track booked activities
+  const [bookedActivities, setBookedActivities] = useState<Set<number>>(new Set());
+  const [showModal, setShowModal] = useState(false);
+  const [selectedActivity, setSelectedActivity] = useState<{
+    index: number;
+    title: string;
+    fare?: number;
+  } | null>(null);
+
   // Extract all travel activities
   const travelActivities = useMemo<TravelActivity[]>(() => {
     const activities: TravelActivity[] = [];
@@ -118,6 +130,32 @@ export default function BookingWidget({
   const totalBudget = useMemo(() => {
     return Object.values(budgetBreakdown).reduce((a, b) => a + b, 0);
   }, [budgetBreakdown]);
+
+  // Check if all activities are booked
+  const allBooked = travelActivities.length > 0 && bookedActivities.size === travelActivities.length;
+
+  // Handlers
+  const handleBookClick = (index: number, activity: TravelActivity) => {
+    if (bookedActivities.has(index)) return; // Already booked
+
+    setSelectedActivity({
+      index,
+      title: `${activity.fromLocation} → ${activity.toLocation}`,
+      fare: activity.fare,
+    });
+    setShowModal(true);
+  };
+
+  const handleBookingConfirm = () => {
+    if (selectedActivity) {
+      setBookedActivities((prev) => new Set(prev).add(selectedActivity.index));
+    }
+  };
+
+  const handleModalClose = () => {
+    setShowModal(false);
+    setSelectedActivity(null);
+  };
 
   if (!isVisible) return null;
 
@@ -192,7 +230,22 @@ export default function BookingWidget({
                           ₹{activity.fare.toLocaleString("en-IN")}
                         </div>
                       )}
-                      <button className="book-button">Book Now</button>
+                      <button
+                        className={`book-button ${bookedActivities.has(index) ? "booked" : ""}`}
+                        onClick={() => handleBookClick(index, activity)}
+                        disabled={bookedActivities.has(index)}
+                      >
+                        {bookedActivities.has(index) ? (
+                          <>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                              <path d="M20 6L9 17l-5-5"></path>
+                            </svg>
+                            Done
+                          </>
+                        ) : (
+                          "Book Now"
+                        )}
+                      </button>
                     </div>
                   </div>
                 ))
@@ -242,7 +295,31 @@ export default function BookingWidget({
             </div>
           </div>
         </div>
+
+        {/* Continue Button - Shows when all bookings are done */}
+        {allBooked && onContinue && (
+          <div className="continue-section">
+            <button onClick={onContinue} className="continue-button-booking">
+              <span>Continue</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </button>
+          </div>
+        )}
       </div>
+
+      {/* Booking Confirmation Modal */}
+      {selectedActivity && (
+        <BookingConfirmationModal
+          isVisible={showModal}
+          onClose={handleModalClose}
+          onConfirm={handleBookingConfirm}
+          activityTitle={selectedActivity.title}
+          activityFare={selectedActivity.fare}
+        />
+      )}
 
       <style jsx>{`
         .booking-widget-container {
@@ -483,12 +560,21 @@ export default function BookingWidget({
           cursor: pointer;
           transition: all 0.2s ease;
           box-shadow: 0 2px 8px rgba(147, 51, 234, 0.2);
+          display: flex;
+          align-items: center;
+          gap: 6px;
         }
 
-        .book-button:hover {
+        .book-button:hover:not(.booked) {
           background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
           transform: translateY(-2px);
           box-shadow: 0 4px 12px rgba(147, 51, 234, 0.3);
+        }
+
+        .book-button.booked {
+          background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+          cursor: default;
+          box-shadow: 0 2px 8px rgba(16, 185, 129, 0.2);
         }
 
         .budget-card {
@@ -584,6 +670,81 @@ export default function BookingWidget({
           }
         }
 
+        /* Continue Section */
+        .continue-section {
+          padding: 20px 32px;
+          border-top: 1px solid rgba(147, 51, 234, 0.15);
+          display: flex;
+          justify-content: center;
+          background: linear-gradient(
+            135deg,
+            rgba(147, 51, 234, 0.03) 0%,
+            rgba(219, 39, 119, 0.02) 100%
+          );
+        }
+
+        .continue-button-booking {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          padding: 14px 32px;
+          background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.75) 0%,
+            rgba(255, 255, 255, 0.6) 100%
+          );
+          backdrop-filter: blur(32px) saturate(200%);
+          -webkit-backdrop-filter: blur(32px) saturate(200%);
+          border-radius: 16px;
+          border: 1px solid rgba(255, 255, 255, 0.6);
+          box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.06),
+            inset 0 1px 0 rgba(255, 255, 255, 0.9), inset 0 -1px 0 rgba(0, 0, 0, 0.03);
+          font-size: 1rem;
+          font-weight: 600;
+          color: #1f2937;
+          font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto,
+            sans-serif;
+          cursor: pointer;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          outline: none;
+        }
+
+        .continue-button-booking:hover {
+          background: linear-gradient(135deg, rgba(59, 130, 246, 0.85) 0%, rgba(37, 99, 235, 0.75) 100%);
+          color: white;
+          transform: translateY(-2px);
+          box-shadow: 0 8px 32px rgba(59, 130, 246, 0.3), 0 4px 12px rgba(59, 130, 246, 0.2);
+        }
+
+        .continue-button-booking:active {
+          transform: translateY(0);
+          box-shadow: 0 4px 16px rgba(59, 130, 246, 0.2);
+        }
+
+        .continue-button-booking svg {
+          flex-shrink: 0;
+          transition: transform 0.3s ease;
+        }
+
+        .continue-button-booking:hover svg {
+          transform: translateX(4px);
+        }
+
+        @media (max-width: 1024px) {
+          .booking-content {
+            grid-template-columns: 1fr;
+            gap: 20px;
+          }
+
+          .budget-column {
+            max-height: 400px;
+          }
+
+          .budget-card {
+            overflow-y: auto;
+          }
+        }
+
         @media (max-width: 640px) {
           .booking-header {
             padding: 20px;
@@ -596,6 +757,15 @@ export default function BookingWidget({
           .booking-content {
             padding: 20px;
             gap: 16px;
+          }
+
+          .continue-section {
+            padding: 16px 20px;
+          }
+
+          .continue-button-booking {
+            width: 100%;
+            justify-content: center;
           }
         }
       `}</style>
