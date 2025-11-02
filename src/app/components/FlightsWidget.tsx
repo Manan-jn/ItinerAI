@@ -227,6 +227,13 @@ function DatePicker({
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const datePickerRef = useRef<HTMLDivElement>(null);
 
+  // Sync selectedDate with value prop when it changes
+  useEffect(() => {
+    if (value !== selectedDate) {
+      setSelectedDate(value);
+    }
+  }, [value]);
+
   // Close calendar when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
