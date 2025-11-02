@@ -153,7 +153,7 @@ export async function fetchConveyanceData(request: ConveyanceRequest): Promise<F
         return departureCity.includes(reqDepartureCity) || reqDepartureCity.includes(departureCity) ||
                arrivalCity.includes(reqArrivalCity) || reqArrivalCity.includes(arrivalCity);
       });
-      
+      console.log('Filtered data:', JSON.stringify(filteredData, null, 2));
       console.log('Using mock data:', filteredData.length, 'flights');
       return filteredData;
     }
@@ -209,7 +209,7 @@ export async function fetchStayData(request: StayRequest): Promise<StayData[]> {
         
         return stayCity.includes(reqCity) || reqCity.includes(stayCity);
       });
-      
+      console.log('Filtered data:', JSON.stringify(filteredData, null, 2));
       console.log('Using mock stay data:', filteredData.length, 'stays');
       return filteredData;
     }
@@ -285,45 +285,61 @@ export function findCheapestTrainPriceForDate(trains: TrainData[], date: string,
   return prices.length > 0 ? Math.min(...prices) : null;
 }
 
-export function findCheapestStayPriceForDate(stays: StayData[], date: string): number | null {
+export function findCheapestStayPriceForDate(stays: StayData[], date: string, minRating?: number): number | null {
   const staysForDate = stays.filter(stay => {
     const availableFrom = new Date(stay.available_from_date);
     const availableUntil = new Date(stay.available_until_date);
     const checkDate = new Date(date);
-    
-    return checkDate >= availableFrom && checkDate <= availableUntil;
+
+    const isAvailable = checkDate >= availableFrom && checkDate <= availableUntil;
+
+    // Apply rating filter if specified (show stays with rating >= minRating)
+    if (minRating !== undefined && minRating > 0) {
+      return isAvailable && stay.overall_rating >= minRating;
+    }
+
+    return isAvailable;
   });
-  
+
   if (staysForDate.length === 0) return null;
-  
+
   const prices = staysForDate
-    .map(stay => parseInt(stay.starting_price))
-    .filter(price => !isNaN(price));
-  
+    .map(stay => {
+      // Handle both number and formatted string (e.g., "₹14,961" or 14961)
+      if (typeof stay.starting_price === 'number') {
+        return stay.starting_price;
+      }
+      // Remove currency symbol, commas, and any other non-numeric characters except decimal point
+      const cleanedPrice = stay.starting_price.replace(/[^\d.]/g, '');
+      return parseFloat(cleanedPrice);
+    })
+    .filter(price => !isNaN(price) && price > 0);
+
   return prices.length > 0 ? Math.min(...prices) : null;
 }
 
 export function processPriceDataForMonth(
-  flights: FlightData[], 
+  flights: FlightData[],
   trains: TrainData[],
-  stays: StayData[], 
-  year: number, 
+  stays: StayData[],
+  year: number,
   month: number,
   flightClass: string = 'economy',
-  trainClass: string = 'SL'
+  trainClass: string = 'SL',
+  minRating?: number
 ): DatePriceInfo[] {
-  console.log(`Processing price data for ${year}-${month}, flights: ${flights.length}, trains: ${trains.length}, stays: ${stays.length}, flightClass: ${flightClass}, trainClass: ${trainClass}`);
-  
+  console.log(`Processing price data for ${year}-${month}, flights: ${flights.length}, trains: ${trains.length}, stays: ${stays.length}, flightClass: ${flightClass}, trainClass: ${trainClass}, minRating: ${minRating}`);
+
   const lastDay = new Date(year, month + 1, 0).getDate();
   const priceData: DatePriceInfo[] = [];
-  
+
   for (let day = 1; day <= lastDay; day++) {
     const date = new Date(year, month, day).toISOString().split('T')[0];
-    
+
     const flightPrice = findCheapestFlightPriceForDate(flights, date, flightClass);
     const trainPrice = findCheapestTrainPriceForDate(trains, date, trainClass);
-    const stayPrice = findCheapestStayPriceForDate(stays, date);
-    
+    const stayPrice = findCheapestStayPriceForDate(stays, date, minRating);
+
     priceData.push({
       date,
       cheapestFlightPrice: flightPrice,
@@ -331,7 +347,7 @@ export function processPriceDataForMonth(
       cheapestStayPrice: stayPrice,
     });
   }
-  
+
   console.log('Processed price data sample:', priceData.slice(0, 5));
   return priceData;
 }

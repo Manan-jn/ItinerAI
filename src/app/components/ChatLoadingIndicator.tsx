@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import GlowBorder from "./GlowBorder";
 
 export interface ChatLoadingIndicatorProps {
   isVisible: boolean;
@@ -76,13 +75,36 @@ export default function ChatLoadingIndicator({
 
   return (
     <>
-      <GlowBorder
-        glowColors={["#9333ea", "#7c3aed", "#6d28d9", "#5b21b6", "#9333ea"]}
-        glowSize="1rem"
-        glowIntensity="0.2"
-        borderWidth="2px"
-        className="glow-wrapper"
-      >
+      {/* RGB Glowing Border Wrapper */}
+      <div className="rgb-border-wrapper">
+        {/* RGB Continuous Flowing Border */}
+        <div className="absolute -inset-[3px] rounded-2xl pointer-events-none">
+          <div
+            className="absolute inset-0 rounded-2xl border-4 border-transparent animate-rgb-flow"
+            style={{
+              background:
+                "linear-gradient(90deg, #3b82f6, #60a5fa, #93c5fd, #60a5fa, #3b82f6, #1d4ed8, #3b82f6) border-box",
+              WebkitMask:
+                "linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0)",
+              WebkitMaskComposite: "xor",
+              maskComposite: "exclude",
+            }}
+          ></div>
+
+          {/* Flowing Glow Overlay */}
+          <div className="absolute inset-0 rounded-2xl animate-rgb-glow-continuous">
+            <div
+              className="absolute inset-0 rounded-2xl border-2 border-transparent bg-gradient-to-r from-blue-400/60 via-blue-500/60 to-blue-600/60 blur-sm shadow-[0_0_25px_rgba(59,130,246,0.8)]"
+              style={{
+                WebkitMask:
+                  "linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0)",
+                WebkitMaskComposite: "xor",
+                maskComposite: "exclude",
+              }}
+            ></div>
+          </div>
+        </div>
+
         <div className={`${themeClasses.container} ${isAnimating ? "visible" : ""}`}>
           {/* Rotating Spinner Icon */}
           <svg
@@ -106,9 +128,15 @@ export default function ChatLoadingIndicator({
             {loadingMessages[messageIndex]}
           </span>
         </div>
-      </GlowBorder>
+      </div>
 
       <style jsx>{`
+        .rgb-border-wrapper {
+          position: relative;
+          isolation: isolate;
+          border-radius: 16px;
+        }
+
         /* Default Theme */
         .chat-loader-container {
           display: flex;
@@ -135,6 +163,8 @@ export default function ChatLoadingIndicator({
           transform: translateY(-10px) scale(0.95);
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
           pointer-events: none;
+          position: relative;
+          z-index: 1;
         }
 
         .chat-loader-container.visible {
@@ -181,6 +211,8 @@ export default function ChatLoadingIndicator({
           transform: translateY(-10px) scale(0.95);
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
           pointer-events: none;
+          position: relative;
+          z-index: 1;
         }
 
         .chat-loader-container-white.visible {
@@ -220,6 +252,8 @@ export default function ChatLoadingIndicator({
             0 4px 12px rgba(147, 51, 234, 0.1),
             inset 0 1px 0 rgba(255, 255, 255, 0.5);
           animation: slideUpFadeIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+          position: relative;
+          z-index: 1;
         }
 
         .chat-loader-text-purple {
@@ -236,6 +270,34 @@ export default function ChatLoadingIndicator({
         .chat-loader-spinner {
           animation: spin 0.8s linear infinite;
           flex-shrink: 0;
+        }
+
+        /* RGB Flow Animations */
+        @keyframes rgb-flow {
+          0% {
+            background-position: 0% 50%;
+          }
+          100% {
+            background-position: 200% 50%;
+          }
+        }
+
+        .animate-rgb-flow {
+          animation: rgb-flow 3s linear infinite;
+          background-size: 200% 100%;
+        }
+
+        .animate-rgb-glow-continuous {
+          animation: rgb-glow-pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes rgb-glow-pulse {
+          0%, 100% {
+            opacity: 0.6;
+          }
+          50% {
+            opacity: 1;
+          }
         }
 
         @keyframes spin {

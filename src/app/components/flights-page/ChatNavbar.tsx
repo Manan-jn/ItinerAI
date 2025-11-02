@@ -16,6 +16,7 @@ interface ChatNavbarProps {
   showDateSelector: boolean;
   showDebug: boolean;
   testEndResponse?: boolean;
+  sessionId?: string;
   onFlashcardsToggle: () => void;
   onFlightsToggle: () => void;
   onStaysToggle: () => void;
@@ -38,6 +39,7 @@ export function ChatNavbar({
   showDateSelector,
   showDebug,
   testEndResponse = false,
+  sessionId = "",
   onFlashcardsToggle,
   onFlightsToggle,
   onStaysToggle,
@@ -67,135 +69,155 @@ export function ChatNavbar({
 
           {/* Right Side - Toggles and Status */}
           <div className="flex items-center space-x-3">
-            {/* Places Toggle */}
-            <div className="flex items-center space-x-2">
-              <span className="text-xs text-gray-500">Places</span>
-              <button
-                onClick={onFlashcardsToggle}
-                className={`relative inline-flex h-5 w-9 items-center rounded-full transition-all duration-300 ${
-                  showFlashcards
-                    ? "bg-purple-500 border-purple-400 shadow-md shadow-purple-200"
-                    : "bg-gray-300 border-gray-400 hover:bg-gray-400"
-                } border`}
-                title="Toggle Places Explorer"
-              >
-                <span
-                  className={`inline-block h-3 w-3 transform rounded-full bg-white shadow-sm transition-transform ${
-                    showFlashcards ? "translate-x-5" : "translate-x-1"
-                  }`}
-                />
-              </button>
-            </div>
+            {/* Component Toggles - Only show when debug mode is active */}
+            {showDebug && (
+              <>
+                {/* Places Toggle */}
+                <div className="flex items-center space-x-2">
+                  <span className="text-xs text-gray-500">Places</span>
+                  <button
+                    onClick={onFlashcardsToggle}
+                    className={`relative inline-flex h-5 w-9 items-center rounded-full transition-all duration-300 ${
+                      showFlashcards
+                        ? "bg-purple-500 border-purple-400 shadow-md shadow-purple-200"
+                        : "bg-gray-300 border-gray-400 hover:bg-gray-400"
+                    } border`}
+                    title="Toggle Places Explorer"
+                  >
+                    <span
+                      className={`inline-block h-3 w-3 transform rounded-full bg-white shadow-sm transition-transform ${
+                        showFlashcards ? "translate-x-5" : "translate-x-1"
+                      }`}
+                    />
+                  </button>
+                </div>
 
-            {/* Flights Toggle */}
-            <div className="flex items-center space-x-2">
-              <span className="text-xs text-gray-500">Flights</span>
-              <button
-                onClick={onFlightsToggle}
-                className={`relative inline-flex h-5 w-9 items-center rounded-full transition-all duration-300 ${
-                  showFlights
-                    ? "bg-blue-500 border-blue-400 shadow-md shadow-blue-200"
-                    : "bg-gray-300 border-gray-400 hover:bg-gray-400"
-                } border`}
-                title="Toggle Flights Search"
-              >
-                <span
-                  className={`inline-block h-3 w-3 transform rounded-full bg-white shadow-sm transition-transform ${
-                    showFlights ? "translate-x-5" : "translate-x-1"
-                  }`}
-                />
-              </button>
-            </div>
+                {/* Flights Toggle */}
+                <div className="flex items-center space-x-2">
+                  <span className="text-xs text-gray-500">Flights</span>
+                  <button
+                    onClick={onFlightsToggle}
+                    className={`relative inline-flex h-5 w-9 items-center rounded-full transition-all duration-300 ${
+                      showFlights
+                        ? "bg-blue-500 border-blue-400 shadow-md shadow-blue-200"
+                        : "bg-gray-300 border-gray-400 hover:bg-gray-400"
+                    } border`}
+                    title="Toggle Flights Search"
+                  >
+                    <span
+                      className={`inline-block h-3 w-3 transform rounded-full bg-white shadow-sm transition-transform ${
+                        showFlights ? "translate-x-5" : "translate-x-1"
+                      }`}
+                    />
+                  </button>
+                </div>
 
-            {/* Stays Toggle */}
-            <div className="flex items-center space-x-2">
-              <span className="text-xs text-gray-500">Stays</span>
-              <button
-                onClick={onStaysToggle}
-                className={`relative inline-flex h-5 w-9 items-center rounded-full transition-all duration-300 ${
-                  showStays
-                    ? "bg-green-500 border-green-400 shadow-md shadow-green-200"
-                    : "bg-gray-300 border-gray-400 hover:bg-gray-400"
-                } border`}
-                title="Toggle Stays Search"
-              >
-                <span
-                  className={`inline-block h-3 w-3 transform rounded-full bg-white shadow-sm transition-transform ${
-                    showStays ? "translate-x-5" : "translate-x-1"
-                  }`}
-                />
-              </button>
-            </div>
+                {/* Stays Toggle */}
+                <div className="flex items-center space-x-2">
+                  <span className="text-xs text-gray-500">Stays</span>
+                  <button
+                    onClick={onStaysToggle}
+                    className={`relative inline-flex h-5 w-9 items-center rounded-full transition-all duration-300 ${
+                      showStays
+                        ? "bg-green-500 border-green-400 shadow-md shadow-green-200"
+                        : "bg-gray-300 border-gray-400 hover:bg-gray-400"
+                    } border`}
+                    title="Toggle Stays Search"
+                  >
+                    <span
+                      className={`inline-block h-3 w-3 transform rounded-full bg-white shadow-sm transition-transform ${
+                        showStays ? "translate-x-5" : "translate-x-1"
+                      }`}
+                    />
+                  </button>
+                </div>
 
-            {/* Itinerary Toggle */}
-            <div className="flex items-center space-x-2">
-              <span className="text-xs text-gray-500">Itinerary</span>
-              <button
-                onClick={onItineraryToggle}
-                className={`relative inline-flex h-5 w-9 items-center rounded-full transition-all duration-300 ${
-                  showItinerary
-                    ? "bg-gradient-to-r from-purple-500 to-blue-500 border-purple-400 shadow-md shadow-purple-200"
-                    : "bg-gray-300 border-gray-400 hover:bg-gray-400"
-                } border`}
-                title="Toggle Day Itinerary"
-              >
-                <span
-                  className={`inline-block h-3 w-3 transform rounded-full bg-white shadow-sm transition-transform ${
-                    showItinerary ? "translate-x-5" : "translate-x-1"
-                  }`}
-                />
-              </button>
-            </div>
+                {/* Itinerary Toggle */}
+                <div className="flex items-center space-x-2">
+                  <span className="text-xs text-gray-500">Itinerary</span>
+                  <button
+                    onClick={onItineraryToggle}
+                    className={`relative inline-flex h-5 w-9 items-center rounded-full transition-all duration-300 ${
+                      showItinerary
+                        ? "bg-gradient-to-r from-purple-500 to-blue-500 border-purple-400 shadow-md shadow-purple-200"
+                        : "bg-gray-300 border-gray-400 hover:bg-gray-400"
+                    } border`}
+                    title="Toggle Day Itinerary"
+                  >
+                    <span
+                      className={`inline-block h-3 w-3 transform rounded-full bg-white shadow-sm transition-transform ${
+                        showItinerary ? "translate-x-5" : "translate-x-1"
+                      }`}
+                    />
+                  </button>
+                </div>
 
-            {/* Date Selector Toggle */}
-            <div className="flex items-center space-x-2">
-              <span className="text-xs text-gray-500">Dates</span>
-              <button
-                onClick={onDateSelectorToggle}
-                className={`relative inline-flex h-5 w-9 items-center rounded-full transition-all duration-300 ${
-                  showDateSelector
-                    ? "bg-gradient-to-r from-pink-500 to-purple-500 border-pink-400 shadow-md shadow-pink-200"
-                    : "bg-gray-300 border-gray-400 hover:bg-gray-400"
-                } border`}
-                title="Toggle Date Selector"
-              >
-                <span
-                  className={`inline-block h-3 w-3 transform rounded-full bg-white shadow-sm transition-transform ${
-                    showDateSelector ? "translate-x-5" : "translate-x-1"
-                  }`}
-                />
-              </button>
-            </div>
-
-            {/* Test End Response Toggle */}
-            {onTestEndResponseToggle && (
-              <button
-                onClick={onTestEndResponseToggle}
-                className={`flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-xs font-medium transition-all duration-300 ${
-                  testEndResponse
-                    ? "bg-orange-100 text-orange-700 border border-orange-300"
-                    : "bg-gray-100 text-gray-600 border border-gray-300 hover:bg-gray-200"
-                }`}
-                title="Test End Response - Next message will trigger date selector"
-              >
-                <svg
-                  className="w-3 h-3"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                  />
-                </svg>
-                <span>Test End</span>
-              </button>
+                {/* Date Selector Toggle */}
+                <div className="flex items-center space-x-2">
+                  <span className="text-xs text-gray-500">Dates</span>
+                  <button
+                    onClick={onDateSelectorToggle}
+                    className={`relative inline-flex h-5 w-9 items-center rounded-full transition-all duration-300 ${
+                      showDateSelector
+                        ? "bg-gradient-to-r from-pink-500 to-purple-500 border-pink-400 shadow-md shadow-pink-200"
+                        : "bg-gray-300 border-gray-400 hover:bg-gray-400"
+                    } border`}
+                    title="Toggle Date Selector"
+                  >
+                    <span
+                      className={`inline-block h-3 w-3 transform rounded-full bg-white shadow-sm transition-transform ${
+                        showDateSelector ? "translate-x-5" : "translate-x-1"
+                      }`}
+                    />
+                  </button>
+                </div>
+              </>
             )}
 
-            {/* Debug Toggle */}
+            {/* Debug Toggles - Only show when debug mode is active */}
+            {showDebug && (
+              <>
+                {/* Test End Response Toggle */}
+                {onTestEndResponseToggle && (
+                  <button
+                    onClick={onTestEndResponseToggle}
+                    className={`flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-xs font-medium transition-all duration-300 ${
+                      testEndResponse
+                        ? "bg-orange-100 text-orange-700 border border-orange-300"
+                        : "bg-gray-100 text-gray-600 border border-gray-300 hover:bg-gray-200"
+                    }`}
+                    title="Test End Response - Next message will trigger date selector"
+                  >
+                    <svg
+                      className="w-3 h-3"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                      />
+                    </svg>
+                    <span>Test End</span>
+                  </button>
+                )}
+
+                {/* Session ID Display */}
+                {sessionId && (
+                  <div className="flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-700 border border-purple-300">
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span title={sessionId} className="max-w-[120px] truncate">{sessionId.slice(0, 8)}...</span>
+                  </div>
+                )}
+              </>
+            )}
+
+            {/* Debug Toggle Button */}
             <button
               onClick={onDebugToggle}
               className={`flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-xs font-medium transition-all duration-300 ${

@@ -1,0 +1,5495 @@
+{
+    "status": "success",
+    "response": [
+        {
+            "train_id": "97998-vandebharatexpress",
+            "operator": "Southern Railway",
+            "train_number": "97998",
+            "train_name": "Vande Bharat Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-01",
+            "departure_time": "23:29",
+            "arrival_date": "2025-12-02",
+            "arrival_time": "22:32",
+            "duration": "23h 3m",
+            "price": {
+                "sleeper": 333,
+                "3AC": 499,
+                "2AC": 732,
+                "1AC": 1165
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "63631-vandebharatexpress",
+            "operator": "Southern Railway",
+            "train_number": "63631",
+            "train_name": "Vande Bharat Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-01",
+            "departure_time": "21:02",
+            "arrival_date": "2025-12-02",
+            "arrival_time": "14:55",
+            "duration": "17h 53m",
+            "price": {
+                "sleeper": 2333,
+                "3AC": 3499,
+                "2AC": 5132,
+                "1AC": 8165
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "86509-superfastexpress",
+            "operator": "Western Railway",
+            "train_number": "86509",
+            "train_name": "Superfast Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-01",
+            "departure_time": "15:54",
+            "arrival_date": "2025-12-02",
+            "arrival_time": "10:22",
+            "duration": "18h 28m",
+            "price": {
+                "sleeper": 775,
+                "3AC": 1162,
+                "2AC": 1705,
+                "1AC": 2712
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "40855-vandebharatexpress",
+            "operator": "Northern Railway",
+            "train_number": "40855",
+            "train_name": "Vande Bharat Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-01",
+            "departure_time": "14:52",
+            "arrival_date": "2025-12-02",
+            "arrival_time": "03:59",
+            "duration": "13h 7m",
+            "price": {
+                "sleeper": 1817,
+                "3AC": 2725,
+                "2AC": 3997,
+                "1AC": 6359
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "49624-shatabdiexpress",
+            "operator": "Southern Railway",
+            "train_number": "49624",
+            "train_name": "Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-02",
+            "departure_time": "11:24",
+            "arrival_date": "2025-12-02",
+            "arrival_time": "23:47",
+            "duration": "12h 23m",
+            "price": {
+                "sleeper": 2476,
+                "3AC": 3714,
+                "2AC": 5447,
+                "1AC": 8666
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "18039-garibrath",
+            "operator": "Konkan Railways",
+            "train_number": "18039",
+            "train_name": "Garib Rath",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-02",
+            "departure_time": "19:47",
+            "arrival_date": "2025-12-02",
+            "arrival_time": "23:58",
+            "duration": "4h 11m",
+            "price": {
+                "sleeper": 711,
+                "3AC": 1066,
+                "2AC": 1564,
+                "1AC": 2488
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "48955-superfastexpress",
+            "operator": "Konkan Railways",
+            "train_number": "48955",
+            "train_name": "Superfast Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-02",
+            "departure_time": "17:53",
+            "arrival_date": "2025-12-03",
+            "arrival_time": "06:59",
+            "duration": "13h 6m",
+            "price": {
+                "sleeper": 1968,
+                "3AC": 2952,
+                "2AC": 4329,
+                "1AC": 6888
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "76451-shatabdiexpress",
+            "operator": "Indian Railways",
+            "train_number": "76451",
+            "train_name": "Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-03",
+            "departure_time": "20:21",
+            "arrival_date": "2025-12-04",
+            "arrival_time": "13:58",
+            "duration": "17h 37m",
+            "price": {
+                "sleeper": 1476,
+                "3AC": 2214,
+                "2AC": 3247,
+                "1AC": 5166
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "38549-superfastexpress",
+            "operator": "Indian Railways",
+            "train_number": "38549",
+            "train_name": "Superfast Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-03",
+            "departure_time": "00:46",
+            "arrival_date": "2025-12-03",
+            "arrival_time": "18:42",
+            "duration": "17h 56m",
+            "price": {
+                "sleeper": 2219,
+                "3AC": 3328,
+                "2AC": 4881,
+                "1AC": 7766
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "85849-janshatabdiexpress",
+            "operator": "Southern Railway",
+            "train_number": "85849",
+            "train_name": "Jan Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-04",
+            "departure_time": "17:16",
+            "arrival_date": "2025-12-05",
+            "arrival_time": "09:34",
+            "duration": "16h 18m",
+            "price": {
+                "sleeper": 1682,
+                "3AC": 2523,
+                "2AC": 3700,
+                "1AC": 5887
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "22427-mailexpress",
+            "operator": "Indian Railways",
+            "train_number": "22427",
+            "train_name": "Mail Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-04",
+            "departure_time": "07:08",
+            "arrival_date": "2025-12-04",
+            "arrival_time": "12:54",
+            "duration": "5h 46m",
+            "price": {
+                "sleeper": 514,
+                "3AC": 771,
+                "2AC": 1130,
+                "1AC": 1799
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "33273-superfastexpress",
+            "operator": "Indian Railways",
+            "train_number": "33273",
+            "train_name": "Superfast Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-04",
+            "departure_time": "12:11",
+            "arrival_date": "2025-12-04",
+            "arrival_time": "19:07",
+            "duration": "6h 56m",
+            "price": {
+                "sleeper": 2253,
+                "3AC": 3379,
+                "2AC": 4956,
+                "1AC": 7885
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "15823-rajdhaniexpress",
+            "operator": "Konkan Railways",
+            "train_number": "15823",
+            "train_name": "Rajdhani Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-04",
+            "departure_time": "20:39",
+            "arrival_date": "2025-12-05",
+            "arrival_time": "06:40",
+            "duration": "10h 1m",
+            "price": {
+                "sleeper": 1998,
+                "3AC": 2997,
+                "2AC": 4395,
+                "1AC": 6993
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "91046-vandebharatexpress",
+            "operator": "Western Railway",
+            "train_number": "91046",
+            "train_name": "Vande Bharat Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-04",
+            "departure_time": "19:01",
+            "arrival_date": "2025-12-05",
+            "arrival_time": "08:49",
+            "duration": "13h 48m",
+            "price": {
+                "sleeper": 983,
+                "3AC": 1474,
+                "2AC": 2162,
+                "1AC": 3440
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "30514-superfastexpress",
+            "operator": "Indian Railways",
+            "train_number": "30514",
+            "train_name": "Superfast Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-04",
+            "departure_time": "14:07",
+            "arrival_date": "2025-12-05",
+            "arrival_time": "02:47",
+            "duration": "12h 40m",
+            "price": {
+                "sleeper": 433,
+                "3AC": 649,
+                "2AC": 952,
+                "1AC": 1515
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "67560-durontoexpress",
+            "operator": "South Central Railway",
+            "train_number": "67560",
+            "train_name": "Duronto Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-05",
+            "departure_time": "08:23",
+            "arrival_date": "2025-12-06",
+            "arrival_time": "03:22",
+            "duration": "18h 59m",
+            "price": {
+                "sleeper": 2105,
+                "3AC": 3157,
+                "2AC": 4631,
+                "1AC": 7367
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "83462-vandebharatexpress",
+            "operator": "Western Railway",
+            "train_number": "83462",
+            "train_name": "Vande Bharat Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-05",
+            "departure_time": "14:27",
+            "arrival_date": "2025-12-06",
+            "arrival_time": "02:45",
+            "duration": "12h 18m",
+            "price": {
+                "sleeper": 2282,
+                "3AC": 3423,
+                "2AC": 5020,
+                "1AC": 7987
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "51286-vandebharatexpress",
+            "operator": "Western Railway",
+            "train_number": "51286",
+            "train_name": "Vande Bharat Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-05",
+            "departure_time": "20:08",
+            "arrival_date": "2025-12-06",
+            "arrival_time": "14:25",
+            "duration": "18h 17m",
+            "price": {
+                "sleeper": 925,
+                "3AC": 1387,
+                "2AC": 2035,
+                "1AC": 3237
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "44423-mailexpress",
+            "operator": "Northern Railway",
+            "train_number": "44423",
+            "train_name": "Mail Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-05",
+            "departure_time": "07:12",
+            "arrival_date": "2025-12-06",
+            "arrival_time": "03:53",
+            "duration": "20h 41m",
+            "price": {
+                "sleeper": 869,
+                "3AC": 1303,
+                "2AC": 1911,
+                "1AC": 3041
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "53448-vandebharatexpress",
+            "operator": "Northern Railway",
+            "train_number": "53448",
+            "train_name": "Vande Bharat Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-05",
+            "departure_time": "13:37",
+            "arrival_date": "2025-12-06",
+            "arrival_time": "00:53",
+            "duration": "11h 16m",
+            "price": {
+                "sleeper": 1080,
+                "3AC": 1620,
+                "2AC": 2376,
+                "1AC": 3780
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "24959-superfastexpress",
+            "operator": "Indian Railways",
+            "train_number": "24959",
+            "train_name": "Superfast Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-05",
+            "departure_time": "20:09",
+            "arrival_date": "2025-12-06",
+            "arrival_time": "04:58",
+            "duration": "8h 49m",
+            "price": {
+                "sleeper": 2033,
+                "3AC": 3049,
+                "2AC": 4472,
+                "1AC": 7115
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "81095-vandebharatexpress",
+            "operator": "Northern Railway",
+            "train_number": "81095",
+            "train_name": "Vande Bharat Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-06",
+            "departure_time": "03:49",
+            "arrival_date": "2025-12-06",
+            "arrival_time": "19:08",
+            "duration": "15h 19m",
+            "price": {
+                "sleeper": 2298,
+                "3AC": 3447,
+                "2AC": 5055,
+                "1AC": 8043
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "91667-durontoexpress",
+            "operator": "South Central Railway",
+            "train_number": "91667",
+            "train_name": "Duronto Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-06",
+            "departure_time": "16:50",
+            "arrival_date": "2025-12-07",
+            "arrival_time": "07:33",
+            "duration": "14h 43m",
+            "price": {
+                "sleeper": 1420,
+                "3AC": 2130,
+                "2AC": 3124,
+                "1AC": 4970
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "28664-durontoexpress",
+            "operator": "Indian Railways",
+            "train_number": "28664",
+            "train_name": "Duronto Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-06",
+            "departure_time": "02:40",
+            "arrival_date": "2025-12-06",
+            "arrival_time": "10:46",
+            "duration": "8h 6m",
+            "price": {
+                "sleeper": 1564,
+                "3AC": 2346,
+                "2AC": 3440,
+                "1AC": 5474
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "24160-garibrath",
+            "operator": "South Central Railway",
+            "train_number": "24160",
+            "train_name": "Garib Rath",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-06",
+            "departure_time": "12:11",
+            "arrival_date": "2025-12-07",
+            "arrival_time": "12:03",
+            "duration": "23h 52m",
+            "price": {
+                "sleeper": 1222,
+                "3AC": 1833,
+                "2AC": 2688,
+                "1AC": 4277
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "25475-shatabdiexpress",
+            "operator": "Northeast Frontier Railway",
+            "train_number": "25475",
+            "train_name": "Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-06",
+            "departure_time": "21:15",
+            "arrival_date": "2025-12-07",
+            "arrival_time": "20:23",
+            "duration": "23h 8m",
+            "price": {
+                "sleeper": 818,
+                "3AC": 1227,
+                "2AC": 1799,
+                "1AC": 2863
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "16411-janshatabdiexpress",
+            "operator": "Western Railway",
+            "train_number": "16411",
+            "train_name": "Jan Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-06",
+            "departure_time": "22:08",
+            "arrival_date": "2025-12-07",
+            "arrival_time": "02:06",
+            "duration": "3h 58m",
+            "price": {
+                "sleeper": 2262,
+                "3AC": 3393,
+                "2AC": 4976,
+                "1AC": 7917
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "89985-garibrath",
+            "operator": "South Central Railway",
+            "train_number": "89985",
+            "train_name": "Garib Rath",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-06",
+            "departure_time": "06:05",
+            "arrival_date": "2025-12-06",
+            "arrival_time": "22:10",
+            "duration": "16h 5m",
+            "price": {
+                "sleeper": 771,
+                "3AC": 1156,
+                "2AC": 1696,
+                "1AC": 2698
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "13516-durontoexpress",
+            "operator": "Western Railway",
+            "train_number": "13516",
+            "train_name": "Duronto Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-06",
+            "departure_time": "17:30",
+            "arrival_date": "2025-12-07",
+            "arrival_time": "05:48",
+            "duration": "12h 18m",
+            "price": {
+                "sleeper": 1131,
+                "3AC": 1696,
+                "2AC": 2488,
+                "1AC": 3958
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "19779-durontoexpress",
+            "operator": "Western Railway",
+            "train_number": "19779",
+            "train_name": "Duronto Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-06",
+            "departure_time": "13:20",
+            "arrival_date": "2025-12-07",
+            "arrival_time": "04:09",
+            "duration": "14h 49m",
+            "price": {
+                "sleeper": 420,
+                "3AC": 630,
+                "2AC": 924,
+                "1AC": 1470
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "51019-durontoexpress",
+            "operator": "Northern Railway",
+            "train_number": "51019",
+            "train_name": "Duronto Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-07",
+            "departure_time": "15:55",
+            "arrival_date": "2025-12-07",
+            "arrival_time": "20:08",
+            "duration": "4h 13m",
+            "price": {
+                "sleeper": 442,
+                "3AC": 663,
+                "2AC": 972,
+                "1AC": 1547
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "65668-superfastexpress",
+            "operator": "Southern Railway",
+            "train_number": "65668",
+            "train_name": "Superfast Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-07",
+            "departure_time": "18:18",
+            "arrival_date": "2025-12-07",
+            "arrival_time": "20:56",
+            "duration": "2h 38m",
+            "price": {
+                "sleeper": 1306,
+                "3AC": 1959,
+                "2AC": 2873,
+                "1AC": 4571
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "85946-shatabdiexpress",
+            "operator": "Konkan Railways",
+            "train_number": "85946",
+            "train_name": "Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-07",
+            "departure_time": "18:53",
+            "arrival_date": "2025-12-07",
+            "arrival_time": "23:19",
+            "duration": "4h 26m",
+            "price": {
+                "sleeper": 1911,
+                "3AC": 2866,
+                "2AC": 4204,
+                "1AC": 6688
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "11011-superfastexpress",
+            "operator": "Indian Railways",
+            "train_number": "11011",
+            "train_name": "Superfast Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-07",
+            "departure_time": "14:35",
+            "arrival_date": "2025-12-08",
+            "arrival_time": "09:56",
+            "duration": "19h 21m",
+            "price": {
+                "sleeper": 1370,
+                "3AC": 2055,
+                "2AC": 3014,
+                "1AC": 4795
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "87334-janshatabdiexpress",
+            "operator": "Konkan Railways",
+            "train_number": "87334",
+            "train_name": "Jan Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-07",
+            "departure_time": "00:23",
+            "arrival_date": "2025-12-07",
+            "arrival_time": "09:21",
+            "duration": "8h 58m",
+            "price": {
+                "sleeper": 1804,
+                "3AC": 2706,
+                "2AC": 3968,
+                "1AC": 6314
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "22141-shatabdiexpress",
+            "operator": "Indian Railways",
+            "train_number": "22141",
+            "train_name": "Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-07",
+            "departure_time": "21:22",
+            "arrival_date": "2025-12-08",
+            "arrival_time": "06:08",
+            "duration": "8h 46m",
+            "price": {
+                "sleeper": 1262,
+                "3AC": 1893,
+                "2AC": 2776,
+                "1AC": 4417
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "66858-janshatabdiexpress",
+            "operator": "Indian Railways",
+            "train_number": "66858",
+            "train_name": "Jan Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-07",
+            "departure_time": "05:51",
+            "arrival_date": "2025-12-08",
+            "arrival_time": "05:41",
+            "duration": "23h 50m",
+            "price": {
+                "sleeper": 1320,
+                "3AC": 1980,
+                "2AC": 2904,
+                "1AC": 4620
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "27077-rajdhaniexpress",
+            "operator": "Northeast Frontier Railway",
+            "train_number": "27077",
+            "train_name": "Rajdhani Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-07",
+            "departure_time": "05:35",
+            "arrival_date": "2025-12-07",
+            "arrival_time": "09:09",
+            "duration": "3h 34m",
+            "price": {
+                "sleeper": 700,
+                "3AC": 1050,
+                "2AC": 1540,
+                "1AC": 2450
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "64632-vandebharatexpress",
+            "operator": "Konkan Railways",
+            "train_number": "64632",
+            "train_name": "Vande Bharat Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-08",
+            "departure_time": "01:11",
+            "arrival_date": "2025-12-08",
+            "arrival_time": "13:24",
+            "duration": "12h 13m",
+            "price": {
+                "sleeper": 1279,
+                "3AC": 1918,
+                "2AC": 2813,
+                "1AC": 4476
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "49329-garibrath",
+            "operator": "Southern Railway",
+            "train_number": "49329",
+            "train_name": "Garib Rath",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-08",
+            "departure_time": "17:51",
+            "arrival_date": "2025-12-09",
+            "arrival_time": "05:11",
+            "duration": "11h 20m",
+            "price": {
+                "sleeper": 2004,
+                "3AC": 3006,
+                "2AC": 4408,
+                "1AC": 7014
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "33422-durontoexpress",
+            "operator": "South Central Railway",
+            "train_number": "33422",
+            "train_name": "Duronto Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-08",
+            "departure_time": "02:12",
+            "arrival_date": "2025-12-08",
+            "arrival_time": "16:36",
+            "duration": "14h 24m",
+            "price": {
+                "sleeper": 2340,
+                "3AC": 3510,
+                "2AC": 5148,
+                "1AC": 8190
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "98492-vandebharatexpress",
+            "operator": "South Central Railway",
+            "train_number": "98492",
+            "train_name": "Vande Bharat Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-08",
+            "departure_time": "07:16",
+            "arrival_date": "2025-12-09",
+            "arrival_time": "06:16",
+            "duration": "23h 0m",
+            "price": {
+                "sleeper": 1181,
+                "3AC": 1771,
+                "2AC": 2598,
+                "1AC": 4133
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "91075-mailexpress",
+            "operator": "Southern Railway",
+            "train_number": "91075",
+            "train_name": "Mail Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-08",
+            "departure_time": "02:33",
+            "arrival_date": "2025-12-08",
+            "arrival_time": "21:21",
+            "duration": "18h 48m",
+            "price": {
+                "sleeper": 1178,
+                "3AC": 1767,
+                "2AC": 2591,
+                "1AC": 4123
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "20314-shatabdiexpress",
+            "operator": "Indian Railways",
+            "train_number": "20314",
+            "train_name": "Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-08",
+            "departure_time": "08:46",
+            "arrival_date": "2025-12-08",
+            "arrival_time": "20:30",
+            "duration": "11h 44m",
+            "price": {
+                "sleeper": 995,
+                "3AC": 1492,
+                "2AC": 2189,
+                "1AC": 3482
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "79011-vandebharatexpress",
+            "operator": "Konkan Railways",
+            "train_number": "79011",
+            "train_name": "Vande Bharat Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-08",
+            "departure_time": "21:40",
+            "arrival_date": "2025-12-09",
+            "arrival_time": "05:01",
+            "duration": "7h 21m",
+            "price": {
+                "sleeper": 1416,
+                "3AC": 2124,
+                "2AC": 3115,
+                "1AC": 4956
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "81765-vandebharatexpress",
+            "operator": "Konkan Railways",
+            "train_number": "81765",
+            "train_name": "Vande Bharat Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-09",
+            "departure_time": "21:57",
+            "arrival_date": "2025-12-10",
+            "arrival_time": "21:19",
+            "duration": "23h 22m",
+            "price": {
+                "sleeper": 1480,
+                "3AC": 2220,
+                "2AC": 3256,
+                "1AC": 5180
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "89462-shatabdiexpress",
+            "operator": "Konkan Railways",
+            "train_number": "89462",
+            "train_name": "Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-09",
+            "departure_time": "00:32",
+            "arrival_date": "2025-12-09",
+            "arrival_time": "11:18",
+            "duration": "10h 46m",
+            "price": {
+                "sleeper": 1556,
+                "3AC": 2334,
+                "2AC": 3423,
+                "1AC": 5446
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "44107-vandebharatexpress",
+            "operator": "Northeast Frontier Railway",
+            "train_number": "44107",
+            "train_name": "Vande Bharat Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-10",
+            "departure_time": "05:35",
+            "arrival_date": "2025-12-10",
+            "arrival_time": "09:52",
+            "duration": "4h 17m",
+            "price": {
+                "sleeper": 820,
+                "3AC": 1230,
+                "2AC": 1804,
+                "1AC": 2870
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "89242-janshatabdiexpress",
+            "operator": "Western Railway",
+            "train_number": "89242",
+            "train_name": "Jan Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-10",
+            "departure_time": "11:29",
+            "arrival_date": "2025-12-11",
+            "arrival_time": "00:34",
+            "duration": "13h 5m",
+            "price": {
+                "sleeper": 2114,
+                "3AC": 3171,
+                "2AC": 4650,
+                "1AC": 7399
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "89570-shatabdiexpress",
+            "operator": "South Central Railway",
+            "train_number": "89570",
+            "train_name": "Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-10",
+            "departure_time": "22:47",
+            "arrival_date": "2025-12-11",
+            "arrival_time": "10:32",
+            "duration": "11h 45m",
+            "price": {
+                "sleeper": 366,
+                "3AC": 549,
+                "2AC": 805,
+                "1AC": 1281
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "91070-garibrath",
+            "operator": "Indian Railways",
+            "train_number": "91070",
+            "train_name": "Garib Rath",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-10",
+            "departure_time": "05:37",
+            "arrival_date": "2025-12-10",
+            "arrival_time": "18:01",
+            "duration": "12h 24m",
+            "price": {
+                "sleeper": 1349,
+                "3AC": 2023,
+                "2AC": 2967,
+                "1AC": 4721
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "21534-vandebharatexpress",
+            "operator": "South Central Railway",
+            "train_number": "21534",
+            "train_name": "Vande Bharat Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-10",
+            "departure_time": "08:45",
+            "arrival_date": "2025-12-10",
+            "arrival_time": "23:03",
+            "duration": "14h 18m",
+            "price": {
+                "sleeper": 634,
+                "3AC": 951,
+                "2AC": 1394,
+                "1AC": 2219
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "95261-shatabdiexpress",
+            "operator": "Western Railway",
+            "train_number": "95261",
+            "train_name": "Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-10",
+            "departure_time": "09:44",
+            "arrival_date": "2025-12-10",
+            "arrival_time": "23:04",
+            "duration": "13h 20m",
+            "price": {
+                "sleeper": 809,
+                "3AC": 1213,
+                "2AC": 1779,
+                "1AC": 2831
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "60777-shatabdiexpress",
+            "operator": "Southern Railway",
+            "train_number": "60777",
+            "train_name": "Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-10",
+            "departure_time": "09:57",
+            "arrival_date": "2025-12-11",
+            "arrival_time": "06:51",
+            "duration": "20h 54m",
+            "price": {
+                "sleeper": 208,
+                "3AC": 312,
+                "2AC": 457,
+                "1AC": 728
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "12473-janshatabdiexpress",
+            "operator": "Northern Railway",
+            "train_number": "12473",
+            "train_name": "Jan Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-10",
+            "departure_time": "07:03",
+            "arrival_date": "2025-12-11",
+            "arrival_time": "00:48",
+            "duration": "17h 45m",
+            "price": {
+                "sleeper": 375,
+                "3AC": 562,
+                "2AC": 825,
+                "1AC": 1312
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "16592-janshatabdiexpress",
+            "operator": "Northern Railway",
+            "train_number": "16592",
+            "train_name": "Jan Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-10",
+            "departure_time": "15:40",
+            "arrival_date": "2025-12-11",
+            "arrival_time": "14:44",
+            "duration": "23h 4m",
+            "price": {
+                "sleeper": 2297,
+                "3AC": 3445,
+                "2AC": 5053,
+                "1AC": 8039
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "12001-vandebharatexpress",
+            "operator": "South Central Railway",
+            "train_number": "12001",
+            "train_name": "Vande Bharat Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-11",
+            "departure_time": "23:59",
+            "arrival_date": "2025-12-12",
+            "arrival_time": "22:35",
+            "duration": "22h 36m",
+            "price": {
+                "sleeper": 1776,
+                "3AC": 2664,
+                "2AC": 3907,
+                "1AC": 6216
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "92470-durontoexpress",
+            "operator": "Indian Railways",
+            "train_number": "92470",
+            "train_name": "Duronto Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-12",
+            "departure_time": "03:47",
+            "arrival_date": "2025-12-12",
+            "arrival_time": "20:39",
+            "duration": "16h 52m",
+            "price": {
+                "sleeper": 1481,
+                "3AC": 2221,
+                "2AC": 3258,
+                "1AC": 5183
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "90595-superfastexpress",
+            "operator": "South Central Railway",
+            "train_number": "90595",
+            "train_name": "Superfast Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-12",
+            "departure_time": "09:13",
+            "arrival_date": "2025-12-13",
+            "arrival_time": "02:14",
+            "duration": "17h 1m",
+            "price": {
+                "sleeper": 1578,
+                "3AC": 2367,
+                "2AC": 3471,
+                "1AC": 5523
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "15431-vandebharatexpress",
+            "operator": "South Central Railway",
+            "train_number": "15431",
+            "train_name": "Vande Bharat Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-12",
+            "departure_time": "13:03",
+            "arrival_date": "2025-12-12",
+            "arrival_time": "16:49",
+            "duration": "3h 46m",
+            "price": {
+                "sleeper": 2233,
+                "3AC": 3349,
+                "2AC": 4912,
+                "1AC": 7815
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "75727-durontoexpress",
+            "operator": "Western Railway",
+            "train_number": "75727",
+            "train_name": "Duronto Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-12",
+            "departure_time": "01:40",
+            "arrival_date": "2025-12-12",
+            "arrival_time": "14:50",
+            "duration": "13h 10m",
+            "price": {
+                "sleeper": 401,
+                "3AC": 601,
+                "2AC": 882,
+                "1AC": 1403
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "17047-garibrath",
+            "operator": "Northern Railway",
+            "train_number": "17047",
+            "train_name": "Garib Rath",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-12",
+            "departure_time": "21:16",
+            "arrival_date": "2025-12-13",
+            "arrival_time": "01:54",
+            "duration": "4h 38m",
+            "price": {
+                "sleeper": 285,
+                "3AC": 427,
+                "2AC": 627,
+                "1AC": 997
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "91965-superfastexpress",
+            "operator": "Northeast Frontier Railway",
+            "train_number": "91965",
+            "train_name": "Superfast Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-12",
+            "departure_time": "11:37",
+            "arrival_date": "2025-12-12",
+            "arrival_time": "16:19",
+            "duration": "4h 42m",
+            "price": {
+                "sleeper": 327,
+                "3AC": 490,
+                "2AC": 719,
+                "1AC": 1144
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "82464-shatabdiexpress",
+            "operator": "South Central Railway",
+            "train_number": "82464",
+            "train_name": "Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-12",
+            "departure_time": "20:48",
+            "arrival_date": "2025-12-13",
+            "arrival_time": "02:56",
+            "duration": "6h 8m",
+            "price": {
+                "sleeper": 545,
+                "3AC": 817,
+                "2AC": 1199,
+                "1AC": 1907
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "45114-rajdhaniexpress",
+            "operator": "Northeast Frontier Railway",
+            "train_number": "45114",
+            "train_name": "Rajdhani Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-12",
+            "departure_time": "03:37",
+            "arrival_date": "2025-12-12",
+            "arrival_time": "14:42",
+            "duration": "11h 5m",
+            "price": {
+                "sleeper": 1034,
+                "3AC": 1551,
+                "2AC": 2274,
+                "1AC": 3619
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "46170-shatabdiexpress",
+            "operator": "Northeast Frontier Railway",
+            "train_number": "46170",
+            "train_name": "Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-12",
+            "departure_time": "01:07",
+            "arrival_date": "2025-12-12",
+            "arrival_time": "12:11",
+            "duration": "11h 4m",
+            "price": {
+                "sleeper": 2156,
+                "3AC": 3234,
+                "2AC": 4743,
+                "1AC": 7546
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "94523-shatabdiexpress",
+            "operator": "Konkan Railways",
+            "train_number": "94523",
+            "train_name": "Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-12",
+            "departure_time": "06:40",
+            "arrival_date": "2025-12-12",
+            "arrival_time": "11:54",
+            "duration": "5h 14m",
+            "price": {
+                "sleeper": 1273,
+                "3AC": 1909,
+                "2AC": 2800,
+                "1AC": 4455
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "99096-garibrath",
+            "operator": "Western Railway",
+            "train_number": "99096",
+            "train_name": "Garib Rath",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-13",
+            "departure_time": "22:59",
+            "arrival_date": "2025-12-14",
+            "arrival_time": "14:30",
+            "duration": "15h 31m",
+            "price": {
+                "sleeper": 746,
+                "3AC": 1119,
+                "2AC": 1641,
+                "1AC": 2611
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "15607-superfastexpress",
+            "operator": "South Central Railway",
+            "train_number": "15607",
+            "train_name": "Superfast Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-13",
+            "departure_time": "05:27",
+            "arrival_date": "2025-12-14",
+            "arrival_time": "02:45",
+            "duration": "21h 18m",
+            "price": {
+                "sleeper": 248,
+                "3AC": 372,
+                "2AC": 545,
+                "1AC": 868
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "92012-durontoexpress",
+            "operator": "Western Railway",
+            "train_number": "92012",
+            "train_name": "Duronto Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-13",
+            "departure_time": "16:12",
+            "arrival_date": "2025-12-13",
+            "arrival_time": "23:19",
+            "duration": "7h 7m",
+            "price": {
+                "sleeper": 1100,
+                "3AC": 1650,
+                "2AC": 2420,
+                "1AC": 3850
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "48255-shatabdiexpress",
+            "operator": "South Central Railway",
+            "train_number": "48255",
+            "train_name": "Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-13",
+            "departure_time": "20:03",
+            "arrival_date": "2025-12-14",
+            "arrival_time": "14:20",
+            "duration": "18h 17m",
+            "price": {
+                "sleeper": 1726,
+                "3AC": 2589,
+                "2AC": 3797,
+                "1AC": 6041
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "97014-janshatabdiexpress",
+            "operator": "Indian Railways",
+            "train_number": "97014",
+            "train_name": "Jan Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-13",
+            "departure_time": "03:32",
+            "arrival_date": "2025-12-13",
+            "arrival_time": "13:05",
+            "duration": "9h 33m",
+            "price": {
+                "sleeper": 713,
+                "3AC": 1069,
+                "2AC": 1568,
+                "1AC": 2495
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "36164-mailexpress",
+            "operator": "Konkan Railways",
+            "train_number": "36164",
+            "train_name": "Mail Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-14",
+            "departure_time": "23:29",
+            "arrival_date": "2025-12-15",
+            "arrival_time": "07:57",
+            "duration": "8h 28m",
+            "price": {
+                "sleeper": 1390,
+                "3AC": 2085,
+                "2AC": 3058,
+                "1AC": 4865
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "80934-superfastexpress",
+            "operator": "Western Railway",
+            "train_number": "80934",
+            "train_name": "Superfast Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-14",
+            "departure_time": "21:29",
+            "arrival_date": "2025-12-15",
+            "arrival_time": "03:01",
+            "duration": "5h 32m",
+            "price": {
+                "sleeper": 1209,
+                "3AC": 1813,
+                "2AC": 2659,
+                "1AC": 4231
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "30727-shatabdiexpress",
+            "operator": "Northeast Frontier Railway",
+            "train_number": "30727",
+            "train_name": "Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-14",
+            "departure_time": "04:32",
+            "arrival_date": "2025-12-14",
+            "arrival_time": "14:47",
+            "duration": "10h 15m",
+            "price": {
+                "sleeper": 1528,
+                "3AC": 2292,
+                "2AC": 3361,
+                "1AC": 5348
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "33023-garibrath",
+            "operator": "South Central Railway",
+            "train_number": "33023",
+            "train_name": "Garib Rath",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-14",
+            "departure_time": "15:44",
+            "arrival_date": "2025-12-15",
+            "arrival_time": "07:33",
+            "duration": "15h 49m",
+            "price": {
+                "sleeper": 333,
+                "3AC": 499,
+                "2AC": 732,
+                "1AC": 1165
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "65700-durontoexpress",
+            "operator": "Northeast Frontier Railway",
+            "train_number": "65700",
+            "train_name": "Duronto Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-14",
+            "departure_time": "05:15",
+            "arrival_date": "2025-12-15",
+            "arrival_time": "00:03",
+            "duration": "18h 48m",
+            "price": {
+                "sleeper": 1224,
+                "3AC": 1836,
+                "2AC": 2692,
+                "1AC": 4284
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "70770-superfastexpress",
+            "operator": "South Central Railway",
+            "train_number": "70770",
+            "train_name": "Superfast Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-15",
+            "departure_time": "22:50",
+            "arrival_date": "2025-12-16",
+            "arrival_time": "21:41",
+            "duration": "22h 51m",
+            "price": {
+                "sleeper": 2154,
+                "3AC": 3231,
+                "2AC": 4738,
+                "1AC": 7539
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "98400-vandebharatexpress",
+            "operator": "South Central Railway",
+            "train_number": "98400",
+            "train_name": "Vande Bharat Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-15",
+            "departure_time": "17:20",
+            "arrival_date": "2025-12-16",
+            "arrival_time": "13:27",
+            "duration": "20h 7m",
+            "price": {
+                "sleeper": 668,
+                "3AC": 1002,
+                "2AC": 1469,
+                "1AC": 2338
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "98110-superfastexpress",
+            "operator": "Konkan Railways",
+            "train_number": "98110",
+            "train_name": "Superfast Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-15",
+            "departure_time": "14:32",
+            "arrival_date": "2025-12-15",
+            "arrival_time": "20:25",
+            "duration": "5h 53m",
+            "price": {
+                "sleeper": 489,
+                "3AC": 733,
+                "2AC": 1075,
+                "1AC": 1711
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "13021-shatabdiexpress",
+            "operator": "South Central Railway",
+            "train_number": "13021",
+            "train_name": "Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-15",
+            "departure_time": "08:10",
+            "arrival_date": "2025-12-15",
+            "arrival_time": "12:44",
+            "duration": "4h 34m",
+            "price": {
+                "sleeper": 1601,
+                "3AC": 2401,
+                "2AC": 3522,
+                "1AC": 5603
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "59753-vandebharatexpress",
+            "operator": "South Central Railway",
+            "train_number": "59753",
+            "train_name": "Vande Bharat Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-15",
+            "departure_time": "18:13",
+            "arrival_date": "2025-12-16",
+            "arrival_time": "13:00",
+            "duration": "18h 47m",
+            "price": {
+                "sleeper": 1075,
+                "3AC": 1612,
+                "2AC": 2365,
+                "1AC": 3762
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "84847-mailexpress",
+            "operator": "South Central Railway",
+            "train_number": "84847",
+            "train_name": "Mail Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-16",
+            "departure_time": "19:16",
+            "arrival_date": "2025-12-16",
+            "arrival_time": "22:27",
+            "duration": "3h 11m",
+            "price": {
+                "sleeper": 2006,
+                "3AC": 3009,
+                "2AC": 4413,
+                "1AC": 7021
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "65993-mailexpress",
+            "operator": "Western Railway",
+            "train_number": "65993",
+            "train_name": "Mail Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-16",
+            "departure_time": "06:43",
+            "arrival_date": "2025-12-16",
+            "arrival_time": "16:04",
+            "duration": "9h 21m",
+            "price": {
+                "sleeper": 1367,
+                "3AC": 2050,
+                "2AC": 3007,
+                "1AC": 4784
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "84984-janshatabdiexpress",
+            "operator": "Northern Railway",
+            "train_number": "84984",
+            "train_name": "Jan Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-16",
+            "departure_time": "05:30",
+            "arrival_date": "2025-12-16",
+            "arrival_time": "21:35",
+            "duration": "16h 5m",
+            "price": {
+                "sleeper": 1711,
+                "3AC": 2566,
+                "2AC": 3764,
+                "1AC": 5988
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "51259-vandebharatexpress",
+            "operator": "Southern Railway",
+            "train_number": "51259",
+            "train_name": "Vande Bharat Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-16",
+            "departure_time": "02:45",
+            "arrival_date": "2025-12-16",
+            "arrival_time": "10:44",
+            "duration": "7h 59m",
+            "price": {
+                "sleeper": 1422,
+                "3AC": 2133,
+                "2AC": 3128,
+                "1AC": 4977
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "55876-vandebharatexpress",
+            "operator": "Northern Railway",
+            "train_number": "55876",
+            "train_name": "Vande Bharat Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-16",
+            "departure_time": "11:54",
+            "arrival_date": "2025-12-16",
+            "arrival_time": "14:46",
+            "duration": "2h 52m",
+            "price": {
+                "sleeper": 1792,
+                "3AC": 2688,
+                "2AC": 3942,
+                "1AC": 6272
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "72288-garibrath",
+            "operator": "Northern Railway",
+            "train_number": "72288",
+            "train_name": "Garib Rath",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-16",
+            "departure_time": "03:10",
+            "arrival_date": "2025-12-16",
+            "arrival_time": "21:22",
+            "duration": "18h 12m",
+            "price": {
+                "sleeper": 1061,
+                "3AC": 1591,
+                "2AC": 2334,
+                "1AC": 3713
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "33298-shatabdiexpress",
+            "operator": "Northern Railway",
+            "train_number": "33298",
+            "train_name": "Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-16",
+            "departure_time": "10:45",
+            "arrival_date": "2025-12-16",
+            "arrival_time": "20:06",
+            "duration": "9h 21m",
+            "price": {
+                "sleeper": 2188,
+                "3AC": 3282,
+                "2AC": 4813,
+                "1AC": 7658
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "43242-rajdhaniexpress",
+            "operator": "Konkan Railways",
+            "train_number": "43242",
+            "train_name": "Rajdhani Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-16",
+            "departure_time": "22:06",
+            "arrival_date": "2025-12-17",
+            "arrival_time": "07:07",
+            "duration": "9h 1m",
+            "price": {
+                "sleeper": 1243,
+                "3AC": 1864,
+                "2AC": 2734,
+                "1AC": 4350
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "41127-shatabdiexpress",
+            "operator": "Southern Railway",
+            "train_number": "41127",
+            "train_name": "Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-17",
+            "departure_time": "18:16",
+            "arrival_date": "2025-12-18",
+            "arrival_time": "01:39",
+            "duration": "7h 23m",
+            "price": {
+                "sleeper": 563,
+                "3AC": 844,
+                "2AC": 1238,
+                "1AC": 1970
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "85325-vandebharatexpress",
+            "operator": "Konkan Railways",
+            "train_number": "85325",
+            "train_name": "Vande Bharat Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-17",
+            "departure_time": "22:33",
+            "arrival_date": "2025-12-18",
+            "arrival_time": "02:29",
+            "duration": "3h 56m",
+            "price": {
+                "sleeper": 2166,
+                "3AC": 3249,
+                "2AC": 4765,
+                "1AC": 7581
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "55726-mailexpress",
+            "operator": "Southern Railway",
+            "train_number": "55726",
+            "train_name": "Mail Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-17",
+            "departure_time": "15:29",
+            "arrival_date": "2025-12-17",
+            "arrival_time": "23:32",
+            "duration": "8h 3m",
+            "price": {
+                "sleeper": 1987,
+                "3AC": 2980,
+                "2AC": 4371,
+                "1AC": 6954
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "82087-vandebharatexpress",
+            "operator": "Western Railway",
+            "train_number": "82087",
+            "train_name": "Vande Bharat Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-17",
+            "departure_time": "20:25",
+            "arrival_date": "2025-12-18",
+            "arrival_time": "09:11",
+            "duration": "12h 46m",
+            "price": {
+                "sleeper": 2230,
+                "3AC": 3345,
+                "2AC": 4906,
+                "1AC": 7805
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "12626-superfastexpress",
+            "operator": "Northeast Frontier Railway",
+            "train_number": "12626",
+            "train_name": "Superfast Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-17",
+            "departure_time": "03:43",
+            "arrival_date": "2025-12-17",
+            "arrival_time": "14:03",
+            "duration": "10h 20m",
+            "price": {
+                "sleeper": 1301,
+                "3AC": 1951,
+                "2AC": 2862,
+                "1AC": 4553
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "83533-janshatabdiexpress",
+            "operator": "Western Railway",
+            "train_number": "83533",
+            "train_name": "Jan Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-17",
+            "departure_time": "15:48",
+            "arrival_date": "2025-12-18",
+            "arrival_time": "08:07",
+            "duration": "16h 19m",
+            "price": {
+                "sleeper": 2245,
+                "3AC": 3367,
+                "2AC": 4939,
+                "1AC": 7857
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "26740-superfastexpress",
+            "operator": "Konkan Railways",
+            "train_number": "26740",
+            "train_name": "Superfast Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-17",
+            "departure_time": "17:01",
+            "arrival_date": "2025-12-18",
+            "arrival_time": "06:22",
+            "duration": "13h 21m",
+            "price": {
+                "sleeper": 1271,
+                "3AC": 1906,
+                "2AC": 2796,
+                "1AC": 4448
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "85903-vandebharatexpress",
+            "operator": "Northeast Frontier Railway",
+            "train_number": "85903",
+            "train_name": "Vande Bharat Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-17",
+            "departure_time": "13:26",
+            "arrival_date": "2025-12-17",
+            "arrival_time": "22:56",
+            "duration": "9h 30m",
+            "price": {
+                "sleeper": 1777,
+                "3AC": 2665,
+                "2AC": 3909,
+                "1AC": 6219
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "32825-durontoexpress",
+            "operator": "Southern Railway",
+            "train_number": "32825",
+            "train_name": "Duronto Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-17",
+            "departure_time": "00:39",
+            "arrival_date": "2025-12-17",
+            "arrival_time": "03:25",
+            "duration": "2h 46m",
+            "price": {
+                "sleeper": 1135,
+                "3AC": 1702,
+                "2AC": 2497,
+                "1AC": 3972
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "18934-garibrath",
+            "operator": "Southern Railway",
+            "train_number": "18934",
+            "train_name": "Garib Rath",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-17",
+            "departure_time": "13:24",
+            "arrival_date": "2025-12-18",
+            "arrival_time": "11:19",
+            "duration": "21h 55m",
+            "price": {
+                "sleeper": 986,
+                "3AC": 1479,
+                "2AC": 2169,
+                "1AC": 3451
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "59908-garibrath",
+            "operator": "Konkan Railways",
+            "train_number": "59908",
+            "train_name": "Garib Rath",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-18",
+            "departure_time": "11:40",
+            "arrival_date": "2025-12-18",
+            "arrival_time": "23:16",
+            "duration": "11h 36m",
+            "price": {
+                "sleeper": 1376,
+                "3AC": 2064,
+                "2AC": 3027,
+                "1AC": 4816
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "59088-garibrath",
+            "operator": "Konkan Railways",
+            "train_number": "59088",
+            "train_name": "Garib Rath",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-18",
+            "departure_time": "01:41",
+            "arrival_date": "2025-12-18",
+            "arrival_time": "07:19",
+            "duration": "5h 38m",
+            "price": {
+                "sleeper": 247,
+                "3AC": 370,
+                "2AC": 543,
+                "1AC": 864
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "41901-shatabdiexpress",
+            "operator": "Northeast Frontier Railway",
+            "train_number": "41901",
+            "train_name": "Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-18",
+            "departure_time": "22:58",
+            "arrival_date": "2025-12-19",
+            "arrival_time": "05:56",
+            "duration": "6h 58m",
+            "price": {
+                "sleeper": 1864,
+                "3AC": 2796,
+                "2AC": 4100,
+                "1AC": 6524
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "31457-rajdhaniexpress",
+            "operator": "Konkan Railways",
+            "train_number": "31457",
+            "train_name": "Rajdhani Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-18",
+            "departure_time": "19:15",
+            "arrival_date": "2025-12-18",
+            "arrival_time": "22:15",
+            "duration": "3h 0m",
+            "price": {
+                "sleeper": 924,
+                "3AC": 1386,
+                "2AC": 2032,
+                "1AC": 3234
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "62557-garibrath",
+            "operator": "Konkan Railways",
+            "train_number": "62557",
+            "train_name": "Garib Rath",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-18",
+            "departure_time": "15:45",
+            "arrival_date": "2025-12-18",
+            "arrival_time": "21:10",
+            "duration": "5h 25m",
+            "price": {
+                "sleeper": 2155,
+                "3AC": 3232,
+                "2AC": 4741,
+                "1AC": 7542
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "99116-durontoexpress",
+            "operator": "Konkan Railways",
+            "train_number": "99116",
+            "train_name": "Duronto Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-18",
+            "departure_time": "15:05",
+            "arrival_date": "2025-12-18",
+            "arrival_time": "22:39",
+            "duration": "7h 34m",
+            "price": {
+                "sleeper": 686,
+                "3AC": 1029,
+                "2AC": 1509,
+                "1AC": 2401
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "32321-mailexpress",
+            "operator": "Konkan Railways",
+            "train_number": "32321",
+            "train_name": "Mail Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-19",
+            "departure_time": "23:32",
+            "arrival_date": "2025-12-20",
+            "arrival_time": "17:49",
+            "duration": "18h 17m",
+            "price": {
+                "sleeper": 815,
+                "3AC": 1222,
+                "2AC": 1793,
+                "1AC": 2852
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "38752-superfastexpress",
+            "operator": "Konkan Railways",
+            "train_number": "38752",
+            "train_name": "Superfast Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-20",
+            "departure_time": "20:39",
+            "arrival_date": "2025-12-21",
+            "arrival_time": "18:06",
+            "duration": "21h 27m",
+            "price": {
+                "sleeper": 2028,
+                "3AC": 3042,
+                "2AC": 4461,
+                "1AC": 7098
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "73215-mailexpress",
+            "operator": "South Central Railway",
+            "train_number": "73215",
+            "train_name": "Mail Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-20",
+            "departure_time": "22:35",
+            "arrival_date": "2025-12-21",
+            "arrival_time": "19:44",
+            "duration": "21h 9m",
+            "price": {
+                "sleeper": 1186,
+                "3AC": 1779,
+                "2AC": 2609,
+                "1AC": 4151
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "92605-mailexpress",
+            "operator": "Western Railway",
+            "train_number": "92605",
+            "train_name": "Mail Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-20",
+            "departure_time": "00:21",
+            "arrival_date": "2025-12-20",
+            "arrival_time": "06:30",
+            "duration": "6h 9m",
+            "price": {
+                "sleeper": 1974,
+                "3AC": 2961,
+                "2AC": 4342,
+                "1AC": 6909
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "90266-rajdhaniexpress",
+            "operator": "Southern Railway",
+            "train_number": "90266",
+            "train_name": "Rajdhani Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-20",
+            "departure_time": "17:42",
+            "arrival_date": "2025-12-21",
+            "arrival_time": "09:12",
+            "duration": "15h 30m",
+            "price": {
+                "sleeper": 2467,
+                "3AC": 3700,
+                "2AC": 5427,
+                "1AC": 8634
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "73877-shatabdiexpress",
+            "operator": "South Central Railway",
+            "train_number": "73877",
+            "train_name": "Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-20",
+            "departure_time": "04:23",
+            "arrival_date": "2025-12-20",
+            "arrival_time": "08:23",
+            "duration": "4h 0m",
+            "price": {
+                "sleeper": 2499,
+                "3AC": 3748,
+                "2AC": 5497,
+                "1AC": 8746
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "64897-durontoexpress",
+            "operator": "Indian Railways",
+            "train_number": "64897",
+            "train_name": "Duronto Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-20",
+            "departure_time": "23:40",
+            "arrival_date": "2025-12-21",
+            "arrival_time": "02:58",
+            "duration": "3h 18m",
+            "price": {
+                "sleeper": 1748,
+                "3AC": 2622,
+                "2AC": 3845,
+                "1AC": 6118
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "89750-rajdhaniexpress",
+            "operator": "Western Railway",
+            "train_number": "89750",
+            "train_name": "Rajdhani Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-20",
+            "departure_time": "16:56",
+            "arrival_date": "2025-12-21",
+            "arrival_time": "00:55",
+            "duration": "7h 59m",
+            "price": {
+                "sleeper": 366,
+                "3AC": 549,
+                "2AC": 805,
+                "1AC": 1281
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "30207-durontoexpress",
+            "operator": "Northeast Frontier Railway",
+            "train_number": "30207",
+            "train_name": "Duronto Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-20",
+            "departure_time": "20:30",
+            "arrival_date": "2025-12-21",
+            "arrival_time": "14:53",
+            "duration": "18h 23m",
+            "price": {
+                "sleeper": 1910,
+                "3AC": 2865,
+                "2AC": 4202,
+                "1AC": 6685
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "51715-mailexpress",
+            "operator": "Southern Railway",
+            "train_number": "51715",
+            "train_name": "Mail Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-20",
+            "departure_time": "22:57",
+            "arrival_date": "2025-12-21",
+            "arrival_time": "10:01",
+            "duration": "11h 4m",
+            "price": {
+                "sleeper": 391,
+                "3AC": 586,
+                "2AC": 860,
+                "1AC": 1368
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "71903-janshatabdiexpress",
+            "operator": "Southern Railway",
+            "train_number": "71903",
+            "train_name": "Jan Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-20",
+            "departure_time": "22:14",
+            "arrival_date": "2025-12-21",
+            "arrival_time": "16:43",
+            "duration": "18h 29m",
+            "price": {
+                "sleeper": 1617,
+                "3AC": 2425,
+                "2AC": 3557,
+                "1AC": 5659
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "76283-shatabdiexpress",
+            "operator": "Northern Railway",
+            "train_number": "76283",
+            "train_name": "Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-21",
+            "departure_time": "19:03",
+            "arrival_date": "2025-12-22",
+            "arrival_time": "08:39",
+            "duration": "13h 36m",
+            "price": {
+                "sleeper": 917,
+                "3AC": 1375,
+                "2AC": 2017,
+                "1AC": 3209
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "28309-janshatabdiexpress",
+            "operator": "Konkan Railways",
+            "train_number": "28309",
+            "train_name": "Jan Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-21",
+            "departure_time": "20:27",
+            "arrival_date": "2025-12-21",
+            "arrival_time": "23:31",
+            "duration": "3h 4m",
+            "price": {
+                "sleeper": 1940,
+                "3AC": 2910,
+                "2AC": 4268,
+                "1AC": 6790
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "64489-vandebharatexpress",
+            "operator": "Northeast Frontier Railway",
+            "train_number": "64489",
+            "train_name": "Vande Bharat Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-21",
+            "departure_time": "02:56",
+            "arrival_date": "2025-12-21",
+            "arrival_time": "09:39",
+            "duration": "6h 43m",
+            "price": {
+                "sleeper": 1002,
+                "3AC": 1503,
+                "2AC": 2204,
+                "1AC": 3507
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "52023-rajdhaniexpress",
+            "operator": "Southern Railway",
+            "train_number": "52023",
+            "train_name": "Rajdhani Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-22",
+            "departure_time": "06:43",
+            "arrival_date": "2025-12-22",
+            "arrival_time": "17:39",
+            "duration": "10h 56m",
+            "price": {
+                "sleeper": 1530,
+                "3AC": 2295,
+                "2AC": 3366,
+                "1AC": 5355
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "39654-janshatabdiexpress",
+            "operator": "Northeast Frontier Railway",
+            "train_number": "39654",
+            "train_name": "Jan Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-22",
+            "departure_time": "22:14",
+            "arrival_date": "2025-12-23",
+            "arrival_time": "07:46",
+            "duration": "9h 32m",
+            "price": {
+                "sleeper": 309,
+                "3AC": 463,
+                "2AC": 679,
+                "1AC": 1081
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "18657-durontoexpress",
+            "operator": "Northern Railway",
+            "train_number": "18657",
+            "train_name": "Duronto Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-22",
+            "departure_time": "21:11",
+            "arrival_date": "2025-12-23",
+            "arrival_time": "16:06",
+            "duration": "18h 55m",
+            "price": {
+                "sleeper": 2376,
+                "3AC": 3564,
+                "2AC": 5227,
+                "1AC": 8316
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "92012-garibrath",
+            "operator": "Northeast Frontier Railway",
+            "train_number": "92012",
+            "train_name": "Garib Rath",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-22",
+            "departure_time": "07:56",
+            "arrival_date": "2025-12-23",
+            "arrival_time": "03:23",
+            "duration": "19h 27m",
+            "price": {
+                "sleeper": 1564,
+                "3AC": 2346,
+                "2AC": 3440,
+                "1AC": 5474
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "83699-garibrath",
+            "operator": "Northeast Frontier Railway",
+            "train_number": "83699",
+            "train_name": "Garib Rath",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-22",
+            "departure_time": "10:07",
+            "arrival_date": "2025-12-23",
+            "arrival_time": "00:17",
+            "duration": "14h 10m",
+            "price": {
+                "sleeper": 207,
+                "3AC": 310,
+                "2AC": 455,
+                "1AC": 724
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "40310-rajdhaniexpress",
+            "operator": "Northern Railway",
+            "train_number": "40310",
+            "train_name": "Rajdhani Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-23",
+            "departure_time": "21:21",
+            "arrival_date": "2025-12-24",
+            "arrival_time": "04:27",
+            "duration": "7h 6m",
+            "price": {
+                "sleeper": 1796,
+                "3AC": 2694,
+                "2AC": 3951,
+                "1AC": 6286
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "91431-superfastexpress",
+            "operator": "Northern Railway",
+            "train_number": "91431",
+            "train_name": "Superfast Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-23",
+            "departure_time": "03:46",
+            "arrival_date": "2025-12-23",
+            "arrival_time": "15:28",
+            "duration": "11h 42m",
+            "price": {
+                "sleeper": 2488,
+                "3AC": 3732,
+                "2AC": 5473,
+                "1AC": 8708
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "13298-garibrath",
+            "operator": "Konkan Railways",
+            "train_number": "13298",
+            "train_name": "Garib Rath",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-23",
+            "departure_time": "17:07",
+            "arrival_date": "2025-12-24",
+            "arrival_time": "00:50",
+            "duration": "7h 43m",
+            "price": {
+                "sleeper": 645,
+                "3AC": 967,
+                "2AC": 1419,
+                "1AC": 2257
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "17318-garibrath",
+            "operator": "South Central Railway",
+            "train_number": "17318",
+            "train_name": "Garib Rath",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-23",
+            "departure_time": "12:45",
+            "arrival_date": "2025-12-24",
+            "arrival_time": "05:40",
+            "duration": "16h 55m",
+            "price": {
+                "sleeper": 255,
+                "3AC": 382,
+                "2AC": 561,
+                "1AC": 892
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "71624-rajdhaniexpress",
+            "operator": "Southern Railway",
+            "train_number": "71624",
+            "train_name": "Rajdhani Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-23",
+            "departure_time": "11:17",
+            "arrival_date": "2025-12-24",
+            "arrival_time": "08:34",
+            "duration": "21h 17m",
+            "price": {
+                "sleeper": 944,
+                "3AC": 1416,
+                "2AC": 2076,
+                "1AC": 3304
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "71829-rajdhaniexpress",
+            "operator": "Konkan Railways",
+            "train_number": "71829",
+            "train_name": "Rajdhani Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-23",
+            "departure_time": "21:30",
+            "arrival_date": "2025-12-24",
+            "arrival_time": "07:36",
+            "duration": "10h 6m",
+            "price": {
+                "sleeper": 2380,
+                "3AC": 3570,
+                "2AC": 5236,
+                "1AC": 8330
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "47965-janshatabdiexpress",
+            "operator": "South Central Railway",
+            "train_number": "47965",
+            "train_name": "Jan Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-23",
+            "departure_time": "03:09",
+            "arrival_date": "2025-12-24",
+            "arrival_time": "00:44",
+            "duration": "21h 35m",
+            "price": {
+                "sleeper": 587,
+                "3AC": 880,
+                "2AC": 1291,
+                "1AC": 2054
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "70654-janshatabdiexpress",
+            "operator": "Southern Railway",
+            "train_number": "70654",
+            "train_name": "Jan Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-23",
+            "departure_time": "00:16",
+            "arrival_date": "2025-12-23",
+            "arrival_time": "14:12",
+            "duration": "13h 56m",
+            "price": {
+                "sleeper": 1697,
+                "3AC": 2545,
+                "2AC": 3733,
+                "1AC": 5939
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "55192-janshatabdiexpress",
+            "operator": "Indian Railways",
+            "train_number": "55192",
+            "train_name": "Jan Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-24",
+            "departure_time": "02:34",
+            "arrival_date": "2025-12-24",
+            "arrival_time": "19:11",
+            "duration": "16h 37m",
+            "price": {
+                "sleeper": 1106,
+                "3AC": 1659,
+                "2AC": 2433,
+                "1AC": 3871
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "66882-mailexpress",
+            "operator": "Southern Railway",
+            "train_number": "66882",
+            "train_name": "Mail Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-24",
+            "departure_time": "09:07",
+            "arrival_date": "2025-12-25",
+            "arrival_time": "04:41",
+            "duration": "19h 34m",
+            "price": {
+                "sleeper": 2229,
+                "3AC": 3343,
+                "2AC": 4903,
+                "1AC": 7801
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "72672-janshatabdiexpress",
+            "operator": "Konkan Railways",
+            "train_number": "72672",
+            "train_name": "Jan Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-25",
+            "departure_time": "03:09",
+            "arrival_date": "2025-12-26",
+            "arrival_time": "01:09",
+            "duration": "22h 0m",
+            "price": {
+                "sleeper": 1181,
+                "3AC": 1771,
+                "2AC": 2598,
+                "1AC": 4133
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "59872-durontoexpress",
+            "operator": "Northern Railway",
+            "train_number": "59872",
+            "train_name": "Duronto Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-25",
+            "departure_time": "04:19",
+            "arrival_date": "2025-12-25",
+            "arrival_time": "23:44",
+            "duration": "19h 25m",
+            "price": {
+                "sleeper": 261,
+                "3AC": 391,
+                "2AC": 574,
+                "1AC": 913
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "79843-garibrath",
+            "operator": "Indian Railways",
+            "train_number": "79843",
+            "train_name": "Garib Rath",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-25",
+            "departure_time": "20:09",
+            "arrival_date": "2025-12-25",
+            "arrival_time": "23:35",
+            "duration": "3h 26m",
+            "price": {
+                "sleeper": 2365,
+                "3AC": 3547,
+                "2AC": 5203,
+                "1AC": 8277
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "81247-durontoexpress",
+            "operator": "Indian Railways",
+            "train_number": "81247",
+            "train_name": "Duronto Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-25",
+            "departure_time": "02:24",
+            "arrival_date": "2025-12-26",
+            "arrival_time": "00:49",
+            "duration": "22h 25m",
+            "price": {
+                "sleeper": 2340,
+                "3AC": 3510,
+                "2AC": 5148,
+                "1AC": 8190
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "40464-superfastexpress",
+            "operator": "South Central Railway",
+            "train_number": "40464",
+            "train_name": "Superfast Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-25",
+            "departure_time": "03:47",
+            "arrival_date": "2025-12-25",
+            "arrival_time": "09:56",
+            "duration": "6h 9m",
+            "price": {
+                "sleeper": 1154,
+                "3AC": 1731,
+                "2AC": 2538,
+                "1AC": 4039
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "18980-durontoexpress",
+            "operator": "Southern Railway",
+            "train_number": "18980",
+            "train_name": "Duronto Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-25",
+            "departure_time": "21:47",
+            "arrival_date": "2025-12-26",
+            "arrival_time": "01:50",
+            "duration": "4h 3m",
+            "price": {
+                "sleeper": 2413,
+                "3AC": 3619,
+                "2AC": 5308,
+                "1AC": 8445
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "74041-durontoexpress",
+            "operator": "South Central Railway",
+            "train_number": "74041",
+            "train_name": "Duronto Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-25",
+            "departure_time": "03:38",
+            "arrival_date": "2025-12-26",
+            "arrival_time": "00:01",
+            "duration": "20h 23m",
+            "price": {
+                "sleeper": 576,
+                "3AC": 864,
+                "2AC": 1267,
+                "1AC": 2016
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "68533-janshatabdiexpress",
+            "operator": "Northern Railway",
+            "train_number": "68533",
+            "train_name": "Jan Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-25",
+            "departure_time": "22:10",
+            "arrival_date": "2025-12-26",
+            "arrival_time": "08:18",
+            "duration": "10h 8m",
+            "price": {
+                "sleeper": 1285,
+                "3AC": 1927,
+                "2AC": 2827,
+                "1AC": 4497
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "79403-mailexpress",
+            "operator": "Southern Railway",
+            "train_number": "79403",
+            "train_name": "Mail Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-25",
+            "departure_time": "17:55",
+            "arrival_date": "2025-12-26",
+            "arrival_time": "01:13",
+            "duration": "7h 18m",
+            "price": {
+                "sleeper": 393,
+                "3AC": 589,
+                "2AC": 864,
+                "1AC": 1375
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "83435-durontoexpress",
+            "operator": "South Central Railway",
+            "train_number": "83435",
+            "train_name": "Duronto Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-25",
+            "departure_time": "12:05",
+            "arrival_date": "2025-12-25",
+            "arrival_time": "19:37",
+            "duration": "7h 32m",
+            "price": {
+                "sleeper": 2164,
+                "3AC": 3246,
+                "2AC": 4760,
+                "1AC": 7574
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "95315-janshatabdiexpress",
+            "operator": "Konkan Railways",
+            "train_number": "95315",
+            "train_name": "Jan Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-26",
+            "departure_time": "10:02",
+            "arrival_date": "2025-12-27",
+            "arrival_time": "06:17",
+            "duration": "20h 15m",
+            "price": {
+                "sleeper": 516,
+                "3AC": 774,
+                "2AC": 1135,
+                "1AC": 1806
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "29018-rajdhaniexpress",
+            "operator": "Western Railway",
+            "train_number": "29018",
+            "train_name": "Rajdhani Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-27",
+            "departure_time": "01:43",
+            "arrival_date": "2025-12-27",
+            "arrival_time": "12:50",
+            "duration": "11h 7m",
+            "price": {
+                "sleeper": 1451,
+                "3AC": 2176,
+                "2AC": 3192,
+                "1AC": 5078
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "62459-vandebharatexpress",
+            "operator": "South Central Railway",
+            "train_number": "62459",
+            "train_name": "Vande Bharat Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-27",
+            "departure_time": "01:28",
+            "arrival_date": "2025-12-27",
+            "arrival_time": "13:05",
+            "duration": "11h 37m",
+            "price": {
+                "sleeper": 1752,
+                "3AC": 2628,
+                "2AC": 3854,
+                "1AC": 6132
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "87708-superfastexpress",
+            "operator": "Northern Railway",
+            "train_number": "87708",
+            "train_name": "Superfast Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-27",
+            "departure_time": "04:34",
+            "arrival_date": "2025-12-27",
+            "arrival_time": "14:02",
+            "duration": "9h 28m",
+            "price": {
+                "sleeper": 2404,
+                "3AC": 3606,
+                "2AC": 5288,
+                "1AC": 8414
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "75213-janshatabdiexpress",
+            "operator": "Konkan Railways",
+            "train_number": "75213",
+            "train_name": "Jan Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-27",
+            "departure_time": "07:26",
+            "arrival_date": "2025-12-27",
+            "arrival_time": "09:56",
+            "duration": "2h 30m",
+            "price": {
+                "sleeper": 2452,
+                "3AC": 3678,
+                "2AC": 5394,
+                "1AC": 8582
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "35260-vandebharatexpress",
+            "operator": "Western Railway",
+            "train_number": "35260",
+            "train_name": "Vande Bharat Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-27",
+            "departure_time": "22:07",
+            "arrival_date": "2025-12-28",
+            "arrival_time": "04:30",
+            "duration": "6h 23m",
+            "price": {
+                "sleeper": 656,
+                "3AC": 984,
+                "2AC": 1443,
+                "1AC": 2296
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "37886-rajdhaniexpress",
+            "operator": "Konkan Railways",
+            "train_number": "37886",
+            "train_name": "Rajdhani Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-27",
+            "departure_time": "17:15",
+            "arrival_date": "2025-12-28",
+            "arrival_time": "01:38",
+            "duration": "8h 23m",
+            "price": {
+                "sleeper": 1500,
+                "3AC": 2250,
+                "2AC": 3300,
+                "1AC": 5250
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "19439-mailexpress",
+            "operator": "Konkan Railways",
+            "train_number": "19439",
+            "train_name": "Mail Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-27",
+            "departure_time": "06:58",
+            "arrival_date": "2025-12-27",
+            "arrival_time": "11:23",
+            "duration": "4h 25m",
+            "price": {
+                "sleeper": 1269,
+                "3AC": 1903,
+                "2AC": 2791,
+                "1AC": 4441
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "88292-superfastexpress",
+            "operator": "Konkan Railways",
+            "train_number": "88292",
+            "train_name": "Superfast Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-27",
+            "departure_time": "22:30",
+            "arrival_date": "2025-12-28",
+            "arrival_time": "17:31",
+            "duration": "19h 1m",
+            "price": {
+                "sleeper": 1933,
+                "3AC": 2899,
+                "2AC": 4252,
+                "1AC": 6765
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "29767-superfastexpress",
+            "operator": "South Central Railway",
+            "train_number": "29767",
+            "train_name": "Superfast Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-27",
+            "departure_time": "07:28",
+            "arrival_date": "2025-12-27",
+            "arrival_time": "22:25",
+            "duration": "14h 57m",
+            "price": {
+                "sleeper": 1359,
+                "3AC": 2038,
+                "2AC": 2989,
+                "1AC": 4756
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "79415-rajdhaniexpress",
+            "operator": "Indian Railways",
+            "train_number": "79415",
+            "train_name": "Rajdhani Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-28",
+            "departure_time": "02:54",
+            "arrival_date": "2025-12-28",
+            "arrival_time": "12:23",
+            "duration": "9h 29m",
+            "price": {
+                "sleeper": 2496,
+                "3AC": 3744,
+                "2AC": 5491,
+                "1AC": 8736
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "34980-mailexpress",
+            "operator": "Indian Railways",
+            "train_number": "34980",
+            "train_name": "Mail Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-28",
+            "departure_time": "05:59",
+            "arrival_date": "2025-12-28",
+            "arrival_time": "22:45",
+            "duration": "16h 46m",
+            "price": {
+                "sleeper": 1369,
+                "3AC": 2053,
+                "2AC": 3011,
+                "1AC": 4791
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "64378-shatabdiexpress",
+            "operator": "Indian Railways",
+            "train_number": "64378",
+            "train_name": "Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-28",
+            "departure_time": "08:14",
+            "arrival_date": "2025-12-28",
+            "arrival_time": "17:25",
+            "duration": "9h 11m",
+            "price": {
+                "sleeper": 1766,
+                "3AC": 2649,
+                "2AC": 3885,
+                "1AC": 6181
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "63040-vandebharatexpress",
+            "operator": "Konkan Railways",
+            "train_number": "63040",
+            "train_name": "Vande Bharat Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-28",
+            "departure_time": "13:42",
+            "arrival_date": "2025-12-29",
+            "arrival_time": "10:28",
+            "duration": "20h 46m",
+            "price": {
+                "sleeper": 2148,
+                "3AC": 3222,
+                "2AC": 4725,
+                "1AC": 7518
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "99144-rajdhaniexpress",
+            "operator": "Indian Railways",
+            "train_number": "99144",
+            "train_name": "Rajdhani Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-28",
+            "departure_time": "00:15",
+            "arrival_date": "2025-12-28",
+            "arrival_time": "15:04",
+            "duration": "14h 49m",
+            "price": {
+                "sleeper": 1724,
+                "3AC": 2586,
+                "2AC": 3792,
+                "1AC": 6034
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "91079-garibrath",
+            "operator": "Konkan Railways",
+            "train_number": "91079",
+            "train_name": "Garib Rath",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-28",
+            "departure_time": "02:04",
+            "arrival_date": "2025-12-28",
+            "arrival_time": "17:54",
+            "duration": "15h 50m",
+            "price": {
+                "sleeper": 1499,
+                "3AC": 2248,
+                "2AC": 3297,
+                "1AC": 5246
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "24712-mailexpress",
+            "operator": "Konkan Railways",
+            "train_number": "24712",
+            "train_name": "Mail Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-28",
+            "departure_time": "13:52",
+            "arrival_date": "2025-12-29",
+            "arrival_time": "09:32",
+            "duration": "19h 40m",
+            "price": {
+                "sleeper": 303,
+                "3AC": 454,
+                "2AC": 666,
+                "1AC": 1060
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "78855-vandebharatexpress",
+            "operator": "South Central Railway",
+            "train_number": "78855",
+            "train_name": "Vande Bharat Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-28",
+            "departure_time": "20:03",
+            "arrival_date": "2025-12-29",
+            "arrival_time": "13:00",
+            "duration": "16h 57m",
+            "price": {
+                "sleeper": 2212,
+                "3AC": 3318,
+                "2AC": 4866,
+                "1AC": 7742
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "63870-mailexpress",
+            "operator": "Northeast Frontier Railway",
+            "train_number": "63870",
+            "train_name": "Mail Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-28",
+            "departure_time": "03:03",
+            "arrival_date": "2025-12-28",
+            "arrival_time": "17:37",
+            "duration": "14h 34m",
+            "price": {
+                "sleeper": 2205,
+                "3AC": 3307,
+                "2AC": 4851,
+                "1AC": 7717
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "77571-durontoexpress",
+            "operator": "Southern Railway",
+            "train_number": "77571",
+            "train_name": "Duronto Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-28",
+            "departure_time": "15:58",
+            "arrival_date": "2025-12-29",
+            "arrival_time": "15:35",
+            "duration": "23h 37m",
+            "price": {
+                "sleeper": 1046,
+                "3AC": 1569,
+                "2AC": 2301,
+                "1AC": 3661
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "12347-vandebharatexpress",
+            "operator": "Western Railway",
+            "train_number": "12347",
+            "train_name": "Vande Bharat Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-29",
+            "departure_time": "22:35",
+            "arrival_date": "2025-12-30",
+            "arrival_time": "20:53",
+            "duration": "22h 18m",
+            "price": {
+                "sleeper": 1567,
+                "3AC": 2350,
+                "2AC": 3447,
+                "1AC": 5484
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "70355-vandebharatexpress",
+            "operator": "Northeast Frontier Railway",
+            "train_number": "70355",
+            "train_name": "Vande Bharat Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-29",
+            "departure_time": "22:50",
+            "arrival_date": "2025-12-30",
+            "arrival_time": "17:54",
+            "duration": "19h 4m",
+            "price": {
+                "sleeper": 1748,
+                "3AC": 2622,
+                "2AC": 3845,
+                "1AC": 6118
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "20002-janshatabdiexpress",
+            "operator": "Northern Railway",
+            "train_number": "20002",
+            "train_name": "Jan Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-29",
+            "departure_time": "05:53",
+            "arrival_date": "2025-12-30",
+            "arrival_time": "00:38",
+            "duration": "18h 45m",
+            "price": {
+                "sleeper": 1851,
+                "3AC": 2776,
+                "2AC": 4072,
+                "1AC": 6478
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "67353-janshatabdiexpress",
+            "operator": "Southern Railway",
+            "train_number": "67353",
+            "train_name": "Jan Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-29",
+            "departure_time": "10:15",
+            "arrival_date": "2025-12-29",
+            "arrival_time": "13:10",
+            "duration": "2h 55m",
+            "price": {
+                "sleeper": 1479,
+                "3AC": 2218,
+                "2AC": 3253,
+                "1AC": 5176
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "51795-rajdhaniexpress",
+            "operator": "Konkan Railways",
+            "train_number": "51795",
+            "train_name": "Rajdhani Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-29",
+            "departure_time": "13:29",
+            "arrival_date": "2025-12-30",
+            "arrival_time": "00:33",
+            "duration": "11h 4m",
+            "price": {
+                "sleeper": 2455,
+                "3AC": 3682,
+                "2AC": 5401,
+                "1AC": 8592
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "74777-garibrath",
+            "operator": "Indian Railways",
+            "train_number": "74777",
+            "train_name": "Garib Rath",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-29",
+            "departure_time": "07:18",
+            "arrival_date": "2025-12-30",
+            "arrival_time": "03:38",
+            "duration": "20h 20m",
+            "price": {
+                "sleeper": 818,
+                "3AC": 1227,
+                "2AC": 1799,
+                "1AC": 2863
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "79134-rajdhaniexpress",
+            "operator": "South Central Railway",
+            "train_number": "79134",
+            "train_name": "Rajdhani Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-30",
+            "departure_time": "12:04",
+            "arrival_date": "2025-12-31",
+            "arrival_time": "02:48",
+            "duration": "14h 44m",
+            "price": {
+                "sleeper": 1581,
+                "3AC": 2371,
+                "2AC": 3478,
+                "1AC": 5533
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "48083-janshatabdiexpress",
+            "operator": "Konkan Railways",
+            "train_number": "48083",
+            "train_name": "Jan Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-30",
+            "departure_time": "03:58",
+            "arrival_date": "2025-12-30",
+            "arrival_time": "08:32",
+            "duration": "4h 34m",
+            "price": {
+                "sleeper": 1815,
+                "3AC": 2722,
+                "2AC": 3993,
+                "1AC": 6352
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "48321-garibrath",
+            "operator": "Northern Railway",
+            "train_number": "48321",
+            "train_name": "Garib Rath",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-30",
+            "departure_time": "03:30",
+            "arrival_date": "2025-12-30",
+            "arrival_time": "11:39",
+            "duration": "8h 9m",
+            "price": {
+                "sleeper": 1303,
+                "3AC": 1954,
+                "2AC": 2866,
+                "1AC": 4560
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "64616-durontoexpress",
+            "operator": "Northern Railway",
+            "train_number": "64616",
+            "train_name": "Duronto Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-30",
+            "departure_time": "03:12",
+            "arrival_date": "2025-12-31",
+            "arrival_time": "03:12",
+            "duration": "24h 0m",
+            "price": {
+                "sleeper": 266,
+                "3AC": 399,
+                "2AC": 585,
+                "1AC": 931
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "45381-rajdhaniexpress",
+            "operator": "Northern Railway",
+            "train_number": "45381",
+            "train_name": "Rajdhani Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-30",
+            "departure_time": "22:12",
+            "arrival_date": "2025-12-31",
+            "arrival_time": "07:53",
+            "duration": "9h 41m",
+            "price": {
+                "sleeper": 815,
+                "3AC": 1222,
+                "2AC": 1793,
+                "1AC": 2852
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "27229-durontoexpress",
+            "operator": "South Central Railway",
+            "train_number": "27229",
+            "train_name": "Duronto Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-31",
+            "departure_time": "20:45",
+            "arrival_date": "2026-01-01",
+            "arrival_time": "15:03",
+            "duration": "18h 18m",
+            "price": {
+                "sleeper": 567,
+                "3AC": 850,
+                "2AC": 1247,
+                "1AC": 1984
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "47624-durontoexpress",
+            "operator": "Konkan Railways",
+            "train_number": "47624",
+            "train_name": "Duronto Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-31",
+            "departure_time": "13:14",
+            "arrival_date": "2026-01-01",
+            "arrival_time": "11:49",
+            "duration": "22h 35m",
+            "price": {
+                "sleeper": 2032,
+                "3AC": 3048,
+                "2AC": 4470,
+                "1AC": 7112
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "43298-durontoexpress",
+            "operator": "Konkan Railways",
+            "train_number": "43298",
+            "train_name": "Duronto Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-31",
+            "departure_time": "01:30",
+            "arrival_date": "2025-12-31",
+            "arrival_time": "04:18",
+            "duration": "2h 48m",
+            "price": {
+                "sleeper": 1668,
+                "3AC": 2502,
+                "2AC": 3669,
+                "1AC": 5838
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "63780-shatabdiexpress",
+            "operator": "Konkan Railways",
+            "train_number": "63780",
+            "train_name": "Shatabdi Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-31",
+            "departure_time": "09:02",
+            "arrival_date": "2025-12-31",
+            "arrival_time": "15:22",
+            "duration": "6h 20m",
+            "price": {
+                "sleeper": 1653,
+                "3AC": 2479,
+                "2AC": 3636,
+                "1AC": 5785
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "98756-rajdhaniexpress",
+            "operator": "Konkan Railways",
+            "train_number": "98756",
+            "train_name": "Rajdhani Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-31",
+            "departure_time": "05:28",
+            "arrival_date": "2026-01-01",
+            "arrival_time": "02:37",
+            "duration": "21h 9m",
+            "price": {
+                "sleeper": 266,
+                "3AC": 399,
+                "2AC": 585,
+                "1AC": 931
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "29864-rajdhaniexpress",
+            "operator": "Indian Railways",
+            "train_number": "29864",
+            "train_name": "Rajdhani Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-31",
+            "departure_time": "13:00",
+            "arrival_date": "2026-01-01",
+            "arrival_time": "08:20",
+            "duration": "19h 20m",
+            "price": {
+                "sleeper": 797,
+                "3AC": 1195,
+                "2AC": 1753,
+                "1AC": 2789
+            },
+            "currency": "INR"
+        },
+        {
+            "train_id": "46840-superfastexpress",
+            "operator": "South Central Railway",
+            "train_number": "46840",
+            "train_name": "Superfast Express",
+            "departure_station": {
+                "code": "DRS",
+                "city": "New Delhi",
+                "country": "Bangalore",
+                "name": "New Delhi Railway Station"
+            },
+            "arrival_station": {
+                "code": "ARS",
+                "city": "India",
+                "country": "India",
+                "name": "India Railway Station"
+            },
+            "departure_date": "2025-12-31",
+            "departure_time": "23:34",
+            "arrival_date": "2026-01-01",
+            "arrival_time": "21:16",
+            "duration": "21h 42m",
+            "price": {
+                "sleeper": 1360,
+                "3AC": 2040,
+                "2AC": 2992,
+                "1AC": 4760
+            },
+            "currency": "INR"
+        }
+    ]
+}

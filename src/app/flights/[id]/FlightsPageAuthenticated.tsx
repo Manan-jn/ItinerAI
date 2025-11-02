@@ -4614,6 +4614,7 @@ export default function FlightsPageAuthenticated() {
                 showDateSelector={showDateSelector}
                 showDebug={showDebug}
                 testEndResponse={testEndResponse}
+                sessionId={sessionId}
                 onTestEndResponseToggle={() => {
                   setTestEndResponse(!testEndResponse);
                   console.log(

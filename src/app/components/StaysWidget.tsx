@@ -28,8 +28,7 @@ interface StaysWidgetProps {
   currentDayNumber?: number;
 }
 
-import { getPopularIndianCities, searchCities } from "../utils/placesData";
-import GlowBorder from "./GlowBorder";
+import { getPopularIndianCities, searchCities, findPlaceByCity } from "../utils/placesData";
 
 // Get initial cities list - will be populated from placesData utility
 const getInitialCities = () => {
@@ -634,7 +633,8 @@ export default function StaysWidget({
   const [showResults, setShowResults] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingComplete, setIsLoadingComplete] = useState(false);
-  const [searchResults, setSearchResults] = useState<StayOption[]>([]);
+  const [searchResults, setSearchResults] = useState<StayOption[]>([]); // AI recommendations
+  const [utilityStays, setUtilityStays] = useState<StayOption[]>([]); // Utility stays
   const [bookedOption, setBookedOption] = useState<string | null>(null);
   const [selectedStayData, setSelectedStayData] = useState<StayOption | null>(null);
   const [hasAutoSearched, setHasAutoSearched] = useState(false);
@@ -700,18 +700,10 @@ export default function StaysWidget({
         if (cachedData) {
           console.log("✅ Found pre-fetched stays data! Using cached results.");
           console.log("📊 Cached data structure:", cachedData);
-          
-          // Combine AI recommendations and utility stays
-          const allStays: any[] = [
-            ...(cachedData.ai_recommendations || []),
-            ...(cachedData.utility_stays || [])
-          ];
-          
-          console.log(`📊 Total properties: ${allStays.length} (AI: ${cachedData.ai_recommendations?.length || 0}, Utility: ${cachedData.utility_stays?.length || 0})`);
-          
-          // Transform to StayOption format
-          const stayOptions: StayOption[] = allStays.map((stay: any, index: number) => ({
-            stay_id: `stay_${index}`,
+
+          // Transform AI recommendations to StayOption format
+          const aiStayOptions: StayOption[] = (cachedData.ai_recommendations || []).map((stay: any, index: number) => ({
+            stay_id: `ai_stay_${index}`,
             property_name: stay.property_name,
             property_address: stay.property_address,
             property_location: stay.property_location || city,
@@ -725,19 +717,38 @@ export default function StaysWidget({
             available_from_date: stay.available_from_date,
             available_until_date: stay.available_until_date,
           }));
-          
-          setSearchResults(stayOptions);
+
+          // Transform utility stays to StayOption format
+          const utilityStayOptions: StayOption[] = (cachedData.utility_stays || []).map((stay: any, index: number) => ({
+            stay_id: `utility_stay_${index}`,
+            property_name: stay.property_name,
+            property_address: stay.property_address,
+            property_location: stay.property_location || city,
+            city: stay.city || city,
+            state: stay.state || "",
+            country: stay.country || "India",
+            overall_rating: parseFloat(stay.overall_rating || 0),
+            starting_price: stay.price || stay.starting_price || "0",
+            currency: stay.currency || "INR",
+            available_rooms_total: parseInt(stay.available_rooms_total || 0),
+            available_from_date: stay.available_from_date,
+            available_until_date: stay.available_until_date,
+          }));
+
+          console.log(`📊 Total properties: ${aiStayOptions.length + utilityStayOptions.length} (AI: ${aiStayOptions.length}, Utility: ${utilityStayOptions.length})`);
+
+          setSearchResults(aiStayOptions);
+          setUtilityStays(utilityStayOptions);
           setShowResults(true);
           setIsLoadingComplete(true);
           setIsLoading(false);
-          
+
           console.log("✅ Pre-fetched stays data loaded:", {
-            total: stayOptions.length,
-            aiCount: cachedData.ai_recommendations?.length || 0,
-            utilityCount: cachedData.utility_stays?.length || 0,
+            aiCount: aiStayOptions.length,
+            utilityCount: utilityStayOptions.length,
             source: "pre-fetched",
           });
-          
+
           return; // Exit early, no need to make API calls
         } else {
           console.log("ℹ️ No pre-fetched stays data found, proceeding with API call...");
@@ -758,56 +769,113 @@ export default function StaysWidget({
 
       const message = `Give me all the stay options available ${checkInFormatted} to ${checkOutFormatted} in ${city}`;
 
-      const response = await fetch("/api/stay", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          user_id: userId || "user123",
-          session_id: sessionId || "session456",
-          message: message,
-        }),
-      });
+      // Get place data to fetch state and country for utility API
+      const placeData = await findPlaceByCity(city);
+      const state = placeData?.state || "";
+      const country = placeData?.country || "India";
 
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ error: "Unknown error" }));
-        console.error("API Error:", errorData);
-        throw new Error(`API error: ${response.status}`);
+      // Calculate duration in days
+      const fromDateObj = new Date(checkInDate);
+      const toDateObj = new Date(checkOutDate);
+      const duration = Math.ceil((toDateObj.getTime() - fromDateObj.getTime()) / (1000 * 60 * 60 * 24));
+
+      // Make parallel API calls to both /api/stay and /api/utility/stay
+      const [aiResponse, utilityResponse] = await Promise.allSettled([
+        fetch("/api/stay", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            user_id: userId || "user123",
+            session_id: sessionId || "session456",
+            message: message,
+          }),
+        }),
+        fetch("/api/utility/stay", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            user_id: userId,
+            city: city,
+            state: state,
+            country: country,
+            start_check_in_date: checkInDate,
+            end_check_in_date: checkOutDate,
+            duration: duration > 0 ? duration : -1,
+          }),
+        }),
+      ]);
+
+      // Process AI recommendations
+      let aiStayOptions: StayOption[] = [];
+      if (aiResponse.status === "fulfilled" && aiResponse.value.ok) {
+        const data = await aiResponse.value.json();
+        console.log("Received AI stay response:", data);
+
+        // Parse response structure: data.message.stays.stay_details
+        if (
+          data.message &&
+          data.message.stays &&
+          data.message.stays.stay_details &&
+          Array.isArray(data.message.stays.stay_details)
+        ) {
+          // Transform backend response to StayOption format
+          aiStayOptions = data.message.stays.stay_details.map(
+            (stay: any, index: number) => ({
+              stay_id: `ai_stay_${index}`,
+              property_name: stay.property_name,
+              property_address: stay.property_address,
+              property_location: data.message.stays.city,
+              city: data.message.stays.city,
+              state: data.message.stays.state,
+              country: data.message.stays.country,
+              overall_rating: parseFloat(stay.overall_rating),
+              starting_price: stay.price,
+              currency: "INR",
+              available_rooms_total: parseInt(stay.available_rooms_total),
+              available_from_date: stay.available_from_date,
+              available_until_date: stay.available_until_date,
+            })
+          );
+        }
+      } else if (aiResponse.status === "rejected") {
+        console.error("AI stay API error:", aiResponse.reason);
       }
 
-      const data = await response.json();
-      console.log("Received stay response:", data);
+      // Process utility stays
+      let utilityStayOptions: StayOption[] = [];
+      if (utilityResponse.status === "fulfilled" && utilityResponse.value.ok) {
+        const utilityData = await utilityResponse.value.json();
+        console.log("Received utility stay response:", utilityData);
 
-      // Parse response structure: data.message.stays.stay_details
-      let stayOptions: StayOption[] = [];
-      
-      if (
-        data.message &&
-        data.message.stays &&
-        data.message.stays.stay_details &&
-        Array.isArray(data.message.stays.stay_details)
-      ) {
-        // Transform backend response to StayOption format
-        stayOptions = data.message.stays.stay_details.map(
-          (stay: any, index: number) => ({
-            stay_id: `stay_${index}`,
+        // Transform utility response (direct array after unwrapping in proxy)
+        if (Array.isArray(utilityData)) {
+          utilityStayOptions = utilityData.map((stay: any, index: number) => ({
+            stay_id: `utility_stay_${index}`,
             property_name: stay.property_name,
-            property_address: stay.property_address,
-            property_location: data.message.stays.city,
-            city: data.message.stays.city,
-            state: data.message.stays.state,
-            country: data.message.stays.country,
-            overall_rating: parseFloat(stay.overall_rating),
-            starting_price: stay.price,
-            currency: "INR",
-            available_rooms_total: parseInt(stay.available_rooms_total),
+            property_address: stay.property_address || stay.property_name,
+            property_location: stay.property_location || stay.city,
+            city: stay.city,
+            state: stay.state,
+            country: stay.country,
+            overall_rating: parseFloat(stay.overall_rating || 0),
+            starting_price: stay.starting_price, // Already formatted by proxy
+            currency: stay.currency || "INR",
+            available_rooms_total: parseInt(stay.available_rooms_total || 0),
             available_from_date: stay.available_from_date,
             available_until_date: stay.available_until_date,
-          })
-        );
+          }));
+        }
+      } else if (utilityResponse.status === "rejected") {
+        console.error("Utility stay API error:", utilityResponse.reason);
       }
 
-      console.log("Parsed stay options:", stayOptions);
-      setSearchResults(stayOptions);
+      console.log("Parsed stay options:", {
+        aiStays: aiStayOptions.length,
+        utilityStays: utilityStayOptions.length,
+      });
+
+      setSearchResults(aiStayOptions);
+      setUtilityStays(utilityStayOptions);
       setShowResults(true);
       setIsLoadingComplete(true);
     } catch (error) {
@@ -820,10 +888,11 @@ export default function StaysWidget({
 
   const handleBooking = (stayId: string) => {
     setBookedOption(stayId);
-    
-    // Find the selected stay from search results
-    const selectedStay = searchResults.find(stay => stay.stay_id === stayId);
-    
+
+    // Find the selected stay from both AI recommendations and utility stays
+    const selectedStay = searchResults.find(stay => stay.stay_id === stayId) ||
+                         utilityStays.find(stay => stay.stay_id === stayId);
+
     if (selectedStay) {
       setSelectedStayData(selectedStay);
       console.log("✅ Selected stay data:", selectedStay);
@@ -977,15 +1046,8 @@ export default function StaysWidget({
         {/* Results Section */}
         {(showResults || isLoading) && (
           <div className="space-y-4 relative z-10">
-            {/* AI Recommendations Box with Glow Border */}
-            <GlowBorder
-              glowColors={["#9333ea", "#7c3aed", "#6d28d9", "#5b21b6", "#9333ea"]}
-              glowSize="1.2rem"
-              glowIntensity="0.15"
-              borderWidth="3px"
-              className="rounded-2xl"
-            >
-              <div className="relative bg-white/90 backdrop-blur-md rounded-2xl shadow-xl overflow-hidden">
+            {/* AI Recommendations Box */}
+            <div className="relative bg-white/90 backdrop-blur-md rounded-2xl shadow-xl overflow-hidden border border-gray-200/40">
                 {/* Header */}
                 <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 p-3 border-b border-gray-200/30">
                   <div className="flex items-center gap-3">
@@ -1048,8 +1110,41 @@ export default function StaysWidget({
                     </div>
                   )}
                 </div>
+            </div>
+
+            {/* Other Stay Options Box */}
+            {utilityStays.length > 0 && (
+              <div className="relative bg-white/90 backdrop-blur-md rounded-2xl shadow-xl overflow-hidden border border-gray-200/40">
+                {/* Header */}
+                <div className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 p-3 border-b border-gray-200/30">
+                  <div className="flex items-center gap-3">
+                    <div className="w-6 h-6 rounded-full flex items-center justify-center bg-purple-500">
+                      <MdHotel className="text-white" size={14} />
+                    </div>
+                    <span className="text-sm font-semibold text-gray-800">
+                      Other Stay Options
+                    </span>
+                    <span className="ml-auto text-xs text-gray-500">
+                      {utilityStays.length} available
+                    </span>
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className="p-3 max-h-[500px] overflow-y-auto">
+                  <div className="space-y-3">
+                    {utilityStays.map((stay) => (
+                      <StayCard
+                        key={stay.stay_id}
+                        stay={stay}
+                        isBooked={bookedOption === stay.stay_id}
+                        onBook={handleBooking}
+                      />
+                    ))}
+                  </div>
+                </div>
               </div>
-            </GlowBorder>
+            )}
           </div>
         )}
       </div>

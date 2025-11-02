@@ -1,21 +1,5495 @@
 {
-    "source":"destination A",
-    "destination":"destination B",
-    "preferred_start_date":"2025-01-01",
-    "preferred_end_date":"2025-01-03"
+    "status": "success",
+    "response": [
+        {
+            "flight_id": "AI819",
+            "airline": "AirAsia India",
+            "flight_number": "AI819",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-01",
+            "departure_time": "10:52",
+            "arrival_date": "2025-12-01",
+            "arrival_time": "14:43",
+            "duration": "3h 51m",
+            "price": {
+                "economy": 18353,
+                "business": 33035,
+                "first": 55059
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI720",
+            "airline": "AirAsia India",
+            "flight_number": "AI720",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-01",
+            "departure_time": "17:23",
+            "arrival_date": "2025-12-01",
+            "arrival_time": "21:21",
+            "duration": "3h 58m",
+            "price": {
+                "economy": 16407,
+                "business": 29532,
+                "first": 49221
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "GO538",
+            "airline": "Go First",
+            "flight_number": "GO538",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-01",
+            "departure_time": "18:30",
+            "arrival_date": "2025-12-01",
+            "arrival_time": "23:07",
+            "duration": "4h 37m",
+            "price": {
+                "economy": 18813,
+                "business": 33863,
+                "first": 56439
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AK773",
+            "airline": "Akasa Air",
+            "flight_number": "AK773",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-01",
+            "departure_time": "16:51",
+            "arrival_date": "2025-12-01",
+            "arrival_time": "20:45",
+            "duration": "3h 54m",
+            "price": {
+                "economy": 14274,
+                "business": 25693,
+                "first": 42822
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI219",
+            "airline": "AirAsia India",
+            "flight_number": "AI219",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-02",
+            "departure_time": "09:22",
+            "arrival_date": "2025-12-02",
+            "arrival_time": "12:00",
+            "duration": "2h 38m",
+            "price": {
+                "economy": 12978,
+                "business": 23360,
+                "first": 38934
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN419",
+            "airline": "IndiGo",
+            "flight_number": "IN419",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-02",
+            "departure_time": "01:38",
+            "arrival_date": "2025-12-02",
+            "arrival_time": "05:46",
+            "duration": "4h 8m",
+            "price": {
+                "economy": 24628,
+                "business": 44330,
+                "first": 73884
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN540",
+            "airline": "IndiGo",
+            "flight_number": "IN540",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-02",
+            "departure_time": "09:34",
+            "arrival_date": "2025-12-02",
+            "arrival_time": "14:06",
+            "duration": "4h 32m",
+            "price": {
+                "economy": 13664,
+                "business": 24595,
+                "first": 40992
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI713",
+            "airline": "Air India",
+            "flight_number": "AI713",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-03",
+            "departure_time": "02:32",
+            "arrival_date": "2025-12-03",
+            "arrival_time": "06:15",
+            "duration": "3h 43m",
+            "price": {
+                "economy": 13756,
+                "business": 24760,
+                "first": 41268
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI505",
+            "airline": "Air India",
+            "flight_number": "AI505",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-03",
+            "departure_time": "06:01",
+            "arrival_date": "2025-12-03",
+            "arrival_time": "10:08",
+            "duration": "4h 7m",
+            "price": {
+                "economy": 24710,
+                "business": 44478,
+                "first": 74130
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI651",
+            "airline": "AirAsia India",
+            "flight_number": "AI651",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-04",
+            "departure_time": "07:46",
+            "arrival_date": "2025-12-04",
+            "arrival_time": "11:14",
+            "duration": "3h 28m",
+            "price": {
+                "economy": 20834,
+                "business": 37501,
+                "first": 62502
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI740",
+            "airline": "Air India",
+            "flight_number": "AI740",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-04",
+            "departure_time": "14:59",
+            "arrival_date": "2025-12-04",
+            "arrival_time": "16:23",
+            "duration": "1h 24m",
+            "price": {
+                "economy": 10316,
+                "business": 18568,
+                "first": 30948
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI511",
+            "airline": "Air India",
+            "flight_number": "AI511",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-04",
+            "departure_time": "05:57",
+            "arrival_date": "2025-12-04",
+            "arrival_time": "08:35",
+            "duration": "2h 38m",
+            "price": {
+                "economy": 9087,
+                "business": 16356,
+                "first": 27261
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN711",
+            "airline": "IndiGo",
+            "flight_number": "IN711",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-04",
+            "departure_time": "01:50",
+            "arrival_date": "2025-12-04",
+            "arrival_time": "03:01",
+            "duration": "1h 11m",
+            "price": {
+                "economy": 24369,
+                "business": 43864,
+                "first": 73107
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "GO924",
+            "airline": "Go First",
+            "flight_number": "GO924",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-04",
+            "departure_time": "11:39",
+            "arrival_date": "2025-12-04",
+            "arrival_time": "15:16",
+            "duration": "3h 37m",
+            "price": {
+                "economy": 3898,
+                "business": 7016,
+                "first": 11694
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI532",
+            "airline": "Air India",
+            "flight_number": "AI532",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-04",
+            "departure_time": "05:29",
+            "arrival_date": "2025-12-04",
+            "arrival_time": "06:58",
+            "duration": "1h 29m",
+            "price": {
+                "economy": 13250,
+                "business": 23850,
+                "first": 39750
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "VI767",
+            "airline": "Vistara",
+            "flight_number": "VI767",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-05",
+            "departure_time": "20:09",
+            "arrival_date": "2025-12-06",
+            "arrival_time": "01:08",
+            "duration": "4h 59m",
+            "price": {
+                "economy": 17390,
+                "business": 31302,
+                "first": 52170
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "GO674",
+            "airline": "Go First",
+            "flight_number": "GO674",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-05",
+            "departure_time": "10:46",
+            "arrival_date": "2025-12-05",
+            "arrival_time": "14:09",
+            "duration": "3h 23m",
+            "price": {
+                "economy": 18050,
+                "business": 32490,
+                "first": 54150
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "GO614",
+            "airline": "Go First",
+            "flight_number": "GO614",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-05",
+            "departure_time": "11:45",
+            "arrival_date": "2025-12-05",
+            "arrival_time": "15:51",
+            "duration": "4h 6m",
+            "price": {
+                "economy": 13321,
+                "business": 23977,
+                "first": 39963
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AK571",
+            "airline": "Akasa Air",
+            "flight_number": "AK571",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-05",
+            "departure_time": "08:49",
+            "arrival_date": "2025-12-05",
+            "arrival_time": "13:02",
+            "duration": "4h 13m",
+            "price": {
+                "economy": 10405,
+                "business": 18729,
+                "first": 31215
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AK742",
+            "airline": "Akasa Air",
+            "flight_number": "AK742",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-05",
+            "departure_time": "11:21",
+            "arrival_date": "2025-12-05",
+            "arrival_time": "14:11",
+            "duration": "2h 50m",
+            "price": {
+                "economy": 22360,
+                "business": 40248,
+                "first": 67080
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI960",
+            "airline": "Air India",
+            "flight_number": "AI960",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-05",
+            "departure_time": "13:07",
+            "arrival_date": "2025-12-05",
+            "arrival_time": "16:52",
+            "duration": "3h 45m",
+            "price": {
+                "economy": 8077,
+                "business": 14538,
+                "first": 24231
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AK946",
+            "airline": "Akasa Air",
+            "flight_number": "AK946",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-06",
+            "departure_time": "16:37",
+            "arrival_date": "2025-12-06",
+            "arrival_time": "20:24",
+            "duration": "3h 47m",
+            "price": {
+                "economy": 13309,
+                "business": 23956,
+                "first": 39927
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "VI281",
+            "airline": "Vistara",
+            "flight_number": "VI281",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-06",
+            "departure_time": "19:32",
+            "arrival_date": "2025-12-06",
+            "arrival_time": "23:55",
+            "duration": "4h 23m",
+            "price": {
+                "economy": 15222,
+                "business": 27399,
+                "first": 45666
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI235",
+            "airline": "Air India",
+            "flight_number": "AI235",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-06",
+            "departure_time": "04:04",
+            "arrival_date": "2025-12-06",
+            "arrival_time": "07:47",
+            "duration": "3h 43m",
+            "price": {
+                "economy": 8866,
+                "business": 15958,
+                "first": 26598
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "VI818",
+            "airline": "Vistara",
+            "flight_number": "VI818",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-06",
+            "departure_time": "08:46",
+            "arrival_date": "2025-12-06",
+            "arrival_time": "10:13",
+            "duration": "1h 27m",
+            "price": {
+                "economy": 15638,
+                "business": 28148,
+                "first": 46914
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "SP208",
+            "airline": "SpiceJet",
+            "flight_number": "SP208",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-06",
+            "departure_time": "03:57",
+            "arrival_date": "2025-12-06",
+            "arrival_time": "07:51",
+            "duration": "3h 54m",
+            "price": {
+                "economy": 10864,
+                "business": 19555,
+                "first": 32592
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "GO330",
+            "airline": "Go First",
+            "flight_number": "GO330",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-06",
+            "departure_time": "22:03",
+            "arrival_date": "2025-12-07",
+            "arrival_time": "02:01",
+            "duration": "3h 58m",
+            "price": {
+                "economy": 7465,
+                "business": 13437,
+                "first": 22395
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "VI877",
+            "airline": "Vistara",
+            "flight_number": "VI877",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-06",
+            "departure_time": "09:39",
+            "arrival_date": "2025-12-06",
+            "arrival_time": "11:29",
+            "duration": "1h 50m",
+            "price": {
+                "economy": 5679,
+                "business": 10222,
+                "first": 17037
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "GO267",
+            "airline": "Go First",
+            "flight_number": "GO267",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-06",
+            "departure_time": "00:34",
+            "arrival_date": "2025-12-06",
+            "arrival_time": "03:35",
+            "duration": "3h 1m",
+            "price": {
+                "economy": 12897,
+                "business": 23214,
+                "first": 38691
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "GO764",
+            "airline": "Go First",
+            "flight_number": "GO764",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-06",
+            "departure_time": "23:40",
+            "arrival_date": "2025-12-07",
+            "arrival_time": "01:13",
+            "duration": "1h 33m",
+            "price": {
+                "economy": 5444,
+                "business": 9799,
+                "first": 16332
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AK285",
+            "airline": "Akasa Air",
+            "flight_number": "AK285",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-07",
+            "departure_time": "10:57",
+            "arrival_date": "2025-12-07",
+            "arrival_time": "13:58",
+            "duration": "3h 1m",
+            "price": {
+                "economy": 5132,
+                "business": 9237,
+                "first": 15396
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI516",
+            "airline": "AirAsia India",
+            "flight_number": "AI516",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-07",
+            "departure_time": "22:27",
+            "arrival_date": "2025-12-08",
+            "arrival_time": "01:53",
+            "duration": "3h 26m",
+            "price": {
+                "economy": 12225,
+                "business": 22005,
+                "first": 36675
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN186",
+            "airline": "IndiGo",
+            "flight_number": "IN186",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-07",
+            "departure_time": "18:37",
+            "arrival_date": "2025-12-07",
+            "arrival_time": "23:09",
+            "duration": "4h 32m",
+            "price": {
+                "economy": 5340,
+                "business": 9612,
+                "first": 16020
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI519",
+            "airline": "Air India",
+            "flight_number": "AI519",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-07",
+            "departure_time": "00:51",
+            "arrival_date": "2025-12-07",
+            "arrival_time": "03:47",
+            "duration": "2h 56m",
+            "price": {
+                "economy": 21000,
+                "business": 37800,
+                "first": 63000
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN320",
+            "airline": "IndiGo",
+            "flight_number": "IN320",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-07",
+            "departure_time": "18:00",
+            "arrival_date": "2025-12-07",
+            "arrival_time": "20:32",
+            "duration": "2h 32m",
+            "price": {
+                "economy": 9696,
+                "business": 17452,
+                "first": 29088
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI845",
+            "airline": "Air India",
+            "flight_number": "AI845",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-07",
+            "departure_time": "02:05",
+            "arrival_date": "2025-12-07",
+            "arrival_time": "05:54",
+            "duration": "3h 49m",
+            "price": {
+                "economy": 14670,
+                "business": 26406,
+                "first": 44010
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI795",
+            "airline": "Air India",
+            "flight_number": "AI795",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-07",
+            "departure_time": "07:27",
+            "arrival_date": "2025-12-07",
+            "arrival_time": "09:09",
+            "duration": "1h 42m",
+            "price": {
+                "economy": 23970,
+                "business": 43146,
+                "first": 71910
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "SP139",
+            "airline": "SpiceJet",
+            "flight_number": "SP139",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-07",
+            "departure_time": "04:10",
+            "arrival_date": "2025-12-07",
+            "arrival_time": "07:31",
+            "duration": "3h 21m",
+            "price": {
+                "economy": 4514,
+                "business": 8125,
+                "first": 13542
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN420",
+            "airline": "IndiGo",
+            "flight_number": "IN420",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-08",
+            "departure_time": "13:03",
+            "arrival_date": "2025-12-08",
+            "arrival_time": "14:49",
+            "duration": "1h 46m",
+            "price": {
+                "economy": 12819,
+                "business": 23074,
+                "first": 38457
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI359",
+            "airline": "AirAsia India",
+            "flight_number": "AI359",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-08",
+            "departure_time": "09:35",
+            "arrival_date": "2025-12-08",
+            "arrival_time": "14:02",
+            "duration": "4h 27m",
+            "price": {
+                "economy": 11967,
+                "business": 21540,
+                "first": 35901
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "VI638",
+            "airline": "Vistara",
+            "flight_number": "VI638",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-08",
+            "departure_time": "05:11",
+            "arrival_date": "2025-12-08",
+            "arrival_time": "06:28",
+            "duration": "1h 17m",
+            "price": {
+                "economy": 9269,
+                "business": 16684,
+                "first": 27807
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "VI479",
+            "airline": "Vistara",
+            "flight_number": "VI479",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-08",
+            "departure_time": "23:49",
+            "arrival_date": "2025-12-09",
+            "arrival_time": "03:41",
+            "duration": "3h 52m",
+            "price": {
+                "economy": 10596,
+                "business": 19072,
+                "first": 31788
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI553",
+            "airline": "AirAsia India",
+            "flight_number": "AI553",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-08",
+            "departure_time": "19:05",
+            "arrival_date": "2025-12-08",
+            "arrival_time": "22:18",
+            "duration": "3h 13m",
+            "price": {
+                "economy": 19142,
+                "business": 34455,
+                "first": 57426
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI196",
+            "airline": "Air India",
+            "flight_number": "AI196",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-08",
+            "departure_time": "02:51",
+            "arrival_date": "2025-12-08",
+            "arrival_time": "05:01",
+            "duration": "2h 10m",
+            "price": {
+                "economy": 12344,
+                "business": 22219,
+                "first": 37032
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN855",
+            "airline": "IndiGo",
+            "flight_number": "IN855",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-08",
+            "departure_time": "11:33",
+            "arrival_date": "2025-12-08",
+            "arrival_time": "15:23",
+            "duration": "3h 50m",
+            "price": {
+                "economy": 23888,
+                "business": 42998,
+                "first": 71664
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN453",
+            "airline": "IndiGo",
+            "flight_number": "IN453",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-09",
+            "departure_time": "17:42",
+            "arrival_date": "2025-12-09",
+            "arrival_time": "22:33",
+            "duration": "4h 51m",
+            "price": {
+                "economy": 23512,
+                "business": 42321,
+                "first": 70536
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN197",
+            "airline": "IndiGo",
+            "flight_number": "IN197",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-09",
+            "departure_time": "19:00",
+            "arrival_date": "2025-12-09",
+            "arrival_time": "22:08",
+            "duration": "3h 8m",
+            "price": {
+                "economy": 11418,
+                "business": 20552,
+                "first": 34254
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "SP477",
+            "airline": "SpiceJet",
+            "flight_number": "SP477",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-10",
+            "departure_time": "08:11",
+            "arrival_date": "2025-12-10",
+            "arrival_time": "11:34",
+            "duration": "3h 23m",
+            "price": {
+                "economy": 5202,
+                "business": 9363,
+                "first": 15606
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "GO326",
+            "airline": "Go First",
+            "flight_number": "GO326",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-10",
+            "departure_time": "19:23",
+            "arrival_date": "2025-12-10",
+            "arrival_time": "22:21",
+            "duration": "2h 58m",
+            "price": {
+                "economy": 13641,
+                "business": 24553,
+                "first": 40923
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "VI700",
+            "airline": "Vistara",
+            "flight_number": "VI700",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-10",
+            "departure_time": "02:55",
+            "arrival_date": "2025-12-10",
+            "arrival_time": "06:30",
+            "duration": "3h 35m",
+            "price": {
+                "economy": 12371,
+                "business": 22267,
+                "first": 37113
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI416",
+            "airline": "Air India",
+            "flight_number": "AI416",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-10",
+            "departure_time": "19:11",
+            "arrival_date": "2025-12-10",
+            "arrival_time": "22:39",
+            "duration": "3h 28m",
+            "price": {
+                "economy": 12997,
+                "business": 23394,
+                "first": 38991
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "VI481",
+            "airline": "Vistara",
+            "flight_number": "VI481",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-10",
+            "departure_time": "02:17",
+            "arrival_date": "2025-12-10",
+            "arrival_time": "06:19",
+            "duration": "4h 2m",
+            "price": {
+                "economy": 14818,
+                "business": 26672,
+                "first": 44454
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "GO996",
+            "airline": "Go First",
+            "flight_number": "GO996",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-10",
+            "departure_time": "02:41",
+            "arrival_date": "2025-12-10",
+            "arrival_time": "04:55",
+            "duration": "2h 14m",
+            "price": {
+                "economy": 13882,
+                "business": 24987,
+                "first": 41646
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI618",
+            "airline": "AirAsia India",
+            "flight_number": "AI618",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-10",
+            "departure_time": "21:05",
+            "arrival_date": "2025-12-10",
+            "arrival_time": "23:44",
+            "duration": "2h 39m",
+            "price": {
+                "economy": 12365,
+                "business": 22257,
+                "first": 37095
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AK325",
+            "airline": "Akasa Air",
+            "flight_number": "AK325",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-10",
+            "departure_time": "00:15",
+            "arrival_date": "2025-12-10",
+            "arrival_time": "01:29",
+            "duration": "1h 14m",
+            "price": {
+                "economy": 18126,
+                "business": 32626,
+                "first": 54378
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AK684",
+            "airline": "Akasa Air",
+            "flight_number": "AK684",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-10",
+            "departure_time": "18:13",
+            "arrival_date": "2025-12-10",
+            "arrival_time": "19:25",
+            "duration": "1h 12m",
+            "price": {
+                "economy": 19097,
+                "business": 34374,
+                "first": 57291
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "VI440",
+            "airline": "Vistara",
+            "flight_number": "VI440",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-11",
+            "departure_time": "00:50",
+            "arrival_date": "2025-12-11",
+            "arrival_time": "04:55",
+            "duration": "4h 5m",
+            "price": {
+                "economy": 22784,
+                "business": 41011,
+                "first": 68352
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI845",
+            "airline": "Air India",
+            "flight_number": "AI845",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-12",
+            "departure_time": "22:08",
+            "arrival_date": "2025-12-13",
+            "arrival_time": "01:49",
+            "duration": "3h 41m",
+            "price": {
+                "economy": 6743,
+                "business": 12137,
+                "first": 20229
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "VI975",
+            "airline": "Vistara",
+            "flight_number": "VI975",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-12",
+            "departure_time": "12:39",
+            "arrival_date": "2025-12-12",
+            "arrival_time": "14:52",
+            "duration": "2h 13m",
+            "price": {
+                "economy": 10081,
+                "business": 18145,
+                "first": 30243
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "VI435",
+            "airline": "Vistara",
+            "flight_number": "VI435",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-12",
+            "departure_time": "01:27",
+            "arrival_date": "2025-12-12",
+            "arrival_time": "02:39",
+            "duration": "1h 12m",
+            "price": {
+                "economy": 4700,
+                "business": 8460,
+                "first": 14100
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "GO290",
+            "airline": "Go First",
+            "flight_number": "GO290",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-12",
+            "departure_time": "16:02",
+            "arrival_date": "2025-12-12",
+            "arrival_time": "19:43",
+            "duration": "3h 41m",
+            "price": {
+                "economy": 13729,
+                "business": 24712,
+                "first": 41187
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AK413",
+            "airline": "Akasa Air",
+            "flight_number": "AK413",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-12",
+            "departure_time": "01:53",
+            "arrival_date": "2025-12-12",
+            "arrival_time": "05:46",
+            "duration": "3h 53m",
+            "price": {
+                "economy": 11401,
+                "business": 20521,
+                "first": 34203
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "SP489",
+            "airline": "SpiceJet",
+            "flight_number": "SP489",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-12",
+            "departure_time": "20:23",
+            "arrival_date": "2025-12-12",
+            "arrival_time": "23:53",
+            "duration": "3h 30m",
+            "price": {
+                "economy": 5600,
+                "business": 10080,
+                "first": 16800
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "VI196",
+            "airline": "Vistara",
+            "flight_number": "VI196",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-12",
+            "departure_time": "17:40",
+            "arrival_date": "2025-12-12",
+            "arrival_time": "21:55",
+            "duration": "4h 15m",
+            "price": {
+                "economy": 6972,
+                "business": 12549,
+                "first": 20916
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "SP113",
+            "airline": "SpiceJet",
+            "flight_number": "SP113",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-12",
+            "departure_time": "08:07",
+            "arrival_date": "2025-12-12",
+            "arrival_time": "11:35",
+            "duration": "3h 28m",
+            "price": {
+                "economy": 11732,
+                "business": 21117,
+                "first": 35196
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "SP930",
+            "airline": "SpiceJet",
+            "flight_number": "SP930",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-12",
+            "departure_time": "03:17",
+            "arrival_date": "2025-12-12",
+            "arrival_time": "04:25",
+            "duration": "1h 8m",
+            "price": {
+                "economy": 6968,
+                "business": 12542,
+                "first": 20904
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN824",
+            "airline": "IndiGo",
+            "flight_number": "IN824",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-12",
+            "departure_time": "03:41",
+            "arrival_date": "2025-12-12",
+            "arrival_time": "08:26",
+            "duration": "4h 45m",
+            "price": {
+                "economy": 9590,
+                "business": 17262,
+                "first": 28770
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "GO679",
+            "airline": "Go First",
+            "flight_number": "GO679",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-13",
+            "departure_time": "22:58",
+            "arrival_date": "2025-12-14",
+            "arrival_time": "01:17",
+            "duration": "2h 19m",
+            "price": {
+                "economy": 15976,
+                "business": 28756,
+                "first": 47928
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "VI623",
+            "airline": "Vistara",
+            "flight_number": "VI623",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-13",
+            "departure_time": "13:46",
+            "arrival_date": "2025-12-13",
+            "arrival_time": "14:56",
+            "duration": "1h 10m",
+            "price": {
+                "economy": 8945,
+                "business": 16101,
+                "first": 26835
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "GO280",
+            "airline": "Go First",
+            "flight_number": "GO280",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-13",
+            "departure_time": "20:33",
+            "arrival_date": "2025-12-13",
+            "arrival_time": "22:23",
+            "duration": "1h 50m",
+            "price": {
+                "economy": 7926,
+                "business": 14266,
+                "first": 23778
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "VI227",
+            "airline": "Vistara",
+            "flight_number": "VI227",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-13",
+            "departure_time": "09:41",
+            "arrival_date": "2025-12-13",
+            "arrival_time": "10:54",
+            "duration": "1h 13m",
+            "price": {
+                "economy": 24516,
+                "business": 44128,
+                "first": 73548
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI309",
+            "airline": "Air India",
+            "flight_number": "AI309",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-13",
+            "departure_time": "21:07",
+            "arrival_date": "2025-12-14",
+            "arrival_time": "00:15",
+            "duration": "3h 8m",
+            "price": {
+                "economy": 10259,
+                "business": 18466,
+                "first": 30777
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN669",
+            "airline": "IndiGo",
+            "flight_number": "IN669",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-14",
+            "departure_time": "20:31",
+            "arrival_date": "2025-12-14",
+            "arrival_time": "22:22",
+            "duration": "1h 51m",
+            "price": {
+                "economy": 18190,
+                "business": 32742,
+                "first": 54570
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "GO637",
+            "airline": "Go First",
+            "flight_number": "GO637",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-14",
+            "departure_time": "21:27",
+            "arrival_date": "2025-12-15",
+            "arrival_time": "00:45",
+            "duration": "3h 18m",
+            "price": {
+                "economy": 24898,
+                "business": 44816,
+                "first": 74694
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "SP173",
+            "airline": "SpiceJet",
+            "flight_number": "SP173",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-14",
+            "departure_time": "05:48",
+            "arrival_date": "2025-12-14",
+            "arrival_time": "07:22",
+            "duration": "1h 34m",
+            "price": {
+                "economy": 19572,
+                "business": 35229,
+                "first": 58716
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "VI357",
+            "airline": "Vistara",
+            "flight_number": "VI357",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-14",
+            "departure_time": "05:30",
+            "arrival_date": "2025-12-14",
+            "arrival_time": "09:27",
+            "duration": "3h 57m",
+            "price": {
+                "economy": 16267,
+                "business": 29280,
+                "first": 48801
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "SP942",
+            "airline": "SpiceJet",
+            "flight_number": "SP942",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-14",
+            "departure_time": "05:27",
+            "arrival_date": "2025-12-14",
+            "arrival_time": "10:24",
+            "duration": "4h 57m",
+            "price": {
+                "economy": 8348,
+                "business": 15026,
+                "first": 25044
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "VI542",
+            "airline": "Vistara",
+            "flight_number": "VI542",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-15",
+            "departure_time": "14:45",
+            "arrival_date": "2025-12-15",
+            "arrival_time": "19:06",
+            "duration": "4h 21m",
+            "price": {
+                "economy": 23022,
+                "business": 41439,
+                "first": 69066
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "VI461",
+            "airline": "Vistara",
+            "flight_number": "VI461",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-15",
+            "departure_time": "21:35",
+            "arrival_date": "2025-12-15",
+            "arrival_time": "23:58",
+            "duration": "2h 23m",
+            "price": {
+                "economy": 20396,
+                "business": 36712,
+                "first": 61188
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN626",
+            "airline": "IndiGo",
+            "flight_number": "IN626",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-15",
+            "departure_time": "13:43",
+            "arrival_date": "2025-12-15",
+            "arrival_time": "18:26",
+            "duration": "4h 43m",
+            "price": {
+                "economy": 17710,
+                "business": 31878,
+                "first": 53130
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "VI625",
+            "airline": "Vistara",
+            "flight_number": "VI625",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-15",
+            "departure_time": "19:04",
+            "arrival_date": "2025-12-15",
+            "arrival_time": "23:35",
+            "duration": "4h 31m",
+            "price": {
+                "economy": 3755,
+                "business": 6759,
+                "first": 11265
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "VI436",
+            "airline": "Vistara",
+            "flight_number": "VI436",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-15",
+            "departure_time": "12:37",
+            "arrival_date": "2025-12-15",
+            "arrival_time": "14:30",
+            "duration": "1h 53m",
+            "price": {
+                "economy": 19125,
+                "business": 34425,
+                "first": 57375
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "VI843",
+            "airline": "Vistara",
+            "flight_number": "VI843",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-16",
+            "departure_time": "21:56",
+            "arrival_date": "2025-12-17",
+            "arrival_time": "02:35",
+            "duration": "4h 39m",
+            "price": {
+                "economy": 17841,
+                "business": 32113,
+                "first": 53523
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "GO564",
+            "airline": "Go First",
+            "flight_number": "GO564",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-16",
+            "departure_time": "13:12",
+            "arrival_date": "2025-12-16",
+            "arrival_time": "17:06",
+            "duration": "3h 54m",
+            "price": {
+                "economy": 10057,
+                "business": 18102,
+                "first": 30171
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AK751",
+            "airline": "Akasa Air",
+            "flight_number": "AK751",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-16",
+            "departure_time": "07:59",
+            "arrival_date": "2025-12-16",
+            "arrival_time": "11:25",
+            "duration": "3h 26m",
+            "price": {
+                "economy": 8537,
+                "business": 15366,
+                "first": 25611
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI456",
+            "airline": "AirAsia India",
+            "flight_number": "AI456",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-16",
+            "departure_time": "10:04",
+            "arrival_date": "2025-12-16",
+            "arrival_time": "14:06",
+            "duration": "4h 2m",
+            "price": {
+                "economy": 8755,
+                "business": 15759,
+                "first": 26265
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AK768",
+            "airline": "Akasa Air",
+            "flight_number": "AK768",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-16",
+            "departure_time": "11:22",
+            "arrival_date": "2025-12-16",
+            "arrival_time": "16:20",
+            "duration": "4h 58m",
+            "price": {
+                "economy": 14922,
+                "business": 26859,
+                "first": 44766
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AK659",
+            "airline": "Akasa Air",
+            "flight_number": "AK659",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-16",
+            "departure_time": "08:30",
+            "arrival_date": "2025-12-16",
+            "arrival_time": "10:00",
+            "duration": "1h 30m",
+            "price": {
+                "economy": 8444,
+                "business": 15199,
+                "first": 25332
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AK212",
+            "airline": "Akasa Air",
+            "flight_number": "AK212",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-16",
+            "departure_time": "22:11",
+            "arrival_date": "2025-12-17",
+            "arrival_time": "00:34",
+            "duration": "2h 23m",
+            "price": {
+                "economy": 10061,
+                "business": 18109,
+                "first": 30183
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN130",
+            "airline": "IndiGo",
+            "flight_number": "IN130",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-16",
+            "departure_time": "22:16",
+            "arrival_date": "2025-12-17",
+            "arrival_time": "02:15",
+            "duration": "3h 59m",
+            "price": {
+                "economy": 6169,
+                "business": 11104,
+                "first": 18507
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI182",
+            "airline": "AirAsia India",
+            "flight_number": "AI182",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-17",
+            "departure_time": "07:37",
+            "arrival_date": "2025-12-17",
+            "arrival_time": "09:43",
+            "duration": "2h 6m",
+            "price": {
+                "economy": 8170,
+                "business": 14706,
+                "first": 24510
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN453",
+            "airline": "IndiGo",
+            "flight_number": "IN453",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-17",
+            "departure_time": "18:45",
+            "arrival_date": "2025-12-17",
+            "arrival_time": "21:59",
+            "duration": "3h 14m",
+            "price": {
+                "economy": 4856,
+                "business": 8740,
+                "first": 14568
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI634",
+            "airline": "AirAsia India",
+            "flight_number": "AI634",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-17",
+            "departure_time": "15:22",
+            "arrival_date": "2025-12-17",
+            "arrival_time": "18:24",
+            "duration": "3h 2m",
+            "price": {
+                "economy": 17903,
+                "business": 32225,
+                "first": 53709
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "GO648",
+            "airline": "Go First",
+            "flight_number": "GO648",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-17",
+            "departure_time": "22:20",
+            "arrival_date": "2025-12-18",
+            "arrival_time": "01:40",
+            "duration": "3h 20m",
+            "price": {
+                "economy": 24165,
+                "business": 43497,
+                "first": 72495
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "SP509",
+            "airline": "SpiceJet",
+            "flight_number": "SP509",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-17",
+            "departure_time": "00:07",
+            "arrival_date": "2025-12-17",
+            "arrival_time": "04:00",
+            "duration": "3h 53m",
+            "price": {
+                "economy": 11006,
+                "business": 19810,
+                "first": 33018
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "GO939",
+            "airline": "Go First",
+            "flight_number": "GO939",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-17",
+            "departure_time": "07:35",
+            "arrival_date": "2025-12-17",
+            "arrival_time": "10:40",
+            "duration": "3h 5m",
+            "price": {
+                "economy": 16746,
+                "business": 30142,
+                "first": 50238
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN521",
+            "airline": "IndiGo",
+            "flight_number": "IN521",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-17",
+            "departure_time": "04:34",
+            "arrival_date": "2025-12-17",
+            "arrival_time": "05:41",
+            "duration": "1h 7m",
+            "price": {
+                "economy": 13902,
+                "business": 25023,
+                "first": 41706
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "SP643",
+            "airline": "SpiceJet",
+            "flight_number": "SP643",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-17",
+            "departure_time": "11:37",
+            "arrival_date": "2025-12-17",
+            "arrival_time": "16:29",
+            "duration": "4h 52m",
+            "price": {
+                "economy": 16412,
+                "business": 29541,
+                "first": 49236
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI832",
+            "airline": "AirAsia India",
+            "flight_number": "AI832",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-17",
+            "departure_time": "05:11",
+            "arrival_date": "2025-12-17",
+            "arrival_time": "10:02",
+            "duration": "4h 51m",
+            "price": {
+                "economy": 3094,
+                "business": 5569,
+                "first": 9282
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI410",
+            "airline": "AirAsia India",
+            "flight_number": "AI410",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-17",
+            "departure_time": "22:04",
+            "arrival_date": "2025-12-18",
+            "arrival_time": "00:51",
+            "duration": "2h 47m",
+            "price": {
+                "economy": 15388,
+                "business": 27698,
+                "first": 46164
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN364",
+            "airline": "IndiGo",
+            "flight_number": "IN364",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-18",
+            "departure_time": "12:22",
+            "arrival_date": "2025-12-18",
+            "arrival_time": "16:03",
+            "duration": "3h 41m",
+            "price": {
+                "economy": 12226,
+                "business": 22006,
+                "first": 36678
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN920",
+            "airline": "IndiGo",
+            "flight_number": "IN920",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-18",
+            "departure_time": "20:16",
+            "arrival_date": "2025-12-18",
+            "arrival_time": "22:51",
+            "duration": "2h 35m",
+            "price": {
+                "economy": 4262,
+                "business": 7671,
+                "first": 12786
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "SP959",
+            "airline": "SpiceJet",
+            "flight_number": "SP959",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-18",
+            "departure_time": "03:15",
+            "arrival_date": "2025-12-18",
+            "arrival_time": "07:12",
+            "duration": "3h 57m",
+            "price": {
+                "economy": 7774,
+                "business": 13993,
+                "first": 23322
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN628",
+            "airline": "IndiGo",
+            "flight_number": "IN628",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-18",
+            "departure_time": "23:02",
+            "arrival_date": "2025-12-19",
+            "arrival_time": "00:43",
+            "duration": "1h 41m",
+            "price": {
+                "economy": 22635,
+                "business": 40743,
+                "first": 67905
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN711",
+            "airline": "IndiGo",
+            "flight_number": "IN711",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-18",
+            "departure_time": "09:25",
+            "arrival_date": "2025-12-18",
+            "arrival_time": "12:30",
+            "duration": "3h 5m",
+            "price": {
+                "economy": 6289,
+                "business": 11320,
+                "first": 18867
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN260",
+            "airline": "IndiGo",
+            "flight_number": "IN260",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-18",
+            "departure_time": "21:31",
+            "arrival_date": "2025-12-18",
+            "arrival_time": "22:53",
+            "duration": "1h 22m",
+            "price": {
+                "economy": 8347,
+                "business": 15024,
+                "first": 25041
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN561",
+            "airline": "IndiGo",
+            "flight_number": "IN561",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-19",
+            "departure_time": "05:47",
+            "arrival_date": "2025-12-19",
+            "arrival_time": "08:57",
+            "duration": "3h 10m",
+            "price": {
+                "economy": 18646,
+                "business": 33562,
+                "first": 55938
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN953",
+            "airline": "IndiGo",
+            "flight_number": "IN953",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-20",
+            "departure_time": "12:14",
+            "arrival_date": "2025-12-20",
+            "arrival_time": "15:56",
+            "duration": "3h 42m",
+            "price": {
+                "economy": 23329,
+                "business": 41992,
+                "first": 69987
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "VI912",
+            "airline": "Vistara",
+            "flight_number": "VI912",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-20",
+            "departure_time": "14:53",
+            "arrival_date": "2025-12-20",
+            "arrival_time": "17:56",
+            "duration": "3h 3m",
+            "price": {
+                "economy": 21231,
+                "business": 38215,
+                "first": 63693
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "GO901",
+            "airline": "Go First",
+            "flight_number": "GO901",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-20",
+            "departure_time": "14:55",
+            "arrival_date": "2025-12-20",
+            "arrival_time": "18:36",
+            "duration": "3h 41m",
+            "price": {
+                "economy": 3431,
+                "business": 6175,
+                "first": 10293
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI103",
+            "airline": "AirAsia India",
+            "flight_number": "AI103",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-20",
+            "departure_time": "19:57",
+            "arrival_date": "2025-12-20",
+            "arrival_time": "23:20",
+            "duration": "3h 23m",
+            "price": {
+                "economy": 24725,
+                "business": 44505,
+                "first": 74175
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "VI725",
+            "airline": "Vistara",
+            "flight_number": "VI725",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-20",
+            "departure_time": "02:31",
+            "arrival_date": "2025-12-20",
+            "arrival_time": "04:04",
+            "duration": "1h 33m",
+            "price": {
+                "economy": 14993,
+                "business": 26987,
+                "first": 44979
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI265",
+            "airline": "Air India",
+            "flight_number": "AI265",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-20",
+            "departure_time": "13:46",
+            "arrival_date": "2025-12-20",
+            "arrival_time": "17:26",
+            "duration": "3h 40m",
+            "price": {
+                "economy": 4256,
+                "business": 7660,
+                "first": 12768
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "GO805",
+            "airline": "Go First",
+            "flight_number": "GO805",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-20",
+            "departure_time": "23:01",
+            "arrival_date": "2025-12-21",
+            "arrival_time": "02:36",
+            "duration": "3h 35m",
+            "price": {
+                "economy": 19546,
+                "business": 35182,
+                "first": 58638
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "SP941",
+            "airline": "SpiceJet",
+            "flight_number": "SP941",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-20",
+            "departure_time": "04:55",
+            "arrival_date": "2025-12-20",
+            "arrival_time": "06:34",
+            "duration": "1h 39m",
+            "price": {
+                "economy": 24059,
+                "business": 43306,
+                "first": 72177
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI605",
+            "airline": "AirAsia India",
+            "flight_number": "AI605",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-20",
+            "departure_time": "10:44",
+            "arrival_date": "2025-12-20",
+            "arrival_time": "15:34",
+            "duration": "4h 50m",
+            "price": {
+                "economy": 11713,
+                "business": 21083,
+                "first": 35139
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI337",
+            "airline": "AirAsia India",
+            "flight_number": "AI337",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-20",
+            "departure_time": "22:30",
+            "arrival_date": "2025-12-21",
+            "arrival_time": "02:30",
+            "duration": "4h 0m",
+            "price": {
+                "economy": 10232,
+                "business": 18417,
+                "first": 30696
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AK190",
+            "airline": "Akasa Air",
+            "flight_number": "AK190",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-21",
+            "departure_time": "16:38",
+            "arrival_date": "2025-12-21",
+            "arrival_time": "17:51",
+            "duration": "1h 13m",
+            "price": {
+                "economy": 14149,
+                "business": 25468,
+                "first": 42447
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN996",
+            "airline": "IndiGo",
+            "flight_number": "IN996",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-21",
+            "departure_time": "23:12",
+            "arrival_date": "2025-12-22",
+            "arrival_time": "03:52",
+            "duration": "4h 40m",
+            "price": {
+                "economy": 7577,
+                "business": 13638,
+                "first": 22731
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "SP446",
+            "airline": "SpiceJet",
+            "flight_number": "SP446",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-21",
+            "departure_time": "13:04",
+            "arrival_date": "2025-12-21",
+            "arrival_time": "17:50",
+            "duration": "4h 46m",
+            "price": {
+                "economy": 7534,
+                "business": 13561,
+                "first": 22602
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI937",
+            "airline": "AirAsia India",
+            "flight_number": "AI937",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-22",
+            "departure_time": "20:03",
+            "arrival_date": "2025-12-22",
+            "arrival_time": "22:25",
+            "duration": "2h 22m",
+            "price": {
+                "economy": 9733,
+                "business": 17519,
+                "first": 29199
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "SP940",
+            "airline": "SpiceJet",
+            "flight_number": "SP940",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-22",
+            "departure_time": "21:52",
+            "arrival_date": "2025-12-22",
+            "arrival_time": "23:53",
+            "duration": "2h 1m",
+            "price": {
+                "economy": 10413,
+                "business": 18743,
+                "first": 31239
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AK970",
+            "airline": "Akasa Air",
+            "flight_number": "AK970",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-22",
+            "departure_time": "05:04",
+            "arrival_date": "2025-12-22",
+            "arrival_time": "08:58",
+            "duration": "3h 54m",
+            "price": {
+                "economy": 8920,
+                "business": 16056,
+                "first": 26760
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "SP827",
+            "airline": "SpiceJet",
+            "flight_number": "SP827",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-22",
+            "departure_time": "09:40",
+            "arrival_date": "2025-12-22",
+            "arrival_time": "11:43",
+            "duration": "2h 3m",
+            "price": {
+                "economy": 19762,
+                "business": 35571,
+                "first": 59286
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "SP850",
+            "airline": "SpiceJet",
+            "flight_number": "SP850",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-22",
+            "departure_time": "09:35",
+            "arrival_date": "2025-12-22",
+            "arrival_time": "12:02",
+            "duration": "2h 27m",
+            "price": {
+                "economy": 6782,
+                "business": 12207,
+                "first": 20346
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AK790",
+            "airline": "Akasa Air",
+            "flight_number": "AK790",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-23",
+            "departure_time": "01:48",
+            "arrival_date": "2025-12-23",
+            "arrival_time": "06:48",
+            "duration": "5h 0m",
+            "price": {
+                "economy": 10577,
+                "business": 19038,
+                "first": 31731
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AK492",
+            "airline": "Akasa Air",
+            "flight_number": "AK492",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-23",
+            "departure_time": "19:07",
+            "arrival_date": "2025-12-23",
+            "arrival_time": "23:12",
+            "duration": "4h 5m",
+            "price": {
+                "economy": 12325,
+                "business": 22185,
+                "first": 36975
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN390",
+            "airline": "IndiGo",
+            "flight_number": "IN390",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-23",
+            "departure_time": "00:35",
+            "arrival_date": "2025-12-23",
+            "arrival_time": "02:03",
+            "duration": "1h 28m",
+            "price": {
+                "economy": 8503,
+                "business": 15305,
+                "first": 25509
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "VI412",
+            "airline": "Vistara",
+            "flight_number": "VI412",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-23",
+            "departure_time": "01:24",
+            "arrival_date": "2025-12-23",
+            "arrival_time": "05:27",
+            "duration": "4h 3m",
+            "price": {
+                "economy": 17324,
+                "business": 31183,
+                "first": 51972
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI120",
+            "airline": "AirAsia India",
+            "flight_number": "AI120",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-23",
+            "departure_time": "15:23",
+            "arrival_date": "2025-12-23",
+            "arrival_time": "17:32",
+            "duration": "2h 9m",
+            "price": {
+                "economy": 21512,
+                "business": 38721,
+                "first": 64536
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN126",
+            "airline": "IndiGo",
+            "flight_number": "IN126",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-23",
+            "departure_time": "15:57",
+            "arrival_date": "2025-12-23",
+            "arrival_time": "19:46",
+            "duration": "3h 49m",
+            "price": {
+                "economy": 18661,
+                "business": 33589,
+                "first": 55983
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "VI782",
+            "airline": "Vistara",
+            "flight_number": "VI782",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-23",
+            "departure_time": "06:18",
+            "arrival_date": "2025-12-23",
+            "arrival_time": "07:44",
+            "duration": "1h 26m",
+            "price": {
+                "economy": 7991,
+                "business": 14383,
+                "first": 23973
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI914",
+            "airline": "AirAsia India",
+            "flight_number": "AI914",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-23",
+            "departure_time": "07:29",
+            "arrival_date": "2025-12-23",
+            "arrival_time": "08:36",
+            "duration": "1h 7m",
+            "price": {
+                "economy": 11343,
+                "business": 20417,
+                "first": 34029
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI350",
+            "airline": "Air India",
+            "flight_number": "AI350",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-24",
+            "departure_time": "11:56",
+            "arrival_date": "2025-12-24",
+            "arrival_time": "13:17",
+            "duration": "1h 21m",
+            "price": {
+                "economy": 20471,
+                "business": 36847,
+                "first": 61413
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI606",
+            "airline": "AirAsia India",
+            "flight_number": "AI606",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-24",
+            "departure_time": "13:18",
+            "arrival_date": "2025-12-24",
+            "arrival_time": "14:49",
+            "duration": "1h 31m",
+            "price": {
+                "economy": 19867,
+                "business": 35760,
+                "first": 59601
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN348",
+            "airline": "IndiGo",
+            "flight_number": "IN348",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-25",
+            "departure_time": "15:07",
+            "arrival_date": "2025-12-25",
+            "arrival_time": "16:46",
+            "duration": "1h 39m",
+            "price": {
+                "economy": 22213,
+                "business": 39983,
+                "first": 66639
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AK831",
+            "airline": "Akasa Air",
+            "flight_number": "AK831",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-25",
+            "departure_time": "19:59",
+            "arrival_date": "2025-12-25",
+            "arrival_time": "23:41",
+            "duration": "3h 42m",
+            "price": {
+                "economy": 8173,
+                "business": 14711,
+                "first": 24519
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI780",
+            "airline": "Air India",
+            "flight_number": "AI780",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-25",
+            "departure_time": "17:36",
+            "arrival_date": "2025-12-25",
+            "arrival_time": "19:40",
+            "duration": "2h 4m",
+            "price": {
+                "economy": 20460,
+                "business": 36828,
+                "first": 61380
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI247",
+            "airline": "Air India",
+            "flight_number": "AI247",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-25",
+            "departure_time": "17:04",
+            "arrival_date": "2025-12-25",
+            "arrival_time": "19:40",
+            "duration": "2h 36m",
+            "price": {
+                "economy": 22610,
+                "business": 40698,
+                "first": 67830
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "VI536",
+            "airline": "Vistara",
+            "flight_number": "VI536",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-25",
+            "departure_time": "07:06",
+            "arrival_date": "2025-12-25",
+            "arrival_time": "11:15",
+            "duration": "4h 9m",
+            "price": {
+                "economy": 6995,
+                "business": 12591,
+                "first": 20985
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI279",
+            "airline": "AirAsia India",
+            "flight_number": "AI279",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-25",
+            "departure_time": "02:49",
+            "arrival_date": "2025-12-25",
+            "arrival_time": "07:38",
+            "duration": "4h 49m",
+            "price": {
+                "economy": 24803,
+                "business": 44645,
+                "first": 74409
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "VI286",
+            "airline": "Vistara",
+            "flight_number": "VI286",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-25",
+            "departure_time": "22:54",
+            "arrival_date": "2025-12-26",
+            "arrival_time": "03:51",
+            "duration": "4h 57m",
+            "price": {
+                "economy": 19010,
+                "business": 34218,
+                "first": 57030
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AK325",
+            "airline": "Akasa Air",
+            "flight_number": "AK325",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-25",
+            "departure_time": "14:44",
+            "arrival_date": "2025-12-25",
+            "arrival_time": "16:24",
+            "duration": "1h 40m",
+            "price": {
+                "economy": 10815,
+                "business": 19467,
+                "first": 32445
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI566",
+            "airline": "AirAsia India",
+            "flight_number": "AI566",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-25",
+            "departure_time": "16:34",
+            "arrival_date": "2025-12-25",
+            "arrival_time": "21:14",
+            "duration": "4h 40m",
+            "price": {
+                "economy": 8091,
+                "business": 14563,
+                "first": 24273
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "VI894",
+            "airline": "Vistara",
+            "flight_number": "VI894",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-25",
+            "departure_time": "16:11",
+            "arrival_date": "2025-12-25",
+            "arrival_time": "19:34",
+            "duration": "3h 23m",
+            "price": {
+                "economy": 15989,
+                "business": 28780,
+                "first": 47967
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN922",
+            "airline": "IndiGo",
+            "flight_number": "IN922",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-26",
+            "departure_time": "21:14",
+            "arrival_date": "2025-12-27",
+            "arrival_time": "01:21",
+            "duration": "4h 7m",
+            "price": {
+                "economy": 24328,
+                "business": 43790,
+                "first": 72984
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "GO147",
+            "airline": "Go First",
+            "flight_number": "GO147",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-27",
+            "departure_time": "04:55",
+            "arrival_date": "2025-12-27",
+            "arrival_time": "06:09",
+            "duration": "1h 14m",
+            "price": {
+                "economy": 11762,
+                "business": 21171,
+                "first": 35286
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "VI760",
+            "airline": "Vistara",
+            "flight_number": "VI760",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-27",
+            "departure_time": "10:56",
+            "arrival_date": "2025-12-27",
+            "arrival_time": "13:38",
+            "duration": "2h 42m",
+            "price": {
+                "economy": 4825,
+                "business": 8685,
+                "first": 14475
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AK866",
+            "airline": "Akasa Air",
+            "flight_number": "AK866",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-27",
+            "departure_time": "12:37",
+            "arrival_date": "2025-12-27",
+            "arrival_time": "17:14",
+            "duration": "4h 37m",
+            "price": {
+                "economy": 7690,
+                "business": 13842,
+                "first": 23070
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN892",
+            "airline": "IndiGo",
+            "flight_number": "IN892",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-27",
+            "departure_time": "22:14",
+            "arrival_date": "2025-12-28",
+            "arrival_time": "01:21",
+            "duration": "3h 7m",
+            "price": {
+                "economy": 10831,
+                "business": 19495,
+                "first": 32493
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "GO479",
+            "airline": "Go First",
+            "flight_number": "GO479",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-27",
+            "departure_time": "06:45",
+            "arrival_date": "2025-12-27",
+            "arrival_time": "08:15",
+            "duration": "1h 30m",
+            "price": {
+                "economy": 7220,
+                "business": 12996,
+                "first": 21660
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN117",
+            "airline": "IndiGo",
+            "flight_number": "IN117",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-27",
+            "departure_time": "06:35",
+            "arrival_date": "2025-12-27",
+            "arrival_time": "08:36",
+            "duration": "2h 1m",
+            "price": {
+                "economy": 9134,
+                "business": 16441,
+                "first": 27402
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN648",
+            "airline": "IndiGo",
+            "flight_number": "IN648",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-27",
+            "departure_time": "14:46",
+            "arrival_date": "2025-12-27",
+            "arrival_time": "16:04",
+            "duration": "1h 18m",
+            "price": {
+                "economy": 9329,
+                "business": 16792,
+                "first": 27987
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN535",
+            "airline": "IndiGo",
+            "flight_number": "IN535",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-27",
+            "departure_time": "19:48",
+            "arrival_date": "2025-12-27",
+            "arrival_time": "23:46",
+            "duration": "3h 58m",
+            "price": {
+                "economy": 18763,
+                "business": 33773,
+                "first": 56289
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "VI709",
+            "airline": "Vistara",
+            "flight_number": "VI709",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-27",
+            "departure_time": "13:09",
+            "arrival_date": "2025-12-27",
+            "arrival_time": "15:11",
+            "duration": "2h 2m",
+            "price": {
+                "economy": 17488,
+                "business": 31478,
+                "first": 52464
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI150",
+            "airline": "Air India",
+            "flight_number": "AI150",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-28",
+            "departure_time": "16:04",
+            "arrival_date": "2025-12-28",
+            "arrival_time": "20:42",
+            "duration": "4h 38m",
+            "price": {
+                "economy": 10184,
+                "business": 18331,
+                "first": 30552
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI562",
+            "airline": "Air India",
+            "flight_number": "AI562",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-28",
+            "departure_time": "06:11",
+            "arrival_date": "2025-12-28",
+            "arrival_time": "11:10",
+            "duration": "4h 59m",
+            "price": {
+                "economy": 17187,
+                "business": 30936,
+                "first": 51561
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI177",
+            "airline": "Air India",
+            "flight_number": "AI177",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-28",
+            "departure_time": "22:26",
+            "arrival_date": "2025-12-29",
+            "arrival_time": "02:41",
+            "duration": "4h 15m",
+            "price": {
+                "economy": 11454,
+                "business": 20617,
+                "first": 34362
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN472",
+            "airline": "IndiGo",
+            "flight_number": "IN472",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-28",
+            "departure_time": "12:26",
+            "arrival_date": "2025-12-28",
+            "arrival_time": "16:16",
+            "duration": "3h 50m",
+            "price": {
+                "economy": 21029,
+                "business": 37852,
+                "first": 63087
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI833",
+            "airline": "Air India",
+            "flight_number": "AI833",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-28",
+            "departure_time": "00:43",
+            "arrival_date": "2025-12-28",
+            "arrival_time": "01:44",
+            "duration": "1h 1m",
+            "price": {
+                "economy": 11056,
+                "business": 19900,
+                "first": 33168
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN410",
+            "airline": "IndiGo",
+            "flight_number": "IN410",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-28",
+            "departure_time": "19:05",
+            "arrival_date": "2025-12-28",
+            "arrival_time": "20:23",
+            "duration": "1h 18m",
+            "price": {
+                "economy": 16280,
+                "business": 29304,
+                "first": 48840
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN611",
+            "airline": "IndiGo",
+            "flight_number": "IN611",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-28",
+            "departure_time": "03:27",
+            "arrival_date": "2025-12-28",
+            "arrival_time": "07:57",
+            "duration": "4h 30m",
+            "price": {
+                "economy": 19967,
+                "business": 35940,
+                "first": 59901
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "VI447",
+            "airline": "Vistara",
+            "flight_number": "VI447",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-28",
+            "departure_time": "16:40",
+            "arrival_date": "2025-12-28",
+            "arrival_time": "17:52",
+            "duration": "1h 12m",
+            "price": {
+                "economy": 17356,
+                "business": 31240,
+                "first": 52068
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "SP597",
+            "airline": "SpiceJet",
+            "flight_number": "SP597",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-28",
+            "departure_time": "13:52",
+            "arrival_date": "2025-12-28",
+            "arrival_time": "15:21",
+            "duration": "1h 29m",
+            "price": {
+                "economy": 4696,
+                "business": 8452,
+                "first": 14088
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI288",
+            "airline": "AirAsia India",
+            "flight_number": "AI288",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-28",
+            "departure_time": "16:31",
+            "arrival_date": "2025-12-28",
+            "arrival_time": "21:23",
+            "duration": "4h 52m",
+            "price": {
+                "economy": 23757,
+                "business": 42762,
+                "first": 71271
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "GO481",
+            "airline": "Go First",
+            "flight_number": "GO481",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-29",
+            "departure_time": "00:45",
+            "arrival_date": "2025-12-29",
+            "arrival_time": "04:08",
+            "duration": "3h 23m",
+            "price": {
+                "economy": 22497,
+                "business": 40494,
+                "first": 67491
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "SP448",
+            "airline": "SpiceJet",
+            "flight_number": "SP448",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-29",
+            "departure_time": "14:45",
+            "arrival_date": "2025-12-29",
+            "arrival_time": "19:05",
+            "duration": "4h 20m",
+            "price": {
+                "economy": 19396,
+                "business": 34912,
+                "first": 58188
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AK941",
+            "airline": "Akasa Air",
+            "flight_number": "AK941",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-29",
+            "departure_time": "07:50",
+            "arrival_date": "2025-12-29",
+            "arrival_time": "09:09",
+            "duration": "1h 19m",
+            "price": {
+                "economy": 8141,
+                "business": 14653,
+                "first": 24423
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI304",
+            "airline": "AirAsia India",
+            "flight_number": "AI304",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-29",
+            "departure_time": "14:21",
+            "arrival_date": "2025-12-29",
+            "arrival_time": "16:22",
+            "duration": "2h 1m",
+            "price": {
+                "economy": 24895,
+                "business": 44811,
+                "first": 74685
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN125",
+            "airline": "IndiGo",
+            "flight_number": "IN125",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-29",
+            "departure_time": "10:26",
+            "arrival_date": "2025-12-29",
+            "arrival_time": "13:23",
+            "duration": "2h 57m",
+            "price": {
+                "economy": 11714,
+                "business": 21085,
+                "first": 35142
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI923",
+            "airline": "Air India",
+            "flight_number": "AI923",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-29",
+            "departure_time": "08:31",
+            "arrival_date": "2025-12-29",
+            "arrival_time": "13:08",
+            "duration": "4h 37m",
+            "price": {
+                "economy": 10629,
+                "business": 19132,
+                "first": 31887
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "VI798",
+            "airline": "Vistara",
+            "flight_number": "VI798",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-30",
+            "departure_time": "00:33",
+            "arrival_date": "2025-12-30",
+            "arrival_time": "03:09",
+            "duration": "2h 36m",
+            "price": {
+                "economy": 5348,
+                "business": 9626,
+                "first": 16044
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN341",
+            "airline": "IndiGo",
+            "flight_number": "IN341",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-30",
+            "departure_time": "09:07",
+            "arrival_date": "2025-12-30",
+            "arrival_time": "14:01",
+            "duration": "4h 54m",
+            "price": {
+                "economy": 5470,
+                "business": 9846,
+                "first": 16410
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AK695",
+            "airline": "Akasa Air",
+            "flight_number": "AK695",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-30",
+            "departure_time": "08:18",
+            "arrival_date": "2025-12-30",
+            "arrival_time": "09:46",
+            "duration": "1h 28m",
+            "price": {
+                "economy": 18376,
+                "business": 33076,
+                "first": 55128
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AK677",
+            "airline": "Akasa Air",
+            "flight_number": "AK677",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-30",
+            "departure_time": "04:26",
+            "arrival_date": "2025-12-30",
+            "arrival_time": "05:54",
+            "duration": "1h 28m",
+            "price": {
+                "economy": 9490,
+                "business": 17082,
+                "first": 28470
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AK836",
+            "airline": "Akasa Air",
+            "flight_number": "AK836",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-30",
+            "departure_time": "16:58",
+            "arrival_date": "2025-12-30",
+            "arrival_time": "18:03",
+            "duration": "1h 5m",
+            "price": {
+                "economy": 11845,
+                "business": 21321,
+                "first": 35535
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "VI964",
+            "airline": "Vistara",
+            "flight_number": "VI964",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-31",
+            "departure_time": "05:08",
+            "arrival_date": "2025-12-31",
+            "arrival_time": "08:51",
+            "duration": "3h 43m",
+            "price": {
+                "economy": 18648,
+                "business": 33566,
+                "first": 55944
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN228",
+            "airline": "IndiGo",
+            "flight_number": "IN228",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-31",
+            "departure_time": "09:26",
+            "arrival_date": "2025-12-31",
+            "arrival_time": "11:24",
+            "duration": "1h 58m",
+            "price": {
+                "economy": 22772,
+                "business": 40989,
+                "first": 68316
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN232",
+            "airline": "IndiGo",
+            "flight_number": "IN232",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-31",
+            "departure_time": "08:02",
+            "arrival_date": "2025-12-31",
+            "arrival_time": "11:02",
+            "duration": "3h 0m",
+            "price": {
+                "economy": 3768,
+                "business": 6782,
+                "first": 11304
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN199",
+            "airline": "IndiGo",
+            "flight_number": "IN199",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-31",
+            "departure_time": "13:18",
+            "arrival_date": "2025-12-31",
+            "arrival_time": "14:29",
+            "duration": "1h 11m",
+            "price": {
+                "economy": 7162,
+                "business": 12891,
+                "first": 21486
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "IN721",
+            "airline": "IndiGo",
+            "flight_number": "IN721",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-31",
+            "departure_time": "01:44",
+            "arrival_date": "2025-12-31",
+            "arrival_time": "06:10",
+            "duration": "4h 26m",
+            "price": {
+                "economy": 9109,
+                "business": 16396,
+                "first": 27327
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "AI956",
+            "airline": "Air India",
+            "flight_number": "AI956",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-31",
+            "departure_time": "00:09",
+            "arrival_date": "2025-12-31",
+            "arrival_time": "02:55",
+            "duration": "2h 46m",
+            "price": {
+                "economy": 3400,
+                "business": 6120,
+                "first": 10200
+            },
+            "currency": "INR"
+        },
+        {
+            "flight_id": "VI498",
+            "airline": "Vistara",
+            "flight_number": "VI498",
+            "departure_airport": {
+                "name": "Indira Gandhi International Airport",
+                "country": "India",
+                "state": "Delhi (National Capital Territory)",
+                "city": "New Delhi",
+                "code": "DEL"
+            },
+            "arrival_airport": {
+                "name": "Kempegowda International Airport",
+                "country": "India",
+                "state": "Karnataka",
+                "city": "Bangalore",
+                "code": "BLR"
+            },
+            "departure_date": "2025-12-31",
+            "departure_time": "08:47",
+            "arrival_date": "2025-12-31",
+            "arrival_time": "12:03",
+            "duration": "3h 16m",
+            "price": {
+                "economy": 21914,
+                "business": 39445,
+                "first": 65742
+            },
+            "currency": "INR"
+        }
+    ]
 }
-
-{
-    "source":"destination B",
-    "destination":"destination C",
-    "preferred_start_date":"2025-01-03",
-    "preferred_end_date":"2025-01-05"
-}
-
-{
-    "source":"destination C",
-    "destination":"destination A",
-    "preferred_start_date":"2025-01-05",
-    "preferred_end_date":"2025-01-07"
-}
-

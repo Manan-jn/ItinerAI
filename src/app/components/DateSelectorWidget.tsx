@@ -4,7 +4,9 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { FiChevronLeft, FiChevronRight, FiChevronDown } from "react-icons/fi";
 import { MdFlight, MdHotel, MdTrain } from "react-icons/md";
 import ItinerAIChatBox from "./ItinerAIChatBox";
+import ChatLoadingIndicator from "./ChatLoadingIndicator";
 import { storeSelectedDate } from "../utils/tripStorage";
+import { findPlaceByCity } from "../utils/placesData";
 import {
   fetchConveyanceData,
   fetchStayData,
@@ -110,6 +112,7 @@ export default function DateSelectorWidget({
   const [isLoadingPrices, setIsLoadingPrices] = useState(false);
   const [lastFetchedMonth, setLastFetchedMonth] = useState<string | null>(null);
   const [apiError, setApiError] = useState<string | null>(null);
+  const [isLoadingContinue, setIsLoadingContinue] = useState(false);
 
   // Conveyance type selection states
   const [selectedConveyanceTypes, setSelectedConveyanceTypes] = useState<Set<'flights' | 'trains'>>(new Set(['flights']));
@@ -353,15 +356,27 @@ export default function DateSelectorWidget({
       setApiError(null);
       const promises = [];
 
+      // Fetch country data for departure and arrival cities
+      const [departurePlace, arrivalPlace] = await Promise.all([
+        findPlaceByCity(fromCity),
+        findPlaceByCity(toCity),
+      ]);
+
+      const departureCountry = departurePlace?.country || "India";
+      const arrivalCountry = arrivalPlace?.country || "India";
+
       // Fetch flight data if flights selected and filters are valid
       if (selectedConveyanceTypes.has('flights') && hasValidFlightFilters(fromCity, toCity)) {
         promises.push(
           fetchConveyanceData({
+            user_id: userId,
             conveyance_type: 'flights',
             departure_city: fromCity,
+            departure_country: departureCountry,
             arrival_city: toCity,
-            from_date,
-            to_date,
+            arrival_country: arrivalCountry,
+            start_date: from_date,
+            end_date: to_date,
           })
         );
       } else {
@@ -372,11 +387,14 @@ export default function DateSelectorWidget({
       if (selectedConveyanceTypes.has('trains') && hasValidFlightFilters(fromCity, toCity)) {
         promises.push(
           fetchConveyanceData({
+            user_id: userId,
             conveyance_type: 'trains',
             departure_city: fromCity,
+            departure_country: departureCountry,
             arrival_city: toCity,
-            from_date,
-            to_date,
+            arrival_country: arrivalCountry,
+            start_date: from_date,
+            end_date: to_date,
           })
         );
       } else {
@@ -385,11 +403,25 @@ export default function DateSelectorWidget({
 
       // Fetch stay data if filters are valid
       if (hasValidStayFilters(toCity)) {
+        // Get place data to fetch state and country
+        const placeData = await findPlaceByCity(toCity);
+        const state = placeData?.state || "";
+        const country = placeData?.country || "India";
+
+        // Calculate duration in days
+        const fromDateObj = new Date(from_date);
+        const toDateObj = new Date(to_date);
+        const duration = Math.ceil((toDateObj.getTime() - fromDateObj.getTime()) / (1000 * 60 * 60 * 24));
+
         promises.push(
           fetchStayData({
+            user_id: userId,
             city: toCity,
-            from_date,
-            to_date,
+            state,
+            country,
+            start_check_in_date: from_date,
+            end_check_in_date: to_date,
+            duration: duration > 0 ? duration : -1,
           })
         );
       } else {
@@ -416,6 +448,13 @@ export default function DateSelectorWidget({
       setTrainData(trains);
       setStayData(stays);
 
+      // Convert hotel rating to minimum rating number for filtering
+      // "Budget" = undefined (show all), "3 Star" = 3.0, "4 Star" = 4.0, "5 Star" = 5.0, "Luxury" = 5.0
+      let minRating: number | undefined = undefined;
+      if (hotelRating === "3 Star") minRating = 3.0;
+      else if (hotelRating === "4 Star") minRating = 4.0;
+      else if (hotelRating === "5 Star" || hotelRating === "Luxury") minRating = 5.0;
+
       // Process price data for each date in the month
       const processedPrices = processPriceDataForMonth(
         flights,
@@ -424,7 +463,8 @@ export default function DateSelectorWidget({
         year,
         month,
         flightClass,
-        trainClass
+        trainClass,
+        minRating
       );
 
       console.log("Processed prices for month:", processedPrices.slice(0, 5));
@@ -437,7 +477,7 @@ export default function DateSelectorWidget({
     } finally {
       setIsLoadingPrices(false);
     }
-  }, [currentMonth, fromCity, toCity, flightClass, trainClass, selectedConveyanceTypes, lastFetchedMonth]);
+  }, [currentMonth, fromCity, toCity, flightClass, trainClass, hotelRating, selectedConveyanceTypes, lastFetchedMonth]);
 
   // Fetch price data when month or filters change
   useEffect(() => {
@@ -448,7 +488,7 @@ export default function DateSelectorWidget({
   useEffect(() => {
     setLastFetchedMonth(null);
     setPriceData([]);
-  }, [fromCity, toCity, flightClass, trainClass, selectedConveyanceTypes]);
+  }, [fromCity, toCity, flightClass, trainClass, hotelRating, selectedConveyanceTypes]);
 
   const handleDateClick = (date: Date) => {
     setSelectedDate(date);
@@ -473,6 +513,8 @@ export default function DateSelectorWidget({
       return;
     }
 
+    setIsLoadingContinue(true);
+
     try {
       // Store date in Firestore and update memory API
       if (userId && sessionId) {
@@ -490,6 +532,8 @@ export default function DateSelectorWidget({
     } catch (error) {
       console.error("Error in handleContinueClick:", error);
       alert("Failed to save date selection. Please try again.");
+    } finally {
+      setIsLoadingContinue(false);
     }
   };
 
@@ -934,14 +978,14 @@ export default function DateSelectorWidget({
             <div className="absolute bottom-4 right-4 z-20">
               <button
                 onClick={handleContinueClick}
-                disabled={!selectedDate}
+                disabled={!selectedDate || isLoadingContinue}
                 className={`px-6 py-2 rounded-lg font-semibold transition-all duration-200 ${
-                  selectedDate
+                  selectedDate && !isLoadingContinue
                     ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:shadow-lg hover:scale-105 cursor-pointer"
                     : "bg-gray-300 text-gray-500 cursor-not-allowed opacity-50"
                 }`}
               >
-                Continue
+                {isLoadingContinue ? "Saving..." : "Continue"}
               </button>
             </div>
             {/* Loading overlay */}
@@ -1229,6 +1273,18 @@ export default function DateSelectorWidget({
           </div>
         </div>
       </div>
+
+      {/* Loading Indicator for Continue Action */}
+      {isLoadingContinue && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-md flex items-center justify-center z-50">
+          <div className="flex flex-col items-center gap-4">
+            <ChatLoadingIndicator isVisible={isLoadingContinue} theme="white" />
+            <p className="text-white text-center text-sm font-medium">
+              Preparing your itinerary...
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

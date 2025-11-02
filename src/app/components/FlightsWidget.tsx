@@ -33,7 +33,6 @@ interface FlightsWidgetProps {
 type ConveyanceType = "Flight" | "Train" | "Bus";
 
 import { getPopularIndianCities, searchCities, findPlaceByCity } from "../utils/placesData";
-import GlowBorder from "./GlowBorder";
 
 // Get initial cities list - will be populated from placesData utility
 const getInitialCities = () => {
@@ -2230,15 +2229,8 @@ export default function FlightsWidget({
         {/* Results Section - Stacked Rows */}
         {(showResults || isLoading) && (
           <div className="space-y-4 relative z-10">
-            {/* AI Recommendations Box with Glow Border */}
-            <GlowBorder
-              glowColors={["#9333ea", "#7c3aed", "#6d28d9", "#5b21b6", "#9333ea"]}
-              glowSize="1.2rem"
-              glowIntensity="0.15"
-              borderWidth="3px"
-              className="rounded-2xl"
-            >
-              <div className="relative bg-white/90 backdrop-blur-md rounded-2xl shadow-xl overflow-hidden">
+            {/* AI Recommendations Box */}
+            <div className="relative bg-white/90 backdrop-blur-md rounded-2xl shadow-xl overflow-hidden border border-gray-200/40">
                 {/* Header */}
                 <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 p-3 border-b border-gray-200/30">
                   <div className="flex items-center gap-3">
@@ -2313,8 +2305,7 @@ export default function FlightsWidget({
                     </div>
                   )}
                 </div>
-              </div>
-            </GlowBorder>
+            </div>
 
             {/* Other Travel Options Box - Utility API Results */}
             {showResults && (
