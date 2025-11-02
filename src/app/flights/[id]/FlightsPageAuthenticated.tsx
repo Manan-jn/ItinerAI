@@ -13,6 +13,7 @@ import ItineraryWidget from "../../components/ItineraryWidget";
 import DateSelectorWidget from "../../components/DateSelectorWidget";
 import OnboardingModalWhite from "../../components/auth/OnboardingModalWhite";
 import ItinerAIChatBox from "../../components/ItinerAIChatBox";
+import MessageResponseOverlay from "../../components/MessageResponseOverlay";
 import { getSessionId } from "../../utils/sessionManager";
 import { updateMemoryOnSessionChange } from "../../utils/memoryApi";
 import {
@@ -121,6 +122,8 @@ export default function FlightsPageAuthenticated() {
   const [pendingConveyanceDays, setPendingConveyanceDays] = useState<
     Set<number>
   >(new Set()); // NEW: Track pending insert days
+  const [overlayMessage, setOverlayMessage] = useState<string | null>(null); // NEW: Message for overlay
+  const [showOverlay, setShowOverlay] = useState(false); // NEW: Show message overlay
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const flashcardsRef = useRef<FlashcardsWidgetRef>(null);
@@ -1976,6 +1979,13 @@ export default function FlightsPageAuthenticated() {
       let itineraryPayload = apiResponse;
       if (apiResponse.message && typeof apiResponse.message === "object") {
         itineraryPayload = apiResponse.message;
+      }
+
+      // Extract and show message in overlay if present
+      const responseMessage = itineraryPayload.message || apiResponse.message;
+      if (responseMessage && typeof responseMessage === "string" && responseMessage.trim()) {
+        setOverlayMessage(responseMessage);
+        setShowOverlay(true);
       }
 
       // Override existing itineraries with response itineraries
@@ -4063,6 +4073,12 @@ export default function FlightsPageAuthenticated() {
 
       setMessages((prev) => [...prev, assistantMessage]);
 
+      // Show message in overlay if there's content
+      if (messageContent && messageContent.trim()) {
+        setOverlayMessage(messageContent);
+        setShowOverlay(true);
+      }
+
       // Handle trip response with loader timing
       const detectedTripResponse =
         data.response_type === "trip" ||
@@ -5015,6 +5031,17 @@ export default function FlightsPageAuthenticated() {
           userId={currentUser.uid}
         />
       )}
+
+      {/* Message Response Overlay */}
+      <MessageResponseOverlay
+        message={overlayMessage}
+        isVisible={showOverlay}
+        onClose={() => {
+          setShowOverlay(false);
+          setOverlayMessage(null);
+        }}
+        autoHideDuration={8000}
+      />
     </div>
   );
 }
