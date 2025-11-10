@@ -68,7 +68,7 @@ export default function FlightsPageAuthenticated() {
   >("oneWay");
   const [travellers, setTravellers] = useState(1);
   const [travelClass, setTravelClass] = useState("Economy");
-  const [activeSection, setActiveSection] = useState<SectionType>("dashboard");
+  const [activeSection, setActiveSection] = useState<SectionType>("chat");
 
   // Auto-focus chat input when switching to chat section
   useEffect(() => {
@@ -1998,13 +1998,21 @@ export default function FlightsPageAuthenticated() {
 
       // Extract and show message in overlay if present
       const responseMessage = itineraryPayload.message || apiResponse.message;
-      if (responseMessage && typeof responseMessage === "string" && responseMessage.trim()) {
-        console.log("📨 Setting overlay message from itinerary chat:", responseMessage);
+      if (
+        responseMessage &&
+        typeof responseMessage === "string" &&
+        responseMessage.trim()
+      ) {
+        console.log(
+          "📨 Setting overlay message from itinerary chat:",
+          responseMessage
+        );
         console.log("🔍 Current context:", {
           activeSection,
           showFlashcards,
           showItinerary,
-          willShowOverlay: activeSection === "chat" && (showFlashcards || showItinerary)
+          willShowOverlay:
+            activeSection === "chat" && (showFlashcards || showItinerary),
         });
         setOverlayMessage(responseMessage);
         setShowOverlay(true);
@@ -2750,10 +2758,18 @@ export default function FlightsPageAuthenticated() {
         correctedTrip.trip_date = dateString;
 
         console.log("📋 correctedTrip before source_point update:", {
-          day1_from: correctedTrip.day_wise_plan?.[0]?.conveyance_details?.from_city,
-          day1_to: correctedTrip.day_wise_plan?.[0]?.conveyance_details?.to_city,
-          lastDay_from: correctedTrip.day_wise_plan?.[correctedTrip.day_wise_plan.length - 1]?.conveyance_details?.from_city,
-          lastDay_to: correctedTrip.day_wise_plan?.[correctedTrip.day_wise_plan.length - 1]?.conveyance_details?.to_city,
+          day1_from:
+            correctedTrip.day_wise_plan?.[0]?.conveyance_details?.from_city,
+          day1_to:
+            correctedTrip.day_wise_plan?.[0]?.conveyance_details?.to_city,
+          lastDay_from:
+            correctedTrip.day_wise_plan?.[
+              correctedTrip.day_wise_plan.length - 1
+            ]?.conveyance_details?.from_city,
+          lastDay_to:
+            correctedTrip.day_wise_plan?.[
+              correctedTrip.day_wise_plan.length - 1
+            ]?.conveyance_details?.to_city,
         });
 
         await storeSelectedTrip(userId, sessionId, correctedTrip);
@@ -2803,7 +2819,10 @@ export default function FlightsPageAuthenticated() {
 
               // Add source_point to the trip
               correctedTrip.source_point = memoryData.source_point;
-              console.log("✅ Adding source_point to correctedTrip:", correctedTrip.source_point);
+              console.log(
+                "✅ Adding source_point to correctedTrip:",
+                correctedTrip.source_point
+              );
 
               // Update ONLY Day 1's from_city and last day's to_city
               // DO NOT touch other days or other fields
@@ -2816,17 +2835,24 @@ export default function FlightsPageAuthenticated() {
                 const firstDay = correctedTrip.day_wise_plan[0];
                 if (firstDay.conveyance_details) {
                   // ONLY update from_city, preserve all other fields
-                  firstDay.conveyance_details.from_city = memoryData.source_point.place_name;
-                  console.log(`🔄 Day 1: Updated ONLY from_city to "${memoryData.source_point.place_name}"`);
-                  console.log(`   Day 1 to_city remains: "${firstDay.conveyance_details.to_city}"`);
+                  firstDay.conveyance_details.from_city =
+                    memoryData.source_point.place_name;
+                  console.log(
+                    `🔄 Day 1: Updated ONLY from_city to "${memoryData.source_point.place_name}"`
+                  );
+                  console.log(
+                    `   Day 1 to_city remains: "${firstDay.conveyance_details.to_city}"`
+                  );
                 } else {
                   // Create conveyance_details if it doesn't exist
                   firstDay.conveyance_details = {
                     from_city: memoryData.source_point.place_name,
-                    to_city: firstDay.conveyance_details?.to_city || '',
-                    is_required: true
+                    to_city: firstDay.conveyance_details?.to_city || "",
+                    is_required: true,
                   };
-                  console.log(`🔄 Day 1: Created conveyance_details with from_city "${memoryData.source_point.place_name}"`);
+                  console.log(
+                    `🔄 Day 1: Created conveyance_details with from_city "${memoryData.source_point.place_name}"`
+                  );
                 }
 
                 // UPDATE THE LAST DAY TO_CITY TO THE SOURCE POINT (return journey)
@@ -2836,17 +2862,24 @@ export default function FlightsPageAuthenticated() {
                 if (lastDay.conveyance_details) {
                   // ONLY update to_city, preserve from_city and all other fields
                   const originalFromCity = lastDay.conveyance_details.from_city;
-                  lastDay.conveyance_details.to_city = memoryData.source_point.place_name;
-                  console.log(`🔄 Day ${lastDay.day_number}: Updated ONLY to_city to "${memoryData.source_point.place_name}" (return journey)`);
-                  console.log(`   Day ${lastDay.day_number} from_city remains: "${originalFromCity}"`);
+                  lastDay.conveyance_details.to_city =
+                    memoryData.source_point.place_name;
+                  console.log(
+                    `🔄 Day ${lastDay.day_number}: Updated ONLY to_city to "${memoryData.source_point.place_name}" (return journey)`
+                  );
+                  console.log(
+                    `   Day ${lastDay.day_number} from_city remains: "${originalFromCity}"`
+                  );
                 } else {
                   // Create conveyance_details if it doesn't exist, but preserve from_city if it exists
                   lastDay.conveyance_details = {
-                    from_city: lastDay.conveyance_details?.from_city || '',
+                    from_city: lastDay.conveyance_details?.from_city || "",
                     to_city: memoryData.source_point.place_name,
-                    is_required: true
+                    is_required: true,
                   };
-                  console.log(`🔄 Day ${lastDay.day_number}: Created conveyance_details with to_city "${memoryData.source_point.place_name}"`);
+                  console.log(
+                    `🔄 Day ${lastDay.day_number}: Created conveyance_details with to_city "${memoryData.source_point.place_name}"`
+                  );
                 }
               }
 
@@ -2855,7 +2888,9 @@ export default function FlightsPageAuthenticated() {
 
               // Update local state
               setSelectedTrip(correctedTrip);
-              console.log("✅ Trip updated with source_point and conveyance details");
+              console.log(
+                "✅ Trip updated with source_point and conveyance details"
+              );
             } else {
               console.log("⚠️ No source_point in memory, using default Mumbai");
               // Default to Mumbai if no source_point
@@ -2875,18 +2910,29 @@ export default function FlightsPageAuthenticated() {
                 if (firstDay.conveyance_details) {
                   firstDay.conveyance_details.from_city = "Mumbai";
                 } else {
-                  firstDay.conveyance_details = { from_city: "Mumbai", is_required: true };
+                  firstDay.conveyance_details = {
+                    from_city: "Mumbai",
+                    is_required: true,
+                  };
                 }
 
                 // Last day to_city
-                const lastDay = correctedTrip.day_wise_plan[correctedTrip.day_wise_plan.length - 1];
+                const lastDay =
+                  correctedTrip.day_wise_plan[
+                    correctedTrip.day_wise_plan.length - 1
+                  ];
                 if (lastDay.conveyance_details) {
                   lastDay.conveyance_details.to_city = "Mumbai";
                 } else {
-                  lastDay.conveyance_details = { to_city: "Mumbai", is_required: true };
+                  lastDay.conveyance_details = {
+                    to_city: "Mumbai",
+                    is_required: true,
+                  };
                 }
 
-                console.log(`🔄 Updated first day from_city and last day to_city to Mumbai (default)`);
+                console.log(
+                  `🔄 Updated first day from_city and last day to_city to Mumbai (default)`
+                );
               }
 
               // Store updated trip with default source_point (trip_date already added above)
@@ -3012,7 +3058,9 @@ export default function FlightsPageAuthenticated() {
             if (fromCity) {
               const originalFromCity = fromCity;
               fromCity = normalizeCityNameSync(fromCity);
-              console.log(`✅ Normalized from_city: "${originalFromCity}" → "${fromCity}"`);
+              console.log(
+                `✅ Normalized from_city: "${originalFromCity}" → "${fromCity}"`
+              );
             } else {
               fromCity = "Mumbai"; // Default if empty
               console.log("🔄 Empty from_city, defaulting to Mumbai");
@@ -3021,7 +3069,9 @@ export default function FlightsPageAuthenticated() {
             if (toCity) {
               const originalToCity = toCity;
               toCity = normalizeCityNameSync(toCity);
-              console.log(`✅ Normalized to_city: "${originalToCity}" → "${toCity}"`);
+              console.log(
+                `✅ Normalized to_city: "${originalToCity}" → "${toCity}"`
+              );
             }
 
             console.log(
@@ -4171,7 +4221,10 @@ export default function FlightsPageAuthenticated() {
 
       // Show message in overlay if there's content
       if (messageContent && messageContent.trim()) {
-        console.log("📨 Setting overlay message from main chat:", messageContent);
+        console.log(
+          "📨 Setting overlay message from main chat:",
+          messageContent
+        );
         console.log("🔍 Current context:", {
           activeSection,
           showFlashcards,
@@ -4179,7 +4232,8 @@ export default function FlightsPageAuthenticated() {
           showFlights,
           showStays,
           showDateSelector,
-          willShowOverlay: activeSection === "chat" && (showFlashcards || showItinerary)
+          willShowOverlay:
+            activeSection === "chat" && (showFlashcards || showItinerary),
         });
         setOverlayMessage(messageContent);
         setShowOverlay(true);
@@ -4719,7 +4773,9 @@ export default function FlightsPageAuthenticated() {
                       onToggle={() => setShowBooking(false)}
                       itinerariesData={itinerariesGenerated}
                       tripTitle={selectedTrip?.trip_title || "My Trip"}
-                      totalDays={selectedTrip?.no_of_days || itinerariesGenerated.length}
+                      totalDays={
+                        selectedTrip?.no_of_days || itinerariesGenerated.length
+                      }
                       onContinue={handleBookingContinue}
                     />
                   </div>
@@ -4752,7 +4808,10 @@ export default function FlightsPageAuthenticated() {
                       onLocalDeleteDay={handleLocalDeleteDay}
                       onChatSubmit={handleItineraryChatSubmit}
                       allDaysGenerated={
-                        itinerariesGenerated.length === (selectedTrip?.no_of_days || selectedTrip?.day_wise_plan?.length || 0)
+                        itinerariesGenerated.length ===
+                        (selectedTrip?.no_of_days ||
+                          selectedTrip?.day_wise_plan?.length ||
+                          0)
                       }
                       onContinue={handleContinueToBooking}
                     />
@@ -5052,35 +5111,37 @@ export default function FlightsPageAuthenticated() {
                     {/* Chat Input - Fixed at bottom */}
                     <div className="flex-shrink-0 bg-gradient-to-t from-white to-blue-50/20 border-t border-blue-100 px-6 py-6 relative">
                       {/* Selected Trip Snippet */}
-                      {selectedTrip && showFlashcards && isCardManuallySelected && (
-                        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-full max-w-md px-6 z-10 animate-slideUp">
-                          <div className="p-3 bg-white border-2 border-blue-400 rounded-xl shadow-2xl backdrop-blur-lg">
-                            <div className="flex items-center justify-between">
-                              <div className="flex-1 min-w-0">
-                                <h3 className="font-semibold text-blue-900 text-xs truncate">
-                                  Selected: {selectedTrip.trip_title}
-                                </h3>
-                                <p className="text-blue-700 text-[10px]">
-                                  {selectedTrip.no_of_days} days • $
-                                  {selectedTrip.estimated_budget}
-                                </p>
+                      {selectedTrip &&
+                        showFlashcards &&
+                        isCardManuallySelected && (
+                          <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-full max-w-md px-6 z-10 animate-slideUp">
+                            <div className="p-3 bg-white border-2 border-blue-400 rounded-xl shadow-2xl backdrop-blur-lg">
+                              <div className="flex items-center justify-between">
+                                <div className="flex-1 min-w-0">
+                                  <h3 className="font-semibold text-blue-900 text-xs truncate">
+                                    Selected: {selectedTrip.trip_title}
+                                  </h3>
+                                  <p className="text-blue-700 text-[10px]">
+                                    {selectedTrip.no_of_days} days • $
+                                    {selectedTrip.estimated_budget}
+                                  </p>
+                                </div>
+                                <button
+                                  onClick={() => {
+                                    setSelectedTrip(null);
+                                    setIsCardManuallySelected(false);
+                                    if (flashcardsRef.current) {
+                                      flashcardsRef.current.clearSelection();
+                                    }
+                                  }}
+                                  className="ml-2 w-6 h-6 flex items-center justify-center text-blue-500 hover:text-blue-700 hover:bg-blue-50 rounded-full transition-all text-sm flex-shrink-0"
+                                >
+                                  ✕
+                                </button>
                               </div>
-                              <button
-                                onClick={() => {
-                                  setSelectedTrip(null);
-                                  setIsCardManuallySelected(false);
-                                  if (flashcardsRef.current) {
-                                    flashcardsRef.current.clearSelection();
-                                  }
-                                }}
-                                className="ml-2 w-6 h-6 flex items-center justify-center text-blue-500 hover:text-blue-700 hover:bg-blue-50 rounded-full transition-all text-sm flex-shrink-0"
-                              >
-                                ✕
-                              </button>
                             </div>
                           </div>
-                        </div>
-                      )}
+                        )}
 
                       <div className="max-w-4xl mx-auto">
                         <ItinerAIChatBox
@@ -5094,19 +5155,27 @@ export default function FlightsPageAuthenticated() {
                               ? "Initializing session..."
                               : testEndResponse
                               ? "🧪 TEST MODE: Next message will trigger date selector"
-                              : selectedTrip && showFlashcards && isCardManuallySelected
+                              : selectedTrip &&
+                                showFlashcards &&
+                                isCardManuallySelected
                               ? "Click send to confirm trip selection"
                               : "Ask ItinerAI"
                           }
                           disabled={
                             isInitializingSession ||
                             isLoading ||
-                            (selectedTrip && showFlashcards && isCardManuallySelected)
+                            (selectedTrip &&
+                              showFlashcards &&
+                              isCardManuallySelected)
                           }
                           isLoading={isLoading || isInitializingSession}
                           theme="default"
                           inputType="textarea"
-                          allowEmptySubmit={selectedTrip && showFlashcards && isCardManuallySelected}
+                          allowEmptySubmit={
+                            selectedTrip &&
+                            showFlashcards &&
+                            isCardManuallySelected
+                          }
                         />
                       </div>
                     </div>
@@ -5116,16 +5185,10 @@ export default function FlightsPageAuthenticated() {
             </div>
           ) : activeSection === "conveyance" ? (
             // Conveyance Tab
-            <ConveyanceTab
-              userId={currentUser?.uid}
-              sessionId={sessionId}
-            />
+            <ConveyanceTab userId={currentUser?.uid} sessionId={sessionId} />
           ) : activeSection === "stays" ? (
             // Stays Tab
-            <StaysTab
-              userId={currentUser?.uid}
-              sessionId={sessionId}
-            />
+            <StaysTab userId={currentUser?.uid} sessionId={sessionId} />
           ) : (
             // Default: Dashboard if no section matches
             <DashboardContent
@@ -5187,16 +5250,10 @@ export default function FlightsPageAuthenticated() {
       )}
 
       {/* Finalize Loader - Full Screen Overlay */}
-      <FinalizeLoader
-        showLoader={showFinalizeLoader}
-        duration={3000}
-      />
+      <FinalizeLoader showLoader={showFinalizeLoader} duration={3000} />
 
       {/* Congratulations Loader - Full Screen Overlay */}
-      <CongratulationsLoader
-        showLoader={showCongratsLoader}
-        duration={4000}
-      />
+      <CongratulationsLoader showLoader={showCongratsLoader} duration={4000} />
     </div>
   );
 }

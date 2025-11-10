@@ -46,7 +46,7 @@ export function TripMap({ places }: TripMapProps) {
       }
 
       const script = document.createElement("script");
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY}&libraries=places`;
+      script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAr_0nNM5M19yREy0C1jR1umVrsbKFZ9a4&libraries=places`;      
       script.async = true;
       script.defer = true;
       script.onload = () => {

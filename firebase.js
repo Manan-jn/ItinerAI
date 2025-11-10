@@ -10,7 +10,7 @@ const firebaseConfig = {
   projectId: "itinerai-41751",
   storageBucket: "itinerai-41751.firebasestorage.app",
   messagingSenderId: "274602328761",
-  appId: "1:274602328761:web:fd07b47902535955e75168",
+  appId: "1:274602328761:web:965a63d7501d09ebe75168",
 };
 
 // Initialize Firebase

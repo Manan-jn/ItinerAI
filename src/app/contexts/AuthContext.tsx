@@ -11,7 +11,7 @@ import {
   onAuthStateChanged,
   updateProfile,
 } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, googleProvider, db } from "../../../firebase";
 
 interface AuthContextType {
@@ -19,6 +19,7 @@ interface AuthContextType {
   loading: boolean;
   showOnboarding: boolean;
   setShowOnboarding: (show: boolean) => void;
+  isGuest: boolean;
   signup: (
     email: string,
     password: string,
@@ -26,6 +27,7 @@ interface AuthContextType {
   ) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
   loginWithGoogle: () => Promise<void>;
+  continueAsGuest: () => Promise<void>;
   logout: () => Promise<void>;
   checkUserOnboardingStatus: (userId: string) => Promise<boolean>;
 }
@@ -48,6 +50,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const [isGuest, setIsGuest] = useState(false);
   const router = useRouter();
 
   // Check if user has completed onboarding
@@ -107,28 +110,106 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   async function logout() {
+    // Clear guest session if present
+    if (typeof window !== "undefined") {
+      const storedGuest = localStorage.getItem("guestUser");
+      if (storedGuest) {
+        localStorage.removeItem("guestUser");
+        setIsGuest(false);
+      }
+    }
+
     await signOut(auth);
     // Redirect to flights page after logout without any query parameters
     router.replace("/flights");
   }
 
   useEffect(() => {
+    // If a guest session exists, prefer it over Firebase auth
+    if (typeof window !== "undefined") {
+      const storedGuest = localStorage.getItem("guestUser");
+      if (storedGuest) {
+        try {
+          const parsed = JSON.parse(storedGuest);
+          setCurrentUser(parsed as User);
+          setIsGuest(true);
+          setLoading(false);
+          return;
+        } catch (e) {
+          // Fallback to normal auth flow
+          localStorage.removeItem("guestUser");
+        }
+      }
+    }
+
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
+      setIsGuest(false);
       setLoading(false);
     });
 
     return unsubscribe;
   }, []);
 
+  async function continueAsGuest() {
+    // Generate a random UID and set minimal user fields used by the app
+    const uid =
+      typeof crypto !== "undefined" && "randomUUID" in crypto
+        ? (crypto.randomUUID() as string)
+        : `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+
+    const guestUserMinimal = {
+      uid,
+      email: null,
+      displayName: "Guest",
+      photoURL: null,
+    } as unknown as User;
+
+    // Persist a users doc stub so onboarding checks and downstream Firestore work
+    try {
+      await setDoc(
+        doc(db, "users", uid),
+        {
+          onboardingCompleted: false,
+          isGuest: true,
+          createdAt: new Date().toISOString(),
+        },
+        { merge: true }
+      );
+    } catch (e) {
+      // Non-fatal; allow guest session to proceed
+      console.warn("Failed to seed guest user doc:", e);
+    }
+
+    // Persist locally and update state
+    if (typeof window !== "undefined") {
+      localStorage.setItem(
+        "guestUser",
+        JSON.stringify({
+          uid,
+          email: null,
+          displayName: "Guest",
+          photoURL: null,
+        })
+      );
+    }
+
+    setCurrentUser(guestUserMinimal);
+    setIsGuest(true);
+    // Trigger onboarding for new guest
+    setShowOnboarding(true);
+  }
+
   const value: AuthContextType = {
     currentUser,
     loading,
     showOnboarding,
     setShowOnboarding,
+    isGuest,
     signup,
     login,
     loginWithGoogle,
+    continueAsGuest,
     logout,
     checkUserOnboardingStatus,
   };

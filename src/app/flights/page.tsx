@@ -107,6 +107,11 @@ export default function FlightsPage() {
     if (!loading && currentUser && !showOnboarding) {
       router.push(`/flights/${currentUser.uid}`);
     }
+    // If user is not authenticated, ensure login modal is shown
+    if (!loading && !currentUser) {
+      setShowLoginModal(true);
+      setShowSignupModal(false);
+    }
   }, [currentUser, loading, showOnboarding, router]);
 
   const [tripType, setTripType] = useState<
@@ -114,7 +119,7 @@ export default function FlightsPage() {
   >("oneWay");
   const [travellers, setTravellers] = useState(1);
   const [travelClass, setTravelClass] = useState("Economy");
-  const [activeSection, setActiveSection] = useState<SectionType>("dashboard");
+  const [activeSection, setActiveSection] = useState<SectionType>("chat");
 
   // Auto-focus chat input when switching to chat section
   useEffect(() => {
@@ -603,6 +608,28 @@ export default function FlightsPage() {
     "Budget backpacking through Europe",
     "Family vacation ideas for summer",
   ];
+
+  // Unauthenticated view: show only fixed Login/Signup modal and nothing else
+  if (!loading && !currentUser) {
+    return (
+      <div className="h-screen w-screen bg-white">
+        <LoginModalWhite
+          isOpen={!showSignupModal}
+          onClose={() => {
+            /* keep modal fixed until auth */
+          }}
+          onSwitchToSignup={handleSwitchToSignup}
+        />
+        <SignupModalWhite
+          isOpen={showSignupModal}
+          onClose={() => {
+            /* keep modal fixed until auth */
+          }}
+          onSwitchToLogin={handleSwitchToLogin}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="h-screen bg-white flex overflow-hidden">

@@ -1,0 +1,32 @@
+{
+    "user_id": "itinerary_local_test",
+    "session_id": "7083002503964393472",
+    "message": {
+        "response_type": "travel_dates",
+        "message": "It seems you're looking for the perfect dates to embark on your 'Leh's Winter Kingdom' adventure in December! Given your solo travel style, interest in culture, spirituality, and history, and the desire to experience Leh in its winter glory, I've curated the best options for you.\n\nHere are my top recommendations for your 6-day trip in December 2025, balancing cultural immersion with the unique winter experience:",
+        "travel_dates": [
+            {
+                "start_date": "2025-12-19",
+                "reasoning": "This date is ideal as it allows you to experience the vibrant Losar Festival (Ladakhi New Year) on December 20th. This major cultural event perfectly aligns with your interests in spirituality and history, offering a unique and immersive experience of local traditions and celebrations.",
+                "tags": [
+                    "cultural festival",
+                    "winter experience",
+                    "solo travel",
+                    "spiritual",
+                    "festive"
+                ]
+            },
+            {
+                "start_date": "2025-12-13",
+                "reasoning": "Choosing December 13th lets you witness the Galdan Namchot Festival on December 14th, a beautiful 'festival of lights.' This period offers a serene winter experience with significant cultural insight, and you might find slightly more favorable flight costs compared to the Losar week.",
+                "tags": [
+                    "cultural festival",
+                    "winter experience",
+                    "solo travel",
+                    "budget-friendly",
+                    "serene"
+                ]
+            }
+        ]
+    }
+}

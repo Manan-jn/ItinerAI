@@ -137,8 +137,29 @@ export default function OnboardingModalWhite({
       // Save to Firestore with user ID as document ID
       await setDoc(doc(db, "users", userId), userData);
 
-      // Send user profile to memory API
-      const sessionId = getSessionId();
+      // Ensure a backend session exists before memory update
+      let sessionId = "";
+      try {
+        const resp = await fetch("/api/session/create", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ user_id: userId }),
+        });
+        if (resp.ok) {
+          const data = await resp.json();
+          sessionId = data.body?.session_id || "";
+          // Persist for later use in sessionManager consumers
+          if (typeof window !== "undefined" && sessionId) {
+            sessionStorage.setItem("itinerai_session_id", sessionId);
+          }
+        } else {
+          // Fallback to local generation if API fails
+          sessionId = getSessionId();
+        }
+      } catch (e) {
+        // Fallback if request failed
+        sessionId = getSessionId();
+      }
       const memoryUserData = {
         ...userData,
         displayName: currentUser?.displayName,

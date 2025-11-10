@@ -1729,12 +1729,11 @@ export default function ConveyanceTab({
       // Prepare date range (from_date and to_date as same date for single day search)
       const dateStr = departureDate; // Already in YYYY-MM-DD format
 
-      console.log("🔍 Fetching conveyance data for:", {
-        from,
-        to,
-        date: dateStr,
-        dayNumber: currentDayNumber,
-      });
+    console.log("🔍 Fetching conveyance data for:", {
+      from,
+      to,
+      date: dateStr,
+    });
 
       // Check for pre-fetched data if userId is available
       if (userId) {
