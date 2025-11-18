@@ -29,6 +29,11 @@ export function TripExpandedView({
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const [isSearching, setIsSearching] = useState(false);
 
+  // Loading state for component readiness
+  const [isLoading, setIsLoading] = useState(true);
+  const [mapReady, setMapReady] = useState(false);
+  const [imagesReady, setImagesReady] = useState(false);
+
   // Ref to track if this is the initial mount
   const isInitialMount = useRef(true);
 
@@ -37,13 +42,90 @@ export function TripExpandedView({
     // Prevent body scroll when modal is open
     document.body.style.overflow = "hidden";
 
-    // Trigger animation
-    setTimeout(() => setIsAnimatingIn(false), 50);
+    // Use requestAnimationFrame for smoother animation timing
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setIsAnimatingIn(false);
+      });
+    });
 
     return () => {
       document.body.style.overflow = "unset";
     };
   }, []);
+
+  // Mark map as ready if there's no trip_route
+  useEffect(() => {
+    if (!trip.trip_route || trip.trip_route.length === 0) {
+      setMapReady(true);
+    }
+  }, [trip.trip_route]);
+
+  // Check if all resources are ready
+  useEffect(() => {
+    // Wait for both map and images, with a minimum delay to ensure smooth appearance
+    const checkReady = () => {
+      // Map is optional (might not have trip_route), so only wait if trip_route exists
+      const mapCondition =
+        trip.trip_route && trip.trip_route.length > 0 ? mapReady : true;
+
+      if (mapCondition && imagesReady && !isClosing) {
+        // Use requestAnimationFrame for smooth transition
+        requestAnimationFrame(() => {
+          setTimeout(() => {
+            setIsLoading(false);
+          }, 200);
+        });
+      }
+    };
+
+    checkReady();
+  }, [mapReady, imagesReady, trip.trip_route, isClosing]);
+
+  // Preload the city image for the current day
+  useEffect(() => {
+    const currentDayData = tripData.day_wise_plan?.find(
+      (day) => day.day_number === selectedDay
+    );
+
+    if (!currentDayData) {
+      setImagesReady(true);
+      return;
+    }
+
+    const dayIndex =
+      tripData.day_wise_plan?.findIndex(
+        (day) => day.day_number === selectedDay
+      ) || 0;
+
+    const cityName = getCityForDay(currentDayData, dayIndex);
+    const cityImage = getCityImage(cityName);
+
+    if (!cityImage) {
+      setImagesReady(true);
+      return;
+    }
+
+    // Preload the image
+    const img = new Image();
+    img.onload = () => {
+      setImagesReady(true);
+    };
+    img.onerror = () => {
+      // Even if image fails, mark as ready to show the UI
+      setImagesReady(true);
+    };
+    img.src = cityImage;
+
+    // Timeout fallback - show UI after 2 seconds even if image hasn't loaded
+    const timeout = setTimeout(() => {
+      setImagesReady(true);
+    }, 2000);
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [selectedDay, tripData]);
 
   // Call onTripUpdate whenever tripData changes (skip initial mount)
   useEffect(() => {
@@ -61,9 +143,11 @@ export function TripExpandedView({
 
   const handleClose = () => {
     setIsClosing(true);
+    // First fade out the content
+    setIsLoading(true);
     setTimeout(() => {
       onClose();
-    }, 300); // Match animation duration
+    }, 400); // Slightly longer for smoother transition
   };
 
   // Get city for a specific day - with fallback logic
@@ -335,7 +419,10 @@ export function TripExpandedView({
         {/* Left Side: Map */}
         <div className="trip-expanded-map">
           {trip.trip_route && trip.trip_route.length > 0 ? (
-            <TripMap places={trip.trip_route} />
+            <TripMap
+              places={trip.trip_route}
+              onMapReady={() => setMapReady(true)}
+            />
           ) : (
             <div className="map-placeholder">MAP</div>
           )}
@@ -635,6 +722,16 @@ export function TripExpandedView({
             ) : null}
           </div>
         </div>
+
+        {/* Loading Overlay */}
+        {isLoading && (
+          <div className="trip-loading-overlay">
+            <div className="loader-container">
+              <div className="loader-spinner"></div>
+              <p className="loader-text">Loading trip details...</p>
+            </div>
+          </div>
+        )}
       </div>
 
       <style jsx>{`
@@ -649,37 +746,43 @@ export function TripExpandedView({
           align-items: stretch;
           justify-content: stretch;
           overflow: hidden;
-          animation: modalFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-          transition: left 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+          transition: left 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+          will-change: opacity, transform;
+          transform: translateZ(0);
         }
 
         .trip-expanded-view.animating-in {
           opacity: 0;
+          transform: translateZ(0) scale(0.98) translateY(10px);
+        }
+
+        .trip-expanded-view:not(.animating-in):not(.closing) {
+          animation: modalFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         .trip-expanded-view.closing {
-          animation: modalFadeOut 0.3s cubic-bezier(0.4, 0, 1, 1) forwards;
+          animation: modalFadeOut 0.35s cubic-bezier(0.4, 0, 0.6, 1) forwards;
         }
 
         @keyframes modalFadeIn {
           from {
             opacity: 0;
-            transform: scale(0.96);
+            transform: translateZ(0) scale(0.98) translateY(10px);
           }
           to {
             opacity: 1;
-            transform: scale(1);
+            transform: translateZ(0) scale(1) translateY(0);
           }
         }
 
         @keyframes modalFadeOut {
           from {
             opacity: 1;
-            transform: scale(1);
+            transform: translateZ(0) scale(1) translateY(0);
           }
           to {
             opacity: 0;
-            transform: scale(0.96);
+            transform: translateZ(0) scale(0.98) translateY(10px);
           }
         }
 
@@ -704,8 +807,10 @@ export function TripExpandedView({
               rgba(240, 249, 255, 0.7) 75%,
               rgba(255, 255, 255, 0.6) 100%
             );
-          backdrop-filter: blur(40px);
-          -webkit-backdrop-filter: blur(40px);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          will-change: transform;
+          transform: translateZ(0);
         }
 
         .trip-expanded-container {
@@ -731,12 +836,15 @@ export function TripExpandedView({
               rgba(240, 249, 255, 0.35) 50%,
               rgba(224, 242, 254, 0.3) 100%
             );
-          backdrop-filter: blur(30px);
-          -webkit-backdrop-filter: blur(30px);
+          backdrop-filter: blur(15px);
+          -webkit-backdrop-filter: blur(15px);
           border: 2px solid rgba(59, 130, 246, 0.15);
           overflow: hidden;
           box-shadow: 0 20px 60px rgba(59, 130, 246, 0.12),
             0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+          will-change: transform, opacity;
+          transform: translateZ(0);
+          transition: opacity 0.2s ease-out;
         }
 
         .trip-expanded-close {
@@ -752,14 +860,22 @@ export function TripExpandedView({
           align-items: center;
           justify-content: center;
           cursor: pointer;
-          transition: all 0.2s ease;
+          transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+            border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+            box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
           z-index: 10;
+          will-change: transform;
+          transform: translateZ(0);
         }
 
         .trip-expanded-close:hover {
-          background: rgba(255, 255, 255, 1);
           border-color: rgba(59, 130, 246, 0.5);
-          transform: scale(1.05);
+          transform: translateZ(0) scale(1.08);
+          box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
+        }
+
+        .trip-expanded-close:active {
+          transform: translateZ(0) scale(1.02);
         }
 
         .trip-expanded-close svg {
@@ -822,6 +938,9 @@ export function TripExpandedView({
           gap: 24px;
           min-height: 0;
           height: 100%;
+          -webkit-overflow-scrolling: touch;
+          will-change: scroll-position;
+          transform: translateZ(0);
         }
 
         /* Custom Scrollbar */
@@ -868,8 +987,8 @@ export function TripExpandedView({
             );
           border: 1px solid rgba(59, 130, 246, 0.2);
           border-radius: 16px;
-          backdrop-filter: blur(20px) saturate(160%);
-          -webkit-backdrop-filter: blur(20px) saturate(160%);
+          backdrop-filter: blur(10px) saturate(140%);
+          -webkit-backdrop-filter: blur(10px) saturate(140%);
           box-shadow: 0 4px 20px rgba(59, 130, 246, 0.1),
             inset 0 1px 0 rgba(255, 255, 255, 0.5),
             0 1px 2px rgba(0, 0, 0, 0.03);
@@ -945,8 +1064,8 @@ export function TripExpandedView({
           border: 1px solid rgba(59, 130, 246, 0.2);
           border-radius: 10px;
           min-width: 110px;
-          backdrop-filter: blur(12px) saturate(140%);
-          -webkit-backdrop-filter: blur(12px) saturate(140%);
+          backdrop-filter: blur(8px) saturate(130%);
+          -webkit-backdrop-filter: blur(8px) saturate(130%);
           box-shadow: 0 2px 8px rgba(59, 130, 246, 0.06),
             inset 0 1px 0 rgba(255, 255, 255, 0.3);
           transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1027,8 +1146,8 @@ export function TripExpandedView({
           font-weight: 600;
           color: #1e40af;
           letter-spacing: 0.01em;
-          backdrop-filter: blur(10px) saturate(140%);
-          -webkit-backdrop-filter: blur(10px) saturate(140%);
+          backdrop-filter: blur(6px) saturate(130%);
+          -webkit-backdrop-filter: blur(6px) saturate(130%);
           box-shadow: 0 2px 6px rgba(59, 130, 246, 0.08),
             inset 0 1px 0 rgba(255, 255, 255, 0.3);
           transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1097,14 +1216,16 @@ export function TripExpandedView({
           font-weight: 700;
           color: #64748b;
           cursor: pointer;
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
           white-space: nowrap;
-          backdrop-filter: blur(12px) saturate(150%);
-          -webkit-backdrop-filter: blur(12px) saturate(150%);
+          backdrop-filter: blur(8px) saturate(140%);
+          -webkit-backdrop-filter: blur(8px) saturate(140%);
           box-shadow: 0 2px 8px rgba(59, 130, 246, 0.06),
             inset 0 1px 0 rgba(255, 255, 255, 0.4);
           min-height: 44px;
           text-align: center;
+          will-change: transform, box-shadow;
+          transform: translateZ(0);
         }
 
         .day-tab:hover {
@@ -1143,17 +1264,18 @@ export function TripExpandedView({
           display: flex;
           flex-direction: column;
           gap: 20px;
-          animation: fadeInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          animation: fadeInUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          will-change: opacity, transform;
         }
 
         @keyframes fadeInUp {
           from {
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(15px) scale(0.98);
           }
           to {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
           }
         }
 
@@ -1170,7 +1292,9 @@ export function TripExpandedView({
           );
           border: 2px solid rgba(59, 130, 246, 0.2);
           border-radius: 12px;
-          backdrop-filter: blur(10px);
+          backdrop-filter: blur(6px);
+          will-change: transform;
+          transform: translateZ(0);
         }
 
         .city-name-badge {
@@ -1250,7 +1374,9 @@ export function TripExpandedView({
           );
           border: 2px solid rgba(59, 130, 246, 0.15);
           border-radius: 12px;
-          backdrop-filter: blur(10px);
+          backdrop-filter: blur(6px);
+          will-change: transform;
+          transform: translateZ(0);
         }
 
         .activities-title {
@@ -1316,19 +1442,18 @@ export function TripExpandedView({
           border: 2px solid rgba(59, 130, 246, 0.2);
           border-radius: 12px;
           margin-bottom: 16px;
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+            box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+            border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+          will-change: transform;
+          transform: translateZ(0);
         }
 
         .activity-content-card:hover {
-          background: linear-gradient(
-            135deg,
-            rgba(255, 255, 255, 0.85) 0%,
-            rgba(255, 255, 255, 0.65) 100%
-          );
           border-color: rgba(59, 130, 246, 0.35);
           box-shadow: 0 4px 16px rgba(59, 130, 246, 0.15);
-          transform: translateX(4px);
+          transform: translateZ(0) translateX(4px);
         }
 
         .activity-card-header {
@@ -1514,13 +1639,16 @@ export function TripExpandedView({
           border: 2px solid rgba(59, 130, 246, 0.15);
           border-radius: 10px;
           cursor: pointer;
-          transition: all 0.2s ease;
+          transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+            box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+            border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+          will-change: transform;
+          transform: translateZ(0);
         }
 
         .search-result-item:hover {
-          background: rgba(255, 255, 255, 0.9);
           border-color: rgba(59, 130, 246, 0.35);
-          transform: translateX(4px);
+          transform: translateZ(0) translateX(4px);
           box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
         }
 
@@ -1590,6 +1718,94 @@ export function TripExpandedView({
         .search-empty-hint {
           font-size: 12px;
           color: #94a3b8;
+        }
+
+        /* Loading Overlay */
+        .trip-loading-overlay {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.98) 0%,
+            rgba(240, 249, 255, 0.98) 100%
+          );
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 100;
+          animation: loaderFadeIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+          will-change: opacity;
+        }
+
+        @keyframes loaderFadeIn {
+          from {
+            opacity: 0;
+            backdrop-filter: blur(0px);
+            -webkit-backdrop-filter: blur(0px);
+          }
+          to {
+            opacity: 1;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+          }
+        }
+
+        .loader-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 20px;
+          animation: loaderContentFadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.1s
+            both;
+        }
+
+        @keyframes loaderContentFadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(-10px) scale(0.95);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+
+        .loader-spinner {
+          width: 48px;
+          height: 48px;
+          border: 4px solid rgba(59, 130, 246, 0.15);
+          border-top-color: #3b82f6;
+          border-right-color: #60a5fa;
+          border-radius: 50%;
+          animation: spin 0.7s cubic-bezier(0.4, 0.15, 0.6, 0.85) infinite;
+          box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.08);
+        }
+
+        @keyframes spin {
+          to {
+            transform: rotate(360deg);
+          }
+        }
+
+        .loader-text {
+          font-size: 14px;
+          font-weight: 600;
+          color: #1e40af;
+          margin: 0;
+          letter-spacing: 0.02em;
+          animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+          0%,
+          100% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0.7;
+          }
         }
 
         /* Responsive Design */

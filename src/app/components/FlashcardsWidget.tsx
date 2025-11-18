@@ -731,7 +731,7 @@ const FlashcardsWidget = forwardRef<FlashcardsWidgetRef, FlashcardsWidgetProps>(
         <div className={`flashcards-widget ${isAppearing ? "appear" : ""}`}>
           <div className="flashcards-header">
             <div className="header-content">
-              <h3>Discover Amazing Trips</h3>
+              <h3>Discover Amazing Trip Ideas</h3>
             </div>
             <button
               onClick={onToggle}

@@ -11,9 +11,10 @@ interface Place {
 
 interface TripMapProps {
   places: Place[];
+  onMapReady?: () => void;
 }
 
-export function TripMap({ places }: TripMapProps) {
+export function TripMap({ places, onMapReady }: TripMapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
   const [mapLoaded, setMapLoaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -278,9 +279,21 @@ export function TripMap({ places }: TripMapProps) {
         // Add some padding
         const padding = { top: 50, right: 50, bottom: 50, left: 50 };
         map.fitBounds(bounds, padding);
+
+        // Notify parent that map is ready
+        if (onMapReady) {
+          // Wait a bit for tiles to load
+          setTimeout(() => {
+            onMapReady();
+          }, 500);
+        }
       } catch (err) {
         console.error("Error initializing map:", err);
         setError("Failed to initialize map");
+        // Still call onMapReady even on error so we don't block the UI
+        if (onMapReady) {
+          onMapReady();
+        }
       }
     };
 
