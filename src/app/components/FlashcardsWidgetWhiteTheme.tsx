@@ -42,13 +42,13 @@ const FlashcardsWidgetWhiteTheme = forwardRef<
 
         .flashcards-white-theme .flashcards-container {
           flex: 1;
-          min-height: 350px;
+          min-height: min(350px, 40vh);
           max-height: 100%;
           border-radius: 8px;
           overflow: visible;
           position: relative;
           margin: 0;
-          padding: 0 0 50px 0;
+          padding: 0 0 clamp(30px, 5vh, 50px) 0;
           contain: layout style;
           display: flex;
           align-items: center;
@@ -90,8 +90,8 @@ const FlashcardsWidgetWhiteTheme = forwardRef<
         }
 
         .flashcards-white-theme .flashcard-slide.inactive {
-          width: 250px;
-          height: 350px;
+          width: min(250px, 18vw);
+          height: min(350px, 45vh);
         }
 
         /* Ensure flashcard wrapper has proper positioning for tick button */
@@ -108,8 +108,8 @@ const FlashcardsWidgetWhiteTheme = forwardRef<
           border-color: rgba(59, 130, 246, 0.4);
           box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15),
             0 0 0 2px rgba(59, 130, 246, 0.3);
-          width: 320px;
-          height: 400px;
+          width: min(320px, 24vw);
+          height: min(400px, 55vh);
         }
 
         .flashcards-white-theme .flashcard-slide.active:hover {
@@ -132,21 +132,21 @@ const FlashcardsWidgetWhiteTheme = forwardRef<
 
         .flashcards-white-theme .trip-name {
           color: #ffffff !important;
-          text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7) !important;
-          font-weight: 700 !important;
+          text-shadow: 0 3px 12px rgba(0, 0, 0, 0.9), 0 1px 3px rgba(0, 0, 0, 0.8) !important;
+          font-weight: 800 !important;
           letter-spacing: -0.02em;
         }
 
         .flashcards-white-theme .info-label {
-          color: #1e293b;
-          font-weight: 700;
-          text-shadow: none;
+          color: rgba(255, 255, 255, 0.9) !important;
+          font-weight: 600;
+          text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8) !important;
         }
 
         .flashcards-white-theme .info-value {
-          color: #0f172a;
+          color: #ffffff !important;
           font-weight: 800;
-          text-shadow: none;
+          text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8) !important;
         }
 
         .flashcards-white-theme .theme-tag {
@@ -240,34 +240,31 @@ const FlashcardsWidgetWhiteTheme = forwardRef<
         }
 
         .flashcards-white-theme .info-card {
-          background: rgba(255, 255, 255, 0.95);
-          border: 1px solid rgba(59, 130, 246, 0.25);
-          backdrop-filter: blur(12px);
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+          background: transparent;
+          border: none;
+          backdrop-filter: none;
+          box-shadow: none;
         }
 
         .flashcards-white-theme .info-card:hover {
-          background: rgba(255, 255, 255, 1);
-          border-color: rgba(59, 130, 246, 0.35);
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-        }
-
-        .flashcards-white-theme .info-card * {
-          text-shadow: none !important;
+          background: transparent;
+          border: none;
+          box-shadow: none;
         }
 
         .flashcards-white-theme .info-icon {
-          background: rgba(59, 130, 246, 0.2);
-          color: #1e40af;
+          background: transparent;
+          color: rgba(255, 255, 255, 0.95);
         }
 
         .flashcards-white-theme .slide-overlay {
           background: linear-gradient(
             180deg,
-            rgba(255, 255, 255, 0.2) 0%,
-            rgba(255, 255, 255, 0.05) 30%,
-            rgba(255, 255, 255, 0.05) 70%,
-            rgba(0, 0, 0, 0.75) 100%
+            rgba(0, 0, 0, 0.6) 0%,
+            rgba(0, 0, 0, 0.3) 20%,
+            rgba(0, 0, 0, 0.2) 40%,
+            rgba(0, 0, 0, 0.3) 60%,
+            rgba(0, 0, 0, 0.85) 100%
           );
           transition: background 0.3s ease;
         }
@@ -275,10 +272,11 @@ const FlashcardsWidgetWhiteTheme = forwardRef<
         .flashcards-white-theme .flashcard-slide:hover .slide-overlay {
           background: linear-gradient(
             180deg,
-            rgba(255, 255, 255, 0.25) 0%,
-            rgba(255, 255, 255, 0.1) 30%,
-            rgba(255, 255, 255, 0.1) 70%,
-            rgba(0, 0, 0, 0.65) 100%
+            rgba(0, 0, 0, 0.65) 0%,
+            rgba(0, 0, 0, 0.35) 20%,
+            rgba(0, 0, 0, 0.25) 40%,
+            rgba(0, 0, 0, 0.35) 60%,
+            rgba(0, 0, 0, 0.9) 100%
           );
         }
 
@@ -569,18 +567,18 @@ const FlashcardsWidgetWhiteTheme = forwardRef<
           }
 
           .flashcards-white-theme .flashcards-container {
-            min-height: 450px;
+            min-height: min(450px, 50vh);
             padding: 0 0 50px 0;
           }
 
           .flashcards-white-theme .flashcard-slide.active {
-            width: 320px;
-            height: 420px;
+            width: min(320px, 42vw);
+            height: min(420px, 52vh);
           }
 
           .flashcards-white-theme .flashcard-slide.inactive {
-            width: 220px;
-            height: 340px;
+            width: min(220px, 28vw);
+            height: min(340px, 42vh);
           }
 
           .flashcards-white-theme .flashcard-select-btn {
@@ -609,18 +607,18 @@ const FlashcardsWidgetWhiteTheme = forwardRef<
           }
 
           .flashcards-white-theme .flashcards-container {
-            min-height: 380px;
+            min-height: min(380px, 48vh);
             padding: 0 0 45px 0;
           }
 
           .flashcards-white-theme .flashcard-slide.active {
-            width: 260px;
-            height: 350px;
+            width: min(260px, 54vw);
+            height: min(350px, 48vh);
           }
 
           .flashcards-white-theme .flashcard-slide.inactive {
-            width: 180px;
-            height: 280px;
+            width: min(180px, 36vw);
+            height: min(280px, 38vh);
           }
 
           .flashcards-white-theme .flashcard-select-btn {
