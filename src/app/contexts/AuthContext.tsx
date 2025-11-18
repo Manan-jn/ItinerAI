@@ -157,7 +157,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       typeof crypto !== "undefined" && "randomUUID" in crypto
         ? (crypto.randomUUID() as string)
         : `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
-
+    console.log("uid", uid);
     const guestUserMinimal = {
       uid,
       email: null,
