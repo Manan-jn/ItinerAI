@@ -32,6 +32,7 @@ import ItinerAIChatBox from "../components/ItinerAIChatBox";
 import { TripLoader } from "../components/flights-page/TripLoader";
 import { getSessionId, getUserId } from "../utils/sessionManager";
 import { updateMemoryOnSessionChange } from "../utils/memoryApi";
+import { translateToEnglish } from "../utils/translateToEnglish";
 
 type SectionType =
   | "flights"
@@ -451,7 +452,18 @@ export default function FlightsPage() {
         setIsFirstMessage(false);
       }
 
-      const data = await makeAPICall(currentInput);
+      // Translate input to English before sending to API
+      console.log("🌐 Translating user input to English...");
+      const translatedInput = await translateToEnglish(currentInput);
+
+      if (translatedInput !== currentInput) {
+        console.log("🌐 Translation applied:", {
+          original: currentInput,
+          translated: translatedInput,
+        });
+      }
+
+      const data = await makeAPICall(translatedInput);
 
       // Check if response contains trip suggestions
       let parsedTripSuggestions: any[] = [];

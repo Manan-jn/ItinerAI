@@ -7,6 +7,7 @@ import ItinerAIChatBox from "./ItinerAIChatBox";
 import ChatLoadingIndicator from "./ChatLoadingIndicator";
 import MessageResponseOverlay from "./MessageResponseOverlay";
 import { storeSelectedDate } from "../utils/tripStorage";
+import { translateToEnglish } from "../utils/translateToEnglish";
 import { findPlaceByCity } from "../utils/placesData";
 import {
   fetchConveyanceData,
@@ -653,7 +654,18 @@ export default function DateSelectorWidget({
       setTravelDatesError(null);
 
       try {
-        console.log("💬 Chat: Sending message:", userMessage);
+        // Translate message to English before sending to API
+        console.log("🌐 Translating date selector chat message to English...");
+        const translatedMessage = await translateToEnglish(userMessage.trim());
+
+        if (translatedMessage !== userMessage.trim()) {
+          console.log("🌐 Translation applied to date selector chat:", {
+            original: userMessage.trim(),
+            translated: translatedMessage,
+          });
+        }
+
+        console.log("💬 Chat: Sending message:", translatedMessage);
 
         const response = await fetch("/api/travel-dates", {
           method: "POST",
@@ -665,7 +677,7 @@ export default function DateSelectorWidget({
             session_id: sessionId,
             role: "user",
             current_month: monthKey,
-            user_message: userMessage.trim(),
+            user_message: translatedMessage,
           }),
         });
 

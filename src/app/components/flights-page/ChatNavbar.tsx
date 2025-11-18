@@ -2,6 +2,7 @@ import React from "react";
 import { User } from "firebase/auth";
 import { MdChat, MdExplore } from "react-icons/md";
 import { ProfileDropdown } from "./ProfileDropdown";
+import { GoogleTranslate } from "./GoogleTranslate";
 
 interface ChatNavbarProps {
   currentUser: User;
@@ -256,6 +257,9 @@ export function ChatNavbar({
                 )}
               </>
             )}
+
+            {/* Google Translate Widget */}
+            <GoogleTranslate />
 
             {/* Debug Toggle Button */}
             <button

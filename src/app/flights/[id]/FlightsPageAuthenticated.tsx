@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { MdChat, MdExplore } from "react-icons/md";
 import { useAuth } from "../../contexts/AuthContext";
 import SessionDebugFlights from "../../components/SessionDebugFlights";
+import { translateToEnglish } from "../../utils/translateToEnglish";
 import FlashcardsWidgetWhiteTheme from "../../components/FlashcardsWidgetWhiteTheme";
 import type { FlashcardsWidgetRef } from "../../components/flashcards/types";
 import FlightsWidget from "../../components/FlightsWidget";
@@ -1603,11 +1604,22 @@ export default function FlightsPageAuthenticated() {
     }
 
     try {
+      // Translate message to English before sending to API
+      console.log("🌐 Translating itinerary chat message to English...");
+      const translatedMessage = await translateToEnglish(message);
+
+      if (translatedMessage !== message) {
+        console.log("🌐 Translation applied to itinerary chat:", {
+          original: message,
+          translated: translatedMessage,
+        });
+      }
+
       // Build request payload
       const requestBody = {
         user_id: userId,
         session_id: sessionId,
-        message: message,
+        message: translatedMessage,
         role: "user",
         current_day: currentDay, // Current active day (1-based)
         trip_duration: selectedTrip.no_of_days,
@@ -3577,10 +3589,21 @@ export default function FlightsPageAuthenticated() {
         setIsFirstMessage(false);
       }
 
+      // Translate input to English before sending to API
+      console.log("🌐 Translating user input to English...");
+      const translatedInput = await translateToEnglish(currentInput);
+
+      if (translatedInput !== currentInput) {
+        console.log("🌐 Translation applied:", {
+          original: currentInput,
+          translated: translatedInput,
+        });
+      }
+
       // Check if we should simulate end response for testing
       const data = testEndResponse
         ? simulateEndResponse()
-        : await makeAPICall(currentInput);
+        : await makeAPICall(translatedInput);
 
       // Reset test flag after use
       if (testEndResponse) {
