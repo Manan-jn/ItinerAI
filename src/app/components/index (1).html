@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimal Timeline Itinerary - Version 1</title>
+    <style>
+        :root {
+            --color-primary: #21808D;
+            --color-primary-light: #32B8C6;
+            --color-bg: #F5F5F5;
+            --color-card: #FFFFFF;
+            --color-text: #1F2121;
+            --color-text-secondary: #626C71;
+            --color-border: #E5E5E5;
+            --color-success: #21C55E;
+            --color-timeline: #32B8C6;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            background: var(--color-card);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+            color: white;
+            padding: 24px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-md);
+        }
+
+        .header-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-subtitle {
+            font-size: 14px;
+            opacity: 0.95;
+            margin-bottom: 12px;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            background: rgba(255,255,255,0.15);
+            padding: 6px 12px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Photo Gallery */
+        .photo-gallery {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            margin-top: 12px;
+            padding-bottom: 8px;
+            scrollbar-width: thin;
+        }
+
+        .photo-gallery::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .photo-gallery::-webkit-scrollbar-thumb {
+            background: var(--color-border);
+            border-radius: 2px;
+        }
+
+        .gallery-photo {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+            flex-shrink: 0;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .gallery-photo:hover {
+            transform: scale(1.05);
+        }
+
+        /* Info Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .info-item {
+            background: var(--color-bg);
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 12px;
+        }
+
+        .info-item-label {
+            color: var(--color-text-secondary);
+            margin-bottom: 4px;
+            font-size: 11px;
+        }
+
+        .info-item-value {
+            color: var(--color-text);
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        /* Menu Highlights */
+        .menu-highlights {
+            margin-top: 12px;
+            padding: 12px;
+            background: var(--color-bg);
+            border-radius: 8px;
+        }
+
+        .menu-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--color-text);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .menu-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: var(--color-text-secondary);
+        }
+
+        .menu-item::before {
+            content: '•';
+            color: var(--color-primary);
+            font-weight: bold;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            text-decoration: none;
+        }
+
+        .action-btn-primary {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .action-btn-primary:hover {
+            background: #1d6f7a;
+            transform: translateY(-2px);
+        }
+
+        .action-btn-secondary {
+            background: var(--color-bg);
+            color: var(--color-text);
+            border: 1px solid var(--color-border);
+        }
+
+        .action-btn-secondary:hover {
+            background: var(--color-border);
+        }
+
+        /* Warning Box */
+        .warning-box {
+            margin-top: 12px;
+            padding: 12px;
+            background: #FEF3C7;
+            border-left: 3px solid #F59E0B;
+            border-radius: 6px;
+        }
+
+        .warning-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #92400E;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .warning-text {
+            font-size: 12px;
+            color: #78350F;
+            line-height: 1.5;
+        }
+
+        /* Timeline Container */
+        .timeline-container {
+            padding: 24px 0 24px 0;
+            position: relative;
+        }
+
+        /* Timeline Item */
+        .timeline-item {
+            position: relative;
+            padding-left: 90px;
+            padding-right: 20px;
+            margin-bottom: 20px;
+        }
+
+        .timeline-time {
+            position: absolute;
+            left: 20px;
+            top: 2px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--color-text-secondary);
+            width: 55px;
+        }
+
+        /* Timeline Line and Dot */
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 75px;
+            top: 10px;
+            bottom: -30px;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--color-timeline) 0%, rgba(50, 184, 198, 0.2) 100%);
+        }
+
+        .timeline-item:last-child::before {
+            display: none;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 68px;
+            top: 4px;
+            width: 16px;
+            height: 16px;
+            background: var(--color-card);
+            border: 3px solid var(--color-timeline);
+            border-radius: 50%;
+            z-index: 2;
+            box-shadow: 0 0 0 4px rgba(50, 184, 198, 0.1);
+        }
+
+        .timeline-dot.active {
+            background: var(--color-timeline);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 4px rgba(50, 184, 198, 0.1); }
+            50% { box-shadow: 0 0 0 8px rgba(50, 184, 198, 0.2); }
+        }
+
+        /* Card */
+        .timeline-card {
+            background: var(--color-card);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .timeline-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+            border-color: var(--color-primary-light);
+        }
+
+        .timeline-card.expanded {
+            border-color: var(--color-primary-light);
+            box-shadow: 0 8px 16px rgba(33, 128, 141, 0.15);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .activity-icon.travel { background: linear-gradient(135deg, #3B82F6 0%, #60A5FA 100%); }
+        .activity-icon.rest { background: linear-gradient(135deg, #8B5CF6 0%, #A78BFA 100%); }
+        .activity-icon.eat { background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 100%); }
+
+        .card-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .card-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--color-text);
+            margin-bottom: 4px;
+            line-height: 1.3;
+        }
+
+        .card-subtitle {
+            font-size: 13px;
+            color: var(--color-text-secondary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .card-badges {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
+
+        .badge {
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .badge.duration {
+            background: #EEF2FF;
+            color: #4F46E5;
+        }
+
+        .badge.cost {
+            background: #ECFDF5;
+            color: #059669;
+        }
+
+        .badge.distance {
+            background: #FEF3C7;
+            color: #D97706;
+        }
+
+        .card-description {
+            font-size: 13px;
+            color: var(--color-text-secondary);
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        .card-expand-trigger {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            font-size: 12px;
+            color: var(--color-primary);
+            font-weight: 500;
+            padding: 8px 0 0 0;
+            border-top: 1px solid var(--color-border);
+            margin-top: 12px;
+        }
+
+        .expand-icon {
+            transition: transform 0.3s ease;
+            font-size: 14px;
+        }
+
+        .timeline-card.expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Expanded Details */
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .timeline-card.expanded .card-details {
+            max-height: 500px;
+        }
+
+        .detail-section {
+            padding-top: 12px;
+            margin-top: 12px;
+            border-top: 1px solid var(--color-border);
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            font-size: 13px;
+        }
+
+        .detail-label {
+            color: var(--color-text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .detail-value {
+            color: var(--color-text);
+            font-weight: 500;
+        }
+
+        .location-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--color-primary);
+            text-decoration: none;
+            font-size: 12px;
+            margin-top: 8px;
+            padding: 6px 12px;
+            background: rgba(50, 184, 198, 0.1);
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .location-link:hover {
+            background: rgba(50, 184, 198, 0.2);
+        }
+
+        /* Photos */
+        .card-photo {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-top: 12px;
+        }
+
+        /* Day Summary at Bottom */
+        .day-summary {
+            position: sticky;
+            bottom: 0;
+            background: var(--color-card);
+            border-top: 1px solid var(--color-border);
+            padding: 16px 20px;
+            box-shadow: 0 -4px 6px rgba(0,0,0,0.05);
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            text-align: center;
+        }
+
+        .summary-item {
+            padding: 8px;
+            background: var(--color-bg);
+            border-radius: 8px;
+        }
+
+        .summary-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--color-primary);
+            display: block;
+        }
+
+        .summary-label {
+            font-size: 11px;
+            color: var(--color-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
+        }
+
+        /* Responsive */
+        @media (max-width: 360px) {
+            .timeline-time {
+                font-size: 11px;
+            }
+            .card-title {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-title">
+                📅 Day 1 - December 21, 2025
+            </div>
+            <div class="header-subtitle">Arrival and Acclimatization in Leh</div>
+            <div class="header-stats">
+                <div class="stat-item">💰 ₹27,489</div>
+                <div class="stat-item">📍 5 activities</div>
+                <div class="stat-item">🚗 3 transfers</div>
+            </div>
+        </div>
+
+        <div class="timeline-container">
+            <!-- Flight -->
+            <div class="timeline-item">
+                <div class="timeline-time">05:30</div>
+                <div class="timeline-dot active"></div>
+                <div class="timeline-card" onclick="toggleCard(this)">
+                    <div class="card-header">
+                        <div class="activity-icon travel">✈️</div>
+                        <div class="card-content">
+                            <div class="card-title">Flight to Leh</div>
+                            <div class="card-subtitle">Mumbai → Leh (Vistara UK9237)</div>
+                            <div class="card-badges">
+                                <span class="badge duration">⏱️ 3h 21m</span>
+                                <span class="badge cost">₹13,489</span>
+                                <span class="badge distance">🛫 1,660 km</span>
+                            </div>
+                            <div class="card-description">
+                                Direct flight from Mumbai to Leh. Enjoy stunning aerial views of the Himalayas as you approach Ladakh.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-expand-trigger">
+                        <span>View details</span>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <div class="card-details">
+                        <div class="detail-section">
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <div class="info-item-label">🛫 Departure</div>
+                                    <div class="info-item-value">05:30 AM</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-item-label">🛬 Arrival</div>
+                                    <div class="info-item-value">08:51 AM</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-item-label">✈️ Airline</div>
+                                    <div class="info-item-value">Vistara</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-item-label">🎫 Flight No.</div>
+                                    <div class="info-item-value">UK9237</div>
+                                </div>
+                            </div>
+                            <div class="action-buttons">
+                                <a href="https://www.google.com/maps/place/?q=place_id:ChIJJ7AKoViT_TgRBExmvIXBXT4" target="_blank" class="action-btn action-btn-primary">
+                                    📍 Airport Location
+                                </a>
+                                <a href="https://www.google.com/maps/dir/?api=1&origin=19.0902177,72.86281199999999&destination=34.1425376,77.5554792" target="_blank" class="action-btn action-btn-secondary">
+                                    🧭 Directions
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Airport Exit -->
+            <div class="timeline-item">
+                <div class="timeline-time">08:51</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-card" onclick="toggleCard(this)">
+                    <div class="card-header">
+                        <div class="activity-icon travel">🚶</div>
+                        <div class="card-content">
+                            <div class="card-title">Airport Arrival</div>
+                            <div class="card-subtitle">Baggage Collection & Exit</div>
+                            <div class="card-badges">
+                                <span class="badge duration">⏱️ 39 min</span>
+                            </div>
+                            <div class="card-description">
+                                Deplane, collect your baggage, and exit the airport. Take a moment to breathe in the crisp mountain air.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-expand-trigger">
+                        <span>View details</span>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <div class="card-details">
+                        <div class="detail-section">
+                            <div class="detail-row">
+                                <span class="detail-label">📍 Location</span>
+                                <span class="detail-value">Leh Airport</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">⚠️ Note</span>
+                                <span class="detail-value">Take it slow at altitude</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Taxi to Hotel -->
+            <div class="timeline-item">
+                <div class="timeline-time">09:30</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-card" onclick="toggleCard(this)">
+                    <div class="card-header">
+                        <div class="activity-icon travel">🚕</div>
+                        <div class="card-content">
+                            <div class="card-title">Transfer to Hotel</div>
+                            <div class="card-subtitle">Airport → Hotel Kidar</div>
+                            <div class="card-badges">
+                                <span class="badge duration">⏱️ 30 min</span>
+                                <span class="badge cost">₹800</span>
+                                <span class="badge distance">🚗 5 km</span>
+                            </div>
+                            <div class="card-description">
+                                Pre-paid taxi ride to your hotel. First glimpse of the stunning Ladakhi landscape.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-expand-trigger">
+                        <span>View details</span>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <div class="card-details">
+                        <div class="detail-section">
+                            <div class="detail-row">
+                                <span class="detail-label">🚕 Type</span>
+                                <span class="detail-value">Pre-paid Taxi</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">📍 Destination</span>
+                                <span class="detail-value">Hotel Kidar, Fort Road</span>
+                            </div>
+                            <a href="https://www.google.com/maps/place/?q=place_id:ChIJBb6k_0jr_TgRGA1r6wPTsTc" target="_blank" class="location-link">
+                                📍 View Hotel on Map
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Check-in & Rest -->
+            <div class="timeline-item">
+                <div class="timeline-time">10:00</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-card" onclick="toggleCard(this)">
+                    <div class="card-header">
+                        <div class="activity-icon rest">🏨</div>
+                        <div class="card-content">
+                            <div class="card-title">Hotel Check-in & Rest</div>
+                            <div class="card-subtitle">Hotel Kidar, Fort Road</div>
+                            <div class="card-badges">
+                                <span class="badge duration">⏱️ 3 hours</span>
+                            </div>
+                            <div class="card-description">
+                                Complete check-in and settle into your room. Take complete rest for acclimatization - this is crucial!
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-expand-trigger">
+                        <span>View details</span>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <div class="card-details">
+                        <div class="detail-section">
+                            <div class="detail-row">
+                                <span class="detail-label">🏨 Hotel</span>
+                                <span class="detail-value">Hotel Kidar</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">⚠️ Important</span>
+                                <span class="detail-value">Mandatory rest period</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">💧 Remember</span>
+                                <span class="detail-value">Stay hydrated</span>
+                            </div>
+                            <a href="https://www.google.com/maps/place/?q=place_id:ChIJBb6k_0jr_TgRGA1r6wPTsTc" target="_blank" class="location-link">
+                                📍 View Location on Map
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lunch -->
+            <div class="timeline-item">
+                <div class="timeline-time">13:00</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-card" onclick="toggleCard(this)">
+                    <div class="card-header">
+                        <div class="activity-icon eat">🍽️</div>
+                        <div class="card-content">
+                            <div class="card-title">Light Lunch</div>
+                            <div class="card-subtitle">Hotel Kidar Restaurant</div>
+                            <div class="card-badges">
+                                <span class="badge duration">⏱️ 1 hour</span>
+                                <span class="badge cost">₹700</span>
+                            </div>
+                            <div class="card-description">
+                                Simple, light meal. Dal, rice, and vegetable curry. Stay hydrated with soup or warm beverages.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-expand-trigger">
+                        <span>View details</span>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <div class="card-details">
+                        <div class="detail-section">
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <div class="info-item-label">🍽️ Cuisine</div>
+                                    <div class="info-item-value">Multi-cuisine</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-item-label">⏰ Meal Type</div>
+                                    <div class="info-item-value">Lunch</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-item-label">💰 Estimate</div>
+                                    <div class="info-item-value">₹700</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-item-label">📝 Reservation</div>
+                                    <div class="info-item-value">Not needed</div>
+                                </div>
+                            </div>
+                            <div class="menu-highlights">
+                                <div class="menu-title">🥘 Recommended Dishes</div>
+                                <div class="menu-list">
+                                    <div class="menu-item">Dal and Rice (easy to digest)</div>
+                                    <div class="menu-item">Simple Vegetable Curry</div>
+                                    <div class="menu-item">Warm Soup (hydrating)</div>
+                                </div>
+                            </div>
+                            <div class="action-buttons">
+                                <a href="https://www.google.com/maps/place/?q=place_id:ChIJBb6k_0jr_TgRGA1r6wPTsTc" target="_blank" class="action-btn action-btn-primary">
+                                    📍 View Location
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Afternoon Rest -->
+            <div class="timeline-item">
+                <div class="timeline-time">14:00</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-card" onclick="toggleCard(this)">
+                    <div class="card-header">
+                        <div class="activity-icon rest">💤</div>
+                        <div class="card-content">
+                            <div class="card-title">Crucial Rest Period</div>
+                            <div class="card-subtitle">Acclimatization Time</div>
+                            <div class="card-badges">
+                                <span class="badge duration">⏱️ 5 hours</span>
+                            </div>
+                            <div class="card-description">
+                                <strong>Most important activity!</strong> Rest completely. No strenuous activity. Drink water, nap, and let your body adjust.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-expand-trigger">
+                        <span>View details</span>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <div class="card-details">
+                        <div class="detail-section">
+                            <div class="warning-box">
+                                <div class="warning-title">⚠️ Critical Acclimatization Period</div>
+                                <div class="warning-text">This 5-hour rest is essential for your health and safety at 11,500 ft altitude. Avoid any physical activity, stay hydrated with 3-4 liters of water, and listen to your body. Symptoms like headache or dizziness are normal but inform hotel staff if they persist.</div>
+                            </div>
+                            <div class="menu-highlights" style="margin-top: 12px;">
+                                <div class="menu-title">💡 Acclimatization Tips</div>
+                                <div class="menu-list">
+                                    <div class="menu-item">Drink 3-4 liters of water throughout the day</div>
+                                    <div class="menu-item">Take deep, slow breaths if you feel breathless</div>
+                                    <div class="menu-item">Avoid alcohol and heavy meals</div>
+                                    <div class="menu-item">Keep room well-ventilated</div>
+                                    <div class="menu-item">Take short naps if tired</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dinner -->
+            <div class="timeline-item">
+                <div class="timeline-time">19:00</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-card" onclick="toggleCard(this)">
+                    <div class="card-header">
+                        <div class="activity-icon eat">🥟</div>
+                        <div class="card-content">
+                            <div class="card-title">Dinner at Tibetan Kitchen</div>
+                            <div class="card-subtitle">Authentic Local Cuisine</div>
+                            <div class="card-badges">
+                                <span class="badge duration">⏱️ 1h 30m</span>
+                                <span class="badge cost">₹1,000</span>
+                            </div>
+                            <div class="card-description">
+                                Gentle walk to nearby restaurant. Try Thukpa, Skyu, or vegetable momos. Warm, hearty Tibetan food.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-expand-trigger">
+                        <span>View details</span>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <div class="card-details">
+                        <div class="detail-section">
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <div class="info-item-label">🍽️ Cuisine</div>
+                                    <div class="info-item-value">Tibetan</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-item-label">⏰ Meal Type</div>
+                                    <div class="info-item-value">Dinner</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-item-label">💰 Estimate</div>
+                                    <div class="info-item-value">₹1,000</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-item-label">📍 Area</div>
+                                    <div class="info-item-value">Fort Road</div>
+                                </div>
+                            </div>
+                            <div class="menu-highlights">
+                                <div class="menu-title">🥘 Must-Try Dishes</div>
+                                <div class="menu-list">
+                                    <div class="menu-item">Thukpa (Hearty noodle soup)</div>
+                                    <div class="menu-item">Skyu (Traditional Ladakhi stew)</div>
+                                    <div class="menu-item">Vegetable Momos (Steamed dumplings)</div>
+                                </div>
+                            </div>
+                            <div class="action-buttons">
+                                <a href="https://www.google.com/maps/place/?q=place_id:ChIJx5SjnvXr_TgRq2VbpHF2bCw" target="_blank" class="action-btn action-btn-primary">
+                                    📍 Restaurant Map
+                                </a>
+                                <a href="https://www.google.com/maps/dir/?api=1&origin=34.160576,77.574821&destination=34.1648157,77.5854066" target="_blank" class="action-btn action-btn-secondary">
+                                    🧭 Get Directions
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Night Rest -->
+            <div class="timeline-item">
+                <div class="timeline-time">20:30</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-card" onclick="toggleCard(this)">
+                    <div class="card-header">
+                        <div class="activity-icon rest">🌙</div>
+                        <div class="card-content">
+                            <div class="card-title">Good Night's Sleep</div>
+                            <div class="card-subtitle">Hotel Kidar</div>
+                            <div class="card-badges">
+                                <span class="badge duration">⏱️ Until morning</span>
+                            </div>
+                            <div class="card-description">
+                                Return to hotel for restful sleep. Stay warm and comfortable. Essential for tomorrow's adventures!
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-expand-trigger">
+                        <span>View details</span>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <div class="card-details">
+                        <div class="detail-section">
+                            <div class="detail-row">
+                                <span class="detail-label">🏨 Location</span>
+                                <span class="detail-value">Hotel Kidar</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">💤 Priority</span>
+                                <span class="detail-value">Full night's rest</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleCard(card) {
+            const isExpanded = card.classList.contains('expanded');
+            
+            // Close all other cards
+            document.querySelectorAll('.timeline-card.expanded').forEach(c => {
+                if (c !== card) {
+                    c.classList.remove('expanded');
+                }
+            });
+            
+            // Toggle current card
+            card.classList.toggle('expanded');
+        }
+
+        // Optional: Auto-collapse when scrolling past
+        let lastScrollTop = 0;
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > lastScrollTop + 100) {
+                // Scrolling down significantly
+                document.querySelectorAll('.timeline-card.expanded').forEach(c => {
+                    const rect = c.getBoundingClientRect();
+                    if (rect.bottom < 100) {
+                        c.classList.remove('expanded');
+                    }
+                });
+            }
+            lastScrollTop = scrollTop;
+        });
+    </script>
+</body>
+</html>

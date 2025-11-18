@@ -80,7 +80,7 @@ export function ChatNavbar({
                 </svg>
               </button>
             )}
-            
+
             {/* Chat Header Info */}
             <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-md">
               <MdChat className="text-white text-xl" />
@@ -89,9 +89,9 @@ export function ChatNavbar({
               <h1 className="text-lg font-bold text-gray-900">
                 Travel Assistant
               </h1>
-              <p className="text-xs text-gray-500">
+              {/* <p className="text-xs text-gray-500">
                 Powered by AI • Ready to help
-              </p>
+              </p> */}
             </div>
           </div>
 
@@ -236,10 +236,22 @@ export function ChatNavbar({
                 {/* Session ID Display */}
                 {sessionId && (
                   <div className="flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-700 border border-purple-300">
-                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <svg
+                      className="w-3 h-3"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
                     </svg>
-                    <span title={sessionId} className="max-w-[120px] truncate">{sessionId.slice(0, 8)}...</span>
+                    <span title={sessionId} className="max-w-[120px] truncate">
+                      {sessionId.slice(0, 8)}...
+                    </span>
                   </div>
                 )}
               </>

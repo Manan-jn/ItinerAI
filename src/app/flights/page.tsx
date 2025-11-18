@@ -1359,9 +1359,9 @@ export default function FlightsPage() {
                         <h1 className="text-lg font-bold text-gray-900">
                           Travel Assistant
                         </h1>
-                        <p className="text-xs text-gray-500">
+                        {/* <p className="text-xs text-gray-500">
                           Powered by AI • Ready to help
-                        </p>
+                        </p> */}
                       </div>
                     </div>
 
