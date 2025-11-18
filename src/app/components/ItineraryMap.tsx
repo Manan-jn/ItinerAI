@@ -30,7 +30,10 @@ export default function ItineraryMap({ stops, dayTitle }: ItineraryMapProps) {
 
     // Load Google Maps script
     const script = document.createElement("script");
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || 'AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk'}&libraries=places,geometry`;
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${
+      process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ||
+      "AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+    }&libraries=places,geometry`;
     script.async = true;
     script.defer = true;
     script.onload = () => setIsLoaded(true);
@@ -68,7 +71,7 @@ export default function ItineraryMap({ stops, dayTitle }: ItineraryMapProps) {
           lng = stop.to_location.long;
         }
         // Parse from location string if needed
-        else if (stop.location && typeof stop.location === 'string') {
+        else if (stop.location && typeof stop.location === "string") {
           // Try to extract coordinates from description or other fields
           const descMatch = stop.description?.match(/(\d+\.\d+),\s*(\d+\.\d+)/);
           if (descMatch) {
@@ -82,14 +85,16 @@ export default function ItineraryMap({ stops, dayTitle }: ItineraryMapProps) {
             lat: parseFloat(lat.toString()),
             lng: parseFloat(lng.toString()),
             name: stop.name,
-            index: index + 1
+            index: index + 1,
           };
         }
         return null;
       })
       .filter(Boolean);
 
-    console.log(`Found ${coordinates.length} coordinates from ${stops.length} stops`);
+    console.log(
+      `Found ${coordinates.length} coordinates from ${stops.length} stops`
+    );
 
     if (coordinates.length === 0) {
       console.log("No coordinates found in stops, using default location");
@@ -161,7 +166,12 @@ export default function ItineraryMap({ stops, dayTitle }: ItineraryMapProps) {
         },
         icon: {
           path: window.google.maps.SymbolPath.CIRCLE,
-          fillColor: idx === 0 ? "#10b981" : idx === coordinates.length - 1 ? "#ef4444" : "#8b5cf6",
+          fillColor:
+            idx === 0
+              ? "#10b981"
+              : idx === coordinates.length - 1
+              ? "#ef4444"
+              : "#8b5cf6",
           fillOpacity: 1,
           strokeColor: "white",
           strokeWeight: 3,
@@ -182,9 +192,9 @@ export default function ItineraryMap({ stops, dayTitle }: ItineraryMapProps) {
 
     // Draw path between stops
     if (coordinates.length > 1) {
-      const path = coordinates.map((coord) =>
-        coord ? { lat: coord.lat, lng: coord.lng } : null
-      ).filter(Boolean);
+      const path = coordinates
+        .map((coord) => (coord ? { lat: coord.lat, lng: coord.lng } : null))
+        .filter(Boolean);
 
       new window.google.maps.Polyline({
         path,
@@ -227,7 +237,10 @@ export default function ItineraryMap({ stops, dayTitle }: ItineraryMapProps) {
       </div>
 
       {/* Map container */}
-      <div ref={mapRef} className="w-full h-full bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-50"></div>
+      <div
+        ref={mapRef}
+        className="w-full h-full bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-50"
+      ></div>
 
       {/* Loading state */}
       {!isLoaded && (

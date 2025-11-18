@@ -87,6 +87,51 @@ export default function FlightsPageAuthenticated() {
   const [activeSection, setActiveSection] = useState<SectionType>("chat");
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
+  // Helper function to auto-collapse sidebar when switching sections/components
+  const collapseSidebarIfOpen = () => {
+    if (!isSidebarCollapsed) {
+      console.log("🔄 Auto-collapsing sidebar");
+      setIsSidebarCollapsed(true);
+    }
+  };
+
+  // Wrapped setter for activeSection with auto-collapse
+  const handleSetActiveSection = (section: SectionType) => {
+    collapseSidebarIfOpen();
+    setActiveSection(section);
+  };
+
+  // Wrapped functions for showing components with auto-collapse
+  const handleShowFlashcards = (show: boolean) => {
+    if (show) collapseSidebarIfOpen();
+    setShowFlashcards(show);
+  };
+
+  const handleShowFlights = (show: boolean) => {
+    if (show) collapseSidebarIfOpen();
+    setShowFlights(show);
+  };
+
+  const handleShowStays = (show: boolean) => {
+    if (show) collapseSidebarIfOpen();
+    setShowStays(show);
+  };
+
+  const handleShowItinerary = (show: boolean) => {
+    if (show) collapseSidebarIfOpen();
+    setShowItinerary(show);
+  };
+
+  const handleShowDateSelector = (show: boolean) => {
+    if (show) collapseSidebarIfOpen();
+    setShowDateSelector(show);
+  };
+
+  const handleShowBooking = (show: boolean) => {
+    if (show) collapseSidebarIfOpen();
+    setShowBooking(show);
+  };
+
   // Auto-focus chat input when switching to chat section
   useEffect(() => {
     if (activeSection === "chat" && textareaRef.current) {
@@ -699,7 +744,7 @@ export default function FlightsPageAuthenticated() {
         setTimeout(() => {
           setIsParsingTrips(false);
           // Show itinerary widget
-          setShowItinerary(true);
+          handleShowItinerary(true);
           console.log("✅ Showing itinerary widget");
 
           // If this is add day flow, navigate to the newly added day
@@ -1088,7 +1133,7 @@ export default function FlightsPageAuthenticated() {
         setIsInsertDayFlow(false);
 
         // Navigate back to itinerary and to the newly added day
-        setShowItinerary(true);
+        handleShowItinerary(true);
 
         // Navigate to the newly inserted day after a short delay
         setTimeout(() => {
@@ -1760,7 +1805,7 @@ export default function FlightsPageAuthenticated() {
       setTimeout(() => {
         setShowFinalizeLoader(false);
         setShowItinerary(false);
-        setShowBooking(true);
+        handleShowBooking(true);
         console.log("✅ Switched to booking view");
       }, 3000);
     } catch (error) {
@@ -1795,7 +1840,7 @@ export default function FlightsPageAuthenticated() {
 
         // Redirect to dashboard
         console.log("🏠 Redirecting to dashboard");
-        setActiveSection("dashboard");
+        handleSetActiveSection("dashboard");
       }, 4000);
     } catch (error) {
       console.error("❌ Error in booking continuation:", error);
@@ -1924,7 +1969,7 @@ export default function FlightsPageAuthenticated() {
               `✈️ Showing FlightsWidget for day ${nextDayNumber} with cities: ${fromCity} to ${toCity}`
             );
             setIsParsingTrips(false);
-            setShowFlights(true);
+            handleShowFlights(true);
             setShowFlashcards(false);
             setShowStays(false);
             setShowDateSelector(false);
@@ -2192,7 +2237,7 @@ export default function FlightsPageAuthenticated() {
             setTimeout(() => {
               console.log(`✈️ Showing FlightsWidget for day ${newDayNumber}`);
               setIsParsingTrips(false);
-              setShowFlights(true);
+              handleShowFlights(true);
               setShowFlashcards(false);
               setShowStays(false);
               setShowDateSelector(false);
@@ -2725,7 +2770,7 @@ export default function FlightsPageAuthenticated() {
                   toCity
                 );
                 setIsParsingTrips(false);
-                setShowFlights(true);
+                handleShowFlights(true);
                 setShowFlashcards(false);
                 setShowItinerary(false);
                 setShowDateSelector(false);
@@ -2991,7 +3036,7 @@ export default function FlightsPageAuthenticated() {
               `🏨 Showing StaysWidget for day ${currentDayNumber} in ${stayCity} with auto-fill mode`
             );
             setIsParsingTrips(false);
-            setShowStays(true);
+            handleShowStays(true);
           }, 700);
         }, 4000);
 
@@ -3125,7 +3170,7 @@ export default function FlightsPageAuthenticated() {
               `🏨 Showing StaysWidget for day ${currentDayNumber} in ${stayCity} with auto-fill mode: ${autoFillStaysMode}`
             );
             setIsParsingTrips(false);
-            setShowStays(true);
+            handleShowStays(true);
           }, 700);
         }, 4000);
 
@@ -3898,7 +3943,7 @@ export default function FlightsPageAuthenticated() {
 
               setTimeout(() => {
                 // Automatically show the places widget after loader dissolves
-                setShowFlashcards(true);
+                handleShowFlashcards(true);
                 setShowFlights(false);
                 setShowStays(false);
                 setShowItinerary(false);
@@ -3956,7 +4001,7 @@ export default function FlightsPageAuthenticated() {
 
             setTimeout(() => {
               // Automatically show the date selector widget after loader dissolves
-              setShowDateSelector(true);
+              handleShowDateSelector(true);
               setShowFlashcards(false);
               setShowFlights(false);
               setShowStays(false);
@@ -4055,7 +4100,7 @@ export default function FlightsPageAuthenticated() {
       {/* Left Sidebar */}
       <Sidebar
         activeSection={activeSection}
-        onSectionChange={setActiveSection}
+        onSectionChange={handleSetActiveSection}
         onLogout={logout}
         isCollapsed={isSidebarCollapsed}
         onToggleCollapse={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
@@ -4124,7 +4169,7 @@ export default function FlightsPageAuthenticated() {
                     setTimeout(() => {
                       setShowTripLoader(false);
                       setTimeout(() => {
-                        setShowFlashcards(true);
+                        handleShowFlashcards(true);
                         setIsParsingTrips(false);
                         console.log(
                           "Places toggle: Flashcards activated after 4 second loader"
@@ -4134,7 +4179,7 @@ export default function FlightsPageAuthenticated() {
                   }
                 }}
                 onFlightsToggle={() => {
-                  setShowFlights(!showFlights);
+                  handleShowFlights(!showFlights);
                   if (!showFlights) {
                     setShowFlashcards(false);
                     setShowStays(false);
