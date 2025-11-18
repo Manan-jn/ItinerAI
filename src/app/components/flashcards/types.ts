@@ -68,6 +68,7 @@ export interface FlashcardsWidgetProps {
   trips?: TripInfo[];
   rightPanelCollapsed?: boolean;
   onTripSelect?: (trip: TripInfo | null) => void;
+  isSidebarCollapsed?: boolean;
 }
 
 export interface FlashcardsWidgetRef {

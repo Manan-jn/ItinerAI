@@ -9,21 +9,21 @@ interface TripExpandedViewProps {
   trip: TripInfo;
   onClose: () => void;
   onTripUpdate?: (updatedTrip: TripInfo) => void;
+  isSidebarCollapsed?: boolean;
 }
 
-export function TripExpandedView({ trip, onClose, onTripUpdate }: TripExpandedViewProps) {
+export function TripExpandedView({
+  trip,
+  onClose,
+  onTripUpdate,
+  isSidebarCollapsed = false,
+}: TripExpandedViewProps) {
   // Make trip data mutable with state
   const [tripData, setTripData] = useState<TripInfo>(trip);
   const [searchQuery, setSearchQuery] = useState("");
-  // Initialize with all days expanded
-  const [expandedDays, setExpandedDays] = useState<Set<number>>(() => {
-    const allDays = new Set<number>();
-    trip.day_wise_plan?.forEach(day => allDays.add(day.day_number));
-    return allDays;
-  });
+  // Changed from expandedDays to selectedDay for tab-based navigation
+  const [selectedDay, setSelectedDay] = useState<number>(1);
   const [mounted, setMounted] = useState(false);
-  const [searchPanelOpen, setSearchPanelOpen] = useState(false);
-  const [selectedDayForActivity, setSelectedDayForActivity] = useState<number | null>(null);
   const [isAnimatingIn, setIsAnimatingIn] = useState(true);
   const [isClosing, setIsClosing] = useState(false);
   const [searchResults, setSearchResults] = useState<any[]>([]);
@@ -35,13 +35,13 @@ export function TripExpandedView({ trip, onClose, onTripUpdate }: TripExpandedVi
   useEffect(() => {
     setMounted(true);
     // Prevent body scroll when modal is open
-    document.body.style.overflow = 'hidden';
-    
+    document.body.style.overflow = "hidden";
+
     // Trigger animation
     setTimeout(() => setIsAnimatingIn(false), 50);
-    
+
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     };
   }, []);
 
@@ -66,89 +66,101 @@ export function TripExpandedView({ trip, onClose, onTripUpdate }: TripExpandedVi
     }, 300); // Match animation duration
   };
 
-  const toggleDay = (dayNumber: number) => {
-    const newExpanded = new Set(expandedDays);
-    if (newExpanded.has(dayNumber)) {
-      newExpanded.delete(dayNumber);
-    } else {
-      newExpanded.add(dayNumber);
-    }
-    setExpandedDays(newExpanded);
-  };
-
   // Get city for a specific day - with fallback logic
   const getCityForDay = (day: DayPlan, dayIndex: number) => {
     // Priority 1: Check conveyance to_city (where they're going)
-    if (day.conveyance_details?.to_city && day.conveyance_details.to_city !== 'user_location') {
+    if (
+      day.conveyance_details?.to_city &&
+      day.conveyance_details.to_city !== "user_location"
+    ) {
       return day.conveyance_details.to_city;
     }
-    
+
     // Priority 2: Check conveyance from_city (for last day or when to_city is user_location)
-    if (day.conveyance_details?.from_city && day.conveyance_details.from_city !== 'user_location') {
+    if (
+      day.conveyance_details?.from_city &&
+      day.conveyance_details.from_city !== "user_location"
+    ) {
       return day.conveyance_details.from_city;
     }
-    
+
     // Priority 3: Check stay_details
     if (day.stay_details?.city) {
       return day.stay_details.city;
     }
-    
+
     // Priority 4: If no conveyance required (staying in same city), look at previous days
-    if (day.conveyance_details?.is_required === false && dayIndex > 0 && trip.day_wise_plan) {
+    if (
+      day.conveyance_details?.is_required === false &&
+      dayIndex > 0 &&
+      trip.day_wise_plan
+    ) {
       // Recursively look back through previous days to find the city
       for (let i = dayIndex - 1; i >= 0; i--) {
         const prevDay = trip.day_wise_plan[i];
-        
+
         // Check if previous day has to_city
-        if (prevDay.conveyance_details?.to_city && prevDay.conveyance_details.to_city !== 'user_location') {
+        if (
+          prevDay.conveyance_details?.to_city &&
+          prevDay.conveyance_details.to_city !== "user_location"
+        ) {
           return prevDay.conveyance_details.to_city;
         }
-        
+
         // Check if previous day has stay_details
         if (prevDay.stay_details?.city) {
           return prevDay.stay_details.city;
         }
       }
     }
-    
+
     return null;
   };
 
   // Get city image from trip_route and convert to proxy URL if needed
   const getCityImage = (cityName: string | null) => {
     if (!cityName || !trip.trip_route) {
-      console.log('getCityImage: No city name or trip_route', { cityName, hasTripRoute: !!trip.trip_route });
-      return null;
-    }
-    
-    // Case-insensitive and partial matching for city names
-    const normalizedCityName = cityName.toLowerCase().trim();
-    const cityData = trip.trip_route.find(
-      (route) => {
-        const routeName = route.place_name.toLowerCase().trim();
-        // Try exact match first, then check if city name is contained in route name or vice versa
-        return routeName === normalizedCityName || 
-               routeName.includes(normalizedCityName) || 
-               normalizedCityName.includes(routeName);
-      }
-    );
-    
-    if (!cityData) {
-      console.log('getCityImage: City not found in trip_route', { 
-        cityName, 
-        availableCities: trip.trip_route.map(r => r.place_name) 
+      console.log("getCityImage: No city name or trip_route", {
+        cityName,
+        hasTripRoute: !!trip.trip_route,
       });
       return null;
     }
-    
-    const photoUrl = cityData?.photos?.[0];
-    if (!photoUrl) {
-      console.log('getCityImage: No photos for city', { cityName, cityData: cityData.place_name });
+
+    // Case-insensitive and partial matching for city names
+    const normalizedCityName = cityName.toLowerCase().trim();
+    const cityData = trip.trip_route.find((route) => {
+      const routeName = route.place_name.toLowerCase().trim();
+      // Try exact match first, then check if city name is contained in route name or vice versa
+      return (
+        routeName === normalizedCityName ||
+        routeName.includes(normalizedCityName) ||
+        normalizedCityName.includes(routeName)
+      );
+    });
+
+    if (!cityData) {
+      console.log("getCityImage: City not found in trip_route", {
+        cityName,
+        availableCities: trip.trip_route.map((r) => r.place_name),
+      });
       return null;
     }
-    
-    console.log('getCityImage: Found photo for city', { cityName, photoUrl: photoUrl.substring(0, 80) + '...' });
-    
+
+    const photoUrl = cityData?.photos?.[0];
+    if (!photoUrl) {
+      console.log("getCityImage: No photos for city", {
+        cityName,
+        cityData: cityData.place_name,
+      });
+      return null;
+    }
+
+    console.log("getCityImage: Found photo for city", {
+      cityName,
+      photoUrl: photoUrl.substring(0, 80) + "...",
+    });
+
     // Convert Google Places photo URL to proxy URL
     if (photoUrl.includes("maps.googleapis.com/maps/api/place/photo")) {
       try {
@@ -156,20 +168,23 @@ export function TripExpandedView({ trip, onClose, onTripUpdate }: TripExpandedVi
         const photoReference = urlObj.searchParams.get("photoreference");
         if (photoReference) {
           const proxyUrl = `/api/place-photo?photoreference=${photoReference}&maxwidth=600&maxheight=400`;
-          console.log('getCityImage: Converted to proxy URL', { originalLength: photoUrl.length, proxyUrl });
+          console.log("getCityImage: Converted to proxy URL", {
+            originalLength: photoUrl.length,
+            proxyUrl,
+          });
           return proxyUrl;
         }
       } catch (error) {
         console.warn("Error processing Google Places photo URL:", error);
       }
     }
-    
+
     return photoUrl;
   };
 
   // Search for places using Google Places API
   useEffect(() => {
-    if (!searchQuery.trim() || !searchPanelOpen) {
+    if (!searchQuery.trim()) {
       setSearchResults([]);
       return;
     }
@@ -186,7 +201,7 @@ export function TripExpandedView({ trip, onClose, onTripUpdate }: TripExpandedVi
           setSearchResults(data.predictions);
         }
       } catch (error) {
-        console.error('Search error:', error);
+        console.error("Search error:", error);
         setSearchResults([]);
       } finally {
         setIsSearching(false);
@@ -194,15 +209,10 @@ export function TripExpandedView({ trip, onClose, onTripUpdate }: TripExpandedVi
     }, 500); // Debounce 500ms
 
     return () => clearTimeout(searchTimer);
-  }, [searchQuery, searchPanelOpen]);
+  }, [searchQuery]);
 
-  // Add activity to a specific day
+  // Add activity to the currently selected day
   const handleAddActivity = async (placeId: string, placeName: string) => {
-    if (selectedDayForActivity === null) {
-      console.error('No day selected for activity');
-      return;
-    }
-
     try {
       // Fetch place details from Google Places API
       const response = await fetch(
@@ -211,16 +221,16 @@ export function TripExpandedView({ trip, onClose, onTripUpdate }: TripExpandedVi
       const activityData = await response.json();
 
       if (activityData.error) {
-        console.error('Error fetching place details:', activityData.error);
+        console.error("Error fetching place details:", activityData.error);
         return;
       }
 
-      // Update trip data with new activity
+      // Update trip data with new activity for the selected day
       setTripData((prevTrip) => {
         const newTrip = { ...prevTrip };
         if (newTrip.day_wise_plan) {
           const dayIndex = newTrip.day_wise_plan.findIndex(
-            (d) => d.day_number === selectedDayForActivity
+            (d) => d.day_number === selectedDay
           );
 
           if (dayIndex !== -1) {
@@ -242,13 +252,13 @@ export function TripExpandedView({ trip, onClose, onTripUpdate }: TripExpandedVi
         return newTrip;
       });
 
-      console.log(`✅ Added activity "${placeName}" to Day ${selectedDayForActivity}`);
+      console.log(`✅ Added activity "${placeName}" to Day ${selectedDay}`);
 
-      // Clear search and close panel
-      setSearchQuery('');
+      // Clear search
+      setSearchQuery("");
       setSearchResults([]);
     } catch (error) {
-      console.error('Error adding activity:', error);
+      console.error("Error adding activity:", error);
     }
   };
 
@@ -279,16 +289,44 @@ export function TripExpandedView({ trip, onClose, onTripUpdate }: TripExpandedVi
 
   if (!mounted) return null;
 
+  // Get the currently selected day data
+  const currentDayData = tripData.day_wise_plan?.find(
+    (day) => day.day_number === selectedDay
+  );
+  const dayIndex =
+    tripData.day_wise_plan?.findIndex(
+      (day) => day.day_number === selectedDay
+    ) || 0;
+  const cityName = currentDayData
+    ? getCityForDay(currentDayData, dayIndex)
+    : null;
+  const cityImage = getCityImage(cityName);
+
   const modalContent = (
-    <div className={`trip-expanded-view ${isAnimatingIn ? 'animating-in' : ''} ${isClosing ? 'closing' : ''}`}>
+    <div
+      className={`trip-expanded-view ${isAnimatingIn ? "animating-in" : ""} ${
+        isClosing ? "closing" : ""
+      }`}
+    >
       {/* Blurred Background Overlay */}
       <div className="trip-expanded-backdrop" onClick={handleClose} />
 
       {/* Main Content Container */}
       <div className="trip-expanded-container">
         {/* Close Button */}
-        <button className="trip-expanded-close" onClick={handleClose} aria-label="Close">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <button
+          className="trip-expanded-close"
+          onClick={handleClose}
+          aria-label="Close"
+        >
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
             <line x1="18" y1="6" x2="6" y2="18" />
             <line x1="6" y1="6" x2="18" y2="18" />
           </svg>
@@ -314,16 +352,71 @@ export function TripExpandedView({ trip, onClose, onTripUpdate }: TripExpandedVi
             {/* Metadata Badges */}
             <div className="trip-meta-badges">
               <div className="meta-badge">
-                <span className="badge-label">Days</span>
-                <span className="badge-value">{trip.no_of_days}</span>
+                <div className="meta-icon">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <rect
+                      x="3"
+                      y="4"
+                      width="18"
+                      height="18"
+                      rx="2"
+                      ry="2"
+                    ></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                  </svg>
+                </div>
+                <div className="meta-text">
+                  <span className="badge-label">Trip</span>
+                  <span className="badge-value">{trip.no_of_days} Days</span>
+                </div>
               </div>
               <div className="meta-badge">
-                <span className="badge-label">Budget</span>
-                <span className="badge-value">₹{(trip.estimated_budget / 1000).toFixed(0)}k</span>
+                <div className="meta-icon">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                  </svg>
+                </div>
+                <div className="meta-text">
+                  <span className="badge-label">Budget</span>
+                  <span className="badge-value">
+                    ₹{(trip.estimated_budget / 1000).toFixed(0)}k
+                  </span>
+                </div>
               </div>
               <div className="meta-badge">
-                <span className="badge-label">Best Time</span>
-                <span className="badge-value">{trip.best_time_to_visit}</span>
+                <div className="meta-icon">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                </div>
+                <div className="meta-text">
+                  <span className="badge-label">Best Time</span>
+                  <span className="badge-value">{trip.best_time_to_visit}</span>
+                </div>
               </div>
             </div>
 
@@ -337,238 +430,218 @@ export function TripExpandedView({ trip, onClose, onTripUpdate }: TripExpandedVi
             </div>
           </div>
 
-          {/* Day-wise Plan */}
-          <div className="trip-days-container">
-            {(tripData.day_wise_plan || []).map((day, dayIndex) => {
-              const cityName = getCityForDay(day, dayIndex);
-              const cityImage = getCityImage(cityName);
-              const isExpanded = expandedDays.has(day.day_number);
-
-              return (
-                <div 
-                  key={day.day_number} 
-                  className={`day-card ${isExpanded ? 'expanded' : 'collapsed'}`}
-                  style={{ animationDelay: `${dayIndex * 0.05}s` }}
-                >
-                  {/* Day Header */}
-                  <div className="day-header">
-                    <div className="day-left" onClick={() => toggleDay(day.day_number)}>
-                      <button className="day-toggle-btn" aria-label={isExpanded ? 'Collapse' : 'Expand'}>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                          {isExpanded ? (
-                            <line x1="5" y1="12" x2="19" y2="12" />
-                          ) : (
-                            <>
-                              <line x1="12" y1="5" x2="12" y2="19" />
-                              <line x1="5" y1="12" x2="19" y2="12" />
-                            </>
-                          )}
-                        </svg>
-                      </button>
-                      <h3 className="day-title">DAY {day.day_number}</h3>
-                      {cityName && <span className="day-city-name">• {cityName}</span>}
-                    </div>
-                    
-                    <div className="day-right">
-                      {day.conveyance_details?.is_required && (
-                        <span className="day-badge transfer-badge">Transfer</span>
-                      )}
-                      {day.stay_details?.is_required && day.stay_details.city && (
-                        <span className="day-badge stay-badge">Stay</span>
-                      )}
-                      <button
-                        className={`day-add-btn ${searchPanelOpen && selectedDayForActivity === day.day_number ? 'active' : ''}`}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          if (searchPanelOpen && selectedDayForActivity === day.day_number) {
-                            // Close if clicking the same day
-                            setSearchPanelOpen(false);
-                            setSelectedDayForActivity(null);
-                            setSearchQuery('');
-                          } else {
-                            // Open for this day
-                            setSearchPanelOpen(true);
-                            setSelectedDayForActivity(day.day_number);
-                            setSearchQuery('');
-                          }
-                        }}
-                        aria-label={searchPanelOpen && selectedDayForActivity === day.day_number ? "Close search panel" : "Open search panel"}
-                        title={searchPanelOpen && selectedDayForActivity === day.day_number ? "Close search panel" : `Add activity to Day ${day.day_number}`}
-                      >
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                          {searchPanelOpen ? (
-                            <line x1="5" y1="12" x2="19" y2="12" />
-                          ) : (
-                            <>
-                              <line x1="12" y1="5" x2="12" y2="19" />
-                              <line x1="5" y1="12" x2="19" y2="12" />
-                            </>
-                          )}
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Day Content - Only show when expanded */}
-                  {isExpanded && (
-                    <div className="day-content">
-                      {/* City Image on Left */}
-                      {cityImage && (
-                        <div className="day-city-image">
-                          <img 
-                            src={cityImage} 
-                            alt={cityName || 'City'}
-                            onError={(e) => {
-                              (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600&h=400&fit=crop&auto=format&q=80';
-                            }}
-                          />
-                          <div className="city-image-overlay">
-                            <span className="city-name">{cityName}</span>
-                          </div>
-                        </div>
-                      )}
-
-                      {/* Activities on Right - Timeline Design */}
-                      <div className="day-activities">
-                        {day.must_do_activities.map((activity, idx) => (
-                          <div key={idx} className="activity-timeline-item">
-                            {/* Timeline Dot and Line */}
-                            <div className="timeline-connector">
-                              <div className="timeline-dot"></div>
-                              {idx < day.must_do_activities.length - 1 && (
-                                <div className="timeline-line"></div>
-                              )}
-                            </div>
-                            
-                            {/* Activity Content Card */}
-                            <div className="activity-content-card">
-                              <div className="activity-card-header">
-                                <div className="activity-type-badge">
-                                  {activity.type === 'place' ? '📍' : 
-                                   activity.type === 'food' ? '🍽️' : 
-                                   activity.type === 'activity' ? '🎯' : 
-                                   activity.type === 'wellness' ? '🧘' :
-                                   activity.type === 'transport' ? '🚗' :
-                                   activity.type === 'shopping' ? '🛍️' : '✨'}
-                                </div>
-                                <button
-                                  className="activity-remove-btn"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleRemoveActivity(day.day_number, idx);
-                                  }}
-                                  aria-label="Remove activity"
-                                  title={`Remove ${activity.name}`}
-                                >
-                                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                                    <line x1="5" y1="12" x2="19" y2="12" />
-                                  </svg>
-                                </button>
-                              </div>
-                              <h4 className="activity-name">{activity.name}</h4>
-                              <p className="activity-description">{activity.description}</p>
-                              {activity.category && (
-                                <span className="activity-category-tag">{activity.category}</span>
-                              )}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Right Side: Search Panel - Conditionally rendered */}
-        {searchPanelOpen && (
-          <div className="trip-expanded-search">
-            <div className="search-header">
-              <h3>Search Activities</h3>
+          {/* Day Tabs Navigation */}
+          <div className="trip-days-tabs">
+            {(tripData.day_wise_plan || []).map((day) => (
               <button
-                className="search-close-btn"
-                onClick={() => {
-                  setSearchPanelOpen(false);
-                  setSelectedDayForActivity(null);
-                  setSearchQuery('');
-                }}
-                aria-label="Close search"
-                title="Close search panel"
+                key={day.day_number}
+                className={`day-tab ${
+                  selectedDay === day.day_number ? "active" : ""
+                }`}
+                onClick={() => setSelectedDay(day.day_number)}
               >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <line x1="18" y1="6" x2="6" y2="18" />
-                  <line x1="6" y1="6" x2="18" y2="18" />
-                </svg>
+                Day {day.day_number}
               </button>
-            </div>
-            {selectedDayForActivity && (
-              <div className="search-day-indicator">
-                Adding to <strong>Day {selectedDayForActivity}</strong>
-              </div>
-            )}
-            <div className="search-input-container">
-              <input
-                type="text"
-                className="search-input"
-                placeholder="Search for places, restaurants, activities..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                autoFocus
-              />
-              {isSearching && (
-                <div className="search-loading">Searching...</div>
-              )}
-            </div>
+            ))}
+          </div>
 
-            {/* Search Results */}
-            <div className="search-results-container">
-              {searchResults.length > 0 ? (
-                <div className="search-results">
-                  {searchResults.map((result) => (
-                    <div
-                      key={result.place_id}
-                      className="search-result-item"
-                      onClick={() => handleAddActivity(result.place_id, result.description)}
-                    >
-                      <div className="result-icon">📍</div>
-                      <div className="result-content">
-                        <div className="result-title">{result.structured_formatting?.main_text || result.description}</div>
-                        {result.structured_formatting?.secondary_text && (
-                          <div className="result-subtitle">{result.structured_formatting.secondary_text}</div>
+          {/* Selected Day Content */}
+          {currentDayData && (
+            <div className="day-content-panel">
+              {/* City Header with Image */}
+              {cityName && (
+                <div className="day-city-header">
+                  <div className="city-name-badge">
+                    <span className="city-icon">📍</span>
+                    <span className="city-name-text">{cityName}</span>
+                  </div>
+                  <div className="day-badges">
+                    {currentDayData.conveyance_details?.is_required && (
+                      <span className="day-badge transfer-badge">
+                        🚗 Transfer
+                      </span>
+                    )}
+                    {currentDayData.stay_details?.is_required &&
+                      currentDayData.stay_details.city && (
+                        <span className="day-badge stay-badge">🏨 Stay</span>
+                      )}
+                  </div>
+                </div>
+              )}
+
+              {/* City Image Banner */}
+              {cityImage && (
+                <div className="day-city-banner">
+                  <img
+                    src={cityImage}
+                    alt={cityName || "City"}
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src =
+                        "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600&h=400&fit=crop&auto=format&q=80";
+                    }}
+                  />
+                  <div className="city-banner-overlay" />
+                </div>
+              )}
+
+              {/* Activities Timeline */}
+              <div className="day-activities-section">
+                <h3 className="activities-title">Activities</h3>
+                <div className="day-activities-timeline">
+                  {currentDayData.must_do_activities.map((activity, idx) => (
+                    <div key={idx} className="activity-timeline-item">
+                      {/* Timeline Connector */}
+                      <div className="timeline-connector">
+                        <div className="timeline-dot"></div>
+                        {idx < currentDayData.must_do_activities.length - 1 && (
+                          <div className="timeline-line"></div>
                         )}
                       </div>
-                      <button className="result-add-btn" aria-label="Add activity">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                          <line x1="12" y1="5" x2="12" y2="19" />
-                          <line x1="5" y1="12" x2="19" y2="12" />
-                        </svg>
-                      </button>
+
+                      {/* Activity Card */}
+                      <div className="activity-content-card">
+                        <div className="activity-card-header">
+                          <div className="activity-type-badge">
+                            {activity.type === "place"
+                              ? "📍"
+                              : activity.type === "food"
+                              ? "🍽️"
+                              : activity.type === "activity"
+                              ? "🎯"
+                              : activity.type === "wellness"
+                              ? "🧘"
+                              : activity.type === "transport"
+                              ? "🚗"
+                              : activity.type === "shopping"
+                              ? "🛍️"
+                              : "✨"}
+                          </div>
+                          <button
+                            className="activity-remove-btn"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleRemoveActivity(
+                                currentDayData.day_number,
+                                idx
+                              );
+                            }}
+                            aria-label="Remove activity"
+                            title={`Remove ${activity.name}`}
+                          >
+                            <svg
+                              width="14"
+                              height="14"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2.5"
+                            >
+                              <line x1="5" y1="12" x2="19" y2="12" />
+                            </svg>
+                          </button>
+                        </div>
+                        <h4 className="activity-name">{activity.name}</h4>
+                        <p className="activity-description">
+                          {activity.description}
+                        </p>
+                        {activity.category && (
+                          <span className="activity-category-tag">
+                            {activity.category}
+                          </span>
+                        )}
+                      </div>
                     </div>
                   ))}
                 </div>
-              ) : searchQuery.trim() && !isSearching ? (
-                <div className="search-empty">
-                  <p>No results found for "{searchQuery}"</p>
-                  <p className="search-empty-hint">Try a different search term</p>
-                </div>
-              ) : !searchQuery.trim() ? (
-                <div className="search-empty">
-                  <p>🔍 Start typing to search</p>
-                  <p className="search-empty-hint">Search for places, restaurants, museums, parks, and more...</p>
-                </div>
-              ) : null}
+              </div>
             </div>
+          )}
+        </div>
+
+        {/* Right Side: Search Panel - Always visible */}
+        <div className="trip-expanded-search">
+          <div className="search-header">
+            <h3>Search Activities</h3>
           </div>
-        )}
+          <div className="search-day-indicator">
+            Adding to <strong>Day {selectedDay}</strong>
+          </div>
+          <div className="search-input-container">
+            <input
+              type="text"
+              className="search-input"
+              placeholder="Search for places, restaurants, activities..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            {isSearching && <div className="search-loading">Searching...</div>}
+          </div>
+
+          {/* Search Results */}
+          <div className="search-results-container">
+            {searchResults.length > 0 ? (
+              <div className="search-results">
+                {searchResults.map((result) => (
+                  <div
+                    key={result.place_id}
+                    className="search-result-item"
+                    onClick={() =>
+                      handleAddActivity(result.place_id, result.description)
+                    }
+                  >
+                    <div className="result-icon">📍</div>
+                    <div className="result-content">
+                      <div className="result-title">
+                        {result.structured_formatting?.main_text ||
+                          result.description}
+                      </div>
+                      {result.structured_formatting?.secondary_text && (
+                        <div className="result-subtitle">
+                          {result.structured_formatting.secondary_text}
+                        </div>
+                      )}
+                    </div>
+                    <button
+                      className="result-add-btn"
+                      aria-label="Add activity"
+                    >
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                      >
+                        <line x1="12" y1="5" x2="12" y2="19" />
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                      </svg>
+                    </button>
+                  </div>
+                ))}
+              </div>
+            ) : searchQuery.trim() && !isSearching ? (
+              <div className="search-empty">
+                <p>No results found for "{searchQuery}"</p>
+                <p className="search-empty-hint">Try a different search term</p>
+              </div>
+            ) : !searchQuery.trim() ? (
+              <div className="search-empty">
+                <p>🔍 Start typing to search</p>
+                <p className="search-empty-hint">
+                  Search for places, restaurants, museums, parks, and more...
+                </p>
+              </div>
+            ) : null}
+          </div>
+        </div>
       </div>
 
       <style jsx>{`
         .trip-expanded-view {
           position: fixed;
           top: 73px;
-          left: 208px;
+          left: ${isSidebarCollapsed ? "0" : "208px"};
           right: 0;
           bottom: 0;
           z-index: 1000;
@@ -577,6 +650,7 @@ export function TripExpandedView({ trip, onClose, onTripUpdate }: TripExpandedVi
           justify-content: stretch;
           overflow: hidden;
           animation: modalFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: left 0.5s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
         .trip-expanded-view.animating-in {
@@ -612,11 +686,19 @@ export function TripExpandedView({ trip, onClose, onTripUpdate }: TripExpandedVi
         .trip-expanded-backdrop {
           position: absolute;
           inset: 0;
-          background: 
-            radial-gradient(circle at 20% 30%, rgba(147, 197, 253, 0.15) 0%, transparent 50%),
-            radial-gradient(circle at 80% 70%, rgba(191, 219, 254, 0.12) 0%, transparent 50%),
-            linear-gradient(135deg, 
-              rgba(255, 255, 255, 0.6) 0%, 
+          background: radial-gradient(
+              circle at 20% 30%,
+              rgba(147, 197, 253, 0.15) 0%,
+              transparent 50%
+            ),
+            radial-gradient(
+              circle at 80% 70%,
+              rgba(191, 219, 254, 0.12) 0%,
+              transparent 50%
+            ),
+            linear-gradient(
+              135deg,
+              rgba(255, 255, 255, 0.6) 0%,
               rgba(240, 249, 255, 0.7) 25%,
               rgba(224, 242, 254, 0.65) 50%,
               rgba(240, 249, 255, 0.7) 75%,
@@ -631,13 +713,21 @@ export function TripExpandedView({ trip, onClose, onTripUpdate }: TripExpandedVi
           width: 100%;
           height: 100%;
           display: grid;
-          grid-template-columns: 280px 1fr ${searchPanelOpen ? '320px' : '0px'};
+          grid-template-columns: 280px 1fr 320px;
           gap: 0;
-          background: 
-            radial-gradient(circle at 10% 20%, rgba(147, 197, 253, 0.08) 0%, transparent 40%),
-            radial-gradient(circle at 90% 80%, rgba(191, 219, 254, 0.06) 0%, transparent 40%),
-            linear-gradient(135deg, 
-              rgba(255, 255, 255, 0.45) 0%, 
+          background: radial-gradient(
+              circle at 10% 20%,
+              rgba(147, 197, 253, 0.08) 0%,
+              transparent 40%
+            ),
+            radial-gradient(
+              circle at 90% 80%,
+              rgba(191, 219, 254, 0.06) 0%,
+              transparent 40%
+            ),
+            linear-gradient(
+              135deg,
+              rgba(255, 255, 255, 0.45) 0%,
               rgba(240, 249, 255, 0.35) 50%,
               rgba(224, 242, 254, 0.3) 100%
             );
@@ -645,9 +735,7 @@ export function TripExpandedView({ trip, onClose, onTripUpdate }: TripExpandedVi
           -webkit-backdrop-filter: blur(30px);
           border: 2px solid rgba(59, 130, 246, 0.15);
           overflow: hidden;
-          transition: grid-template-columns 0.3s ease;
-          box-shadow: 
-            0 20px 60px rgba(59, 130, 246, 0.12),
+          box-shadow: 0 20px 60px rgba(59, 130, 246, 0.12),
             0 0 0 1px rgba(255, 255, 255, 0.5) inset;
         }
 
@@ -680,7 +768,11 @@ export function TripExpandedView({ trip, onClose, onTripUpdate }: TripExpandedVi
 
         /* Left Side - Map */
         .trip-expanded-map {
-          background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, rgba(240, 249, 255, 0.3) 100%);
+          background: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.4) 0%,
+            rgba(240, 249, 255, 0.3) 100%
+          );
           border-right: 2px solid rgba(59, 130, 246, 0.15);
           display: flex;
           align-items: stretch;
@@ -692,7 +784,11 @@ export function TripExpandedView({ trip, onClose, onTripUpdate }: TripExpandedVi
         .map-placeholder {
           width: 100%;
           height: 100%;
-          background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(147, 197, 253, 0.12) 100%);
+          background: linear-gradient(
+            135deg,
+            rgba(59, 130, 246, 0.08) 0%,
+            rgba(147, 197, 253, 0.12) 100%
+          );
           border: 2px dashed rgba(59, 130, 246, 0.3);
           border-radius: 16px;
           display: flex;
@@ -707,18 +803,25 @@ export function TripExpandedView({ trip, onClose, onTripUpdate }: TripExpandedVi
 
         /* Center - Main Content */
         .trip-expanded-main {
-          background: 
-            radial-gradient(circle at 50% 0%, rgba(147, 197, 253, 0.05) 0%, transparent 50%),
-            linear-gradient(180deg, 
-              rgba(255, 255, 255, 0.25) 0%, 
+          background: radial-gradient(
+              circle at 50% 0%,
+              rgba(147, 197, 253, 0.05) 0%,
+              transparent 50%
+            ),
+            linear-gradient(
+              180deg,
+              rgba(255, 255, 255, 0.25) 0%,
               rgba(240, 249, 255, 0.2) 50%,
               rgba(255, 255, 255, 0.15) 100%
             );
           overflow-y: auto;
+          overflow-x: hidden;
           padding: 24px;
           display: flex;
           flex-direction: column;
           gap: 24px;
+          min-height: 0;
+          height: 100%;
         }
 
         /* Custom Scrollbar */
@@ -745,29 +848,76 @@ export function TripExpandedView({ trip, onClose, onTripUpdate }: TripExpandedVi
           display: flex;
           flex-direction: column;
           align-items: center;
-          gap: 18px;
-          padding: 24px;
-          background: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(240, 249, 255, 0.5) 100%);
-          border: 2px solid rgba(59, 130, 246, 0.2);
-          border-radius: 18px;
-          backdrop-filter: blur(16px);
-          box-shadow: 0 4px 16px rgba(59, 130, 246, 0.08);
+          gap: 14px;
+          padding: 18px 24px;
+          background: radial-gradient(
+              circle at 20% 30%,
+              rgba(147, 197, 253, 0.2) 0%,
+              transparent 50%
+            ),
+            radial-gradient(
+              circle at 80% 70%,
+              rgba(191, 219, 254, 0.15) 0%,
+              transparent 50%
+            ),
+            linear-gradient(
+              135deg,
+              rgba(255, 255, 255, 0.35) 0%,
+              rgba(240, 249, 255, 0.3) 50%,
+              rgba(224, 242, 254, 0.25) 100%
+            );
+          border: 1px solid rgba(59, 130, 246, 0.2);
+          border-radius: 16px;
+          backdrop-filter: blur(20px) saturate(160%);
+          -webkit-backdrop-filter: blur(20px) saturate(160%);
+          box-shadow: 0 4px 20px rgba(59, 130, 246, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.5),
+            0 1px 2px rgba(0, 0, 0, 0.03);
+          position: relative;
+          overflow: visible;
+          width: 100%;
+        }
+
+        .trip-expanded-header::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 1px;
+          background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(147, 197, 253, 0.5),
+            transparent
+          );
         }
 
         .trip-title-container {
           width: 100%;
           text-align: center;
-          padding: 16px 28px;
-          background: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(240, 249, 255, 0.6) 100%);
-          border: 2px solid rgba(59, 130, 246, 0.25);
-          border-radius: 14px;
-          box-shadow: 0 2px 8px rgba(59, 130, 246, 0.1);
+          padding: 12px 24px;
+          background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.4) 0%,
+            rgba(240, 249, 255, 0.35) 100%
+          );
+          border: 1px solid rgba(59, 130, 246, 0.25);
+          border-radius: 12px;
+          box-shadow: 0 2px 8px rgba(59, 130, 246, 0.06),
+            inset 0 1px 0 rgba(255, 255, 255, 0.4);
+          backdrop-filter: blur(10px);
         }
 
         .trip-title {
-          font-size: 26px;
-          font-weight: 800;
-          background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+          font-size: 20px;
+          font-weight: 700;
+          background: linear-gradient(
+            135deg,
+            #1e40af 0%,
+            #3b82f6 50%,
+            #60a5fa 100%
+          );
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -777,91 +927,226 @@ export function TripExpandedView({ trip, onClose, onTripUpdate }: TripExpandedVi
 
         .trip-meta-badges {
           display: flex;
-          gap: 12px;
+          gap: 10px;
           flex-wrap: wrap;
           justify-content: center;
         }
 
         .meta-badge {
           display: flex;
-          flex-direction: column;
           align-items: center;
-          gap: 6px;
-          padding: 12px 24px;
-          background: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(240, 249, 255, 0.6) 100%);
-          border: 2px solid rgba(59, 130, 246, 0.2);
-          border-radius: 12px;
+          gap: 8px;
+          padding: 8px 14px;
+          background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.3) 0%,
+            rgba(240, 249, 255, 0.25) 100%
+          );
+          border: 1px solid rgba(59, 130, 246, 0.2);
+          border-radius: 10px;
           min-width: 110px;
-          box-shadow: 0 2px 8px rgba(59, 130, 246, 0.06);
-          transition: all 0.2s ease;
+          backdrop-filter: blur(12px) saturate(140%);
+          -webkit-backdrop-filter: blur(12px) saturate(140%);
+          box-shadow: 0 2px 8px rgba(59, 130, 246, 0.06),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3);
+          transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .meta-badge:hover {
+          background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.4) 0%,
+            rgba(240, 249, 255, 0.3) 100%
+          );
           border-color: rgba(59, 130, 246, 0.35);
-          box-shadow: 0 4px 12px rgba(59, 130, 246, 0.12);
-          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(59, 130, 246, 0.12),
+            inset 0 1px 0 rgba(255, 255, 255, 0.4);
+          transform: translateY(-1px);
+        }
+
+        .meta-icon {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 28px;
+          height: 28px;
+          border-radius: 8px;
+          background: linear-gradient(
+            135deg,
+            rgba(59, 130, 246, 0.12) 0%,
+            rgba(147, 197, 253, 0.15) 100%
+          );
+          border: 1px solid rgba(59, 130, 246, 0.2);
+          backdrop-filter: blur(6px);
+        }
+
+        .meta-icon svg {
+          color: #3b82f6;
+          opacity: 0.85;
+          width: 14px;
+          height: 14px;
+        }
+
+        .meta-text {
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
         }
 
         .badge-label {
-          font-size: 11px;
-          font-weight: 700;
-          color: #64748b;
+          font-size: 9px;
+          font-weight: 600;
+          color: rgba(59, 130, 246, 0.75);
           text-transform: uppercase;
-          letter-spacing: 0.08em;
+          letter-spacing: 0.06em;
         }
 
         .badge-value {
-          font-size: 15px;
-          font-weight: 800;
+          font-size: 13px;
+          font-weight: 700;
           color: #1e40af;
         }
 
         .trip-themes {
           display: flex;
-          gap: 10px;
+          gap: 8px;
           flex-wrap: wrap;
           justify-content: center;
         }
 
         .theme-badge {
-          padding: 8px 16px;
-          background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(147, 197, 253, 0.2) 100%);
-          border: 2px solid rgba(59, 130, 246, 0.3);
-          border-radius: 24px;
-          font-size: 12px;
-          font-weight: 700;
+          padding: 6px 12px;
+          background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.3) 0%,
+            rgba(240, 249, 255, 0.25) 100%
+          );
+          border: 1px solid rgba(59, 130, 246, 0.25);
+          border-radius: 14px;
+          font-size: 11px;
+          font-weight: 600;
           color: #1e40af;
-          letter-spacing: 0.02em;
-          box-shadow: 0 2px 6px rgba(59, 130, 246, 0.1);
-          transition: all 0.2s ease;
+          letter-spacing: 0.01em;
+          backdrop-filter: blur(10px) saturate(140%);
+          -webkit-backdrop-filter: blur(10px) saturate(140%);
+          box-shadow: 0 2px 6px rgba(59, 130, 246, 0.08),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3);
+          transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .theme-badge:hover {
-          background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(147, 197, 253, 0.25) 100%);
-          border-color: rgba(59, 130, 246, 0.4);
-          transform: translateY(-2px);
-          box-shadow: 0 4px 10px rgba(59, 130, 246, 0.15);
+          background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.4) 0%,
+            rgba(240, 249, 255, 0.35) 100%
+          );
+          border-color: rgba(59, 130, 246, 0.35);
+          transform: translateY(-1px);
+          box-shadow: 0 4px 10px rgba(59, 130, 246, 0.14),
+            inset 0 1px 0 rgba(255, 255, 255, 0.4);
         }
 
-        /* Days Container */
-        .trip-days-container {
+        /* Day Tabs Navigation */
+        .trip-days-tabs {
+          display: flex;
+          gap: 10px;
+          padding: 0 4px 18px 4px;
+          margin: 0 -4px;
+          border-bottom: 2px solid rgba(59, 130, 246, 0.15);
+          overflow-x: auto;
+          overflow-y: hidden;
+          scrollbar-width: thin;
+          scrollbar-color: rgba(59, 130, 246, 0.3) transparent;
+          -webkit-overflow-scrolling: touch;
+          width: 100%;
+          min-height: 62px;
+        }
+
+        .trip-days-tabs::-webkit-scrollbar {
+          height: 6px;
+        }
+
+        .trip-days-tabs::-webkit-scrollbar-track {
+          background: rgba(59, 130, 246, 0.05);
+          border-radius: 3px;
+        }
+
+        .trip-days-tabs::-webkit-scrollbar-thumb {
+          background: rgba(59, 130, 246, 0.3);
+          border-radius: 3px;
+        }
+
+        .trip-days-tabs::-webkit-scrollbar-thumb:hover {
+          background: rgba(59, 130, 246, 0.5);
+        }
+
+        .day-tab {
+          flex-shrink: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 12px 24px;
+          border-radius: 10px;
+          background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.4) 0%,
+            rgba(240, 249, 255, 0.35) 100%
+          );
+          border: 1px solid rgba(59, 130, 246, 0.25);
+          font-size: 14px;
+          font-weight: 700;
+          color: #64748b;
+          cursor: pointer;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          white-space: nowrap;
+          backdrop-filter: blur(12px) saturate(150%);
+          -webkit-backdrop-filter: blur(12px) saturate(150%);
+          box-shadow: 0 2px 8px rgba(59, 130, 246, 0.06),
+            inset 0 1px 0 rgba(255, 255, 255, 0.4);
+          min-height: 44px;
+          text-align: center;
+        }
+
+        .day-tab:hover {
+          background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.6) 0%,
+            rgba(240, 249, 255, 0.5) 100%
+          );
+          border-color: rgba(59, 130, 246, 0.4);
+          color: #1e40af;
+          box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15),
+            inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        }
+
+        .day-tab.active {
+          background: radial-gradient(
+              circle at top,
+              rgba(147, 197, 253, 0.3) 0%,
+              transparent 70%
+            ),
+            linear-gradient(
+              135deg,
+              rgba(59, 130, 246, 0.25) 0%,
+              rgba(147, 197, 253, 0.3) 100%
+            );
+          border: 1.5px solid rgba(59, 130, 246, 0.5);
+          color: #1e40af;
+          box-shadow: 0 4px 16px rgba(59, 130, 246, 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 0.6),
+            0 0 0 3px rgba(59, 130, 246, 0.1);
+          font-weight: 800;
+        }
+
+        /* Day Content Panel */
+        .day-content-panel {
           display: flex;
           flex-direction: column;
-          gap: 16px;
+          gap: 20px;
+          animation: fadeInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .day-card {
-          background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(240, 249, 255, 0.4) 100%);
-          border: 2px solid rgba(59, 130, 246, 0.15);
-          border-radius: 16px;
-          overflow: hidden;
-          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-          box-shadow: 0 2px 12px rgba(59, 130, 246, 0.08);
-          backdrop-filter: blur(10px);
-          animation: slideInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
-        }
-
-        @keyframes slideInUp {
+        @keyframes fadeInUp {
           from {
             opacity: 0;
             transform: translateY(20px);
@@ -872,218 +1157,110 @@ export function TripExpandedView({ trip, onClose, onTripUpdate }: TripExpandedVi
           }
         }
 
-        .day-card.expanded {
-          background: linear-gradient(135deg, rgba(255, 255, 255, 0.65) 0%, rgba(240, 249, 255, 0.55) 100%);
-          border-color: rgba(59, 130, 246, 0.25);
-          box-shadow: 0 4px 20px rgba(59, 130, 246, 0.12), 0 0 0 1px rgba(59, 130, 246, 0.05);
-        }
-
-        .day-header {
+        /* Day City Header */
+        .day-city-header {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          padding: 20px 26px;
-          background: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(240, 249, 255, 0.5) 100%);
-          border-bottom: 1px solid rgba(59, 130, 246, 0.12);
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-          position: relative;
-          overflow: hidden;
+          padding: 16px 20px;
+          background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.6) 0%,
+            rgba(240, 249, 255, 0.5) 100%
+          );
+          border: 2px solid rgba(59, 130, 246, 0.2);
+          border-radius: 12px;
+          backdrop-filter: blur(10px);
         }
 
-        .day-header::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 2px;
-          background: linear-gradient(90deg, transparent 0%, rgba(59, 130, 246, 0.3) 50%, transparent 100%);
-          opacity: 0;
-          transition: opacity 0.3s ease;
-        }
-
-        .day-header:hover {
-          background: linear-gradient(135deg, rgba(255, 255, 255, 0.75) 0%, rgba(240, 249, 255, 0.65) 100%);
-        }
-
-        .day-header:hover::before {
-          opacity: 1;
-        }
-
-        .day-left {
+        .city-name-badge {
           display: flex;
           align-items: center;
-          gap: 14px;
-          cursor: pointer;
-          flex: 1;
-        }
-
-        .day-city-name {
-          font-size: 13px;
-          color: #64748b;
-          font-weight: 500;
-          margin-left: 4px;
-        }
-
-        .day-toggle-btn {
-          width: 32px;
-          height: 32px;
-          border-radius: 8px;
-          background: linear-gradient(135deg, rgba(59, 130, 246, 0.12) 0%, rgba(147, 197, 253, 0.15) 100%);
-          border: 2px solid rgba(59, 130, 246, 0.25);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-          box-shadow: 0 2px 6px rgba(59, 130, 246, 0.1);
-        }
-
-        .day-toggle-btn:hover {
-          background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(147, 197, 253, 0.25) 100%);
-          border-color: rgba(59, 130, 246, 0.4);
-          transform: scale(1.05);
-          box-shadow: 0 4px 10px rgba(59, 130, 246, 0.15);
-        }
-
-        .day-toggle-btn svg {
-          color: #3b82f6;
-          transition: transform 0.3s ease;
-        }
-
-        .day-card.expanded .day-toggle-btn svg {
-          transform: rotate(0deg);
-        }
-
-        .day-card.collapsed .day-toggle-btn svg {
-          transform: rotate(45deg);
-        }
-
-        .day-title {
-          font-size: 16px;
-          font-weight: 700;
-          color: #0f172a;
-          margin: 0;
-        }
-
-        .day-right {
-          display: flex;
           gap: 10px;
-          align-items: center;
+        }
+
+        .city-icon {
+          font-size: 20px;
+        }
+
+        .city-name-text {
+          font-size: 18px;
+          font-weight: 700;
+          color: #1e40af;
+        }
+
+        .day-badges {
+          display: flex;
+          gap: 8px;
         }
 
         .day-badge {
-          padding: 5px 12px;
+          padding: 6px 14px;
           border-radius: 8px;
-          font-size: 11px;
+          font-size: 12px;
           font-weight: 600;
           white-space: nowrap;
-          letter-spacing: 0.02em;
         }
 
         .transfer-badge {
-          background: rgba(59, 130, 246, 0.12);
+          background: rgba(59, 130, 246, 0.15);
           color: #1e40af;
-          border: 1px solid rgba(59, 130, 246, 0.25);
+          border: 1px solid rgba(59, 130, 246, 0.3);
         }
 
         .stay-badge {
-          background: rgba(34, 197, 94, 0.12);
-          color: #047857;
-          border: 1px solid rgba(34, 197, 94, 0.25);
-        }
-
-        .day-add-btn {
-          width: 32px;
-          height: 32px;
-          border-radius: 8px;
           background: rgba(34, 197, 94, 0.15);
-          border: 1.5px solid rgba(34, 197, 94, 0.3);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          transition: all 0.2s ease;
+          color: #047857;
+          border: 1px solid rgba(34, 197, 94, 0.3);
         }
 
-        .day-add-btn:hover {
-          background: rgba(34, 197, 94, 0.25);
-          border-color: rgba(34, 197, 94, 0.5);
-          transform: scale(1.05);
-        }
-
-        .day-add-btn svg {
-          color: #059669;
-          transition: transform 0.3s ease;
-        }
-
-        .day-add-btn.active {
-          background: rgba(34, 197, 94, 0.25);
-          border-color: rgba(34, 197, 94, 0.5);
-        }
-
-        .day-add-btn.active svg {
-          color: #059669;
-          transform: rotate(45deg);
-        }
-
-        .day-content {
-          display: grid;
-          grid-template-columns: 280px 1fr;
-          gap: 20px;
-          padding: 24px;
-          animation: expandContent 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-          transform-origin: top;
-        }
-
-        @keyframes expandContent {
-          from {
-            opacity: 0;
-            transform: scaleY(0.95);
-          }
-          to {
-            opacity: 1;
-            transform: scaleY(1);
-          }
-        }
-
-        .day-city-image {
+        /* Day City Banner */
+        .day-city-banner {
           position: relative;
           width: 100%;
-          height: 200px;
+          height: 220px;
           border-radius: 12px;
           overflow: hidden;
           border: 2px solid rgba(59, 130, 246, 0.2);
-          background: rgba(59, 130, 246, 0.1);
-          display: flex;
-          align-items: center;
-          justify-content: center;
         }
 
-        .day-city-image img {
+        .day-city-banner img {
           width: 100%;
           height: 100%;
           object-fit: cover;
-          display: block;
         }
 
-        .city-image-overlay {
+        .city-banner-overlay {
           position: absolute;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          padding: 12px;
-          background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+          inset: 0;
+          background: linear-gradient(
+            180deg,
+            rgba(0, 0, 0, 0) 0%,
+            rgba(0, 0, 0, 0.4) 100%
+          );
         }
 
-        .city-name {
-          font-size: 14px;
+        /* Day Activities Section */
+        .day-activities-section {
+          padding: 20px;
+          background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.5) 0%,
+            rgba(240, 249, 255, 0.4) 100%
+          );
+          border: 2px solid rgba(59, 130, 246, 0.15);
+          border-radius: 12px;
+          backdrop-filter: blur(10px);
+        }
+
+        .activities-title {
+          font-size: 16px;
           font-weight: 700;
-          color: white;
-          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+          color: #1e40af;
+          margin: 0 0 20px 0;
         }
 
-        .day-activities {
+        .day-activities-timeline {
           display: flex;
           flex-direction: column;
           gap: 0;
@@ -1110,7 +1287,8 @@ export function TripExpandedView({ trip, onClose, onTripUpdate }: TripExpandedVi
           border-radius: 50%;
           background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
           border: 3px solid rgba(255, 255, 255, 0.9);
-          box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2), 0 2px 8px rgba(59, 130, 246, 0.3);
+          box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2),
+            0 2px 8px rgba(59, 130, 246, 0.3);
           z-index: 2;
           flex-shrink: 0;
         }
@@ -1118,7 +1296,11 @@ export function TripExpandedView({ trip, onClose, onTripUpdate }: TripExpandedVi
         .timeline-line {
           width: 2px;
           flex: 1;
-          background: linear-gradient(180deg, rgba(59, 130, 246, 0.4) 0%, rgba(59, 130, 246, 0.15) 100%);
+          background: linear-gradient(
+            180deg,
+            rgba(59, 130, 246, 0.4) 0%,
+            rgba(59, 130, 246, 0.15) 100%
+          );
           margin-top: 4px;
           min-height: 40px;
         }
@@ -1126,7 +1308,11 @@ export function TripExpandedView({ trip, onClose, onTripUpdate }: TripExpandedVi
         .activity-content-card {
           flex: 1;
           padding: 16px 18px;
-          background: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.5) 100%);
+          background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.7) 0%,
+            rgba(255, 255, 255, 0.5) 100%
+          );
           border: 2px solid rgba(59, 130, 246, 0.2);
           border-radius: 12px;
           margin-bottom: 16px;
@@ -1135,7 +1321,11 @@ export function TripExpandedView({ trip, onClose, onTripUpdate }: TripExpandedVi
         }
 
         .activity-content-card:hover {
-          background: linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.65) 100%);
+          background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.85) 0%,
+            rgba(255, 255, 255, 0.65) 100%
+          );
           border-color: rgba(59, 130, 246, 0.35);
           box-shadow: 0 4px 16px rgba(59, 130, 246, 0.15);
           transform: translateX(4px);
@@ -1221,56 +1411,21 @@ export function TripExpandedView({ trip, onClose, onTripUpdate }: TripExpandedVi
           display: flex;
           flex-direction: column;
           gap: 20px;
-          animation: slideInRight 0.3s ease;
-        }
-
-        @keyframes slideInRight {
-          from {
-            opacity: 0;
-            transform: translateX(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
         }
 
         .search-header {
           display: flex;
-          justify-content: space-between;
+          justify-content: center;
           align-items: center;
           padding-bottom: 16px;
-          border-bottom: 1px solid rgba(59, 130, 246, 0.15);
+          border-bottom: 2px solid rgba(59, 130, 246, 0.2);
         }
 
         .search-header h3 {
-          font-size: 16px;
+          font-size: 17px;
           font-weight: 700;
-          color: #0f172a;
+          color: #1e40af;
           margin: 0;
-        }
-
-        .search-close-btn {
-          width: 28px;
-          height: 28px;
-          border-radius: 6px;
-          background: rgba(239, 68, 68, 0.1);
-          border: 1px solid rgba(239, 68, 68, 0.2);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          transition: all 0.2s ease;
-        }
-
-        .search-close-btn:hover {
-          background: rgba(239, 68, 68, 0.2);
-          border-color: rgba(239, 68, 68, 0.3);
-          transform: scale(1.05);
-        }
-
-        .search-close-btn svg {
-          color: #dc2626;
         }
 
         .search-input-container {
@@ -1301,7 +1456,11 @@ export function TripExpandedView({ trip, onClose, onTripUpdate }: TripExpandedVi
 
         .search-day-indicator {
           padding: 10px 14px;
-          background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(147, 197, 253, 0.2) 100%);
+          background: linear-gradient(
+            135deg,
+            rgba(59, 130, 246, 0.15) 0%,
+            rgba(147, 197, 253, 0.2) 100%
+          );
           border: 1px solid rgba(59, 130, 246, 0.3);
           border-radius: 8px;
           font-size: 13px;
@@ -1471,5 +1630,7 @@ export function TripExpandedView({ trip, onClose, onTripUpdate }: TripExpandedVi
   );
 
   // Use portal to render at body level, but style it to fit within chat container
-  return typeof window !== 'undefined' ? createPortal(modalContent, document.body) : null;
+  return typeof window !== "undefined"
+    ? createPortal(modalContent, document.body)
+    : null;
 }

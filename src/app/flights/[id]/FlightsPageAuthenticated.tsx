@@ -4291,6 +4291,7 @@ export default function FlightsPageAuthenticated() {
                               }
                               rightPanelCollapsed={true}
                               onTripSelect={handleTripSelect}
+                              isSidebarCollapsed={isSidebarCollapsed}
                             />
                           </div>
                         </div>

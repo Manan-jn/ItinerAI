@@ -10,6 +10,7 @@ interface FlashcardsWidgetWhiteThemeProps {
   trips?: any[];
   rightPanelCollapsed?: boolean;
   onTripSelect?: (trip: any | null) => void;
+  isSidebarCollapsed?: boolean;
 }
 
 const FlashcardsWidgetWhiteTheme = forwardRef<
@@ -132,7 +133,8 @@ const FlashcardsWidgetWhiteTheme = forwardRef<
 
         .flashcards-white-theme .trip-name {
           color: #ffffff !important;
-          text-shadow: 0 3px 12px rgba(0, 0, 0, 0.9), 0 1px 3px rgba(0, 0, 0, 0.8) !important;
+          text-shadow: 0 3px 12px rgba(0, 0, 0, 0.9),
+            0 1px 3px rgba(0, 0, 0, 0.8) !important;
           font-weight: 800 !important;
           letter-spacing: -0.02em;
         }

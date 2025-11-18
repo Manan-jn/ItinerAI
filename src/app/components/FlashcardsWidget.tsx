@@ -48,6 +48,7 @@ const FlashcardsWidget = forwardRef<FlashcardsWidgetRef, FlashcardsWidgetProps>(
       trips = tripsData,
       rightPanelCollapsed = false,
       onTripSelect,
+      isSidebarCollapsed = false,
     },
     ref
   ) => {
@@ -824,6 +825,7 @@ const FlashcardsWidget = forwardRef<FlashcardsWidgetRef, FlashcardsWidgetProps>(
             trip={tripsState[activeSlide] as any}
             onClose={handleCloseModal}
             onTripUpdate={handleTripUpdate}
+            isSidebarCollapsed={isSidebarCollapsed}
           />
         )}
 

@@ -1613,6 +1613,7 @@ export default function FlightsPage() {
                                 }
                                 rightPanelCollapsed={true}
                                 onTripSelect={setSelectedTrip}
+                                isSidebarCollapsed={false}
                               />
                             </div>
                           </div>
