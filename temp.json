@@ -1,311 +1,194 @@
 {
-  "trip_title": "Exploring the history of Rajasthan",
-  "no_of_days": 12,
-  "estimated_budget": 75000,
-  "best_time_to_visit": "October to March",
-  "themes": [
-    "culture",
-    "history",
-    "architecture"
-  ],
-  "trip_route": [
-    {
-      "place_name": "Jaipur",
-      "address": "Jaipur, Rajasthan, India",
-      "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJgeJXTN9KbDkRCS7yDDrG4Qw",
-      "lat": "26.9124336",
-      "long": "75.7872709",
-      "photos": [
-        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU4XA24knPrBYr6RoSdK8IL3Osm4tTn9gQlk0JxOV4sSK29DB4cGdbyPbq-mgvP7Vb5GtbTDjFdlRCeouNmTZiz3ezL0pcqBcNGVVn6nJHUtgtp5DjoNAhVjP1Ei1w6b8XpdlTV8UXDHW_A_HJaJ88ySDOvyWQ1TJvmS9uiQmBPNrVOU2S7YfmOc4FPK8CIKeJ-w4d-smLor8w_8hwndiHVnFqRFg8jxz2D_WCLG7j8shHTkwg-asdBnzyh1DyReQunl4rfO4xkTU6hvox5SaZtoNuq5oeyZ2bG7JZ_qKeZ5HjMzAf5ZreV2DoGFstG9ras29Qfm9A0S8VTD3nGS-QUMOsYcXIGYlFKJJNjmmzMIEU3bA2K7IzjOtXMnJMt0m9D7Q78hiOKqIjUguv7eWQaDUUjj8l6gOluLtl3jWpcd-RRiEUTcdAKaoofzRhxRIMlo-L8_W2Y-4gNxCPqX6F_2AJJLn4LFLDHjq83sXx3ZnPfPSF0xP3f0H7KNiPzkZPYt4GQLLqh3rMMRzGBFw86FxR02igjwkmkbwTrNydqdqyIuCpU3ha2OV5doR_YouxyQZly1&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
-      ],
-      "place_id": "ChIJgeJXTN9KbDkRCS7yDDrG4Qw"
-    },
-    {
-      "place_name": "Jodhpur",
-      "address": "Jodhpur, Rajasthan, India",
-      "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJucwGqk6MQTkRuKvhClvqFIE",
-      "lat": "26.2389469",
-      "long": "73.02430939999999",
-      "photos": [
-        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6-dOSdDkv6obSXnUTJf2owSxoFlo3A-Ca0cDgXAq96UQpUGqgoBROjEuEu-cSqx2mXp71BpEmk3Ncmsq6o44EQhUO6l3DgS3ZGlunhybC_zTOzfF5V5ZA2vY0hQvJ8E7tIK-zTZK8lqDqW09J-DbAbUhTMXrYupY8F9-WPP0spG_khvzLG1G1_t1pfBxVmcIz6TnjJy-4wUX_uCIjXPC0nRurQ4sIhH3UcntSn4farfFRA4IyPFxYEJyyoopjee8cZWx8d_Va1sexuiKmNIG5veaMFhubmMeIAxIaVcJadOTCbnUoU356MiiwCojoTdm9aZyAAb7P7UAHN3ydZEac5Pp1iZcu_zZhowW8F_6By14XB1HxWWeMdfbFS5Oou1II-ITr_XHy3gnkqUtCjA3KNaBITq_vULMH-OzGo-Ab6-eOzinbiLnkI22PRR3W9vQfUeAdPVXVjV1TMdmVLi6n1xsof5QGDPrbPCWxbkFhAhn62WEtphxkOEuSaDbF066CP_7grzK3O-5x4xGES5VKJbqwFEMEIHkJitazqO2T90SWcrqzWMvsRhJw8BMoPIr0ptwXZAt3l2w&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
-      ],
-      "place_id": "ChIJucwGqk6MQTkRuKvhClvqFIE"
-    },
-    {
-      "place_name": "Udaipur",
-      "address": "Udaipur, Rajasthan, India",
-      "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJEUShUGXlZzkRsGi4VYTC2Ns",
-      "lat": "24.585445",
-      "long": "73.712479",
-      "photos": [
-        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU7ZRCeXnN96IZC0KBNk1Ni7xzLMfWAhJao5fCfQWHQQ-CnOMsDpXZLZPDJPvm83PNFQ3QC5Wwkhn5waTYuf4BTgcm6rI3Zdb1x2UdBD-PIDYUqtcCIb6QpwvKoZRTxiHSyDOFlyt3JUbCAQJMVR8CbJIaNcYbjXmjUQr2zFdfW7wv9AiD4KAcUL5jxcN51doyRuBiTkn_c8GtkL6aw4uQrcSmKXIclqmYZx1hb00Cx96JBS5RJgxXvEHwd_kXlzmx8uRgGKymEqch8VLSIQvlXSUOT6RgLCigzws9aighl3HRLfNkeX1HsP53GJV3W0Y__aNzQFc5QklkFFBV9s1lW3ZUTQoJbS1eqKX0FYq5WuF2DUdkG6plaDNAJuDRpiTF2L4ONRettCZOHww0RGy50CgmW9KW_-a_w-g_Xa-JOcYXvn1yOK2Kj4A5YsvyOU4jRqn0f4-fQVgVwtbd2BcxcDdsQD5iPaLz0gw9ynZU51wmvvz7H-RSDgCPflSM7gmHKFzpePJwJ7BbCq0Qkmadab-bzZl4fdq0N2L3G2S665Y5TspKawcYhsb84L-6EiVxUlP8KvVuN0rw&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
-      ],
-      "place_id": "ChIJEUShUGXlZzkRsGi4VYTC2Ns"
-    },
-    {
-      "place_name": "Jaisalmer",
-      "address": "Jaisalmer, Rajasthan, India",
-      "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJazkbqii8RzkR427WYNab7_U",
-      "lat": "26.9157487",
-      "long": "70.9083443",
-      "photos": [
-        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6UZAdJ6Y9PeHVU5UYYmMeptcKR2IwjQ_yNVvra9R8S6WPGPb9xvXJlD9l2J4-f_jA-OndjDqyLCgIZXPU8YiU8FgLd8yJ8uMRtDX3nL4b4fF-yQYynBDQwQqIyyHIsxfjkTedMCPxAOh5vapwKSzUTze9V5qQwSrRUVvrnyVMumoxnQG4Mb39tr_dIo6nKHhmU3wN4tGEeyEmJxcQH_-yEHvGjptr8zHnj-D4NN15JaPtsZL80liHOR4JaaRWMHeLMIcp94PE3EyAMOiYjFbsPK8Wv-p7YWcLvpWvgVulw8UcQLy5SJh2V41ALiAemk4k-3qXXhCuVDZSp6fX4lBXeg5monPoPK1u8xBuccWk_pR2zme7B-RWHCigAe38SFf4z7TExNwLu-BJjsJdESEVPCZTeX3PT3JjCbjoH0e6tzV3Cv2dE50DNDTZddZrBp3LEQDH-pRTCkAQkXeobFWLNQ0s2np8MVsKBBaJ_73nuMLHvT6Y_fSO4RtnxM-AleDmO0KznkPp1TM4_sNFjlr5MVvL1otIa2Xuj_z2ci6gJ7hzbuy75QojQXXJ1Q1GBpQAZWBAG&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
-      ],
-      "place_id": "ChIJazkbqii8RzkR427WYNab7_U"
-    }
-  ],
-  "day_wise_plan": [
-    {
-      "day_number": 1,
-      "conveyance_details": {
-        "is_required": true,
-        "travel_timing": "morning",
-        "from_city": "user_location",
-        "to_city": "Jaipur"
-      },
-      "stay_details": {
-        "is_required": true,
-        "city": "Jaipur",
-        "check_in_day": "1",
-        "check_out_day": "3"
-      },
-      "must_do_activities": [
-        {
-          "type": "place",
-          "category": "fort",
-          "name": "Amer Fort",
-          "description": "Arrive in Jaipur and check into your hotel. Visit the magnificent Amer Fort. You can take a jeep ride up to the fort."
-        }
+  "user_id": "gu1aKNfzK9Zze6w1hvzuHLnJ1Vz1",
+  "session_id": "605440855154622464",
+  "message": {
+      "response_type": "itinerary",
+      "message": "Welcome to Dubai! I've planned your first day to be a relaxed and enchanting introduction to the city, keeping in mind your late arrival. You'll get settled into your beautiful hotel and immediately soak in the iconic downtown atmosphere.",
+      "itinerary": [
+          {
+              "day_number": 1,
+              "date": "2025-12-14",
+              "title": "Arrival in Downtown Dubai & Fountain Spectacle",
+              "weather_forecast": {
+                  "temperature": "16 - 26",
+                  "avg_humidity": 60,
+                  "precipitation": 0
+              },
+              "themes": [
+                  "Sightseeing",
+                  "Leisure"
+              ],
+              "estimated_total_cost": 6000,
+              "summary": "Arrive in Dubai, transfer to your hotel in the heart of Downtown, and enjoy a relaxed evening with a late dinner accompanied by the spectacular Dubai Fountain show.",
+              "highlights": [
+                  "Arrival in Dubai",
+                  "Check-in at the luxurious Manzil Downtown by Vida",
+                  "Witnessing the Dubai Fountain show",
+                  "Late-night dinner with views of the Burj Khalifa"
+              ],
+              "schedule": [
+                  {
+                      "start_time": "00:00",
+                      "end_time": "19:12",
+                      "description": "Free time and travel to Indira Gandhi International Airport, New Delhi for your flight to Dubai.",
+                      "activity_type": "free_time",
+                      "place_name": "New Delhi",
+                      "address": "New Delhi, India",
+                      "free_time_highlights": [],
+                      "fare": 0,
+                      "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJLbZ-NFv9DDkRzk0gTkm3wlI",
+                      "lat": "28.6139298",
+                      "long": "77.2088282",
+                      "photos": [
+                          "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU4rO0kWMYn_6prN9r8UsZ49ZrJCCt5W1GMZnlnyQDMPxvoTvB-wj9pEcfBKFGAfG1vkLCcHf6BH48eManKv5GBYFaxw8CxDNir2Nr_49rQSgyj2chO99A_rndwnMHITK4b96laARhk2CN9_M5SIhZCaeOhu4n8RuJYFb-dztcsfrD1k9BlPEnQG1OdPIbdtunojHsoGM1N8VY4IXeZLmAcOG2H3jiR7ON3uSMjcC8LuNJSrFUehBR_6WLtrG-k7sWWCTV-i47yaKU7mfUqzMN-StDlh5SXnD-ybk3mXYlkc4PNtxVl7aM4C0SVgkVSTK0tIIMOTWyBOOx2y50vOmmajdoxYEFNJWiNZWP0Kj2uT4dBCUioUUqKU5BhdRW_eGMIurfneBfqIZv7HD9gjMjuTcRHJQSOotEZcVofbs8JUMoe6zSGuhlyC_6qK5sTK758S18ZOxGqMomWaM7Af1OfHvOgXKTAJbS8NjUB-PcoQIKDmB8LjDjI-f949JzTt6rVVEEYKBOllUJMhhZBmiJuyHu2EC08HRdQFl_KBgHTAxORlTCIOy0e5kNUp3HM84lU9YAKW&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                      ],
+                      "place_id": "ChIJLbZ-NFv9DDkRzk0gTkm3wlI"
+                  },
+                  {
+                      "start_time": "19:12",
+                      "end_time": "20:12",
+                      "description": "Flight from New Delhi to Dubai.",
+                      "activity_type": "travel",
+                      "conveyance_type": "flight",
+                      "fare": 3299,
+                      "distance_km": 2200,
+                      "duration_minutes": 60,
+                      "from_location": {
+                          "place_name": "Indira Gandhi International Airport",
+                          "address": "New Delhi, Delhi 110037, India",
+                          "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJiS0q_IUbDTkRne1DLBh2874",
+                          "lat": "28.5561437",
+                          "long": "77.0999623",
+                          "photos": [
+                              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU4BdQN0_JCraoryxUIGeW7mofCnk9NBKGSI8N2LD0dE1Xc6YjejpmPHr5yMUooMDEJnd9PUaw1i0qY6DTNqhvLi8JF1s8uuJvz-iBmWe4vPYuwSxLOCqYX4sjF0RP--sdelm7UWjp2ajDmc83GCEdDfvKlPxrnO6IXiqIySSVXW-Hp_eWBQuP5jSgzxIGjzgkb1oXi7FKwypFmfU4OzQrDLX5EInAJUvrf5rEao68Q0thtq5qs0xuYf76fYol-qzEK-bqc2uBxe2xUrUmLrGjF_-AHO2UhTmsJv0--4JQ2M2EZ_BSEgWuP2pe24Uy3mFRfEs-Bj0E1bJNTruoi0kBS81q7BmpeqfQTILgxWGsEsylQgH4I7kephS2K6LrLU4WTDZrogD19LFrfr0SVsWojqvMTrUzTHJqvIh6xpUwTol8zDVA957jmJ-ltANUebYC1m2tIgEhx8GZZy7Gno_WSHkOmbLsIxI5WUAl520Gy3mHidPdeypXGdw4aBCB6kyFiLPs0iqdfNFlRNedXmth3fcVX3N23ELvmDi0P6dj-A7hQ9_sO1MILmbRyr8C5kiM2VqqUlfS55e_M_HUyWMe8XL-s&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                          ],
+                          "place_id": "ChIJiS0q_IUbDTkRne1DLBh2874"
+                      },
+                      "to_location": {
+                          "place_name": "Dubai International Airport",
+                          "address": "Dubai - United Arab Emirates",
+                          "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJaQ4mkwZdXz4R6e5IegDUleY",
+                          "lat": "25.2515401",
+                          "long": "55.3683066",
+                          "photos": [
+                              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU7WGEa3hIovIIgxRSXJpA0R9tuphoRX9O2qTRR0ZmHrZRpFKejH-fN7J8u7OULRLxfJXuAXgwAZxe5zhyPCXZz2LqscUf54rnUV9YpsH3URvtiIeEiwiqOAzr0MPfFhzQ4ZgPGR9fyPv7WoalfDC4UlOam_CO7pgOIY-g1A1dJ6GRO2AKwfoGnn3VGe9LqnzCbl5eKh6DJe1yFEA2sZ6u0lXL_nFIRotbPN_V-LI-xLgu6CB-mnrcrt0L_PBMXu8qvLs9sz3vplg0_ZId9J5M8wLSmZI5RtEXyBC91m3OS0AWQcLa_vWb2uXZzR5xUeIsO3ElJwpPxk7DjY9Myd_prJp2EnW9tUQVYVzVItwufrI4GMWf90-8Cfwy80NGzlr7H3SqcvfeskgLqqTVDjJHxfoNmUZmvaNNI86YJKoASmvxisQ8SP-22AbOyAfXLL7A-Jp2QGBPW6W5WFZrHmtupTXbeG2cLE0rQDKgBxVIgsI3oK9h9LxhMXxoJRsIcAJzqn6xMUAdRe8IiNfqy9uiSvtVUjGTfN1q1NIzEG-fr31J2rbOX_y4C32GGJ1DrH6yQ4WcYcMse6DQ&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                          ],
+                          "place_id": "ChIJaQ4mkwZdXz4R6e5IegDUleY"
+                      },
+                      "flight_number": "AK367",
+                      "airline": "Akasa Air",
+                      "departure_time": "19:12",
+                      "arrival_time": "20:12"
+                  },
+                  {
+                      "start_time": "20:12",
+                      "end_time": "21:30",
+                      "description": "Arrive at Dubai International Airport (DXB). Clear immigration, and collect your baggage.",
+                      "activity_type": "other",
+                      "place_name": "Dubai International Airport",
+                      "address": "Dubai - United Arab Emirates",
+                      "other_highlights": [
+                          "Immigration and customs clearance",
+                          "Baggage claim"
+                      ],
+                      "fare": 0,
+                      "booking_required": false,
+                      "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJaQ4mkwZdXz4R6e5IegDUleY",
+                      "lat": "25.2515401",
+                      "long": "55.3683066",
+                      "photos": [
+                          "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6bVPOzFhww6SVR5cRmJVSxjKBt-sGjxBh2ehkayVl33q_dRy-if0dG1TL95bqy0T-gkREp2GIc6l3LwRJNR8j3RPiDHSB3Fije9hpuqN3ManUuySwKPg6jo4tFGizCtqFMElJY8Gc479_00Uo-r4eeSq6_GPXIRy5tRDziAbVlD1Uab1TYgW1DgF2SMtrbcfzXsHFCtIA132rByhWrAGxeReFMeW8aLUaVxT2Lhtu41A8h647wRCNWOPFnGXE-kloDBw6rwMem6qW1hDkPDnkZGSvJExr08oOK41DQ-FNTeHMpoAGtPjPGdLI2BwVAUxrg9lj6sLCG6CYaJrx2RKf6lg-GI9Z3kHGA-IwoH-NDSeqajiIFBBsEPn46GO7j3_6xD8wqniAduatElYAcbQyNhFZrpWeHHkS6Qn0ZDs-6_fMZsqaCX-tSfyznUW7OSQ8oBTE6nztaWpztSN8a3DwEXLD1YAt1rEaJn8L0PCjF2ffn3qFO0Q-QEiapoYinEOMUAGNcs88vPhtr94WDpayb2sJ4dt3qafUMi_XXm4iuRaaQIoLlx8v6-M2_D0tTFVPAXpsncw_jWA&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                      ],
+                      "place_id": "ChIJaQ4mkwZdXz4R6e5IegDUleY"
+                  },
+                  {
+                      "start_time": "21:30",
+                      "end_time": "22:00",
+                      "description": "Travel from the airport to your hotel in Downtown Dubai.",
+                      "activity_type": "travel",
+                      "conveyance_type": "cab",
+                      "fare": 1200,
+                      "distance_km": 16,
+                      "duration_minutes": 30,
+                      "from_location": {
+                          "place_name": "Dubai International Airport",
+                          "address": "Dubai - United Arab Emirates",
+                          "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJaQ4mkwZdXz4R6e5IegDUleY",
+                          "lat": "25.2515401",
+                          "long": "55.3683066",
+                          "photos": [
+                              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU62JS1JtFFBUDZ3s6vMujl0FYXUyXHfxXCwjc93WXEytFVIPbjwSA_4E7hlESj3oJQjZTJB5892lMvTm32i5EJjErpn4Qu42RYeNlQ2PXDrMpkVT_DqNSNy__4wNq_TuPT-mtle4d-42zE-8odF5qYpmIW8IGQdMbJ8TbrpuTZTx6dT0ng6yJkozWO-433jhBTlUl0L-RfHKUfJrpr0xqSVgihTkIH6e3kV0eeZE_V-vRZ4JGKNNIQNxrplGqOeaxsBXYrnnAOW09wY5WUEMcPAJHKD3-h4U3DYgCTS6NT5sIC-rcYv3g9FtJjanaEi83qxJH9tSdzZej5rj_qneyeHCduPUH7fiRXhkgT46_r5h0a8HedIg5rQIUeQ5GB5kOYt0vTfapB9nSPn6-2VE18Yz1S0Oxh_iFGtfbho0LzQo5rhAP0mblSPKnVThg6RTCBLB_a9pc6ASM3F0Smho4Fu9ySZBTU6_07ntjKxI98ayGJrgT3DCnVeml_pmIdkQvUazVCr6FOPwBSLxpJSNZMI0mPWJyXzvsAhtsTLI3DuAguSjdsQLyZIE5rc5PNSWET5DwKxGrgW9A&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                          ],
+                          "place_id": "ChIJaQ4mkwZdXz4R6e5IegDUleY"
+                      },
+                      "to_location": {
+                          "place_name": "Manzil Downtown by Vida",
+                          "address": "Sheikh Mohammed Bin Rashid Boulevard, Downtown Dubai, Dubai, United Arab Emirates",
+                          "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJsVRTwS5oXz4R7xWV3Zb3jxM",
+                          "lat": "25.1911134",
+                          "long": "55.2776665",
+                          "photos": [
+                              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6iHwUT7pHHgvUsLjn-qZ8pHh-WN9MEHgbOzlDQZ6VERHcTbc42wVkBWZC2MMHoeMQ96Z3xoI8nqVuM5uHMST2J9JUbnhahYppnco06d24fBQft-46S5XyGLHGhURfw621vLZbg9Bp0CiZlbH4qVpkyvpLIQQuQDVEofv8zqIkDc5rYtJMgZiIJ33jrZ0TWgNQpvTGjKmm7uh5V3E6m4WHawgd3wUEm9lCmYOMwkAYXOctdEo6MWZHh9ee5e6lR9XfSpbtT6wrw5yvX8NsFe3WKwBFBBFLKJdU5q8Euytt5-1BkPDM&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                          ],
+                          "place_id": "ChIJsVRTwS5oXz4R7xWV3Zb3jxM"
+                      }
+                  },
+                  {
+                      "start_time": "22:00",
+                      "end_time": "22:30",
+                      "description": "Check into your hotel, Manzil Downtown by Vida, and settle in.",
+                      "activity_type": "rest",
+                      "place_name": "Manzil Downtown by Vida",
+                      "address": "Sheikh Mohammed Bin Rashid Boulevard, Downtown Dubai, Dubai, United Arab Emirates",
+                      "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJsVRTwS5oXz4R7xWV3Zb3jxM",
+                      "lat": "25.1911134",
+                      "long": "55.2776665",
+                      "photos": [
+                          "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6iHwUT7pHHgvUsLjn-qZ8pHh-WN9MEHgbOzlDQZ6VERHcTbc42wVkBWZC2MMHoeMQ96Z3xoI8nqVuM5uHMST2J9JUbnhahYppnco06d24fBQft-46S5XyGLHGhURfw621vLZbg9Bp0CiZlbH4qVpkyvpLIQQuQDVEofv8zqIkDc5rYtJMgZiIJ33jrZ0TWgNQpvTGjKmm7uh5V3E6m4WHawgd3wUEm9lCmYOMwkAYXOctdEo6MWZHh9ee5e6lR9XfSpbtT6wrw5yvX8NsFe3WKwBFBBFLKJdU5q8Euytt5-1BkPDM&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                      ],
+                      "place_id": "ChIJsVRTwS5oXz4R7xWV3Zb3jxM"
+                  },
+                  {
+                      "start_time": "22:30",
+                      "end_time": "23:45",
+                      "description": "Take a short walk to Souk Al Bahar for a late dinner. Enjoy your meal while watching the final performances of the spectacular Dubai Fountain show, with the magnificent Burj Khalifa in the background.",
+                      "activity_type": "eat",
+                      "place_name": "Operation: Falafel",
+                      "address": "Souk Al Bahar, Downtown Dubai - Dubai - United Arab Emirates",
+                      "meal_type": "dinner",
+                      "cuisine": "Middle Eastern",
+                      "menu_highlights": [
+                          "Shawarma",
+                          "Falafel Platter",
+                          "Hummus"
+                      ],
+                      "fare": 1500,
+                      "reservation_required": false,
+                      "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJf8A0gStoXz4RI9lh78aCGxM",
+                      "lat": "25.1911846",
+                      "long": "55.2733076",
+                      "photos": [
+                          "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU5rYtKZ1ALpXzJgI8ck8aHP6CZAzLYYvlqhFCkN1irob1o79Oha0lt6yfQYvzZacnfniPnxv8A9xIYxNwMHHdTDAvcOEPP_Z41Kxpi-RBmd4J9VR5ztGAB61XT8kvm-SPJOlkrLdQCJBSRBZe5kKXp4uy1IFTMup-L9K7x134heGkJABI4MMQAn3fhGaASXkfmlqLbcRazp1S5GdzPdttCYwjjVHOREnlXPq1sgzGvAHBnmKXCHxCKzHTnkNrSaN3BAK4dZWXj2OILvcDEs3R_DE7SYJkzHNHHC5LuXinG5w1l1wlc&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                      ],
+                      "place_id": "ChIJf8A0gStoXz4RI9lh78aCGxM"
+                  },
+                  {
+                      "start_time": "23:45",
+                      "end_time": "23:59",
+                      "description": "Return to your hotel and get a good night's rest for the adventures ahead.",
+                      "activity_type": "rest",
+                      "place_name": "Manzil Downtown by Vida",
+                      "address": "Sheikh Mohammed Bin Rashid Boulevard, Downtown Dubai, Dubai, United Arab Emirates",
+                      "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJsVRTwS5oXz4R7xWV3Zb3jxM",
+                      "lat": "25.1911134",
+                      "long": "55.2776665",
+                      "photos": [
+                          "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6iHwUT7pHHgvUsLjn-qZ8pHh-WN9MEHgbOzlDQZ6VERHcTbc42wVkBWZC2MMHoeMQ96Z3xoI8nqVuM5uHMST2J9JUbnhahYppnco06d24fBQft-46S5XyGLHGhURfw621vLZbg9Bp0CiZlbH4qVpkyvpLIQQuQDVEofv8zqIkDc5rYtJMgZiIJ33jrZ0TWgNQpvTGjKmm7uh5V3E6m4WHawgd3wUEm9lCmYOMwkAYXOctdEo6MWZHh9ee5e6lR9XfSpbtT6wrw5yvX8NsFe3WKwBFBBFLKJdU5q8Euytt5-1BkPDM&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                      ],
+                      "place_id": "ChIJsVRTwS5oXz4R7xWV3Zb3jxM"
+                  }
+              ]
+          }
       ]
-    },
-    {
-      "day_number": 2,
-      "conveyance_details": {
-        "is_required": false
-      },
-      "stay_details": {
-        "is_required": true,
-        "city": "Jaipur",
-        "check_in_day": "1",
-        "check_out_day": "3"
-      },
-      "must_do_activities": [
-        {
-          "type": "place",
-          "category": "palace",
-          "name": "City Palace and Hawa Mahal",
-          "description": "Visit the City Palace and the adjoining Jantar Mantar. Take a photo stop at the Hawa Mahal (Palace of Winds)."
-        }
-      ]
-    },
-    {
-      "day_number": 3,
-      "conveyance_details": {
-        "is_required": true,
-        "travel_timing": "morning",
-        "from_city": "Jaipur",
-        "to_city": "Jodhpur"
-      },
-      "stay_details": {
-        "is_required": true,
-        "city": "Jodhpur",
-        "check_in_day": "3",
-        "check_out_day": "5"
-      },
-      "must_do_activities": [
-        {
-          "type": "place",
-          "category": "fort",
-          "name": "Mehrangarh Fort",
-          "description": "Drive to Jodhpur, the 'Blue City'. Visit the mighty Mehrangarh Fort, which offers panoramic views of the city."
-        }
-      ]
-    },
-    {
-      "day_number": 4,
-      "conveyance_details": {
-        "is_required": false
-      },
-      "stay_details": {
-        "is_required": true,
-        "city": "Jodhpur",
-        "check_in_day": "3",
-        "check_out_day": "5"
-      },
-      "must_do_activities": [
-        {
-          "type": "place",
-          "category": "cenotaph",
-          "name": "Jaswant Thada",
-          "description": "Visit Jaswant Thada, a beautiful marble cenotaph. Explore the bustling Sardar Market near the Clock Tower."
-        }
-      ]
-    },
-    {
-      "day_number": 5,
-      "conveyance_details": {
-        "is_required": true,
-        "travel_timing": "morning",
-        "from_city": "Jodhpur",
-        "to_city": "Udaipur"
-      },
-      "stay_details": {
-        "is_required": true,
-        "city": "Udaipur",
-        "check_in_day": "5",
-        "check_out_day": "7"
-      },
-      "must_do_activities": [
-        {
-          "type": "activity",
-          "category": "boating",
-          "name": "Boat Ride on Lake Pichola",
-          "description": "Drive to Udaipur, the 'City of Lakes'. In the evening, enjoy a serene boat ride on Lake Pichola."
-        }
-      ]
-    },
-    {
-      "day_number": 6,
-      "conveyance_details": {
-        "is_required": false
-      },
-      "stay_details": {
-        "is_required": true,
-        "city": "Udaipur",
-        "check_in_day": "5",
-        "check_out_day": "7"
-      },
-      "must_do_activities": [
-        {
-          "type": "place",
-          "category": "palace",
-          "name": "City Palace and Jagdish Temple",
-          "description": "Visit the majestic City Palace and the Jagdish Temple. In the evening, watch a traditional folk dance performance at Bagore Ki Haveli."
-        }
-      ]
-    },
-    {
-      "day_number": 7,
-      "conveyance_details": {
-        "is_required": true,
-        "travel_timing": "morning",
-        "from_city": "Udaipur",
-        "to_city": "Jaisalmer"
-      },
-      "stay_details": {
-        "is_required": true,
-        "city": "Jaisalmer",
-        "check_in_day": "7",
-        "check_out_day": "10"
-      },
-      "must_do_activities": [
-        {
-          "type": "activity",
-          "category": "camel_safari",
-          "name": "Camel Safari in Sam Sand Dunes",
-          "description": "Drive to Jaisalmer, the 'Golden City'. In the evening, head to the Sam Sand Dunes for a camel safari at sunset and a cultural program."
-        }
-      ]
-    },
-    {
-      "day_number": 8,
-      "conveyance_details": {
-        "is_required": false
-      },
-      "stay_details": {
-        "is_required": true,
-        "city": "Jaisalmer",
-        "check_in_day": "7",
-        "check_out_day": "10"
-      },
-      "must_do_activities": [
-        {
-          "type": "place",
-          "category": "fort",
-          "name": "Jaisalmer Fort",
-          "description": "Explore the majestic Jaisalmer Fort, a UNESCO World Heritage site and a living fort."
-        }
-      ]
-    },
-    {
-      "day_number": 9,
-      "conveyance_details": {
-        "is_required": false
-      },
-      "stay_details": {
-        "is_required": true,
-        "city": "Jaisalmer",
-        "check_in_day": "7",
-        "check_out_day": "10"
-      },
-      "must_do_activities": [
-        {
-          "type": "place",
-          "category": "haveli",
-          "name": "Patwon Ki Haveli",
-          "description": "Wander through the narrow lanes of the fort and visit the intricately carved Patwon Ki Haveli, Salim Singh Ki Haveli, and Nathmal Ki Haveli."
-        }
-      ]
-    },
-    {
-      "day_number": 10,
-      "conveyance_details": {
-        "is_required": true,
-        "travel_timing": "morning",
-        "from_city": "Jaisalmer",
-        "to_city": "Jaipur"
-      },
-      "stay_details": {
-        "is_required": true,
-        "city": "Jaipur",
-        "check_in_day": "10",
-        "check_out_day": "11"
-      },
-      "must_do_activities": [
-        {
-          "type": "activity",
-          "category": "other",
-          "name": "Travel back to Jaipur",
-          "description": "Take a train or bus back to Jaipur."
-        }
-      ]
-    },
-    {
-      "day_number": 11,
-      "conveyance_details": {
-        "is_required": true,
-        "travel_timing": "evening",
-        "from_city": "Jaipur",
-        "to_city": "user_location"
-      },
-      "stay_details": {
-        "is_required": false
-      },
-      "must_do_activities": [
-        {
-          "type": "activity",
-          "category": "shopping",
-          "name": "Shopping in Jaipur",
-          "description": "Spend the day shopping for souvenirs in the local markets of Jaipur before heading back to your location."
-        }
-      ]
-    },
-    {
-      "day_number": 12,
-      "conveyance_details": {
-        "is_required": false
-      },
-      "stay_details": {
-        "is_required": false
-      },
-      "must_do_activities": [
-        {
-          "type": "activity",
-          "category": "other",
-          "name": "Arrive back at your location",
-          "description": "Arrive back at your location with memories of a royal trip."
-        }
-      ]
-    }
-  ]
+  }
 }

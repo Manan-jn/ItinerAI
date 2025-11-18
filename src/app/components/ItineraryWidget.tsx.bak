@@ -288,15 +288,8 @@ interface TimelineCardProps {
   onToggleExpand: () => void;
 }
 
-const TimelineCard = ({
-  stop,
-  activityType,
-  photoUrl,
-  mapsUrl,
-  index,
-  isExpanded,
-  onToggleExpand,
-}: TimelineCardProps) => {
+const TimelineCard = ({ stop, activityType, photoUrl, mapsUrl, index, isExpanded, onToggleExpand }: TimelineCardProps) => {
+
   // Get activity icon and color based on type
   const getActivityConfig = (type: string) => {
     switch (type) {
@@ -351,20 +344,12 @@ const TimelineCard = ({
   const airline = stop.airline || null;
   const departureTime = stop.departure_time || null;
   const arrivalTime = stop.arrival_time || null;
-  const conveyanceType = stop.type || null;
-  console.log("stop121 ", stop);
-  console.log("conveyanceType ", conveyanceType);
-  console.log("activityType ", activityType);
-  console.log("departureTime ", departureTime);
-  console.log("arrivalTime ", arrivalTime);
-  console.log("flightNumber ", flightNumber);
-  console.log("airline ", airline);
+  const conveyanceType = stop.conveyance_type || null;
+
   return (
     <div
       className={`timeline-card relative bg-white border border-[#E5E5E5] rounded-xl overflow-hidden cursor-pointer transition-all duration-300 shadow-[0_1px_3px_rgba(0,0,0,0.08)] hover:shadow-[0_4px_6px_rgba(0,0,0,0.1)] hover:-translate-y-0.5 ${
-        isExpanded
-          ? "border-[#32B8C6] shadow-[0_8px_16px_rgba(33,128,141,0.15)]"
-          : ""
+        isExpanded ? "border-[#32B8C6] shadow-[0_8px_16px_rgba(33,128,141,0.15)]" : ""
       }`}
       onClick={onToggleExpand}
     >
@@ -387,16 +372,11 @@ const TimelineCard = ({
             </h4>
 
             {/* Subtitle - Location or Route */}
-            {activityType === "travel" &&
-            (stop.from_location || stop.to_location) ? (
+            {activityType === "travel" && (stop.from_location || stop.to_location) ? (
               <div className="text-[13px] text-[#626C71] flex items-center gap-1.5 mb-2">
-                <span className="truncate">
-                  {stop.from_location?.place_name || "Start"}
-                </span>
+                <span className="truncate">{stop.from_location?.place_name || "Start"}</span>
                 <span>→</span>
-                <span className="truncate">
-                  {stop.to_location?.place_name || "End"}
-                </span>
+                <span className="truncate">{stop.to_location?.place_name || "End"}</span>
                 {airline && flightNumber && (
                   <span className="text-[#21808D] font-medium ml-1">
                     ({airline} {flightNumber})
@@ -469,42 +449,26 @@ const TimelineCard = ({
               <div className="grid grid-cols-2 gap-2 mb-3">
                 {departureTime && (
                   <div className="bg-[#F5F5F5] p-2.5 rounded-lg">
-                    <div className="text-[11px] text-[#626C71] mb-1">
-                      🛫 Departure
-                    </div>
-                    <div className="text-[13px] font-semibold text-[#1F2121]">
-                      {departureTime}
-                    </div>
+                    <div className="text-[11px] text-[#626C71] mb-1">🛫 Departure</div>
+                    <div className="text-[13px] font-semibold text-[#1F2121]">{departureTime}</div>
                   </div>
                 )}
                 {arrivalTime && (
                   <div className="bg-[#F5F5F5] p-2.5 rounded-lg">
-                    <div className="text-[11px] text-[#626C71] mb-1">
-                      🛬 Arrival
-                    </div>
-                    <div className="text-[13px] font-semibold text-[#1F2121]">
-                      {arrivalTime}
-                    </div>
+                    <div className="text-[11px] text-[#626C71] mb-1">🛬 Arrival</div>
+                    <div className="text-[13px] font-semibold text-[#1F2121]">{arrivalTime}</div>
                   </div>
                 )}
                 {airline && (
                   <div className="bg-[#F5F5F5] p-2.5 rounded-lg">
-                    <div className="text-[11px] text-[#626C71] mb-1">
-                      ✈️ Airline
-                    </div>
-                    <div className="text-[13px] font-semibold text-[#1F2121]">
-                      {airline}
-                    </div>
+                    <div className="text-[11px] text-[#626C71] mb-1">✈️ Airline</div>
+                    <div className="text-[13px] font-semibold text-[#1F2121]">{airline}</div>
                   </div>
                 )}
                 {flightNumber && (
                   <div className="bg-[#F5F5F5] p-2.5 rounded-lg">
-                    <div className="text-[11px] text-[#626C71] mb-1">
-                      🎫 Flight No.
-                    </div>
-                    <div className="text-[13px] font-semibold text-[#1F2121]">
-                      {flightNumber}
-                    </div>
+                    <div className="text-[11px] text-[#626C71] mb-1">🎫 Flight No.</div>
+                    <div className="text-[13px] font-semibold text-[#1F2121]">{flightNumber}</div>
                   </div>
                 )}
               </div>
@@ -516,38 +480,24 @@ const TimelineCard = ({
                 <div className="grid grid-cols-2 gap-2 mb-3">
                   {cuisine && (
                     <div className="bg-[#F5F5F5] p-2.5 rounded-lg">
-                      <div className="text-[11px] text-[#626C71] mb-1">
-                        🍽️ Cuisine
-                      </div>
-                      <div className="text-[13px] font-semibold text-[#1F2121]">
-                        {cuisine}
-                      </div>
+                      <div className="text-[11px] text-[#626C71] mb-1">🍽️ Cuisine</div>
+                      <div className="text-[13px] font-semibold text-[#1F2121]">{cuisine}</div>
                     </div>
                   )}
                   {mealType && (
                     <div className="bg-[#F5F5F5] p-2.5 rounded-lg">
-                      <div className="text-[11px] text-[#626C71] mb-1">
-                        ⏰ Meal Type
-                      </div>
-                      <div className="text-[13px] font-semibold text-[#1F2121] capitalize">
-                        {mealType}
-                      </div>
+                      <div className="text-[11px] text-[#626C71] mb-1">⏰ Meal Type</div>
+                      <div className="text-[13px] font-semibold text-[#1F2121] capitalize">{mealType}</div>
                     </div>
                   )}
                   {stop.fare && (
                     <div className="bg-[#F5F5F5] p-2.5 rounded-lg">
-                      <div className="text-[11px] text-[#626C71] mb-1">
-                        💰 Estimate
-                      </div>
-                      <div className="text-[13px] font-semibold text-[#1F2121]">
-                        ₹{stop.fare}
-                      </div>
+                      <div className="text-[11px] text-[#626C71] mb-1">💰 Estimate</div>
+                      <div className="text-[13px] font-semibold text-[#1F2121]">₹{stop.fare}</div>
                     </div>
                   )}
                   <div className="bg-[#F5F5F5] p-2.5 rounded-lg">
-                    <div className="text-[11px] text-[#626C71] mb-1">
-                      📝 Reservation
-                    </div>
+                    <div className="text-[11px] text-[#626C71] mb-1">📝 Reservation</div>
                     <div className="text-[13px] font-semibold text-[#1F2121]">
                       {reservationRequired ? "Required" : "Not needed"}
                     </div>
@@ -562,10 +512,7 @@ const TimelineCard = ({
                     </div>
                     <div className="space-y-1.5">
                       {menuHighlights.map((item: string, idx: number) => (
-                        <div
-                          key={idx}
-                          className="flex items-start gap-2 text-[12px] text-[#626C71]"
-                        >
+                        <div key={idx} className="flex items-start gap-2 text-[12px] text-[#626C71]">
                           <span className="text-[#21808D] font-bold">•</span>
                           <span>{item}</span>
                         </div>
@@ -601,19 +548,17 @@ const TimelineCard = ({
                   📍 Location
                 </a>
               )}
-              {activityType === "travel" &&
-                stop.from_location &&
-                stop.to_location && (
-                  <a
-                    href={`https://www.google.com/maps/dir/?api=1&origin=${stop.from_location.lat},${stop.from_location.long}&destination=${stop.to_location.lat},${stop.to_location.long}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 flex items-center justify-center gap-1.5 bg-[#F5F5F5] hover:bg-[#E5E5E5] text-[#1F2121] text-[12px] font-medium py-2.5 px-4 rounded-lg border border-[#E5E5E5] transition-all duration-200"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    🧭 Directions
-                  </a>
-                )}
+              {activityType === "travel" && stop.from_location && stop.to_location && (
+                <a
+                  href={`https://www.google.com/maps/dir/?api=1&origin=${stop.from_location.lat},${stop.from_location.long}&destination=${stop.to_location.lat},${stop.to_location.long}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 flex items-center justify-center gap-1.5 bg-[#F5F5F5] hover:bg-[#E5E5E5] text-[#1F2121] text-[12px] font-medium py-2.5 px-4 rounded-lg border border-[#E5E5E5] transition-all duration-200"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  🧭 Directions
+                </a>
+              )}
             </div>
           </div>
         </div>
@@ -653,16 +598,13 @@ export default function ItineraryWidget({
   const [loadingDayIndex, setLoadingDayIndex] = useState<number | null>(null);
   const [showDeleteWarning, setShowDeleteWarning] = useState(false); // NEW: Show delete warning alert
   const [dayToDelete, setDayToDelete] = useState<number | null>(null); // NEW: Day number to delete
-  const [deletingDayNumber, setDeletingDayNumber] = useState<number | null>(
-    null
-  ); // NEW: Day being deleted (for animation)
+  const [deletingDayNumber, setDeletingDayNumber] = useState<number | null>(null); // NEW: Day being deleted (for animation)
   const [isChatLoading, setIsChatLoading] = useState(false); // NEW: Loading state for chat API call
   const [showUpdateNotification, setShowUpdateNotification] = useState(false); // NEW: Show update notification
   const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set()); // Track expanded timeline cards
 
   // Use pending days from parent - single source of truth
-  const pendingConveyanceDays =
-    pendingConveyanceDaysFromParent || new Set<number>();
+  const pendingConveyanceDays = pendingConveyanceDaysFromParent || new Set<number>();
 
   // Load itinerary data from JSON or API response
   const [itineraryData, setItineraryData] = useState<ItineraryData | null>(
@@ -753,10 +695,7 @@ export default function ItineraryWidget({
           );
 
           // Calculate new total_days (max of current length or highest day number)
-          const maxDayNumber = Math.max(
-            ...mergedDays.map((d) => d.day),
-            prevData.total_days
-          );
+          const maxDayNumber = Math.max(...mergedDays.map(d => d.day), prevData.total_days);
 
           return {
             ...prevData,
@@ -775,10 +714,8 @@ export default function ItineraryWidget({
   useEffect(() => {
     if (navigateToDayNumber !== null && itineraryData) {
       // Find the day by day_number to handle shifted days correctly
-      const dayExists = itineraryData.days.some(
-        (day) => day.day === navigateToDayNumber
-      );
-
+      const dayExists = itineraryData.days.some(day => day.day === navigateToDayNumber);
+      
       if (dayExists) {
         // Convert day number (1-based) to array index (0-based)
         const targetIndex = navigateToDayNumber - 1;
@@ -798,12 +735,10 @@ export default function ItineraryWidget({
 
   // Calculate current day number from index
   const currentDayNumber = currentDayIndex + 1;
-
+  
   // Find current day by day_number (not array index) to handle shifted days correctly
-  const currentDay = itineraryData.days.find(
-    (day) => day.day === currentDayNumber
-  );
-
+  const currentDay = itineraryData.days.find(day => day.day === currentDayNumber);
+  
   const hasNextDay = currentDayIndex < itineraryData.days.length - 1;
   const hasPrevDay = currentDayIndex > 0;
 
@@ -839,31 +774,23 @@ export default function ItineraryWidget({
     if (isPendingDay) {
       // For pending days, just navigate to show the pending state
       // DO NOT trigger API call with response_type='generate'
-      console.log(
-        `📌 Day ${dayNumber} is pending - showing pending state without API call`
-      );
+      console.log(`📌 Day ${dayNumber} is pending - showing pending state without API call`);
       setCurrentDayIndex(dayIndex);
       return;
     }
 
     // Not a pending day - check if we have data for it by day_number (not array index)
     // This is critical after day insertions where day numbers and indices may not align
-    const selectedDay = itineraryData!.days.find(
-      (day) => day.day === dayNumber
-    );
+    const selectedDay = itineraryData!.days.find(day => day.day === dayNumber);
 
     if (selectedDay) {
       // Day data already exists, navigate immediately
-      console.log(
-        `✅ Day ${dayNumber} has data (found by day_number) - navigating`
-      );
+      console.log(`✅ Day ${dayNumber} has data (found by day_number) - navigating`);
       setCurrentDayIndex(dayIndex);
     } else {
       // Day data doesn't exist and it's not pending - need to fetch it
       if (dayNumber <= totalDays && onRequestNextDay) {
-        console.log(
-          `🔄 Requesting itinerary for day ${dayNumber} from slider (response_type='generate')`
-        );
+        console.log(`🔄 Requesting itinerary for day ${dayNumber} from slider (response_type='generate')`);
         setLoadingDayIndex(dayIndex);
 
         try {
@@ -897,9 +824,7 @@ export default function ItineraryWidget({
       setItineraryData((prevData) => {
         if (!prevData) return prevData;
 
-        console.log(
-          `🔄 Shifting days >= ${insertDayNumber} by +1 in itineraryData`
-        );
+        console.log(`🔄 Shifting days >= ${insertDayNumber} by +1 in itineraryData`);
 
         // Shift day numbers for all days >= insertDayNumber
         const updatedDays = prevData.days.map((day) => {
@@ -950,9 +875,7 @@ export default function ItineraryWidget({
 
       // NOTE: We DO NOT remove from pending set
       // The pending day will be populated with the API response
-      console.log(
-        `✅ Conveyance flow completed for day ${dayNumber}, keeping pending state`
-      );
+      console.log(`✅ Conveyance flow completed for day ${dayNumber}, keeping pending state`);
     }
   };
 
@@ -968,28 +891,20 @@ export default function ItineraryWidget({
       // NOTE: We DO NOT remove from pending set here
       // The pending day will be populated with the API response
       // The parent component will handle removing it from pending set after API success
-      console.log(
-        `✅ Day ${dayNumber} added without conveyance, keeping pending state`
-      );
+      console.log(`✅ Day ${dayNumber} added without conveyance, keeping pending state`);
     }
   };
 
   // Handle delete day button click
   const handleDeleteDayClick = (dayNumber: number) => {
-    console.log(
-      `\n🗑️ ========== DELETE DAY ${dayNumber} BUTTON CLICKED ==========`
-    );
-    console.log(
-      `📍 Current day index: ${currentDayIndex}, Current day number: ${currentDayNumber}`
-    );
+    console.log(`\n🗑️ ========== DELETE DAY ${dayNumber} BUTTON CLICKED ==========`);
+    console.log(`📍 Current day index: ${currentDayIndex}, Current day number: ${currentDayNumber}`);
 
     // Check if day exists in transformed itinerary data
-    const dayData = itineraryData?.days.find((day) => day.day === dayNumber);
+    const dayData = itineraryData?.days.find(day => day.day === dayNumber);
 
     if (!dayData) {
-      console.log(
-        `⚠️ Day ${dayNumber} has no itinerary data in transformed format, cannot delete`
-      );
+      console.log(`⚠️ Day ${dayNumber} has no itinerary data in transformed format, cannot delete`);
       return;
     }
 
@@ -1004,51 +919,31 @@ export default function ItineraryWidget({
       console.log(`📦 Checking itineraryResponse for day ${dayNumber}...`);
 
       // Extract itinerary array from response (handle both message wrapper and direct format)
-      const apiItinerary =
-        itineraryResponse?.message?.itinerary || itineraryResponse?.itinerary;
+      const apiItinerary = itineraryResponse?.message?.itinerary || itineraryResponse?.itinerary;
 
       if (apiItinerary && Array.isArray(apiItinerary)) {
         console.log(`📊 Found ${apiItinerary.length} days in API itinerary`);
 
         // Find the day in the API response by day_number
-        const apiDayData = apiItinerary.find(
-          (day: any) => day.day_number === dayNumber
-        );
+        const apiDayData = apiItinerary.find((day: any) => day.day_number === dayNumber);
 
         if (apiDayData) {
           console.log(`✅ Found day ${dayNumber} in API response`);
-          console.log(
-            `📋 API day data:`,
-            JSON.stringify(
-              {
-                day_number: apiDayData.day_number,
-                has_conveyance: !!apiDayData.conveyance_details,
-                conveyance_details: apiDayData.conveyance_details,
-              },
-              null,
-              2
-            )
-          );
+          console.log(`📋 API day data:`, JSON.stringify({
+            day_number: apiDayData.day_number,
+            has_conveyance: !!apiDayData.conveyance_details,
+            conveyance_details: apiDayData.conveyance_details
+          }, null, 2));
 
           if (apiDayData.conveyance_details) {
-            hasRequiredConveyance =
-              apiDayData.conveyance_details.is_required === true;
-            console.log(
-              `📊 Day ${dayNumber} conveyance check: is_required = ${apiDayData.conveyance_details.is_required}`
-            );
+            hasRequiredConveyance = apiDayData.conveyance_details.is_required === true;
+            console.log(`📊 Day ${dayNumber} conveyance check: is_required = ${apiDayData.conveyance_details.is_required}`);
           } else {
-            console.log(
-              `📊 Day ${dayNumber} has NO conveyance_details in API response`
-            );
+            console.log(`📊 Day ${dayNumber} has NO conveyance_details in API response`);
           }
         } else {
-          console.log(
-            `⚠️ Day ${dayNumber} NOT FOUND in API response by day_number`
-          );
-          console.log(
-            `Available day numbers in API:`,
-            apiItinerary.map((d: any) => d.day_number)
-          );
+          console.log(`⚠️ Day ${dayNumber} NOT FOUND in API response by day_number`);
+          console.log(`Available day numbers in API:`, apiItinerary.map((d: any) => d.day_number));
         }
       } else {
         console.log(`⚠️ API itinerary is not an array or is missing`);
@@ -1077,9 +972,7 @@ export default function ItineraryWidget({
 
   // Handle local delete for CASE 2 (is_required: false)
   const handleLocalDelete = (dayNumber: number) => {
-    console.log(
-      `\n🔄 ========== LOCAL DELETE CASE 2 for Day ${dayNumber} ==========`
-    );
+    console.log(`\n🔄 ========== LOCAL DELETE CASE 2 for Day ${dayNumber} ==========`);
     console.log(`🎬 Starting animation...`);
 
     // Set deleting state for animation
@@ -1098,9 +991,7 @@ export default function ItineraryWidget({
 
       // Clear deleting state
       setDeletingDayNumber(null);
-      console.log(
-        `========== END LOCAL DELETE for Day ${dayNumber} ==========\n`
-      );
+      console.log(`========== END LOCAL DELETE for Day ${dayNumber} ==========\n`);
     }, 300);
   };
 
@@ -1111,9 +1002,7 @@ export default function ItineraryWidget({
       return;
     }
 
-    console.log(
-      `💬 Chat message submitted: "${message}" for day ${currentDayNumber}`
-    );
+    console.log(`💬 Chat message submitted: "${message}" for day ${currentDayNumber}`);
 
     try {
       // Set loading state
@@ -1141,9 +1030,7 @@ export default function ItineraryWidget({
   // Handle delete warning - Continue
   const handleDeleteContinue = async () => {
     if (dayToDelete !== null && onDeleteDay) {
-      console.log(
-        `🗑️ CASE 1: Continuing with API delete for day ${dayToDelete}`
-      );
+      console.log(`🗑️ CASE 1: Continuing with API delete for day ${dayToDelete}`);
       setShowDeleteWarning(false);
 
       try {
@@ -1261,8 +1148,7 @@ export default function ItineraryWidget({
                         Creating Day {currentDayNumber} Itinerary
                       </h3>
                       <p className="text-sm text-gray-600 mb-4">
-                        Analyzing your preferences and optimizing your
-                        schedule...
+                        Analyzing your preferences and optimizing your schedule...
                       </p>
                       <div className="space-y-2">
                         <div className="flex items-center justify-center gap-2 text-xs text-purple-600 font-medium">
@@ -1270,17 +1156,11 @@ export default function ItineraryWidget({
                           <span>Finding best activities</span>
                         </div>
                         <div className="flex items-center justify-center gap-2 text-xs text-indigo-600 font-medium">
-                          <div
-                            className="w-2 h-2 bg-indigo-600 rounded-full animate-pulse"
-                            style={{ animationDelay: "0.2s" }}
-                          ></div>
+                          <div className="w-2 h-2 bg-indigo-600 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
                           <span>Optimizing travel routes</span>
                         </div>
                         <div className="flex items-center justify-center gap-2 text-xs text-blue-600 font-medium">
-                          <div
-                            className="w-2 h-2 bg-blue-600 rounded-full animate-pulse"
-                            style={{ animationDelay: "0.4s" }}
-                          ></div>
+                          <div className="w-2 h-2 bg-blue-600 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
                           <span>Adding personalized recommendations</span>
                         </div>
                       </div>
@@ -1317,73 +1197,73 @@ export default function ItineraryWidget({
 
                       {/* Conveyance Card */}
                       <div className="group relative bg-white/70 backdrop-blur-md rounded-2xl border-2 border-purple-300 shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden">
-                        {/* Glassmorphic overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-purple-100/30 to-indigo-100/30 pointer-events-none"></div>
+                      {/* Glassmorphic overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-purple-100/30 to-indigo-100/30 pointer-events-none"></div>
 
-                        <div className="relative z-10 p-6">
-                          {/* Title */}
-                          <h3 className="text-lg font-bold text-gray-900 text-center mb-3 mt-2">
-                            Day {currentDayNumber}
-                          </h3>
+                      <div className="relative z-10 p-6">
+                        {/* Title */}
+                        <h3 className="text-lg font-bold text-gray-900 text-center mb-3 mt-2">
+                          Day {currentDayNumber}
+                        </h3>
 
-                          {/* Message */}
-                          <p className="text-sm text-gray-600 text-center mb-6">
-                            Want to add conveyance options for this day?
-                          </p>
+                        {/* Message */}
+                        <p className="text-sm text-gray-600 text-center mb-6">
+                          Want to add conveyance options for this day?
+                        </p>
 
-                          {/* Important Note */}
-                          <div className="mb-4 p-3 bg-amber-50/80 backdrop-blur-sm border border-amber-300/50 rounded-lg">
-                            <div className="flex items-start gap-2">
-                              <div className="flex-shrink-0 mt-0.5">
-                                <svg
-                                  className="w-4 h-4 text-amber-600"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                                  />
-                                </svg>
-                              </div>
-                              <p className="text-xs text-amber-900 font-medium leading-relaxed">
-                                <span className="font-bold">Note:</span> Adding
-                                conveyance will restructure the itinerary from
-                                this day onwards to optimize travel routes.
-                              </p>
+                        {/* Important Note */}
+                        <div className="mb-4 p-3 bg-amber-50/80 backdrop-blur-sm border border-amber-300/50 rounded-lg">
+                          <div className="flex items-start gap-2">
+                            <div className="flex-shrink-0 mt-0.5">
+                              <svg
+                                className="w-4 h-4 text-amber-600"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                />
+                              </svg>
                             </div>
+                            <p className="text-xs text-amber-900 font-medium leading-relaxed">
+                              <span className="font-bold">Note:</span> Adding
+                              conveyance will restructure the itinerary from
+                              this day onwards to optimize travel routes.
+                            </p>
                           </div>
-
-                          {/* Add Conveyance Button */}
-                          <button
-                            onClick={() =>
-                              handleAddConveyanceToPendingDay(currentDayNumber)
-                            }
-                            className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white rounded-xl py-3 px-4 font-semibold shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 flex items-center justify-center gap-2 group/btn"
-                          >
-                            <svg
-                              className="w-5 h-5 transition-transform group-hover/btn:rotate-90"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                              strokeWidth={2.5}
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M12 4v16m8-8H4"
-                              />
-                            </svg>
-                            <span>Add Conveyance</span>
-                          </button>
                         </div>
 
-                        {/* Bottom accent */}
-                        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-indigo-600"></div>
+                        {/* Add Conveyance Button */}
+                        <button
+                          onClick={() =>
+                            handleAddConveyanceToPendingDay(currentDayNumber)
+                          }
+                          className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white rounded-xl py-3 px-4 font-semibold shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 flex items-center justify-center gap-2 group/btn"
+                        >
+                          <svg
+                            className="w-5 h-5 transition-transform group-hover/btn:rotate-90"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            strokeWidth={2.5}
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M12 4v16m8-8H4"
+                            />
+                          </svg>
+                          <span>Add Conveyance</span>
+                        </button>
                       </div>
+
+                      {/* Bottom accent */}
+                      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-indigo-600"></div>
+                    </div>
                     </div>
                   </div>
                 )}
@@ -1449,18 +1329,12 @@ export default function ItineraryWidget({
                   {/* Timeline Container */}
                   <div className="relative">
                     {currentDay.stops.map((stop: any, index) => {
-                      console.log("stop ", stop);
                       const isLast = index === currentDay.stops.length - 1;
                       const activityType = stop.activity_type || "other";
-                      console.log("activityType ", activityType);
                       const imageUrl = stop.image_url || stop.photo_url || null;
-
+                      
                       // Get first photo from photos array if available
-                      const photos =
-                        stop.photos ||
-                        stop.from_location?.photos ||
-                        stop.to_location?.photos ||
-                        [];
+                      const photos = stop.photos || (stop.from_location?.photos) || (stop.to_location?.photos) || [];
                       const photoUrl = photos.length > 0 ? photos[0] : imageUrl;
 
                       // Get location for maps URL
@@ -1487,10 +1361,7 @@ export default function ItineraryWidget({
                       };
 
                       return (
-                        <div
-                          key={stop.id}
-                          className="timeline-item-container relative mb-5 last:mb-0"
-                        >
+                        <div key={stop.id} className="timeline-item-container relative mb-5 last:mb-0">
                           {/* Timeline Time - Left Side */}
                           <div className="absolute left-0 top-0.5 w-14 text-right pr-3">
                             <span className="text-[13px] font-semibold text-gray-600">
@@ -1500,20 +1371,18 @@ export default function ItineraryWidget({
 
                           {/* Timeline Line - Vertical connector */}
                           {!isLast && (
-                            <div
+                            <div 
                               className="absolute left-[68px] top-5 w-[2px] bg-gradient-to-b from-[#32B8C6] to-[rgba(50,184,198,0.2)]"
-                              style={{ height: "calc(100% + 20px)" }}
+                              style={{ height: 'calc(100% + 20px)' }}
                             ></div>
                           )}
 
                           {/* Timeline Dot */}
-                          <div
-                            className={`absolute left-[60px] top-1 w-4 h-4 bg-white border-[3px] rounded-full z-10 ${
-                              index === 0
-                                ? "border-[#32B8C6] shadow-[0_0_0_4px_rgba(50,184,198,0.2)]"
-                                : "border-[#32B8C6] shadow-[0_0_0_4px_rgba(50,184,198,0.1)]"
-                            }`}
-                          ></div>
+                          <div className={`absolute left-[60px] top-1 w-4 h-4 bg-white border-[3px] rounded-full z-10 ${
+                            index === 0 
+                              ? 'border-[#32B8C6] shadow-[0_0_0_4px_rgba(50,184,198,0.2)]' 
+                              : 'border-[#32B8C6] shadow-[0_0_0_4px_rgba(50,184,198,0.1)]'
+                          }`}></div>
 
                           {/* Card Container - Right Side */}
                           <div className="ml-[90px]">
@@ -1527,6 +1396,366 @@ export default function ItineraryWidget({
                               onToggleExpand={handleToggleCard}
                             />
                           </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+                                    )}
+                                  </div>
+
+                                  {/* From → To */}
+                                  {(stop.from_location || stop.to_location) && (
+                                    <div className="flex items-center gap-1 mb-2 text-[10px] font-semibold text-gray-700">
+                                      <span className="bg-green-100 px-2 py-0.5 rounded-md">
+                                        {stop.from_location?.place_name ||
+                                          "Start"}
+                                      </span>
+                                      <span>→</span>
+                                      <span className="bg-emerald-100 px-2 py-0.5 rounded-md">
+                                        {stop.to_location?.place_name || "End"}
+                                      </span>
+                                    </div>
+                                  )}
+
+                                  <p className="text-xs text-gray-700 leading-relaxed mb-2 font-medium">
+                                    {stop.description}
+                                  </p>
+
+                                  {/* Travel Details */}
+                                  {stop.notes && (
+                                    <div className="bg-white/60 border border-green-300 rounded-lg px-2 py-1.5 mb-2">
+                                      <span className="text-[10px] text-green-900 font-bold leading-relaxed">
+                                        {stop.notes}
+                                      </span>
+                                    </div>
+                                  )}
+
+                                  {/* Maps Link */}
+                                  {mapsUrl && (
+                                    <a
+                                      href={mapsUrl}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="inline-flex items-center gap-1 text-[10px] font-bold text-green-700 hover:text-green-900 transition-colors"
+                                    >
+                                      <MdLocationOn size={12} />
+                                      <span>View on Google Maps</span>
+                                    </a>
+                                  )}
+                                </div>
+                              </div>
+                              <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-green-400 to-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            </div>
+                          ) : activityType === "eat" ? (
+                            // EAT/RESTAURANT CARD
+                            <div className="relative bg-gradient-to-br from-orange-50 to-red-50 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border-2 border-orange-200 hover:border-orange-400 group">
+                              <div className="flex items-start gap-3 p-4">
+                                {/* Time Badge */}
+                                <div className="flex flex-col items-center flex-shrink-0 w-14">
+                                  <div className="bg-gradient-to-br from-orange-500 to-red-600 text-white rounded-xl px-2 py-1.5 text-center shadow-md">
+                                    <div className="text-[9px] font-bold uppercase opacity-90">
+                                      {parseInt(
+                                        stop.time.split(" - ")[0].split(":")[0]
+                                      ) >= 12
+                                        ? "PM"
+                                        : "AM"}
+                                    </div>
+                                    <div className="text-xs font-extrabold leading-tight">
+                                      {stop.time.split(" - ")[0]}
+                                    </div>
+                                  </div>
+                                  {stop.duration && (
+                                    <div className="mt-1.5 bg-orange-100 rounded-md px-1.5 py-0.5 border border-orange-300">
+                                      <span className="text-[8px] font-bold text-orange-700">
+                                        {stop.duration}
+                                      </span>
+                                    </div>
+                                  )}
+                                </div>
+
+                                {/* Icon */}
+                                <div className="relative flex-shrink-0 mt-1">
+                                  <div className="w-11 h-11 bg-orange-100 border-2 border-orange-300 rounded-xl flex items-center justify-center text-lg shadow-md">
+                                    {stop.image}
+                                  </div>
+                                </div>
+
+                                {/* Content with Photo */}
+                                <div className="flex-1 min-w-0">
+                                  <div className="flex items-start justify-between gap-2 mb-1">
+                                    <h4 className="font-extrabold text-sm text-gray-900 leading-tight flex-1">
+                                      {stop.name}
+                                    </h4>
+                                    {imageUrl && (
+                                      <img
+                                        src={imageUrl}
+                                        alt={stop.name}
+                                        className="w-16 h-16 rounded-xl object-cover border-2 border-orange-200 shadow-sm"
+                                      />
+                                    )}
+                                  </div>
+
+                                  {stop.location &&
+                                    stop.location !==
+                                      "Location not specified" && (
+                                      <div className="flex items-start gap-1 mb-2">
+                                        <MdLocationOn
+                                          className="text-orange-400 mt-0.5 flex-shrink-0"
+                                          size={12}
+                                        />
+                                        <span className="text-[10px] text-gray-600 font-medium line-clamp-1">
+                                          {stop.location}
+                                        </span>
+                                      </div>
+                                    )}
+
+                                  <p className="text-xs text-gray-700 leading-relaxed font-medium">
+                                    {stop.description}
+                                  </p>
+
+                                  {stop.notes && (
+                                    <div className="mt-2 bg-white/60 border border-orange-300 rounded-lg px-2 py-1">
+                                      <span className="text-[10px] text-orange-900 font-bold">
+                                        {stop.notes}
+                                      </span>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                              <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-orange-400 to-red-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            </div>
+                          ) : activityType === "visit" ? (
+                            // VISIT/SIGHTSEEING CARD
+                            <div className="relative bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border-2 border-blue-200 hover:border-blue-400 group">
+                              <div className="flex items-start gap-3 p-4">
+                                <div className="flex flex-col items-center flex-shrink-0 w-14">
+                                  <div className="bg-gradient-to-br from-blue-500 to-indigo-600 text-white rounded-xl px-2 py-1.5 text-center shadow-md">
+                                    <div className="text-[9px] font-bold uppercase opacity-90">
+                                      {parseInt(
+                                        stop.time.split(" - ")[0].split(":")[0]
+                                      ) >= 12
+                                        ? "PM"
+                                        : "AM"}
+                                    </div>
+                                    <div className="text-xs font-extrabold leading-tight">
+                                      {stop.time.split(" - ")[0]}
+                                    </div>
+                                  </div>
+                                  {stop.duration && (
+                                    <div className="mt-1.5 bg-blue-100 rounded-md px-1.5 py-0.5 border border-blue-300">
+                                      <span className="text-[8px] font-bold text-blue-700">
+                                        {stop.duration}
+                                      </span>
+                                    </div>
+                                  )}
+                                </div>
+
+                                <div className="relative flex-shrink-0 mt-1">
+                                  <div className="w-11 h-11 bg-blue-100 border-2 border-blue-300 rounded-xl flex items-center justify-center text-lg shadow-md">
+                                    {stop.image}
+                                  </div>
+                                </div>
+
+                                <div className="flex-1 min-w-0">
+                                  <div className="flex items-start justify-between gap-2 mb-1">
+                                    <h4 className="font-extrabold text-sm text-gray-900 leading-tight flex-1">
+                                      {stop.name}
+                                    </h4>
+                                    {imageUrl && (
+                                      <img
+                                        src={imageUrl}
+                                        alt={stop.name}
+                                        className="w-16 h-16 rounded-xl object-cover border-2 border-blue-200 shadow-sm"
+                                      />
+                                    )}
+                                  </div>
+
+                                  {stop.location &&
+                                    stop.location !==
+                                      "Location not specified" && (
+                                      <div className="flex items-start gap-1 mb-2">
+                                        <MdLocationOn
+                                          className="text-blue-400 mt-0.5"
+                                          size={12}
+                                        />
+                                        <span className="text-[10px] text-gray-600 font-medium">
+                                          {stop.location}
+                                        </span>
+                                      </div>
+                                    )}
+
+                                  <p className="text-xs text-gray-700 leading-relaxed font-medium">
+                                    {stop.description}
+                                  </p>
+
+                                  {stop.notes && (
+                                    <div className="mt-2 bg-white/60 border border-blue-300 rounded-lg px-2 py-1">
+                                      <span className="text-[10px] text-blue-900 font-bold">
+                                        {stop.notes}
+                                      </span>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                              <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-400 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            </div>
+                          ) : activityType === "rest" ? (
+                            // REST/HOTEL CARD
+                            <div className="relative bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border-2 border-purple-200 hover:border-purple-400 group">
+                              <div className="flex items-start gap-3 p-4">
+                                <div className="flex flex-col items-center flex-shrink-0 w-14">
+                                  <div className="bg-gradient-to-br from-purple-500 to-pink-600 text-white rounded-xl px-2 py-1.5 text-center shadow-md">
+                                    <div className="text-[9px] font-bold uppercase opacity-90">
+                                      {parseInt(
+                                        stop.time.split(" - ")[0].split(":")[0]
+                                      ) >= 12
+                                        ? "PM"
+                                        : "AM"}
+                                    </div>
+                                    <div className="text-xs font-extrabold leading-tight">
+                                      {stop.time.split(" - ")[0]}
+                                    </div>
+                                  </div>
+                                  {stop.duration && (
+                                    <div className="mt-1.5 bg-purple-100 rounded-md px-1.5 py-0.5 border border-purple-300">
+                                      <span className="text-[8px] font-bold text-purple-700">
+                                        {stop.duration}
+                                      </span>
+                                    </div>
+                                  )}
+                                </div>
+
+                                <div className="relative flex-shrink-0 mt-1">
+                                  <div className="w-11 h-11 bg-purple-100 border-2 border-purple-300 rounded-xl flex items-center justify-center text-lg shadow-md">
+                                    {stop.image}
+                                  </div>
+                                </div>
+
+                                <div className="flex-1 min-w-0">
+                                  <div className="flex items-start justify-between gap-2 mb-1">
+                                    <h4 className="font-extrabold text-sm text-gray-900 leading-tight flex-1">
+                                      {stop.name}
+                                    </h4>
+                                    {imageUrl && (
+                                      <img
+                                        src={imageUrl}
+                                        alt={stop.name}
+                                        className="w-16 h-16 rounded-xl object-cover border-2 border-purple-200 shadow-sm"
+                                      />
+                                    )}
+                                  </div>
+
+                                  {stop.location &&
+                                    stop.location !==
+                                      "Location not specified" && (
+                                      <div className="flex items-start gap-1 mb-2">
+                                        <MdLocationOn
+                                          className="text-purple-400 mt-0.5"
+                                          size={12}
+                                        />
+                                        <span className="text-[10px] text-gray-600 font-medium">
+                                          {stop.location}
+                                        </span>
+                                      </div>
+                                    )}
+
+                                  <p className="text-xs text-gray-700 leading-relaxed font-medium">
+                                    {stop.description}
+                                  </p>
+
+                                  {stop.notes && (
+                                    <div className="mt-2 bg-white/60 border border-purple-300 rounded-lg px-2 py-1">
+                                      <span className="text-[10px] text-purple-900 font-bold">
+                                        {stop.notes}
+                                      </span>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                              <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-400 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            </div>
+                          ) : (
+                            // DEFAULT CARD (activity, shopping, event, etc.)
+                            <div className="relative bg-white/80 backdrop-blur-sm rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border-2 border-gray-200 hover:border-purple-300 group">
+                              <div className="flex items-start gap-3 p-4">
+                                <div className="flex flex-col items-center flex-shrink-0 w-14">
+                                  <div className="bg-gradient-to-br from-purple-500 via-indigo-500 to-purple-600 text-white rounded-xl px-2 py-1.5 text-center shadow-md">
+                                    <div className="text-[9px] font-bold uppercase opacity-90">
+                                      {parseInt(
+                                        stop.time.split(" - ")[0].split(":")[0]
+                                      ) >= 12
+                                        ? "PM"
+                                        : "AM"}
+                                    </div>
+                                    <div className="text-xs font-extrabold leading-tight">
+                                      {stop.time.split(" - ")[0]}
+                                    </div>
+                                  </div>
+                                  {stop.duration && (
+                                    <div className="mt-1.5 bg-blue-50 rounded-md px-1.5 py-0.5 border border-blue-200">
+                                      <span className="text-[8px] font-bold text-blue-700">
+                                        {stop.duration}
+                                      </span>
+                                    </div>
+                                  )}
+                                </div>
+
+                                <div className="relative flex-shrink-0 mt-1">
+                                  <div
+                                    className={`w-11 h-11 ${iconConfig.bg} border-2 ${iconConfig.border} rounded-xl flex items-center justify-center text-lg shadow-md`}
+                                  >
+                                    {stop.image}
+                                  </div>
+                                </div>
+
+                                <div className="flex-1 min-w-0">
+                                  <div className="flex items-start justify-between gap-2 mb-1">
+                                    <h4 className="font-extrabold text-sm text-gray-900 leading-tight group-hover:text-purple-700 transition-colors flex-1">
+                                      {stop.name}
+                                    </h4>
+                                    {imageUrl && (
+                                      <img
+                                        src={imageUrl}
+                                        alt={stop.name}
+                                        className="w-14 h-14 rounded-xl object-cover border-2 border-purple-200 shadow-sm"
+                                      />
+                                    )}
+                                  </div>
+
+                                  {stop.location &&
+                                    stop.location !==
+                                      "Location not specified" && (
+                                      <div className="flex items-start gap-1 mb-2">
+                                        <MdLocationOn
+                                          className="text-purple-400 mt-0.5"
+                                          size={12}
+                                        />
+                                        <span className="text-[10px] text-gray-600 font-medium line-clamp-1">
+                                          {stop.location}
+                                        </span>
+                                      </div>
+                                    )}
+
+                                  <p className="text-xs text-gray-700 leading-relaxed mb-2 font-medium">
+                                    {stop.description}
+                                  </p>
+
+                                  {stop.notes && (
+                                    <div className="mt-2 bg-gradient-to-r from-amber-50 via-yellow-50 to-orange-50 border border-amber-300 rounded-lg px-2 py-1.5">
+                                      <div className="flex items-start gap-1.5">
+                                        <span className="text-xs">💡</span>
+                                        <span className="text-[10px] text-amber-900 font-bold leading-relaxed">
+                                          {stop.notes}
+                                        </span>
+                                      </div>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                              <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-400 via-indigo-400 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            </div>
+                          )}
                         </div>
                       );
                     })}
@@ -1607,9 +1836,7 @@ export default function ItineraryWidget({
             <button
               onClick={onContinue}
               disabled={!allDaysGenerated}
-              className={`continue-button ${
-                !allDaysGenerated ? "disabled" : ""
-              }`}
+              className={`continue-button ${!allDaysGenerated ? "disabled" : ""}`}
               aria-label="Continue to booking"
             >
               <span>Continue</span>
@@ -1667,16 +1894,13 @@ export default function ItineraryWidget({
                   />
                 </svg>
               </div>
-              <h3 className="text-lg font-bold text-white">
-                Warning: Delete Day
-              </h3>
+              <h3 className="text-lg font-bold text-white">Warning: Delete Day</h3>
             </div>
 
             {/* Alert Body */}
             <div className="p-5">
               <p className="text-sm text-gray-800 leading-relaxed mb-4 font-medium">
-                Deleting this will delete all the itineraries generated ahead of
-                it. Are you sure you want to continue?
+                Deleting this will delete all the itineraries generated ahead of it. Are you sure you want to continue?
               </p>
 
               {/* Buttons */}
@@ -1706,18 +1930,8 @@ export default function ItineraryWidget({
             {/* Notification Header */}
             <div className="bg-gradient-to-r from-green-500 to-green-600 px-4 py-3 flex items-center gap-3">
               <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                <svg
-                  className="w-5 h-5 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  strokeWidth={2.5}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M5 13l4 4L19 7"
-                  />
+                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/>
                 </svg>
               </div>
               <h3 className="text-lg font-bold text-white">Success</h3>
@@ -1768,30 +1982,23 @@ export default function ItineraryWidget({
           -webkit-backdrop-filter: blur(32px) saturate(200%);
           border-radius: 16px;
           border: 1px solid rgba(255, 255, 255, 0.6);
-          box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1),
-            0 2px 6px rgba(0, 0, 0, 0.06),
-            inset 0 1px 0 rgba(255, 255, 255, 0.9),
-            inset 0 -1px 0 rgba(0, 0, 0, 0.03);
+          box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.06),
+            inset 0 1px 0 rgba(255, 255, 255, 0.9), inset 0 -1px 0 rgba(0, 0, 0, 0.03);
           font-size: 0.9375rem;
           font-weight: 600;
           color: #1f2937;
-          font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
-            "Segoe UI", Roboto, sans-serif;
+          font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto,
+            sans-serif;
           cursor: pointer;
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
           outline: none;
         }
 
         .continue-button:not(.disabled):hover {
-          background: linear-gradient(
-            135deg,
-            rgba(59, 130, 246, 0.85) 0%,
-            rgba(37, 99, 235, 0.75) 100%
-          );
+          background: linear-gradient(135deg, rgba(59, 130, 246, 0.85) 0%, rgba(37, 99, 235, 0.75) 100%);
           color: white;
           transform: translateY(-2px);
-          box-shadow: 0 8px 32px rgba(59, 130, 246, 0.3),
-            0 4px 12px rgba(59, 130, 246, 0.2);
+          box-shadow: 0 8px 32px rgba(59, 130, 246, 0.3), 0 4px 12px rgba(59, 130, 246, 0.2);
         }
 
         .continue-button:not(.disabled):active {

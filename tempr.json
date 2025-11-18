@@ -1,247 +1,34 @@
 {
-    "user_id": "zqh2H13LPvXWDkZjfFzthJCXktB3",
-    "session_id": "5626410181416976384",
-    "message": "{'role':'admin','day_number':2,'end_day':10,'query':'recommend the itinerary for day 2'}",
-    "current_itinerary": [
-      {
-        "day_number": 1,
-        "conveyance_details": {
-          "is_required": true,
-          "type": "flight",
-          "from_city": "Chhatrapati Shivaji International Airport",
-          "to_city": "Leh Kushok Bakula Rimpochee Airport",
-          "departure_time": "05:30",
-          "arrival_time": "08:51",
-          "duration": "191 min",
-          "price": 13489
-        },
-        "stay_details": {
-          "is_required": true,
-          "property_name": "Hotel Kidar",
-          "property_address": "Fort Road, Leh, Ladakh, India",
-          "city": "Fort Road, Leh, Ladakh, India"
-        },
-        "schedule": [
-          {
-            "start_time": "05:30",
-            "end_time": "08:51",
-            "description": "Flight from Mumbai to Leh.",
-            "activity_type": "travel",
-            "conveyance_type": "flight",
-            "fare": 13489,
-            "distance_km": 0,
-            "duration_minutes": 191,
-            "from_location": {
-              "place_name": "Chhatrapati Shivaji International Airport",
-              "address": "Mumbai, Maharashtra, India",
-              "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJRym9mVDI5zsRrqh0xGAazB4",
-              "lat": "19.0902177",
-              "long": "72.86281199999999",
-              "photos": [
-                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU4tZDklAQSolrz1H-oXKigc4ukKIuCsvp1fl8p21afqPhxWuw8J1KvieGI5HXSO5RM6uOSjgmCei_a6PQ8T1-EMCKZmECdvlL8kkTr1UId8ujJCIONNPoVk-YOyy1w9xFlQ_VtPQNpl6aG0uATB_TTsDMabc2wXuSbzDLivk8QM_dvvV67laKicVh6tG7ME6BzQ6XeV2tkY2EXSmOexmX76iIQxmRm7Rj4T244tTn_bkHRjaCP5n0bnZH4cH_iAjFcBj_VsQH72_hqT2MUoA8fgL3ppBobnZZIOgomF0FFrvyNBYn_9QhXrvWSCzgyVREQK7UVDtRGve0sbCKH5tYI1XCoUCGXRx8tI2-tlm9RVjz2Y8wpFHZwql287zjPEPRwl6LL2tfDLzDqbH1CnxAkKzlhpXl75f82iUmxt-JeEny-TGP4xrI1Klh4gyee2k5vj6u6mh49W8gGK6cIoA3dvF3eyQkc4H8_2kSDuKx5irU43XmLF32OCA0_Mj3_dXyp4mTV6E_iMLrKbqwqxNbJrOCLOI0ZAhb4DsGvjuBlSGsaeSYdSQzTzlF2EVV--AstDVycJ&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
-              ],
-              "place_id": "ChIJRym9mVDI5zsRrqh0xGAazB4"
-            },
-            "to_location": {
-              "place_name": "Leh Kushok Bakula Rimpochee Airport",
-              "address": "Leh, Ladakh, India",
-              "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJJ7AKoViT_TgRBExmvIXBXT4",
-              "lat": "34.1425376",
-              "long": "77.5554792",
-              "photos": [
-                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU7EuJlX1gKDpYhi6sWTrIjl7aZwtfdNyHqALo_TpZ0BXscGi1OFfQZQkbhY6VvnYulTk_09cMt8hmvUWGb6KNmS8HNHVeRV2lTodhiln9Suk-SamDSUVvjV1chc2OSZ_AOUqOIJr8PxdFGCWguiCFnVF5AtjUFSUrHwVWyffrIPGk8XJSHg_EUv-5eAJqT69EwrvTO9-UEVyJC9oxxo_vBWBb2aIYaoIpCT5thawxFh5MQDZmkIY9_YEUi9NDqdhPGRSSElonlyQiDkP-LTUxUKOIbnXW6gnn_xVveOf8TuZHv_UmPz7DDGglcfGWHxfCQXIcIYwb3LNBKiQRizZC-YKs7Fmnn-OfulSN61fMvZBi-cXPFpud5QHK0Lds5irANkdQoGzcRwo4NkzhOtbIbjrdIEgcAxhArviQCDIIAavJUbyWQyt9d5kVR2PXvEB3EOADeIcix6myKcl0bCQwzSE9bqhSgxco29E1QR6XrXmczO9VW0jUtfn0jWSGVA9_TZ5WDW9MPaREIM-r5K4uXWtHNBPGmRkEsT_2RkDqwFkiqNY2ZIlX1ZPgWIse3u6bCKzQ&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
-              ],
-              "place_id": "ChIJJ7AKoViT_TgRBExmvIXBXT4"
-            },
-            "flight_number": "UK9237",
-            "airline": "Vistara",
-            "departure_time": "05:30",
-            "arrival_time": "08:51"
-          },
-          {
-            "start_time": "08:51",
-            "end_time": "09:30",
-            "description": "Deplane and collect your baggage at Leh's Kushok Bakula Rimpochee Airport.",
-            "activity_type": "other",
-            "place_name": "Leh Kushok Bakula Rimpochee Airport",
-            "address": "Leh, Ladakh, India",
-            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJJ7AKoViT_TgRBExmvIXBXT4",
-            "lat": "34.1425376",
-            "long": "77.5554792",
-            "photos": [
-              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU7EuJlX1gKDpYhi6sWTrIjl7aZwtfdNyHqALo_TpZ0BXscGi1OFfQZQkbhY6VvnYulTk_09cMt8hmvUWGb6KNmS8HNHVeRV2lTodhiln9Suk-SamDSUVvjV1chc2OSZ_AOUqOIJr8PxdFGCWguiCFnVF5AtjUFSUrHwVWyffrIPGk8XJSHg_EUv-5eAJqT69EwrvTO9-UEVyJC9oxxo_vBWBb2aIYaoIpCT5thawxFh5MQDZmkIY9_YEUi9NDqdhPGRSSElonlyQiDkP-LTUxUKOIbnXW6gnn_xVveOf8TuZHv_UmPz7DDGglcfGWHxfCQXIcIYwb3LNBKiQRizZC-YKs7Fmnn-OfulSN61fMvZBi-cXPFpud5QHK0Lds5irANkdQoGzcRwo4NkzhOtbIbjrdIEgcAxhArviQCDIIAavJUbyWQyt9d5kVR2PXvEB3EOADeIcix6myKcl0bCQwzSE9bqhSgxco29E1QR6XrXmczO9VW0jUtfn0jWSGVA9_TZ5WDW9MPaREIM-r5K4uXWtHNBPGmRkEsT_2RkDqwFkiqNY2ZIlX1ZPgWIse3u6bCKzQ&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
-            ],
-            "place_id": "ChIJJ7AKoViT_TgRBExmvIXBXT4"
-          },
-          {
-            "start_time": "09:30",
-            "end_time": "10:00",
-            "description": "Travel from the airport to your hotel. It is advisable to take a local taxi.",
-            "activity_type": "travel",
-            "conveyance_type": "cab",
-            "fare": 500,
-            "distance_km": 4,
-            "duration_minutes": 10,
-            "from_location": {
-              "place_name": "Leh Kushok Bakula Rimpochee Airport",
-              "address": "Leh, Ladakh, India",
-              "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJJ7AKoViT_TgRBExmvIXBXT4",
-              "lat": "34.1425376",
-              "long": "77.5554792",
-              "photos": [
-                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU7EuJlX1gKDpYhi6sWTrIjl7aZwtfdNyHqALo_TpZ0BXscGi1OFfQZQkbhY6VvnYulTk_09cMt8hmvUWGb6KNmS8HNHVeRV2lTodhiln9Suk-SamDSUVvjV1chc2OSZ_AOUqOIJr8PxdFGCWguiCFnVF5AtjUFSUrHwVWyffrIPGk8XJSHg_EUv-5eAJqT69EwrvTO9-UEVyJC9oxxo_vBWBb2aIYaoIpCT5thawxFh5MQDZmkIY9_YEUi9NDqdhPGRSSElonlyQiDkP-LTUxUKOIbnXW6gnn_xVveOf8TuZHv_UmPz7DDGglcfGWHxfCQXIcIYwb3LNBKiQRizZC-YKs7Fmnn-OfulSN61fMvZBi-cXPFpud5QHK0Lds5irANkdQoGzcRwo4NkzhOtbIbjrdIEgcAxhArviQCDIIAavJUbyWQyt9d5kVR2PXvEB3EOADeIcix6myKcl0bCQwzSE9bqhSgxco29E1QR6XrXmczO9VW0jUtfn0jWSGVA9_TZ5WDW9MPaREIM-r5K4uXWtHNBPGmRkEsT_2RkDqwFkiqNY2ZIlX1ZPgWIse3u6bCKzQ&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
-              ],
-              "place_id": "ChIJJ7AKoViT_TgRBExmvIXBXT4"
-            },
-            "to_location": {
-              "place_name": "Hotel Kidar",
-              "address": "Fort Road, Leh, Ladakh, India",
-              "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJBb6k_0jr_TgRGA1r6wPTsTc",
-              "lat": "34.160576",
-              "long": "77.574821",
-              "photos": [
-                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU78JVKRCxEovwgE2DxVAaYjWbSFf0NyuBmqbSe4GE4Alguu10qjf8C8sVe4rGDFZmvSRSgSerqwIvDhnapN4g1Y4lzVMoN4iGfHtuwmDq1H3f7m9tsdQA3ralYLY_WtopLQRg9PqC4kDiuw4BGeiBnUIt0LbLRp19Ktzmt9B49MsvaBhbFNgSOu0Up0Bvc5aWAcVdPRGrVKJYiMDal97BIyEwztscWj8fc1AcQ2ZJZZ-xpnEJ3sq458WR8W5Lqubbd99rFOVGyP62lddVTfoHe58EsuvufJdhz7bL4ogm9LVBAOti0&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
-              ],
-              "place_id": "ChIJBb6k_0jr_TgRGA1r6wPTsTc"
-            }
-          },
-          {
-            "start_time": "10:00",
-            "end_time": "13:00",
-            "description": "Check into your hotel and take complete rest to acclimatize to the high altitude. It is crucial to stay hydrated by drinking plenty of water.",
-            "activity_type": "rest",
-            "place_name": "Hotel Kidar",
-            "address": "Fort Road, Leh, Ladakh, India",
-            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJBb6k_0jr_TgRGA1r6wPTsTc",
-            "lat": "34.160576",
-            "long": "77.574821",
-            "photos": [
-              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU78JVKRCxEovwgE2DxVAaYjWbSFf0NyuBmqbSe4GE4Alguu10qjf8C8sVe4rGDFZmvSRSgSerqwIvDhnapN4g1Y4lzVMoN4iGfHtuwmDq1H3f7m9tsdQA3ralYLY_WtopLQRg9PqC4kDiuw4BGeiBnUIt0LbLRp19Ktzmt9B49MsvaBhbFNgSOu0Up0Bvc5aWAcVdPRGrVKJYiMDal97BIyEwztscWj8fc1AcQ2ZJZZ-xpnEJ3sq458WR8W5Lqubbd99rFOVGyP62lddVTfoHe58EsuvufJdhz7bL4ogm9LVBAOti0&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
-            ],
-            "place_id": "ChIJBb6k_0jr_TgRGA1r6wPTsTc"
-          },
-          {
-            "start_time": "13:00",
-            "end_time": "14:30",
-            "description": "Have a light lunch at a restaurant near your hotel. A short and gentle walk will help with acclimatization.",
-            "activity_type": "eat",
-            "place_name": "The Tibetan Kitchen",
-            "address": "Fort Road, Near Hotel Ladakh Villa, Leh",
-            "meal_type": "lunch",
-            "cuisine": "Tibetan",
-            "menu_highlights": [
-              "Thukpa",
-              "Momos",
-              "Skyu"
-            ],
-            "fare": 500,
-            "reservation_required": false,
-            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJx5SjnvXr_TgRq2VbpHF2bCw",
-            "lat": "34.1648157",
-            "long": "77.5854066",
-            "photos": [
-              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU4u9OiDgI3T-KmTNrVWSVz9jkh8rf1Mbj_Hf7AkMUgW0oH19Mk1Zrth9GkvubbdkL0i9dbJdPgPi0pLyfiG-SpXoE374HtU-Nk71vosjB_mOlKAFyNb8aagVvXL9V7q5bNVpyJXRc1TdFDOZs--Yl5nsscmOLeklUqRYpqSWwxzUB-dykJuGJsx_6fkjFsnwM_ZJsKmFxgabC4SHKkrQ1JEcbWUVO6eSnCReGNoJnB3FeVc6dKGdGonvXnL3vERKGr2QtgeNwW9At8ljpUdt0hdBAgco4D2Rcumnwyiqp9xd2ErmdN4xVXF4QpYvQKRhWX9fZA9uU_3DS38_u6RtvMHF9kOTc2RxbExheKh9f9tfZKMrK8mxifAKqPPspHtjHYfdltft3nDsQsGhhWEcsLbeZp-X8AuG_dcPwKvVy5cbtAIXwqA-aOlOnpW5HZa7GaSYhotnGF_VDrs6caCWzPCNmQ5CMzUm8c1asT0iNIBn7U4ESOvN_x7UwQsd8FPcn8KNFcMqoHFW2nb2ddrWh1EKsx_rleKVFUeOA1S0C9vYOOx0trRhjO6I5c-rZSqgxJqo5z9&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
-            ],
-            "place_id": "ChIJx5SjnvXr_TgRq2VbpHF2bCw"
-          },
-          {
-            "start_time": "14:30",
-            "end_time": "19:00",
-            "description": "Continue to rest at your hotel. Avoid sleeping during the day to ensure you get a good night's sleep, which is important for acclimatization.",
-            "activity_type": "rest",
-            "place_name": "Hotel Kidar",
-            "address": "Fort Road, Leh, Ladakh, India",
-            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJBb6k_0jr_TgRGA1r6wPTsTc",
-            "lat": "34.160576",
-            "long": "77.574821",
-            "photos": [
-              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU78JVKRCxEovwgE2DxVAaYjWbSFf0NyuBmqbSe4GE4Alguu10qjf8C8sVe4rGDFZmvSRSgSerqwIvDhnapN4g1Y4lzVMoN4iGfHtuwmDq1H3f7m9tsdQA3ralYLY_WtopLQRg9PqC4kDiuw4BGeiBnUIt0LbLRp19Ktzmt9B49MsvaBhbFNgSOu0Up0Bvc5aWAcVdPRGrVKJYiMDal97BIyEwztscWj8fc1AcQ2ZJZZ-xpnEJ3sq458WR8W5Lqubbd99rFOVGyP62lddVTfoHe58EsuvufJdhz7bL4ogm9LVBAOti0&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
-            ],
-            "place_id": "ChIJBb6k_0jr_TgRGA1r6wPTsTc"
-          },
-          {
-            "start_time": "19:00",
-            "end_time": "20:30",
-            "description": "Enjoy dinner at another highly-rated restaurant on Fort Road.",
-            "activity_type": "eat",
-            "place_name": "Lamayuru Restaurant",
-            "address": "Fort Road, Near Hotel Yaktail, Leh",
-            "meal_type": "dinner",
-            "cuisine": "Indian",
-            "menu_highlights": [
-              "Dal Makhani",
-              "Paneer Butter Masala",
-              "Vegetable Biryani"
-            ],
-            "fare": 500,
-            "reservation_required": false,
-            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJM0QWhT_r_TgRoCqlyEp6UmI",
-            "lat": "34.1635459",
-            "long": "77.58238290000001",
-            "photos": [
-              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU4hhXIliVwa2pz6qUMCIiQZ71uXST0fa0wjAo6YWSD1wfPHScgUwMyDbblTqnnVXwHTI_Hae0a_8Yd2AK9dCFjCtn4YF74hfESaKHdS-8gkIjhIgCSst8onLBUTpkkNkfAqFAG9hNLtYsV3xuKCK931w2dWS_pNGztc8sAZcFKeP4_70RA9iSiSFcrnw884mjT8U3OxISedf8_az7DrAqLZEIAQlc15K758dchyVYufVOovYaOR_DzAtel05dvu6YmMj_bPMDzv7-_6oYIvu2TbVUgHxtw1hbvaZoRYtAOhgw0XBPQ&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
-            ],
-            "place_id": "ChIJM0QWhT_r_TgRoCqlyEp6UmI"
-          },
-          {
-            "start_time": "20:30",
-            "end_time": "22:00",
-            "description": "Relax and unwind at the hotel after dinner.",
-            "activity_type": "leisure",
-            "place_name": "Hotel Kidar",
-            "address": "Fort Road, Leh, Ladakh, India",
-            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJBb6k_0jr_TgRGA1r6wPTsTc",
-            "lat": "34.160576",
-            "long": "77.574821",
-            "photos": [
-              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU78JVKRCxEovwgE2DxVAaYjWbSFf0NyuBmqbSe4GE4Alguu10qjf8C8sVe4rGDFZmvSRSgSerqwIvDhnapN4g1Y4lzVMoN4iGfHtuwmDq1H3f7m9tsdQA3ralYLY_WtopLQRg9PqC4kDiuw4BGeiBnUIt0LbLRp19Ktzmt9B49MsvaBhbFNgSOu0Up0Bvc5aWAcVdPRGrVKJYiMDal97BIyEwztscWj8fc1AcQ2ZJZZ-xpnEJ3sq458WR8W5Lqubbd99rFOVGyP62lddVTfoHe58EsuvufJdhz7bL4ogm9LVBAOti0&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
-            ],
-            "place_id": "ChIJBb6k_0jr_TgRGA1r6wPTsTc"
-          },
-          {
-            "start_time": "22:00",
-            "end_time": "23:59",
-            "description": "Get a good night's sleep to be well-rested for the days ahead.",
-            "activity_type": "rest",
-            "place_name": "Hotel Kidar",
-            "address": "Fort Road, Leh, Ladakh, India",
-            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJBb6k_0jr_TgRGA1r6wPTsTc",
-            "lat": "34.160576",
-            "long": "77.574821",
-            "photos": [
-              "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU78JVKRCxEovwgE2DxVAaYjWbSFf0NyuBmqbSe4GE4Alguu10qjf8C8sVe4rGDFZmvSRSgSerqwIvDhnapN4g1Y4lzVMoN4iGfHtuwmDq1H3f7m9tsdQA3ralYLY_WtopLQRg9PqC4kDiuw4BGeiBnUIt0LbLRp19Ktzmt9B49MsvaBhbFNgSOu0Up0Bvc5aWAcVdPRGrVKJYiMDal97BIyEwztscWj8fc1AcQ2ZJZZ-xpnEJ3sq458WR8W5Lqubbd99rFOVGyP62lddVTfoHe58EsuvufJdhz7bL4ogm9LVBAOti0&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
-            ],
-            "place_id": "ChIJBb6k_0jr_TgRGA1r6wPTsTc"
-          }
-        ],
-        "title": "Arrival and Acclimatization in Leh",
-        "date": "2025-12-21",
-        "summary": "Welcome to Leh! Today is dedicated to resting and acclimatizing to the high altitude. After arriving from Mumbai, you will check into your hotel and take it easy for the rest of the day, with short walks for meals at nearby restaurants.",
-        "themes": [
-          "Culture",
-          "Spirituality",
-          "Winter",
-          "Relaxation"
-        ],
-        "estimated_total_cost": 1500,
-        "highlights": [
-          "Arrival in the high-altitude city of Leh",
-          "Complete rest and acclimatization",
-          "Trying out local Ladakhi cuisine"
-        ]
-      },
-      {
-        "day_number": 2,
-        "conveyance_details": {
-          "is_required": false
-        },
-        "stay_details": {
-          "is_required": false
-        }
-      }
-    ],
-    "role": "admin",
-    "current_day": 2,
-    "trip_duration": 10,
-    "request_type": "add"
+  "id": "stop-0",
+  "name": "Indira Gandhi International Airport",
+  "time": "00:00 - 20:12",
+  "location": "New Delhi, Delhi, India",
+  "description": "Flight from New Delhi to Tokyo. Settle in and get ready for your Japanese adventure.",
+  "image": "✈️",
+  "type": "transport",
+  "duration": "20h 12m",
+  "notes": "Akasa Air AK367 | Dep: 19:12 | Arr: 20:12 | ₹3299 | 5850km",
+  "activity_type": "travel",
+  "from_location": {
+      "place_name": "Indira Gandhi International Airport",
+      "address": "New Delhi, Delhi, India",
+      "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJiS0q_IUbDTkRne1DLBh2874",
+      "lat": "28.5561437",
+      "long": "77.0999623",
+      "photos": [
+          "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU7zc_4YWDnHbPYoGIWGjOtKIZ8vLHzdzjWcPQMw5L3J_YE9ac1pU9xQChoBDoEXYSgYnZc4mQf7q2yzH_HAkM-ZZCmJEaxHcc7gOCqBBvHeJegQbDV7Y5N3_zGawodWkPowu4jiuH9hdW-IgMAPguzy1JiFAcxAOWAn_ywTeC-y_m1-ldOHdxD2CBB5-XAsoY6SMeS6tu9wCPtX_z1_046vz-7Vl9hSNxBlNBtSy3bmhTg6hvlRX8wl0YjO3dJM_ZoSAxWicK_IqgHOY0UTvaOothbLID1ecCPbEiOxieqWxnB92DGuvkKLnaxDFqDEe1Dfl2zi33XfQ9n-y0VvxN9ifryuPbSnoEKG9l4fhuRdX_gJjeedC1PTLc6S8HUphzlXM0qUw8GILgpAiSapVC_gFkVWx10d5fv_FzjuLusOr-bmxdXFfMzzjaeCF2SIWFPojUPtWSVX8qEJyB5s8beSSUMZiqzKRgJoGxBiMyEHKySfOlmc5K2sKw7gPK4_UcGI7CCruLFpdJh2I_FfryHwVUiHG2omfV19xAgrxT4SiOf9d79pNyomdoxG2OskGIq_cAXm_gRrR3YOAoKU_KqQt6E&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+      ],
+      "place_id": "ChIJiS0q_IUbDTkRne1DLBh2874"
+  },
+  "to_location": {
+      "place_name": "Tokyo Haneda International Airport",
+      "address": "Hanedakuko, Ota City, Tokyo 144-0041, Japan",
+      "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJ45IxpAtkGGAR3_hG0anDMg0",
+      "lat": "35.5482964",
+      "long": "139.7779951",
+      "photos": [
+          "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU75R9yxma8t_HmEHTcvlipttmQcEA72WLk2GHKH78jbSKAGDpSCjyyL1U0lyXXzVwI4B3KFFPW3wTifMufAvyr5GfS7TaqFk1ZN-N4DzCilaFvBhFWrr2HG_fFyEky9aiocFn-AQasDgIJrOu7Emzd3NCU7kUVXcfOOiKjP2xFbdtK9WkHlNdLnk0Fm9nisXArBPcBS70k1kq_nh0jyDY5HYgB5uKfHhVRNlNSELbTs2A_hDLCUDzWeKVfSe5puLquE0NkpP8hmEGCyEyt4GIU7d_sq-tFlRrdK7GQxtyjaM70DtAD4XF9mTC1FAzgSBBEERLt8LHxoFvIRRCOmLzfanKGhHrPnti5lFyGklbYDnuHCimOY5Qdrv0HOcIUHZhCjZtrykJqK-3uj64DIIyMqdWu3OJnylSSDPJ4Eaio0iSnmHnGLa7YjtPIIziav4UETq4cFcKJxCLHBLIxCWIsXLoit1dSoy9-3gST4cKOtKsw0qTiinuajsnhXSptvLL2r0fD1DI-54WTWqvLkuixDRo-4JhqxbDn2OEqEynb8IiFGtMClFZau6mzXrRPZs5jkg9RY&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+      ],
+      "place_id": "ChIJ45IxpAtkGGAR3_hG0anDMg0"
   }
+}
