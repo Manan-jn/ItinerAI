@@ -22,6 +22,8 @@ interface FlightsContentProps {
   setTripType: (type: "oneWay" | "roundTrip" | "multicity") => void;
   travellers: number;
   travelClass: string;
+  isSidebarCollapsed?: boolean;
+  onToggleSidebar?: () => void;
 }
 
 export function FlightsContent({
@@ -34,6 +36,8 @@ export function FlightsContent({
   setTripType,
   travellers,
   travelClass,
+  isSidebarCollapsed = false,
+  onToggleSidebar,
 }: FlightsContentProps) {
   return (
     <div className="flex-1 flex flex-col min-h-0">
@@ -41,8 +45,31 @@ export function FlightsContent({
       <nav className="bg-white border-b border-gray-200 flex-shrink-0 z-10">
         <div className="px-6 py-4">
           <div className="flex items-center justify-between">
-            {/* Left Side - Empty for flights */}
-            <div></div>
+            {/* Left Side - Hamburger Menu */}
+            <div>
+              {/* Hamburger Menu Button */}
+              {onToggleSidebar && (
+                <button
+                  onClick={onToggleSidebar}
+                  className="p-2 rounded-lg hover:bg-gray-100 transition-all duration-300 group"
+                  title={isSidebarCollapsed ? "Show Sidebar" : "Hide Sidebar"}
+                >
+                  <svg
+                    className="w-5 h-5 text-gray-600 group-hover:text-blue-600 transition-colors duration-300"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 6h16M4 12h16M4 18h16"
+                    />
+                  </svg>
+                </button>
+              )}
+            </div>
 
             {/* Right Side - User Profile */}
             <div className="flex items-center space-x-3 ml-auto">

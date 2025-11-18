@@ -734,3 +734,44 @@ button, .clickable {
 .animate-slideUp {
   animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
+
+/* Collapsible Sidebar Animations */
+.sidebar-collapsed {
+  width: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.sidebar-expanded {
+  width: 13rem; /* w-52 = 13rem */
+  min-width: 13rem;
+}
+
+.sidebar-content-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sidebar-content-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Smooth hamburger icon transition */
+.hamburger-icon {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hamburger-icon:hover {
+  transform: scale(1.1);
+}
+
+.hamburger-icon:active {
+  transform: scale(0.95);
+}
+
+/* Main content expansion animation */
+.main-content-expand {
+  transition: margin-left 0.5s cubic-bezier(0.23, 1, 0.32, 1),
+              max-width 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}

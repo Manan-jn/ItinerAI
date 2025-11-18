@@ -24,15 +24,36 @@ interface SidebarProps {
   activeSection: SectionType;
   onSectionChange: (section: SectionType) => void;
   onLogout: () => void;
+  isCollapsed?: boolean;
+  onToggleCollapse?: () => void;
 }
 
 export function Sidebar({
   activeSection,
   onSectionChange,
   onLogout,
+  isCollapsed = false,
+  onToggleCollapse,
 }: SidebarProps) {
   return (
-    <aside className="w-52 bg-white border-r border-gray-200 flex flex-col flex-shrink-0">
+    <aside 
+      className={`
+        bg-white border-r border-gray-200 flex flex-col flex-shrink-0 
+        transition-all duration-500 ease-in-out overflow-hidden
+        ${isCollapsed ? 'w-0 border-r-0' : 'w-52'}
+      `}
+      style={{
+        minWidth: isCollapsed ? '0' : '13rem',
+      }}
+    >
+      {/* Content wrapper with opacity transition */}
+      <div 
+        className={`
+          w-52 flex flex-col h-full
+          transition-opacity duration-300 ease-in-out
+          ${isCollapsed ? 'opacity-0' : 'opacity-100'}
+        `}
+      >
       {/* Logo */}
       <div className="p-4 border-b border-gray-200">
         <div className="flex items-center">
@@ -133,6 +154,7 @@ export function Sidebar({
           </svg>
           <span className="text-xs">Logout</span>
         </button>
+        </div>
       </div>
     </aside>
   );

@@ -14,6 +14,8 @@ interface DashboardContentProps {
   setShowProfileDropdown: (show: boolean) => void;
   onSettings: () => void;
   onLogout: () => void;
+  isSidebarCollapsed?: boolean;
+  onToggleSidebar?: () => void;
 }
 
 export function DashboardContent({
@@ -22,6 +24,8 @@ export function DashboardContent({
   setShowProfileDropdown,
   onSettings,
   onLogout,
+  isSidebarCollapsed = false,
+  onToggleSidebar,
 }: DashboardContentProps) {
   const [dashboardChatInput, setDashboardChatInput] = useState("");
   const [convertAmount, setConvertAmount] = useState("1500");
@@ -35,15 +39,41 @@ export function DashboardContent({
       <nav className="bg-white border-b border-gray-200 flex-shrink-0 z-10">
         <div className="px-6 py-4">
           <div className="flex items-center justify-between">
-            {/* Left Side - Good Morning Message */}
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900 mb-0.5">
-                Good Morning,{" "}
-                {currentUser?.displayName?.split(" ")[0] || "User"} 👋
-              </h1>
-              <p className="text-sm text-gray-500">
-                Plan your itinerary with us
-              </p>
+            {/* Left Side - Hamburger Menu + Good Morning Message */}
+            <div className="flex items-center space-x-3">
+              {/* Hamburger Menu Button */}
+              {onToggleSidebar && (
+                <button
+                  onClick={onToggleSidebar}
+                  className="p-2 rounded-lg hover:bg-gray-100 transition-all duration-300 group"
+                  title={isSidebarCollapsed ? "Show Sidebar" : "Hide Sidebar"}
+                >
+                  <svg
+                    className="w-5 h-5 text-gray-600 group-hover:text-blue-600 transition-colors duration-300"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 6h16M4 12h16M4 18h16"
+                    />
+                  </svg>
+                </button>
+              )}
+
+              {/* Good Morning Message */}
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900 mb-0.5">
+                  Good Morning,{" "}
+                  {currentUser?.displayName?.split(" ")[0] || "User"} 👋
+                </h1>
+                <p className="text-sm text-gray-500">
+                  Plan your itinerary with us
+                </p>
+              </div>
             </div>
 
             {/* Right Side - User Profile */}

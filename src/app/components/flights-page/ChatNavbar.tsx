@@ -24,6 +24,8 @@ interface ChatNavbarProps {
   onDateSelectorToggle: () => void;
   onDebugToggle: () => void;
   onTestEndResponseToggle?: () => void;
+  isSidebarCollapsed?: boolean;
+  onToggleSidebar?: () => void;
 }
 
 export function ChatNavbar({
@@ -47,13 +49,39 @@ export function ChatNavbar({
   onDateSelectorToggle,
   onDebugToggle,
   onTestEndResponseToggle,
+  isSidebarCollapsed = false,
+  onToggleSidebar,
 }: ChatNavbarProps) {
   return (
     <nav className="bg-white border-b border-gray-200 flex-shrink-0">
       <div className="px-6 py-4">
         <div className="flex items-center justify-between">
-          {/* Chat Header Info */}
+          {/* Left Side - Hamburger Menu + Chat Header Info */}
           <div className="flex items-center space-x-3">
+            {/* Hamburger Menu Button */}
+            {onToggleSidebar && (
+              <button
+                onClick={onToggleSidebar}
+                className="p-2 rounded-lg hover:bg-gray-100 transition-all duration-300 group"
+                title={isSidebarCollapsed ? "Show Sidebar" : "Hide Sidebar"}
+              >
+                <svg
+                  className="w-5 h-5 text-gray-600 group-hover:text-blue-600 transition-colors duration-300"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                </svg>
+              </button>
+            )}
+            
+            {/* Chat Header Info */}
             <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-md">
               <MdChat className="text-white text-xl" />
             </div>

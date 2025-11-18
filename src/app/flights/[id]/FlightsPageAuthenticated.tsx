@@ -40,6 +40,14 @@ import {
   DayItineraryData,
   finalizeAndStoreCompleteItinerary,
 } from "../../utils/itineraryStorage";
+import { transformTripData } from "../../utils/tripDataTransformer";
+import {
+  cleanBackticksFromResponse,
+  makeChatAPICall,
+} from "../../utils/chatApiHelpers";
+// Custom hooks
+import { useSessionManagement } from "../../hooks/useSessionManagement";
+import { useTripHandlers } from "../../hooks/useTripHandlers";
 // New component imports
 import { Sidebar } from "../../components/flights-page/Sidebar";
 import { DashboardContent } from "../../components/flights-page/DashboardContent";
@@ -48,6 +56,14 @@ import { TripLoader } from "../../components/flights-page/TripLoader";
 import { EndResponseLoader } from "../../components/flights-page/EndResponseLoader";
 import { ChatNavbar } from "../../components/flights-page/ChatNavbar";
 import PreFetchTestTrigger from "../../components/PreFetchTestTrigger";
+import {
+  ChatMessage,
+  ChatLoadingIndicators,
+  SelectedTripSnippet,
+  WelcomeScreen,
+  TestModeIndicator,
+  ChatInputContainer,
+} from "../../components/chat";
 
 type SectionType =
   | "conveyance"
@@ -69,6 +85,7 @@ export default function FlightsPageAuthenticated() {
   const [travellers, setTravellers] = useState(1);
   const [travelClass, setTravelClass] = useState("Economy");
   const [activeSection, setActiveSection] = useState<SectionType>("chat");
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   // Auto-focus chat input when switching to chat section
   useEffect(() => {
@@ -140,13 +157,18 @@ export default function FlightsPageAuthenticated() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const flashcardsRef = useRef<FlashcardsWidgetRef>(null);
 
-  // Session management - for authenticated users, always use Firebase UID
-  const [sessionId, setSessionId] = useState<string>("");
-  const [userId, setUserId] = useState<string>("");
-  const [previousSessionId, setPreviousSessionId] = useState<string>("");
-  const [isFirstMessage, setIsFirstMessage] = useState(true);
-  const [isInitializingSession, setIsInitializingSession] = useState(false);
-  const sessionInitRef = useRef<boolean>(false); // Prevent double initialization in dev mode
+  // Session management using custom hook
+  const {
+    sessionId,
+    userId,
+    previousSessionId,
+    isFirstMessage,
+    isInitializingSession,
+    setSessionId,
+    setUserId,
+    setIsFirstMessage,
+    handleSessionRegenerated,
+  } = useSessionManagement(currentUser);
 
   // Handle clicking outside profile dropdown
   useEffect(() => {
@@ -162,132 +184,6 @@ export default function FlightsPageAuthenticated() {
     document.addEventListener("click", handleClickOutside);
     return () => document.removeEventListener("click", handleClickOutside);
   }, [showProfileDropdown]);
-
-  // Initialize session for authenticated user using API
-  useEffect(() => {
-    if (currentUser && !sessionId && !sessionInitRef.current) {
-      // Only run if we don't have a session yet AND haven't started initialization
-      sessionInitRef.current = true; // Mark as initializing to prevent double calls
-
-      const initializeAuthenticatedSession = async () => {
-        const authenticatedUserId = currentUser.uid; // Always use Firebase UID
-
-        setIsInitializingSession(true);
-
-        try {
-          // Call /api/session/create to get a new session ID
-          console.log(
-            "🔄 Creating new session via API for user:",
-            authenticatedUserId
-          );
-
-          const response = await fetch("/api/session/create", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              user_id: authenticatedUserId,
-            }),
-          });
-
-          if (!response.ok) {
-            throw new Error(`Session API error: ${response.status}`);
-          }
-
-          const sessionData = await response.json();
-          const newSessionId = sessionData.body.session_id;
-
-          console.log("✅ Session created via API:", {
-            user_id: sessionData.body.user_id,
-            session_id: newSessionId,
-          });
-
-          setSessionId(newSessionId);
-          setUserId(authenticatedUserId);
-          setPreviousSessionId(newSessionId);
-          setIsInitializingSession(false);
-
-          console.log("Authenticated flights session initialized:", {
-            sessionId: newSessionId,
-            userId: authenticatedUserId,
-            userEmail: currentUser.email,
-            isAuthenticated: true,
-          });
-        } catch (error) {
-          console.error("❌ Error creating session via API:", error);
-
-          // Fallback to old method if API fails
-          console.warn("⚠️ Falling back to local session generation");
-          const fallbackSessionId = getSessionId();
-
-          setSessionId(fallbackSessionId);
-          setUserId(authenticatedUserId);
-          setPreviousSessionId(fallbackSessionId);
-          setIsInitializingSession(false);
-
-          console.log("Authenticated flights session initialized (fallback):", {
-            sessionId: fallbackSessionId,
-            userId: authenticatedUserId,
-            userEmail: currentUser.email,
-            isAuthenticated: true,
-          });
-        }
-      };
-
-      initializeAuthenticatedSession();
-    }
-  }, [currentUser]); // ✅ Only depend on currentUser, not previousSessionId
-
-  // Handle session regeneration from debug component
-  const handleSessionRegenerated = async (
-    newSessionId: string,
-    newUserId: string
-  ) => {
-    // If no sessionId provided, call API to create new one
-    if (!newSessionId && currentUser) {
-      try {
-        console.log(
-          "🔄 Regenerating session via API for user:",
-          currentUser.uid
-        );
-
-        const response = await fetch("/api/session/create", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            user_id: currentUser.uid,
-          }),
-        });
-
-        if (response.ok) {
-          const sessionData = await response.json();
-          newSessionId = sessionData.body.session_id;
-          console.log("✅ Session regenerated via API:", newSessionId);
-        } else {
-          throw new Error("Failed to create session via API");
-        }
-      } catch (error) {
-        console.error("❌ Error regenerating session:", error);
-        // Fallback to provided session or generate locally
-        newSessionId = newSessionId || getSessionId();
-      }
-    }
-
-    setSessionId(newSessionId);
-    // For authenticated users, userId should always remain the same (Firebase UID)
-    // but we'll update it anyway in case the debug component passes it
-    setUserId(currentUser?.uid || newUserId);
-    setIsFirstMessage(true); // Reset first message flag for new session
-
-    console.log("Authenticated session regenerated:", {
-      sessionId: newSessionId,
-      userId: currentUser?.uid || newUserId,
-      userEmail: currentUser?.email,
-    });
-  };
 
   // Handle chat history clearing when session is regenerated
   const handleClearChatHistory = () => {
@@ -345,6 +241,20 @@ export default function FlightsPageAuthenticated() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]); // Run when userId is set (selectedTrip checked inside but not in deps to avoid loops)
 
+  // Trip handlers using custom hook
+  const { handleTripSelect, handleTripMemoryUpdate } = useTripHandlers(
+    userId,
+    sessionId,
+    selectedTrip,
+    setSelectedTrip,
+    originalTrips,
+    setIsCardManuallySelected,
+    setMessages,
+    setIsLoading,
+    setShowFlashcards,
+    flashcardsRef
+  );
+
   // No need for dashboard data here anymore - it's in DashboardData.ts
 
   // Chat functions
@@ -374,164 +284,16 @@ export default function FlightsPageAuthenticated() {
     };
   };
 
-  // Post-processing function to clean backticks from API response
-  const cleanBackticksFromResponse = (data: any): any => {
-    if (!data || typeof data !== "object") {
-      return data;
-    }
-
-    if (data.message && typeof data.message === "string") {
-      let cleanedMessage = data.message;
-
-      // Remove markdown code blocks: ```json\n{...}\n``` or ```{...}```
-      // Pattern 1: ```json\n...\n```
-      cleanedMessage = cleanedMessage.replace(/^```json\s*\n/i, "");
-      cleanedMessage = cleanedMessage.replace(/\n```\s*$/, "");
-
-      // Pattern 2: ```...```
-      cleanedMessage = cleanedMessage.replace(/^```\s*/, "");
-      cleanedMessage = cleanedMessage.replace(/\s*```$/, "");
-
-      // Trim whitespace
-      cleanedMessage = cleanedMessage.trim();
-
-      // If the cleaned message looks like JSON, try to parse it
-      if (cleanedMessage.startsWith("{") || cleanedMessage.startsWith("[")) {
-        try {
-          // First attempt: Direct parse
-          const parsed = JSON.parse(cleanedMessage);
-          console.log(
-            "✅ Successfully parsed cleaned message as JSON (direct)"
-          );
-          return { ...data, message: parsed };
-        } catch (e: any) {
-          console.warn(
-            "⚠️ Direct JSON parse failed, attempting to sanitize control characters:",
-            e.message
-          );
-
-          try {
-            // Second attempt: Sanitize control characters
-            // Replace unescaped control characters with escaped versions
-            let sanitized = cleanedMessage;
-
-            // First, remove any literal backspace characters that may have been added incorrectly
-            sanitized = sanitized.replace(/[\b]/g, "");
-
-            // Handle common control character issues in JSON strings
-            // This regex finds string values and fixes unescaped control chars within them
-            sanitized = sanitized.replace(
-              /"([^"\\]*(\\.[^"\\]*)*)"/g,
-              (match: string) => {
-                // Don't modify keys like "response_type", only string values
-                // Check if this is likely a value (not a key)
-                return match
-                  .replace(/\n/g, "\\n")
-                  .replace(/\r/g, "\\r")
-                  .replace(/\t/g, "\\t")
-                  .replace(/\f/g, "\\f");
-                // Note: backspace chars already removed above
-              }
-            );
-
-            const parsed = JSON.parse(sanitized);
-            console.log(
-              "✅ Successfully parsed cleaned message as JSON (after sanitization)"
-            );
-            return { ...data, message: parsed };
-          } catch (e2: any) {
-            console.warn(
-              "⚠️ Sanitized JSON parse failed, attempting JSON5-like parse:",
-              e2.message
-            );
-
-            try {
-              // Third attempt: More aggressive sanitization
-              // Remove all literal control characters (not escaped)
-              let aggressiveSanitized = cleanedMessage
-                .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, "") // Remove control chars
-                .replace(/\n/g, "\\n")
-                .replace(/\r/g, "\\r")
-                .replace(/\t/g, "\\t");
-
-              const parsed = JSON.parse(aggressiveSanitized);
-              console.log(
-                "✅ Successfully parsed cleaned message as JSON (aggressive sanitization)"
-              );
-              return { ...data, message: parsed };
-            } catch (e3: any) {
-              console.error("❌ All JSON parse attempts failed:", e3.message);
-              console.error(
-                "Failed at character position:",
-                e3.message.match(/position (\d+)/)?.[1]
-              );
-
-              // Return the cleaned message as-is if parsing fails completely
-              return { ...data, message: cleanedMessage };
-            }
-          }
-        }
-      }
-
-      return { ...data, message: cleanedMessage };
-    }
-
-    return data;
-  };
-
-  // Simple API call function
+  // Wrapper function for API call - uses imported makeChatAPICall
   const makeAPICall = async (currentInput: string): Promise<any> => {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => {
-      console.log("Request timeout after 2 minutes");
-      controller.abort();
-    }, 600000); // 2 minutes timeout
+    const data = await makeChatAPICall(userId, sessionId, currentInput);
+    console.log("API Response received (raw):", data);
 
-    try {
-      console.log("Making API call...");
+    // Clean backticks from response
+    const cleanedData = cleanBackticksFromResponse(data);
+    console.log("API Response (cleaned):", cleanedData);
 
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user_id: userId,
-          session_id: sessionId,
-          message: currentInput,
-        }),
-        signal: controller.signal,
-      });
-
-      clearTimeout(timeoutId);
-
-      console.log("API Request sent:", {
-        user_id: userId,
-        session_id: sessionId,
-        message: currentInput,
-      });
-      console.log("API Response status:", response.status);
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error("API Error Response:", errorData);
-        throw new Error(
-          errorData.error || `API error! status: ${response.status}`
-        );
-      }
-
-      const data = await response.json();
-      console.log("API Response received (raw):", data);
-
-      // Clean backticks from response
-      const cleanedData = cleanBackticksFromResponse(data);
-      console.log("API Response (cleaned):", cleanedData);
-
-      return cleanedData;
-    } catch (error) {
-      clearTimeout(timeoutId);
-      throw error;
-    }
+    return cleanedData;
   };
 
   // Clean up trip data - remove 'theme' field and keep only 'themes'
@@ -544,168 +306,6 @@ export default function FlightsPageAuthenticated() {
       }
       return cleanedTrip;
     });
-  };
-
-  // Handle trip selection - map transformed trip back to original trip
-  const handleTripSelect = (transformedTrip: any | null) => {
-    if (transformedTrip === null) {
-      setSelectedTrip(null);
-      setIsCardManuallySelected(false); // Clear manual selection flag
-      return;
-    }
-
-    // Find the corresponding original trip by matching trip_title
-    const originalTrip = originalTrips.find(
-      (trip) => trip.trip_title === transformedTrip.trip_title
-    );
-
-    if (originalTrip) {
-      console.log("Selected original trip:", originalTrip);
-      setSelectedTrip(originalTrip);
-      setIsCardManuallySelected(true); // User manually selected this trip
-    } else {
-      console.warn(
-        "Could not find original trip for:",
-        transformedTrip.trip_title
-      );
-      setSelectedTrip(transformedTrip); // Fallback to transformed trip
-      setIsCardManuallySelected(true); // User manually selected this trip
-    }
-  };
-
-  // Handle trip memory update when a trip is selected and send button is clicked
-  const handleTripMemoryUpdate = async () => {
-    if (!selectedTrip || !sessionId || !userId) {
-      console.error("Missing required data for trip memory update");
-      return;
-    }
-
-    setIsLoading(true);
-
-    try {
-      console.log("Sending trip to memory API and Firestore:", selectedTrip);
-
-      // Store the selected trip in Firestore first
-      await storeSelectedTrip(userId, sessionId, selectedTrip);
-      console.log(
-        "✅ Trip stored in Firestore successfully:",
-        selectedTrip.trip_title
-      );
-      console.log(
-        "📌 Trip remains in component state for subsequent operations"
-      );
-
-      // Send the selected trip to memory API
-      const response = await fetch("/api/memory", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user_id: userId,
-          session_id: sessionId,
-          updates: {
-            final_trip: selectedTrip,
-          },
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response
-          .json()
-          .catch(() => ({ error: "Unknown error" }));
-        console.error("Memory API Error:", errorData);
-        throw new Error(
-          `Failed to update memory: ${errorData.error || response.statusText}`
-        );
-      }
-
-      const result = await response.json();
-      console.log("Memory API success:", result);
-
-      // Add a user message showing the selected trip
-      const userMessage = {
-        id: Date.now().toString(),
-        content: `Selected trip: ${selectedTrip.trip_title}`,
-        role: "user" as const,
-        timestamp: new Date(),
-        metadata: {
-          selectedTrip: selectedTrip,
-        },
-      };
-
-      setMessages((prev) => [...prev, userMessage]);
-
-      // Close flashcards and clear visual selection
-      setShowFlashcards(false);
-      // NOTE: Keep selectedTrip in state - it's needed for subsequent operations
-      // (date selection, conveyance flow, stays). Trip is already stored in Firestore.
-      // setSelectedTrip(null); // ❌ Removed - causes null trip in date selector
-
-      // Clear flashcards visual selection via ref
-      if (flashcardsRef.current) {
-        flashcardsRef.current.clearSelection();
-      }
-
-      // Make a chat API call to notify the backend about the memory update
-      console.log("Making chat API call after memory update");
-      const chatResponse = await fetch("/api/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user_id: userId,
-          session_id: sessionId,
-          message:
-            "I have updated the memory with the trip selected by the user.",
-        }),
-      });
-
-      if (!chatResponse.ok) {
-        const errorData = await chatResponse
-          .json()
-          .catch(() => ({ error: "Unknown error" }));
-        console.error("Chat API Error:", errorData);
-        throw new Error(
-          `Failed to call chat API: ${
-            errorData.error || chatResponse.statusText
-          }`
-        );
-      }
-
-      const chatData = await chatResponse.json();
-      console.log("Chat API response received:", chatData);
-
-      // Extract message content from chat response
-      let chatMessageContent = "";
-
-      if (chatData.response_type === "text" && chatData.message) {
-        chatMessageContent = chatData.message.message || chatData.message;
-      } else if (chatData.message && typeof chatData.message === "object") {
-        chatMessageContent =
-          chatData.message.message || JSON.stringify(chatData.message);
-      } else if (typeof chatData.message === "string") {
-        chatMessageContent = chatData.message;
-      } else {
-        chatMessageContent = "Trip selection updated successfully.";
-      }
-
-      // Add assistant response from chat API to messages
-      const assistantMessage = {
-        id: (Date.now() + 1).toString(),
-        content: chatMessageContent,
-        role: "assistant" as const,
-        timestamp: new Date(),
-      };
-
-      setMessages((prev) => [...prev, assistantMessage]);
-      setIsLoading(false);
-    } catch (error) {
-      console.error("Error updating trip memory:", error);
-      setIsLoading(false);
-      alert("Failed to save trip selection. Please try again.");
-    }
   };
 
   // Call itinerary API to generate detailed itinerary for a specific day
@@ -4416,183 +4016,6 @@ export default function FlightsPageAuthenticated() {
   };
 
   // Transform trip data from API format to FlashcardsWidget format
-  const transformTripData = (trips: any[]): any[] => {
-    console.log("=== TRANSFORMING TRIPS DATA ===");
-    console.log("Number of trips to transform:", trips.length);
-
-    return trips.map((trip, tripIdx) => {
-      // console.log(
-      //   `\n--- Processing trip ${tripIdx + 1}: ${trip.trip_title} ---`
-      // );
-      // console.log("Raw trip data:", JSON.stringify(trip, null, 2));
-
-      // Create a map of cities from trip_route
-      const cityMap = new Map();
-      if (trip.trip_route && Array.isArray(trip.trip_route)) {
-        // console.log(`Trip route has ${trip.trip_route.length} cities`);
-        trip.trip_route.forEach((city: any) => {
-          const cityData = {
-            name: city.place_name || city.name,
-            address: city.address || city.place_name || city.name,
-            map_url: city.map_url || "",
-            lat: city.lat || "0",
-            long: city.long || "0",
-            photos: city.photos || [],
-            place_id: city.place_id || "",
-          };
-          cityMap.set(city.place_name || city.name, cityData);
-          // console.log(
-          //   `  - Mapped city: ${city.place_name || city.name}`,
-          //   cityData
-          // );
-        });
-      } else {
-        console.log(
-          "No trip_route found in trip data - will create from day_wise_plan"
-        );
-      }
-
-      // Transform day_wise_plan to include cities
-      const transformedDayPlan =
-        trip.day_wise_plan?.map((day: any) => {
-          const cities: any[] = [];
-          let cityName = null;
-
-          // console.log(`  Day ${day.day_number}:`);
-          // console.log(`    - stay_details:`, day.stay_details);
-          // console.log(`    - conveyance_details:`, day.conveyance_details);
-
-          // Extract city name with priority: stay_details > conveyance to_city
-          if (
-            day.stay_details?.is_required &&
-            day.stay_details?.city &&
-            day.stay_details.city !== "user_location"
-          ) {
-            cityName = day.stay_details.city;
-            // console.log(`    - City from stay_details: ${cityName}`);
-          } else if (
-            day.conveyance_details?.is_required &&
-            day.conveyance_details?.to_city &&
-            day.conveyance_details.to_city !== "user_location"
-          ) {
-            cityName = day.conveyance_details.to_city;
-            // console.log(`    - City from conveyance to_city: ${cityName}`);
-          } else if (
-            day.conveyance_details?.is_required &&
-            day.conveyance_details?.from_city &&
-            day.conveyance_details?.to_city &&
-            day.conveyance_details.from_city ===
-              day.conveyance_details.to_city &&
-            day.conveyance_details.to_city !== "user_location"
-          ) {
-            cityName = day.conveyance_details.to_city;
-            // console.log(`    - City from same from/to city: ${cityName}`);
-          } else if (
-            day.conveyance_details?.is_required &&
-            day.conveyance_details?.from_city &&
-            day.conveyance_details.from_city !== "user_location"
-          ) {
-            cityName = day.conveyance_details.from_city;
-            // console.log(`    - City from conveyance from_city: ${cityName}`);
-          }
-
-          if (cityName) {
-            const cityInfo = cityMap.get(cityName);
-
-            if (cityInfo) {
-              cities.push(cityInfo);
-              // console.log(`    - Added city info from map: ${cityName}`);
-            } else {
-              // Create a basic city info if not found in trip_route
-              const basicCityInfo = {
-                name: cityName,
-                address: cityName,
-                map_url: "",
-                lat: "0",
-                long: "0",
-                photos: [],
-                place_id: "",
-              };
-              cities.push(basicCityInfo);
-              // console.log(`    - Created basic city info for: ${cityName}`);
-            }
-          } else {
-            // console.log(
-            //   `    - No city found for day ${day.day_number} - checking activities`
-            // );
-          }
-
-          // If no city found yet, try to infer from must_do_activities or trip_route
-          if (
-            cities.length === 0 &&
-            day.must_do_activities &&
-            day.must_do_activities.length > 0
-          ) {
-            // Use trip_route cities if available
-            if (trip.trip_route && trip.trip_route.length > 0) {
-              const firstCity = trip.trip_route[0];
-              const fallbackCity = {
-                name: firstCity.place_name || firstCity.name,
-                address:
-                  firstCity.address || firstCity.place_name || firstCity.name,
-                map_url: firstCity.map_url || "",
-                lat: firstCity.lat || "0",
-                long: firstCity.long || "0",
-                photos: firstCity.photos || [],
-                place_id: firstCity.place_id || "",
-              };
-              cities.push(fallbackCity);
-              console.log(
-                `    - Fallback: Using first city from trip_route: ${fallbackCity.name}`
-              );
-            }
-          }
-
-          return {
-            day_number: day.day_number,
-            cities: cities,
-            must_do_activities: day.must_do_activities || [],
-            conveyance_details: day.conveyance_details, // Include original conveyance details
-            stay_details: day.stay_details, // Include original stay details
-          };
-        }) || [];
-
-      console.log(
-        `Transformed ${transformedDayPlan.length} days for trip ${tripIdx + 1}`
-      );
-
-      // Return transformed trip with theme instead of themes AND trip_route
-      const transformed = {
-        trip_title: trip.trip_title,
-        no_of_days: trip.no_of_days,
-        estimated_budget: trip.estimated_budget,
-        best_time_to_visit: trip.best_time_to_visit,
-        theme: trip.themes || trip.theme || [], // Handle both 'themes' and 'theme'
-        themes: trip.themes || trip.theme || [], // Include both for compatibility
-        trip_route: trip.trip_route || [], // CRITICAL: Include trip_route for photos and map
-        day_wise_plan: transformedDayPlan,
-      };
-
-      console.log(`Final transformed trip ${tripIdx + 1}:`);
-      console.log("  - trip_title:", transformed.trip_title);
-      console.log("  - no_of_days:", transformed.no_of_days);
-      console.log("  - estimated_budget:", transformed.estimated_budget);
-      console.log("  - best_time_to_visit:", transformed.best_time_to_visit);
-      console.log("  - theme:", transformed.theme);
-      console.log("  - themes:", transformed.themes);
-      console.log(
-        "  - trip_route length:",
-        transformed.trip_route?.length || 0
-      );
-      console.log(
-        "  - day_wise_plan length:",
-        transformed.day_wise_plan.length
-      );
-
-      return transformed;
-    });
-  };
-
   const adjustTextareaHeight = () => {
     const textarea = textareaRef.current;
     if (textarea) {
@@ -4621,13 +4044,6 @@ export default function FlightsPageAuthenticated() {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  const nudges = [
-    "Plan a 7-day trip to Japan",
-    "Best restaurants in Paris",
-    "Budget backpacking through Europe",
-    "Family vacation ideas for summer",
-  ];
-
   // TripLoader component moved to separate file
 
   if (!currentUser) {
@@ -4641,10 +4057,12 @@ export default function FlightsPageAuthenticated() {
         activeSection={activeSection}
         onSectionChange={setActiveSection}
         onLogout={logout}
+        isCollapsed={isSidebarCollapsed}
+        onToggleCollapse={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
       />
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col bg-white min-h-0 min-w-0 max-w-full overflow-hidden">
+      <div className="flex-1 flex flex-col bg-white min-h-0 min-w-0 max-w-full overflow-hidden transition-all duration-500 ease-in-out">
         {/* Conditional rendering based on active section */}
         <div className="flex-1 flex flex-col min-h-0 min-w-0 max-w-full overflow-hidden transition-all duration-500 ease-in-out">
           {activeSection === "dashboard" ? (
@@ -4654,6 +4072,8 @@ export default function FlightsPageAuthenticated() {
               setShowProfileDropdown={setShowProfileDropdown}
               onSettings={() => router.push("/flights/settings")}
               onLogout={logout}
+              isSidebarCollapsed={isSidebarCollapsed}
+              onToggleSidebar={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
             />
           ) : activeSection === "chat" ? (
             // Chat Content - Fixed height container with proper scrolling
@@ -4672,6 +4092,10 @@ export default function FlightsPageAuthenticated() {
                 showDebug={showDebug}
                 testEndResponse={testEndResponse}
                 sessionId={sessionId}
+                isSidebarCollapsed={isSidebarCollapsed}
+                onToggleSidebar={() =>
+                  setIsSidebarCollapsed(!isSidebarCollapsed)
+                }
                 onTestEndResponseToggle={() => {
                   setTestEndResponse(!testEndResponse);
                   console.log(
@@ -4848,16 +4272,7 @@ export default function FlightsPageAuthenticated() {
                       />
 
                       {/* Test Mode Indicator */}
-                      {testEndResponse && (
-                        <div className="absolute top-4 right-4 z-40 bg-orange-100 border border-orange-300 rounded-lg px-3 py-2 shadow-lg">
-                          <div className="flex items-center gap-2">
-                            <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></div>
-                            <span className="text-xs font-medium text-orange-700">
-                              🧪 Test Mode: End Response Active
-                            </span>
-                          </div>
-                        </div>
-                      )}
+                      <TestModeIndicator isVisible={testEndResponse} />
                       <div className="max-w-4xl mx-auto h-full">
                         {showFlights ? (
                           <div className="h-full flex flex-col relative">
@@ -4915,192 +4330,24 @@ export default function FlightsPageAuthenticated() {
                             </div>
                           </div>
                         ) : messages.length === 0 ? (
-                          <div className="flex flex-col items-center justify-center h-full min-h-[400px]">
-                            {isInitializingSession ? (
-                              // Loading state when session is being initialized
-                              <div className="text-center">
-                                <div className="relative w-16 h-16 mx-auto mb-4">
-                                  <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl animate-spin opacity-20"></div>
-                                  <div className="relative w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg">
-                                    <div className="w-8 h-8 border-3 border-white border-t-transparent rounded-full animate-spin"></div>
-                                  </div>
-                                </div>
-                                <h2 className="text-xl font-semibold text-gray-900 mb-2">
-                                  Initializing your session...
-                                </h2>
-                                <p className="text-gray-500 text-sm">
-                                  Please wait while we set things up
-                                </p>
-                              </div>
-                            ) : (
-                              // Normal empty state
-                              <>
-                                <div className="text-center mb-6">
-                                  <div className="relative w-16 h-16 mx-auto mb-4">
-                                    <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl rotate-6 animate-pulse opacity-20"></div>
-                                    <div className="relative w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg">
-                                      <MdChat className="text-white text-3xl" />
-                                    </div>
-                                  </div>
-                                  <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                                    How can I help you today?
-                                  </h2>
-                                  <p className="text-gray-500 text-sm">
-                                    Ask me anything about your travel plans or
-                                    use the toggles above
-                                  </p>
-                                </div>
-
-                                {/* Nudges */}
-                                <div className="w-full max-w-2xl px-4">
-                                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                    {nudges.map((nudge, index) => (
-                                      <button
-                                        key={index}
-                                        onClick={() => setChatInputText(nudge)}
-                                        className="px-4 py-3 text-sm text-left text-gray-700 bg-white border border-gray-200 rounded-xl hover:border-blue-300 hover:bg-blue-50 hover:shadow-md transition-all group"
-                                      >
-                                        <span className="text-blue-600 group-hover:text-blue-700 mr-2">
-                                          →
-                                        </span>
-                                        {nudge}
-                                      </button>
-                                    ))}
-                                  </div>
-                                </div>
-                              </>
-                            )}
-                          </div>
+                          <WelcomeScreen
+                            isInitializingSession={isInitializingSession}
+                            onNudgeClick={setChatInputText}
+                          />
                         ) : (
                           <div className="space-y-6 pb-4">
                             {messages.map((message) => (
-                              <div
+                              <ChatMessage
                                 key={message.id}
-                                className={`flex items-start gap-3 ${
-                                  message.role === "user"
-                                    ? "flex-row-reverse"
-                                    : "flex-row"
-                                }`}
-                              >
-                                {/* Avatar */}
-                                <div
-                                  className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
-                                    message.role === "user"
-                                      ? "bg-gradient-to-br from-blue-500 to-blue-600 shadow-md"
-                                      : "bg-gradient-to-br from-gray-100 to-gray-200 border border-gray-300"
-                                  }`}
-                                >
-                                  {message.role === "user" ? (
-                                    currentUser?.photoURL ? (
-                                      <img
-                                        src={currentUser.photoURL}
-                                        alt="Profile"
-                                        className="w-full h-full object-cover rounded-full"
-                                        referrerPolicy="no-referrer"
-                                      />
-                                    ) : (
-                                      <span className="text-white text-sm font-medium">
-                                        {currentUser?.displayName?.charAt(0) ||
-                                          currentUser?.email?.charAt(0) ||
-                                          "U"}
-                                      </span>
-                                    )
-                                  ) : (
-                                    <MdChat className="text-gray-600 text-sm" />
-                                  )}
-                                </div>
-
-                                {/* Message Content */}
-                                <div
-                                  className={`max-w-[70%] ${
-                                    message.role === "user"
-                                      ? "bg-gradient-to-br from-blue-600 to-blue-700 text-white shadow-lg"
-                                      : "bg-white text-gray-900 border border-gray-200 shadow-sm"
-                                  } rounded-2xl px-4 py-3`}
-                                >
-                                  {(message as any).metadata?.selectedTrip ? (
-                                    <div className="space-y-2">
-                                      <p className="text-xs font-medium opacity-90">
-                                        Selected Trip:
-                                      </p>
-                                      <div className="bg-white/10 rounded-lg p-3 border border-white/20">
-                                        <h4 className="font-semibold text-sm mb-1">
-                                          {
-                                            (message as any).metadata
-                                              .selectedTrip.trip_title
-                                          }
-                                        </h4>
-                                        <div className="flex items-center gap-3 text-xs opacity-90">
-                                          <span>
-                                            {
-                                              (message as any).metadata
-                                                .selectedTrip.no_of_days
-                                            }{" "}
-                                            days
-                                          </span>
-                                          <span>•</span>
-                                          <span>
-                                            ₹
-                                            {
-                                              (message as any).metadata
-                                                .selectedTrip.estimated_budget
-                                            }
-                                          </span>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  ) : (
-                                    <p className="whitespace-pre-wrap text-sm leading-relaxed">
-                                      {message.content}
-                                    </p>
-                                  )}
-                                </div>
-                              </div>
+                                message={message}
+                                currentUser={currentUser}
+                              />
                             ))}
 
-                            {/* Loading indicator */}
-                            {isLoading && (
-                              <div className="flex items-start gap-3">
-                                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-gray-100 to-gray-200 border border-gray-300 flex items-center justify-center">
-                                  <MdChat className="text-gray-600 text-sm" />
-                                </div>
-                                <div className="bg-white border border-gray-200 shadow-sm rounded-2xl px-4 py-3 min-w-[120px]">
-                                  <div className="flex items-center space-x-2">
-                                    <div className="flex items-center space-x-1">
-                                      <div className="w-2 h-2 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full animate-bounce"></div>
-                                      <div
-                                        className="w-2 h-2 bg-gradient-to-r from-blue-500 to-blue-700 rounded-full animate-bounce"
-                                        style={{ animationDelay: "0.2s" }}
-                                      ></div>
-                                      <div
-                                        className="w-2 h-2 bg-gradient-to-r from-blue-600 to-blue-800 rounded-full animate-bounce"
-                                        style={{ animationDelay: "0.4s" }}
-                                      ></div>
-                                    </div>
-                                    <span className="text-xs text-gray-500 ml-2">
-                                      Thinking...
-                                    </span>
-                                  </div>
-                                </div>
-                              </div>
-                            )}
-
-                            {/* Trip Parsing indicator */}
-                            {isParsingTrips && (
-                              <div className="flex items-start gap-3">
-                                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-purple-100 to-purple-200 border border-purple-300 flex items-center justify-center">
-                                  <MdExplore className="text-purple-600 text-sm" />
-                                </div>
-                                <div className="bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-200 shadow-sm rounded-2xl px-4 py-3 min-w-[200px]">
-                                  <div className="flex items-center space-x-2">
-                                    <div className="w-4 h-4 border-2 border-purple-300 border-t-purple-600 rounded-full animate-spin"></div>
-                                    <span className="text-xs text-purple-700 font-medium">
-                                      Preparing your trip suggestions...
-                                    </span>
-                                  </div>
-                                </div>
-                              </div>
-                            )}
+                            <ChatLoadingIndicators
+                              isLoading={isLoading}
+                              isParsingTrips={isParsingTrips}
+                            />
 
                             <div ref={messagesEndRef} />
                           </div>
@@ -5109,76 +4356,26 @@ export default function FlightsPageAuthenticated() {
                     </div>
 
                     {/* Chat Input - Fixed at bottom */}
-                    <div className="flex-shrink-0 bg-gradient-to-t from-white to-blue-50/20 border-t border-blue-100 px-6 py-6 relative">
-                      {/* Selected Trip Snippet */}
-                      {selectedTrip &&
-                        showFlashcards &&
-                        isCardManuallySelected && (
-                          <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-full max-w-md px-6 z-10 animate-slideUp">
-                            <div className="p-3 bg-white border-2 border-blue-400 rounded-xl shadow-2xl backdrop-blur-lg">
-                              <div className="flex items-center justify-between">
-                                <div className="flex-1 min-w-0">
-                                  <h3 className="font-semibold text-blue-900 text-xs truncate">
-                                    Selected: {selectedTrip.trip_title}
-                                  </h3>
-                                  <p className="text-blue-700 text-[10px]">
-                                    {selectedTrip.no_of_days} days • $
-                                    {selectedTrip.estimated_budget}
-                                  </p>
-                                </div>
-                                <button
-                                  onClick={() => {
-                                    setSelectedTrip(null);
-                                    setIsCardManuallySelected(false);
-                                    if (flashcardsRef.current) {
-                                      flashcardsRef.current.clearSelection();
-                                    }
-                                  }}
-                                  className="ml-2 w-6 h-6 flex items-center justify-center text-blue-500 hover:text-blue-700 hover:bg-blue-50 rounded-full transition-all text-sm flex-shrink-0"
-                                >
-                                  ✕
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        )}
-
-                      <div className="max-w-4xl mx-auto">
-                        <ItinerAIChatBox
-                          ref={textareaRef}
-                          value={chatInput}
-                          onChange={setChatInputText}
-                          onSubmit={handleChatSubmit}
-                          onKeyDown={handleKeyDown}
-                          placeholder={
-                            isInitializingSession
-                              ? "Initializing session..."
-                              : testEndResponse
-                              ? "🧪 TEST MODE: Next message will trigger date selector"
-                              : selectedTrip &&
-                                showFlashcards &&
-                                isCardManuallySelected
-                              ? "Click send to confirm trip selection"
-                              : "Ask ItinerAI"
-                          }
-                          disabled={
-                            isInitializingSession ||
-                            isLoading ||
-                            (selectedTrip &&
-                              showFlashcards &&
-                              isCardManuallySelected)
-                          }
-                          isLoading={isLoading || isInitializingSession}
-                          theme="default"
-                          inputType="textarea"
-                          allowEmptySubmit={
-                            selectedTrip &&
-                            showFlashcards &&
-                            isCardManuallySelected
-                          }
-                        />
-                      </div>
-                    </div>
+                    <ChatInputContainer
+                      selectedTrip={selectedTrip}
+                      showFlashcards={showFlashcards}
+                      isCardManuallySelected={isCardManuallySelected}
+                      onClearSelection={() => {
+                        setSelectedTrip(null);
+                        setIsCardManuallySelected(false);
+                        if (flashcardsRef.current) {
+                          flashcardsRef.current.clearSelection();
+                        }
+                      }}
+                      textareaRef={textareaRef}
+                      chatInput={chatInput}
+                      onChatInputChange={setChatInputText}
+                      onSubmit={handleChatSubmit}
+                      onKeyDown={handleKeyDown}
+                      isInitializingSession={isInitializingSession}
+                      testEndResponse={testEndResponse}
+                      isLoading={isLoading}
+                    />
                   </>
                 )}
               </div>

@@ -71,20 +71,26 @@ const FlashcardsWidget = forwardRef<FlashcardsWidgetRef, FlashcardsWidgetProps>(
 
     // Handler to update trip data when activities are added/removed
     // Use useCallback to maintain stable reference and prevent infinite loops
-    const handleTripUpdate = useCallback((updatedTrip: TripInfo) => {
-      setTripsState(prevTrips =>
-        prevTrips.map((trip, idx) =>
-          idx === activeSlide ? updatedTrip : trip
-        )
-      );
-      console.log('Trip updated in FlashcardsWidget:', updatedTrip.trip_title);
+    const handleTripUpdate = useCallback(
+      (updatedTrip: TripInfo) => {
+        setTripsState((prevTrips) =>
+          prevTrips.map((trip, idx) =>
+            idx === activeSlide ? updatedTrip : trip
+          )
+        );
+        console.log(
+          "Trip updated in FlashcardsWidget:",
+          updatedTrip.trip_title
+        );
 
-      // Also notify parent component about the update
-      if (onTripSelect && activeSlide !== null) {
-        console.log('Notifying parent of trip update via onTripSelect');
-        onTripSelect(updatedTrip);
-      }
-    }, [activeSlide, onTripSelect]);
+        // Also notify parent component about the update
+        if (onTripSelect && activeSlide !== null) {
+          console.log("Notifying parent of trip update via onTripSelect");
+          onTripSelect(updatedTrip);
+        }
+      },
+      [activeSlide, onTripSelect]
+    );
 
     // Image preloading states
     const [isLoadingImages, setIsLoadingImages] = useState(true);
@@ -585,7 +591,8 @@ const FlashcardsWidget = forwardRef<FlashcardsWidgetRef, FlashcardsWidgetProps>(
     }, [isModalOpen]);
 
     const handleSlideClick = (idxExt: number) => {
-      const realIdx = (idxExt - numClones + tripsState.length) % tripsState.length;
+      const realIdx =
+        (idxExt - numClones + tripsState.length) % tripsState.length;
       if (idxExt === centerExtendedIdx) {
         setActiveSlide(realIdx);
         setIsModalOpen(true);
@@ -602,14 +609,17 @@ const FlashcardsWidget = forwardRef<FlashcardsWidgetRef, FlashcardsWidgetProps>(
 
     const handleSelectCard = (idxExt: number, e: React.MouseEvent) => {
       e.stopPropagation(); // Prevent triggering slide click
-      const realIdx = (idxExt - numClones + tripsState.length) % tripsState.length;
+      const realIdx =
+        (idxExt - numClones + tripsState.length) % tripsState.length;
       // Toggle selection: if already selected, deselect; otherwise select
       const newSelectedCard = selectedCard === realIdx ? null : realIdx;
       setSelectedCard(newSelectedCard);
 
       // Notify parent component about trip selection
       if (onTripSelect) {
-        onTripSelect(newSelectedCard !== null ? tripsState[newSelectedCard] : null);
+        onTripSelect(
+          newSelectedCard !== null ? tripsState[newSelectedCard] : null
+        );
       }
     };
 
