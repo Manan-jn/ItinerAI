@@ -4273,86 +4273,89 @@ export default function FlightsPageAuthenticated() {
 
                       {/* Test Mode Indicator */}
                       <TestModeIndicator isVisible={testEndResponse} />
-                      <div className="max-w-4xl mx-auto h-full">
-                        {showFlights ? (
+                      {/* Conditional wrapper: no max-w constraint for flashcards, max-w-4xl for others */}
+                      {showFlashcards ? (
+                        <div className="h-full w-full">
                           <div className="h-full flex flex-col relative">
-                            <div className="flex-1 min-h-0 overflow-hidden">
-                              <FlightsWidget
-                                isVisible={showFlights}
-                                onToggle={() => setShowFlights(false)}
-                                initialFromCity={conveyanceFromCity}
-                                initialToCity={conveyanceToCity}
-                                initialDepartureDate={initialDepartureDate}
-                                autoFillMode={autoFillMode}
-                                partialAutoFillMode={partialAutoFillMode}
-                                userId={userId}
-                                sessionId={sessionId}
-                                currentDayNumber={currentDayNumber}
-                                onContinue={handleFlightsContinue}
-                              />
-                            </div>
-                          </div>
-                        ) : showStays ? (
-                          <div className="h-full flex flex-col relative">
-                            <div className="flex-1 min-h-0 overflow-hidden">
-                              <StaysWidget
-                                isVisible={showStays}
-                                onToggle={() => setShowStays(false)}
-                                initialCity={stayCity}
-                                initialCheckInDate={stayCheckInDate}
-                                initialCheckOutDate={stayCheckOutDate}
-                                autoFillMode={autoFillStaysMode}
-                                userId={userId}
-                                sessionId={sessionId}
-                                currentDayNumber={currentDayNumber}
-                                onContinue={handleStaysContinue}
-                              />
-                            </div>
-                          </div>
-                        ) : showFlashcards ? (
-                          <div className="h-full flex flex-col relative">
-                            <div className="flex-1 min-h-0 bg-white rounded-xl border border-blue-200 overflow-hidden shadow-lg">
-                              <FlashcardsWidgetWhiteTheme
-                                ref={flashcardsRef}
-                                isVisible={showFlashcards}
-                                onToggle={() => {
-                                  setShowFlashcards(false);
-                                  // setSelectedTrip(null);
-                                }}
-                                trips={
-                                  tripSuggestions.length > 0
-                                    ? tripSuggestions
-                                    : undefined
-                                }
-                                rightPanelCollapsed={true}
-                                onTripSelect={handleTripSelect}
-                              />
-                            </div>
-                          </div>
-                        ) : messages.length === 0 ? (
-                          <WelcomeScreen
-                            isInitializingSession={isInitializingSession}
-                            onNudgeClick={setChatInputText}
-                          />
-                        ) : (
-                          <div className="space-y-6 pb-4">
-                            {messages.map((message) => (
-                              <ChatMessage
-                                key={message.id}
-                                message={message}
-                                currentUser={currentUser}
-                              />
-                            ))}
-
-                            <ChatLoadingIndicators
-                              isLoading={isLoading}
-                              isParsingTrips={isParsingTrips}
+                            <FlashcardsWidgetWhiteTheme
+                              ref={flashcardsRef}
+                              isVisible={showFlashcards}
+                              onToggle={() => {
+                                setShowFlashcards(false);
+                                // setSelectedTrip(null);
+                              }}
+                              trips={
+                                tripSuggestions.length > 0
+                                  ? tripSuggestions
+                                  : undefined
+                              }
+                              rightPanelCollapsed={true}
+                              onTripSelect={handleTripSelect}
                             />
-
-                            <div ref={messagesEndRef} />
                           </div>
-                        )}
-                      </div>
+                        </div>
+                      ) : (
+                        <div className="max-w-4xl mx-auto h-full">
+                          {showFlights ? (
+                            <div className="h-full flex flex-col relative">
+                              <div className="flex-1 min-h-0 overflow-hidden">
+                                <FlightsWidget
+                                  isVisible={showFlights}
+                                  onToggle={() => setShowFlights(false)}
+                                  initialFromCity={conveyanceFromCity}
+                                  initialToCity={conveyanceToCity}
+                                  initialDepartureDate={initialDepartureDate}
+                                  autoFillMode={autoFillMode}
+                                  partialAutoFillMode={partialAutoFillMode}
+                                  userId={userId}
+                                  sessionId={sessionId}
+                                  currentDayNumber={currentDayNumber}
+                                  onContinue={handleFlightsContinue}
+                                />
+                              </div>
+                            </div>
+                          ) : showStays ? (
+                            <div className="h-full flex flex-col relative">
+                              <div className="flex-1 min-h-0 overflow-hidden">
+                                <StaysWidget
+                                  isVisible={showStays}
+                                  onToggle={() => setShowStays(false)}
+                                  initialCity={stayCity}
+                                  initialCheckInDate={stayCheckInDate}
+                                  initialCheckOutDate={stayCheckOutDate}
+                                  autoFillMode={autoFillStaysMode}
+                                  userId={userId}
+                                  sessionId={sessionId}
+                                  currentDayNumber={currentDayNumber}
+                                  onContinue={handleStaysContinue}
+                                />
+                              </div>
+                            </div>
+                          ) : messages.length === 0 ? (
+                            <WelcomeScreen
+                              isInitializingSession={isInitializingSession}
+                              onNudgeClick={setChatInputText}
+                            />
+                          ) : (
+                            <div className="space-y-6 pb-4">
+                              {messages.map((message) => (
+                                <ChatMessage
+                                  key={message.id}
+                                  message={message}
+                                  currentUser={currentUser}
+                                />
+                              ))}
+
+                              <ChatLoadingIndicators
+                                isLoading={isLoading}
+                                isParsingTrips={isParsingTrips}
+                              />
+
+                              <div ref={messagesEndRef} />
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </div>
 
                     {/* Chat Input - Fixed at bottom */}

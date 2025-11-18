@@ -1,12 +1,10 @@
 import React from "react";
 
 interface FlashcardsStylesProps {
-  rightPanelCollapsed: boolean;
+  rightPanelCollapsed?: boolean;
 }
 
-export function FlashcardsStyles({
-  rightPanelCollapsed,
-}: FlashcardsStylesProps) {
+export function FlashcardsStyles({}: FlashcardsStylesProps) {
   return (
     <style jsx global>{`
       @keyframes fc-fade-up {
@@ -27,15 +25,13 @@ export function FlashcardsStyles({
       .flashcards-widget {
         background: transparent;
         backdrop-filter: none;
-        border-radius: 12px;
-        padding: 10px 70px 14px 70px;
-        margin: 8px auto;
+        border-radius: 0;
+        padding: 16px 0;
+        margin: 0;
         width: 100%;
-        max-width: ${rightPanelCollapsed
-          ? "calc(100vw - 140px)"
-          : "calc(100vw - 440px)"};
-        height: calc(100% - 24px);
-        max-height: calc(100vh - 130px);
+        max-width: 100%;
+        height: 100%;
+        max-height: 100%;
         border: none;
         box-shadow: none;
         transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -1082,15 +1078,15 @@ export function FlashcardsStyles({
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 10px;
-        padding: 0 4px;
+        margin-bottom: 16px;
+        padding: 0 80px;
       }
 
       .header-content h3 {
         color: white;
-        font-size: 1.15rem;
+        font-size: 1.4rem;
         margin: 0;
-        font-weight: 500;
+        font-weight: 600;
         letter-spacing: -0.02em;
       }
 
@@ -1114,9 +1110,9 @@ export function FlashcardsStyles({
 
       .flashcards-container {
         flex: 1;
-        min-height: 430px;
-        max-height: calc(100vh - 130px);
-        border-radius: 12px;
+        min-height: 0;
+        max-height: 100%;
+        border-radius: 0;
         overflow: hidden;
         position: relative;
         margin: 0;
@@ -1128,7 +1124,7 @@ export function FlashcardsStyles({
 
       .flashcards-scroll-wrapper {
         display: flex;
-        gap: 18px;
+        gap: 24px;
         width: 100%;
         height: 100%;
         overflow-x: hidden;
@@ -1136,7 +1132,7 @@ export function FlashcardsStyles({
         scroll-behavior: smooth;
         scrollbar-width: none;
         scrollbar-color: transparent transparent;
-        padding: 20px calc(50% - 140px);
+        padding: 40px calc(50% - 200px);
         -webkit-overflow-scrolling: touch;
         scrollbar-gutter: stable;
         will-change: scroll-position, transform;
@@ -1282,8 +1278,8 @@ export function FlashcardsStyles({
       }
 
       .flashcard-slide.inactive {
-        width: 180px;
-        height: 280px;
+        width: 280px;
+        height: 420px;
         filter: blur(0.5px) brightness(0.85);
         transform: scale(0.88);
         opacity: 0.7;
@@ -1343,8 +1339,8 @@ export function FlashcardsStyles({
       }
 
       .flashcard-slide.active {
-        width: 260px;
-        height: 340px;
+        width: 400px;
+        height: 520px;
         filter: none;
         transform: scale(1);
         opacity: 1;
@@ -1580,8 +1576,8 @@ export function FlashcardsStyles({
         color: white;
         border: 1.5px solid rgba(255, 255, 255, 0.3);
         border-radius: 50%;
-        width: 44px;
-        height: 44px;
+        width: 56px;
+        height: 56px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1609,14 +1605,16 @@ export function FlashcardsStyles({
       .nav-arrow svg {
         filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.6));
         opacity: 0.95;
+        width: 24px;
+        height: 24px;
       }
 
       .nav-left {
-        left: 12px;
+        left: 40px;
       }
 
       .nav-right {
-        right: 12px;
+        right: 40px;
       }
 
       /* Suggestion Panel Styles */
@@ -1832,29 +1830,21 @@ export function FlashcardsStyles({
       /* Responsive Design - Mobile */
       @media (max-width: 768px) {
         .flashcards-widget {
-          padding: 10px 54px 16px 54px;
-          margin: 6px auto;
-          width: 100%;
-          max-width: calc(100vw - 32px);
-          height: calc(100% - 24px);
-          max-height: calc(100vh - 120px);
+          padding: 12px 0;
         }
 
         .flashcards-container {
-          min-height: 420px;
-          max-height: calc(100vh - 180px);
-          margin: 0;
-          padding: 0;
+          min-height: 0;
         }
 
         .flashcards-header {
-          padding: 0 2px;
-          margin-bottom: 16px;
+          padding: 0 24px;
+          margin-bottom: 12px;
         }
 
         .flashcards-scroll-wrapper {
-          padding: 25px calc(50% - 130px);
-          gap: 16px;
+          padding: 30px calc(50% - 140px);
+          gap: 20px;
         }
 
         .header-content h3 {
@@ -1862,13 +1852,31 @@ export function FlashcardsStyles({
         }
 
         .flashcard-slide.inactive {
-          width: 170px;
-          height: 270px;
+          width: 220px;
+          height: 340px;
         }
 
         .flashcard-slide.active {
-          width: 230px;
-          height: 320px;
+          width: 320px;
+          height: 440px;
+        }
+
+        .nav-arrow {
+          width: 48px;
+          height: 48px;
+        }
+
+        .nav-arrow svg {
+          width: 20px;
+          height: 20px;
+        }
+
+        .nav-left {
+          left: 24px;
+        }
+
+        .nav-right {
+          right: 24px;
         }
 
         .modal-backdrop {
@@ -1890,31 +1898,44 @@ export function FlashcardsStyles({
 
       @media (max-width: 480px) {
         .flashcards-widget {
-          padding: 8px 48px 12px 48px;
-          max-width: calc(100vw - 20px);
+          padding: 8px 0;
+        }
+
+        .flashcards-header {
+          padding: 0 16px;
+        }
+
+        .flashcards-scroll-wrapper {
+          padding: 20px calc(50% - 100px);
+          gap: 16px;
         }
 
         .flashcard-slide.inactive {
-          width: 150px;
-          height: 230px;
+          width: 160px;
+          height: 260px;
         }
 
         .flashcard-slide.active {
-          width: 190px;
-          height: 270px;
+          width: 240px;
+          height: 340px;
         }
 
         .nav-arrow {
-          width: 36px;
-          height: 36px;
+          width: 40px;
+          height: 40px;
+        }
+
+        .nav-arrow svg {
+          width: 18px;
+          height: 18px;
         }
 
         .nav-left {
-          left: 4px !important;
+          left: 12px;
         }
 
         .nav-right {
-          right: 4px !important;
+          right: 12px;
         }
       }
     `}</style>
