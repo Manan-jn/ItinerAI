@@ -233,8 +233,9 @@ export default function DaySlider({
                       </div>
                     )}
 
-                    {/* Delete Icon - Top Right */}
-                    {!isLoading && isLoaded && onDeleteDay && (
+                    {/* Delete Icon - Top Right - Hidden for first and last day */}
+                    {!isLoading && isLoaded && onDeleteDay && 
+                     idx !== 0 && idx !== allDayCards.length - 1 && (
                       <div
                         onClick={(e) => {
                           e.stopPropagation();
@@ -375,7 +376,8 @@ export default function DaySlider({
                   </button>
 
                   {/* Plus Button Between Cards - Fixed size to prevent layout shift */}
-                  {idx < allDayCards.length - 1 ? (
+                  {/* Only show between cards, not after the last card */}
+                  {idx < allDayCards.length - 1 && (
                     <div className="flex-shrink-0 mx-2 w-10 h-10 flex items-center justify-center">
                       <button
                         onClick={() => handlePlusClick(idx)}
@@ -420,31 +422,6 @@ export default function DaySlider({
                         </svg>
                       </button>
                     </div>
-                  ) : (
-                    // Add Day Button (After last day)
-                    <button
-                      onClick={onAddDay}
-                      className={`flex-shrink-0 ml-2 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 shadow-md hover:shadow-lg transition-all duration-300 hover:scale-110 active:scale-95 flex items-center justify-center group ${
-                        isExpanded ? "w-12 h-12" : "w-8 h-8"
-                      }`}
-                      title="Add New Day at End"
-                    >
-                      <svg
-                        className={`text-white transition-all duration-300 group-hover:rotate-90 ${
-                          isExpanded ? "w-5 h-5" : "w-4 h-4"
-                        }`}
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        strokeWidth={2.5}
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M12 4v16m8-8H4"
-                        />
-                      </svg>
-                    </button>
                   )}
                 </div>
               );
