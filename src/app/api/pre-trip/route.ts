@@ -1,0 +1,96 @@
+import { NextRequest, NextResponse } from "next/server";
+
+interface PreTripRequest {
+  user_id: string;
+  session_id: string;
+}
+
+interface PreTripResponse {
+  user_id: string;
+  session_id: string;
+  message: string; // Markdown content
+}
+
+const BACKEND_API_URL = process.env.BACKEND_API_URL || "http://127.0.0.1:8000";
+
+export async function POST(request: NextRequest) {
+  try {
+    const body: PreTripRequest = await request.json();
+    const { user_id, session_id } = body;
+
+    // Validate input
+    if (!session_id || !user_id) {
+      return NextResponse.json(
+        { error: "Session ID and User ID are required" },
+        { status: 400 }
+      );
+    }
+
+    console.log("Proxying pre-trip request to backend:", {
+      url: `${BACKEND_API_URL}/agents/pre-trip`,
+      user_id,
+      session_id,
+    });
+
+    // Proxy the request to the FastAPI backend
+    const response = await fetch(`${BACKEND_API_URL}/agents/pre-trip`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_id,
+        session_id,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("Backend pre-trip API error:", {
+        status: response.status,
+        statusText: response.statusText,
+        error: errorText,
+      });
+
+      return NextResponse.json(
+        {
+          error: `Backend API error: ${response.status} ${response.statusText}`,
+          details: errorText,
+        },
+        { status: response.status }
+      );
+    }
+
+    const data: PreTripResponse = await response.json();
+    console.log("Backend pre-trip response received:", {
+      hasMessage: !!data.message,
+      messageLength: data.message?.length || 0,
+      messagePreview: data.message?.substring(0, 100) || "",
+    });
+
+    return NextResponse.json(data);
+  } catch (error) {
+    console.error("Pre-trip API proxy error:", error);
+
+    // Provide different error messages based on error type
+    if (error instanceof TypeError && error.message.includes("fetch")) {
+      return NextResponse.json(
+        {
+          error: "Unable to connect to backend service",
+          details:
+            "The backend API is not accessible. Please check if the service is running.",
+        },
+        { status: 503 }
+      );
+    }
+
+    return NextResponse.json(
+      {
+        error: "Internal server error",
+        details: error instanceof Error ? error.message : "Unknown error",
+      },
+      { status: 500 }
+    );
+  }
+}
+

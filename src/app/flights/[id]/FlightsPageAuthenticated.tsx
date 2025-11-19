@@ -21,6 +21,7 @@ import ChatLoadingIndicator from "../../components/ChatLoadingIndicator";
 import BookingWidget from "../../components/BookingWidget";
 import FinalizeLoader from "../../components/FinalizeLoader";
 import CongratulationsLoader from "../../components/CongratulationsLoader";
+import PreTripWidget from "../../components/PreTripWidget";
 import { getSessionId } from "../../utils/sessionManager";
 import { updateMemoryOnSessionChange } from "../../utils/memoryApi";
 import {
@@ -42,6 +43,7 @@ import {
   finalizeAndStoreCompleteItinerary,
 } from "../../utils/itineraryStorage";
 import { transformTripData } from "../../utils/tripDataTransformer";
+import { getPreTripMarkdown } from "../../utils/preTripData";
 import {
   cleanBackticksFromResponse,
   makeChatAPICall,
@@ -133,6 +135,11 @@ export default function FlightsPageAuthenticated() {
     setShowBooking(show);
   };
 
+  const handleShowPreTrip = (show: boolean) => {
+    if (show) collapseSidebarIfOpen();
+    setShowPreTrip(show);
+  };
+
   // Auto-focus chat input when switching to chat section
   useEffect(() => {
     if (activeSection === "chat" && textareaRef.current) {
@@ -199,6 +206,8 @@ export default function FlightsPageAuthenticated() {
   const [showBooking, setShowBooking] = useState(false); // NEW: Show booking widget
   const [showFinalizeLoader, setShowFinalizeLoader] = useState(false); // NEW: Show finalize loader
   const [showCongratsLoader, setShowCongratsLoader] = useState(false); // NEW: Show congratulations loader
+  const [showPreTrip, setShowPreTrip] = useState(false); // NEW: Show pre-trip brief widget
+  const [preTripMarkdown, setPreTripMarkdown] = useState<string>(""); // NEW: Store pre-trip markdown content
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const flashcardsRef = useRef<FlashcardsWidgetRef>(null);
@@ -286,6 +295,22 @@ export default function FlightsPageAuthenticated() {
     restoreSelectedTrip();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]); // Run when userId is set (selectedTrip checked inside but not in deps to avoid loops)
+
+  // Load pre-trip markdown when PreTrip widget is shown via debug toggle
+  useEffect(() => {
+    if (showPreTrip && !preTripMarkdown && userId && sessionId) {
+      const loadMarkdown = async () => {
+        console.log("🔄 Debug toggle: Fetching pre-trip brief with:", {
+          userId,
+          sessionId,
+        });
+        const markdown = await getPreTripMarkdown(userId, sessionId);
+        setPreTripMarkdown(markdown);
+        console.log("✅ Debug toggle: Pre-trip markdown loaded");
+      };
+      loadMarkdown();
+    }
+  }, [showPreTrip, preTripMarkdown, userId, sessionId]);
 
   // Trip handlers using custom hook
   const { handleTripSelect, handleTripMemoryUpdate } = useTripHandlers(
@@ -1831,7 +1856,7 @@ export default function FlightsPageAuthenticated() {
   // Handler for Continue from BookingWidget (after all bookings done)
   const handleBookingContinue = async () => {
     try {
-      console.log("🎉 All bookings completed, proceeding to congratulations");
+      console.log("🎉 All bookings completed, proceeding to pre-trip brief");
 
       if (!userId || !sessionId) {
         console.error("❌ Missing user data");
@@ -1840,6 +1865,15 @@ export default function FlightsPageAuthenticated() {
 
       // Show congratulations loader
       setShowCongratsLoader(true);
+
+      // Load pre-trip markdown content from backend API
+      console.log("🔄 Fetching pre-trip brief with:", { userId, sessionId });
+      const markdown = await getPreTripMarkdown(userId, sessionId);
+      setPreTripMarkdown(markdown);
+      console.log("✅ Pre-trip markdown loaded:", {
+        length: markdown.length,
+        preview: markdown.substring(0, 100),
+      });
 
       // Save bookings information to Firestore
       // This would typically update the generated_itineraries document with booking status
@@ -1850,14 +1884,21 @@ export default function FlightsPageAuthenticated() {
         setShowCongratsLoader(false);
         setShowBooking(false);
 
-        // Redirect to dashboard
-        console.log("🏠 Redirecting to dashboard");
-        handleSetActiveSection("dashboard");
+        // Show pre-trip brief instead of redirecting to dashboard
+        console.log("📄 Showing pre-trip brief");
+        handleShowPreTrip(true);
       }, 4000);
     } catch (error) {
       console.error("❌ Error in booking continuation:", error);
       setShowCongratsLoader(false);
     }
+  };
+
+  // Handler for finishing pre-trip brief
+  const handlePreTripFinish = () => {
+    console.log("✅ Pre-trip brief finished, redirecting to dashboard");
+    setShowPreTrip(false);
+    handleSetActiveSection("dashboard");
   };
 
   // Handler for requesting next day itinerary from ItineraryWidget
@@ -4158,12 +4199,22 @@ export default function FlightsPageAuthenticated() {
                 showItinerary={showItinerary}
                 showDateSelector={showDateSelector}
                 showDebug={showDebug}
+                showBooking={showBooking}
+                showPreTrip={showPreTrip}
                 testEndResponse={testEndResponse}
                 sessionId={sessionId}
                 isSidebarCollapsed={isSidebarCollapsed}
                 onToggleSidebar={() =>
                   setIsSidebarCollapsed(!isSidebarCollapsed)
                 }
+                onBookingToggle={() => {
+                  handleShowBooking(!showBooking);
+                  console.log("📝 Booking toggle:", !showBooking);
+                }}
+                onPreTripToggle={() => {
+                  handleShowPreTrip(!showPreTrip);
+                  console.log("📄 PreTrip toggle:", !showPreTrip);
+                }}
                 onTestEndResponseToggle={() => {
                   setTestEndResponse(!testEndResponse);
                   console.log(
@@ -4258,7 +4309,37 @@ export default function FlightsPageAuthenticated() {
 
               {/* Chat Container - Scrollable messages area with fixed input */}
               <div className="flex-1 flex flex-col min-h-0">
-                {showBooking ? (
+                {showPreTrip ? (
+                  <div className="flex-1 overflow-hidden">
+                    <PreTripWidget
+                      isVisible={showPreTrip}
+                      onToggle={() => setShowPreTrip(false)}
+                      markdownContent={
+                        preTripMarkdown ||
+                        `# PRE-TRIP BRIEF — ${
+                          selectedTrip?.trip_title || "Your Trip"
+                        }
+**Generated on:** ${new Date().toISOString()}
+**Generated for user:** ${
+                          currentUser?.displayName ||
+                          currentUser?.email ||
+                          "Traveler"
+                        }
+
+---
+
+## SUMMARY
+Loading pre-trip information...
+
+---
+
+*This is a placeholder. Pre-trip data is being loaded.*`
+                      }
+                      tripTitle={selectedTrip?.trip_title || "My Trip"}
+                      onClose={handlePreTripFinish}
+                    />
+                  </div>
+                ) : showBooking ? (
                   <div className="flex-1 overflow-hidden">
                     <BookingWidget
                       isVisible={showBooking}

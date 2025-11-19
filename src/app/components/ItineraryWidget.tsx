@@ -21,6 +21,33 @@ const ItineraryMap = dynamic(() => import("./ItineraryMap"), {
   ),
 });
 
+// Helper function to process Google Places photo URLs to use authenticated proxy
+const processPhotoUrl = (photoUrl: string | null): string | null => {
+  if (!photoUrl) return null;
+
+  // Check if it's a Google Places photo URL
+  if (photoUrl.includes("maps.googleapis.com/maps/api/place/photo")) {
+    try {
+      const urlObj = new URL(photoUrl);
+      const photoReference = urlObj.searchParams.get("photoreference");
+      if (photoReference) {
+        // Convert to proxy URL with higher resolution for itinerary
+        const proxyUrl = `/api/place-photo?photoreference=${photoReference}&maxwidth=800`;
+        console.log("🔄 Converting Google Places photo to proxy URL:", {
+          original: photoUrl.substring(0, 100) + "...",
+          proxy: proxyUrl,
+        });
+        return proxyUrl;
+      }
+    } catch (error) {
+      console.warn("❌ Error processing Google Places photo URL:", error);
+    }
+  }
+
+  // Return original URL for non-Google Places photos
+  return photoUrl;
+};
+
 // JSON structure for day itinerary data
 export interface ItineraryStop {
   id: string;
@@ -1405,7 +1432,17 @@ export default function ItineraryWidget({
                             📅 {currentDay.date}
                           </span>
                         </div>
-                        <h3 className="text-lg font-extrabold text-gray-900 leading-tight">
+                        <h3
+                          className="text-lg font-extrabold leading-tight"
+                          style={{
+                            background:
+                              "linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%)",
+                            WebkitBackgroundClip: "text",
+                            WebkitTextFillColor: "transparent",
+                            backgroundClip: "text",
+                            letterSpacing: "-0.01em",
+                          }}
+                        >
                           {currentDay.title}
                         </h3>
                       </div>
@@ -1461,7 +1498,11 @@ export default function ItineraryWidget({
                         stop.from_location?.photos ||
                         stop.to_location?.photos ||
                         [];
-                      const photoUrl = photos.length > 0 ? photos[0] : imageUrl;
+                      const rawPhotoUrl =
+                        photos.length > 0 ? photos[0] : imageUrl;
+
+                      // Process photo URL to use authenticated proxy for Google Places photos
+                      const photoUrl = processPhotoUrl(rawPhotoUrl);
 
                       // Get location for maps URL
                       const mapsUrl = getGoogleMapsUrl(

@@ -1323,7 +1323,13 @@ export default function DateSelectorWidget({
                 />
               </button>
               <div className="flex items-center gap-2">
-                <h2 className="text-lg font-bold text-gray-800">{monthName}</h2>
+                <h2 className="text-lg font-bold" style={{
+                  background: 'linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  letterSpacing: '-0.01em'
+                }}>{monthName}</h2>
                 {isLoadingPrices && (
                   <div className="flex items-center gap-2">
                     <div className="w-4 h-4 border border-gray-300 border-t-blue-500 rounded-full animate-spin" />

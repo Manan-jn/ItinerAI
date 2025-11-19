@@ -47,10 +47,16 @@ export function WelcomeScreen({
             <MdChat className="text-white text-3xl" />
           </div>
         </div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">
+        <h2 className="text-2xl font-bold mb-2" style={{
+          background: 'linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          backgroundClip: 'text',
+          letterSpacing: '-0.01em'
+        }}>
           How can I help you today?
         </h2>
-        <p className="text-gray-500 text-sm">
+        <p className="text-gray-500 text-sm font-medium">
           Ask me anything about your travel plans or use the toggles above
         </p>
       </div>

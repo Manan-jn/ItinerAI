@@ -16,6 +16,8 @@ interface ChatNavbarProps {
   showItinerary: boolean;
   showDateSelector: boolean;
   showDebug: boolean;
+  showBooking?: boolean;
+  showPreTrip?: boolean;
   testEndResponse?: boolean;
   sessionId?: string;
   onFlashcardsToggle: () => void;
@@ -24,6 +26,8 @@ interface ChatNavbarProps {
   onItineraryToggle: () => void;
   onDateSelectorToggle: () => void;
   onDebugToggle: () => void;
+  onBookingToggle?: () => void;
+  onPreTripToggle?: () => void;
   onTestEndResponseToggle?: () => void;
   isSidebarCollapsed?: boolean;
   onToggleSidebar?: () => void;
@@ -41,6 +45,8 @@ export function ChatNavbar({
   showItinerary,
   showDateSelector,
   showDebug,
+  showBooking = false,
+  showPreTrip = false,
   testEndResponse = false,
   sessionId = "",
   onFlashcardsToggle,
@@ -49,6 +55,8 @@ export function ChatNavbar({
   onItineraryToggle,
   onDateSelectorToggle,
   onDebugToggle,
+  onBookingToggle,
+  onPreTripToggle,
   onTestEndResponseToggle,
   isSidebarCollapsed = false,
   onToggleSidebar,
@@ -87,7 +95,16 @@ export function ChatNavbar({
               <MdChat className="text-white text-lg" />
             </div>
             <div>
-              <h1 className="text-base font-bold text-gray-900 tracking-tight">
+              <h1
+                className="text-base font-bold tracking-tight bg-gradient-to-r from-blue-800 via-blue-600 to-blue-400 bg-clip-text text-transparent"
+                style={{
+                  background:
+                    "linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}
+              >
                 Travel Assistant
               </h1>
               <p className="text-[10px] text-gray-400 font-medium">
@@ -206,6 +223,62 @@ export function ChatNavbar({
             {/* Debug Toggles - Only show when debug mode is active */}
             {showDebug && (
               <>
+                {/* Booking Toggle */}
+                {onBookingToggle && (
+                  <button
+                    onClick={onBookingToggle}
+                    className={`flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-xs font-medium transition-all duration-300 ${
+                      showBooking
+                        ? "bg-green-100 text-green-700 border border-green-300"
+                        : "bg-gray-100 text-gray-600 border border-gray-300 hover:bg-gray-200"
+                    }`}
+                    title="Toggle Booking Widget"
+                  >
+                    <svg
+                      className="w-3 h-3"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
+                      />
+                    </svg>
+                    <span>Booking</span>
+                  </button>
+                )}
+
+                {/* PreTrip Toggle */}
+                {onPreTripToggle && (
+                  <button
+                    onClick={onPreTripToggle}
+                    className={`flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-xs font-medium transition-all duration-300 ${
+                      showPreTrip
+                        ? "bg-purple-100 text-purple-700 border border-purple-300"
+                        : "bg-gray-100 text-gray-600 border border-gray-300 hover:bg-gray-200"
+                    }`}
+                    title="Toggle Pre-Trip Brief"
+                  >
+                    <svg
+                      className="w-3 h-3"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                      />
+                    </svg>
+                    <span>PreTrip</span>
+                  </button>
+                )}
+
                 {/* Test End Response Toggle */}
                 {onTestEndResponseToggle && (
                   <button

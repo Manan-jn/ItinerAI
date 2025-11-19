@@ -731,7 +731,13 @@ const FlashcardsWidget = forwardRef<FlashcardsWidgetRef, FlashcardsWidgetProps>(
         <div className={`flashcards-widget ${isAppearing ? "appear" : ""}`}>
           <div className="flashcards-header">
             <div className="header-content">
-              <h3>Discover Amazing Trip Ideas</h3>
+              <h3 style={{
+                background: 'linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                letterSpacing: '-0.01em'
+              }}>Discover Amazing Trip Ideas</h3>
             </div>
             <button
               onClick={onToggle}
