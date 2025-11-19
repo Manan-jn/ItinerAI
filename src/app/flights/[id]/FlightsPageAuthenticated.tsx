@@ -1826,7 +1826,39 @@ export default function FlightsPageAuthenticated() {
       // Show loader
       setShowFinalizeLoader(true);
 
-      // Store complete itinerary in Firestore
+      // STEP 1: Save final itinerary to memory
+      console.log("💾 Saving final itinerary to memory...");
+      try {
+        const memoryResponse = await fetch("/api/memory", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            user_id: userId,
+            session_id: sessionId,
+            updates: {
+              final_itinerary: itinerariesGenerated,
+            },
+          }),
+        });
+
+        if (!memoryResponse.ok) {
+          console.error(
+            "❌ Failed to save itinerary to memory:",
+            await memoryResponse.text()
+          );
+          // Continue anyway - don't block the flow
+        } else {
+          const memoryData = await memoryResponse.json();
+          console.log("✅ Itinerary saved to memory successfully:", memoryData);
+        }
+      } catch (memoryError) {
+        console.error("❌ Error saving to memory:", memoryError);
+        // Continue anyway - don't block the flow
+      }
+
+      // STEP 2: Store complete itinerary in Firestore
       await finalizeAndStoreCompleteItinerary(
         userId,
         sessionId,
