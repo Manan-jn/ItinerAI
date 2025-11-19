@@ -1,8 +1,27 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { PDFViewer, PDFDownloadLink } from "@react-pdf/renderer";
-import PreTripDocument from "./PreTripDocument";
+import React, { useState, useEffect, useRef } from "react";
+import dynamic from "next/dynamic";
+
+// Dynamically import PDF wrapper components to ensure they only load on client side
+const PDFViewerWrapper = dynamic(() => import("./pdf/PDFViewerWrapper"), {
+  ssr: false,
+  loading: () => (
+    <div className="loading-state">
+      <div className="spinner"></div>
+      <p>Loading PDF viewer...</p>
+    </div>
+  ),
+});
+
+const PDFDownloadButton = dynamic(() => import("./pdf/PDFDownloadButton"), {
+  ssr: false,
+  loading: () => (
+    <button className="download-button" disabled>
+      <span>Loading...</span>
+    </button>
+  ),
+});
 
 export interface PreTripWidgetProps {
   isVisible: boolean;
@@ -20,10 +39,15 @@ export default function PreTripWidget({
   onClose,
 }: PreTripWidgetProps) {
   const [isClient, setIsClient] = useState(false);
+  const hasRenderedRef = useRef(false);
 
   // Ensure we're only rendering PDF viewer on client side
   useEffect(() => {
-    setIsClient(true);
+    // Only set isClient once to prevent re-mounting PDF components
+    if (!hasRenderedRef.current) {
+      setIsClient(true);
+      hasRenderedRef.current = true;
+    }
   }, []);
 
   if (!isVisible) return null;
@@ -39,35 +63,21 @@ export default function PreTripWidget({
               <p className="header-subtitle">{tripTitle}</p>
             </div>
             <div className="header-actions">
-              {isClient && (
-                <PDFDownloadLink
-                  document={
-                    <PreTripDocument markdownContent={markdownContent} />
-                  }
-                  fileName={`pre-trip-${tripTitle
-                    .replace(/\s+/g, "-")
-                    .toLowerCase()}.pdf`}
-                  className="download-button"
-                >
-                  {({ loading }) => (
-                    <>
-                      <svg
-                        width="20"
-                        height="20"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2.5"
-                      >
-                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path>
-                        <polyline points="7 10 12 15 17 10"></polyline>
-                        <line x1="12" y1="15" x2="12" y2="3"></line>
-                      </svg>
-                      <span>{loading ? "Preparing..." : "Download PDF"}</span>
-                    </>
-                  )}
-                </PDFDownloadLink>
-              )}
+              {/* Download Button with stable container */}
+              <div style={{ minWidth: "140px", minHeight: "42px" }}>
+                {isClient ? (
+                  <PDFDownloadButton
+                    markdownContent={markdownContent}
+                    fileName={`pre-trip-${tripTitle
+                      .replace(/\s+/g, "-")
+                      .toLowerCase()}.pdf`}
+                  />
+                ) : (
+                  <button className="download-button" disabled>
+                    <span>Loading...</span>
+                  </button>
+                )}
+              </div>
               <button
                 onClick={onToggle}
                 className="close-button"
@@ -92,17 +102,7 @@ export default function PreTripWidget({
           {/* PDF Viewer Section */}
           <div className="pdf-viewer-container">
             {isClient ? (
-              <PDFViewer
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  border: "none",
-                  borderRadius: "12px",
-                }}
-                showToolbar={true}
-              >
-                <PreTripDocument markdownContent={markdownContent} />
-              </PDFViewer>
+              <PDFViewerWrapper markdownContent={markdownContent} />
             ) : (
               <div className="loading-state">
                 <div className="spinner"></div>
@@ -218,7 +218,7 @@ export default function PreTripWidget({
           gap: 12px;
         }
 
-        .download-button {
+        :global(.download-button) {
           display: flex;
           align-items: center;
           gap: 10px;
@@ -239,7 +239,7 @@ export default function PreTripWidget({
           overflow: hidden;
         }
 
-        .download-button::before {
+        :global(.download-button::before) {
           content: "";
           position: absolute;
           top: 0;
@@ -255,11 +255,11 @@ export default function PreTripWidget({
           transition: left 0.5s;
         }
 
-        .download-button:hover::before {
+        :global(.download-button:hover::before) {
           left: 100%;
         }
 
-        .download-button:hover {
+        :global(.download-button:hover:not(:disabled)) {
           background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
           transform: translateY(-2px);
           box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4),
@@ -268,12 +268,17 @@ export default function PreTripWidget({
             0 0 24px rgba(59, 130, 246, 0.3);
         }
 
-        .download-button:active {
+        :global(.download-button:active:not(:disabled)) {
           transform: translateY(0);
           box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
         }
 
-        .download-button svg {
+        :global(.download-button:disabled) {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+
+        :global(.download-button svg) {
           filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
         }
 
@@ -468,7 +473,7 @@ export default function PreTripWidget({
             justify-content: space-between;
           }
 
-          .download-button {
+          :global(.download-button) {
             flex: 1;
             justify-content: center;
           }
