@@ -54,20 +54,20 @@ export function ChatNavbar({
   onToggleSidebar,
 }: ChatNavbarProps) {
   return (
-    <nav className="bg-white border-b border-gray-200 flex-shrink-0">
-      <div className="px-6 py-4">
+    <nav className="bg-white/80 backdrop-blur-md border-b border-gray-100 flex-shrink-0 shadow-sm">
+      <div className="px-6 py-3.5">
         <div className="flex items-center justify-between">
           {/* Left Side - Hamburger Menu + Chat Header Info */}
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center gap-3">
             {/* Hamburger Menu Button */}
             {onToggleSidebar && (
               <button
                 onClick={onToggleSidebar}
-                className="p-2 rounded-lg hover:bg-gray-100 transition-all duration-300 group"
+                className="p-2 rounded-lg hover:bg-gray-100 transition-all duration-200 group"
                 title={isSidebarCollapsed ? "Show Sidebar" : "Hide Sidebar"}
               >
                 <svg
-                  className="w-5 h-5 text-gray-600 group-hover:text-blue-600 transition-colors duration-300"
+                  className="w-5 h-5 text-gray-500 group-hover:text-blue-600 transition-colors"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -83,21 +83,21 @@ export function ChatNavbar({
             )}
 
             {/* Chat Header Info */}
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-md">
-              <MdChat className="text-white text-xl" />
+            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-200/50">
+              <MdChat className="text-white text-lg" />
             </div>
             <div>
-              <h1 className="text-lg font-bold text-gray-900">
+              <h1 className="text-base font-bold text-gray-900 tracking-tight">
                 Travel Assistant
               </h1>
-              {/* <p className="text-xs text-gray-500">
-                Powered by AI • Ready to help
-              </p> */}
+              <p className="text-[10px] text-gray-400 font-medium">
+                Powered by AI
+              </p>
             </div>
           </div>
 
           {/* Right Side - Toggles and Status */}
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center gap-2">
             {/* Component Toggles - Only show when debug mode is active */}
             {showDebug && (
               <>
@@ -264,15 +264,15 @@ export function ChatNavbar({
             {/* Debug Toggle Button */}
             <button
               onClick={onDebugToggle}
-              className={`flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-xs font-medium transition-all duration-300 ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 ${
                 showDebug
-                  ? "bg-blue-100 text-blue-700 border border-blue-300"
-                  : "bg-gray-100 text-gray-600 border border-gray-300 hover:bg-gray-200"
+                  ? "bg-blue-50 text-blue-600 ring-1 ring-blue-200 shadow-sm"
+                  : "bg-gray-50 text-gray-600 hover:bg-gray-100"
               }`}
               title="Toggle Debug Info (Ctrl/Cmd + D)"
             >
               <svg
-                className="w-3 h-3"
+                className="w-3.5 h-3.5"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -293,7 +293,7 @@ export function ChatNavbar({
               <span>Debug</span>
             </button>
 
-            <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700 border border-green-200">
+            <span className="inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-medium bg-green-50 text-green-600 ring-1 ring-green-200 shadow-sm">
               <span className="w-1.5 h-1.5 bg-green-500 rounded-full mr-1.5 animate-pulse"></span>
               Online
             </span>

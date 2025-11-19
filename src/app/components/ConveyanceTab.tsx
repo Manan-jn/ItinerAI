@@ -19,6 +19,8 @@ import {
 interface ConveyanceTabProps {
   userId?: string;
   sessionId?: string;
+  isSidebarCollapsed?: boolean;
+  onToggleSidebar?: () => void;
 }
 
 type ConveyanceType = "Flight" | "Train" | "Bus";
@@ -1558,6 +1560,8 @@ function TransportCard({
 export default function ConveyanceTab({
   userId,
   sessionId,
+  isSidebarCollapsed = false,
+  onToggleSidebar,
 }: ConveyanceTabProps) {
   const [travellers, setTravellers] = useState(1);
   const [travelClass, setTravelClass] = useState("Economy");
@@ -1978,20 +1982,59 @@ export default function ConveyanceTab({
 
   return (
     <div className="w-full h-full bg-gradient-to-br from-white/98 to-gray-50/98 flex flex-col overflow-hidden">
-      {/* Page Header */}
-      <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 backdrop-blur-sm px-6 py-4 flex-shrink-0 border-b border-gray-200/30">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center shadow-md">
-            <MdFlight className="text-white text-xl" />
-          </div>
-          <div>
-            <h2 className="text-gray-900 text-lg font-bold tracking-wide">
-              Conveyance Search
-            </h2>
-            <p className="text-xs text-gray-500">Find flights, trains, and buses for your journey</p>
+      {/* Top Navbar */}
+      <nav className="bg-white/80 backdrop-blur-md border-b border-gray-100 flex-shrink-0 shadow-sm">
+        <div className="px-6 py-3.5">
+          <div className="flex items-center justify-between">
+            {/* Left Side - Hamburger Menu + Header Info */}
+            <div className="flex items-center gap-3">
+              {/* Hamburger Menu Button */}
+              {onToggleSidebar && (
+                <button
+                  onClick={onToggleSidebar}
+                  className="p-2 rounded-lg hover:bg-gray-100 transition-all duration-200 group"
+                  title={isSidebarCollapsed ? "Show Sidebar" : "Hide Sidebar"}
+                >
+                  <svg
+                    className="w-5 h-5 text-gray-500 group-hover:text-blue-600 transition-colors"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 6h16M4 12h16M4 18h16"
+                    />
+                  </svg>
+                </button>
+              )}
+
+              {/* Header Info */}
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-200/50">
+                <MdDirectionsBus className="text-white text-lg" />
+              </div>
+              <div>
+                <h1 className="text-base font-bold text-gray-900 tracking-tight">
+                  Conveyance Search
+                </h1>
+                <p className="text-[10px] text-gray-400 font-medium">
+                  Find flights, trains & buses
+                </p>
+              </div>
+            </div>
+
+            {/* Right Side - Status */}
+            <div className="flex items-center gap-2">
+              <span className="inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-medium bg-green-50 text-green-600 ring-1 ring-green-200 shadow-sm">
+                <span className="w-1.5 h-1.5 bg-green-500 rounded-full mr-1.5 animate-pulse"></span>
+                Online
+              </span>
+            </div>
           </div>
         </div>
-      </div>
+      </nav>
 
       {/* Content - Scrollable */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">

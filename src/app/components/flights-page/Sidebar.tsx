@@ -36,124 +36,92 @@ export function Sidebar({
   onToggleCollapse,
 }: SidebarProps) {
   return (
-    <aside 
+    <aside
       className={`
         bg-white border-r border-gray-200 flex flex-col flex-shrink-0 
         transition-all duration-500 ease-in-out overflow-hidden
-        ${isCollapsed ? 'w-0 border-r-0' : 'w-52'}
+        ${isCollapsed ? "w-0 border-r-0" : "w-52"}
       `}
       style={{
-        minWidth: isCollapsed ? '0' : '13rem',
+        minWidth: isCollapsed ? "0" : "13rem",
       }}
     >
       {/* Content wrapper with opacity transition */}
-      <div 
+      <div
         className={`
           w-52 flex flex-col h-full
           transition-opacity duration-300 ease-in-out
-          ${isCollapsed ? 'opacity-0' : 'opacity-100'}
+          ${isCollapsed ? "opacity-0" : "opacity-100"}
         `}
       >
-      {/* Logo */}
-      <div className="p-4 border-b border-gray-200">
-        <div className="flex items-center">
-          <MdFlight className="text-blue-500 text-2xl transform rotate-45" />
-          <div className="ml-2">
-            <div className="text-blue-600 font-bold text-base leading-tight">
-              ItinerAI
+        {/* Logo */}
+        <div className="p-5 border-b border-gray-100">
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-200/50">
+              <MdFlight className="text-white text-lg transform rotate-45" />
             </div>
-            <div className="text-[8px] text-gray-500 -mt-0.5">
-              Your AI Travel Companion
+            <div>
+              <div className="text-gray-900 font-bold text-base leading-tight tracking-tight">
+                ItinerAI
+              </div>
+              <div className="text-[9px] text-gray-400 font-medium tracking-wide">
+                AI Travel Companion
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Sidebar Header - Clean */}
-      <div className="p-4 border-b border-gray-200">
-        <div className="h-4"></div>
-      </div>
-
-      {/* Navigation */}
-      <div className="flex-1 overflow-y-auto p-3">
-        <h4 className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-2">
-          MAIN
-        </h4>
-        <div className="space-y-1">
-          <SidebarButton
-            icon={<MdHome className="w-4 h-4" />}
-            text="Dashboard"
-            active={(activeSection as string) === "dashboard"}
-            onClick={() => onSectionChange("dashboard")}
-          />
-          <SidebarButton
-            icon={<MdChat className="w-4 h-4" />}
-            text="Trip Planner"
-            active={activeSection === "chat"}
-            onClick={() => onSectionChange("chat")}
-          />
-          <SidebarButton
-            icon={<MdDirectionsBus className="w-4 h-4" />}
-            text="Conveyance Finder"
-            active={activeSection === "conveyance"}
-            onClick={() => onSectionChange("conveyance")}
-          />
-          <SidebarButton
-            icon={<MdHotel className="w-4 h-4" />}
-            text="Stay Finder"
-            active={activeSection === "stays"}
-            onClick={() => onSectionChange("stays")}
-          />
-        </div>
-
-        {/* Discover Section */}
-        <h4 className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider mt-5 mb-2">
-          DISCOVER
-        </h4>
-        <div className="space-y-1">
-          <SidebarButton
-            icon={<MdExplore className="w-4 h-4" />}
-            text="Explore"
-            active={activeSection === "explore"}
-            onClick={() => onSectionChange("explore")}
-          />
-          <SidebarButton
-            icon={<MdBook className="w-4 h-4" />}
-            text="Itinerary"
-            active={activeSection === "itinerary"}
-            onClick={() => onSectionChange("itinerary")}
-            badge="NEW!"
-          />
-          <SidebarButton
-            icon={<MdPeople className="w-4 h-4" />}
-            text="Friends"
-            active={activeSection === "friends"}
-            onClick={() => onSectionChange("friends")}
-          />
-        </div>
-      </div>
-
-      {/* Logout */}
-      <div className="p-3 border-t border-gray-200">
-        <button
-          onClick={onLogout}
-          className="w-full flex items-center space-x-2.5 px-2.5 py-2 rounded-lg text-red-500 hover:bg-red-50 transition-all"
-        >
-          <svg
-            className="w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+        {/* Navigation */}
+        <div className="flex-1 overflow-y-auto p-4">
+          <div className="space-y-1.5">
+            <SidebarButton
+              icon={<MdHome className="w-[18px] h-[18px]" />}
+              text="Dashboard"
+              active={(activeSection as string) === "dashboard"}
+              onClick={() => onSectionChange("dashboard")}
             />
-          </svg>
-          <span className="text-xs">Logout</span>
-        </button>
+            <SidebarButton
+              icon={<MdChat className="w-[18px] h-[18px]" />}
+              text="Trip Planner"
+              active={activeSection === "chat"}
+              onClick={() => onSectionChange("chat")}
+            />
+            <SidebarButton
+              icon={<MdDirectionsBus className="w-[18px] h-[18px]" />}
+              text="Conveyance"
+              active={activeSection === "conveyance"}
+              onClick={() => onSectionChange("conveyance")}
+            />
+            <SidebarButton
+              icon={<MdHotel className="w-[18px] h-[18px]" />}
+              text="Stay Finder"
+              active={activeSection === "stays"}
+              onClick={() => onSectionChange("stays")}
+            />
+          </div>
+        </div>
+
+        {/* Logout */}
+        <div className="p-4 border-t border-gray-100">
+          <button
+            onClick={onLogout}
+            className="w-full flex items-center gap-2.5 px-3.5 py-2.5 rounded-lg text-red-600 hover:bg-red-50 transition-all duration-200 group"
+          >
+            <svg
+              className="w-[18px] h-[18px] group-hover:scale-110 transition-transform"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+              />
+            </svg>
+            <span className="text-sm font-medium">Logout</span>
+          </button>
         </div>
       </div>
     </aside>

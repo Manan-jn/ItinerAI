@@ -4454,10 +4454,20 @@ export default function FlightsPageAuthenticated() {
             </div>
           ) : activeSection === "conveyance" ? (
             // Conveyance Tab
-            <ConveyanceTab userId={currentUser?.uid} sessionId={sessionId} />
+            <ConveyanceTab
+              userId={currentUser?.uid}
+              sessionId={sessionId}
+              isSidebarCollapsed={isSidebarCollapsed}
+              onToggleSidebar={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+            />
           ) : activeSection === "stays" ? (
             // Stays Tab
-            <StaysTab userId={currentUser?.uid} sessionId={sessionId} />
+            <StaysTab
+              userId={currentUser?.uid}
+              sessionId={sessionId}
+              isSidebarCollapsed={isSidebarCollapsed}
+              onToggleSidebar={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+            />
           ) : (
             // Default: Dashboard if no section matches
             <DashboardContent
@@ -4466,6 +4476,8 @@ export default function FlightsPageAuthenticated() {
               setShowProfileDropdown={setShowProfileDropdown}
               onSettings={() => router.push("/flights/settings")}
               onLogout={logout}
+              isSidebarCollapsed={isSidebarCollapsed}
+              onToggleSidebar={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
             />
           )}
         </div>

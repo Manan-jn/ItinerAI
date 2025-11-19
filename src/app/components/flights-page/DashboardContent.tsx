@@ -36,20 +36,20 @@ export function DashboardContent({
   return (
     <div className="flex-1 flex flex-col min-h-0 bg-gray-50">
       {/* Combined Navigation Bar - Fixed */}
-      <nav className="bg-white border-b border-gray-200 flex-shrink-0 z-10">
-        <div className="px-6 py-4">
+      <nav className="bg-white/80 backdrop-blur-md border-b border-gray-100 flex-shrink-0 z-10 shadow-sm">
+        <div className="px-6 py-3.5">
           <div className="flex items-center justify-between">
             {/* Left Side - Hamburger Menu + Good Morning Message */}
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center gap-3">
               {/* Hamburger Menu Button */}
               {onToggleSidebar && (
                 <button
                   onClick={onToggleSidebar}
-                  className="p-2 rounded-lg hover:bg-gray-100 transition-all duration-300 group"
+                  className="p-2 rounded-lg hover:bg-gray-100 transition-all duration-200 group"
                   title={isSidebarCollapsed ? "Show Sidebar" : "Hide Sidebar"}
                 >
                   <svg
-                    className="w-5 h-5 text-gray-600 group-hover:text-blue-600 transition-colors duration-300"
+                    className="w-5 h-5 text-gray-500 group-hover:text-blue-600 transition-colors"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -66,18 +66,18 @@ export function DashboardContent({
 
               {/* Good Morning Message */}
               <div>
-                <h1 className="text-2xl font-bold text-gray-900 mb-0.5">
+                <h1 className="text-xl font-bold text-gray-900 tracking-tight">
                   Good Morning,{" "}
                   {currentUser?.displayName?.split(" ")[0] || "User"} 👋
                 </h1>
-                <p className="text-sm text-gray-500">
+                <p className="text-[11px] text-gray-400 font-medium">
                   Plan your itinerary with us
                 </p>
               </div>
             </div>
 
             {/* Right Side - User Profile */}
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center gap-3">
               <ProfileDropdown
                 currentUser={currentUser}
                 showProfileDropdown={showProfileDropdown}

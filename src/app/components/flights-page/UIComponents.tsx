@@ -84,16 +84,18 @@ export function SidebarButton({
   return (
     <button
       onClick={onClick}
-      className={`w-full flex items-center space-x-2.5 px-2.5 py-2 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 ${
+      className={`group w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition-all duration-200 ${
         active
-          ? "bg-blue-50 text-blue-600 border border-blue-200 shadow-md"
-          : "text-gray-600 hover:bg-gray-50 hover:text-gray-900 hover:shadow-sm"
+          ? "bg-gradient-to-r from-blue-50 to-blue-50/50 text-blue-600 shadow-sm ring-1 ring-blue-100"
+          : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
       }`}
     >
-      {icon}
-      <span className="text-xs flex-1 text-left">{text}</span>
+      <span className={`${active ? "scale-110" : "group-hover:scale-110"} transition-transform`}>
+        {icon}
+      </span>
+      <span className="text-sm font-medium flex-1 text-left">{text}</span>
       {badge && (
-        <span className="ml-auto bg-purple-600 text-white text-[9px] px-1.5 py-0.5 rounded-full">
+        <span className="ml-auto bg-gradient-to-r from-purple-600 to-purple-500 text-white text-[9px] font-semibold px-2 py-0.5 rounded-full shadow-sm">
           {badge}
         </span>
       )}

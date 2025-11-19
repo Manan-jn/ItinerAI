@@ -12,22 +12,31 @@ import {
   FiStar,
 } from "react-icons/fi";
 import { MdHotel } from "react-icons/md";
-import { getStaysDataForWidget, formatStaysForDisplay } from "../utils/preFetchIntegration";
+import {
+  getStaysDataForWidget,
+  formatStaysForDisplay,
+} from "../utils/preFetchIntegration";
 import { getPreFetchedStaysData } from "../utils/preFetchStays";
 
 interface StaysTabProps {
   userId?: string;
   sessionId?: string;
+  isSidebarCollapsed?: boolean;
+  onToggleSidebar?: () => void;
 }
 
-import { getPopularIndianCities, searchCities, findPlaceByCity } from "../utils/placesData";
+import {
+  getPopularIndianCities,
+  searchCities,
+  findPlaceByCity,
+} from "../utils/placesData";
 
 // Get initial cities list - will be populated from placesData utility
 const getInitialCities = () => {
   const popularCities = getPopularIndianCities();
-  return popularCities.map(c => ({
+  return popularCities.map((c) => ({
     name: c.city,
-    code: c.code
+    code: c.code,
   }));
 };
 
@@ -85,15 +94,15 @@ function CitySelector({
       setIsLoading(true);
       try {
         const results = await searchCities(searchTerm, 50); // Limit to 50 results
-        const formattedCities = results.map(c => ({
+        const formattedCities = results.map((c) => ({
           name: c.city,
-          code: c.code
+          code: c.code,
         }));
         setCities(formattedCities);
       } catch (error) {
         console.error("Error searching cities:", error);
         // Fallback to popular cities on error
-        const filtered = AVAILABLE_CITIES.filter(city =>
+        const filtered = AVAILABLE_CITIES.filter((city) =>
           city.name.toLowerCase().includes(searchTerm.toLowerCase())
         );
         setCities(filtered);
@@ -609,6 +618,8 @@ function StayCard({
 export default function StaysTab({
   userId,
   sessionId,
+  isSidebarCollapsed = false,
+  onToggleSidebar,
 }: StaysTabProps) {
   const [city, setCity] = useState("Bangalore");
   const [checkInDate, setCheckInDate] = useState("");
@@ -620,11 +631,15 @@ export default function StaysTab({
   const [searchResults, setSearchResults] = useState<StayOption[]>([]); // AI recommendations
   const [utilityStays, setUtilityStays] = useState<StayOption[]>([]); // Utility stays
   const [bookedOption, setBookedOption] = useState<string | null>(null);
-  const [selectedStayData, setSelectedStayData] = useState<StayOption | null>(null);
+  const [selectedStayData, setSelectedStayData] = useState<StayOption | null>(
+    null
+  );
 
   const handleSearch = async () => {
     if (!city || !checkInDate || !checkOutDate) {
-      alert("Please fill in all required fields: City, Check-in Date, and Check-out Date");
+      alert(
+        "Please fill in all required fields: City, Check-in Date, and Check-out Date"
+      );
       return;
     }
 
@@ -640,15 +655,24 @@ export default function StaysTab({
     try {
       // Check for pre-fetched data if userId is available
       if (userId) {
-        console.log(`🏨 Checking for pre-fetched stays data for: ${city} (${checkInDate} to ${checkOutDate})...`);
-        const cachedData = await getPreFetchedStaysData(userId, city, checkInDate, checkOutDate);
-        
+        console.log(
+          `🏨 Checking for pre-fetched stays data for: ${city} (${checkInDate} to ${checkOutDate})...`
+        );
+        const cachedData = await getPreFetchedStaysData(
+          userId,
+          city,
+          checkInDate,
+          checkOutDate
+        );
+
         if (cachedData) {
           console.log("✅ Found pre-fetched stays data! Using cached results.");
           console.log("📊 Cached data structure:", cachedData);
 
           // Transform AI recommendations to StayOption format
-          const aiStayOptions: StayOption[] = (cachedData.ai_recommendations || []).map((stay: any, index: number) => ({
+          const aiStayOptions: StayOption[] = (
+            cachedData.ai_recommendations || []
+          ).map((stay: any, index: number) => ({
             stay_id: `ai_stay_${index}`,
             property_name: stay.property_name,
             property_address: stay.property_address,
@@ -665,7 +689,9 @@ export default function StaysTab({
           }));
 
           // Transform utility stays to StayOption format
-          const utilityStayOptions: StayOption[] = (cachedData.utility_stays || []).map((stay: any, index: number) => ({
+          const utilityStayOptions: StayOption[] = (
+            cachedData.utility_stays || []
+          ).map((stay: any, index: number) => ({
             stay_id: `utility_stay_${index}`,
             property_name: stay.property_name,
             property_address: stay.property_address,
@@ -681,7 +707,13 @@ export default function StaysTab({
             available_until_date: stay.available_until_date,
           }));
 
-          console.log(`📊 Total properties: ${aiStayOptions.length + utilityStayOptions.length} (AI: ${aiStayOptions.length}, Utility: ${utilityStayOptions.length})`);
+          console.log(
+            `📊 Total properties: ${
+              aiStayOptions.length + utilityStayOptions.length
+            } (AI: ${aiStayOptions.length}, Utility: ${
+              utilityStayOptions.length
+            })`
+          );
 
           setSearchResults(aiStayOptions);
           setUtilityStays(utilityStayOptions);
@@ -697,21 +729,29 @@ export default function StaysTab({
 
           return; // Exit early, no need to make API calls
         } else {
-          console.log("ℹ️ No pre-fetched stays data found, proceeding with API call...");
+          console.log(
+            "ℹ️ No pre-fetched stays data found, proceeding with API call..."
+          );
         }
       }
 
       // Format dates for display in message
-      const checkInFormatted = new Date(checkInDate).toLocaleDateString("en-US", {
-        day: "2-digit",
-        month: "short",
-        year: "numeric",
-      });
-      const checkOutFormatted = new Date(checkOutDate).toLocaleDateString("en-US", {
-        day: "2-digit",
-        month: "short",
-        year: "numeric",
-      });
+      const checkInFormatted = new Date(checkInDate).toLocaleDateString(
+        "en-US",
+        {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+        }
+      );
+      const checkOutFormatted = new Date(checkOutDate).toLocaleDateString(
+        "en-US",
+        {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+        }
+      );
 
       const message = `Give me all the stay options available ${checkInFormatted} to ${checkOutFormatted} in ${city}`;
 
@@ -723,7 +763,9 @@ export default function StaysTab({
       // Calculate duration in days
       const fromDateObj = new Date(checkInDate);
       const toDateObj = new Date(checkOutDate);
-      const duration = Math.ceil((toDateObj.getTime() - fromDateObj.getTime()) / (1000 * 60 * 60 * 24));
+      const duration = Math.ceil(
+        (toDateObj.getTime() - fromDateObj.getTime()) / (1000 * 60 * 60 * 24)
+      );
 
       // Make parallel API calls to both /api/stay and /api/utility/stay
       const [aiResponse, utilityResponse] = await Promise.allSettled([
@@ -836,8 +878,9 @@ export default function StaysTab({
     setBookedOption(stayId);
 
     // Find the selected stay from both AI recommendations and utility stays
-    const selectedStay = searchResults.find(stay => stay.stay_id === stayId) ||
-                         utilityStays.find(stay => stay.stay_id === stayId);
+    const selectedStay =
+      searchResults.find((stay) => stay.stay_id === stayId) ||
+      utilityStays.find((stay) => stay.stay_id === stayId);
 
     if (selectedStay) {
       setSelectedStayData(selectedStay);
@@ -847,20 +890,59 @@ export default function StaysTab({
 
   return (
     <div className="w-full h-full bg-gradient-to-br from-white/98 to-gray-50/98 flex flex-col overflow-hidden">
-      {/* Page Header */}
-      <div className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 backdrop-blur-sm px-6 py-4 flex-shrink-0 border-b border-gray-200/30">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center shadow-md">
-            <MdHotel className="text-white text-xl" />
-          </div>
-          <div>
-            <h2 className="text-gray-900 text-lg font-bold tracking-wide">
-              Stays Search
-            </h2>
-            <p className="text-xs text-gray-500">Find hotels and accommodations for your trip</p>
+      {/* Top Navbar */}
+      <nav className="bg-white/80 backdrop-blur-md border-b border-gray-100 flex-shrink-0 shadow-sm">
+        <div className="px-6 py-3.5">
+          <div className="flex items-center justify-between">
+            {/* Left Side - Hamburger Menu + Header Info */}
+            <div className="flex items-center gap-3">
+              {/* Hamburger Menu Button */}
+              {onToggleSidebar && (
+                <button
+                  onClick={onToggleSidebar}
+                  className="p-2 rounded-lg hover:bg-gray-100 transition-all duration-200 group"
+                  title={isSidebarCollapsed ? "Show Sidebar" : "Hide Sidebar"}
+                >
+                  <svg
+                    className="w-5 h-5 text-gray-500 group-hover:text-blue-600 transition-colors"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 6h16M4 12h16M4 18h16"
+                    />
+                  </svg>
+                </button>
+              )}
+
+              {/* Header Info */}
+              <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center shadow-lg shadow-purple-200/50">
+                <MdHotel className="text-white text-lg" />
+              </div>
+              <div>
+                <h1 className="text-base font-bold text-gray-900 tracking-tight">
+                  Stay Finder
+                </h1>
+                <p className="text-[10px] text-gray-400 font-medium">
+                  Find hotels & accommodations
+                </p>
+              </div>
+            </div>
+
+            {/* Right Side - Status */}
+            <div className="flex items-center gap-2">
+              <span className="inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-medium bg-green-50 text-green-600 ring-1 ring-green-200 shadow-sm">
+                <span className="w-1.5 h-1.5 bg-green-500 rounded-full mr-1.5 animate-pulse"></span>
+                Online
+              </span>
+            </div>
           </div>
         </div>
-      </div>
+      </nav>
 
       {/* Content - Scrollable */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
@@ -944,68 +1026,68 @@ export default function StaysTab({
           <div className="space-y-4 relative z-10">
             {/* AI Recommendations Box */}
             <div className="relative bg-white/90 backdrop-blur-md rounded-2xl shadow-xl overflow-hidden border border-gray-200/40">
-                {/* Header */}
-                <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 p-3 border-b border-gray-200/30">
-                  <div className="flex items-center gap-3">
-                    <div
-                      className={`w-6 h-6 rounded-full flex items-center justify-center ${
-                        isLoadingComplete
-                          ? "bg-green-500"
-                          : isLoading
-                          ? "bg-blue-500"
-                          : "bg-gray-300"
-                      }`}
-                    >
-                      {isLoadingComplete ? (
-                        <FiCheck className="text-white" size={12} />
-                      ) : isLoading ? (
-                        <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                      ) : (
-                        <div className="w-2 h-2 bg-white rounded-full"></div>
-                      )}
-                    </div>
-                    <span className="text-sm font-semibold text-gray-800">
-                      AI Recommendations
-                    </span>
+              {/* Header */}
+              <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 p-3 border-b border-gray-200/30">
+                <div className="flex items-center gap-3">
+                  <div
+                    className={`w-6 h-6 rounded-full flex items-center justify-center ${
+                      isLoadingComplete
+                        ? "bg-green-500"
+                        : isLoading
+                        ? "bg-blue-500"
+                        : "bg-gray-300"
+                    }`}
+                  >
+                    {isLoadingComplete ? (
+                      <FiCheck className="text-white" size={12} />
+                    ) : isLoading ? (
+                      <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    ) : (
+                      <div className="w-2 h-2 bg-white rounded-full"></div>
+                    )}
                   </div>
+                  <span className="text-sm font-semibold text-gray-800">
+                    AI Recommendations
+                  </span>
                 </div>
+              </div>
 
-                {/* Content */}
-                <div className="p-3 max-h-[500px] overflow-y-auto">
-                  {isLoading ? (
-                    <div className="flex flex-col items-center justify-center py-12">
-                      <div className="w-10 h-10 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
-                      <p className="mt-3 text-sm text-gray-600 font-medium">
-                        Finding best stays...
-                      </p>
-                    </div>
-                  ) : showResults ? (
-                    <div className="space-y-3">
-                      {searchResults.length > 0 ? (
-                        <>
-                          {searchResults.map((stay) => (
-                            <StayCard
-                              key={stay.stay_id}
-                              stay={stay}
-                              isBooked={bookedOption === stay.stay_id}
-                              onBook={handleBooking}
-                            />
-                          ))}
-                        </>
-                      ) : (
-                        <div className="text-center py-12 text-gray-500">
-                          <p className="text-sm">No stays available</p>
-                        </div>
-                      )}
-                    </div>
-                  ) : (
-                    <div className="text-center py-12 text-gray-500">
-                      <p className="text-sm">
-                        Click "Smart Search" to see AI recommendations
-                      </p>
-                    </div>
-                  )}
-                </div>
+              {/* Content */}
+              <div className="p-3 max-h-[500px] overflow-y-auto">
+                {isLoading ? (
+                  <div className="flex flex-col items-center justify-center py-12">
+                    <div className="w-10 h-10 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
+                    <p className="mt-3 text-sm text-gray-600 font-medium">
+                      Finding best stays...
+                    </p>
+                  </div>
+                ) : showResults ? (
+                  <div className="space-y-3">
+                    {searchResults.length > 0 ? (
+                      <>
+                        {searchResults.map((stay) => (
+                          <StayCard
+                            key={stay.stay_id}
+                            stay={stay}
+                            isBooked={bookedOption === stay.stay_id}
+                            onBook={handleBooking}
+                          />
+                        ))}
+                      </>
+                    ) : (
+                      <div className="text-center py-12 text-gray-500">
+                        <p className="text-sm">No stays available</p>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="text-center py-12 text-gray-500">
+                    <p className="text-sm">
+                      Click "Smart Search" to see AI recommendations
+                    </p>
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Other Stay Options Box */}
