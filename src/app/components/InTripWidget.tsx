@@ -1,13 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { MdLocationOn } from "react-icons/md";
+import MessageResponseOverlay from "./MessageResponseOverlay";
 
 export interface InTripWidgetProps {
   isVisible: boolean;
   onClose?: () => void;
   tripTitle: string;
   itineraries: any[];
+  userId?: string;
+  sessionId?: string;
 }
 
 // Helper function to process Google Places photo URLs to use authenticated proxy
@@ -126,15 +129,249 @@ const getGoogleMapsUrl = (location: any) => {
   return null;
 };
 
+// Helper function to add hours to a time string (HH:MM format)
+const addHoursToTime = (timeStr: string, hoursToAdd: number): string => {
+  const [hours, minutes] = timeStr.split(":").map(Number);
+  const totalMinutes = hours * 60 + minutes + hoursToAdd * 60;
+  const newHours = Math.floor(totalMinutes / 60) % 24;
+  const newMinutes = totalMinutes % 60;
+  return `${String(newHours).padStart(2, "0")}:${String(newMinutes).padStart(
+    2,
+    "0"
+  )}`;
+};
+
+// Helper function to extract city from address
+const extractCityFromAddress = (address: string): string => {
+  if (!address) return "Unknown City";
+
+  // Split by comma and get the first part (usually city)
+  const parts = address.split(",");
+  if (parts.length > 0) {
+    return parts[0].trim();
+  }
+  return address;
+};
+
+// Helper function to extract country from address
+const extractCountryFromAddress = (address: string): string => {
+  if (!address) return "Unknown Country";
+
+  // Split by comma and get the last part (usually country)
+  const parts = address.split(",");
+  if (parts.length > 1) {
+    return parts[parts.length - 1].trim();
+  }
+  return "Unknown Country";
+};
+
+// Helper function to process itineraries and inject events
+const processItinerariesWithFlightChange = (
+  originalItineraries: any[]
+): { modifiedItineraries: any[]; eventsList: any[] } => {
+  // Create a deep copy to avoid modifying the original
+  const itinerariesCopy = JSON.parse(JSON.stringify(originalItineraries));
+  const eventsList: any[] = [];
+
+  // ========== PART 1: FLIGHT/TRAIN SCHEDULE CHANGE ==========
+  // Step 1: Find all days with flight or train conveyances
+  const conveyanceDays: Array<{
+    dayIndex: number;
+    scheduleIndex: number;
+    conveyance: any;
+  }> = [];
+
+  itinerariesCopy.forEach((day: any, dayIndex: number) => {
+    if (day.schedule && Array.isArray(day.schedule)) {
+      day.schedule.forEach((item: any, scheduleIndex: number) => {
+        if (
+          item.activity_type === "travel" &&
+          (item.conveyance_type === "flight" ||
+            item.conveyance_type === "train")
+        ) {
+          conveyanceDays.push({ dayIndex, scheduleIndex, conveyance: item });
+        }
+      });
+    }
+  });
+
+  // Step 2: If we found conveyances, select the middle one (or mid+1)
+  if (conveyanceDays.length > 0) {
+    // Sort by day number to ensure consistent ordering
+    conveyanceDays.sort((a, b) => a.dayIndex - b.dayIndex);
+
+    // Select middle or mid+1
+    const middleIndex = Math.floor(conveyanceDays.length / 2);
+    const selectedConveyance = conveyanceDays[middleIndex];
+
+    // Randomly choose delay: 2.5 or 3 hours
+    const delayHours = Math.random() > 0.5 ? 3 : 2.5;
+
+    // Get the original conveyance
+    const original =
+      itinerariesCopy[selectedConveyance.dayIndex].schedule[
+        selectedConveyance.scheduleIndex
+      ];
+
+    // Calculate updated times
+    const updatedDepartureTime = addHoursToTime(
+      original.departure_time || original.start_time,
+      delayHours
+    );
+    const updatedArrivalTime = addHoursToTime(
+      original.arrival_time || original.end_time,
+      delayHours
+    );
+    console.log("original", original);
+    // Step 3: Create the flight schedule change object
+    const flightChangeObject = {
+      event_type: "FLIGHT_SCHD_CHG",
+      flight_number: original.flight_number || original.train_number || "",
+      updated_arrival_time: updatedArrivalTime,
+      updated_arrival_date:
+        original.date || itinerariesCopy[selectedConveyance.dayIndex].date,
+      updated_departure_date:
+        original.date || itinerariesCopy[selectedConveyance.dayIndex].date,
+      updated_departure_time: updatedDepartureTime,
+      flight_update_message: `The ${
+        original.conveyance_type === "flight" ? "flight" : "train"
+      } has been delayed by ${delayHours} hours from its scheduled time.`,
+    };
+
+    eventsList.push(flightChangeObject);
+
+    console.log("🔄 Flight schedule change injected:", {
+      day: selectedConveyance.dayIndex + 1,
+      conveyance: original.conveyance_type,
+      flightNumber: original.flight_number,
+      originalDeparture: original.departure_time || original.start_time,
+      updatedDeparture: updatedDepartureTime,
+      delayHours,
+    });
+  }
+
+  // ========== PART 2: WEATHER CHANGE EVENT ==========
+  // Find days without required conveyance (days where conveyance is not the main focus)
+  const daysWithoutMajorConveyance: number[] = [];
+
+  itinerariesCopy.forEach((day: any, dayIndex: number) => {
+    if (day.schedule && Array.isArray(day.schedule)) {
+      // Check if this day has any flight or train
+      const hasMajorConveyance = day.schedule.some(
+        (item: any) =>
+          item.activity_type === "travel" &&
+          (item.conveyance_type === "flight" ||
+            item.conveyance_type === "train")
+      );
+
+      if (!hasMajorConveyance) {
+        daysWithoutMajorConveyance.push(dayIndex);
+      }
+    }
+  });
+  console.log("daysWithoutMajorConveyance", daysWithoutMajorConveyance);
+
+  // Select mid or mid+1 day from days without major conveyance
+  if (daysWithoutMajorConveyance.length > 0) {
+    const middleIndex = Math.floor(daysWithoutMajorConveyance.length / 2);
+    const selectedDayIndex = daysWithoutMajorConveyance[middleIndex];
+    const selectedDay = itinerariesCopy[selectedDayIndex];
+
+    // Extract location information from the day's schedule
+    let city = "Unknown City";
+    let country = "Unknown Country";
+    let address = "";
+
+    // Try to get address from the first activity with location
+    if (selectedDay.schedule && selectedDay.schedule.length > 0) {
+      for (const activity of selectedDay.schedule) {
+        if (activity.address) {
+          address = activity.address;
+          city = extractCityFromAddress(address);
+          country = extractCountryFromAddress(address);
+          break;
+        } else if (activity.from_location?.address) {
+          address = activity.from_location.address;
+          city = extractCityFromAddress(address);
+          country = extractCountryFromAddress(address);
+          break;
+        } else if (activity.to_location?.address) {
+          address = activity.to_location.address;
+          city = extractCityFromAddress(address);
+          country = extractCountryFromAddress(address);
+          break;
+        }
+      }
+    }
+
+    // Generate random weather conditions
+    const weatherConditions = [
+      "Severe thunderstorm until 16:00 hrs.",
+      "Heavy rainfall expected throughout the day.",
+      "Strong winds with gusts up to 60 km/h until 18:00 hrs.",
+      "Dense fog until 12:00 hrs, visibility reduced.",
+      "Heat wave warning, temperatures exceeding 40°C.",
+      "Heavy snowfall expected, travel may be affected.",
+    ];
+
+    const randomWeather =
+      weatherConditions[Math.floor(Math.random() * weatherConditions.length)];
+
+    // Create weather change object
+    const weatherChangeObject = {
+      event_type: "WEATHER_CHG",
+      city: city,
+      country: country,
+      date: selectedDay.date || new Date().toISOString().split("T")[0],
+      weather_condition: randomWeather,
+    };
+
+    eventsList.push(weatherChangeObject);
+
+    console.log("🌦️ Weather change injected:", {
+      day: selectedDayIndex + 1,
+      city,
+      country,
+      date: selectedDay.date,
+      condition: randomWeather,
+    });
+  }
+
+  return { modifiedItineraries: itinerariesCopy, eventsList };
+};
+
 export default function InTripWidget({
   isVisible,
   onClose,
   tripTitle,
   itineraries,
+  userId: userIdProp,
+  sessionId: sessionIdProp,
 }: InTripWidgetProps) {
   const [selectedDay, setSelectedDay] = useState(0);
   const [isTestPanelOpen, setIsTestPanelOpen] = useState(false);
   const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set());
+
+  // Run state management
+  const [isRunning, setIsRunning] = useState(false);
+  const [currentEventIndex, setCurrentEventIndex] = useState<number | null>(
+    null
+  );
+  const [processedItineraries, setProcessedItineraries] =
+    useState<any[]>(itineraries);
+
+  // Track which days have been updated (for visual effects)
+  const [updatedDays, setUpdatedDays] = useState<Set<number>>(new Set());
+
+  // Message overlay state
+  const [overlayMessage, setOverlayMessage] = useState<string | null>(null);
+  const [showOverlay, setShowOverlay] = useState(false);
+
+  // Process itineraries with event simulations
+  const { eventsList } = useMemo(
+    () => processItinerariesWithFlightChange(itineraries),
+    [itineraries]
+  );
 
   if (!isVisible) return null;
 
@@ -144,9 +381,137 @@ export default function InTripWidget({
 
   const handleClosePanel = () => {
     setIsTestPanelOpen(false);
+    setIsRunning(false);
+    setCurrentEventIndex(null);
   };
 
-  const currentDayItinerary = itineraries[selectedDay] || {};
+  // Function to process events one by one
+  const handleRunEvents = async () => {
+    if (!userIdProp || !sessionIdProp) {
+      setOverlayMessage("User session not found. Please log in.");
+      setShowOverlay(true);
+      return;
+    }
+
+    if (!eventsList || eventsList.length === 0) {
+      setOverlayMessage("No events to process.");
+      setShowOverlay(true);
+      return;
+    }
+
+    setIsRunning(true);
+    let updatedItineraries = [...processedItineraries];
+
+    // Process each event one by one
+    for (let i = 0; i < eventsList.length; i++) {
+      setCurrentEventIndex(i);
+      const event = eventsList[i];
+
+      try {
+        console.log(
+          `🔄 Processing event ${i + 1}/${eventsList.length}:`,
+          event
+        );
+
+        // Call the in-trip API with the current event
+        const response = await fetch("/api/in-trip", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            user_id: userIdProp,
+            session_id: sessionIdProp,
+            change_of_events: [event], // Send one event at a time
+          }),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+          console.error(`❌ Event ${i + 1} processing failed:`, errorData);
+          setOverlayMessage(
+            `Failed to process ${event.event_type}: ${
+              errorData.error || "Unknown error"
+            }`
+          );
+          setShowOverlay(true);
+          // Continue with next event
+          continue;
+        }
+
+        const data = await response.json();
+        console.log(`✅ Event ${i + 1} response:`, data);
+
+        // Extract the actual response from the nested message field
+        const messageData = data.message || data;
+        const responseType = messageData.response_type;
+        const responseMessage = messageData.message;
+
+        // Always show the message if present
+        if (responseMessage) {
+          setOverlayMessage(responseMessage);
+          setShowOverlay(true);
+        }
+
+        // Handle response based on response_type
+        if (responseType === "itinerary" && messageData.itinerary) {
+          // The itinerary is an array, extract the first item (updated day)
+          const updatedDayData = Array.isArray(messageData.itinerary)
+            ? messageData.itinerary[0]
+            : messageData.itinerary;
+
+          const dayNumber = updatedDayData.day_number || updatedDayData.day;
+          if (
+            dayNumber &&
+            dayNumber > 0 &&
+            dayNumber <= updatedItineraries.length
+          ) {
+            updatedItineraries[dayNumber - 1] = updatedDayData;
+            setProcessedItineraries([...updatedItineraries]);
+            console.log(`✅ Updated day ${dayNumber} itinerary`);
+
+            // Mark this day as updated (for visual effect - persistent)
+            setUpdatedDays((prev) => new Set(prev).add(dayNumber - 1));
+
+            // Show message if not already shown
+            if (!responseMessage) {
+              setOverlayMessage(
+                `Itinerary updated for Day ${dayNumber} due to ${event.event_type}`
+              );
+              setShowOverlay(true);
+            }
+          }
+        } else if (responseType === "text" || responseType === "no_update") {
+          // Message already shown above, but if not present, show default
+          if (!responseMessage) {
+            const message = messageData.text || "Event processed successfully";
+            setOverlayMessage(message);
+            setShowOverlay(true);
+          }
+        }
+
+        // Wait a bit before processing next event (for UI feedback)
+        await new Promise((resolve) => setTimeout(resolve, 1500));
+      } catch (error) {
+        console.error(`❌ Error processing event ${i + 1}:`, error);
+        setOverlayMessage(
+          `Error processing ${event.event_type}: ${
+            error instanceof Error ? error.message : "Unknown error"
+          }`
+        );
+        setShowOverlay(true);
+      }
+    }
+
+    // All events processed
+    console.log("✅ All events processed");
+    setCurrentEventIndex(null);
+    setIsRunning(false);
+    setOverlayMessage("All events have been processed successfully!");
+    setShowOverlay(true);
+  };
+
+  const currentDayItinerary = processedItineraries[selectedDay] || {};
 
   // Process schedule items similar to ItineraryWidget
   const processedStops =
@@ -191,23 +556,55 @@ export default function InTripWidget({
             </div>
             <div className="header-actions">
               <button
-                onClick={handleTestClick}
-                className="test-button"
-                aria-label={isTestPanelOpen ? "Run test" : "Open test panel"}
+                onClick={isTestPanelOpen ? handleRunEvents : handleTestClick}
+                className={`test-button ${isRunning ? "running" : ""}`}
+                disabled={isRunning}
+                aria-label={
+                  isRunning
+                    ? "Processing events..."
+                    : isTestPanelOpen
+                    ? "Run test"
+                    : "Open test panel"
+                }
               >
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
-                </svg>
-                <span>{isTestPanelOpen ? "Run" : "Test"}</span>
+                {isRunning ? (
+                  <>
+                    <svg
+                      className="spinner"
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M21 12a9 9 0 11-6.219-8.56" />
+                    </svg>
+                    <span>Running...</span>
+                  </>
+                ) : (
+                  <>
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      {isTestPanelOpen ? (
+                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                      ) : (
+                        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+                      )}
+                    </svg>
+                    <span>{isTestPanelOpen ? "Run" : "Test"}</span>
+                  </>
+                )}
               </button>
               {isTestPanelOpen && (
                 <button
@@ -243,25 +640,37 @@ export default function InTripWidget({
             >
               {/* Day Tabs */}
               <div className="day-tabs">
-                {itineraries.map((day, index) => (
+                {processedItineraries.map((day, index) => (
                   <button
                     key={index}
                     className={`day-tab ${
                       selectedDay === index ? "active" : ""
-                    }`}
+                    } ${updatedDays.has(index) ? "updated" : ""}`}
                     onClick={() => setSelectedDay(index)}
                   >
-                    Day {index + 1}
+                    <span className="day-tab-content">
+                      Day {index + 1}
+                      {updatedDays.has(index) && (
+                        <span className="update-indicator">●</span>
+                      )}
+                    </span>
                   </button>
                 ))}
               </div>
 
               {/* Day Content */}
               <div className="day-content">
-                <div className="day-header">
+                <div
+                  className={`day-header ${
+                    updatedDays.has(selectedDay) ? "updated-header" : ""
+                  }`}
+                >
                   <div className="day-header-left">
                     <div className="day-date-badge">
                       📅 {currentDayItinerary.date || `Day ${selectedDay + 1}`}
+                      {updatedDays.has(selectedDay) && (
+                        <span className="updated-badge">Updated!</span>
+                      )}
                     </div>
                     <h3 className="day-title">
                       {currentDayItinerary.title ||
@@ -538,15 +947,70 @@ export default function InTripWidget({
             {isTestPanelOpen && (
               <div className="code-panel">
                 <div className="code-panel-header">
-                  <span className="code-panel-title">Itinerary JSON</span>
-                  <span className="code-panel-badge">
-                    {itineraries.length}{" "}
-                    {itineraries.length === 1 ? "Day" : "Days"}
-                  </span>
+                  <div className="code-panel-header-left">
+                    <span className="code-panel-title">Events & Alerts</span>
+                    {eventsList && eventsList.length > 0 && (
+                      <span className="code-panel-badge">
+                        {eventsList.length}{" "}
+                        {eventsList.length === 1 ? "Event" : "Events"}
+                      </span>
+                    )}
+                  </div>
+                  {eventsList && eventsList.length > 0 && (
+                    <span className="code-panel-modified-badge">
+                      ⚠️ Active Alerts
+                    </span>
+                  )}
                 </div>
                 <div className="code-editor">
                   <pre className="code-content">
-                    <code>{JSON.stringify(itineraries, null, 2)}</code>
+                    {eventsList && eventsList.length > 0 ? (
+                      <>
+                        {"[\n"}
+                        {eventsList.map((event, index) => {
+                          const isCurrentEvent = currentEventIndex === index;
+                          const isPastEvent =
+                            currentEventIndex !== null &&
+                            index < currentEventIndex;
+                          const isFutureEvent =
+                            currentEventIndex !== null &&
+                            index > currentEventIndex;
+
+                          return (
+                            <span
+                              key={index}
+                              className={`event-item ${
+                                isCurrentEvent
+                                  ? "current-event"
+                                  : isPastEvent
+                                  ? "past-event"
+                                  : isFutureEvent
+                                  ? "future-event"
+                                  : ""
+                              }`}
+                            >
+                              {JSON.stringify(event, null, 2)
+                                .split("\n")
+                                .map((line, lineIndex) => (
+                                  <span key={lineIndex}>
+                                    {"  "}
+                                    {line}
+                                    {"\n"}
+                                  </span>
+                                ))}
+                              {index < eventsList.length - 1 && "  ,\n"}
+                            </span>
+                          );
+                        })}
+                        {"]"}
+                      </>
+                    ) : (
+                      <code>
+                        {
+                          "// No events or alerts detected\n// All schedules are on time\n// Weather conditions are normal"
+                        }
+                      </code>
+                    )}
                   </pre>
                 </div>
               </div>
@@ -573,6 +1037,14 @@ export default function InTripWidget({
           )}
         </div>
       </div>
+
+      {/* Message Overlay */}
+      <MessageResponseOverlay
+        message={overlayMessage}
+        isVisible={showOverlay}
+        onClose={() => setShowOverlay(false)}
+        autoHideDuration={4000}
+      />
 
       <style jsx>{`
         .intrip-widget-container {
@@ -726,6 +1198,13 @@ export default function InTripWidget({
           cursor: pointer;
           transition: all 0.25s ease;
           white-space: nowrap;
+          position: relative;
+        }
+
+        .day-tab-content {
+          display: flex;
+          align-items: center;
+          gap: 6px;
         }
 
         .day-tab:hover {
@@ -739,6 +1218,58 @@ export default function InTripWidget({
           border-color: transparent;
           color: white;
           box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .day-tab.updated {
+          background: linear-gradient(
+            135deg,
+            rgba(59, 130, 246, 0.12) 0%,
+            rgba(147, 197, 253, 0.08) 100%
+          );
+          border-color: rgba(59, 130, 246, 0.4);
+          color: #3b82f6;
+          position: relative;
+        }
+
+        .day-tab.updated::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 2px;
+          background: linear-gradient(
+            90deg,
+            rgba(59, 130, 246, 0.6) 0%,
+            rgba(147, 197, 253, 0.8) 50%,
+            rgba(59, 130, 246, 0.6) 100%
+          );
+          border-radius: 10px 10px 0 0;
+        }
+
+        .day-tab.updated.active {
+          background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+          border-color: transparent;
+          color: white;
+        }
+
+        .day-tab.updated.active::before {
+          background: linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.4) 0%,
+            rgba(255, 255, 255, 0.6) 50%,
+            rgba(255, 255, 255, 0.4) 100%
+          );
+        }
+
+        .update-indicator {
+          display: inline-block;
+          width: 6px;
+          height: 6px;
+          background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+          border-radius: 50%;
+          margin-left: 4px;
+          box-shadow: 0 0 4px rgba(59, 130, 246, 0.4);
         }
 
         .day-content {
@@ -758,6 +1289,17 @@ export default function InTripWidget({
           );
           border-radius: 12px;
           border: 1px solid rgba(59, 130, 246, 0.15);
+          transition: all 0.4s ease;
+        }
+
+        .day-header.updated-header {
+          background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.98) 0%,
+            rgba(239, 246, 255, 0.95) 100%
+          );
+          border: 1px solid rgba(59, 130, 246, 0.25);
+          box-shadow: 0 2px 8px rgba(59, 130, 246, 0.1);
         }
 
         .day-header-left {
@@ -775,6 +1317,23 @@ export default function InTripWidget({
           padding: 6px 12px;
           border-radius: 8px;
           white-space: nowrap;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        .updated-badge {
+          background: linear-gradient(
+            135deg,
+            rgba(59, 130, 246, 0.15) 0%,
+            rgba(147, 197, 253, 0.1) 100%
+          );
+          color: #3b82f6;
+          padding: 2px 8px;
+          border-radius: 6px;
+          font-size: 0.625rem;
+          font-weight: 600;
+          border: 1px solid rgba(59, 130, 246, 0.2);
         }
 
         .day-title {
@@ -1104,6 +1663,12 @@ export default function InTripWidget({
           border-bottom: 1px solid rgba(59, 130, 246, 0.15);
         }
 
+        .code-panel-header-left {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+        }
+
         .code-panel-title {
           font-size: 0.875rem;
           font-weight: 700;
@@ -1117,6 +1682,27 @@ export default function InTripWidget({
           background: rgba(59, 130, 246, 0.1);
           padding: 4px 10px;
           border-radius: 6px;
+        }
+
+        .code-panel-modified-badge {
+          font-size: 0.6875rem;
+          font-weight: 600;
+          color: #d97706;
+          background: rgba(251, 191, 36, 0.15);
+          padding: 4px 10px;
+          border-radius: 6px;
+          border: 1px solid rgba(251, 191, 36, 0.3);
+          animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+          0%,
+          100% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0.7;
+          }
         }
 
         .code-editor {
@@ -1136,6 +1722,78 @@ export default function InTripWidget({
 
         .code-content code {
           color: #cbd5e1;
+        }
+
+        /* Event item highlighting styles */
+        .event-item {
+          display: inline-block;
+          position: relative;
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .event-item.current-event {
+          background: linear-gradient(
+            90deg,
+            rgba(59, 130, 246, 0.15) 0%,
+            rgba(147, 197, 253, 0.1) 100%
+          );
+          border-left: 3px solid #3b82f6;
+          padding-left: 12px;
+          margin-left: -12px;
+          border-radius: 6px;
+          box-shadow: 0 0 20px rgba(59, 130, 246, 0.3),
+            inset 0 0 20px rgba(59, 130, 246, 0.1);
+          animation: highlightPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes highlightPulse {
+          0%,
+          100% {
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3),
+              inset 0 0 20px rgba(59, 130, 246, 0.1);
+          }
+          50% {
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.5),
+              inset 0 0 30px rgba(59, 130, 246, 0.2);
+          }
+        }
+
+        .event-item.past-event {
+          opacity: 0.5;
+          background: rgba(34, 197, 94, 0.05);
+          border-left: 2px solid #22c55e;
+          padding-left: 10px;
+          margin-left: -10px;
+          border-radius: 6px;
+        }
+
+        .event-item.future-event {
+          opacity: 0.6;
+        }
+
+        /* Running button styles */
+        .test-button.running {
+          background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+          cursor: not-allowed;
+          opacity: 0.9;
+        }
+
+        .test-button.running:hover {
+          transform: none;
+          box-shadow: 0 4px 16px rgba(139, 92, 246, 0.3);
+        }
+
+        .test-button .spinner {
+          animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
         }
 
         .action-bar {

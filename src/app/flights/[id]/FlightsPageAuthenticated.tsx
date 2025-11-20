@@ -4366,6 +4366,8 @@ export default function FlightsPageAuthenticated() {
                       tripTitle={selectedTrip?.trip_title || "My Trip"}
                       itineraries={itinerariesGenerated}
                       onClose={handleInTripFinish}
+                      userId={userId}
+                      sessionId={sessionId}
                     />
                   </div>
                 ) : showPreTrip ? (

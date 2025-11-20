@@ -1,0 +1,367 @@
+{
+    "user_id": "zqh2H13LPvXWDkZjfFzthJCXktB3",
+    "session_id": "2745064094527651840",
+    "message": {
+        "response_type": "itinerary",
+        "message": "Due to the 2.5-hour delay of your flight to Amritsar, I have updated the itinerary for Day 2 to ensure you get adequate rest. The visit to the Golden Temple has been moved to the evening to allow for this, which also offers a beautiful view of the temple illuminated at night.",
+        "itinerary": [
+            {
+                "day_number": 2,
+                "date": "2025-12-22",
+                "title": "Amritsar Detour: Patriotism & Piety",
+                "weather_forecast": {
+                    "temperature": "8 - 20",
+                    "avg_humidity": 60,
+                    "precipitation": 0
+                },
+                "themes": [
+                    "Cultural",
+                    "Historical",
+                    "Patriotic"
+                ],
+                "estimated_total_cost": 10000,
+                "summary": "An early start takes you from Mumbai to the historic city of Amritsar. After getting adequate rest, you'll witness the electrifying energy of the Wagah Border ceremony, followed by a spiritual evening visit to the beautifully illuminated Golden Temple and a traditional Punjabi dinner.",
+                "highlights": [
+                    "Delayed morning flight to Amritsar",
+                    "Witnessing the Wagah Border ceremony",
+                    "Spiritual evening visit to the Golden Temple",
+                    "Authentic Punjabi cuisine"
+                ],
+                "schedule": [
+                    {
+                        "start_time": "03:20",
+                        "end_time": "04:10",
+                        "description": "Check out from your Mumbai hotel and take a cab to the airport for your early morning flight.",
+                        "activity_type": "travel",
+                        "conveyance_type": "cab",
+                        "fare": 500,
+                        "distance_km": 8,
+                        "duration_minutes": 50,
+                        "from_location": {
+                            "place_name": "Novotel Mumbai Juhu Beach",
+                            "address": "Balraj Sahni Rd, Juhu Beach, Juhu, Mumbai, Maharashtra 400049, India",
+                            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJeW5hJJjJ5zsRRst7UJbbAQo",
+                            "lat": "19.1086322",
+                            "long": "72.8243853",
+                            "photos": [
+                                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU4KjGe9JXrHFBvdvIop_gaJbw6uZKXZNjFyVv5JZKtuQF_GMNFhvQWWxtO6jovjrzB0WJEnLF4W4S5L5FyDBZuSTzUE-OQjGtxu7vdHdRyGjiMNwmE8-ltnBEOhLUfJGsEnBfN6D7SI72ywKF02g1jmxyBoI1Bvk255Gbx91OJPLkgVmJycnujnaNqZyZe9P6aqkMaQ0YFpHYPa5Psi5UUrtHM0yNddX99k3M-ej2-m8hfsFXad9QcxG8tqVpZgxegdyA4wtSm6ZRq4YRMdhUN0yQ8ZBvD3QeZ7zwmToG41wuxCjWM&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                            ],
+                            "place_id": "ChIJeW5hJJjJ5zsRRst7UJbbAQo"
+                        },
+                        "to_location": {
+                            "place_name": "Chhatrapati Shivaji International Airport",
+                            "address": "Mumbai, Maharashtra 400099, India",
+                            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJRym9mVDI5zsRrqh0xGAazB4",
+                            "lat": "19.0902177",
+                            "long": "72.86281199999999",
+                            "photos": [
+                                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU6vyQw7dm0N_M22zIx_oUYgNUT53CUPdUyMlPgH-OeSBWQQ5MjwMYTDk0XPjTldllOoUDz8GwKkMuIykkce49j_49atTlokgDj07K44fjTzUv1y4SVhBxEXvwlfQHnr7KDeWbU0k8pNdcbLS42By5uRSVoDLqAtpGAtS97PtvwrEbKuGz-_7gm2pP2MgQwoWSwTalWi0xD0LTWKY7vOETx_lpJDChR-06OyEHiQOujyEelEoHjKd_xmq-6imKOrv4pFJMfZwjGUpfiaMrkFQapAg0LRbZsrFzDeG2ZglkH570g2Dke7xooZv9XhtpP0YhpEgEkiTLPBEk-AKYsnXfp_KHD1ZQZjRhoGHs7IyRefv3pOj1lpPsNW120_6m4savrkCWKdgXjTa0PWtGS8Q_nPkC-Eft-e8muMKr5KEReY4etWO4Osz7PJqH3fvm2siHBCaLI4iDcppd4aVyfydbRlAT-MtrVGpZTBmMpMpic-Q_9MK3uP2YCpzdBEPbMs__A905VN7xHy6iAf04VF7l7O_4qeYPp1XigqlIxVHgWbRGkMUTq0_NUJD2VV9fBcjV7oPtgl&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                            ],
+                            "place_id": "ChIJRym9mVDI5zsRrqh0xGAazB4"
+                        }
+                    },
+                    {
+                        "start_time": "04:10",
+                        "end_time": "06:10",
+                        "description": "Complete airport check-in and security formalities for your delayed flight.",
+                        "activity_type": "travel",
+                        "conveyance_type": "walk",
+                        "fare": 0,
+                        "distance_km": 0,
+                        "duration_minutes": 120,
+                        "from_location": {
+                            "place_name": "Chhatrapati Shivaji International Airport",
+                            "address": "Mumbai, Maharashtra 400099, India",
+                            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJRym9mVDI5zsRrqh0xGAazB4",
+                            "lat": "19.0902177",
+                            "long": "72.86281199999999",
+                            "photos": [
+                                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU7H792YZXSTQ-wBXP6s8k4DSIbYpmaxuan0-WJk7UgshCF6xZhBkMKxbLvJdTqlS7wtFE2HlNpu5vhSyju0JIL8gC1ZwPtI7JpUmYyaYJwRkuAlk1DR3Phe3bfvpKASjEKl7uB1UKpNF-Eq1u76KB4cCQOHb_8QBm5R1Y-jm5OGTRgWXqHFw9W6OF7If_xw9V9qGX62NjXraruOXON-HzeWOWzy55uSYFB5lFKhAm7s9wYppPEgwhC3fXCAvtdbtXuNCiwaXlKbjBY9f5RB5qcA0EdbegRJpqdSVC3Hh1i89ZzUTTW1QuCPTPkGtoS4WGDkVs1tADThEOZGdKk9In_CEjsb7KSo_PIzyRJwTa24TTUgmyr5NwCGT91Xg0swp85q7RHMshWjhX7tgl4pfN4vOh5m1_CXHqOYpDNTFrhpk1uHYYHuMUputoWHSZHsji9gj4RSZzOEP-m0vwmsuMuqbJcTk3dDSpPXSDtfDtP3pitkMTJ7R3wyqJpwg4BPD0LZjSN7RzZQ2rX1h6jylokAAfKVrKapd6WTcXF3Mp6-C_e9vlasehWqjLP8rzWN-Db_g-J3&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                            ],
+                            "place_id": "ChIJRym9mVDI5zsRrqh0xGAazB4"
+                        },
+                        "to_location": {
+                            "place_name": "Chhatrapati Shivaji International Airport",
+                            "address": "Mumbai, Maharashtra 400099, India",
+                            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJRym9mVDI5zsRrqh0xGAazB4",
+                            "lat": "19.0902177",
+                            "long": "72.86281199999999",
+                            "photos": [
+                                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU7LHDvmQvAbDBWIeHIa3w6wmcQIx4m4Ts7gmiE1hEIPSI1rxMzQn0mSjfI5a5zzY0gfHvJdzH5bAKjPhsparrmCY9WkWdagPhWkzcifRQqm6JSFsxEGIC8LOlRCERL14kOXr-hIJrJeY_keo7pYoWRTY6JC7St0cNLRAZajZiV9kyHxJM_YygRBw6iaeKaGS4Pfqj9Otb3pRIs6LU9JlP54EHSIjfrPIQtxT7UhPvZYzDNAE3OJZ6bae2y5X6468W4cVVR6J10VhKbtQNxct1ltKUUl3m9QChvfdzm8W78HyL47Wc8tLIN1duYeQow23CtSiiI_sdppETGYuQ5QY2fHZ0SroILtNK73fxY-4wCUjp9ERPnvK2WZH00bgPtc_mq3bKv4Lzo92YJLZYKtSJ-qvRewE5Tmy7Jvt2JvtwT-UO1RtM5FeXrCHvBcmB8bsV56qAVoZF5zfUmIyjL4bTXiTBs4bRccwuiWQijoyxTavNL3Q1kc6V7mwH8w7HOc3aV1Xf2chAb06yQp5TylR8hAhg5gHjS17YjBXRD334UiVr_j5kyBI1mok55HeE7PqiqS6lPr&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                            ],
+                            "place_id": "ChIJRym9mVDI5zsRrqh0xGAazB4"
+                        }
+                    },
+                    {
+                        "start_time": "06:10",
+                        "end_time": "08:35",
+                        "description": "Fly from Mumbai to the holy city of Amritsar.",
+                        "activity_type": "travel",
+                        "conveyance_type": "flight",
+                        "fare": 4500,
+                        "distance_km": 1400,
+                        "duration_minutes": 145,
+                        "from_location": {
+                            "place_name": "Chhatrapati Shivaji International Airport",
+                            "address": "Mumbai, Maharashtra 400099, India",
+                            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJRym9mVDI5zsRrqh0xGAazB4",
+                            "lat": "19.0902177",
+                            "long": "72.86281199999999",
+                            "photos": [
+                                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU5gLqs85rpGtV050dpclCRnAfuTmkHwjtwqJCI2wnj97NE2kdr6jDUPylUGG1xsQLgtg6GsmLmQUrQUaaBciTF3nUghYCMUdPVKxDcjwfVFv--kdC41CJ-Umq0fS0XOu-gGrrKkS6f2i-pKNV-tH9n_TTHhoqth2keyyL7ge8q5ogGmU7LiWRCksEaFtQA_uxNylBlTu4aMbEp4aXpIwpKgBM4ncmQSnLoUJEDwrVJg-5XHWdYAVqlDP8dqIckgClh7jwcb_5X8NZdEXV6kXqPSoW1MozMhi--Lo3wa0gU2UFIWxOkpHO3mY0Bzf677OhSpZnDPxlx4Y-Xrzd02QM19eBO6tDIxhu7_CQ3P8ZfO_d0Si36hJbDhkBca4pws5ruAK17FTaKFTeeB4J9LKjSkEBQFOWD6xOilkqQklxkOE97xhJ_imUMk8m8E9swxrOx-BShJB0tu7e096A_sFXt6f7OHZb236CxAasqHGY1VZzfA_SxJSGKHjjTA2wsIXS3CvZ41ZTsK4MNqHAmlqJvHAgSBzeYZRLnvm9Te9acnxVcaKpFXxwRRfmbNInd4Wau9IiPZ&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                            ],
+                            "place_id": "ChIJRym9mVDI5zsRrqh0xGAazB4"
+                        },
+                        "to_location": {
+                            "place_name": "Sri Guru Ram Dass Jee International Airport",
+                            "address": "Amritsar, Punjab, India",
+                            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJ60NTwglmGTkRbaEbtbiqhCI",
+                            "lat": "31.7056203",
+                            "long": "74.8068644",
+                            "photos": [
+                                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU5Cpty8i6dA5uMIHI_5RDmKkR6T2w4FLRU7PSwwRfSmlsQq5FReY8otliM8mWvhFleO-CsltrAGEj3p0Lon5v3AXRHAAsRb2Mo2_I2lGTJJzZ-JaIX2jqTxcmH-CG3DMQMRn8J-OMYP0mn0nZT29l8Z88AbuH1237HBH8guDIaTWZG4iqEAwGo5Lrqz_zFx7s30-dqsuUBy1PpvIRQPe6exVGkCoyQAgl22-O_9WHWY1xwWXiEaoRahaCUxWXbsDT8EERHAch7qgExGqBhEO2gxYxrTQK9MSXN64gojU9iYK6OovxuA2xA7dBw6vQZRoPgKDZYDQyGowYO9VLhz8ftMh_Hd4BLwzecvuJ6bLWpbK1w1HOeEe3WBQTNWd6tqt80Um280UsRzdGbJD-dN2tHY_Gcf7jc0_mWbITWexv1emIEBWQbOKO3VSNNAzsWoZYguAd99HYpQabx2fYsfWgloDUp43OdA1iFqLAtHrNmf2T8CsZuELLMDAovyn5BmhrdQIe5uoSkMEUdvDpAt0TquZ9o0Xlg0Tovsa1zvW4l8Bxs7k7oilrdTwYfrZbDctanhmQ&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                            ],
+                            "place_id": "ChIJ60NTwglmGTkRbaEbtbiqhCI"
+                        },
+                        "flight_number": "5325",
+                        "airline": "IndiGo",
+                        "departure_time": "06:10",
+                        "arrival_time": "08:35"
+                    },
+                    {
+                        "start_time": "08:35",
+                        "end_time": "09:30",
+                        "description": "Arrive in Amritsar, collect your luggage, and take a cab to your hotel.",
+                        "activity_type": "travel",
+                        "conveyance_type": "cab",
+                        "fare": 350,
+                        "distance_km": 12,
+                        "duration_minutes": 55,
+                        "from_location": {
+                            "place_name": "Sri Guru Ram Dass Jee International Airport",
+                            "address": "Amritsar, Punjab, India",
+                            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJ60NTwglmGTkRbaEbtbiqhCI",
+                            "lat": "31.7056203",
+                            "long": "74.8068644",
+                            "photos": [
+                                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU72cghnqmEisnUsEzOQon15ImfOrGb8msSzpMTcyJmzhWuOKuF-MTr-Ba_8UXxk_vIMzX1A_X5Q6thFdG9NBANdyH_DI9wua53stuOkDKkdk5cQum1WcaqhA9WkAkOOTPC5vKY4-7KCboivdggXmxtdqLyYfmZ9o4YCc4gPk6-jqCDWJl4DNyiS_UBIoJNO4RyqVaodsJNXMwV1878ySn0tEM7ehCR0w9Xqr6LDACbNHh5_DStFCGWZ03yd64G7XIyXOoNd-7842U9iiG1HOQozFLgtBxydwy4I7r1tT-u-HYr24Gpl14DJ9Z6KLr49bo53ukMoRhRx9n9XwwsYHcjkfaQKcZdEDQiDCUUUr69I4ITWQyfKkHUdyi-FvRL7ih9k_1cbEymy_gIRVRhbxTAWYgbM7GJz7bREWebj0Vp-biW2WW_wa5lpXmsMmFMnFFTqSSulaRRCUoyF5LtKFJRF1Hge32uUbtfiO9c2YBe92NuaiZNKCRs2wQR0XJ2qLf06oT9s5ZGhpmCnv5P3c_UlX3FogyUvrOSoQyvBVBCo9Q2kN_I8D4DLnz7dZ4wcKQGnNg&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                            ],
+                            "place_id": "ChIJ60NTwglmGTkRbaEbtbiqhCI"
+                        },
+                        "to_location": {
+                            "place_name": "Novotel Amritsar",
+                            "address": "Verka Bypass, Amritsar, Punjab 143001, India",
+                            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJI6n8WaxjGTkR76T-VV8AeLc",
+                            "lat": "31.6635602",
+                            "long": "74.9158537",
+                            "photos": [
+                                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU5dk84lud-JVoKPHi6Q47MK3utF9lcj-2unsxbYXK-KAJEd_RHLAIIhLW3GVYCDEc_4jO_Em_1RwzYZUD3bz-PLO7HnKPvR73k_YLWVjHXHnWI0KvwYFM1efV9FtvYNC39NNDcFUoDpnYU4GP-R1SPWMGUAGFQ6_Nhc379pT-Phm_7NMDmmr2zpXpAMS21vMVP1hyboyoc_WDvzzI96PswyAVJpjfN9B3QAZN28KZaPaRl0oLVcHqAE4qfeKj7P6nz83RKgcSJASVQ8sKKmjzAmvuE4i2-OSbAN5iIhwimbbXsIcIJwxa4WEm6pU8rJgSoH78Fx5X5t6CeTjzENqQ02WapMd8oIo7ceX79EQmDuYulMQ3ewdQvZoO-yJaKa0hHgH3s6ar5VNPEQY64C-Mr_UUF_xFq_Jz5PRlIf9xhmPQr1PsNQ91PMknfSsxIpJRt0SHkPC3uwHIRjfCla5nuR_bmaQf_3QiAihXZhGqlhkV-3Wcp77mt1Bykb-UBxdyvBAdcRhmxxUvDOPLjq7Az9oPdePg6UfKAK1enxRTh-CFislsAT2DhDNVdnp7BUQrjTSmMs&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                            ],
+                            "place_id": "ChIJI6n8WaxjGTkR76T-VV8AeLc"
+                        }
+                    },
+                    {
+                        "start_time": "09:30",
+                        "end_time": "13:30",
+                        "description": "Check into your hotel for some much-needed rest after the delayed flight. It is recommended to have pre-booked the room from the previous night to ensure immediate availability.",
+                        "activity_type": "rest",
+                        "place_name": "Novotel Amritsar",
+                        "address": "Verka Bypass, Amritsar, Punjab 143001, India",
+                        "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJI6n8WaxjGTkR76T-VV8AeLc",
+                        "lat": "31.6635602",
+                        "long": "74.9158537",
+                        "photos": [
+                            "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU5UDEUChHa2Ds_LgafGX6poF_a1VaNhoEeKC1XuAjSF5HuHPJaOMm4z-b2CrK75Lro4HYi3wwdaC7d5XhLaWukKf3hBOsvzx3D_D6bgQI4xEgTcNLL6iMc4_MGJ7SRXdY5SDkw8HTg2BCYXh73Ox635L1P4yc71-5zgaCzDJXYstW8n1tV7vtMsVMxTlU79KhzpdQ8LtvWjzjlMSoIELCGiO1O0hx9cujcumeqMT5pZ-dhrB1Pc6jkkZbbsmAs0fWCAaM553F1JRp4kEIKhdIiWu_Xhu9PU2jGMAfsBKb8HnaxY90bNnwyx6fkcg2axz7UayyD6VxTkm2jWnFu9wS0jprAnuwxJi46N1RUiUUAwHNKH4KuGXCDTsWMlR6B4jikdQfLMAkCI6fYq93m0ZRZy5fEkgom8BVZeGgE9G9vA1-dARla302iOP5yPb4Aa4moltMHF7LzYyl9nNbcud6-ZsH1Nc8gVV-_LIRlXdxHgxp2uKisXSIik2RvJqV95P4N3aq6tqjUOVEuLSKUsR0Yp0nnLoO-ifwurauy0ccHVJ5kubDpG3mmtuH8klorhK80eTtg8&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                        ],
+                        "place_id": "ChIJI6n8WaxjGTkR76T-VV8AeLc"
+                    },
+                    {
+                        "start_time": "13:30",
+                        "end_time": "14:30",
+                        "description": "Have lunch at the hotel's restaurant and get ready for the afternoon.",
+                        "activity_type": "eat",
+                        "place_name": "Novotel Amritsar",
+                        "address": "Verka Bypass, Amritsar, Punjab 143001, India",
+                        "meal_type": "lunch",
+                        "cuisine": "Multi-cuisine",
+                        "menu_highlights": [
+                            "Buffet Lunch",
+                            "A la carte options"
+                        ],
+                        "fare": 1000,
+                        "reservation_required": false,
+                        "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJI6n8WaxjGTkR76T-VV8AeLc",
+                        "lat": "31.6635602",
+                        "long": "74.9158537",
+                        "photos": [
+                            "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU7GVv1vC4fzoR1nKPfWqEb8BVKntXNj13x1LjpiTbX7LlgfnGSlbNwrk8Xev93YiXURdPnEJekUGvAaSS_cQWI5n510F3WGsoLIDat0wk0F1VHspCoEsIXGqO4PuoWd6pjMiR99leTmzNuG72Hg5dkwfY7NZrcuXIiMPJH4j4EevCnCMHMQdKaV2dSh8mz6dtSsbENaMYv1i-U1eqKIV2Dlej609B2g64KM9488Pkt_70U9uzTUqTJAAp__2UGO_cKlPozBoUyTLnGzlHlUxoCc83bZzeLNqvTKaLNLYlxvNBGP5Ar3HyYVdKBDZ6UnpHBmhX6_QTKtiCCYRPq7r6cvA-rbVjhIiaW8JlUMC7zKku1Iizh9Ht8CNIAq2Z_vcIwKz5TfJ9ZPxXO_31K_814nSX0oTVzSZf7WDh1peIZxjmby2Iv1B2dp-vGztgjQNgl1F7khd78iAfmjF-M6XqTV0QLbOSoXgw0lLj3Xn4W3kgitNVDK3F0YKi4bJFYq6PlAr6StTjdeC38GcbC4mjkob3zjSn2MiWmDw42eo0HQgkzWHWYJ4x43JFUsCy-QKnAovugZ&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                        ],
+                        "place_id": "ChIJI6n8WaxjGTkR76T-VV8AeLc"
+                    },
+                    {
+                        "start_time": "14:30",
+                        "end_time": "15:30",
+                        "description": "Take a cab to the Wagah Border. The journey will take about an hour.",
+                        "activity_type": "travel",
+                        "conveyance_type": "cab",
+                        "fare": 1200,
+                        "distance_km": 32,
+                        "duration_minutes": 60,
+                        "from_location": {
+                            "place_name": "Novotel Amritsar",
+                            "address": "Verka Bypass, Amritsar, Punjab 143001, India",
+                            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJI6n8WaxjGTkR76T-VV8AeLc",
+                            "lat": "31.6635602",
+                            "long": "74.9158537",
+                            "photos": [
+                                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU5UDEUChHa2Ds_LgafGX6poF_a1VaNhoEeKC1XuAjSF5HuHPJaOMm4z-b2CrK75Lro4HYi3wwdaC7d5XhLaWukKf3hBOsvzx3D_D6bgQI4xEgTcNLL6iMc4_MGJ7SRXdY5SDkw8HTg2BCYXh73Ox635L1P4yc71-5zgaCzDJXYstW8n1tV7vtMsVMxTlU79KhzpdQ8LtvWjzjlMSoIELCGiO1O0hx9cujcumeqMT5pZ-dhrB1Pc6jkkZbbsmAs0fWCAaM553F1JRp4kEIKhdIiWu_Xhu9PU2jGMAfsBKb8HnaxY90bNnwyx6fkcg2axz7UayyD6VxTkm2jWnFu9wS0jprAnuwxJi46N1RUiUUAwHNKH4KuGXCDTsWMlR6B4jikdQfLMAkCI6fYq93m0ZRZy5fEkgom8BVZeGgE9G9vA1-dARla302iOP5yPb4Aa4moltMHF7LzYyl9nNbcud6-ZsH1Nc8gVV-_LIRlXdxHgxp2uKisXSIik2RvJqV95P4N3aq6tqjUOVEuLSKUsR0Yp0nnLoO-ifwurauy0ccHVJ5kubDpG3mmtuH8klorhK80eTtg8&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                            ],
+                            "place_id": "ChIJI6n8WaxjGTkR76T-VV8AeLc"
+                        },
+                        "to_location": {
+                            "place_name": "Wagah Border",
+                            "address": "Wagah, Hardo Rattan, Punjab 143108, India",
+                            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJE24fsIUTGTkRihhwQnipDaw",
+                            "lat": "31.6048091",
+                            "long": "74.5741101",
+                            "photos": [
+                                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU4diGLcamGgSoCrZhdFHkhFNYbTbDwgQxpztk5VNzbHtE5S29JuCrZrFa794pIpgAVZgKlyAisf4mXEtltdhr9-K92gRyeqjrSfcFmsDurpTaF3LHVTwXfH1dRVtlSM0Z8gB8BtB8Dk3e8LIOMRH6GmubYshdbKLFmYp6mO3HyaQfnUx78hzNTSaDHvXQ9jVEf9O16KDOcHqGFUzyyEivTWSmXMOPfV6k9DZaEBpdEkT-y73ChEI10qV4vESYNfRMaP_GS2IFO1C4Vx6faNsAZkFSXwpt4UJR-z9R9M0NvoIKKAn-sBwmrNbzhe2nblSXDrwOiAJkEBXLUpyz8U2uBV3AqHbck_9WTkqqmDGV49IL_hvSOqFRY0yHsdy7j85w6k9VJh3gO3lL02zUQ-hld3JG159V-XjN5F15buJ-eh5utf6SIoDlGE9i6kp5m2tY7PkGqFT5aP65ON9PvPZSd0VZtmjaUxfUYsRLFN1yezVGXkG1TPzG0OSS_NWGJZ1pEi_9SEGBkB2PpHfyFPDY8c7L9lX6rreHzcJODl64eletbDVNEJqlFortcePdUxSQeMdYtP&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                            ],
+                            "place_id": "ChIJE24fsIUTGTkRihhwQnipDaw"
+                        }
+                    },
+                    {
+                        "start_time": "15:30",
+                        "end_time": "17:30",
+                        "description": "Experience the patriotic fervor of the daily military 'Beating Retreat' ceremony that the security forces of India and Pakistan have jointly followed since 1959.",
+                        "activity_type": "event",
+                        "event_type": "cultural_show",
+                        "place_name": "Wagah Border Ceremony",
+                        "address": "Wagah, Hardo Rattan, Punjab 143108, India",
+                        "event_highlights": [
+                            "Beating Retreat Ceremony",
+                            "Coordinated parade by Indian and Pakistani soldiers"
+                        ],
+                        "fare": 0,
+                        "booking_required": false,
+                        "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJE24fsIUTGTkRihhwQnipDaw",
+                        "lat": "31.6048091",
+                        "long": "74.5741101",
+                        "photos": [
+                            "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU5KiHj097TTyy-wQH0pkQNdGf8YJOKvoL7O3b6ou5h6xOArnTKnsq35xCE9m14SNEIV7ChW-1BkMXuSEDoKUEtyBztX3cRIQ7N8y2YRUaDesM1un2bTyCSOnIgIfKWluY45UlrdnypYTdwigaWUTCGpUe8TOOAhah09tcIbN8SZUgZzTA15DX7lywqeVkSsbh0pVD6sdjnRDATjHAnYsN9WCDJak1p_MDxNUAwSv0-T2nX6YiPDJLlMz5-SyVEYBSJcVZON_4_zjBOpY8UpfoN4Gydft93uPm76M_smW5moKIG7K38OhAIh78e5_VLTayDw4E4mvXEvGjQbTK8KDqZttlAm12viIgWfy4W4qbp2HlVajFgBbndcU_Sk9ATKRt6AuH16RjYGJhFCaNhRb-SUDxTX13UaEksUuLEdtlW0hhRgGhtgsZNThvM_OMp8JYZam7aTLsLW5gPky84UuvnreK5kiVw0jtccNLaq68K3VOF8x7A_PQNjPhpWxHCmrDOiuMHkl2NeAOJR_0ASdjWq4h5GQc02Ovl5m9wn_XGHtl7vFQvVzRpAbOs8xZtBumX-R9Po&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                        ],
+                        "place_id": "ChIJE24fsIUTGTkRihhwQnipDaw"
+                    },
+                    {
+                        "start_time": "17:30",
+                        "end_time": "18:30",
+                        "description": "Travel from the border to the Golden Temple.",
+                        "activity_type": "travel",
+                        "conveyance_type": "cab",
+                        "fare": 1200,
+                        "distance_km": 33,
+                        "duration_minutes": 60,
+                        "from_location": {
+                            "place_name": "Wagah Border",
+                            "address": "Wagah, Hardo Rattan, Punjab 143108, India",
+                            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJE24fsIUTGTkRihhwQnipDaw",
+                            "lat": "31.6048091",
+                            "long": "74.5741101",
+                            "photos": [
+                                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU7T6gBrlYBpKLSQ-xgcIkDL9lT2-2dVmDnWEOCkGSnU9mD4Z8VHLw_NWDMrt5evemVUk-tJzQPZ5zeVinYNRR6rKyPJUzJXyJsuGUU4mwYE-I42f_p-Tiac0NfXMw4YebDGRkWOB5NmMSPzD7R_9ghrScEKpGpOJrcIJoS2Ze5_4alCe1FRk_Bh7FSD3Ofoho3EKY_nEVS_O0hR9h0t7HvYKUdAbXAuwNnS83jcnjr7ZfCLA9VLxZoK6hFKTk59aMldu5kwF8RrNii3O6iJjv95Nr5q3vIvA0icpUfCINpo9qjlR6jfVzE_FEGzjuv7eLdjUhsw9oaD6rnDMbnm5PoboXYRlPvyFwD1HHKXlSBmJi8epfws0GQ7woJO1MSZihK_A2zwQW7iNJeqdlutfeh-hdWbEpMFzpxYg43Oa7Smw9TSOsPbHe0VpQ9bKiQGoKWLQT3rFprTdLzkvVQdBjdwlP0AS8CvXUAN_680IijMp4dZ1L91PtH4BPwHBvrLeDa9Htt0T6MGsFscRWCWKhi3vlb2bI8s3YKg59ornYlEaiWEV55oDS62LqVULwznC4N-Soem&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                            ],
+                            "place_id": "ChIJE24fsIUTGTkRihhwQnipDaw"
+                        },
+                        "to_location": {
+                            "place_name": "Golden Temple",
+                            "address": "Golden Temple Rd, Atta Mandi, Katra Ahluwalia, Amritsar, Punjab 143006, India",
+                            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJ74qu11d7GTkRTJwA_9vlfv8",
+                            "lat": "31.6195511",
+                            "long": "74.8743246",
+                            "photos": [
+                                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU7NbEQ1oafrOzTun4lIBkZMk_LCMQ0tRcNN19NxBuivn_llUTX32OcVbLI6QvWWH50LAK-B91MKxqALIdfr_aAjMDh_UvhZm6uTRTUKk4wIqRapzHvDpEOdtSnnXewuCKsyVKUfc4xr8wmW3u_aK3qPwDcremdwnyEgwGXd3oIOP4b19zykuVYeJUin9znbnphGSkdhdZaFt0MRLvQShgJgzY6tbLB-NoB0EjzZv6G5YXdVYY-L0hWsDAkI5K6lDtZg51t-4-zJY_by4pQi-XBWY9o_xRznl4fZ5pF_kNw7V770WUqeWf01ErgARaHUXAMZlcYY997wFc6y8zh5broKjTt9-vHBQEZ4IUGHUSjyNuZpszlY-eRFdX0f5zWfxCqzm1rlzPVI1N9QIwv42Fu2z40-eAPqLEl05PyJjGS53JR8IbCFOnqYwItEPc_L9-CZqd8PLH0zy5Y67Ffl2i9Ku3ToEqimScqvNhfjbETQL7rXv8dhOt-hnbGT_hfNmkv1prCWui91RQXza42hVuD4WeOX2rKQ1LWal4C8KIUc34MeznfzDnOvkLdOWyBOuJfIPw7S&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                            ],
+                            "place_id": "ChIJ74qu11d7GTkRTJwA_9vlfv8"
+                        }
+                    },
+                    {
+                        "start_time": "18:30",
+                        "end_time": "20:00",
+                        "description": "Visit the serene and beautiful Golden Temple, which is stunningly illuminated at night. Remember to cover your head and remove your shoes before entering.",
+                        "activity_type": "visit",
+                        "place_name": "Golden Temple",
+                        "address": "Golden Temple Rd, Atta Mandi, Katra Ahluwalia, Amritsar, Punjab 143006, India",
+                        "fare": 0,
+                        "opening_hours": {
+                            "open": "00:00",
+                            "close": "23:59"
+                        },
+                        "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJ74qu11d7GTkRTJwA_9vlfv8",
+                        "lat": "31.6195511",
+                        "long": "74.8743246",
+                        "photos": [
+                            "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU4J81HUTA9TuXUjRxWYg-I0xWC5518vOs7M4WXZAZOflxJdbj9sCuAjRa6ANcXcFEDlFTt7Rf23ChM2VLMWKqeu_AyY6lfo3D-0YVDYTK54k8RYsJYK1Cd-lEjQUYpvRB73OUF0Nd1Unrs5rxyv7hrhzGNw_BCtvaWTOa54V4MgQReWNXVnuvf0RtKxuE9jvqKlSdb0bdVOFSj5PdjYVVHFj34bwUml-H3dj8cZg25Z6hugmIMmcBWTiFGW_a0ImPtZkYEmXTp7sLQhEE0Mdnq2F5oePWexdximpg_35ewEtywk_921a_AKpnWvm5YHt4U-A6QvwU84QyeZGxZoPKMjgPOhqNkpJL_rNEPkas1B8nvyJ67-QZPKz89lgZkElLUZ2RLyL-pbnK5WdspmG0MUO_fmco-QTangewIcZOQPxnlR75jMzn2LgJUeH0yUFKuqptjTUbx6JZIpR-R0R7fm_vW2S6BuprTIBZbh1BoJQsq8riOHhQM-Iuq0nPHLsfODdI3BAoRK4QNE8Svyk6_TLZXujD0Hg1ZY0EYv1piZYXBGlLe2d_IzGE9_T1NXl5DkMyz_&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                        ],
+                        "place_id": "ChIJ74qu11d7GTkRTJwA_9vlfv8"
+                    },
+                    {
+                        "start_time": "20:00",
+                        "end_time": "21:00",
+                        "description": "Enjoy an authentic Punjabi dinner at one of Amritsar's most iconic and beloved dhabas.",
+                        "activity_type": "eat",
+                        "place_name": "Bharawan Da Dhaba",
+                        "address": "Near Town Hall, Amritsar, Punjab, India",
+                        "meal_type": "dinner",
+                        "cuisine": "Punjabi",
+                        "menu_highlights": [
+                            "Amritsari Kulcha",
+                            "Dal Makhani",
+                            "Lassi"
+                        ],
+                        "fare": 700,
+                        "reservation_required": false,
+                        "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJy5-1B6t8GTkRZf_GNMPg0NI",
+                        "lat": "31.6260119",
+                        "long": "74.8776183",
+                        "photos": [
+                            "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU50mFZHvDWslYZ-biiGj8J6479E68jwpbeLHXWhpjAUP2XC2dEUguSKM2fGeVRboZeSmeLTPl13CWwMBAyAtkFAtkZk5T2kgiIG4vPg-pwH5PyixgcQQO6MxxRu2xmMTw7cABmrUc-xJz4Po6KgZwGpt1ahSkOHGCMO2UL85HDupmWVaBz2x4pta29gbVLsL0UwR92iNJ4m_APEwznLqXcDVikDUtO0jM1Rcy49_bqQyzZems_CxnrN5FM9KMdkIUJaviaT2dDBNLYMcnpiSNDYrMXI0g4uC5eds85RgazBB5a8KZHmYnq3AbGb9N_8EWLBwhsEDrsqn9zSNUXNpB8xu4UmeeiNw0tTL5u4Rvf7leONn_lO1MbSzKekae3pnrC7lPtF25Ngx-T4tt9gWpYNzqNfMhzVI13h9dNQ7y0Pm6dn1lgLmHFZnS911GnGaLbUMYmwVFqUAPwoHonPZpSKzCAcLyDnB9RF2MANASkNLoBEArQz65qKVRWrJPPitXrditR43w_MLwy-N32k2kuX1WaHGuhquskwjEUPbeRBjz9EdULovWD0a3Lfy4o7yXMubFK1fIzHmA&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                        ],
+                        "place_id": "ChIJy5-1B6t8GTkRZf_GNMPg0NI"
+                    },
+                    {
+                        "start_time": "21:00",
+                        "end_time": "21:30",
+                        "description": "Return to your hotel for a well-deserved night's sleep.",
+                        "activity_type": "travel",
+                        "conveyance_type": "cab",
+                        "fare": 250,
+                        "distance_km": 2,
+                        "duration_minutes": 30,
+                        "from_location": {
+                            "place_name": "Bharawan Da Dhaba",
+                            "address": "Near Town Hall, Amritsar, Punjab, India",
+                            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJy5-1B6t8GTkRZf_GNMPg0NI",
+                            "lat": "31.6260119",
+                            "long": "74.8776183",
+                            "photos": [
+                                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU4bjrjPdE1q8Tekta0OTCALtlt_Tu5J2zNAa2V6-jmHGVBW09ABFJf1DxTIhhEg3St4ACKArTEUCPnhznMU7_qXLApxEuORlkqS1KGraESDkmoNSyWtavJwWhBxtFl3ro3S6KV073L561jQ9GHbBgJ_6xDjl0NtOB0sBhmNCe0G-4oUHHz1DQS1Sz-wFBP3F4HchIcH95E9wfYgoJU4xdDqayuu4sGuBTR2oyoGvsRUCeLq7WOZHQBEQw_g8YY2a0Yf3xwN0bBCV-ziOcIVc6OYKW2gpHkHgIoTjAvkFHlYPG6B9hUOBbw6CNeNyBg1BWBpMsNHtIUbD9gXKIYIAH9GtIooZ6dG273oIdoH-z7AHVCYGb0bJUrOqKwW9Jg2dnV4UvNOaHrDBqXA27IPPPADaI_KDgV2iLFUvXeEn7azRdryQxtKGzLqMDb9rUd_295pT00pG1YYCU-RnOvH2LzUGrHBC62iuWMuSU411-DhNDTe4Se4S42P0lnvvPgwOAmMVcBzz_KHXh9WSy9TtnDj7DNgy3NcDoZDrDMBbwciAKIwYH9elgSm24FX0J_3dvzSCSLG537lNg&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                            ],
+                            "place_id": "ChIJy5-1B6t8GTkRZf_GNMPg0NI"
+                        },
+                        "to_location": {
+                            "place_name": "Novotel Amritsar",
+                            "address": "Verka Bypass, Amritsar, Punjab 143001, India",
+                            "map_url": "https://www.google.com/maps/place/?q=place_id:ChIJI6n8WaxjGTkR76T-VV8AeLc",
+                            "lat": "31.6635602",
+                            "long": "74.9158537",
+                            "photos": [
+                                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AWn5SU46AcrVXWcjtwoS9DXz9PoLtUsCPjwAdAY5f5gntzJYJlWsjHeKTQCFVq6MHMOAlR2At96U_SvyZvjKVo-zmTxPD7dwYEhKDiDKDI5eH66ggcNbAxYJ1g2epM1WCUiPCPajpvFmJsljKr_Q_mHST9xY_xqgROvzk-_wpLSVTb5AAPmgrT44S8oGeDfvvijRHt_8dGXglTMrOwDdnkm8GkkEAtN1y36CWjSR-CrLuGCgi8ZYYWkpNMFfknSiG8CyZaPSZH9gCedrkap0lMA_RKpK6lzxmIEfLZk-KDCnOCKZeCutbrREoIndzqGo5em7bqxUasLuDcuZaONdxXkHBglSHoSJ4fIfWa24GLTzSqG2cPXW7hxVT_xp35U8aGd0bN-kIVEuzLwiInNmZ_u_E98-MRMSEvK_L14MPI1SUeVKM9oEkfR5hXJMMIiJBmMp0nvfyhFX6ryIIlwhbNkm57_gFgy2AukGxldxF4HmDB8pDSdkYMhMrFcTRkDpXVvJ2tMbeXBHjkoovpxgK36jmYB6rDHVsvU76jxL7g6MO1TcvCPk-t3BRhgAoKmi7eDy2V5H_DI9&key=AIzaSyCf5tix34FAK7eWdYArHLzklKk7FaaWIPk"
+                            ],
+                            "place_id": "ChIJI6n8WaxjGTkR76T-VV8AeLc"
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}
