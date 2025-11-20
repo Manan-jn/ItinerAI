@@ -214,8 +214,86 @@ export async function normalizeCityName(cityName: string): Promise<string> {
 }
 
 /**
+ * In-memory index for fast city lookups (built once, reused forever)
+ * Maps normalized city name (lowercase) to exact city name from places.json
+ */
+let cityLookupMap: Map<string, string> | null = null;
+
+/**
+ * Build city lookup map for O(1) lookups
+ * This is called once and cached in memory
+ */
+async function buildCityLookupMap(): Promise<Map<string, string>> {
+  if (cityLookupMap) {
+    return cityLookupMap;
+  }
+
+  const places = await loadPlacesData();
+  const map = new Map<string, string>();
+
+  // Build map: lowercase city name -> exact city name
+  places.forEach(place => {
+    const normalizedKey = place.city.toLowerCase().trim();
+    // Only store first occurrence to avoid duplicates
+    if (!map.has(normalizedKey)) {
+      map.set(normalizedKey, place.city);
+    }
+  });
+
+  cityLookupMap = map;
+  console.log(`✅ Built city lookup map with ${map.size} unique cities`);
+  return map;
+}
+
+/**
+ * Fast synchronous city lookup with fallback
+ * Returns: { normalized: string, found: boolean }
+ * - If found in places.json cache: returns exact spelling + found=true
+ * - If not found: returns capitalized version + found=false
+ */
+export function normalizeCityNameSyncWithFallback(cityName: string): { normalized: string; found: boolean } {
+  if (!cityName || cityName.trim() === '') {
+    return { normalized: cityName, found: false };
+  }
+
+  // Handle special placeholder values
+  if (cityName.toLowerCase() === 'user_location' || cityName.toLowerCase() === 'user location') {
+    return { normalized: cityName, found: true };
+  }
+
+  // If cityLookupMap is already built (cached), use it for instant O(1) lookup
+  if (cityLookupMap) {
+    const normalizedKey = cityName.toLowerCase().trim();
+    const exactCity = cityLookupMap.get(normalizedKey);
+
+    if (exactCity) {
+      return { normalized: exactCity, found: true };
+    }
+  } else {
+    // Fallback to popular cities if map not yet loaded
+    const popularCities = getPopularIndianCities();
+    const matchedCity = popularCities.find(
+      c => c.city.toLowerCase() === cityName.toLowerCase()
+    );
+
+    if (matchedCity) {
+      return { normalized: matchedCity.city, found: true };
+    }
+  }
+
+  // Not found - return with proper capitalization
+  const capitalized = cityName
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+
+  return { normalized: capitalized, found: false };
+}
+
+/**
  * Synchronous version of normalizeCityName using only popular cities
  * Use this for performance when you don't need the full places.json lookup
+ * @deprecated Use normalizeCityNameSyncWithFallback for better accuracy
  */
 export function normalizeCityNameSync(cityName: string): string {
   if (!cityName || cityName.trim() === '') {
@@ -242,6 +320,19 @@ export function normalizeCityNameSync(cityName: string): string {
     .split(' ')
     .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(' ');
+}
+
+/**
+ * Preload and build city lookup map for instant synchronous access
+ * Call this early in app lifecycle (e.g., on page load)
+ */
+export async function preloadCityData(): Promise<void> {
+  try {
+    await buildCityLookupMap();
+    console.log('✅ City data preloaded and indexed');
+  } catch (error) {
+    console.error('❌ Failed to preload city data:', error);
+  }
 }
 
 /**

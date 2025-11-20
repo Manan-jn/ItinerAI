@@ -36,7 +36,7 @@ import {
   extractImageUrls,
   validateAndPopulateTripData,
 } from "../../utils/imageDownloader";
-import { normalizeCityNameSync } from "../../utils/placesData";
+import { normalizeCityNameSync, normalizeCityNameSyncWithFallback, preloadCityData } from "../../utils/placesData";
 import {
   storeDayItinerary,
   buildCompleteItinerary,
@@ -298,6 +298,11 @@ export default function FlightsPageAuthenticated() {
         console.error("❌ Error restoring trip from Firestore:", error);
       }
     };
+
+    // Preload city data for fast normalization (non-blocking)
+    preloadCityData().catch(err => {
+      console.warn('⚠️ City data preload failed (will use fallback):', err);
+    });
 
     restoreSelectedTrip();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -1980,46 +1985,49 @@ export default function FlightsPageAuthenticated() {
       // Extract from and to cities
       let fromCity = nextDay.conveyance_details.from_city || "";
       let toCity = nextDay.conveyance_details.to_city || "";
+      let canAutoFill = true;
 
-      // Define supported cities
-      const supportedCities = [
-        "Mumbai",
-        "Bangalore",
-        "Agra",
-        "New Delhi",
-        "Leh",
-        "Delhi",
-      ];
-
-      // Normalize fromCity
+      // Normalize fromCity with fallback detection
       if (fromCity) {
-        const normalizedFromCity =
-          fromCity.charAt(0).toUpperCase() + fromCity.slice(1).toLowerCase();
-        const isSupported = supportedCities.some(
-          (city) => city.toLowerCase() === normalizedFromCity.toLowerCase()
-        );
+        const originalFromCity = fromCity;
+        const result = normalizeCityNameSyncWithFallback(fromCity);
+        fromCity = result.normalized;
 
-        if (!isSupported) {
-          console.log(
-            `🔄 "${fromCity}" is not a supported city, defaulting to Mumbai`
+        if (!result.found) {
+          console.warn(
+            `⚠️ from_city "${originalFromCity}" not found in places.json - disabling auto-fill`
           );
-          fromCity = "Mumbai";
+          canAutoFill = false;
         } else {
-          fromCity = normalizedFromCity;
+          console.log(
+            `✅ Normalized from_city: "${originalFromCity}" → "${fromCity}"`
+          );
         }
       } else {
         fromCity = "Mumbai";
         console.log("🔄 Empty from_city, defaulting to Mumbai");
       }
 
-      // Normalize toCity
+      // Normalize toCity with fallback detection
       if (toCity) {
-        toCity = toCity.charAt(0).toUpperCase() + toCity.slice(1).toLowerCase();
-        if (toCity === "Delhi") toCity = "New Delhi";
+        const originalToCity = toCity;
+        const result = normalizeCityNameSyncWithFallback(toCity);
+        toCity = result.normalized;
+
+        if (!result.found) {
+          console.warn(
+            `⚠️ to_city "${originalToCity}" not found in places.json - disabling auto-fill`
+          );
+          canAutoFill = false;
+        } else {
+          console.log(
+            `✅ Normalized to_city: "${originalToCity}" → "${toCity}"`
+          );
+        }
       }
 
       console.log(
-        `🎯 Setting conveyance cities - From: ${fromCity}, To: ${toCity}`
+        `🎯 Setting conveyance cities - From: ${fromCity}, To: ${toCity}, Auto-fill: ${canAutoFill}`
       );
 
       // Calculate departure date for this day
@@ -2035,7 +2043,7 @@ export default function FlightsPageAuthenticated() {
         // Set states for FlightsWidget
         setConveyanceFromCity(fromCity);
         setConveyanceToCity(toCity);
-        setAutoFillMode(true);
+        setAutoFillMode(canAutoFill);
         setInitialDepartureDate(departureDateStr);
 
         // Set loader messages
@@ -2172,33 +2180,18 @@ export default function FlightsPageAuthenticated() {
         }
       }
 
-      // Capitalize first letter and lowercase the rest
-      normalizedFromCity =
-        normalizedFromCity.charAt(0).toUpperCase() +
-        normalizedFromCity.slice(1).toLowerCase();
+      // Use new normalization with fallback detection
+      const cityResult = normalizeCityNameSyncWithFallback(normalizedFromCity);
+      normalizedFromCity = cityResult.normalized;
 
-      // Handle special city name mappings
-      if (normalizedFromCity === "Delhi") {
-        normalizedFromCity = "New Delhi";
-      }
-
-      // Verify city is in supported cities list
-      const supportedCities = [
-        "Mumbai",
-        "Bangalore",
-        "New Delhi",
-        "Agra",
-        "Leh",
-      ];
-      const isSupportedCity = supportedCities.some(
-        (city) => city.toLowerCase() === normalizedFromCity.toLowerCase()
-      );
-
-      if (!isSupportedCity) {
-        console.log(
-          `⚠️ City "${normalizedFromCity}" is not in supported cities list, defaulting to Mumbai`
+      if (!cityResult.found) {
+        console.warn(
+          `⚠️ City "${fromCity}" not found in places.json - using capitalized version`
         );
-        normalizedFromCity = "Mumbai";
+      } else {
+        console.log(
+          `✅ Normalized from_city for new day: "${fromCity}" → "${normalizedFromCity}"`
+        );
       }
 
       fromCity = normalizedFromCity;
@@ -2796,14 +2789,24 @@ export default function FlightsPageAuthenticated() {
             // Extract from and to cities
             let fromCity = day1.conveyance_details.from_city || "";
             let toCity = day1.conveyance_details.to_city || "";
+            let canAutoFill = true;
 
-            // Normalize city names using places.json matching
+            // Normalize city names using places.json matching with fallback detection
             if (fromCity) {
               const originalFromCity = fromCity;
-              fromCity = normalizeCityNameSync(fromCity);
-              console.log(
-                `✅ Normalized from_city: "${originalFromCity}" → "${fromCity}"`
-              );
+              const result = normalizeCityNameSyncWithFallback(fromCity);
+              fromCity = result.normalized;
+
+              if (!result.found) {
+                console.warn(
+                  `⚠️ from_city "${originalFromCity}" not found in places.json - disabling auto-fill`
+                );
+                canAutoFill = false;
+              } else {
+                console.log(
+                  `✅ Normalized from_city: "${originalFromCity}" → "${fromCity}"`
+                );
+              }
             } else {
               fromCity = "Mumbai"; // Default if empty
               console.log("🔄 Empty from_city, defaulting to Mumbai");
@@ -2811,28 +2814,39 @@ export default function FlightsPageAuthenticated() {
 
             if (toCity) {
               const originalToCity = toCity;
-              toCity = normalizeCityNameSync(toCity);
-              console.log(
-                `✅ Normalized to_city: "${originalToCity}" → "${toCity}"`
-              );
+              const result = normalizeCityNameSyncWithFallback(toCity);
+              toCity = result.normalized;
+
+              if (!result.found) {
+                console.warn(
+                  `⚠️ to_city "${originalToCity}" not found in places.json - disabling auto-fill`
+                );
+                canAutoFill = false;
+              } else {
+                console.log(
+                  `✅ Normalized to_city: "${originalToCity}" → "${toCity}"`
+                );
+              }
             }
 
             console.log(
               "🎯 Setting conveyance cities - From:",
               fromCity,
               "To:",
-              toCity
+              toCity,
+              "Auto-fill enabled:",
+              canAutoFill
             );
 
             // Set conveyance cities for FlightsWidget
             setConveyanceFromCity(fromCity);
             setConveyanceToCity(toCity);
 
-            // Set auto-fill mode and initial departure date
-            setAutoFillMode(true);
+            // Set auto-fill mode based on whether cities were found
+            setAutoFillMode(canAutoFill);
             setInitialDepartureDate(dateString); // Use the trip start date
             console.log(
-              "📅 Set auto-fill mode with departure date:",
+              `📅 Set auto-fill mode: ${canAutoFill} with departure date:`,
               dateString
             );
 
