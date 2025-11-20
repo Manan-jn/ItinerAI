@@ -39,7 +39,9 @@ export async function POST(request: NextRequest) {
       type: 'api_request',
       endpoint: '/api/session/create',
       method: 'POST',
-      params: { user_id: userId }
+      params: {
+        user_id: userId
+      }
     });
 
     // Validate user_id
@@ -55,7 +57,9 @@ export async function POST(request: NextRequest) {
     }
 
     const backendUrl = `${BACKEND_API_URL}/session/create`;
-    const backendRequestBody = { user_id: userId };
+    const backendRequestBody = {
+      user_id: userId,
+    };
 
     // Log backend request
     logBackendRequest(logger, backendUrl, backendRequestBody);

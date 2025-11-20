@@ -7,3 +7,10 @@ node_modules/
 *.log
 .gitignore
 .gcloudignore
+
+# Logs directory (Winston logging)
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
