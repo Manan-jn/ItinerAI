@@ -198,6 +198,8 @@ const processItinerariesWithFlightChange = (
   });
 
   // Step 2: If we found conveyances, select the middle one (or mid+1)
+  // IMPORTANT: If no flight/train conveyances found, nothing is added to eventsList
+  // (no fallback to last day or first day)
   if (conveyanceDays.length > 0) {
     // Sort by day number to ensure consistent ordering
     conveyanceDays.sort((a, b) => a.dayIndex - b.dayIndex);
@@ -253,31 +255,17 @@ const processItinerariesWithFlightChange = (
   }
 
   // ========== PART 2: WEATHER CHANGE EVENT ==========
-  // Find days without required conveyance (days where conveyance is not the main focus)
-  const daysWithoutMajorConveyance: number[] = [];
-
-  itinerariesCopy.forEach((day: any, dayIndex: number) => {
-    if (day.schedule && Array.isArray(day.schedule)) {
-      // Check if this day has any flight or train
-      const hasMajorConveyance = day.schedule.some(
-        (item: any) =>
-          item.activity_type === "travel" &&
-          (item.conveyance_type === "flight" ||
-            item.conveyance_type === "train")
-      );
-
-      if (!hasMajorConveyance) {
-        daysWithoutMajorConveyance.push(dayIndex);
-      }
-    }
-  });
-  console.log("daysWithoutMajorConveyance", daysWithoutMajorConveyance);
-
-  // Select mid or mid+1 day from days without major conveyance
-  if (daysWithoutMajorConveyance.length > 0) {
-    const middleIndex = Math.floor(daysWithoutMajorConveyance.length / 2);
-    const selectedDayIndex = daysWithoutMajorConveyance[middleIndex];
+  // Select mid or mid+1 day from ALL days (no conveyance criteria)
+  if (itinerariesCopy.length > 0) {
+    // Calculate middle index (mid or mid+1)
+    const middleIndex = Math.floor(itinerariesCopy.length / 2);
+    const selectedDayIndex = middleIndex;
     const selectedDay = itinerariesCopy[selectedDayIndex];
+
+    console.log("🌦️ Selected day for weather change:", {
+      dayIndex: selectedDayIndex,
+      totalDays: itinerariesCopy.length
+    });
 
     // Extract location information from the day's schedule
     let city = "Unknown City";
