@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getLogger, logBackendRequest, logBackendResponse, logAPIError } from "../../utils/logger";
 
 interface PreTripRequest {
   user_id: string;
@@ -14,43 +15,65 @@ interface PreTripResponse {
 const BACKEND_API_URL = process.env.BACKEND_API_URL || "http://127.0.0.1:8000";
 
 export async function POST(request: NextRequest) {
+  const startTime = Date.now();
+  let logger: any = null;
+  let userId = 'anonymous';
+  let sessionId = 'unknown';
+
   try {
     const body: PreTripRequest = await request.json();
     const { user_id, session_id } = body;
 
+    userId = user_id;
+    sessionId = session_id;
+
+    // Get logger for this user/session
+    logger = getLogger(userId, sessionId);
+
+    // Log incoming request
+    logger.info('Pre-Trip API Request', {
+      type: 'api_request',
+      endpoint: '/api/pre-trip',
+      method: 'POST',
+      params: {
+        user_id,
+        session_id
+      }
+    });
+
     // Validate input
     if (!session_id || !user_id) {
+      logger.warn('Validation failed: Session ID and User ID are required');
       return NextResponse.json(
         { error: "Session ID and User ID are required" },
         { status: 400 }
       );
     }
 
-    console.log("Proxying pre-trip request to backend:", {
-      url: `${BACKEND_API_URL}/agents/pre-trip`,
+    const backendUrl = `${BACKEND_API_URL}/agents/pre-trip`;
+    const backendRequestBody = {
       user_id,
       session_id,
-    });
+    };
+
+    // Log backend request
+    logBackendRequest(logger, backendUrl, backendRequestBody);
 
     // Proxy the request to the FastAPI backend
-    const response = await fetch(`${BACKEND_API_URL}/agents/pre-trip`, {
+    const backendStartTime = Date.now();
+    const response = await fetch(backendUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        user_id,
-        session_id,
-      }),
+      body: JSON.stringify(backendRequestBody),
     });
+
+    const backendDuration = Date.now() - backendStartTime;
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error("Backend pre-trip API error:", {
-        status: response.status,
-        statusText: response.statusText,
-        error: errorText,
-      });
+      logBackendResponse(logger, backendUrl, response.status, { error: errorText }, backendDuration);
 
       return NextResponse.json(
         {
@@ -62,15 +85,32 @@ export async function POST(request: NextRequest) {
     }
 
     const data: PreTripResponse = await response.json();
-    console.log("Backend pre-trip response received:", {
-      hasMessage: !!data.message,
-      messageLength: data.message?.length || 0,
-      messagePreview: data.message?.substring(0, 100) || "",
+
+    // Log backend success response
+    logBackendResponse(logger, backendUrl, response.status, data, backendDuration);
+
+    const totalDuration = Date.now() - startTime;
+    logger.info('Pre-Trip API Response', {
+      type: 'api_response',
+      endpoint: '/api/pre-trip',
+      statusCode: 200,
+      duration: `${totalDuration}ms`,
+      responsePreview: {
+        hasMessage: !!data.message,
+        messageLength: data.message?.length || 0,
+        messagePreview: data.message?.substring(0, 100) || ""
+      }
     });
 
     return NextResponse.json(data);
   } catch (error) {
-    console.error("Pre-trip API proxy error:", error);
+    if (logger) {
+      logAPIError(logger, '/api/pre-trip', 'POST', error, {
+        userId,
+        sessionId,
+        duration: `${Date.now() - startTime}ms`
+      });
+    }
 
     // Provide different error messages based on error type
     if (error instanceof TypeError && error.message.includes("fetch")) {
