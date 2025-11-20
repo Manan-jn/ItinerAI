@@ -22,6 +22,7 @@ import BookingWidget from "../../components/BookingWidget";
 import FinalizeLoader from "../../components/FinalizeLoader";
 import CongratulationsLoader from "../../components/CongratulationsLoader";
 import PreTripWidget from "../../components/PreTripWidget";
+import InTripWidget from "../../components/InTripWidget";
 import { getSessionId } from "../../utils/sessionManager";
 import { updateMemoryOnSessionChange } from "../../utils/memoryApi";
 import {
@@ -140,6 +141,11 @@ export default function FlightsPageAuthenticated() {
     setShowPreTrip(show);
   };
 
+  const handleShowInTrip = (show: boolean) => {
+    if (show) collapseSidebarIfOpen();
+    setShowInTrip(show);
+  };
+
   // Auto-focus chat input when switching to chat section
   useEffect(() => {
     if (activeSection === "chat" && textareaRef.current) {
@@ -208,6 +214,7 @@ export default function FlightsPageAuthenticated() {
   const [showCongratsLoader, setShowCongratsLoader] = useState(false); // NEW: Show congratulations loader
   const [showPreTrip, setShowPreTrip] = useState(false); // NEW: Show pre-trip brief widget
   const [preTripMarkdown, setPreTripMarkdown] = useState<string>(""); // NEW: Store pre-trip markdown content
+  const [showInTrip, setShowInTrip] = useState(false); // NEW: Show in-trip widget
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const flashcardsRef = useRef<FlashcardsWidgetRef>(null);
@@ -1928,8 +1935,14 @@ export default function FlightsPageAuthenticated() {
 
   // Handler for finishing pre-trip brief
   const handlePreTripFinish = () => {
-    console.log("✅ Pre-trip brief finished, redirecting to dashboard");
+    console.log("✅ Pre-trip brief finished, showing in-trip widget");
     setShowPreTrip(false);
+    handleShowInTrip(true);
+  };
+
+  const handleInTripFinish = () => {
+    console.log("✅ In-trip widget finished, redirecting to dashboard");
+    setShowInTrip(false);
     handleSetActiveSection("dashboard");
   };
 
@@ -4233,6 +4246,7 @@ export default function FlightsPageAuthenticated() {
                 showDebug={showDebug}
                 showBooking={showBooking}
                 showPreTrip={showPreTrip}
+                showInTrip={showInTrip}
                 testEndResponse={testEndResponse}
                 sessionId={sessionId}
                 isSidebarCollapsed={isSidebarCollapsed}
@@ -4246,6 +4260,10 @@ export default function FlightsPageAuthenticated() {
                 onPreTripToggle={() => {
                   handleShowPreTrip(!showPreTrip);
                   console.log("📄 PreTrip toggle:", !showPreTrip);
+                }}
+                onInTripToggle={() => {
+                  handleShowInTrip(!showInTrip);
+                  console.log("🗺️ InTrip toggle:", !showInTrip);
                 }}
                 onTestEndResponseToggle={() => {
                   setTestEndResponse(!testEndResponse);
@@ -4341,7 +4359,16 @@ export default function FlightsPageAuthenticated() {
 
               {/* Chat Container - Scrollable messages area with fixed input */}
               <div className="flex-1 flex flex-col min-h-0">
-                {showPreTrip ? (
+                {showInTrip ? (
+                  <div className="flex-1 overflow-hidden">
+                    <InTripWidget
+                      isVisible={showInTrip}
+                      tripTitle={selectedTrip?.trip_title || "My Trip"}
+                      itineraries={itinerariesGenerated}
+                      onClose={handleInTripFinish}
+                    />
+                  </div>
+                ) : showPreTrip ? (
                   <div className="flex-1 overflow-hidden">
                     <PreTripWidget
                       isVisible={showPreTrip}
