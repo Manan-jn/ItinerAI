@@ -4,7 +4,8 @@ import { getLogger, logBackendRequest, logBackendResponse, logAPIError } from ".
 interface InTripRequest {
   user_id: string;
   session_id: string;
-  change_of_events: any[];
+  change_of_events?: any[];
+  user_message?: string;
 }
 
 const BACKEND_API_URL = process.env.BACKEND_API_URL || "http://127.0.0.1:8000";
@@ -17,7 +18,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const body: InTripRequest = await request.json();
-    const { user_id, session_id, change_of_events } = body;
+    const { user_id, session_id, change_of_events, user_message } = body;
 
     userId = user_id;
     sessionId = session_id;
@@ -33,24 +34,41 @@ export async function POST(request: NextRequest) {
       params: {
         user_id,
         session_id,
-        events_count: change_of_events?.length || 0
+        events_count: change_of_events?.length || 0,
+        has_user_message: !!user_message
       }
     });
 
-    if (!user_id || !session_id || !change_of_events) {
-      logger.warn('Validation failed: User ID, Session ID, and change_of_events are required');
+    // Validate: Must have user_id, session_id, and at least one of change_of_events or user_message
+    if (!user_id || !session_id) {
+      logger.warn('Validation failed: User ID and Session ID are required');
       return NextResponse.json(
-        { error: "User ID, Session ID, and change_of_events are required" },
+        { error: "User ID and Session ID are required" },
+        { status: 400 }
+      );
+    }
+
+    if (!change_of_events && !user_message) {
+      logger.warn('Validation failed: Either change_of_events or user_message is required');
+      return NextResponse.json(
+        { error: "Either change_of_events or user_message is required" },
         { status: 400 }
       );
     }
 
     const backendUrl = `${BACKEND_API_URL}/agents/in-trip`;
-    const backendRequestBody = {
+    const backendRequestBody: any = {
       user_id,
       session_id,
-      change_of_events,
     };
+
+    // Add optional fields only if they exist
+    if (change_of_events) {
+      backendRequestBody.change_of_events = change_of_events;
+    }
+    if (user_message) {
+      backendRequestBody.user_message = user_message;
+    }
 
     // Log backend request
     logBackendRequest(logger, backendUrl, backendRequestBody);

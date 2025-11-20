@@ -3,6 +3,8 @@
 import React, { useState, useMemo } from "react";
 import { MdLocationOn } from "react-icons/md";
 import MessageResponseOverlay from "./MessageResponseOverlay";
+import ItinerAIChatBox from "./ItinerAIChatBox";
+import ChatLoadingIndicator from "./ChatLoadingIndicator";
 
 export interface InTripWidgetProps {
   isVisible: boolean;
@@ -367,6 +369,10 @@ export default function InTripWidget({
   const [overlayMessage, setOverlayMessage] = useState<string | null>(null);
   const [showOverlay, setShowOverlay] = useState(false);
 
+  // Chat state
+  const [chatInput, setChatInput] = useState("");
+  const [isChatLoading, setIsChatLoading] = useState(false);
+
   // Process itineraries with event simulations
   const { eventsList } = useMemo(
     () => processItinerariesWithFlightChange(itineraries),
@@ -509,6 +515,112 @@ export default function InTripWidget({
     setIsRunning(false);
     setOverlayMessage("All events have been processed successfully!");
     setShowOverlay(true);
+  };
+
+  // Handle chat message submission
+  const handleChatSubmit = async (message: string) => {
+    if (!userIdProp || !sessionIdProp) {
+      setOverlayMessage("User session not found. Please log in.");
+      setShowOverlay(true);
+      return;
+    }
+
+    if (!message.trim()) {
+      console.warn("⚠️ Empty message, ignoring submission");
+      return;
+    }
+
+    console.log(`💬 Chat message submitted: "${message}"`);
+    setIsChatLoading(true);
+
+    try {
+      // Call the in-trip API with user_message
+      const response = await fetch("/api/in-trip", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: userIdProp,
+          session_id: sessionIdProp,
+          user_message: message,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        console.error("❌ Chat submission failed:", errorData);
+        setOverlayMessage(
+          `Failed to process message: ${errorData.error || "Unknown error"}`
+        );
+        setShowOverlay(true);
+        return;
+      }
+
+      const data = await response.json();
+      console.log("✅ Chat response:", data);
+
+      // Extract the actual response from the nested message field
+      const messageData = data.message || data;
+      const responseType = messageData.response_type;
+      const responseMessage = messageData.message;
+
+      // Always show the message if present
+      if (responseMessage) {
+        setOverlayMessage(responseMessage);
+        setShowOverlay(true);
+      }
+
+      // Handle response based on response_type
+      if (responseType === "itinerary" && messageData.itinerary) {
+        // The itinerary is an array, extract the first item (updated day)
+        const updatedDayData = Array.isArray(messageData.itinerary)
+          ? messageData.itinerary[0]
+          : messageData.itinerary;
+
+        const dayNumber = updatedDayData.day_number || updatedDayData.day;
+        if (
+          dayNumber &&
+          dayNumber > 0 &&
+          dayNumber <= processedItineraries.length
+        ) {
+          const updatedItineraries = [...processedItineraries];
+          updatedItineraries[dayNumber - 1] = updatedDayData;
+          setProcessedItineraries([...updatedItineraries]);
+          console.log(`✅ Updated day ${dayNumber} itinerary from chat`);
+
+          // Mark this day as updated (for visual effect)
+          setUpdatedDays((prev) => new Set(prev).add(dayNumber - 1));
+
+          // Show message if not already shown
+          if (!responseMessage) {
+            setOverlayMessage(
+              `Itinerary updated for Day ${dayNumber} based on your message`
+            );
+            setShowOverlay(true);
+          }
+        }
+      } else if (responseType === "text" || responseType === "no_update") {
+        // Message already shown above, but if not present, show default
+        if (!responseMessage) {
+          const message = messageData.text || "Message processed successfully";
+          setOverlayMessage(message);
+          setShowOverlay(true);
+        }
+      }
+
+      console.log("✅ Chat message processed successfully");
+    } catch (error) {
+      console.error("❌ Error in chat submission:", error);
+      setOverlayMessage(
+        `Error processing message: ${
+          error instanceof Error ? error.message : "Unknown error"
+        }`
+      );
+      setShowOverlay(true);
+    } finally {
+      setIsChatLoading(false);
+    }
   };
 
   const currentDayItinerary = processedItineraries[selectedDay] || {};
@@ -1017,24 +1129,55 @@ export default function InTripWidget({
             )}
           </div>
 
-          {/* Bottom Action Bar */}
-          {onClose && (
-            <div className="action-bar">
-              <button onClick={onClose} className="finish-button">
-                <span>Continue to Dashboard</span>
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
+          {/* Bottom Action Bar with Chat and Continue */}
+          <div className="action-bar">
+            <div className="action-bar-container">
+              {/* Chat Box - Takes most space */}
+              <div className="chat-box-wrapper">
+                <ItinerAIChatBox
+                  value={chatInput}
+                  onChange={setChatInput}
+                  onSubmit={async (e) => {
+                    e.preventDefault();
+                    if (chatInput.trim()) {
+                      const message = chatInput;
+                      setChatInput(""); // Clear input immediately
+                      await handleChatSubmit(message);
+                    }
+                  }}
+                  placeholder="Ask ItinerAI about your trip..."
+                  theme="white"
+                  inputType="input"
+                  isLoading={isChatLoading}
+                  disabled={isChatLoading}
+                />
+              </div>
+
+              {/* Continue Button - Right side next to chatbox */}
+              {onClose && (
+                <button
+                  onClick={onClose}
+                  className="continue-button"
+                  aria-label="Continue to Dashboard"
                 >
-                  <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
-              </button>
+                  <span>Continue</span>
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </button>
+              )}
             </div>
-          )}
+          </div>
         </div>
       </div>
 
@@ -1045,6 +1188,11 @@ export default function InTripWidget({
         onClose={() => setShowOverlay(false)}
         autoHideDuration={4000}
       />
+
+      {/* Chat Loading Indicator - Top Right */}
+      <div className="chat-loading-container">
+        <ChatLoadingIndicator isVisible={isChatLoading} theme="white" />
+      </div>
 
       <style jsx>{`
         .intrip-widget-container {
@@ -1802,40 +1950,85 @@ export default function InTripWidget({
           padding: 0;
         }
 
-        .finish-button {
+        .action-bar-container {
+          width: 100%;
+          max-width: 1200px;
           display: flex;
           align-items: center;
-          gap: 12px;
-          padding: 14px 40px;
+          gap: 16px;
+          margin: 0 auto;
+        }
+
+        .chat-box-wrapper {
+          flex: 1;
+          min-width: 0;
+        }
+
+        .continue-button {
+          display: inline-flex;
+          flex-shrink: 0;
+          align-items: center;
+          gap: 8px;
+          padding: 12px 24px;
           background: linear-gradient(
             135deg,
-            rgba(255, 255, 255, 0.9) 0%,
-            rgba(255, 255, 255, 0.8) 100%
+            rgba(255, 255, 255, 0.75) 0%,
+            rgba(255, 255, 255, 0.6) 100%
           );
-          backdrop-filter: blur(20px) saturate(180%);
+          backdrop-filter: blur(32px) saturate(200%);
+          -webkit-backdrop-filter: blur(32px) saturate(200%);
           border-radius: 16px;
-          border: 1px solid rgba(59, 130, 246, 0.2);
-          box-shadow: 0 4px 16px rgba(59, 130, 246, 0.1);
-          font-size: 1.0625rem;
+          border: 1px solid rgba(255, 255, 255, 0.6);
+          box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1),
+            0 2px 6px rgba(0, 0, 0, 0.06),
+            inset 0 1px 0 rgba(255, 255, 255, 0.9),
+            inset 0 -1px 0 rgba(0, 0, 0, 0.03);
+          font-size: 0.9375rem;
           font-weight: 600;
-          color: #1e40af;
+          color: #1f2937;
+          font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+            "Segoe UI", Roboto, sans-serif;
           cursor: pointer;
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          outline: none;
         }
 
-        .finish-button:hover {
-          background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        .continue-button:hover {
+          background: linear-gradient(
+            135deg,
+            rgba(59, 130, 246, 0.85) 0%,
+            rgba(37, 99, 235, 0.75) 100%
+          );
           color: white;
-          transform: translateY(-3px);
-          box-shadow: 0 12px 32px rgba(59, 130, 246, 0.35);
+          transform: translateY(-2px);
+          box-shadow: 0 8px 32px rgba(59, 130, 246, 0.3),
+            0 4px 12px rgba(59, 130, 246, 0.2);
         }
 
-        .finish-button svg {
+        .continue-button:active {
+          transform: translateY(0);
+          box-shadow: 0 4px 16px rgba(59, 130, 246, 0.2);
+        }
+
+        .continue-button span {
+          font-weight: 600;
+        }
+
+        .continue-button svg {
+          flex-shrink: 0;
           transition: transform 0.3s ease;
         }
 
-        .finish-button:hover svg {
+        .continue-button:hover svg {
           transform: translateX(4px);
+        }
+
+        .chat-loading-container {
+          position: fixed;
+          top: 24px;
+          right: 24px;
+          z-index: 9999;
+          pointer-events: none;
         }
 
         @media (max-width: 1200px) {
