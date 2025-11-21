@@ -123,6 +123,7 @@ export function useTripHandlers(
         timestamp: new Date(),
         metadata: {
           selectedTrip: selectedTrip,
+          isTripSelection: true, // Flag to indicate this is the primary trip selection
         },
       };
 

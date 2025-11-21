@@ -24,6 +24,7 @@ interface ChatMessageProps {
         themes?: string[];
         best_time_to_visit?: string;
       }>;
+      isTripSelection?: boolean; // Flag to indicate this is the primary trip selection message
     };
   };
   currentUser: User | null;
@@ -72,7 +73,7 @@ export function ChatMessage({ message, currentUser }: ChatMessageProps) {
             : "bg-white text-gray-900 border border-gray-200 shadow-sm"
         } rounded-2xl px-4 py-3`}
       >
-        {message.metadata?.selectedTrip ? (
+        {message.metadata?.selectedTrip && message.metadata?.isTripSelection ? (
           <div className="space-y-2">
             <p className="text-xs font-medium opacity-90">Selected Trip:</p>
             <div className="bg-white/10 rounded-lg p-3 border border-white/20">
