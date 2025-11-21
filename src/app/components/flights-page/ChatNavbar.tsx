@@ -95,8 +95,12 @@ export function ChatNavbar({
             )}
 
             {/* Chat Header Info */}
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-200/50">
-              <MdChat className="text-white text-lg" />
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center overflow-hidden">
+              <img
+                src="/itinerAI_logo.jpeg"
+                alt="ItinerAI Logo"
+                className="w-full h-full object-contain"
+              />
             </div>
             <div>
               <h1
