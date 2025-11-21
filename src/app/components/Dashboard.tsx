@@ -12,6 +12,7 @@ import type { FlashcardsWidgetRef } from "./flashcards/types";
 import ConveyanceWidget from "../../../temp_non_flights_code/unused_components/ConveyanceWidget";
 import { getSessionId, getUserId } from "../utils/sessionManager";
 import { updateMemoryOnSessionChange } from "../utils/memoryApi";
+import { ChatMessage } from "./chat/ChatMessage";
 import {
   TripDetailsContent,
   ItineraryContent,
@@ -30,6 +31,22 @@ interface Message {
   content: string;
   role: "user" | "assistant";
   timestamp: Date;
+  metadata?: {
+    selectedTrip?: {
+      trip_title: string;
+      no_of_days: number;
+      estimated_budget: number;
+    };
+    suggestedTrips?: Array<{
+      trip_title: string;
+      no_of_days: number;
+      estimated_budget: number;
+      image?: string;
+      theme?: string[];
+      themes?: string[];
+      best_time_to_visit?: string;
+    }>;
+  };
 }
 
 interface APIResponse {
@@ -252,6 +269,17 @@ export default function Dashboard() {
         ? data.message.message || ""
         : data.message || "";
 
+      // Check if trips data is present
+      const hasTripsData = typeof data.message === 'object' &&
+                          data.message.response_type === 'trip' &&
+                          data.message.trips &&
+                          Array.isArray(data.message.trips) &&
+                          data.message.trips.length > 0;
+
+      // Extract trips data safely
+      const tripsData = hasTripsData && typeof data.message === 'object' ? data.message.trips : [];
+
+      // Create assistant message with trips metadata if available
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         content:
@@ -259,14 +287,19 @@ export default function Dashboard() {
           "Sorry, I couldn't process your request. Please try again.",
         role: "assistant",
         timestamp: new Date(),
+        ...(hasTripsData && tripsData && tripsData.length > 0 && {
+          metadata: {
+            suggestedTrips: tripsData,
+          },
+        }),
       };
 
       setPendingResponse(assistantMessage);
 
       // Handle trips data if present
-      if (typeof data.message === 'object' && data.message.response_type === 'trip' && data.message.trips) {
-        console.log("🎉 Trips data received:", data.message.trips);
-        setTripsData(data.message.trips);
+      if (hasTripsData && tripsData && tripsData.length > 0) {
+        console.log("🎉 Trips data received:", tripsData);
+        setTripsData(tripsData);
 
         // Show flashcards if not already shown
         if (!showFlashcards) {
@@ -985,25 +1018,7 @@ export default function Dashboard() {
                         : ""
                     }`}
                   >
-                    <div
-                      className={`flex ${
-                        message.role === "user"
-                          ? "justify-end"
-                          : "justify-start"
-                      }`}
-                    >
-                      <div
-                        className={`max-w-[75%] rounded-lg px-3 py-2 ${
-                          message.role === "user"
-                            ? "bg-white text-black"
-                            : "bg-gray-900 text-gray-100 border border-gray-800"
-                        }`}
-                      >
-                        <p className="whitespace-pre-wrap text-sm leading-relaxed">
-                          {message.content}
-                        </p>
-                      </div>
-                    </div>
+                    <ChatMessage message={message} currentUser={currentUser} />
                   </div>
                 ))}
 

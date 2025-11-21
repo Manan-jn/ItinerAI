@@ -1,6 +1,7 @@
 import React from "react";
 import { MdChat } from "react-icons/md";
 import { User } from "firebase/auth";
+import { SuggestedTripsSnippet } from "./SuggestedTripsSnippet";
 
 interface ChatMessageProps {
   message: {
@@ -14,6 +15,15 @@ interface ChatMessageProps {
         no_of_days: number;
         estimated_budget: number;
       };
+      suggestedTrips?: Array<{
+        trip_title: string;
+        no_of_days: number;
+        estimated_budget: number;
+        image?: string;
+        theme?: string[];
+        themes?: string[];
+        best_time_to_visit?: string;
+      }>;
     };
   };
   currentUser: User | null;
@@ -76,6 +86,8 @@ export function ChatMessage({ message, currentUser }: ChatMessageProps) {
               </div>
             </div>
           </div>
+        ) : message.metadata?.suggestedTrips ? (
+          <SuggestedTripsSnippet trips={message.metadata.suggestedTrips} />
         ) : (
           <p className="whitespace-pre-wrap text-sm leading-relaxed">
             {message.content}

@@ -166,6 +166,23 @@ export default function FlightsPageAuthenticated() {
       content: string;
       role: "user" | "assistant";
       timestamp: Date;
+      metadata?: {
+        selectedTrip?: {
+          trip_title: string;
+          no_of_days: number;
+          estimated_budget: number;
+        };
+        suggestedTrips?: Array<{
+          trip_title: string;
+          no_of_days: number;
+          estimated_budget: number;
+          image?: string;
+          theme?: string[];
+          themes?: string[];
+          best_time_to_visit?: string;
+        }>;
+        [key: string]: any; // Allow other metadata fields
+      };
     }>
   >([]);
   const [chatInput, setChatInputText] = useState("");
@@ -3987,6 +4004,11 @@ export default function FlightsPageAuthenticated() {
         content: messageContent,
         role: "assistant" as const,
         timestamp: new Date(),
+        ...(shouldShowPlaces && parsedTripSuggestions.length > 0 && {
+          metadata: {
+            suggestedTrips: parsedTripSuggestions,
+          },
+        }),
       };
 
       setMessages((prev) => [...prev, assistantMessage]);
