@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useMemo } from "react";
+import { getTripImage } from "../flashcards/imageHelpers";
 
 interface Trip {
   trip_title: string;
@@ -8,6 +9,8 @@ interface Trip {
   theme?: string[];
   themes?: string[];
   best_time_to_visit?: string;
+  trip_route?: any[];
+  day_wise_plan?: any[];
 }
 
 interface SuggestedTripsSnippetProps {
@@ -15,15 +18,26 @@ interface SuggestedTripsSnippetProps {
 }
 
 export function SuggestedTripsSnippet({ trips }: SuggestedTripsSnippetProps) {
-  // Show only first 2 trips initially, rest will be scrollable
-  const displayTrips = trips.slice(0, Math.min(trips.length, 4));
+  // Process trips to get proper image URLs using the same logic as FlashcardsWidget
+  const processedTrips = useMemo(() => {
+    return trips.map((trip) => ({
+      ...trip,
+      image: getTripImage(trip),
+    }));
+  }, [trips]);
+
+  // Show only first 4 trips, rest will be scrollable
+  const displayTrips = processedTrips.slice(
+    0,
+    Math.min(processedTrips.length, 4)
+  );
 
   return (
     <div className="space-y-2">
       <p className="text-xs font-medium text-gray-600">
         Here are some trip suggestions for you:
       </p>
-      <div className="flex flex-col gap-2 max-h-[500px] overflow-y-auto custom-scrollbar pr-1">
+      <div className="flex flex-col gap-2 max-h-[460px] overflow-y-auto custom-scrollbar pr-1">
         {displayTrips.map((trip, index) => {
           const themes = trip.themes || trip.theme || [];
           return (

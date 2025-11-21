@@ -347,7 +347,7 @@ export default function BudgetPanel({
               ))}
             </div>
 
-            {/* Daily Spending Chart */}
+            {/* Daily Spending Chart
             {dayWiseTotals.length > 0 ? (
               <div className="daily-spending-section">
                 <h4 className="section-title">Daily Spending</h4>
@@ -386,7 +386,7 @@ export default function BudgetPanel({
                   No daily spending data available
                 </div>
               </div>
-            )}
+            )} */}
           </>
         )}
 
