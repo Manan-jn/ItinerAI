@@ -36,7 +36,11 @@ import {
   extractImageUrls,
   validateAndPopulateTripData,
 } from "../../utils/imageDownloader";
-import { normalizeCityNameSync, normalizeCityNameSyncWithFallback, preloadCityData } from "../../utils/placesData";
+import {
+  normalizeCityNameSync,
+  normalizeCityNameSyncWithFallback,
+  preloadCityData,
+} from "../../utils/placesData";
 import {
   storeDayItinerary,
   buildCompleteItinerary,
@@ -300,8 +304,8 @@ export default function FlightsPageAuthenticated() {
     };
 
     // Preload city data for fast normalization (non-blocking)
-    preloadCityData().catch(err => {
-      console.warn('⚠️ City data preload failed (will use fallback):', err);
+    preloadCityData().catch((err) => {
+      console.warn("⚠️ City data preload failed (will use fallback):", err);
     });
 
     restoreSelectedTrip();
@@ -4412,6 +4416,8 @@ export default function FlightsPageAuthenticated() {
                         selectedTrip?.no_of_days || itinerariesGenerated.length
                       }
                       onContinue={handleBookingContinue}
+                      userId={userId}
+                      sessionId={sessionId}
                     />
                   </div>
                 ) : showItinerary ? (

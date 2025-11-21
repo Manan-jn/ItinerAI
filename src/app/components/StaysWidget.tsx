@@ -894,8 +894,30 @@ export default function StaysWidget({
                          utilityStays.find(stay => stay.stay_id === stayId);
 
     if (selectedStay) {
-      setSelectedStayData(selectedStay);
-      console.log("✅ Selected stay data:", selectedStay);
+      // Enrich with check-in and check-out dates for proper tracking
+      const enrichedStayData = {
+        ...selectedStay,
+        check_in_date: checkInDate,
+        check_out_date: checkOutDate,
+        total_nights: checkInDate && checkOutDate
+          ? Math.ceil((new Date(checkOutDate).getTime() - new Date(checkInDate).getTime()) / (1000 * 60 * 60 * 24))
+          : 1,
+        total_price: checkInDate && checkOutDate
+          ? Math.ceil((new Date(checkOutDate).getTime() - new Date(checkInDate).getTime()) / (1000 * 60 * 60 * 24)) * parseFloat(selectedStay.starting_price)
+          : parseFloat(selectedStay.starting_price),
+      };
+
+      setSelectedStayData(enrichedStayData);
+      console.log("✅ Selected stay data with pricing:", enrichedStayData);
+
+      // Store in sessionStorage for persistence across components
+      try {
+        const stayDataKey = `stay_${userId}_${sessionId}`;
+        sessionStorage.setItem(stayDataKey, JSON.stringify(enrichedStayData));
+        console.log("✅ Stay data stored in sessionStorage");
+      } catch (error) {
+        console.error("Failed to store stay data:", error);
+      }
     }
   };
 
