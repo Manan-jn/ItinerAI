@@ -326,6 +326,16 @@ export default function DateSelectorWidget({
 
   const preferredTimeScrollRef = useRef<HTMLDivElement>(null);
 
+  // Refs to track previous userId and sessionId for detecting actual changes
+  const prevUserIdRef = useRef<string | undefined>(userId);
+  const prevSessionIdRef = useRef<string | undefined>(sessionId);
+
+  // Ref to prevent concurrent API calls (acts as a lock)
+  const isFetchingTravelDatesRef = useRef(false);
+
+  // Ref to track the last month we fetched to detect actual month changes
+  const lastFetchedMonthRef = useRef<string | null>(null);
+
   // Import popular cities utility
   const { getPopularIndianCities } = require("../utils/placesData");
 
@@ -568,6 +578,16 @@ export default function DateSelectorWidget({
     const month = currentMonth.getMonth() + 1; // getMonth() returns 0-11, we need 1-12
     const monthKey = `${year}-${month.toString().padStart(2, "0")}`;
 
+    console.log(`📅 TravelDates: fetchTravelDates called for ${monthKey}`);
+
+    // Use ref-based lock to prevent concurrent calls
+    if (isFetchingTravelDatesRef.current) {
+      console.log("📅 TravelDates: Already fetching, skipping duplicate call");
+      return;
+    }
+
+    // Set the lock before any async operations
+    isFetchingTravelDatesRef.current = true;
     setIsLoadingTravelDates(true);
     setTravelDatesError(null);
 
@@ -622,6 +642,8 @@ export default function DateSelectorWidget({
         console.warn("⚠️ TravelDates: No message found in response");
         setTravelDatesData([]);
       }
+
+      console.log(`✅ TravelDates: Successfully fetched data for ${monthKey}`);
     } catch (error) {
       console.error("❌ TravelDates: Error fetching travel dates:", error);
       setTravelDatesError(
@@ -630,6 +652,8 @@ export default function DateSelectorWidget({
       setTravelDatesData([]);
     } finally {
       setIsLoadingTravelDates(false);
+      // Release the lock after everything is done
+      isFetchingTravelDatesRef.current = false;
     }
   }, [currentMonth, userId, sessionId]);
 
@@ -743,10 +767,41 @@ export default function DateSelectorWidget({
     fetchPriceData();
   }, [fetchPriceData]);
 
+  // Reset travel dates when user/session changes (e.g., user logs in)
+  // Use refs to track previous values and only reset on actual change
+  useEffect(() => {
+    const userIdChanged = prevUserIdRef.current !== undefined && prevUserIdRef.current !== userId;
+    const sessionIdChanged = prevSessionIdRef.current !== undefined && prevSessionIdRef.current !== sessionId;
+
+    if (userIdChanged || sessionIdChanged) {
+      console.log("🔄 User or session changed, resetting travel dates");
+      setTravelDatesData([]);
+      // Release the lock to allow fresh fetch
+      isFetchingTravelDatesRef.current = false;
+    }
+
+    prevUserIdRef.current = userId;
+    prevSessionIdRef.current = sessionId;
+  }, [userId, sessionId]);
+
   // Fetch travel dates when month changes or component loads
   useEffect(() => {
-    fetchTravelDates();
-  }, [fetchTravelDates]);
+    if (userId && sessionId) {
+      const year = currentMonth.getFullYear();
+      const month = currentMonth.getMonth() + 1;
+      const monthKey = `${year}-${month.toString().padStart(2, "0")}`;
+
+      // Only reset lock if the month actually changed
+      if (lastFetchedMonthRef.current !== monthKey) {
+        console.log(`📅 Month changed from ${lastFetchedMonthRef.current} to ${monthKey}, resetting lock`);
+        isFetchingTravelDatesRef.current = false;
+        lastFetchedMonthRef.current = monthKey;
+      }
+
+      fetchTravelDates();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentMonth, userId, sessionId]); // Depend on actual values, not the callback
 
   // Reset price data when filters change
   useEffect(() => {
