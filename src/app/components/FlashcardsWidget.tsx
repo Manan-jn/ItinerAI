@@ -62,6 +62,7 @@ const FlashcardsWidget = forwardRef<FlashcardsWidgetRef, FlashcardsWidgetProps>(
     const [suggestionPanelOpen, setSuggestionPanelOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedCard, setSelectedCard] = useState<number | null>(null);
+    const [isRefreshing, setIsRefreshing] = useState(false);
 
     // Expose methods to parent component
     useImperativeHandle(ref, () => ({
@@ -69,6 +70,34 @@ const FlashcardsWidget = forwardRef<FlashcardsWidgetRef, FlashcardsWidgetProps>(
         setSelectedCard(null);
       },
     }));
+
+    // Update trips when prop changes (from chat API response)
+    useEffect(() => {
+      if (trips && trips.length > 0 && JSON.stringify(trips) !== JSON.stringify(tripsState)) {
+        console.log("🔄 Updating flashcards with new trips data:", trips);
+
+        // Trigger refresh animation
+        setIsRefreshing(true);
+
+        // Add processed images to new trips
+        const processedTrips = trips.map((trip: any) => ({
+          ...trip,
+          image: getTripImage(trip),
+        }));
+
+        // Update trips state with smooth transition
+        setTimeout(() => {
+          setTripsState(processedTrips);
+          setIsRefreshing(false);
+
+          // Reset scroll to first card
+          setCenterExtendedIdx(numClones);
+          setSelectedCard(null);
+
+          console.log("✅ Flashcards refreshed successfully");
+        }, 300);
+      }
+    }, [trips]);
 
     // Handler to update trip data when activities are added/removed
     // Use useCallback to maintain stable reference and prevent infinite loops
@@ -758,7 +787,7 @@ const FlashcardsWidget = forwardRef<FlashcardsWidgetRef, FlashcardsWidgetProps>(
             </button>
           </div>
 
-          <div className="flashcards-container">
+          <div className={`flashcards-container ${isRefreshing ? "refreshing" : ""}`}>
             <div
               className="flashcards-scroll-wrapper"
               ref={scrollContainerRef}

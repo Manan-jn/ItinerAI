@@ -54,6 +54,12 @@ const FlashcardsWidgetWhiteTheme = forwardRef<
           display: flex;
           align-items: center;
           background: #ffffff;
+          transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+        }
+
+        .flashcards-white-theme .flashcards-container.refreshing {
+          opacity: 0.6;
+          transform: scale(0.98);
         }
 
         .flashcards-white-theme .flashcards-header .header-content h3 {

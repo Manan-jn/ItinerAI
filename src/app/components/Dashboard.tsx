@@ -33,7 +33,11 @@ interface Message {
 }
 
 interface APIResponse {
-  message?: string;
+  message?: {
+    message?: string;
+    response_type?: string;
+    trips?: any[];
+  };
   [key: string]: unknown;
 }
 
@@ -55,6 +59,7 @@ export default function Dashboard() {
   const [showConveyance, setShowConveyance] = useState(false);
   const [selectedTrip, setSelectedTrip] = useState<any>(null);
   const [isTripSelected, setIsTripSelected] = useState(false);
+  const [tripsData, setTripsData] = useState<any[]>([]);
 
   // Session management
   const [sessionId, setSessionId] = useState<string>("");
@@ -242,16 +247,33 @@ export default function Dashboard() {
 
       const data = await makeAPICall(currentInput);
 
+      // Extract message content
+      const messageContent = typeof data.message === 'object'
+        ? data.message.message || ""
+        : data.message || "";
+
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         content:
-          data.message ||
+          messageContent ||
           "Sorry, I couldn't process your request. Please try again.",
         role: "assistant",
         timestamp: new Date(),
       };
 
       setPendingResponse(assistantMessage);
+
+      // Handle trips data if present
+      if (typeof data.message === 'object' && data.message.response_type === 'trip' && data.message.trips) {
+        console.log("🎉 Trips data received:", data.message.trips);
+        setTripsData(data.message.trips);
+
+        // Show flashcards if not already shown
+        if (!showFlashcards) {
+          setShowFlashcards(true);
+        }
+      }
+
       setIsLoading(false);
     } catch (error) {
       console.error("Error calling API:", error);
@@ -775,6 +797,7 @@ export default function Dashboard() {
                         setSelectedTrip(trip);
                         setIsTripSelected(trip !== null);
                       }}
+                      trips={tripsData.length > 0 ? tripsData : undefined}
                     />
                   </div>
                   {/* Chat Input Below Flashcards */}

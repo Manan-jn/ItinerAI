@@ -1120,6 +1120,23 @@ export function FlashcardsStyles({}: FlashcardsStylesProps) {
         contain: layout style;
         display: flex;
         align-items: center;
+        transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+      }
+
+      .flashcards-container.refreshing {
+        opacity: 0.6;
+        transform: scale(0.98);
+      }
+
+      @keyframes flashcards-refresh {
+        0% {
+          opacity: 0.6;
+          transform: scale(0.98);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
       }
 
       .flashcards-scroll-wrapper {
