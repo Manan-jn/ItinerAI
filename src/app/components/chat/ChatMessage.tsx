@@ -2,6 +2,7 @@ import React from "react";
 import { MdChat } from "react-icons/md";
 import { User } from "firebase/auth";
 import { SuggestedTripsSnippet } from "./SuggestedTripsSnippet";
+import { DateSelectorSnippet } from "./DateSelectorSnippet";
 
 interface ChatMessageProps {
   message: {
@@ -25,6 +26,11 @@ interface ChatMessageProps {
         best_time_to_visit?: string;
       }>;
       isTripSelection?: boolean; // Flag to indicate this is the primary trip selection message
+      // Date selector snippet metadata
+      isDateSelection?: boolean; // Flag to indicate this is the date selection assistant message
+      selectedDate?: string; // YYYY-MM-DD format
+      tripTitle?: string;
+      tripDuration?: number;
     };
   };
   currentUser: User | null;
@@ -87,6 +93,12 @@ export function ChatMessage({ message, currentUser }: ChatMessageProps) {
               </div>
             </div>
           </div>
+        ) : message.metadata?.isDateSelection && message.metadata?.selectedDate ? (
+          <DateSelectorSnippet
+            selectedDate={message.metadata.selectedDate}
+            tripTitle={message.metadata.tripTitle}
+            tripDuration={message.metadata.tripDuration}
+          />
         ) : message.metadata?.suggestedTrips ? (
           <SuggestedTripsSnippet trips={message.metadata.suggestedTrips} />
         ) : (

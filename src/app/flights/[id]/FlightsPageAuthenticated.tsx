@@ -2534,9 +2534,23 @@ export default function FlightsPageAuthenticated() {
         // Update the local state with corrected trip (now includes trip_date)
         setSelectedTrip(correctedTrip);
 
-        // Add a message to chat indicating date was selected
-        const userMessage = {
+        // Add an assistant message with calendar snippet showing the selected date
+        const assistantDateMessage = {
           id: Date.now().toString(),
+          content: "Here's your selected travel date:",
+          role: "assistant" as const,
+          timestamp: new Date(),
+          metadata: {
+            isDateSelection: true, // Flag to render DateSelectorSnippet
+            selectedDate: dateString, // YYYY-MM-DD format
+            tripTitle: correctedTrip.trip_title,
+            tripDuration: correctedTrip.no_of_days || 6,
+          },
+        };
+
+        // Add a user message to chat indicating date was selected
+        const userMessage = {
+          id: (Date.now() + 1).toString(),
           content: `Selected date: ${selectedDate.toLocaleDateString()} for trip: ${
             correctedTrip.trip_title
           }`,
@@ -2548,7 +2562,7 @@ export default function FlightsPageAuthenticated() {
           },
         };
 
-        setMessages((prev) => [...prev, userMessage]);
+        setMessages((prev) => [...prev, assistantDateMessage, userMessage]);
 
         // Fetch source_point from memory API
         console.log("🔍 Fetching source_point from memory API...");
