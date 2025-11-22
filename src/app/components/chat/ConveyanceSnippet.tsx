@@ -38,11 +38,9 @@ export function ConveyanceSnippet({
         {dayNumber
           ? `AI recommended conveyance options for Day ${dayNumber}:`
           : "AI recommended conveyance options:"}
-        {routeInfo && (
-          <span className="text-gray-500 ml-1">({routeInfo})</span>
-        )}
+        {routeInfo && <span className="text-gray-500 ml-1">({routeInfo})</span>}
       </p>
-      <div className="flex flex-col gap-2 max-h-[400px] overflow-y-auto custom-scrollbar pr-1">
+      <div className="flex flex-col gap-2 max-h-[500px] overflow-y-auto custom-scrollbar pr-1">
         {displayOptions.map((option, index) => (
           <div
             key={option.id || index}

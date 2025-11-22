@@ -5,6 +5,7 @@ import { SuggestedTripsSnippet } from "./SuggestedTripsSnippet";
 import { DateSelectorSnippet } from "./DateSelectorSnippet";
 import { ConveyanceSnippet } from "./ConveyanceSnippet";
 import { StaysSnippet } from "./StaysSnippet";
+import { ItinerarySnippet } from "./ItinerarySnippet";
 
 interface ChatMessageProps {
   message: {
@@ -64,6 +65,50 @@ interface ChatMessageProps {
       }>;
       staysDayNumber?: number;
       staysCityName?: string;
+      // Itinerary snippet metadata
+      isItinerarySelection?: boolean;
+      itineraries?: Array<{
+        day_number: number;
+        date?: string;
+        title?: string;
+        summary?: string;
+        themes?: string[];
+        schedule: Array<{
+          activity_type: string;
+          sub_type?: string;
+          start_time: string;
+          end_time: string;
+          description: string;
+          place_name?: string;
+          address?: string;
+          fare?: number;
+          duration_minutes?: number;
+          from_location?: {
+            place_name: string;
+            address?: string;
+          };
+          to_location?: {
+            place_name: string;
+            address?: string;
+          };
+        }>;
+        estimated_total_cost?: number;
+        conveyance_details?: {
+          is_required: boolean;
+          from_city?: string;
+          to_city?: string;
+          type?: string;
+          operator?: string;
+          number?: string;
+        };
+        stay_details?: {
+          is_required: boolean;
+          city?: string;
+          property_name?: string;
+        };
+      }>;
+      itineraryTripTitle?: string;
+      itineraryTotalDays?: number;
     };
   };
   currentUser: User | null;
@@ -143,6 +188,12 @@ export function ChatMessage({ message, currentUser }: ChatMessageProps) {
             stayOptions={message.metadata.stayOptions}
             dayNumber={message.metadata.staysDayNumber}
             cityName={message.metadata.staysCityName}
+          />
+        ) : message.metadata?.isItinerarySelection && message.metadata?.itineraries ? (
+          <ItinerarySnippet
+            itineraries={message.metadata.itineraries}
+            tripTitle={message.metadata.itineraryTripTitle}
+            totalDays={message.metadata.itineraryTotalDays}
           />
         ) : message.metadata?.suggestedTrips ? (
           <SuggestedTripsSnippet trips={message.metadata.suggestedTrips} />

@@ -1849,12 +1849,55 @@ export default function FlightsPageAuthenticated() {
   const handleContinueToBooking = async () => {
     try {
       console.log("📋 Continue to booking clicked");
+      console.log("📊 Itineraries generated:", itinerariesGenerated.length, "days");
 
       if (!userId || !sessionId || !selectedTrip) {
         console.error("❌ Missing required data for finalization");
         setOverlayMessage("Unable to finalize itinerary. Please try again.");
         setShowOverlay(true);
         return;
+      }
+
+      // Add assistant message with itinerary snippet to chat BEFORE proceeding
+      if (itinerariesGenerated.length > 0) {
+        const assistantItineraryMessage = {
+          id: Date.now().toString(),
+          content: "Here's your complete trip itinerary:",
+          role: "assistant" as const,
+          timestamp: new Date(),
+          metadata: {
+            isItinerarySelection: true,
+            itineraries: itinerariesGenerated.map((day: any) => ({
+              day_number: day.day_number,
+              date: day.date,
+              title: day.title,
+              summary: day.summary,
+              themes: day.themes,
+              schedule: day.schedule || [],
+              estimated_total_cost: day.estimated_total_cost,
+              conveyance_details: day.conveyance_details,
+              stay_details: day.stay_details,
+            })),
+            itineraryTripTitle: selectedTrip?.trip_title,
+            itineraryTotalDays: selectedTrip?.no_of_days || itinerariesGenerated.length,
+          },
+        };
+
+        // Add user confirmation message
+        const userConfirmMessage = {
+          id: (Date.now() + 1).toString(),
+          content: `Finalized ${itinerariesGenerated.length}-day itinerary for ${selectedTrip?.trip_title || "trip"}`,
+          role: "user" as const,
+          timestamp: new Date(),
+          metadata: {
+            action: "itinerary_finalized",
+            totalDays: itinerariesGenerated.length,
+          },
+        };
+
+        // Add both messages: assistant first, then user
+        setMessages((prev) => [...prev, assistantItineraryMessage, userConfirmMessage]);
+        console.log("✅ Added itinerary snippet to chat messages");
       }
 
       // Show loader
