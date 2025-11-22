@@ -2986,11 +2986,12 @@ export default function FlightsPageAuthenticated() {
   };
 
   // Handle continue action from FlightsWidget with selected conveyance data
-  const handleFlightsContinue = async (selectedConveyanceData?: any) => {
+  const handleFlightsContinue = async (selectedConveyanceData?: any, aiOptions?: any[]) => {
     console.log(
       "🚀 Continue clicked from FlightsWidget with data:",
       selectedConveyanceData
     );
+    console.log("📋 AI options received:", aiOptions?.length || 0, "options");
 
     if (!selectedConveyanceData) {
       console.error("❌ No conveyance data selected");
@@ -3014,8 +3015,34 @@ export default function FlightsPageAuthenticated() {
       // Skip adding chat message for add day flow (in partial auto-fill mode)
       // Only add chat messages for regular conveyance selection flow
       if (!partialAutoFillMode) {
-        const conveyanceMessage = {
+        // Create assistant message with AI conveyance options snippet (BEFORE user message)
+        const assistantConveyanceMessage = {
           id: Date.now().toString(),
+          content: "Here are the AI recommended conveyance options:",
+          role: "assistant" as const,
+          timestamp: new Date(),
+          metadata: {
+            isConveyanceSelection: true,
+            conveyanceOptions: aiOptions?.slice(0, 4).map((opt: any) => ({
+              id: opt.id,
+              type: opt.operator?.toLowerCase().includes("train") ? "train" as const : "flight" as const,
+              number: opt.number,
+              operator: opt.operator,
+              departureTime: opt.departureTime,
+              arrivalTime: opt.arrivalTime,
+              duration: opt.duration,
+              price: opt.price,
+              from_city: opt.from_city || conveyanceFromCity,
+              to_city: opt.to_city || conveyanceToCity,
+            })) || [],
+            conveyanceDayNumber: currentDayNumber,
+            conveyanceRouteInfo: `${conveyanceFromCity} to ${conveyanceToCity}`,
+          },
+        };
+
+        // Create user message for selected conveyance
+        const conveyanceMessage = {
+          id: (Date.now() + 1).toString(),
           content: `Selected ${selectedConveyanceData.operator} ${selectedConveyanceData.number} for Day ${currentDayNumber} (${conveyanceFromCity} to ${conveyanceToCity})`,
           role: "user" as const,
           timestamp: new Date(),
@@ -3026,7 +3053,8 @@ export default function FlightsPageAuthenticated() {
           },
         };
 
-        setMessages((prev) => [...prev, conveyanceMessage]);
+        // Add both messages: assistant first, then user
+        setMessages((prev) => [...prev, assistantConveyanceMessage, conveyanceMessage]);
       }
 
       // Close flights widget
@@ -3414,11 +3442,12 @@ export default function FlightsPageAuthenticated() {
   };
 
   // Handle continue action from StaysWidget with selected stay data
-  const handleStaysContinue = async (selectedStayData?: any) => {
+  const handleStaysContinue = async (selectedStayData?: any, aiOptions?: any[]) => {
     console.log(
       "🚀 Continue clicked from StaysWidget with data:",
       selectedStayData
     );
+    console.log("🏨 AI stay options received:", aiOptions?.length || 0, "options");
 
     if (!selectedStayData) {
       console.error("❌ No stay data selected");
@@ -3582,8 +3611,35 @@ export default function FlightsPageAuthenticated() {
       // Skip adding chat message for add day flow
       // Check if this is from add day flow by looking at the day's is_new_day flag
       if (!isNewDay) {
-        const stayMessage = {
+        // Create assistant message with AI stay options snippet (BEFORE user message)
+        const assistantStaysMessage = {
           id: Date.now().toString(),
+          content: "Here are the AI recommended stays:",
+          role: "assistant" as const,
+          timestamp: new Date(),
+          metadata: {
+            isStaysSelection: true,
+            stayOptions: aiOptions?.slice(0, 4).map((stay: any) => ({
+              stay_id: stay.stay_id,
+              property_name: stay.property_name,
+              property_address: stay.property_address,
+              overall_rating: stay.overall_rating || 0,
+              starting_price: typeof stay.starting_price === 'string'
+                ? parseFloat(stay.starting_price.replace(/[^0-9.]/g, '')) || 0
+                : stay.starting_price || 0,
+              city: stay.city || stayCity,
+              image: stay.image,
+              amenities: stay.amenities,
+              property_type: stay.property_type,
+            })) || [],
+            staysDayNumber: currentDayNumber,
+            staysCityName: stayCity,
+          },
+        };
+
+        // Create user message for selected stay
+        const stayMessage = {
+          id: (Date.now() + 1).toString(),
           content: `Selected ${selectedStayData.property_name} for Day ${currentDayNumber} in ${selectedStayData.city}`,
           role: "user" as const,
           timestamp: new Date(),
@@ -3594,7 +3650,8 @@ export default function FlightsPageAuthenticated() {
           },
         };
 
-        setMessages((prev) => [...prev, stayMessage]);
+        // Add both messages: assistant first, then user
+        setMessages((prev) => [...prev, assistantStaysMessage, stayMessage]);
       } else {
         console.log("📝 Skipping chat message for add day flow");
       }

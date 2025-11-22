@@ -24,7 +24,8 @@ interface FlightsWidgetProps {
   initialDepartureDate?: string; // NEW: Initial departure date in YYYY-MM-DD format
   autoFillMode?: boolean; // NEW: If true, ALL fields are auto-filled and disabled
   partialAutoFillMode?: boolean; // NEW: If true, only FROM and DATE are fixed, TO is selectable
-  onContinue?: (selectedConveyanceData?: TransportOption) => void;
+  onContinue?: (selectedConveyanceData?: TransportOption, aiOptions?: TransportOption[]) => void;
+  onAiOptionsLoaded?: (aiOptions: TransportOption[]) => void; // Callback when AI options are loaded
   userId?: string;
   sessionId?: string;
   currentDayNumber?: number;
@@ -1573,6 +1574,7 @@ export default function FlightsWidget({
   autoFillMode = false,
   partialAutoFillMode = false,
   onContinue,
+  onAiOptionsLoaded,
   userId,
   sessionId,
   currentDayNumber,
@@ -1876,6 +1878,12 @@ export default function FlightsWidget({
             source: cachedData.isCached ? "cached" : "fresh",
           });
 
+          // Notify parent about AI options loaded
+          if (onAiOptionsLoaded) {
+            const allAiOptions = [...aiFlights, ...aiTrains];
+            onAiOptionsLoaded(allAiOptions);
+          }
+
           return; // Exit early, no need to make API calls
         } else {
           console.log(
@@ -2013,6 +2021,12 @@ export default function FlightsWidget({
       setShowResults(true);
       setIsLoadingComplete(true);
       setIsUtilityComplete(true);
+
+      // Notify parent about AI options loaded
+      if (onAiOptionsLoaded) {
+        const allAiOptions = [...aiResults.flights, ...aiResults.trains];
+        onAiOptionsLoaded(allAiOptions);
+      }
     } catch (error) {
       console.error("❌ Error fetching transport options:", error);
       alert("Failed to fetch transport options. Please try again.");
@@ -2388,7 +2402,9 @@ export default function FlightsWidget({
                 "🚀 Continue clicked with selected data:",
                 selectedConveyanceData
               );
-              onContinue(selectedConveyanceData || undefined);
+              // Pass both the selected conveyance and all AI options
+              const allAiOptions = [...searchResults.flights, ...searchResults.trains];
+              onContinue(selectedConveyanceData || undefined, allAiOptions);
             }}
             disabled={!bookedOption}
             className={`px-6 py-3 rounded-full font-medium text-sm transition-all duration-300 shadow-lg backdrop-blur-sm ${

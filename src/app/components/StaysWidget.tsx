@@ -22,7 +22,8 @@ interface StaysWidgetProps {
   initialCheckInDate?: string; // NEW - YYYY-MM-DD format
   initialCheckOutDate?: string; // NEW - YYYY-MM-DD format
   autoFillMode?: boolean; // NEW - Make fields fixed and auto-search
-  onContinue?: (selectedStayData?: StayOption) => void;
+  onContinue?: (selectedStayData?: StayOption, aiOptions?: StayOption[]) => void;
+  onAiOptionsLoaded?: (aiOptions: StayOption[]) => void; // Callback when AI options are loaded
   userId?: string;
   sessionId?: string;
   currentDayNumber?: number;
@@ -622,6 +623,7 @@ export default function StaysWidget({
   initialCheckOutDate,
   autoFillMode = false,
   onContinue,
+  onAiOptionsLoaded,
   userId,
   sessionId,
   currentDayNumber,
@@ -748,6 +750,11 @@ export default function StaysWidget({
             utilityCount: utilityStayOptions.length,
             source: "pre-fetched",
           });
+
+          // Notify parent about AI options loaded
+          if (onAiOptionsLoaded) {
+            onAiOptionsLoaded(aiStayOptions);
+          }
 
           return; // Exit early, no need to make API calls
         } else {
@@ -878,6 +885,11 @@ export default function StaysWidget({
       setUtilityStays(utilityStayOptions);
       setShowResults(true);
       setIsLoadingComplete(true);
+
+      // Notify parent about AI options loaded
+      if (onAiOptionsLoaded) {
+        onAiOptionsLoaded(aiStayOptions);
+      }
     } catch (error) {
       console.error("Error fetching stay options:", error);
       alert("Failed to fetch stay options. Please try again.");
@@ -1177,7 +1189,8 @@ export default function StaysWidget({
           <button
             onClick={() => {
               console.log("🚀 Continue clicked with selected stay data:", selectedStayData);
-              onContinue(selectedStayData || undefined);
+              // Pass both the selected stay and all AI options
+              onContinue(selectedStayData || undefined, searchResults);
             }}
             disabled={!bookedOption}
             className={`px-6 py-3 rounded-full font-medium text-sm transition-all duration-300 shadow-lg backdrop-blur-sm ${

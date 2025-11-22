@@ -3,6 +3,8 @@ import { MdChat } from "react-icons/md";
 import { User } from "firebase/auth";
 import { SuggestedTripsSnippet } from "./SuggestedTripsSnippet";
 import { DateSelectorSnippet } from "./DateSelectorSnippet";
+import { ConveyanceSnippet } from "./ConveyanceSnippet";
+import { StaysSnippet } from "./StaysSnippet";
 
 interface ChatMessageProps {
   message: {
@@ -31,6 +33,37 @@ interface ChatMessageProps {
       selectedDate?: string; // YYYY-MM-DD format
       tripTitle?: string;
       tripDuration?: number;
+      // Conveyance snippet metadata
+      isConveyanceSelection?: boolean;
+      conveyanceOptions?: Array<{
+        id: string;
+        type: "flight" | "train";
+        number: string;
+        operator: string;
+        departureTime: string;
+        arrivalTime: string;
+        duration: string;
+        price: number;
+        from_city: string;
+        to_city: string;
+      }>;
+      conveyanceDayNumber?: number;
+      conveyanceRouteInfo?: string;
+      // Stays snippet metadata
+      isStaysSelection?: boolean;
+      stayOptions?: Array<{
+        stay_id: string;
+        property_name: string;
+        property_address: string;
+        overall_rating: number;
+        starting_price: number;
+        city: string;
+        image?: string;
+        amenities?: string[];
+        property_type?: string;
+      }>;
+      staysDayNumber?: number;
+      staysCityName?: string;
     };
   };
   currentUser: User | null;
@@ -98,6 +131,18 @@ export function ChatMessage({ message, currentUser }: ChatMessageProps) {
             selectedDate={message.metadata.selectedDate}
             tripTitle={message.metadata.tripTitle}
             tripDuration={message.metadata.tripDuration}
+          />
+        ) : message.metadata?.isConveyanceSelection && message.metadata?.conveyanceOptions ? (
+          <ConveyanceSnippet
+            conveyanceOptions={message.metadata.conveyanceOptions}
+            dayNumber={message.metadata.conveyanceDayNumber}
+            routeInfo={message.metadata.conveyanceRouteInfo}
+          />
+        ) : message.metadata?.isStaysSelection && message.metadata?.stayOptions ? (
+          <StaysSnippet
+            stayOptions={message.metadata.stayOptions}
+            dayNumber={message.metadata.staysDayNumber}
+            cityName={message.metadata.staysCityName}
           />
         ) : message.metadata?.suggestedTrips ? (
           <SuggestedTripsSnippet trips={message.metadata.suggestedTrips} />
