@@ -10,6 +10,7 @@ import {
   MdCardGiftcard,
 } from "react-icons/md";
 import { ProfileDropdown } from "./ProfileDropdown";
+import { NotificationsDropdown } from "../NotificationsDropdown";
 import { TripTypeButton, SpecialFareCheckbox, QuickLink } from "./UIComponents";
 
 interface FlightsContentProps {
@@ -71,8 +72,9 @@ export function FlightsContent({
               )}
             </div>
 
-            {/* Right Side - User Profile */}
+            {/* Right Side - Notifications + User Profile */}
             <div className="flex items-center space-x-3 ml-auto">
+              <NotificationsDropdown theme="light" />
               <ProfileDropdown
                 currentUser={currentUser}
                 showProfileDropdown={showProfileDropdown}

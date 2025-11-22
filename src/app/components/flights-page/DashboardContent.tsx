@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { User } from "firebase/auth";
 import { ProfileDropdown } from "./ProfileDropdown";
+import { NotificationsDropdown } from "../NotificationsDropdown";
 import {
   upcomingTrips,
   malaysiaPlaces,
@@ -76,8 +77,9 @@ export function DashboardContent({
               </div>
             </div>
 
-            {/* Right Side - User Profile */}
+            {/* Right Side - Notifications + User Profile */}
             <div className="flex items-center gap-3">
+              <NotificationsDropdown theme="light" />
               <ProfileDropdown
                 currentUser={currentUser}
                 showProfileDropdown={showProfileDropdown}

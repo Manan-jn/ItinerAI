@@ -1175,6 +1175,7 @@ export default function InTripWidget({
         isVisible={showOverlay}
         onClose={() => setShowOverlay(false)}
         autoHideDuration={4000}
+        source="In-Trip Assistant"
       />
 
       {/* Chat Loading Indicator - Top Right */}

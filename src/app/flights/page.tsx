@@ -19,6 +19,7 @@ import {
   MdChat,
 } from "react-icons/md";
 import { useAuth } from "../contexts/AuthContext";
+import { NotificationsDropdown } from "../components/NotificationsDropdown";
 import Dashboard from "../components/Dashboard";
 import SessionDebugFlights from "../components/SessionDebugFlights";
 import FlashcardsWidgetWhiteTheme from "../components/FlashcardsWidgetWhiteTheme";
@@ -762,8 +763,9 @@ export default function FlightsPage() {
                       </p>
                     </div>
 
-                    {/* Right Side - Profile or Login */}
+                    {/* Right Side - Notifications + Profile or Login */}
                     <div className="flex items-center space-x-3">
+                      {currentUser && <NotificationsDropdown theme="light" />}
                       {currentUser ? (
                         <div className="relative profile-dropdown">
                           <button
@@ -811,7 +813,7 @@ export default function FlightsPage() {
 
                           {/* Dropdown Menu */}
                           {showProfileDropdown && (
-                            <div className="absolute right-0 mt-2 w-64 bg-white border border-gray-200 rounded-xl shadow-lg z-50">
+                            <div className="absolute right-0 mt-2 w-64 bg-white border border-gray-200 rounded-xl shadow-lg z-[10010]">
                               <div className="p-4 border-b border-gray-100">
                                 <div className="flex items-center space-x-3">
                                   <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center overflow-hidden">

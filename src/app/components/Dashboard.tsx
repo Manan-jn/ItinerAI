@@ -13,6 +13,7 @@ import ConveyanceWidget from "../../../temp_non_flights_code/unused_components/C
 import { getSessionId, getUserId } from "../utils/sessionManager";
 import { updateMemoryOnSessionChange } from "../utils/memoryApi";
 import { ChatMessage } from "./chat/ChatMessage";
+import { NotificationsDropdown } from "./NotificationsDropdown";
 import {
   TripDetailsContent,
   ItineraryContent,
@@ -503,7 +504,7 @@ export default function Dashboard() {
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
 
       {/* Header */}
-      <header className="relative z-10 backdrop-blur-md bg-black/20 border-b border-white/10 flex-shrink-0">
+      <header className="relative z-[10020] backdrop-blur-md bg-black/20 border-b border-white/10 flex-shrink-0">
         <div className="flex items-center justify-between py-4 px-6">
           <div className="flex items-center space-x-3">
             <div className="w-8 h-8 bg-gradient-to-r from-blue-400 to-purple-500 rounded-lg flex items-center justify-center backdrop-blur-sm">
@@ -623,6 +624,9 @@ export default function Dashboard() {
               </span>
             </button>
 
+            {/* Notifications Bell Icon */}
+            <NotificationsDropdown theme="dark" />
+
             {/* Profile Dropdown */}
             <div className="relative profile-dropdown">
               <button
@@ -664,7 +668,7 @@ export default function Dashboard() {
 
               {/* Dropdown Menu */}
               {showProfileDropdown && (
-                <div className="absolute right-0 mt-2 w-64 backdrop-blur-xl bg-black/80 border border-white/20 rounded-xl shadow-2xl z-50">
+                <div className="absolute right-0 mt-2 w-64 backdrop-blur-xl bg-black/80 border border-white/20 rounded-xl shadow-2xl z-[10010]">
                   <div className="p-4 border-b border-white/10">
                     <div className="flex items-center space-x-3">
                       <div className="w-10 h-10 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full flex items-center justify-center overflow-hidden">

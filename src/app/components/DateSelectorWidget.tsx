@@ -1030,6 +1030,7 @@ export default function DateSelectorWidget({
         isVisible={showTravelDatesMessage}
         onClose={() => setShowTravelDatesMessage(false)}
         autoHideDuration={7000} // Auto-hide after 7 seconds
+        source="Date Selector"
       />
 
       {/* Custom animations */}

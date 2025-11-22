@@ -586,6 +586,21 @@ export default function FlightsPageAuthenticated() {
         itineraryPayload = itineraryResponse.message;
       }
 
+      // Extract and show message in overlay if present
+      const generateResponseMessage = itineraryPayload.message || itineraryResponse.message;
+      if (
+        generateResponseMessage &&
+        typeof generateResponseMessage === "string" &&
+        generateResponseMessage.trim()
+      ) {
+        console.log(
+          "📨 Setting overlay message from itinerary generation API:",
+          generateResponseMessage
+        );
+        setOverlayMessage(generateResponseMessage);
+        setShowOverlay(true);
+      }
+
       // Store itinerary data and save ALL days to Firestore
       if (
         itineraryPayload.response_type === "itinerary" &&
@@ -956,6 +971,21 @@ export default function FlightsPageAuthenticated() {
         itineraryPayload = itineraryResponse.message;
       }
 
+      // Extract and show message in overlay if present
+      const insertResponseMessage = itineraryPayload.message || itineraryResponse.message;
+      if (
+        insertResponseMessage &&
+        typeof insertResponseMessage === "string" &&
+        insertResponseMessage.trim()
+      ) {
+        console.log(
+          "📨 Setting overlay message from insert day API:",
+          insertResponseMessage
+        );
+        setOverlayMessage(insertResponseMessage);
+        setShowOverlay(true);
+      }
+
       // Store itinerary data
       if (
         itineraryPayload.response_type === "itinerary" &&
@@ -1304,6 +1334,21 @@ export default function FlightsPageAuthenticated() {
         typeof itineraryResponse.message === "object"
       ) {
         itineraryPayload = itineraryResponse.message;
+      }
+
+      // Extract and show message in overlay if present
+      const deleteResponseMessage = itineraryPayload.message || itineraryResponse.message;
+      if (
+        deleteResponseMessage &&
+        typeof deleteResponseMessage === "string" &&
+        deleteResponseMessage.trim()
+      ) {
+        console.log(
+          "📨 Setting overlay message from delete day API:",
+          deleteResponseMessage
+        );
+        setOverlayMessage(deleteResponseMessage);
+        setShowOverlay(true);
       }
 
       // Store itinerary data
@@ -4819,6 +4864,7 @@ export default function FlightsPageAuthenticated() {
             setOverlayMessage(null);
           }}
           autoHideDuration={8000}
+          source={showItinerary ? "Itinerary" : "Trip Planner"}
         />
       )}
 

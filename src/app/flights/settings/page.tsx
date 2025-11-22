@@ -6,6 +6,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../../../firebase";
 import LoadingSpinner from "../../components/LoadingSpinner";
+import { NotificationsDropdown } from "../../components/NotificationsDropdown";
 
 interface UserData {
   dateOfBirth: string;
@@ -381,6 +382,8 @@ export default function FlightsSettingsPage() {
           </div>
 
           <div className="flex items-center space-x-3">
+            {/* Notifications Bell Icon */}
+            <NotificationsDropdown theme="light" />
             {/* Profile Dropdown */}
             <div className="relative profile-dropdown">
               <button
@@ -425,7 +428,7 @@ export default function FlightsSettingsPage() {
 
               {/* Dropdown Menu */}
               {showProfileDropdown && (
-                <div className="absolute right-0 mt-2 w-64 bg-white border border-gray-200 rounded-xl shadow-lg z-50">
+                <div className="absolute right-0 mt-2 w-64 bg-white border border-gray-200 rounded-xl shadow-lg z-[10010]">
                   <div className="p-3 border-b border-gray-100">
                     <div className="flex items-center space-x-2">
                       <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center overflow-hidden">

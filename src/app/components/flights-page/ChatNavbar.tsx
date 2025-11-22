@@ -3,6 +3,7 @@ import { User } from "firebase/auth";
 import { MdChat, MdExplore } from "react-icons/md";
 import { ProfileDropdown } from "./ProfileDropdown";
 import { GoogleTranslate } from "./GoogleTranslate";
+import { NotificationsDropdown } from "../NotificationsDropdown";
 
 interface ChatNavbarProps {
   currentUser: User;
@@ -66,7 +67,7 @@ export function ChatNavbar({
   onToggleSidebar,
 }: ChatNavbarProps) {
   return (
-    <nav className="bg-white/80 backdrop-blur-md border-b border-gray-100 flex-shrink-0 shadow-sm">
+    <nav className="bg-white/80 backdrop-blur-md border-b border-gray-100 flex-shrink-0 shadow-sm relative z-[10020]">
       <div className="px-6 py-3.5">
         <div className="flex items-center justify-between">
           {/* Left Side - Hamburger Menu + Chat Header Info */}
@@ -406,6 +407,9 @@ export function ChatNavbar({
               <span className="w-1.5 h-1.5 bg-green-500 rounded-full mr-1.5 animate-pulse"></span>
               Online
             </span>
+
+            {/* Notifications Bell Icon */}
+            <NotificationsDropdown theme="light" />
 
             <ProfileDropdown
               currentUser={currentUser}
