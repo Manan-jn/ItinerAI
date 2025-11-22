@@ -2318,7 +2318,8 @@ export default function FlightsPageAuthenticated() {
           to_city: "", // Will be filled by user if conveyance is required
         },
       };
-
+      console.log("newDayManan", newDay);
+      console.log("updatedTripManan", updatedTrip);
       // Insert the new day at the correct position
       if (!updatedTrip.day_wise_plan) {
         updatedTrip.day_wise_plan = [];
@@ -2326,12 +2327,12 @@ export default function FlightsPageAuthenticated() {
 
       // Insert at position (newDayNumber - 1) to maintain array index = dayNumber - 1
       updatedTrip.day_wise_plan.splice(newDayNumber - 1, 0, newDay);
-
+      console.log("updatedTripManan after splice", updatedTrip);
       // Re-number all subsequent days
       for (let i = newDayNumber; i < updatedTrip.day_wise_plan.length; i++) {
         updatedTrip.day_wise_plan[i].day_number = i + 1;
       }
-
+      console.log("updatedTripManan after renumbering", updatedTrip);
       console.log(
         `✅ Inserted new day ${newDayNumber} and renumbered subsequent days`
       );
@@ -2343,6 +2344,7 @@ export default function FlightsPageAuthenticated() {
       console.log(
         "📦 Updating itinerariesGenerated to shift subsequent days..."
       );
+      console.log("itinerariesGeneratedManan before mapping", itinerariesGenerated);
       const updatedItinerariesGenerated = itinerariesGenerated.map(
         (itinerary) => {
           // If this itinerary is for a day >= newDayNumber, increment its day_number
@@ -2360,27 +2362,27 @@ export default function FlightsPageAuthenticated() {
           return itinerary;
         }
       );
-
+      console.log("updatedItinerariesGeneratedManan after mapping", updatedItinerariesGenerated);
       // Sort by day_number to maintain order after shifting
       updatedItinerariesGenerated.sort((a, b) => a.day_number - b.day_number);
-
+      console.log("updatedItinerariesGeneratedManan after sorting", updatedItinerariesGenerated);
       // Insert empty placeholder for new day (will be filled after conveyance/stay selection)
       const newDayItinerary = {
         day_number: newDayNumber,
         // Will be populated with conveyance_details and stay_details later
       };
       updatedItinerariesGenerated.splice(newDayNumber - 1, 0, newDayItinerary);
-
+      console.log("updatedItinerariesGeneratedManan after splicing", updatedItinerariesGenerated);
       setItinerariesGenerated(updatedItinerariesGenerated);
       console.log(
         `✅ itinerariesGenerated updated, now has ${updatedItinerariesGenerated.length} day(s)`
       );
-
+      console.log("updatedItinerariesGeneratedManan after setting", updatedItinerariesGenerated);
       // Store updated trip in Firestore
       await storeSelectedTrip(userId, sessionId, updatedTrip);
       setSelectedTrip(updatedTrip);
       console.log(`✅ Added day ${newDayNumber} to trip in Firestore`);
-
+      console.log("updatedTripManan after storing", updatedTrip);
       if (needsConveyance) {
         // CASE 1: User needs conveyance - redirect to FlightsWidget
         console.log(`✈️ Redirecting to FlightsWidget for day ${newDayNumber}`);
@@ -2463,9 +2465,6 @@ export default function FlightsPageAuthenticated() {
         const dayToStore = {
           day_number: newDayNumber,
           conveyance_details: {
-            is_required: false,
-          },
-          stay_details: {
             is_required: false,
           },
         };

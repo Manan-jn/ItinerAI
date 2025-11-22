@@ -74,17 +74,30 @@ export default function DaySlider({
   }, []);
 
   // Generate all day cards including unloaded ones AND pending days
-  // Calculate total cards: loaded days + pending days
+  //
+  // IMPORTANT: We generate cards for day numbers 1 through effectiveTotalDays.
+  // The effectiveTotalDays is calculated from:
+  // 1. The totalDays prop (which includes insertedDaysCount from parent)
+  // 2. The maximum day number from existing days (handles shifted days)
+  // 3. The maximum pending day number
+  //
+  // This ensures that when a day is inserted:
+  // - The new pending day appears (e.g., Day 2)
+  // - The shifted days also appear (e.g., old Day 2 is now Day 3)
+  // - Even if the days array hasn't updated yet, we show all cards up to effectiveTotalDays
+
+  const maxExistingDayNumber = days.length > 0
+    ? Math.max(...days.map((day) => day.day))
+    : 0;
+  const maxPendingDayNumber = pendingConveyanceDays.size > 0
+    ? Math.max(...Array.from(pendingConveyanceDays))
+    : 0;
+  const effectiveTotalDays = Math.max(totalDays, maxExistingDayNumber, maxPendingDayNumber);
+
+  // Create a set of all day numbers from 1 to effectiveTotalDays
+  // This ensures continuous day cards even during async state transitions
   const allDayNumbers = new Set<number>();
-
-  // Add all existing day numbers
-  days.forEach((day) => allDayNumbers.add(day.day));
-
-  // Add all pending day numbers
-  pendingConveyanceDays.forEach((dayNum) => allDayNumbers.add(dayNum));
-
-  // Add placeholder days up to totalDays
-  for (let i = 1; i <= totalDays; i++) {
+  for (let i = 1; i <= effectiveTotalDays; i++) {
     allDayNumbers.add(i);
   }
 

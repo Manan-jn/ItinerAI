@@ -691,6 +691,11 @@ export default function ItineraryWidget({
   const pendingConveyanceDays =
     pendingConveyanceDaysFromParent || new Set<number>();
 
+  // Track the expected total days after insertions
+  // This is used to ensure DaySlider shows all days immediately after insertion,
+  // before the async state update completes
+  const [insertedDaysCount, setInsertedDaysCount] = useState(0);
+
   // Load itinerary data from JSON or API response
   const [itineraryData, setItineraryData] = useState<ItineraryData | null>(
     () => {
@@ -722,6 +727,9 @@ export default function ItineraryWidget({
   useEffect(() => {
     if (itineraryResponse) {
       console.log("📊 Updating itinerary data from new API response");
+      // Reset insertedDaysCount when API response comes in
+      // The API response now contains the authoritative day count
+      setInsertedDaysCount(0);
       const transformed = transformItineraryResponse(itineraryResponse);
       if (transformed) {
         // Merge with existing itinerary data
@@ -918,6 +926,11 @@ export default function ItineraryWidget({
     console.log(
       `➕ Insert day ${insertDayNumber} after day ${afterDayIndex + 1}`
     );
+    console.log("itineraryDataManan before", itineraryData);
+
+    // STEP 0: Immediately increment insertedDaysCount
+    // This ensures DaySlider sees the new total BEFORE async state updates complete
+    setInsertedDaysCount((prev) => prev + 1);
 
     // STEP 1: Shift all subsequent days in itineraryData
     if (itineraryData) {
@@ -952,8 +965,11 @@ export default function ItineraryWidget({
         };
       });
     }
+    console.log("itineraryDataManan after", itineraryData);
 
     // STEP 2: Mark this day as pending in parent's state
+    console.log("onAddPendingDayManan", onAddPendingDay);
+    console.log("insertDayNumberManan", insertDayNumber);
     if (onAddPendingDay) {
       onAddPendingDay(insertDayNumber);
       console.log(`✅ Added day ${insertDayNumber} to pending set in parent`);
@@ -1612,7 +1628,7 @@ export default function ItineraryWidget({
           <DaySlider
             days={itineraryData.days}
             currentDayIndex={currentDayIndex}
-            totalDays={totalDays}
+            totalDays={Math.max(totalDays, itineraryData.total_days || 0) + insertedDaysCount}
             onDaySelect={handleDaySelect}
             onAddDay={handleAddDayClick}
             onInsertDay={handleInsertDay}
