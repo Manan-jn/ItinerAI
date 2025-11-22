@@ -28,6 +28,7 @@ import { updateMemoryOnSessionChange } from "../../utils/memoryApi";
 import {
   storeSelectedTrip,
   getSelectedTripFromFirestore,
+  formatDateToLocalString,
 } from "../../utils/tripStorage";
 import { preFetchConveyanceData } from "../../utils/preFetchConveyance";
 import { preFetchStaysData } from "../../utils/preFetchStays";
@@ -2476,7 +2477,9 @@ export default function FlightsPageAuthenticated() {
     }
 
     try {
-      console.log("✅ Date selected:", selectedDate.toLocaleDateString());
+      // Use formatDateToLocalString for consistent date display (avoids timezone issues)
+      const formattedDateForDisplay = formatDateToLocalString(selectedDate);
+      console.log("✅ Date selected:", formattedDateForDisplay);
 
       // If selectedTrip is not in memory, try to restore it from Firestore
       let tripToUse = selectedTrip;
@@ -2506,8 +2509,8 @@ export default function FlightsPageAuthenticated() {
       // If there's a selected trip (either from memory or Firestore), store it with the date
       if (tripToUse) {
         console.log("Storing trip with selected date:", tripToUse.trip_title);
-        // Convert date to strict YYYY-MM-DD format
-        const dateString = selectedDate.toISOString().split("T")[0];
+        // Convert date to strict YYYY-MM-DD format using local timezone (not UTC)
+        const dateString = formatDateToLocalString(selectedDate);
 
         const correctedTrip = JSON.parse(JSON.stringify(tripToUse)); // Deep copy
 
@@ -2549,9 +2552,13 @@ export default function FlightsPageAuthenticated() {
         };
 
         // Add a user message to chat indicating date was selected
+        // Format the date for display (MM/DD/YYYY format from YYYY-MM-DD)
+        const [year, month, day] = dateString.split("-");
+        const displayDate = `${parseInt(month)}/${parseInt(day)}/${year}`;
+
         const userMessage = {
           id: (Date.now() + 1).toString(),
-          content: `Selected date: ${selectedDate.toLocaleDateString()} for trip: ${
+          content: `Selected date: ${displayDate} for trip: ${
             correctedTrip.trip_title
           }`,
           role: "user" as const,

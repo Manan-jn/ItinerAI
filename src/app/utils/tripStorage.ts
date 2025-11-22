@@ -98,6 +98,17 @@ export async function storeSelectedTrip(
 }
 
 /**
+ * Formats a Date object to YYYY-MM-DD string using local timezone.
+ * This avoids timezone conversion issues that occur with toISOString().
+ */
+export function formatDateToLocalString(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+/**
  * Stores the selected start date in Firestore and updates memory API
  */
 export async function storeSelectedDate(
@@ -113,8 +124,8 @@ export async function storeSelectedDate(
     const userDocSnapshot = await getDoc(userDocRef);
     const existingData = userDocSnapshot.exists() ? userDocSnapshot.data() : {};
 
-    // Convert date to strict YYYY-MM-DD format
-    const dateString = selectedDate.toISOString().split("T")[0];
+    // Convert date to strict YYYY-MM-DD format using local timezone (not UTC)
+    const dateString = formatDateToLocalString(selectedDate);
 
     await setDoc(
       userDocRef,
