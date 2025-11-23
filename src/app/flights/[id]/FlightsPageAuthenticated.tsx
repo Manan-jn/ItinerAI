@@ -19,8 +19,6 @@ import ItinerAIChatBox from "../../components/ItinerAIChatBox";
 import MessageResponseOverlay from "../../components/MessageResponseOverlay";
 import ChatLoadingIndicator from "../../components/ChatLoadingIndicator";
 import BookingWidget from "../../components/BookingWidget";
-import FinalizeLoader from "../../components/FinalizeLoader";
-import CongratulationsLoader from "../../components/CongratulationsLoader";
 import PreTripWidget from "../../components/PreTripWidget";
 import InTripWidget from "../../components/InTripWidget";
 import { getSessionId } from "../../utils/sessionManager";
@@ -4887,11 +4885,17 @@ export default function FlightsPageAuthenticated() {
         />
       )}
 
-      {/* Finalize Loader - Full Screen Overlay */}
-      <FinalizeLoader showLoader={showFinalizeLoader} duration={3000} />
+      {/* Finalize Loader - Using JourneyLoader for booking activities */}
+      <JourneyLoader
+        isVisible={showFinalizeLoader}
+        currentStep="booking-activities"
+      />
 
-      {/* Congratulations Loader - Full Screen Overlay */}
-      <CongratulationsLoader showLoader={showCongratsLoader} duration={4000} />
+      {/* Pre-Trip Loader - Using JourneyLoader for pre-trip brief */}
+      <JourneyLoader
+        isVisible={showCongratsLoader}
+        currentStep="pre-trip-brief"
+      />
     </div>
   );
 }

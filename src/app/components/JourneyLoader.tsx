@@ -7,7 +7,9 @@ export type JourneyStep =
   | "date-recommender"
   | "conveyance-finder"
   | "stays-finder"
-  | "itinerary-generation";
+  | "itinerary-generation"
+  | "booking-activities"
+  | "pre-trip-brief";
 
 interface JourneyLoaderProps {
   isVisible: boolean;
@@ -28,11 +30,11 @@ const STEPS_CONFIG: StepConfig[] = [
     icon: "🎯",
     label: "Trip Suggestion",
     messages: [
-      "Analyzing your travel preferences",
-      "Understanding your journey style",
-      "Discovering perfect destinations",
-      "Crafting personalized experiences",
-      "Curating your ideal adventure",
+      "Analyzing your unique travel preferences carefully",
+      "Understanding your ideal journey style",
+      "Discovering perfect destinations for you",
+      "Crafting personalized travel experiences now",
+      "Curating your dream adventure itinerary",
     ],
   },
   {
@@ -40,11 +42,11 @@ const STEPS_CONFIG: StepConfig[] = [
     icon: "📅",
     label: "Date Recommender",
     messages: [
-      "Finding the best travel dates",
-      "Analyzing seasonal patterns",
-      "Checking availability windows",
-      "Optimizing your timeline",
-      "Preparing date options",
+      "Finding the best travel dates available",
+      "Analyzing seasonal patterns for your trip",
+      "Checking availability windows and prices",
+      "Optimizing your travel timeline smartly",
+      "Preparing perfect date options for you",
     ],
   },
   {
@@ -52,11 +54,11 @@ const STEPS_CONFIG: StepConfig[] = [
     icon: "✈️",
     label: "Conveyance Finder",
     messages: [
-      "Searching for flights & trains",
-      "Comparing travel options",
-      "Finding best connections",
-      "Checking seat availability",
-      "Curating transport choices",
+      "Searching for best flights and trains",
+      "Comparing all available travel options",
+      "Finding optimal connections for you",
+      "Checking real-time seat availability now",
+      "Curating the best transport choices",
     ],
   },
   {
@@ -64,11 +66,11 @@ const STEPS_CONFIG: StepConfig[] = [
     icon: "🏨",
     label: "Stays Finder",
     messages: [
-      "Discovering perfect stays",
-      "Filtering by your preferences",
-      "Checking room availability",
-      "Comparing accommodations",
-      "Preparing stay options",
+      "Discovering perfect stays for your trip",
+      "Filtering accommodations by your preferences",
+      "Checking real-time room availability now",
+      "Comparing the best accommodation options",
+      "Preparing ideal stay options for you",
     ],
   },
   {
@@ -76,11 +78,35 @@ const STEPS_CONFIG: StepConfig[] = [
     icon: "📋",
     label: "Itinerary Generation",
     messages: [
-      "Building your perfect itinerary",
-      "Organizing daily activities",
-      "Adding must-see attractions",
-      "Optimizing your schedule",
-      "Finalizing your journey",
+      "Building your perfect travel itinerary now",
+      "Organizing daily activities and experiences",
+      "Adding must-see attractions to your plan",
+      "Optimizing your schedule for best experience",
+      "Finalizing your complete journey details",
+    ],
+  },
+  {
+    id: "booking-activities",
+    icon: "🎫",
+    label: "Booking Activities",
+    messages: [
+      "Preparing your travel bookings summary",
+      "Calculating total costs and expenses",
+      "Organizing all your travel reservations",
+      "Finalizing your complete booking details",
+      "Getting everything ready to confirm",
+    ],
+  },
+  {
+    id: "pre-trip-brief",
+    icon: "📄",
+    label: "Pre-Trip Brief",
+    messages: [
+      "Generating your personalized travel brief",
+      "Compiling essential trip information now",
+      "Creating your pre-departure document",
+      "Preparing important travel reminders for you",
+      "Finalizing your complete trip summary",
     ],
   },
 ];
@@ -251,25 +277,16 @@ export function JourneyLoader({
           })}
         </div>
 
-        {/* Loading text with reveal animation - inspired by loadingscreen.html */}
-        <div className="text-center">
-          <div className="text-reveal-container relative inline-flex items-center justify-center overflow-hidden">
-            <div
-              key={`prefix-${currentStep}`}
-              className="text-reveal-prefix text-lg md:text-xl font-light text-gray-600"
-              style={{
-                fontFamily:
-                  "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-              }}
-            >
-              {currentStepConfig.label}
-            </div>
+        {/* Loading text with smooth reveal animation */}
+        <div className="text-center px-4">
+          {/* Dynamic message display */}
+          <div className="message-container relative h-16 md:h-20 flex items-center justify-center overflow-hidden">
             <div
               key={currentMessage}
-              className="text-reveal-main overflow-hidden whitespace-nowrap"
+              className="message-text absolute inset-0 flex items-center justify-center"
             >
               <span
-                className="text-reveal-slide inline-block text-lg md:text-xl font-normal text-blue-500 ml-2"
+                className="text-lg md:text-xl font-medium text-gray-700 text-center leading-relaxed"
                 style={{
                   fontFamily:
                     "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
@@ -281,7 +298,7 @@ export function JourneyLoader({
           </div>
 
           {/* Message progress dots - more subtle */}
-          <div className="flex justify-center space-x-1.5 mt-5">
+          <div className="flex justify-center space-x-1.5 mt-4">
             {currentStepConfig.messages.map((_, i) => (
               <div
                 key={i}
@@ -327,41 +344,33 @@ export function JourneyLoader({
           animation: subtle-float 3s ease-in-out infinite;
         }
 
-        /* Text reveal animations - inspired by loadingscreen.html */
-        @keyframes showup {
-          0% { opacity: 0; }
-          20% { opacity: 1; }
-          80% { opacity: 1; }
-          100% { opacity: 0; }
+        /* Message container for smooth transitions */
+        .message-container {
+          min-height: 64px;
         }
 
-        @keyframes reveal {
-          0% { opacity: 0; width: 0px; }
-          20% { opacity: 1; width: 0px; }
-          30% { width: 280px; }
-          80% { opacity: 1; }
-          100% { opacity: 0; width: 280px; }
+        /* Smooth message text animation */
+        .message-text {
+          animation: messageReveal 1.1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
 
-        @keyframes slidein {
-          0% { margin-left: -280px; }
-          20% { margin-left: -280px; }
-          35% { margin-left: 0px; }
-          100% { margin-left: 0px; }
-        }
-
-        .text-reveal-prefix {
-          animation: showup 5s infinite;
-        }
-
-        .text-reveal-main {
-          width: 0px;
-          animation: reveal 5s infinite;
-        }
-
-        .text-reveal-slide {
-          margin-left: -280px;
-          animation: slidein 5s infinite;
+        @keyframes messageReveal {
+          0% {
+            opacity: 0;
+            transform: translateY(12px);
+          }
+          15% {
+            opacity: 0.3;
+            transform: translateY(6px);
+          }
+          40% {
+            opacity: 1;
+            transform: translateY(0);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
       `}</style>
     </div>

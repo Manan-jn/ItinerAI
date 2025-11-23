@@ -6,6 +6,7 @@ import { MdFlight, MdHotel, MdTrain } from "react-icons/md";
 import ItinerAIChatBox from "./ItinerAIChatBox";
 import ChatLoadingIndicator from "./ChatLoadingIndicator";
 import MessageResponseOverlay from "./MessageResponseOverlay";
+import { JourneyLoader } from "./JourneyLoader";
 import { storeSelectedDate } from "../utils/tripStorage";
 import { translateToEnglish } from "../utils/translateToEnglish";
 import { findPlaceByCity } from "../utils/placesData";
@@ -1931,20 +1932,11 @@ export default function DateSelectorWidget({
           </div>
         </div>
 
-        {/* Loading Indicator for Continue Action */}
-        {isLoadingContinue && (
-          <div className="fixed inset-0 bg-black/50 backdrop-blur-md flex items-center justify-center z-50">
-            <div className="flex flex-col items-center gap-4">
-              <ChatLoadingIndicator
-                isVisible={isLoadingContinue}
-                theme="white"
-              />
-              <p className="text-white text-center text-sm font-medium">
-                Preparing your itinerary...
-              </p>
-            </div>
-          </div>
-        )}
+        {/* Loading Indicator for Continue Action - Using JourneyLoader */}
+        <JourneyLoader
+          isVisible={isLoadingContinue}
+          currentStep="conveyance-finder"
+        />
       </div>
     </>
   );
