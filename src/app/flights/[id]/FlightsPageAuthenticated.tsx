@@ -2341,7 +2341,7 @@ export default function FlightsPageAuthenticated() {
       }
 
       // Find the current city - look for last to_city BEFORE the new day position
-      let fromCity = "Mumbai"; // Default
+      let fromCity = "Unknown"; // Default
 
       // Iterate backwards from currentDayNumber to find the last conveyance with to_city
       console.log(
