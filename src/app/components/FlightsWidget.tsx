@@ -1831,7 +1831,10 @@ export default function FlightsWidget({
     setIsLoadingComplete(false);
     setIsLoadingUtility(true);
     setIsUtilityComplete(false);
-    setShowResults(false);
+    setShowResults(true); // Show results section immediately with loading state
+    // Reset previous results
+    setSearchResults({ flights: [], trains: [], buses: [] });
+    setUtilityResults({ flights: [], trains: [], buses: [] });
 
     try {
       // Prepare date range (from_date and to_date as same date for single day search)
@@ -1912,135 +1915,148 @@ export default function FlightsWidget({
       console.log(`🌍 Departure: ${from}, ${departureCountry}`);
       console.log(`🌍 Arrival: ${to}, ${arrivalCountry}`);
 
-      // Make parallel API calls to utility/conveyance for flights and trains
-      const [flightsResponse, trainsResponse, aiResponse] =
-        await Promise.allSettled([
-          // Utility API call for flights
-          fetch("/api/utility/conveyance", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              user_id: userId || "user123",
-              conveyance_type: "flights",
-              departure_city: from,
-              departure_country: departureCountry,
-              arrival_city: to,
-              arrival_country: arrivalCountry,
-              start_date: dateStr,
-              end_date: dateStr,
-            }),
-          }),
-          // Utility API call for trains
-          fetch("/api/utility/conveyance", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              user_id: userId || "user123",
-              conveyance_type: "trains",
-              departure_city: from,
-              departure_country: departureCountry,
-              arrival_city: to,
-              arrival_country: arrivalCountry,
-              start_date: dateStr,
-              end_date: dateStr,
-            }),
-          }),
-          // AI recommendations call (existing)
-          fetch("/api/conveyance", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              user_id: userId || "user123",
-              session_id: sessionId || "session456",
-              from_city: from,
-              from_country: departureCountry,
-              to_city: to,
-              to_country: arrivalCountry,
-              date: dateStr,
-            }),
-          }),
-        ]);
-
-      // Separate AI results from utility results
-      let aiFlights: TransportOption[] = [];
-      let aiTrains: TransportOption[] = [];
-      let utilFlights: TransportOption[] = [];
-      let utilTrains: TransportOption[] = [];
-
-      // Parse flights from utility API
-      if (flightsResponse.status === "fulfilled" && flightsResponse.value.ok) {
-        const flightsData = await flightsResponse.value.json();
-        if (Array.isArray(flightsData)) {
-          utilFlights = parseUtilityFlightData(flightsData);
-        }
-      }
-
-      // Parse trains from utility API
-      if (trainsResponse.status === "fulfilled" && trainsResponse.value.ok) {
-        const trainsData = await trainsResponse.value.json();
-        if (Array.isArray(trainsData)) {
-          utilTrains = parseUtilityTrainData(trainsData);
-        }
-      }
-
-      // Parse AI recommendations
-      if (aiResponse.status === "fulfilled" && aiResponse.value.ok) {
-        const aiData: APIConveyanceResponse = await aiResponse.value.json();
-        if (
-          aiData.message &&
-          aiData.message.conveyances &&
-          aiData.message.conveyances.conveyance_details
-        ) {
-          const conveyanceDetails =
-            aiData.message.conveyances.conveyance_details;
-          if (conveyanceDetails.flights) {
-            aiFlights = parseFlightData(conveyanceDetails.flights);
+      // Make parallel API calls - each updates state independently as it completes
+      // Utility API call for flights
+      const flightsPromise = fetch("/api/utility/conveyance", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          user_id: userId || "user123",
+          conveyance_type: "flights",
+          departure_city: from,
+          departure_country: departureCountry,
+          arrival_city: to,
+          arrival_country: arrivalCountry,
+          start_date: dateStr,
+          end_date: dateStr,
+        }),
+      })
+        .then(async (response) => {
+          if (response.ok) {
+            const flightsData = await response.json();
+            if (Array.isArray(flightsData)) {
+              const utilFlights = parseUtilityFlightData(flightsData);
+              console.log("✅ Utility flights received:", utilFlights.length);
+              setUtilityResults((prev) => ({
+                ...prev,
+                flights: utilFlights,
+              }));
+            }
           }
-          if (conveyanceDetails.trains) {
-            aiTrains = parseTrainData(conveyanceDetails.trains);
+        })
+        .catch((error) => {
+          console.error("❌ Error fetching utility flights:", error);
+        });
+
+      // Utility API call for trains
+      const trainsPromise = fetch("/api/utility/conveyance", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          user_id: userId || "user123",
+          conveyance_type: "trains",
+          departure_city: from,
+          departure_country: departureCountry,
+          arrival_city: to,
+          arrival_country: arrivalCountry,
+          start_date: dateStr,
+          end_date: dateStr,
+        }),
+      })
+        .then(async (response) => {
+          if (response.ok) {
+            const trainsData = await response.json();
+            if (Array.isArray(trainsData)) {
+              const utilTrains = parseUtilityTrainData(trainsData);
+              console.log("✅ Utility trains received:", utilTrains.length);
+              setUtilityResults((prev) => ({
+                ...prev,
+                trains: utilTrains,
+              }));
+            }
           }
-        }
-      }
+        })
+        .catch((error) => {
+          console.error("❌ Error fetching utility trains:", error);
+        });
 
-      // Set AI results
-      const aiResults: SearchResultsData = {
-        flights: aiFlights,
-        trains: aiTrains,
-        buses: [],
-      };
+      // AI recommendations call
+      const aiPromise = fetch("/api/conveyance", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          user_id: userId || "user123",
+          session_id: sessionId || "session456",
+          from_city: from,
+          from_country: departureCountry,
+          to_city: to,
+          to_country: arrivalCountry,
+          date: dateStr,
+        }),
+      })
+        .then(async (response) => {
+          if (response.ok) {
+            const aiData: APIConveyanceResponse = await response.json();
+            if (
+              aiData.message &&
+              aiData.message.conveyances &&
+              aiData.message.conveyances.conveyance_details
+            ) {
+              const conveyanceDetails =
+                aiData.message.conveyances.conveyance_details;
+              const aiFlights = conveyanceDetails.flights
+                ? parseFlightData(conveyanceDetails.flights)
+                : [];
+              const aiTrains = conveyanceDetails.trains
+                ? parseTrainData(conveyanceDetails.trains)
+                : [];
 
-      // Set utility results
-      const utilResults: SearchResultsData = {
-        flights: utilFlights,
-        trains: utilTrains,
-        buses: [],
-      };
+              console.log("✅ AI recommendations received:", {
+                flights: aiFlights.length,
+                trains: aiTrains.length,
+              });
 
-      console.log("✅ AI results:", {
-        flights: aiResults.flights.length,
-        trains: aiResults.trains.length,
-      });
+              setSearchResults({
+                flights: aiFlights,
+                trains: aiTrains,
+                buses: [],
+              });
 
-      console.log("✅ Utility results:", {
-        flights: utilResults.flights.length,
-        trains: utilResults.trains.length,
-      });
+              // Notify parent about AI options loaded
+              if (onAiOptionsLoaded) {
+                const allAiOptions = [...aiFlights, ...aiTrains];
+                onAiOptionsLoaded(allAiOptions);
+              }
+            }
+          }
+          // Mark AI loading complete
+          setIsLoading(false);
+          setIsLoadingComplete(true);
+        })
+        .catch((error) => {
+          console.error("❌ Error fetching AI recommendations:", error);
+          setIsLoading(false);
+          setIsLoadingComplete(true);
+        });
 
-      setSearchResults(aiResults);
-      setUtilityResults(utilResults);
-      setShowResults(true);
-      setIsLoadingComplete(true);
-      setIsUtilityComplete(true);
+      // Wait for utility calls to complete (for the utility loading indicator)
+      Promise.all([flightsPromise, trainsPromise])
+        .then(() => {
+          console.log("✅ All utility API calls completed");
+          setIsLoadingUtility(false);
+          setIsUtilityComplete(true);
+        })
+        .catch((error) => {
+          console.error("❌ Error in utility API calls:", error);
+          setIsLoadingUtility(false);
+          setIsUtilityComplete(true);
+        });
 
-      // Notify parent about AI options loaded
-      if (onAiOptionsLoaded) {
-        const allAiOptions = [...aiResults.flights, ...aiResults.trains];
-        onAiOptionsLoaded(allAiOptions);
-      }
+      // Wait for AI call separately (already handled above)
+      await aiPromise;
     } catch (error) {
       console.error("❌ Error fetching transport options:", error);
       alert("Failed to fetch transport options. Please try again.");
-    } finally {
       setIsLoading(false);
       setIsLoadingUtility(false);
     }
