@@ -2248,7 +2248,7 @@ export default function FlightsPageAuthenticated() {
       console.log(
         `🔍 Looking for last to_city before day ${newDayNumber} (checking days 1 to ${currentDayNumber})`
       );
-
+      console.log("selectedTripManan manvi before", selectedTrip);
       for (let i = currentDayNumber - 1; i >= 0; i--) {
         const day = selectedTrip.day_wise_plan?.[i];
         console.log(`   Checking day ${i + 1}:`, day?.conveyance_details);

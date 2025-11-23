@@ -985,6 +985,12 @@ export default function ItineraryWidget({
   const handleAddConveyanceToPendingDay = async (dayNumber: number) => {
     console.log(`🚗 CASE 1: Adding conveyance for inserted day ${dayNumber}`);
 
+    // IMPORTANT: Decrement insertedDaysCount BEFORE calling onAddDay
+    // Same logic as handleRemovePendingDay - prevents the glitch where an extra day appears.
+    // The pending day slot was already created when + was clicked, so we need to
+    // "consume" the insertedDaysCount before the API call creates the actual day.
+    setInsertedDaysCount((prev) => Math.max(0, prev - 1));
+
     if (onAddDay) {
       // Call the add day handler with isInsertFlow=true
       // This will trigger FlightsWidget → StaysWidget flow
@@ -999,9 +1005,24 @@ export default function ItineraryWidget({
     }
   };
 
-  // Handle removing pending day - CASE 2
+  // Handle removing pending day - CASE 2 (Skip conveyance, generate itinerary directly)
   const handleRemovePendingDay = async (dayNumber: number) => {
     console.log(`❌ CASE 2: Skipping conveyance for inserted day ${dayNumber}`);
+
+    // IMPORTANT: Decrement insertedDaysCount BEFORE calling onAddDay
+    // This prevents the glitch where an extra day appears momentarily.
+    //
+    // Why? When we inserted the pending day, we incremented insertedDaysCount.
+    // Now that we're generating the itinerary for that pending day (via onAddDay),
+    // the API response will contain the actual day data. The merge logic in
+    // useEffect will handle adding it to itineraryData.days.
+    //
+    // If we don't decrement here, the totalDays calculation becomes:
+    // totalDays (from parent, already includes this day) + insertedDaysCount (still 1) = extra day
+    //
+    // After API response, insertedDaysCount is reset to 0 (line 732), but during the
+    // API call, we see the glitch.
+    setInsertedDaysCount((prev) => Math.max(0, prev - 1));
 
     if (onAddDay) {
       // Call the add day handler with needsConveyance=false and isInsertFlow=true
