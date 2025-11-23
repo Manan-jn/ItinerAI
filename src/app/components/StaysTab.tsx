@@ -775,7 +775,10 @@ export default function StaysTab({
           body: JSON.stringify({
             user_id: userId || "user123",
             session_id: sessionId || "session456",
-            message: message,
+            city: city,
+            country: country,
+            check_in_date: checkInDate,
+            check_out_date: checkOutDate,
           }),
         }),
         fetch("/api/utility/stay", {

@@ -46,20 +46,20 @@ function calculateDayDate(baseTripDate: string, dayNumber: number): string {
  */
 function normalizeCityName(cityName: string): string {
   if (!cityName) return "";
-  
+
   // Handle special cases
   if (cityName === "user_location" || cityName === "User Location") {
     return "Mumbai"; // Default location
   }
-  
+
   // Capitalize first letter
   let normalized = cityName.charAt(0).toUpperCase() + cityName.slice(1).toLowerCase();
-  
+
   // Handle Delhi → New Delhi
   if (normalized === "Delhi") {
     normalized = "New Delhi";
   }
-  
+
   return normalized;
 }
 
@@ -111,11 +111,16 @@ async function fetchConveyanceForDay(
       body: JSON.stringify({
         user_id: userId,
         session_id: sessionId,
-        message: `Give me all the travel options from ${normalizedFromCity} to ${normalizedToCity} on ${new Date(
-          travelDate
-        ).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}`,
+        from_city: normalizedFromCity,
+        from_country: departureCountry,
+        to_city: normalizedToCity,
+        to_country: arrivalCountry,
+        date: travelDate,
       }),
     }),
+    // user_query: `Give me all the travel options from ${normalizedFromCity} to ${normalizedToCity} on ${new Date(
+    //   travelDate
+    // ).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}`,
     // Utility Flights
     fetch("/api/utility/conveyance", {
       method: "POST",
@@ -271,7 +276,7 @@ export async function preFetchConveyanceData(request: PreFetchRequest): Promise<
     daysRequiringConveyance.forEach((day, index) => {
       const dayDate = calculateDayDate(tripDate, day.day_number);
       const routeKey = generateRouteKey(day.from_city, day.to_city, dayDate);
-      
+
       preFetchedData[routeKey] = {
         ...results[index],
         // Add metadata for easy retrieval
@@ -284,7 +289,7 @@ export async function preFetchConveyanceData(request: PreFetchRequest): Promise<
           fetched_at: new Date().toISOString(),
         },
       } as any;
-      
+
       console.log(`📍 Storing route: ${routeKey}`);
     });
 
@@ -309,7 +314,7 @@ async function storePreFetchedConveyanceData(
 ): Promise<void> {
   try {
     const docRef = doc(db, "pre_fetch_data_conveyance_stays", userId);
-    
+
     await setDoc(
       docRef,
       {
@@ -343,16 +348,16 @@ export async function getPreFetchedConveyanceData(
 ): Promise<any> {
   try {
     const routeKey = generateRouteKey(fromCity, toCity, travelDate);
-    
+
     console.log(`🔍 Retrieving pre-fetched data for route: ${routeKey}`);
-    
+
     const docRef = doc(db, "pre_fetch_data_conveyance_stays", userId);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
       const data = docSnap.data();
       const routeData = data.conveyance_data?.[routeKey];
-      
+
       if (routeData) {
         console.log(`✅ Found cached data for route: ${routeKey}`);
         return routeData;

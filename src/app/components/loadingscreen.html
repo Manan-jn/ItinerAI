@@ -1,621 +1,76 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Travel Journey Loading</title>
-    <style>
-        :root {
-            --primary-blue: #2563eb;
-            --light-blue: #60a5fa;
-            --dark-blue: #1e3a8a;
-            --white: #ffffff;
-            --gray-200: #e5e7eb;
-            --gray-700: #374151;
-            --purple: #8b5cf6;
-            --orange: #f59e0b;
-            --green: #10b981;
-            --pink: #ec4899;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #ffffff;
-            overflow: hidden;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .fullscreen-loader {
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        /* Animated travel graphics above icons */
-        .travel-animation-container {
-            position: absolute;
-            top: 35%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 200px;
-            height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .travel-icon {
-            position: absolute;
-            font-size: 80px;
-            opacity: 0;
-            transform: scale(0.5) rotate(0deg);
-            animation: morphTravel 12s infinite;
-            filter: drop-shadow(0 4px 12px rgba(37, 99, 235, 0.25));
-        }
-
-        .travel-icon:nth-child(1) {
-            animation-delay: 0s;
-        }
-
-        .travel-icon:nth-child(2) {
-            animation-delay: 2.4s;
-        }
-
-        .travel-icon:nth-child(3) {
-            animation-delay: 4.8s;
-        }
-
-        .travel-icon:nth-child(4) {
-            animation-delay: 7.2s;
-        }
-
-        .travel-icon:nth-child(5) {
-            animation-delay: 9.6s;
-        }
-
-        @keyframes morphTravel {
-            0% {
-                opacity: 0;
-                transform: scale(0.3) rotate(-20deg) translateY(20px);
-            }
-
-            8% {
-                opacity: 1;
-                transform: scale(1.15) rotate(5deg) translateY(-10px);
-            }
-
-            15% {
-                opacity: 1;
-                transform: scale(1) rotate(0deg) translateY(0);
-            }
-
-            20% {
-                opacity: 1;
-                transform: scale(1) rotate(0deg) translateY(0);
-            }
-
-            28% {
-                opacity: 0;
-                transform: scale(0.3) rotate(20deg) translateY(-20px);
-            }
-
-            100% {
-                opacity: 0;
-                transform: scale(0.3) rotate(20deg) translateY(-20px);
-            }
-        }
-
-        /* Steps container */
-        .steps-loader {
-            width: 90%;
-            max-width: 800px;
-            margin-top: 200px;
-        }
-
-        .steps-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 50px;
-            position: relative;
-        }
-
-        .step {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            z-index: 2;
-        }
-
-        .step-circle {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.6);
-            border: 2px solid rgba(37, 99, 235, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 15px;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            backdrop-filter: blur(12px);
-            box-shadow: 0 2px 12px rgba(37, 99, 235, 0.06);
-        }
-
-        .step.active .step-circle {
-            border-color: var(--primary-blue);
-            background: rgba(255, 255, 255, 0.95);
-            animation: subtlePulse 3s ease-in-out infinite;
-            transform: scale(1.08);
-            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.18), 0 0 0 6px rgba(37, 99, 235, 0.08);
-        }
-
-        .step.completed .step-circle {
-            border-color: rgba(37, 99, 235, 0.5);
-            background: rgba(37, 99, 235, 0.08);
-            box-shadow: 0 3px 12px rgba(37, 99, 235, 0.1);
-        }
-
-        .step-icon {
-            font-size: 2rem;
-            opacity: 0.35;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            transform: scale(0.92);
-        }
-
-        .step.active .step-icon {
-            opacity: 1;
-            transform: scale(1) rotate(10deg);
-            animation: subtleIconBounce 3s ease-in-out infinite;
-        }
-
-        .step.completed .step-icon {
-            opacity: 0.6;
-            transform: scale(0.98);
-        }
-
-        .step-label {
-            font-size: 0.9rem;
-            color: rgba(55, 65, 81, 0.6);
-            text-align: center;
-            max-width: 100px;
-            font-weight: 500;
-            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .step.active .step-label {
-            color: var(--primary-blue);
-            font-weight: 700;
-            transform: translateY(-3px);
-        }
-
-        .steps-line {
-            position: absolute;
-            top: 35px;
-            left: 70px;
-            right: 70px;
-            height: 3px;
-            background: rgba(37, 99, 235, 0.1);
-            z-index: 1;
-            border-radius: 2px;
-        }
-
-        .steps-line-progress {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary-blue) 0%, var(--light-blue) 100%);
-            width: var(--step-progress, 0%);
-            transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-            border-radius: 2px;
-            box-shadow: 0 0 12px rgba(37, 99, 235, 0.4);
-        }
-
-        @keyframes subtlePulse {
-
-            0%,
-            100% {
-                box-shadow: 0 6px 20px rgba(37, 99, 235, 0.18), 0 0 0 6px rgba(37, 99, 235, 0.08);
-            }
-
-            50% {
-                box-shadow: 0 8px 24px rgba(37, 99, 235, 0.22), 0 0 0 8px rgba(37, 99, 235, 0.12);
-            }
-        }
-
-        @keyframes subtleIconBounce {
-
-            0%,
-            100% {
-                transform: scale(1) rotate(10deg);
-            }
-
-            50% {
-                transform: scale(1.05) rotate(-5deg);
-            }
-        }
-
-        .loading-text {
-            margin-top: 30px;
-            text-align: center;
-            font-size: 1.8rem;
-            color: var(--primary-blue);
-            font-weight: 400;
-            letter-spacing: 0.5px;
-        }
-
-        .loading-text>div {
-            display: inline-block;
-            overflow: hidden;
-            white-space: nowrap;
-            vertical-align: bottom;
-        }
-
-        .loading-text>div:first-of-type {
-            animation: showup 7s infinite;
-        }
-
-        .loading-text>div:last-of-type {
-            width: 0px;
-            animation: reveal 7s infinite;
-        }
-
-        .loading-text>div:last-of-type span {
-            margin-left: -500px;
-            animation: slidein 7s infinite;
-        }
-
-        @keyframes showup {
-            0% {
-                opacity: 0;
-            }
-
-            20% {
-                opacity: 1;
-            }
-
-            80% {
-                opacity: 1;
-            }
-
-            100% {
-                opacity: 0;
-            }
-        }
-
-        @keyframes slidein {
-            0% {
-                margin-left: -500px;
-            }
-
-            20% {
-                margin-left: -500px;
-            }
-
-            35% {
-                margin-left: 0px;
-            }
-
-            100% {
-                margin-left: 0px;
-            }
-        }
-
-        @keyframes reveal {
-            0% {
-                opacity: 0;
-                width: 0px;
-            }
-
-            20% {
-                opacity: 1;
-                width: 0px;
-            }
-
-            30% {
-                width: 500px;
-            }
-
-            80% {
-                opacity: 1;
-            }
-
-            100% {
-                opacity: 0;
-                width: 500px;
-            }
-        }
-
-        @keyframes textGlassmorph {
-
-            0%,
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-                box-shadow: 0 4px 24px rgba(37, 99, 235, 0.12);
-            }
-
-            50% {
-                opacity: 0.85;
-                transform: translateY(-4px) scale(1.02);
-                box-shadow: 0 8px 32px rgba(37, 99, 235, 0.18);
-            }
-        }
-
-        /* Floating particles */
-        .particles {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            pointer-events: none;
-        }
-
-        .particle {
-            position: absolute;
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.4), rgba(96, 165, 250, 0.3));
-            border-radius: 50%;
-            animation: float-particle 15s infinite ease-in-out;
-            box-shadow: 0 0 20px rgba(37, 99, 235, 0.3);
-        }
-
-        .particle:nth-child(1) {
-            width: 8px;
-            height: 8px;
-            left: 10%;
-            animation-delay: 0s;
-        }
-
-        .particle:nth-child(2) {
-            width: 6px;
-            height: 6px;
-            left: 20%;
-            animation-delay: 2s;
-        }
-
-        .particle:nth-child(3) {
-            width: 10px;
-            height: 10px;
-            left: 30%;
-            animation-delay: 4s;
-        }
-
-        .particle:nth-child(4) {
-            width: 7px;
-            height: 7px;
-            left: 70%;
-            animation-delay: 1s;
-        }
-
-        .particle:nth-child(5) {
-            width: 9px;
-            height: 9px;
-            left: 80%;
-            animation-delay: 3s;
-        }
-
-        @keyframes float-particle {
-            0% {
-                transform: translateY(100vh) translateX(0) scale(0.5);
-                opacity: 0;
-            }
-
-            10% {
-                opacity: 0.6;
-            }
-
-            90% {
-                opacity: 0.6;
-            }
-
-            100% {
-                transform: translateY(-100px) translateX(100px) scale(1.2);
-                opacity: 0;
-            }
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .step-circle {
-                width: 50px;
-                height: 50px;
-            }
-
-            .step-icon {
-                font-size: 1.5rem;
-            }
-
-            .step-label {
-                font-size: 0.75rem;
-                max-width: 70px;
-            }
-
-            .steps-line {
-                top: 25px;
-                left: 50px;
-                right: 50px;
-            }
-
-            .loading-text {
-                font-size: 1.2rem;
-            }
-
-            .loading-text>div:last-of-type span {
-                margin-left: -350px;
-            }
-
-            @keyframes slidein {
-                0% {
-                    margin-left: -350px;
-                }
-
-                20% {
-                    margin-left: -350px;
-                }
-
-                35% {
-                    margin-left: 0px;
-                }
-
-                100% {
-                    margin-left: 0px;
-                }
-            }
-
-            @keyframes reveal {
-                0% {
-                    opacity: 0;
-                    width: 0px;
-                }
-
-                20% {
-                    opacity: 1;
-                    width: 0px;
-                }
-
-                30% {
-                    width: 350px;
-                }
-
-                80% {
-                    opacity: 1;
-                }
-
-                100% {
-                    opacity: 0;
-                    width: 350px;
-                }
-            }
-
-            .travel-animation-container {
-                width: 150px;
-                height: 150px;
-            }
-
-            .travel-icon {
-                font-size: 60px;
-            }
-        }
-    </style>
-</head>
-
-<body>
-    <div class="fullscreen-loader">
-        <!-- Floating particles -->
-        <div class="particles">
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-        </div>
-
-        <!-- Travel animation (morphing icons) -->
-        <div class="travel-animation-container">
-            <div class="travel-icon">📖</div>
-            <div class="travel-icon">✈️</div>
-            <div class="travel-icon">🏨</div>
-            <div class="travel-icon">🎭</div>
-            <div class="travel-icon">🎉</div>
-        </div>
-
-        <!-- Steps loader -->
-        <div class="steps-loader">
-            <div class="steps-container">
-                <div class="steps-line">
-                    <div class="steps-line-progress" id="stepsLineProgress"></div>
-                </div>
-                <div class="step" id="step1">
-                    <div class="step-circle">
-                        <span class="step-icon">🔍</span>
-                    </div>
-                    <div class="step-label">Preferences</div>
-                </div>
-                <div class="step" id="step2">
-                    <div class="step-circle">
-                        <span class="step-icon">🌍</span>
-                    </div>
-                    <div class="step-label">Destinations</div>
-                </div>
-                <div class="step" id="step3">
-                    <div class="step-circle">
-                        <span class="step-icon">📅</span>
-                    </div>
-                    <div class="step-label">Itinerary</div>
-                </div>
-                <div class="step" id="step4">
-                    <div class="step-circle">
-                        <span class="step-icon">✨</span>
-                    </div>
-                    <div class="step-label">Finalize</div>
-                </div>
-            </div>
-            <div class="loading-text" id="stepsText">
-                <div>Escape</div>
-                <div><span>into amazing experiences</span></div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const stepsMessages = [
-            { first: "Escape", second: "into amazing experiences" },
-            { first: "Discover", second: "your perfect journey" },
-            { first: "Explore", second: "incredible destinations" },
-            { first: "Experience", second: "unforgettable moments" }
-        ];
-
-        let currentStep = 0;
-        const steps = ['step1', 'step2', 'step3', 'step4'];
-
-        function updateSteps() {
-            // Clear all steps
-            steps.forEach(stepId => {
-                const step = document.getElementById(stepId);
-                step.classList.remove('active', 'completed');
-            });
-
-            // Update current step
-            currentStep = (currentStep + 1) % steps.length;
-
-            // Mark completed steps
-            for (let i = 0; i < currentStep; i++) {
-                document.getElementById(steps[i]).classList.add('completed');
-            }
-
-            // Mark active step
-            document.getElementById(steps[currentStep]).classList.add('active');
-
-            // Update progress line
-            const progress = (currentStep / (steps.length - 1)) * 100;
-            document.getElementById('stepsLineProgress').style.setProperty('--step-progress', progress + '%');
-
-            // Update text with revealing animation
-            const textElement = document.getElementById('stepsText');
-            const message = stepsMessages[currentStep];
-            textElement.innerHTML = `<div>${message.first}</div><div><span>${message.second}</span></div>`;
-        }
-
-        // Initialize first step
-        document.getElementById('step1').classList.add('active');
-
-        // Update every 7 seconds to match text animation
-        setInterval(updateSteps, 7000);
-    </script>
-</body>
-
-</html>
+<div>Escape</div>
+<div>
+    <span>into amazing experiences</span>
+</div>
+
+
+<p>a css3 animation demo</p>
+
+@import url('https://fonts.googleapis.com/css?family=Roboto:300');
+
+body {
+text-align:center;
+background:linear-gradient(141deg, #ccc 25%, #eee 40%, #ddd 55%);
+color:#555;
+font-family:'Roboto';
+font-weight:300;
+font-size:32px;
+padding-top:40vh;
+height:100vh;
+overflow:hidden;
+-webkit-backface-visibility: hidden;
+-webkit-perspective: 1000;
+-webkit-transform: translate3d(0,0,0);
+}
+
+div {
+display:inline-block;
+overflow:hidden;
+white-space:nowrap;
+}
+
+div:first-of-type { /* For increasing performance
+ID/Class should've been used.
+For a small demo
+it's okaish for now */
+animation: showup 7s infinite;
+}
+
+div:last-of-type {
+width:0px;
+animation: reveal 7s infinite;
+}
+
+div:last-of-type span {
+margin-left:-355px;
+animation: slidein 7s infinite;
+}
+
+@keyframes showup {
+0% {opacity:0;}
+20% {opacity:1;}
+80% {opacity:1;}
+100% {opacity:0;}
+}
+
+@keyframes slidein {
+0% { margin-left:-800px; }
+20% { margin-left:-800px; }
+35% { margin-left:0px; }
+100% { margin-left:0px; }
+}
+
+@keyframes reveal {
+0% {opacity:0;width:0px;}
+20% {opacity:1;width:0px;}
+30% {width:355px;}
+80% {opacity:1;}
+100% {opacity:0;width:355px;}
+}
+
+
+p {
+font-size:12px;
+color:#999;
+margin-top:200px;
+}

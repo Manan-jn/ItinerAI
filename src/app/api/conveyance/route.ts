@@ -2,11 +2,37 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const BACKEND_API_URL = process.env.BACKEND_API_URL || "http://127.0.0.1:8000";
 
+// Request interface matching the backend ConveyanceRequest model
+interface ConveyanceRequest {
+  user_id: string;
+  session_id: string;
+  from_city: string;
+  from_country: string;
+  to_city: string;
+  to_country: string;
+  date: string;
+  user_query?: string;
+}
+
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
+    const body: ConveyanceRequest = await request.json();
+
+    // Validate required fields
+    if (!body.user_id || !body.session_id || !body.from_city || !body.from_country ||
+        !body.to_city || !body.to_country || !body.date) {
+      return NextResponse.json(
+        {
+          error: 'Missing required fields',
+          required: ['user_id', 'session_id', 'from_city', 'from_country', 'to_city', 'to_country', 'date'],
+          received: Object.keys(body)
+        },
+        { status: 400 }
+      );
+    }
+
     console.log('Sending request to backend:', JSON.stringify(body, null, 2));
-    
+
     const response = await fetch(`${BACKEND_API_URL}/agents/conveyance`, {
       method: 'POST',
       headers: {

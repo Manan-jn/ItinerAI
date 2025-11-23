@@ -85,7 +85,7 @@ const STEPS_CONFIG: StepConfig[] = [
   },
 ];
 
-const TRAVEL_ICONS = ["🌍", "✈️", "🏨", "🎭", "🎉"];
+const TRAVEL_ICONS = ["🌍", "✈️", "🏨", "🗺️", "🧳"];
 
 export function JourneyLoader({
   isVisible,
@@ -165,38 +165,19 @@ export function JourneyLoader({
         background: "#ffffff",
       }}
     >
-      {/* Subtle floating particles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(5)].map((_, i) => (
-          <div
-            key={i}
-            className="particle absolute rounded-full"
-            style={{
-              width: `${6 + i * 2}px`,
-              height: `${6 + i * 2}px`,
-              left: `${10 + i * 17}%`,
-              background:
-                "linear-gradient(135deg, rgba(37, 99, 235, 0.3), rgba(96, 165, 250, 0.2))",
-              boxShadow: "0 0 15px rgba(37, 99, 235, 0.2)",
-              animationDelay: `${i * 2}s`,
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Travel animation container - morphing icons */}
-      <div className="relative w-32 h-32 md:w-40 md:h-40 flex items-center justify-center mb-8">
+      {/* Travel animation container - subtle morphing icons */}
+      <div className="relative w-24 h-24 md:w-28 md:h-28 flex items-center justify-center mb-10">
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-br from-blue-50 to-white border border-blue-100 animate-gentle-breathe" />
+        </div>
         {TRAVEL_ICONS.map((icon, i) => (
           <span
             key={i}
-            className={`travel-icon absolute text-5xl md:text-6xl transition-all duration-500 ${
+            className={`absolute text-4xl md:text-5xl transition-all duration-700 ease-out ${
               i === travelIconIndex
-                ? "opacity-100 scale-100"
-                : "opacity-0 scale-50"
+                ? "opacity-100 scale-100 animate-subtle-float"
+                : "opacity-0 scale-90"
             }`}
-            style={{
-              filter: "drop-shadow(0 4px 12px rgba(37, 99, 235, 0.2))",
-            }}
           >
             {icon}
           </span>
@@ -206,20 +187,19 @@ export function JourneyLoader({
       {/* Steps loader */}
       <div className="w-[90%] max-w-3xl">
         {/* Steps container */}
-        <div className="relative flex justify-between items-center mb-12">
+        <div className="relative flex justify-between items-center mb-10">
           {/* Progress line background */}
-          <div className="absolute top-[28px] md:top-[35px] left-[35px] md:left-[45px] right-[35px] md:right-[45px] h-[3px] bg-blue-100 z-0 rounded-full" />
+          <div className="absolute top-[24px] md:top-[28px] left-[30px] md:left-[35px] right-[30px] md:right-[35px] h-[2px] bg-gray-100 z-0 rounded-full" />
 
           {/* Progress line active */}
           <div
-            className="absolute top-[28px] md:top-[35px] left-[35px] md:left-[45px] h-[3px] bg-gradient-to-r from-blue-500 to-blue-400 z-0 rounded-full transition-all duration-800 ease-out"
+            className="absolute top-[24px] md:top-[28px] left-[30px] md:left-[35px] h-[2px] bg-blue-400 z-0 rounded-full transition-all duration-700 ease-out"
             style={{
-              width: `calc(${progressPercentage}% * (100% - 70px) / 100)`,
-              boxShadow: "0 0 12px rgba(37, 99, 235, 0.4)",
+              width: `calc(${progressPercentage}% * (100% - 60px) / 100)`,
             }}
           />
 
-          {/* Step circles */}
+          {/* Step circles - minimalistic design */}
           {STEPS_CONFIG.map((step, i) => {
             const isActive = i === currentStepIndex;
             const isCompleted = i < currentStepIndex;
@@ -230,46 +210,35 @@ export function JourneyLoader({
                 className="relative z-10 flex flex-col items-center"
               >
                 <div
-                  className={`w-14 h-14 md:w-[70px] md:h-[70px] rounded-full flex items-center justify-center mb-3 transition-all duration-500 ${
+                  className={`w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center mb-2 transition-all duration-400 ${
                     isActive
-                      ? "bg-white border-2 border-blue-500 shadow-lg scale-110"
+                      ? "bg-white border border-blue-400"
                       : isCompleted
-                      ? "bg-blue-50 border-2 border-blue-300"
-                      : "bg-white/60 border-2 border-blue-100"
+                      ? "bg-blue-50 border border-blue-200"
+                      : "bg-gray-50 border border-gray-200"
                   }`}
                   style={{
-                    backdropFilter: "blur(12px)",
                     boxShadow: isActive
-                      ? "0 6px 20px rgba(37, 99, 235, 0.18), 0 0 0 6px rgba(37, 99, 235, 0.08)"
-                      : isCompleted
-                      ? "0 3px 12px rgba(37, 99, 235, 0.1)"
-                      : "0 2px 12px rgba(37, 99, 235, 0.06)",
-                    animation: isActive
-                      ? "subtlePulse 3s ease-in-out infinite"
+                      ? "0 2px 8px rgba(37, 99, 235, 0.12)"
                       : "none",
                   }}
                 >
                   <span
-                    className={`text-xl md:text-2xl transition-all duration-500 ${
+                    className={`text-lg md:text-xl transition-all duration-400 ${
                       isActive
-                        ? "opacity-100 scale-100"
+                        ? "opacity-100"
                         : isCompleted
-                        ? "opacity-60 scale-95"
-                        : "opacity-35 scale-90"
+                        ? "opacity-70"
+                        : "opacity-40"
                     }`}
-                    style={{
-                      animation: isActive
-                        ? "subtleIconBounce 3s ease-in-out infinite"
-                        : "none",
-                    }}
                   >
                     {step.icon}
                   </span>
                 </div>
                 <span
-                  className={`text-xs md:text-sm text-center max-w-[70px] md:max-w-[90px] font-medium transition-all duration-600 ${
+                  className={`text-[10px] md:text-xs text-center max-w-[60px] md:max-w-[80px] transition-all duration-400 ${
                     isActive
-                      ? "text-blue-600 font-bold -translate-y-0.5"
+                      ? "text-blue-600 font-medium"
                       : isCompleted
                       ? "text-gray-500"
                       : "text-gray-400"
@@ -282,31 +251,44 @@ export function JourneyLoader({
           })}
         </div>
 
-        {/* Loading text with reveal animation */}
+        {/* Loading text with reveal animation - inspired by loadingscreen.html */}
         <div className="text-center">
-          <div className="loading-text-container relative inline-block">
-            <p
-              key={currentMessage}
-              className="text-xl md:text-2xl font-medium text-blue-600 animate-text-reveal"
+          <div className="text-reveal-container relative inline-flex items-center justify-center overflow-hidden">
+            <div
+              key={`prefix-${currentStep}`}
+              className="text-reveal-prefix text-lg md:text-xl font-light text-gray-600"
               style={{
                 fontFamily:
                   "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-                letterSpacing: "0.01em",
               }}
             >
-              {currentMessage}
-            </p>
+              {currentStepConfig.label}
+            </div>
+            <div
+              key={currentMessage}
+              className="text-reveal-main overflow-hidden whitespace-nowrap"
+            >
+              <span
+                className="text-reveal-slide inline-block text-lg md:text-xl font-normal text-blue-500 ml-2"
+                style={{
+                  fontFamily:
+                    "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+                }}
+              >
+                {currentMessage}
+              </span>
+            </div>
           </div>
 
-          {/* Message progress dots */}
-          <div className="flex justify-center space-x-2 mt-6">
+          {/* Message progress dots - more subtle */}
+          <div className="flex justify-center space-x-1.5 mt-5">
             {currentStepConfig.messages.map((_, i) => (
               <div
                 key={i}
-                className={`transition-all duration-500 ease-out rounded-full ${
+                className={`transition-all duration-400 ease-out rounded-full ${
                   i === messageIndex
-                    ? "w-6 h-1 bg-blue-400"
-                    : "w-1.5 h-1 bg-gray-300"
+                    ? "w-4 h-1 bg-blue-400"
+                    : "w-1 h-1 bg-gray-200"
                 }`}
               />
             ))}
@@ -315,70 +297,71 @@ export function JourneyLoader({
       </div>
 
       <style jsx>{`
-        @keyframes float-particle {
-          0% {
-            transform: translateY(100vh) translateX(0) scale(0.5);
-            opacity: 0;
-          }
-          10% {
-            opacity: 0.5;
-          }
-          90% {
-            opacity: 0.5;
-          }
-          100% {
-            transform: translateY(-100px) translateX(80px) scale(1.1);
-            opacity: 0;
-          }
-        }
-
-        .particle {
-          animation: float-particle 15s infinite ease-in-out;
-        }
-
-        @keyframes subtlePulse {
-          0%,
-          100% {
-            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.18),
-              0 0 0 6px rgba(37, 99, 235, 0.08);
+        /* Gentle breathing animation for the icon container */
+        @keyframes gentle-breathe {
+          0%, 100% {
+            transform: scale(1);
+            opacity: 0.8;
           }
           50% {
-            box-shadow: 0 8px 24px rgba(37, 99, 235, 0.22),
-              0 0 0 8px rgba(37, 99, 235, 0.12);
+            transform: scale(1.03);
+            opacity: 1;
           }
         }
 
-        @keyframes subtleIconBounce {
-          0%,
-          100% {
-            transform: scale(1) rotate(5deg);
+        .animate-gentle-breathe {
+          animation: gentle-breathe 4s ease-in-out infinite;
+        }
+
+        /* Subtle float for active emoji */
+        @keyframes subtle-float {
+          0%, 100% {
+            transform: translateY(0);
           }
           50% {
-            transform: scale(1.08) rotate(-3deg);
+            transform: translateY(-4px);
           }
         }
 
-        @keyframes text-reveal {
-          0% {
-            opacity: 0;
-            transform: translateY(10px);
-          }
-          20% {
-            opacity: 1;
-            transform: translateY(0);
-          }
-          80% {
-            opacity: 1;
-            transform: translateY(0);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0);
-          }
+        .animate-subtle-float {
+          animation: subtle-float 3s ease-in-out infinite;
         }
 
-        .animate-text-reveal {
-          animation: text-reveal 1.2s ease-out both;
+        /* Text reveal animations - inspired by loadingscreen.html */
+        @keyframes showup {
+          0% { opacity: 0; }
+          20% { opacity: 1; }
+          80% { opacity: 1; }
+          100% { opacity: 0; }
+        }
+
+        @keyframes reveal {
+          0% { opacity: 0; width: 0px; }
+          20% { opacity: 1; width: 0px; }
+          30% { width: 280px; }
+          80% { opacity: 1; }
+          100% { opacity: 0; width: 280px; }
+        }
+
+        @keyframes slidein {
+          0% { margin-left: -280px; }
+          20% { margin-left: -280px; }
+          35% { margin-left: 0px; }
+          100% { margin-left: 0px; }
+        }
+
+        .text-reveal-prefix {
+          animation: showup 5s infinite;
+        }
+
+        .text-reveal-main {
+          width: 0px;
+          animation: reveal 5s infinite;
+        }
+
+        .text-reveal-slide {
+          margin-left: -280px;
+          animation: slidein 5s infinite;
         }
       `}</style>
     </div>

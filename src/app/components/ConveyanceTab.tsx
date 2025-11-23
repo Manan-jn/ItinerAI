@@ -1841,9 +1841,11 @@ export default function ConveyanceTab({
             body: JSON.stringify({
               user_id: userId || "user123",
               session_id: sessionId || "session456",
-              message: `Give me all the travel options from ${from} to ${to} on ${formatDateForMessage(
-                departureDate
-              )}`,
+              from_city: from,
+              from_country: departureCountry,
+              to_city: to,
+              to_country: arrivalCountry,
+              date: dateStr,
             }),
           }),
         ]);

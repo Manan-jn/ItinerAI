@@ -57,12 +57,12 @@ function formatDateForAPI(dateString: string): string {
  */
 function normalizeCityName(cityName: string): string {
   if (!cityName) return "";
-  
+
   // Handle special cases
   if (cityName === "user_location" || cityName === "User Location") {
     return "Mumbai"; // Default location
   }
-  
+
   // Capitalize first letter of each word
   return cityName
     .split(" ")
@@ -119,9 +119,14 @@ async function fetchStaysForDay(
       body: JSON.stringify({
         user_id: userId,
         session_id: sessionId,
-        message: `Give me all the stay options available ${checkInFormatted} to ${checkOutFormatted} in ${normalizedCity}`,
+        city: normalizedCity,
+        country: country,
+        check_in_date: checkInDate,
+        check_out_date: checkOutDate,
       }),
     }),
+    //         user_query: `Give me all the stay options available ${checkInFormatted} to ${checkOutFormatted} in ${normalizedCity}`,
+
     // Utility Stays
     fetch("/api/utility/stay", {
       method: "POST",
@@ -250,7 +255,7 @@ export async function preFetchStaysData(
     // Calculate actual dates for check-in and check-out
     const checkInDate = calculateDayDate(tripDate, day.check_in_day);
     const checkOutDate = calculateDayDate(tripDate, day.check_out_day);
-    
+
     return fetchStaysForDay(
       day.day_number,
       day.city,
@@ -271,7 +276,7 @@ export async function preFetchStaysData(
       const checkInDate = calculateDayDate(tripDate, day.check_in_day);
       const checkOutDate = calculateDayDate(tripDate, day.check_out_day);
       const stayKey = generateStayKey(day.city, checkInDate, checkOutDate);
-      
+
       preFetchedData[stayKey] = {
         ...results[index],
         // Add metadata for easy retrieval
@@ -286,7 +291,7 @@ export async function preFetchStaysData(
           fetched_at: new Date().toISOString(),
         },
       };
-      
+
       console.log(`📍 Storing stay: ${stayKey}`);
     });
 
@@ -311,7 +316,7 @@ async function storePreFetchedStaysData(
 ): Promise<void> {
   try {
     const docRef = doc(db, "pre_fetch_data_conveyance_stays", userId);
-    
+
     await setDoc(
       docRef,
       {
@@ -345,16 +350,16 @@ export async function getPreFetchedStaysData(
 ): Promise<any> {
   try {
     const stayKey = generateStayKey(city, checkInDate, checkOutDate);
-    
+
     console.log(`🔍 Retrieving pre-fetched stays data for: ${stayKey}`);
-    
+
     const docRef = doc(db, "pre_fetch_data_conveyance_stays", userId);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
       const data = docSnap.data();
       const stayData = data.stays_data?.[stayKey];
-      
+
       if (stayData) {
         console.log(`✅ Found cached stays data for: ${stayKey}`);
         return stayData;
