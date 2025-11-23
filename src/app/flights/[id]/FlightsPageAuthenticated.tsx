@@ -940,21 +940,92 @@ export default function FlightsPageAuthenticated() {
         JSON.stringify(requestBody, null, 2)
       );
 
-      const response = await fetch("/api/itinerary", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestBody),
-      });
+      // Retry configuration for insert flow
+      const MAX_RETRIES = 2; // Up to 3 attempts total (initial + 2 retries)
+      const RETRY_DELAY = 5000; // 5 seconds
+      let lastError: Error | null = null;
+      let itineraryResponse: any = null;
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error("❌ Itinerary API error:", response.status, errorText);
-        throw new Error(`API request failed: ${response.status}`);
+      // Retry loop for handling 500/503 errors
+      for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+        try {
+          if (attempt > 0) {
+            console.log(
+              `⏳ Retrying insert API (attempt ${attempt + 1}/${
+                MAX_RETRIES + 1
+              }) after 5 seconds...`
+            );
+
+            // Update loader messages for retry
+            setConveyanceLoaderMessages([
+              `Retrying itinerary generation (attempt ${attempt + 1})`,
+              "Please wait, this may take a moment...",
+              "Optimizing your schedule",
+              "Adding personalized recommendations",
+            ]);
+
+            // Wait before retry
+            await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY));
+          }
+
+          const response = await fetch("/api/itinerary", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(requestBody),
+          });
+
+          // Check for 500 or 503 specifically (server-side errors that may be transient)
+          if (response.status === 500 || response.status === 503) {
+            console.warn(
+              `⚠️ Insert API returned ${response.status} (attempt ${attempt + 1}/${
+                MAX_RETRIES + 1
+              })`
+            );
+            lastError = new Error(`Service error (${response.status})`);
+
+            // If we have retries left, continue to next attempt
+            if (attempt < MAX_RETRIES) {
+              continue;
+            } else {
+              // Last attempt failed
+              throw lastError;
+            }
+          }
+
+          if (!response.ok) {
+            const errorText = await response.text();
+            console.error("❌ Insert API error:", response.status, errorText);
+            throw new Error(`API request failed: ${response.status}`);
+          }
+
+          itineraryResponse = await response.json();
+          console.log(
+            `✅ Insert API response received on attempt ${attempt + 1}`
+          );
+
+          // Success - break out of retry loop
+          break;
+        } catch (error) {
+          console.error(
+            `❌ Insert API error (attempt ${attempt + 1}/${MAX_RETRIES + 1}):`,
+            error
+          );
+          lastError = error as Error;
+
+          // If this was the last attempt, throw
+          if (attempt === MAX_RETRIES) {
+            throw lastError;
+          }
+        }
       }
 
-      const itineraryResponse = await response.json();
+      // If we exited the loop without a response, throw the last error
+      if (!itineraryResponse) {
+        throw lastError || new Error("Insert API request failed after retries");
+      }
+
       console.log("✅ Insert API Response:", itineraryResponse);
 
       // Hide loader
@@ -2093,29 +2164,57 @@ export default function FlightsPageAuthenticated() {
       console.log(`✅ Day ${nextDayNumber} requires conveyance`);
 
       // Extract from and to cities
-      let fromCity = nextDay.conveyance_details.from_city || "";
+      // IMPROVED: Iterate backward through selectedTrip.day_wise_plan to find the last to_city
+      let fromCity = "";
       let toCity = nextDay.conveyance_details.to_city || "";
       let canAutoFill = true;
 
-      // Normalize fromCity with fallback detection
-      if (fromCity) {
-        const originalFromCity = fromCity;
-        const result = normalizeCityNameSyncWithFallback(fromCity);
-        fromCity = result.normalized;
+      // First, try to get fromCity by iterating backward from the current day
+      console.log(
+        `🔍 Looking for last to_city before day ${nextDayNumber} (checking days ${nextDayNumber - 1} to 1)`
+      );
+      for (let i = nextDayNumber - 2; i >= 0; i--) {
+        const day = selectedTrip.day_wise_plan?.[i];
+        console.log(`   Checking day ${i + 1}:`, day?.conveyance_details);
 
-        if (!result.found) {
-          console.warn(
-            `⚠️ from_city "${originalFromCity}" not found in places.json - disabling auto-fill`
-          );
-          canAutoFill = false;
-        } else {
-          console.log(
-            `✅ Normalized from_city: "${originalFromCity}" → "${fromCity}"`
-          );
+        if (day?.conveyance_details?.to_city) {
+          fromCity = day.conveyance_details.to_city;
+          console.log(`🎯 Found last to_city: ${fromCity} from day ${i + 1}`);
+          break;
         }
+      }
+
+      // Fallback: if no to_city found from backward iteration, use the day's from_city
+      if (!fromCity) {
+        fromCity = nextDay.conveyance_details.from_city || "";
+        console.log(`🔄 No previous to_city found, using day's from_city: ${fromCity}`);
+      }
+
+      // Fallback: if still no fromCity, use source_point or default to Mumbai
+      if (!fromCity) {
+        if (selectedTrip.source_point?.place_name) {
+          fromCity = selectedTrip.source_point.place_name;
+          console.log(`🔄 Using source_point as from_city: ${fromCity}`);
+        } else {
+          fromCity = "Mumbai";
+          console.log("🔄 No from_city found, defaulting to Mumbai");
+        }
+      }
+
+      // Normalize fromCity with fallback detection
+      const originalFromCity = fromCity;
+      const fromCityResult = normalizeCityNameSyncWithFallback(fromCity);
+      fromCity = fromCityResult.normalized;
+
+      if (!fromCityResult.found) {
+        console.warn(
+          `⚠️ from_city "${originalFromCity}" not found in places.json - disabling auto-fill`
+        );
+        canAutoFill = false;
       } else {
-        fromCity = "Mumbai";
-        console.log("🔄 Empty from_city, defaulting to Mumbai");
+        console.log(
+          `✅ Normalized from_city: "${originalFromCity}" → "${fromCity}"`
+        );
       }
 
       // Normalize toCity with fallback detection
