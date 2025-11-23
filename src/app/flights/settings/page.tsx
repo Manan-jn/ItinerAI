@@ -12,6 +12,7 @@ interface UserData {
   dateOfBirth: string;
   gender: string;
   passportNationality: string;
+  phoneNumber: string;
   allergies: string;
   emergencyContactName: string;
   emergencyContactPhone: string;
@@ -637,6 +638,22 @@ export default function FlightsSettingsPage() {
                         </option>
                       ))}
                     </select>
+                  </div>
+
+                  {/* Phone Number */}
+                  <div className="md:col-span-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Phone Number
+                    </label>
+                    <input
+                      type="tel"
+                      value={formData.phoneNumber || ""}
+                      onChange={(e) =>
+                        handleInputChange("phoneNumber", e.target.value)
+                      }
+                      placeholder="+1 (555) 123-4567"
+                      className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                    />
                   </div>
                 </div>
               </div>

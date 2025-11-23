@@ -9,7 +9,8 @@ const BACKEND_API_URL = process.env.BACKEND_API_URL || "http://127.0.0.1:8000";
  *
  * Request Body:
  * {
- *   "user_id": "234"
+ *   "user_id": "234",
+ *   "phone_number": "+1234567890"
  * }
  *
  * Response:
@@ -30,6 +31,7 @@ export async function POST(request: NextRequest) {
     // Get request body
     const body = await request.json();
     userId = body.user_id;
+    const phoneNumber = body.phone_number;
 
     // Use app logger since we don't have session yet
     logger = getAppLogger();
@@ -39,7 +41,7 @@ export async function POST(request: NextRequest) {
       type: 'api_request',
       endpoint: '/api/session/create',
       method: 'POST',
-      params: { user_id: userId }
+      params: { user_id: userId, phone_number: phoneNumber ? '***' : undefined }
     });
 
     // Validate user_id
@@ -54,8 +56,20 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Validate phone_number
+    if (!phoneNumber) {
+      logger.warn('Validation failed: phone_number is required');
+      return NextResponse.json(
+        {
+          error: "phone_number is required",
+          message: "Missing phone_number in request body",
+        },
+        { status: 400 }
+      );
+    }
+
     const backendUrl = `${BACKEND_API_URL}/session/create`;
-    const backendRequestBody = { user_id: userId };
+    const backendRequestBody = { user_id: userId, phone_number: phoneNumber };
 
     // Log backend request
     logBackendRequest(logger, backendUrl, backendRequestBody);

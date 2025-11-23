@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { User } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../../firebase";
 import { getSessionId } from "../utils/sessionManager";
 
 /**
@@ -30,6 +32,27 @@ export function useSessionManagement(currentUser: User | null) {
         setIsInitializingSession(true);
 
         try {
+          // Fetch phone_number from Firestore
+          let phoneNumber = "";
+          try {
+            const userDoc = await getDoc(doc(db, "users", authenticatedUserId));
+            if (userDoc.exists()) {
+              phoneNumber = userDoc.data()?.phoneNumber || "";
+            }
+          } catch (firestoreError) {
+            console.warn("⚠️ Could not fetch user data from Firestore:", firestoreError);
+          }
+
+          if (!phoneNumber) {
+            console.warn("⚠️ No phone number found for user, falling back to local session");
+            const fallbackSessionId = getSessionId();
+            setSessionId(fallbackSessionId);
+            setUserId(authenticatedUserId);
+            setPreviousSessionId(fallbackSessionId);
+            setIsInitializingSession(false);
+            return;
+          }
+
           // Call /api/session/create to get a new session ID
           console.log(
             "🔄 Creating new session via API for user:",
@@ -43,6 +66,7 @@ export function useSessionManagement(currentUser: User | null) {
             },
             body: JSON.stringify({
               user_id: authenticatedUserId,
+              phone_number: phoneNumber,
             }),
           });
 
@@ -107,22 +131,39 @@ export function useSessionManagement(currentUser: User | null) {
           currentUser.uid
         );
 
-        const response = await fetch("/api/session/create", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            user_id: currentUser.uid,
-          }),
-        });
+        // Fetch phone_number from Firestore
+        let phoneNumber = "";
+        try {
+          const userDoc = await getDoc(doc(db, "users", currentUser.uid));
+          if (userDoc.exists()) {
+            phoneNumber = userDoc.data()?.phoneNumber || "";
+          }
+        } catch (firestoreError) {
+          console.warn("⚠️ Could not fetch user data from Firestore:", firestoreError);
+        }
 
-        if (response.ok) {
-          const sessionData = await response.json();
-          newSessionId = sessionData.body.session_id;
-          console.log("✅ Session regenerated via API:", newSessionId);
+        if (!phoneNumber) {
+          console.warn("⚠️ No phone number found for user, falling back to local session");
+          newSessionId = getSessionId();
         } else {
-          throw new Error("Failed to create session via API");
+          const response = await fetch("/api/session/create", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              user_id: currentUser.uid,
+              phone_number: phoneNumber,
+            }),
+          });
+
+          if (response.ok) {
+            const sessionData = await response.json();
+            newSessionId = sessionData.body.session_id;
+            console.log("✅ Session regenerated via API:", newSessionId);
+          } else {
+            throw new Error("Failed to create session via API");
+          }
         }
       } catch (error) {
         console.error("❌ Error regenerating session:", error);

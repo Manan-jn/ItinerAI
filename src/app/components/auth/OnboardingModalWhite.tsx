@@ -19,6 +19,8 @@ interface Step1Data {
   dateOfBirth: string;
   gender: string;
   passportNationality: string;
+  countryCode: string;
+  phoneNumber: string;
 }
 
 interface Step2Data {
@@ -45,6 +47,8 @@ export default function OnboardingModalWhite({
     dateOfBirth: "",
     gender: "",
     passportNationality: "",
+    countryCode: "+1",
+    phoneNumber: "",
   });
 
   // Step 2 state (optional)
@@ -69,7 +73,8 @@ export default function OnboardingModalWhite({
     if (
       !step1Data.dateOfBirth ||
       !step1Data.gender ||
-      !step1Data.passportNationality
+      !step1Data.passportNationality ||
+      !step1Data.phoneNumber
     ) {
       setError("Please fill in all required fields");
       return false;
@@ -119,11 +124,15 @@ export default function OnboardingModalWhite({
         finalFoodPreference = step2Data.foodPreferencesOther;
       }
 
+      // Combine country code and phone number
+      const fullPhoneNumber = `${step1Data.countryCode}${step1Data.phoneNumber}`;
+
       const userData = {
         // Step 1 data (mandatory)
         dateOfBirth: step1Data.dateOfBirth,
         gender: step1Data.gender,
         passportNationality: step1Data.passportNationality,
+        phoneNumber: fullPhoneNumber,
         // Step 2 data (optional)
         allergies: step2Data.allergies || "",
         emergencyContactName: step2Data.emergencyContactName || "",
@@ -143,7 +152,7 @@ export default function OnboardingModalWhite({
         const resp = await fetch("/api/session/create", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ user_id: userId }),
+          body: JSON.stringify({ user_id: userId, phone_number: fullPhoneNumber }),
         });
         if (resp.ok) {
           const data = await resp.json();
@@ -394,6 +403,59 @@ export default function OnboardingModalWhite({
     "Other",
   ];
 
+  const countryCodes = [
+    { code: "+1", country: "US/CA", flag: "🇺🇸" },
+    { code: "+44", country: "UK", flag: "🇬🇧" },
+    { code: "+91", country: "IN", flag: "🇮🇳" },
+    { code: "+86", country: "CN", flag: "🇨🇳" },
+    { code: "+81", country: "JP", flag: "🇯🇵" },
+    { code: "+49", country: "DE", flag: "🇩🇪" },
+    { code: "+33", country: "FR", flag: "🇫🇷" },
+    { code: "+39", country: "IT", flag: "🇮🇹" },
+    { code: "+34", country: "ES", flag: "🇪🇸" },
+    { code: "+55", country: "BR", flag: "🇧🇷" },
+    { code: "+52", country: "MX", flag: "🇲🇽" },
+    { code: "+61", country: "AU", flag: "🇦🇺" },
+    { code: "+82", country: "KR", flag: "🇰🇷" },
+    { code: "+7", country: "RU", flag: "🇷🇺" },
+    { code: "+31", country: "NL", flag: "🇳🇱" },
+    { code: "+46", country: "SE", flag: "🇸🇪" },
+    { code: "+41", country: "CH", flag: "🇨🇭" },
+    { code: "+43", country: "AT", flag: "🇦🇹" },
+    { code: "+32", country: "BE", flag: "🇧🇪" },
+    { code: "+45", country: "DK", flag: "🇩🇰" },
+    { code: "+47", country: "NO", flag: "🇳🇴" },
+    { code: "+358", country: "FI", flag: "🇫🇮" },
+    { code: "+48", country: "PL", flag: "🇵🇱" },
+    { code: "+351", country: "PT", flag: "🇵🇹" },
+    { code: "+353", country: "IE", flag: "🇮🇪" },
+    { code: "+64", country: "NZ", flag: "🇳🇿" },
+    { code: "+65", country: "SG", flag: "🇸🇬" },
+    { code: "+852", country: "HK", flag: "🇭🇰" },
+    { code: "+971", country: "AE", flag: "🇦🇪" },
+    { code: "+966", country: "SA", flag: "🇸🇦" },
+    { code: "+972", country: "IL", flag: "🇮🇱" },
+    { code: "+90", country: "TR", flag: "🇹🇷" },
+    { code: "+20", country: "EG", flag: "🇪🇬" },
+    { code: "+27", country: "ZA", flag: "🇿🇦" },
+    { code: "+234", country: "NG", flag: "🇳🇬" },
+    { code: "+254", country: "KE", flag: "🇰🇪" },
+    { code: "+60", country: "MY", flag: "🇲🇾" },
+    { code: "+62", country: "ID", flag: "🇮🇩" },
+    { code: "+66", country: "TH", flag: "🇹🇭" },
+    { code: "+84", country: "VN", flag: "🇻🇳" },
+    { code: "+63", country: "PH", flag: "🇵🇭" },
+    { code: "+92", country: "PK", flag: "🇵🇰" },
+    { code: "+880", country: "BD", flag: "🇧🇩" },
+    { code: "+94", country: "LK", flag: "🇱🇰" },
+    { code: "+977", country: "NP", flag: "🇳🇵" },
+    { code: "+54", country: "AR", flag: "🇦🇷" },
+    { code: "+56", country: "CL", flag: "🇨🇱" },
+    { code: "+57", country: "CO", flag: "🇨🇴" },
+    { code: "+51", country: "PE", flag: "🇵🇪" },
+    { code: "+58", country: "VE", flag: "🇻🇪" },
+  ];
+
   if (!isOpen) return null;
 
   return (
@@ -493,6 +555,41 @@ export default function OnboardingModalWhite({
                   </option>
                 ))}
               </select>
+            </div>
+
+            {/* Phone Number */}
+            <div>
+              <label className="block text-xs font-medium text-gray-700 mb-1.5">
+                Phone Number <span className="text-red-500">*</span>
+              </label>
+              <div className="flex space-x-2">
+                <select
+                  value={step1Data.countryCode}
+                  onChange={(e) =>
+                    handleStep1Change("countryCode", e.target.value)
+                  }
+                  className="w-28 px-2 py-2 text-sm bg-white border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                  disabled={loading}
+                >
+                  {countryCodes.map((item) => (
+                    <option key={item.code} value={item.code}>
+                      {item.flag} {item.code}
+                    </option>
+                  ))}
+                </select>
+                <input
+                  type="tel"
+                  value={step1Data.phoneNumber}
+                  onChange={(e) => {
+                    // Only allow digits
+                    const value = e.target.value.replace(/\D/g, "");
+                    handleStep1Change("phoneNumber", value);
+                  }}
+                  placeholder="1234567890"
+                  className="flex-1 px-3 py-2 text-sm bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                  disabled={loading}
+                />
+              </div>
             </div>
 
             <button

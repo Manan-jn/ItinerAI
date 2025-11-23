@@ -392,15 +392,23 @@ function DatePicker({
                 const isDisplayedMonth = date.getMonth() === currentMonth;
                 const isToday = date.toDateString() === today.toDateString();
                 const isPast = date < today && !isToday;
-                const isSelected =
-                  selectedDate === date.toISOString().split("T")[0];
+                // Use local date components for comparison to avoid timezone issues
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                const dateStrForComparison = `${year}-${month}-${day}`;
+                const isSelected = selectedDate === dateStrForComparison;
 
                 return (
                   <button
                     key={index}
                     onClick={() => {
                       if (!isPast) {
-                        const dateStr = date.toISOString().split("T")[0];
+                        // Use local date components to avoid timezone issues
+                        const year = date.getFullYear();
+                        const month = String(date.getMonth() + 1).padStart(2, '0');
+                        const day = String(date.getDate()).padStart(2, '0');
+                        const dateStr = `${year}-${month}-${day}`;
                         setSelectedDate(dateStr);
                         onChange(dateStr);
                         setIsOpen(false);
