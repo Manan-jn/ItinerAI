@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { createPortal } from "react-dom";
 import {
   FiChevronDown,
   FiUser,
@@ -9,6 +10,7 @@ import {
   FiChevronLeft,
   FiChevronRight,
   FiCheck,
+  FiInfo,
 } from "react-icons/fi";
 import { MdFlight, MdTrain, MdDirectionsBus } from "react-icons/md";
 import {
@@ -613,6 +615,9 @@ interface TransportOption {
   arrivalTime: string;
   duration: string;
   price: number;
+  // AI recommendation specific fields
+  reason?: string;
+  tags?: string[];
   // Enriched metadata for parent flows
   from_city?: string;
   to_city?: string;
@@ -636,6 +641,8 @@ interface APIFlightData {
   arrival_time: string;
   duration: string;
   price: string;
+  reason?: string;
+  tags?: string[];
 }
 
 interface APITrainData {
@@ -647,6 +654,8 @@ interface APITrainData {
   arrival_time: string;
   duration: string;
   price: string;
+  reason?: string;
+  tags?: string[];
 }
 
 interface APIConveyanceResponse {
@@ -1039,6 +1048,7 @@ function TransportCard({
   toCity,
   isBooked,
   onBook,
+  isAiRecommendation = false,
 }: {
   option: TransportOption;
   mode: "flight" | "train" | "bus";
@@ -1046,8 +1056,76 @@ function TransportCard({
   toCity?: string;
   isBooked: boolean;
   onBook: (id: string) => void;
+  isAiRecommendation?: boolean;
 }) {
   const [showFareDetails, setShowFareDetails] = useState(false);
+  const [showReasonTooltip, setShowReasonTooltip] = useState(false);
+  const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0, arrowOnRight: false });
+  const [isMounted, setIsMounted] = useState(false);
+  const infoIconRef = useRef<HTMLDivElement>(null);
+
+  // Ensure we're on the client side for portal rendering and inject tooltip animation
+  useEffect(() => {
+    setIsMounted(true);
+
+    // Inject tooltip animation keyframes into document head if not already present
+    if (typeof document !== 'undefined' && !document.getElementById('tooltip-animation-styles')) {
+      const styleSheet = document.createElement('style');
+      styleSheet.id = 'tooltip-animation-styles';
+      styleSheet.textContent = `
+        @keyframes tooltipFadeIn {
+          0% {
+            opacity: 0;
+            transform: translateX(-8px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+      `;
+      document.head.appendChild(styleSheet);
+    }
+  }, []);
+
+  // Calculate tooltip position when hovering
+  const handleMouseEnter = () => {
+    if (infoIconRef.current) {
+      const rect = infoIconRef.current.getBoundingClientRect();
+      const tooltipWidth = 320; // w-80 = 20rem = 320px
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+
+      let left = rect.right + 12; // 12px gap from the icon
+      let top = rect.top;
+      let arrowOnRight = false;
+
+      // Check if tooltip would overflow right edge of viewport
+      if (left + tooltipWidth > viewportWidth - 20) {
+        // Position to the left of the icon instead
+        left = rect.left - tooltipWidth - 12;
+        arrowOnRight = true;
+      }
+
+      // Ensure tooltip doesn't go off the top
+      if (top < 10) {
+        top = 10;
+      }
+
+      // Ensure tooltip doesn't go off the bottom (rough estimate)
+      const estimatedTooltipHeight = 180;
+      if (top + estimatedTooltipHeight > viewportHeight - 10) {
+        top = viewportHeight - estimatedTooltipHeight - 10;
+      }
+
+      setTooltipPosition({ top, left, arrowOnRight });
+    }
+    setShowReasonTooltip(true);
+  };
+
+  const handleMouseLeave = () => {
+    setShowReasonTooltip(false);
+  };
 
   const getIcon = () => {
     switch (mode) {
@@ -1125,6 +1203,74 @@ function TransportCard({
           <span>SELECTED</span>
         </div>
       )}
+
+      {/* AI Recommendation Info Icon */}
+      {isAiRecommendation && option.reason && (
+        <div
+          ref={infoIconRef}
+          className="absolute top-2 left-2 z-10"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          <div className="w-7 h-7 bg-gradient-to-br from-purple-500 to-blue-500 rounded-full flex items-center justify-center shadow-lg cursor-help transition-all duration-300 hover:scale-110 hover:shadow-xl">
+            <FiInfo className="text-white" size={14} />
+          </div>
+        </div>
+      )}
+
+      {/* Portal-based Tooltip - Renders at document body level to escape overflow:hidden */}
+      {isAiRecommendation && option.reason && showReasonTooltip && isMounted &&
+        createPortal(
+          <div
+            className="fixed z-[9999] w-80 pointer-events-none"
+            style={{
+              top: `${tooltipPosition.top}px`,
+              left: `${tooltipPosition.left}px`,
+              animation: "tooltipFadeIn 0.2s ease-out forwards",
+            }}
+          >
+            <div className="relative bg-gradient-to-br from-gray-900 to-gray-800 text-white text-xs rounded-xl shadow-2xl overflow-visible border border-purple-500/30">
+              {/* Tooltip Arrow - dynamically positioned based on tooltip placement */}
+              <div
+                className={`absolute top-3 w-4 h-4 bg-gray-900 transform rotate-45 ${
+                  tooltipPosition.arrowOnRight
+                    ? "-right-2 border-r border-t border-purple-500/30"
+                    : "-left-2 border-l border-b border-purple-500/30"
+                }`}
+              ></div>
+
+              {/* Header */}
+              <div className="bg-gradient-to-r from-purple-500/20 to-blue-500/20 px-4 py-2.5 border-b border-white/10 rounded-t-xl">
+                <div className="flex items-center gap-2">
+                  <div className="w-6 h-6 bg-gradient-to-br from-purple-400 to-blue-400 rounded-full flex items-center justify-center shadow-md">
+                    <FiInfo className="text-white" size={12} />
+                  </div>
+                  <span className="font-semibold text-purple-200 text-sm">AI Recommendation</span>
+                </div>
+              </div>
+
+              {/* Reason Content */}
+              <div className="px-4 py-3">
+                <p className="text-gray-200 leading-relaxed text-[13px]">{option.reason}</p>
+              </div>
+
+              {/* Tags */}
+              {option.tags && option.tags.length > 0 && (
+                <div className="px-4 pb-3 flex flex-wrap gap-1.5">
+                  {option.tags.map((tag, idx) => (
+                    <span
+                      key={idx}
+                      className="px-2.5 py-1 bg-gradient-to-r from-purple-500/30 to-blue-500/30 text-purple-200 text-[11px] rounded-full border border-purple-400/30 font-medium"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>,
+          document.body
+        )}
 
       {/* Main Card Content */}
       <div className="p-3">
@@ -1723,6 +1869,19 @@ export default function FlightsWidget({
     });
   };
 
+  // Helper function to parse price strings like "INR 7257" or "INR 408 (Sleeper)"
+  const parsePrice = (priceStr: string | undefined): number => {
+    if (!priceStr) return 0;
+    // Remove currency prefix (INR, Rs, ₹, etc.) and any text in parentheses
+    const cleanedPrice = priceStr
+      .replace(/^(INR|Rs\.?|₹)\s*/i, "") // Remove currency prefix
+      .replace(/\s*\([^)]*\)/g, "") // Remove text in parentheses like "(Sleeper)"
+      .replace(/,/g, "") // Remove commas
+      .trim();
+    const parsed = parseInt(cleanedPrice, 10);
+    return isNaN(parsed) ? 0 : parsed;
+  };
+
   // Helper function to parse API flight data
   const parseFlightData = (apiFlights: APIFlightData[]): TransportOption[] => {
     return apiFlights.map((flight, index) => {
@@ -1748,7 +1907,9 @@ export default function FlightsWidget({
           departureTime: flight.departure_time || "N/A",
           arrivalTime: flight.arrival_time || "N/A",
           duration: flight.duration || "N/A",
-          price: flight.price ? parseInt(flight.price) : 0,
+          price: parsePrice(flight.price),
+          reason: flight.reason,
+          tags: flight.tags,
         };
       } catch (error) {
         console.error("Error parsing flight data:", flight, error);
@@ -1792,7 +1953,9 @@ export default function FlightsWidget({
           departureTime: train.departure_time || "N/A",
           arrivalTime: train.arrival_time || "N/A",
           duration: train.duration || "N/A",
-          price: train.price ? parseInt(train.price) : 0,
+          price: parsePrice(train.price),
+          reason: train.reason,
+          tags: train.tags,
         };
       } catch (error) {
         console.error("Error parsing train data:", train, error);
@@ -2326,6 +2489,7 @@ export default function FlightsWidget({
                               toCity={to}
                               isBooked={bookedOption === option.id}
                               onBook={handleBooking}
+                              isAiRecommendation={true}
                             />
                           ))}
                         </>
@@ -2486,6 +2650,17 @@ export default function FlightsWidget({
           }
         }
 
+        @keyframes fadeIn {
+          0% {
+            opacity: 0;
+            transform: translateY(-8px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
         .animate-rgb-flow {
           animation: rgb-flow 3s linear infinite;
           background-size: 200% 100%;
@@ -2493,6 +2668,10 @@ export default function FlightsWidget({
 
         .animate-rgb-glow-continuous {
           animation: rgb-glow-continuous 4s ease-in-out infinite;
+        }
+
+        .animate-fadeIn {
+          animation: fadeIn 0.2s ease-out forwards;
         }
       `}</style>
     </div>
