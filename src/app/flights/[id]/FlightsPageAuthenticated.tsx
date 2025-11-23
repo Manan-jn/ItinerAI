@@ -61,8 +61,7 @@ import { useTripHandlers } from "../../hooks/useTripHandlers";
 import { Sidebar } from "../../components/flights-page/Sidebar";
 import { DashboardContent } from "../../components/flights-page/DashboardContent";
 import { FlightsContent } from "../../components/flights-page/FlightsContent";
-import { TripLoader } from "../../components/flights-page/TripLoader";
-import { EndResponseLoader } from "../../components/flights-page/EndResponseLoader";
+import { JourneyLoader, type JourneyStep } from "../../components/JourneyLoader";
 import { ChatNavbar } from "../../components/flights-page/ChatNavbar";
 import PreFetchTestTrigger from "../../components/PreFetchTestTrigger";
 import {
@@ -198,12 +197,9 @@ export default function FlightsPageAuthenticated() {
   const [tripSuggestions, setTripSuggestions] = useState<any[]>([]);
   const [originalTrips, setOriginalTrips] = useState<any[]>([]); // Store original trip data for memory API
   const [isParsingTrips, setIsParsingTrips] = useState(false);
-  const [showTripLoader, setShowTripLoader] = useState(false);
-  const [showEndLoader, setShowEndLoader] = useState(false);
+  const [showJourneyLoader, setShowJourneyLoader] = useState(false);
+  const [currentJourneyStep, setCurrentJourneyStep] = useState<JourneyStep>("trip-suggestion");
   const [testEndResponse, setTestEndResponse] = useState(false);
-  const [conveyanceLoaderMessages, setConveyanceLoaderMessages] = useState<
-    string[]
-  >([]);
   const [conveyanceFromCity, setConveyanceFromCity] = useState<string>("");
   const [conveyanceToCity, setConveyanceToCity] = useState<string>("");
   const [stayCity, setStayCity] = useState<string>("");
@@ -438,13 +434,8 @@ export default function FlightsPageAuthenticated() {
       setIsLoadingItinerary(true);
 
       if (showLoaderScreen) {
-        setConveyanceLoaderMessages([
-          `Creating your detailed itinerary for day ${dayNumber}`,
-          "Analyzing your preferences and selections",
-          "Optimizing your schedule",
-          "Adding personalized recommendations",
-        ]);
-        setShowTripLoader(true);
+        setCurrentJourneyStep("itinerary-generation");
+        setShowJourneyLoader(true);
         setIsParsingTrips(true);
       }
 
@@ -498,15 +489,7 @@ export default function FlightsPageAuthenticated() {
               }) after 5 seconds...`
             );
 
-            // Update loader messages for retry
-            if (showLoaderScreen) {
-              setConveyanceLoaderMessages([
-                `Retrying itinerary generation (attempt ${attempt + 1})`,
-                "Please wait, this may take a moment...",
-                "Optimizing your schedule",
-                "Adding personalized recommendations",
-              ]);
-            }
+            // Retry with itinerary generation loader already showing
 
             // Wait 5 seconds before retry
             await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY));
@@ -813,7 +796,7 @@ export default function FlightsPageAuthenticated() {
 
       // Hide loader after minimum display time
       setTimeout(() => {
-        setShowTripLoader(false);
+        setShowJourneyLoader(false);
         setIsLoadingItinerary(false);
 
         setTimeout(() => {
@@ -842,7 +825,7 @@ export default function FlightsPageAuthenticated() {
     } catch (error) {
       console.error("❌ Error calling itinerary API:", error);
       setIsLoadingItinerary(false);
-      setShowTripLoader(false);
+      setShowJourneyLoader(false);
       setIsParsingTrips(false);
       alert("Failed to generate itinerary. Please try again.");
     }
@@ -866,13 +849,8 @@ export default function FlightsPageAuthenticated() {
 
       // Show loader
       setIsLoadingItinerary(true);
-      setConveyanceLoaderMessages([
-        `Creating your detailed itinerary for day ${insertDayNumber}`,
-        "Analyzing your preferences and selections",
-        "Optimizing your schedule",
-        "Adding personalized recommendations",
-      ]);
-      setShowTripLoader(true);
+      setCurrentJourneyStep("itinerary-generation");
+      setShowJourneyLoader(true);
       setIsParsingTrips(true);
 
       // Build payload for insert flow
@@ -956,13 +934,7 @@ export default function FlightsPageAuthenticated() {
               }) after 5 seconds...`
             );
 
-            // Update loader messages for retry
-            setConveyanceLoaderMessages([
-              `Retrying itinerary generation (attempt ${attempt + 1})`,
-              "Please wait, this may take a moment...",
-              "Optimizing your schedule",
-              "Adding personalized recommendations",
-            ]);
+            // Retry with itinerary generation loader already showing
 
             // Wait before retry
             await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY));
@@ -1029,7 +1001,7 @@ export default function FlightsPageAuthenticated() {
       console.log("✅ Insert API Response:", itineraryResponse);
 
       // Hide loader
-      setShowTripLoader(false);
+      setShowJourneyLoader(false);
       setIsParsingTrips(false);
       setIsLoadingItinerary(false);
 
@@ -1304,7 +1276,7 @@ export default function FlightsPageAuthenticated() {
       }
     } catch (error) {
       console.error("❌ Error in insert itinerary API call:", error);
-      setShowTripLoader(false);
+      setShowJourneyLoader(false);
       setIsParsingTrips(false);
       setIsLoadingItinerary(false);
       setIsInsertDayFlow(false);
@@ -1325,12 +1297,8 @@ export default function FlightsPageAuthenticated() {
 
       // Show loader
       setIsLoadingItinerary(true);
-      setConveyanceLoaderMessages([
-        `Deleting day ${deleteDayNumber} and updating itinerary`,
-        "Reorganizing your schedule",
-        "Optimizing remaining days",
-      ]);
-      setShowTripLoader(true);
+      setCurrentJourneyStep("itinerary-generation");
+      setShowJourneyLoader(true);
       setIsParsingTrips(true);
 
       // Build payload for delete flow
@@ -1394,7 +1362,7 @@ export default function FlightsPageAuthenticated() {
       console.log("✅ Delete API Response:", itineraryResponse);
 
       // Hide loader
-      setShowTripLoader(false);
+      setShowJourneyLoader(false);
       setIsParsingTrips(false);
       setIsLoadingItinerary(false);
 
@@ -1557,7 +1525,7 @@ export default function FlightsPageAuthenticated() {
       }
     } catch (error) {
       console.error("❌ Error in delete itinerary API call:", error);
-      setShowTripLoader(false);
+      setShowJourneyLoader(false);
       setIsParsingTrips(false);
       setIsLoadingItinerary(false);
       alert("Failed to delete day. Please try again.");
@@ -2255,21 +2223,14 @@ export default function FlightsPageAuthenticated() {
         setAutoFillMode(canAutoFill);
         setInitialDepartureDate(departureDateStr);
 
-        // Set loader messages
-        setConveyanceLoaderMessages([
-          `Let's find conveyance options for Day ${nextDayNumber}`,
-          `Searching ${fromCity} to ${toCity} routes`,
-          "Finding the best travel options",
-          "Comparing prices and timings",
-        ]);
-
         console.log("🔄 Closing itinerary and showing loader");
 
         // Close itinerary widget
         setShowItinerary(false);
 
-        // Show trip loader
-        setShowTripLoader(true);
+        // Show conveyance finder loader
+        setCurrentJourneyStep("conveyance-finder");
+        setShowJourneyLoader(true);
         setIsParsingTrips(true);
 
         console.log("⏱️ Starting 4-second timer for loader");
@@ -2277,7 +2238,7 @@ export default function FlightsPageAuthenticated() {
         // After 4 seconds, hide loader and show flights widget
         setTimeout(() => {
           console.log("⏱️ 4 seconds elapsed, hiding loader");
-          setShowTripLoader(false);
+          setShowJourneyLoader(false);
 
           setTimeout(() => {
             console.log(
@@ -2513,14 +2474,6 @@ export default function FlightsPageAuthenticated() {
           setPartialAutoFillMode(true); // Enable partial auto-fill (FROM and DATE locked, TO selectable)
           setInitialDepartureDate(departureDateStr);
 
-          // Set loader messages
-          setConveyanceLoaderMessages([
-            `Let's find conveyance options for Day ${newDayNumber}`,
-            `Starting from ${fromCity}`,
-            "Finding the best travel options",
-            "Comparing prices and timings",
-          ]);
-
           console.log(
             "🔄 Closing itinerary and showing loader for add day flow"
           );
@@ -2528,13 +2481,14 @@ export default function FlightsPageAuthenticated() {
           // Close itinerary widget to show FlightsWidget
           setShowItinerary(false);
 
-          // Show trip loader before FlightsWidget
-          setShowTripLoader(true);
+          // Show conveyance finder loader
+          setCurrentJourneyStep("conveyance-finder");
+          setShowJourneyLoader(true);
           setIsParsingTrips(true);
 
           // After 4 seconds, show flights widget
           setTimeout(() => {
-            setShowTripLoader(false);
+            setShowJourneyLoader(false);
 
             setTimeout(() => {
               console.log(`✈️ Showing FlightsWidget for day ${newDayNumber}`);
@@ -3078,21 +3032,14 @@ export default function FlightsPageAuthenticated() {
               dateString
             );
 
-            // Set custom loader messages
-            setConveyanceLoaderMessages([
-              "Let's find conveyance options for Day 1",
-              `Searching ${fromCity} to ${toCity} routes`,
-              "Finding the best travel options",
-              "Comparing prices and timings",
-            ]);
-
             console.log("🔄 Closing date selector and showing loader");
 
             // Close date selector
             setShowDateSelector(false);
 
-            // Show trip loader with conveyance message
-            setShowTripLoader(true);
+            // Show conveyance finder loader
+            setCurrentJourneyStep("conveyance-finder");
+            setShowJourneyLoader(true);
             setIsParsingTrips(true);
 
             console.log("⏱️ Starting 4-second timer for loader");
@@ -3100,7 +3047,7 @@ export default function FlightsPageAuthenticated() {
             // After 4 seconds, hide loader and show flights widget
             setTimeout(() => {
               console.log("⏱️ 4 seconds elapsed, hiding loader");
-              setShowTripLoader(false);
+              setShowJourneyLoader(false);
 
               setTimeout(() => {
                 console.log(
@@ -3373,14 +3320,6 @@ export default function FlightsPageAuthenticated() {
           }
         }
 
-        // Set loader messages for stay
-        setConveyanceLoaderMessages([
-          `Let's find stay options for day ${currentDayNumber}`,
-          `Searching accommodations in ${stayCity}`,
-          "Finding the best hotels",
-          "Comparing prices and ratings",
-        ]);
-
         console.log(`🏨 Setting auto-fill mode for StaysWidget:`, {
           stayCity,
           checkInDate: stayCheckInDate,
@@ -3388,8 +3327,9 @@ export default function FlightsPageAuthenticated() {
           autoFillMode: true,
         });
 
-        // Show loader
-        setShowTripLoader(true);
+        // Show stays finder loader
+        setCurrentJourneyStep("stays-finder");
+        setShowJourneyLoader(true);
         setIsParsingTrips(true);
 
         // Reset partial auto-fill mode
@@ -3397,7 +3337,7 @@ export default function FlightsPageAuthenticated() {
 
         // After 4 seconds, show stays widget
         setTimeout(() => {
-          setShowTripLoader(false);
+          setShowJourneyLoader(false);
 
           setTimeout(() => {
             console.log(
@@ -3510,14 +3450,6 @@ export default function FlightsPageAuthenticated() {
           setAutoFillStaysMode(true); // Enable auto-fill mode
         }
 
-        // Set loader messages for stay
-        setConveyanceLoaderMessages([
-          `Let's find stay options for day ${currentDayNumber}`,
-          `Searching accommodations in ${stayCity}`,
-          "Finding the best hotels",
-          "Comparing prices and ratings",
-        ]);
-
         console.log(`🏨 Setting auto-fill mode for StaysWidget:`, {
           stayCity,
           checkInDate: stayCheckInDate,
@@ -3525,13 +3457,14 @@ export default function FlightsPageAuthenticated() {
           autoFillMode: true,
         });
 
-        // Show loader
-        setShowTripLoader(true);
+        // Show stays finder loader
+        setCurrentJourneyStep("stays-finder");
+        setShowJourneyLoader(true);
         setIsParsingTrips(true);
 
         // After 4 seconds, show stays widget
         setTimeout(() => {
-          setShowTripLoader(false);
+          setShowJourneyLoader(false);
 
           setTimeout(() => {
             console.log(
@@ -3854,15 +3787,9 @@ export default function FlightsPageAuthenticated() {
           `📝 Add day flow - showing loader before itinerary generation`
         );
 
-        // Set loader messages for itinerary generation
-        setConveyanceLoaderMessages([
-          `Creating your detailed itinerary for day ${currentDayNumber}`,
-          "Analyzing your preferences and selections",
-          "Optimizing your schedule",
-          "Adding personalized recommendations",
-        ]);
-
-        setShowTripLoader(true);
+        // Show itinerary generation loader
+        setCurrentJourneyStep("itinerary-generation");
+        setShowJourneyLoader(true);
         setIsParsingTrips(true);
 
         // Get the updated itinerariesGenerated array after adding conveyance/stay
@@ -4033,25 +3960,26 @@ export default function FlightsPageAuthenticated() {
             nested_response_type: data.message?.response_type,
           });
 
-          // Force loader to show immediately
-          setShowTripLoader(true);
+          // Force trip suggestion loader to show immediately
+          setCurrentJourneyStep("trip-suggestion");
+          setShowJourneyLoader(true);
           setIsParsingTrips(true);
 
           // Safety check - ensure loader stays visible for minimum duration
           setTimeout(() => {
             console.log("🎯 Safety check: Ensuring loader is still visible");
-            if (!showTripLoader) {
+            if (!showJourneyLoader) {
               console.log(
                 "🎯 Safety: Loader was hidden prematurely, re-showing"
               );
-              setShowTripLoader(true);
+              setShowJourneyLoader(true);
             }
           }, 100);
         }
-        // Show end loader IMMEDIATELY for ANY end response detected
+        // Show date recommender loader IMMEDIATELY for ANY end response detected
         else if (isEndResponse) {
           console.log(
-            "🎯 End response detected - showing end loader immediately"
+            "🎯 End response detected - showing date recommender loader immediately"
           );
           messageContent = "Let's call the smart date recommender now";
           console.log("🎯 End response data:", {
@@ -4059,19 +3987,20 @@ export default function FlightsPageAuthenticated() {
             nested_response_type: data.message?.response_type,
           });
 
-          // Force end loader to show immediately
-          setShowEndLoader(true);
+          // Force date recommender loader to show immediately
+          setCurrentJourneyStep("date-recommender");
+          setShowJourneyLoader(true);
 
           // Safety check - ensure loader stays visible for minimum duration
           setTimeout(() => {
             console.log(
-              "🎯 Safety check: Ensuring end loader is still visible"
+              "🎯 Safety check: Ensuring date recommender loader is still visible"
             );
-            if (!showEndLoader) {
+            if (!showJourneyLoader) {
               console.log(
-                "🎯 Safety: End loader was hidden prematurely, re-showing"
+                "🎯 Safety: Date recommender loader was hidden prematurely, re-showing"
               );
-              setShowEndLoader(true);
+              setShowJourneyLoader(true);
             }
           }, 100);
         } else {
@@ -4352,7 +4281,7 @@ export default function FlightsPageAuthenticated() {
 
             // Hide trip loader with dissolving effect and show flashcards
             setTimeout(() => {
-              setShowTripLoader(false);
+              setShowJourneyLoader(false);
 
               setTimeout(() => {
                 // Automatically show the places widget after loader dissolves
@@ -4383,14 +4312,14 @@ export default function FlightsPageAuthenticated() {
             console.log(
               "🎯 Trip loader duration completed, hiding loader (no suggestions)"
             );
-            setShowTripLoader(false);
+            setShowJourneyLoader(false);
             setIsParsingTrips(false);
           }, minLoaderDuration);
         }
       }
       // Handle end response detection and flow
       else if (isEndResponse) {
-        console.log("🎯 End response detected - showing EndResponseLoader");
+        console.log("🎯 End response detected - showing date recommender loader");
         console.log("🎯 End response data:", {
           root_response_type: data.response_type,
           nested_response_type: data.message?.response_type,
@@ -4410,7 +4339,7 @@ export default function FlightsPageAuthenticated() {
 
           // Hide end loader with dissolving effect and show date selector
           setTimeout(() => {
-            setShowEndLoader(false);
+            setShowJourneyLoader(false);
 
             setTimeout(() => {
               // Automatically show the date selector widget after loader dissolves
@@ -4433,8 +4362,8 @@ export default function FlightsPageAuthenticated() {
       } else {
         // Non-trip, non-end response - hide loaders immediately
         setIsParsingTrips(false);
-        setShowTripLoader(false);
-        setShowEndLoader(false);
+        setShowJourneyLoader(false);
+        setShowJourneyLoader(false);
       }
     } catch (error) {
       console.error("Error calling API:", error);
@@ -4459,8 +4388,8 @@ export default function FlightsPageAuthenticated() {
 
       // Hide loaders on error
       setIsParsingTrips(false);
-      setShowTripLoader(false);
-      setShowEndLoader(false);
+      setShowJourneyLoader(false);
+      setShowJourneyLoader(false);
     } finally {
       setIsLoading(false);
     }
@@ -4502,7 +4431,7 @@ export default function FlightsPageAuthenticated() {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  // TripLoader component moved to separate file
+  // JourneyLoader handles all loading states
 
   if (!currentUser) {
     return null; // This shouldn't happen due to the parent component's validation
@@ -4585,9 +4514,10 @@ export default function FlightsPageAuthenticated() {
                     }
                   } else {
                     console.log(
-                      "Places toggle: Showing trip loader for 4 seconds"
+                      "Places toggle: Showing trip suggestion loader for 4 seconds"
                     );
-                    setShowTripLoader(true);
+                    setCurrentJourneyStep("trip-suggestion");
+                    setShowJourneyLoader(true);
                     setIsParsingTrips(true);
                     setShowFlights(false);
                     setShowStays(false);
@@ -4595,7 +4525,7 @@ export default function FlightsPageAuthenticated() {
                     setShowDateSelector(false);
 
                     setTimeout(() => {
-                      setShowTripLoader(false);
+                      setShowJourneyLoader(false);
                       setTimeout(() => {
                         handleShowFlashcards(true);
                         setIsParsingTrips(false);
@@ -4758,19 +4688,10 @@ export default function FlightsPageAuthenticated() {
                   <>
                     {/* Messages Container - Scrollable */}
                     <div className="flex-1 overflow-y-auto p-6 relative min-h-0">
-                      {/* Trip Loader */}
-                      <TripLoader
-                        showTripLoader={showTripLoader}
-                        duration={4000}
-                        customMessages={
-                          conveyanceLoaderMessages.length > 0
-                            ? conveyanceLoaderMessages
-                            : undefined
-                        }
-                      />
-                      {/* End Response Loader */}
-                      <EndResponseLoader
-                        showEndLoader={showEndLoader}
+                      {/* Journey Loader - Unified loading screen for all stages */}
+                      <JourneyLoader
+                        isVisible={showJourneyLoader}
+                        currentStep={currentJourneyStep}
                         duration={4000}
                       />
 
