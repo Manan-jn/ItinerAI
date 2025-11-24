@@ -501,8 +501,8 @@ export default function InTripWidget({
     console.log("✅ All events processed");
     setCurrentEventIndex(null);
     setIsRunning(false);
-    setOverlayMessage("All events have been processed successfully!");
-    setShowOverlay(true);
+    // setOverlayMessage("All events have been processed successfully!");
+    // setShowOverlay(true);
   };
 
   // Handle chat message submission

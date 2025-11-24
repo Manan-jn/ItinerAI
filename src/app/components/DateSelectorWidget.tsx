@@ -238,43 +238,101 @@ export default function DateSelectorWidget({
           console.warn("⚠️ Error response:", errorText);
         }
 
-        // Extract to_city from Day 1 conveyance_details in selectedTrip
+        // Extract to_city from selectedTrip with fallback logic
         console.log(
           "📋 DateSelector: Extracting to_city from selectedTrip:",
           selectedTrip
         );
+        
         if (
           selectedTrip.day_wise_plan &&
           Array.isArray(selectedTrip.day_wise_plan)
         ) {
+          // Helper function to format city names
+          const formatCityName = (cityName: string): string => {
+            if (!cityName) return "";
+            
+            // Properly capitalize multi-word city names
+            let formatted = cityName
+              .split(" ")
+              .map(
+                (word) =>
+                  word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+              )
+              .join(" ");
+            
+            // Special case: "Delhi" → "New Delhi"
+            if (formatted === "Delhi") formatted = "New Delhi";
+            
+            return formatted;
+          };
+
+          // Helper function to extract city from a day's data
+          const extractCityFromDay = (day: any): string | null => {
+            // Priority 1: conveyance_details.to_city
+            if (
+              day.conveyance_details?.is_required &&
+              day.conveyance_details?.to_city &&
+              day.conveyance_details.to_city !== "user_location"
+            ) {
+              return day.conveyance_details.to_city;
+            }
+            
+            // Priority 2: stay_details.city
+            if (
+              day.stay_details?.is_required &&
+              day.stay_details?.city &&
+              day.stay_details.city !== "user_location"
+            ) {
+              return day.stay_details.city;
+            }
+            
+            return null;
+          };
+
+          // Step 1: Try to extract from Day 1
           const day1 = selectedTrip.day_wise_plan.find(
             (day: any) => day.day_number === 1
           );
           console.log("📋 DateSelector: Found Day 1:", day1);
 
-          if (
-            day1 &&
-            day1.conveyance_details &&
-            day1.conveyance_details.to_city
-          ) {
-            extractedToCity = day1.conveyance_details.to_city;
-            console.log("✅ Extracted to_city from Day 1:", extractedToCity);
-
-            // Handle city name formatting for to_city
-            if (extractedToCity) {
-              // Properly capitalize multi-word city names
-              extractedToCity = extractedToCity
-                .split(" ")
-                .map(
-                  (word) =>
-                    word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-                )
-                .join(" ");
-              if (extractedToCity === "Delhi") extractedToCity = "New Delhi";
-              console.log("✅ Formatted to_city:", extractedToCity);
+          if (day1) {
+            const day1City = extractCityFromDay(day1);
+            if (day1City) {
+              extractedToCity = formatCityName(day1City);
+              console.log("✅ Extracted to_city from Day 1:", {
+                source: day1.conveyance_details?.to_city ? "conveyance_details.to_city" : "stay_details.city",
+                raw: day1City,
+                formatted: extractedToCity
+              });
+            } else {
+              console.log("⚠️ No valid city found in Day 1, checking other days...");
+              
+              // Step 2: Fallback - iterate through all days to find earliest city
+              const sortedDays = [...selectedTrip.day_wise_plan].sort(
+                (a, b) => a.day_number - b.day_number
+              );
+              
+              for (const day of sortedDays) {
+                const dayCity = extractCityFromDay(day);
+                if (dayCity) {
+                  extractedToCity = formatCityName(dayCity);
+                  console.log("✅ Extracted to_city from fallback (Day " + day.day_number + "):", {
+                    day_number: day.day_number,
+                    source: day.conveyance_details?.to_city ? "conveyance_details.to_city" : "stay_details.city",
+                    raw: dayCity,
+                    formatted: extractedToCity
+                  });
+                  break; // Found earliest city, break the loop
+                }
+              }
+              
+              if (!extractedToCity) {
+                console.log("⚠️ No valid city found in any day of the trip");
+              }
             }
           } else {
-            console.log("⚠️ No conveyance_details.to_city found in Day 1");
+            console.log("⚠️ Day 1 not found in day_wise_plan");
           }
         } else {
           console.log("⚠️ No day_wise_plan found in selectedTrip");
@@ -282,15 +340,26 @@ export default function DateSelectorWidget({
 
         // Handle city name formatting for from_city
         if (extractedFromCity) {
-          // Properly capitalize multi-word city names
-          extractedFromCity = extractedFromCity
-            .split(" ")
-            .map(
-              (word) =>
-                word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-            )
-            .join(" ");
-          if (extractedFromCity === "Delhi") extractedFromCity = "New Delhi";
+          // Use the same formatting function as to_city
+          const formatCityName = (cityName: string): string => {
+            if (!cityName) return "";
+            
+            // Properly capitalize multi-word city names
+            let formatted = cityName
+              .split(" ")
+              .map(
+                (word) =>
+                  word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+              )
+              .join(" ");
+            
+            // Special case: "Delhi" → "New Delhi"
+            if (formatted === "Delhi") formatted = "New Delhi";
+            
+            return formatted;
+          };
+          
+          extractedFromCity = formatCityName(extractedFromCity);
           console.log("✅ Formatted from_city:", extractedFromCity);
         }
 
