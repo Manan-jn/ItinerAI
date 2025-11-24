@@ -7,12 +7,20 @@
  * - Daily log rotation
  * - Formatted JSON output for better readability
  * - Automatic log directory creation
+ * - Real-time Firestore logging integration
  */
 
 import winston from 'winston';
 import DailyRotateFile from 'winston-daily-rotate-file';
 import path from 'path';
 import fs from 'fs';
+import {
+  addLogToFirestore,
+  logAPIRequestToFirestore,
+  logAPIResponseToFirestore,
+  logErrorToFirestore,
+  flushSessionBatches
+} from './firestoreLogger';
 
 // Log directory configuration
 const LOG_DIR = process.env.LOG_DIR || path.join(process.cwd(), 'logs');
@@ -199,13 +207,29 @@ export function logAPIRequest(
   method: string,
   params: any
 ) {
-  logger.info('API Request', {
+  const logData = {
     type: 'api_request',
     endpoint,
     method,
     params: sanitizeLogData(params),
     timestamp: new Date().toISOString()
-  });
+  };
+
+  logger.info('API Request', logData);
+
+  // Also log to Firestore if we have user and session context
+  const meta = logger.defaultMeta as any;
+  if (meta && meta.userId && meta.sessionId && meta.userId !== 'anonymous') {
+    logAPIRequestToFirestore(
+      meta.userId,
+      meta.sessionId,
+      endpoint,
+      method,
+      sanitizeLogData(params)
+    ).catch(err => {
+      console.error('Failed to log API request to Firestore:', err);
+    });
+  }
 }
 
 /**
@@ -220,8 +244,7 @@ export function logAPIResponse(
   duration?: number
 ) {
   const logLevel = statusCode >= 400 ? 'error' : 'info';
-
-  logger.log(logLevel, 'API Response', {
+  const logData = {
     type: 'api_response',
     endpoint,
     method,
@@ -229,7 +252,25 @@ export function logAPIResponse(
     response: sanitizeLogData(response),
     duration: duration ? `${duration}ms` : undefined,
     timestamp: new Date().toISOString()
-  });
+  };
+
+  logger.log(logLevel, 'API Response', logData);
+
+  // Also log to Firestore if we have user and session context
+  const meta = logger.defaultMeta as any;
+  if (meta && meta.userId && meta.sessionId && meta.userId !== 'anonymous') {
+    logAPIResponseToFirestore(
+      meta.userId,
+      meta.sessionId,
+      endpoint,
+      method,
+      statusCode,
+      sanitizeLogData(response),
+      duration
+    ).catch(err => {
+      console.error('Failed to log API response to Firestore:', err);
+    });
+  }
 }
 
 /**
@@ -242,7 +283,7 @@ export function logAPIError(
   error: any,
   additionalContext?: any
 ) {
-  logger.error('API Error', {
+  const logData = {
     type: 'api_error',
     endpoint,
     method,
@@ -253,7 +294,23 @@ export function logAPIError(
     } : error,
     context: sanitizeLogData(additionalContext),
     timestamp: new Date().toISOString()
-  });
+  };
+
+  logger.error('API Error', logData);
+
+  // Also log to Firestore if we have user and session context
+  const meta = logger.defaultMeta as any;
+  if (meta && meta.userId && meta.sessionId && meta.userId !== 'anonymous') {
+    logErrorToFirestore(
+      meta.userId,
+      meta.sessionId,
+      `API Error: ${endpoint} ${method}`,
+      error,
+      sanitizeLogData(additionalContext)
+    ).catch(err => {
+      console.error('Failed to log API error to Firestore:', err);
+    });
+  }
 }
 
 /**
@@ -264,12 +321,38 @@ export function logBackendRequest(
   backendEndpoint: string,
   requestBody: any
 ) {
-  logger.info('Backend Request', {
+  const logData = {
     type: 'backend_request',
     backendEndpoint,
     requestBody: sanitizeLogData(requestBody),
     timestamp: new Date().toISOString()
-  });
+  };
+
+  logger.info('Backend Request', logData);
+
+  // Also log to Firestore if we have user and session context
+  const meta = logger.defaultMeta as any;
+  if (meta && meta.userId && meta.sessionId && meta.userId !== 'anonymous') {
+    addLogToFirestore(
+      meta.userId,
+      meta.sessionId,
+      {
+        level: 'info',
+        message: 'Backend Request',
+        type: 'backend_request',
+        endpoint: backendEndpoint,
+        metadata: {
+          backendEndpoint,
+          requestBody: sanitizeLogData(requestBody),
+          timestamp: new Date().toISOString()
+        },
+        timestamp: new Date().toISOString()
+      },
+      'application'
+    ).catch(err => {
+      console.error('Failed to log backend request to Firestore:', err);
+    });
+  }
 }
 
 /**
@@ -283,15 +366,44 @@ export function logBackendResponse(
   duration?: number
 ) {
   const logLevel = statusCode >= 400 ? 'error' : 'info';
-
-  logger.log(logLevel, 'Backend Response', {
+  const logData = {
     type: 'backend_response',
     backendEndpoint,
     statusCode,
     response: sanitizeLogData(response),
     duration: duration ? `${duration}ms` : undefined,
     timestamp: new Date().toISOString()
-  });
+  };
+
+  logger.log(logLevel, 'Backend Response', logData);
+
+  // Also log to Firestore if we have user and session context
+  const meta = logger.defaultMeta as any;
+  if (meta && meta.userId && meta.sessionId && meta.userId !== 'anonymous') {
+    addLogToFirestore(
+      meta.userId,
+      meta.sessionId,
+      {
+        level: logLevel,
+        message: 'Backend Response',
+        type: 'backend_response',
+        endpoint: backendEndpoint,
+        statusCode,
+        metadata: {
+          backendEndpoint,
+          statusCode,
+          response: sanitizeLogData(response),
+          duration: duration ? `${duration}ms` : undefined,
+          timestamp: new Date().toISOString()
+        },
+        timestamp: new Date().toISOString(),
+        duration: duration ? `${duration}ms` : undefined
+      },
+      statusCode >= 400 ? 'error' : 'application'
+    ).catch(err => {
+      console.error('Failed to log backend response to Firestore:', err);
+    });
+  }
 }
 
 /**
@@ -340,7 +452,7 @@ function sanitizeLogData(data: any): any {
 /**
  * Close all loggers (useful for cleanup)
  */
-export function closeAllLoggers(): Promise<void[]> {
+export async function closeAllLoggers(): Promise<void[]> {
   const closePromises = Array.from(loggerCache.values()).map(
     logger => new Promise<void>((resolve) => {
       logger.close();
@@ -349,7 +461,31 @@ export function closeAllLoggers(): Promise<void[]> {
   );
 
   loggerCache.clear();
+
+  // Also flush all Firestore batches
+  const { flushAllBatches } = await import('./firestoreLogger');
+  await flushAllBatches();
+
   return Promise.all(closePromises);
+}
+
+/**
+ * Close logger for a specific session and flush its Firestore batches
+ */
+export async function closeSessionLogger(userId: string, sessionId: string): Promise<void> {
+  const loggerKey = `${userId}_${sessionId}`;
+
+  const logger = loggerCache.get(loggerKey);
+  if (logger) {
+    await new Promise<void>((resolve) => {
+      logger.close();
+      resolve();
+    });
+    loggerCache.delete(loggerKey);
+  }
+
+  // Flush Firestore batches for this session
+  await flushSessionBatches(userId, sessionId);
 }
 
 export default {
@@ -360,5 +496,6 @@ export default {
   logAPIError,
   logBackendRequest,
   logBackendResponse,
-  closeAllLoggers
+  closeAllLoggers,
+  closeSessionLogger
 };
