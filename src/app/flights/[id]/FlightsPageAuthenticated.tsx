@@ -2093,9 +2093,21 @@ export default function FlightsPageAuthenticated() {
   };
 
   const handleInTripFinish = () => {
-    console.log("✅ In-trip widget finished, redirecting to dashboard");
+    console.log("✅ In-trip widget finished, returning to chat");
+    // Smoothly hide the in-trip widget with fade effect
     setShowInTrip(false);
-    handleSetActiveSection("dashboard");
+    
+    // Ensure we're on the chat section
+    setActiveSection("chat");
+    
+    // After a brief delay to allow the chat to render, scroll to bottom smoothly
+    setTimeout(() => {
+      scrollToBottom();
+      // Also focus on the chat input for better UX
+      if (textareaRef.current) {
+        textareaRef.current.focus();
+      }
+    }, 300); // 300ms delay for smooth transition
   };
 
   // Handler for requesting next day itinerary from ItineraryWidget

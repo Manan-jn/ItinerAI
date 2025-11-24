@@ -360,6 +360,9 @@ export default function InTripWidget({
   // Chat state
   const [chatInput, setChatInput] = useState("");
   const [isChatLoading, setIsChatLoading] = useState(false);
+  
+  // Animation state for smooth closing
+  const [isClosing, setIsClosing] = useState(false);
 
   // Process itineraries with event simulations
   const { eventsList } = useMemo(
@@ -382,7 +385,19 @@ export default function InTripWidget({
     }
   }, [eventsList]);
 
-  if (!isVisible) return null;
+  // Handle smooth close animation
+  const handleClose = () => {
+    if (onClose) {
+      setIsClosing(true);
+      // Wait for fade-out animation to complete before calling onClose
+      setTimeout(() => {
+        onClose();
+        setIsClosing(false);
+      }, 300); // Match animation duration
+    }
+  };
+
+  if (!isVisible && !isClosing) return null;
 
   const handleTestClick = () => {
     setIsTestPanelOpen(!isTestPanelOpen);
@@ -684,7 +699,7 @@ export default function InTripWidget({
 
   return (
     <>
-      <div className="intrip-widget-container">
+      <div className={`intrip-widget-container ${isClosing ? 'closing' : ''}`}>
         <div className="centered-wrapper">
           {/* Header Section */}
           <div className="intrip-header">
@@ -1179,9 +1194,9 @@ export default function InTripWidget({
               {/* Continue Button - Right side next to chatbox */}
               {onClose && (
                 <button
-                  onClick={onClose}
+                  onClick={handleClose}
                   className="continue-button"
-                  aria-label="Continue to Dashboard"
+                  aria-label="Continue to Chat"
                 >
                   <span>Continue</span>
                   <svg
@@ -1233,6 +1248,33 @@ export default function InTripWidget({
           );
           overflow: hidden;
           padding: 0;
+          animation: fadeIn 0.3s ease-in-out;
+        }
+        
+        .intrip-widget-container.closing {
+          animation: fadeOut 0.3s ease-in-out forwards;
+        }
+        
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        @keyframes fadeOut {
+          from {
+            opacity: 1;
+            transform: translateY(0);
+          }
+          to {
+            opacity: 0;
+            transform: translateY(-10px);
+          }
         }
 
         .centered-wrapper {
