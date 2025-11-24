@@ -15,6 +15,10 @@ interface JourneyLoaderProps {
   isVisible: boolean;
   currentStep: JourneyStep;
   duration?: number;
+  // Dynamic location data for conveyance and stays search
+  fromLocation?: string;
+  toLocation?: string;
+  cityLocation?: string;
 }
 
 interface StepConfig {
@@ -117,6 +121,9 @@ export function JourneyLoader({
   isVisible,
   currentStep,
   duration = 4000,
+  fromLocation,
+  toLocation,
+  cityLocation,
 }: JourneyLoaderProps) {
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageIndex, setMessageIndex] = useState(0);
@@ -128,10 +135,38 @@ export function JourneyLoader({
     [currentStep]
   );
 
-  const currentStepConfig = useMemo(
-    () => STEPS_CONFIG[currentStepIndex] || STEPS_CONFIG[0],
-    [currentStepIndex]
-  );
+  const currentStepConfig = useMemo(() => {
+    const config = STEPS_CONFIG[currentStepIndex] || STEPS_CONFIG[0];
+    
+    // Generate dynamic messages for conveyance and stays based on location data
+    if (config.id === "conveyance-finder" && fromLocation && toLocation) {
+      return {
+        ...config,
+        messages: [
+          `Finding the conveyance options from ${fromLocation} to ${toLocation}`,
+          `Searching for best flights and trains from ${fromLocation}`,
+          `Comparing travel options to ${toLocation}`,
+          `Checking real-time availability for your route`,
+          `Curating the best transport choices for you`,
+        ],
+      };
+    }
+    
+    if (config.id === "stays-finder" && cityLocation) {
+      return {
+        ...config,
+        messages: [
+          `Discovering perfect stays in ${cityLocation}`,
+          `Finding accommodation options in ${cityLocation}`,
+          `Checking real-time room availability in ${cityLocation}`,
+          `Comparing the best hotels and properties`,
+          `Preparing ideal stay options for you in ${cityLocation}`,
+        ],
+      };
+    }
+    
+    return config;
+  }, [currentStepIndex, fromLocation, toLocation, cityLocation]);
 
   // Handle visibility with smooth transition
   useEffect(() => {

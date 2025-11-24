@@ -3979,7 +3979,7 @@ export default function FlightsPageAuthenticated() {
           console.log(
             "🎯 End response detected - showing date recommender loader immediately"
           );
-          messageContent = "Let's call the smart date recommender now";
+          messageContent = "Let's Plan the itinerary in detail";
           console.log("🎯 End response data:", {
             root_response_type: data.response_type,
             nested_response_type: data.message?.response_type,
@@ -4014,7 +4014,7 @@ export default function FlightsPageAuthenticated() {
           console.log("Detected end response at root level");
           // Handle empty message case with custom text
           if (data.message === "" || !data.message) {
-            messageContent = "Let's call the smart date recommender now";
+            messageContent = "Let's Plan the itinerary in detail";
           } else {
             messageContent =
               (typeof data.message === "object"
@@ -4097,7 +4097,7 @@ export default function FlightsPageAuthenticated() {
             console.log("Detected end response in nested format");
             // Handle empty message case with custom text
             if (messageData.message === "" || !messageData.message) {
-              messageContent = "Let's call the smart date recommender now";
+              messageContent = "Let's Plan the itinerary in detail";
             } else {
               messageContent =
                 typeof messageData.message === "string"
@@ -4691,6 +4691,9 @@ export default function FlightsPageAuthenticated() {
                         isVisible={showJourneyLoader}
                         currentStep={currentJourneyStep}
                         duration={4000}
+                        fromLocation={conveyanceFromCity}
+                        toLocation={conveyanceToCity}
+                        cityLocation={stayCity}
                       />
 
                       {/* Test Mode Indicator */}

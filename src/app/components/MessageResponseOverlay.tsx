@@ -273,7 +273,7 @@ export default function MessageResponseOverlay({
           display: flex;
           align-items: center;
           justify-content: center;
-          color: #86868b;
+          color: #1d1d1f;
           cursor: pointer;
           transition: all 0.2s ease;
           padding: 0;
@@ -340,7 +340,7 @@ export default function MessageResponseOverlay({
 
           .close-button {
             background: rgba(255, 255, 255, 0.1);
-            color: #86868b;
+            color: #f5f5f7;
           }
 
           .close-button:hover {

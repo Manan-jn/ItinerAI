@@ -75,74 +75,40 @@ export default function ChatLoadingIndicator({
 
   return (
     <>
-      {/* RGB Glowing Border Wrapper */}
-      <div className="rgb-border-wrapper">
-        {/* RGB Continuous Flowing Border */}
-        <div className="absolute -inset-[3px] rounded-2xl pointer-events-none">
-          <div
-            className="absolute inset-0 rounded-2xl border-4 border-transparent animate-rgb-flow"
-            style={{
-              background:
-                "linear-gradient(90deg, #3b82f6, #60a5fa, #93c5fd, #60a5fa, #3b82f6, #1d4ed8, #3b82f6) border-box",
-              WebkitMask:
-                "linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0)",
-              WebkitMaskComposite: "xor",
-              maskComposite: "exclude",
-            }}
-          ></div>
+      {/* Glassmorphic Container - Similar to MessageResponseOverlay */}
+      <div className={`${themeClasses.container} ${isAnimating ? "visible" : ""}`}>
+        {/* Rotating Spinner Icon */}
+        <svg
+          className="chat-loader-spinner"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+        >
+          <circle cx="12" cy="12" r="10" strokeOpacity="0.25"></circle>
+          <path
+            d="M12 2a10 10 0 0 1 10 10"
+            strokeLinecap="round"
+          ></path>
+        </svg>
 
-          {/* Flowing Glow Overlay */}
-          <div className="absolute inset-0 rounded-2xl animate-rgb-glow-continuous">
-            <div
-              className="absolute inset-0 rounded-2xl border-2 border-transparent bg-gradient-to-r from-blue-400/60 via-blue-500/60 to-blue-600/60 blur-sm shadow-[0_0_25px_rgba(59,130,246,0.8)]"
-              style={{
-                WebkitMask:
-                  "linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0)",
-                WebkitMaskComposite: "xor",
-                maskComposite: "exclude",
-              }}
-            ></div>
-          </div>
-        </div>
-
-        <div className={`${themeClasses.container} ${isAnimating ? "visible" : ""}`}>
-          {/* Rotating Spinner Icon */}
-          <svg
-            className="chat-loader-spinner"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-          >
-            <circle cx="12" cy="12" r="10" strokeOpacity="0.25"></circle>
-            <path
-              d="M12 2a10 10 0 0 1 10 10"
-              strokeLinecap="round"
-            ></path>
-          </svg>
-
-          {/* Dynamic Loading Text */}
-          <span className={themeClasses.text}>
-            {loadingMessages[messageIndex]}
-          </span>
-        </div>
+        {/* Dynamic Loading Text */}
+        <span className={themeClasses.text}>
+          {loadingMessages[messageIndex]}
+        </span>
       </div>
 
       <style jsx>{`
-        .rgb-border-wrapper {
-          position: relative;
-          isolation: isolate;
-          border-radius: 16px;
-        }
-
-        /* Default Theme */
+        /* Default Theme - Glassmorphic Design */
         .chat-loader-container {
           display: flex;
           align-items: center;
           gap: 10px;
           padding: 14px 18px;
+          
+          /* Enhanced Glassmorphic Background - Similar to MessageResponseOverlay */
           background: linear-gradient(
             135deg,
             rgba(255, 255, 255, 0.75) 0%,
@@ -150,6 +116,8 @@ export default function ChatLoadingIndicator({
           );
           backdrop-filter: blur(32px) saturate(200%);
           -webkit-backdrop-filter: blur(32px) saturate(200%);
+          
+          /* Border & Shadow - More compact, subtle */
           border-radius: 16px;
           border: 1px solid rgba(255, 255, 255, 0.6);
           box-shadow:
@@ -161,16 +129,15 @@ export default function ChatLoadingIndicator({
           /* Initial hidden state */
           opacity: 0;
           transform: translateY(-10px) scale(0.95);
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
           pointer-events: none;
-          position: relative;
-          z-index: 1;
         }
 
         .chat-loader-container.visible {
           opacity: 1;
           transform: translateY(0) scale(1);
           pointer-events: all;
+          animation: gentlePulse 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .chat-loader-text {
@@ -181,16 +148,19 @@ export default function ChatLoadingIndicator({
             sans-serif;
           white-space: nowrap;
           line-height: 1.4;
+          letter-spacing: -0.01em;
+          /* Subtle text shadow for depth */
           text-shadow: 0 0.5px 1px rgba(255, 255, 255, 0.8);
           animation: textFadeIn 0.3s ease-in-out;
         }
 
-        /* White Theme */
+        /* White Theme - Same as Default */
         .chat-loader-container-white {
           display: flex;
           align-items: center;
           gap: 10px;
           padding: 14px 18px;
+          
           background: linear-gradient(
             135deg,
             rgba(255, 255, 255, 0.75) 0%,
@@ -198,6 +168,7 @@ export default function ChatLoadingIndicator({
           );
           backdrop-filter: blur(32px) saturate(200%);
           -webkit-backdrop-filter: blur(32px) saturate(200%);
+          
           border-radius: 16px;
           border: 1px solid rgba(255, 255, 255, 0.6);
           box-shadow:
@@ -206,19 +177,17 @@ export default function ChatLoadingIndicator({
             inset 0 1px 0 rgba(255, 255, 255, 0.9),
             inset 0 -1px 0 rgba(0, 0, 0, 0.03);
 
-          /* Initial hidden state */
           opacity: 0;
           transform: translateY(-10px) scale(0.95);
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
           pointer-events: none;
-          position: relative;
-          z-index: 1;
         }
 
         .chat-loader-container-white.visible {
           opacity: 1;
           transform: translateY(0) scale(1);
           pointer-events: all;
+          animation: gentlePulse 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .chat-loader-text-white {
@@ -229,40 +198,55 @@ export default function ChatLoadingIndicator({
             sans-serif;
           white-space: nowrap;
           line-height: 1.4;
+          letter-spacing: -0.01em;
           text-shadow: 0 0.5px 1px rgba(255, 255, 255, 0.8);
           animation: textFadeIn 0.3s ease-in-out;
         }
 
-        /* Purple Theme */
+        /* Purple Theme - Glassmorphic */
         .chat-loader-container-purple {
           display: flex;
           align-items: center;
           gap: 10px;
-          padding: 12px 20px;
+          padding: 14px 18px;
+          
           background: linear-gradient(
             135deg,
-            rgba(147, 51, 234, 0.08) 0%,
-            rgba(219, 39, 119, 0.05) 100%
+            rgba(147, 51, 234, 0.1) 0%,
+            rgba(219, 39, 119, 0.08) 100%
           );
-          backdrop-filter: blur(16px);
-          -webkit-backdrop-filter: blur(16px);
-          border-radius: 20px;
-          border: 1px solid rgba(147, 51, 234, 0.15);
+          backdrop-filter: blur(32px) saturate(180%);
+          -webkit-backdrop-filter: blur(32px) saturate(180%);
+          
+          border-radius: 16px;
+          border: 1px solid rgba(147, 51, 234, 0.2);
           box-shadow:
-            0 4px 12px rgba(147, 51, 234, 0.1),
-            inset 0 1px 0 rgba(255, 255, 255, 0.5);
-          animation: slideUpFadeIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-          position: relative;
-          z-index: 1;
+            0 6px 24px rgba(147, 51, 234, 0.15),
+            0 2px 6px rgba(147, 51, 234, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.4);
+          
+          opacity: 0;
+          transform: translateY(-10px) scale(0.95);
+          transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+          pointer-events: none;
+        }
+
+        .chat-loader-container-purple.visible {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+          pointer-events: all;
+          animation: gentlePulse 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .chat-loader-text-purple {
-          font-size: 0.875rem;
+          font-size: 14px;
           font-weight: 500;
           color: #9333ea;
-          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto,
             sans-serif;
           white-space: nowrap;
+          line-height: 1.4;
+          letter-spacing: -0.01em;
           animation: textFadeIn 0.3s ease-in-out;
         }
 
@@ -272,30 +256,17 @@ export default function ChatLoadingIndicator({
           flex-shrink: 0;
         }
 
-        /* RGB Flow Animations */
-        @keyframes rgb-flow {
+        /* Gentle pulse animation */
+        @keyframes gentlePulse {
           0% {
-            background-position: 0% 50%;
+            transform: translateY(-10px) scale(0.95);
+            opacity: 0;
+          }
+          60% {
+            transform: translateY(0) scale(1.02);
           }
           100% {
-            background-position: 200% 50%;
-          }
-        }
-
-        .animate-rgb-flow {
-          animation: rgb-flow 3s linear infinite;
-          background-size: 200% 100%;
-        }
-
-        .animate-rgb-glow-continuous {
-          animation: rgb-glow-pulse 3s ease-in-out infinite;
-        }
-
-        @keyframes rgb-glow-pulse {
-          0%, 100% {
-            opacity: 0.6;
-          }
-          50% {
+            transform: translateY(0) scale(1);
             opacity: 1;
           }
         }
@@ -315,6 +286,29 @@ export default function ChatLoadingIndicator({
           }
           to {
             opacity: 1;
+          }
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+          .chat-loader-container,
+          .chat-loader-container-white {
+            background: linear-gradient(
+              135deg,
+              rgba(30, 30, 30, 0.75) 0%,
+              rgba(20, 20, 20, 0.6) 100%
+            );
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow:
+              0 6px 24px rgba(0, 0, 0, 0.3),
+              0 2px 6px rgba(0, 0, 0, 0.2),
+              inset 0 1px 0 rgba(255, 255, 255, 0.1);
+          }
+
+          .chat-loader-text,
+          .chat-loader-text-white {
+            color: #f5f5f7;
+            text-shadow: 0 0.5px 1px rgba(0, 0, 0, 0.5);
           }
         }
       `}</style>

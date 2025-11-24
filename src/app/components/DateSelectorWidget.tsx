@@ -2005,6 +2005,8 @@ export default function DateSelectorWidget({
         <JourneyLoader
           isVisible={isLoadingContinue}
           currentStep="conveyance-finder"
+          fromLocation={fromCity}
+          toLocation={toCity}
         />
       </div>
     </>

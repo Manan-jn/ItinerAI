@@ -2052,6 +2052,12 @@ export default function FlightsWidget({
             source: cachedData.isCached ? "cached" : "fresh",
           });
 
+          // Smart toggle: Auto-switch to trains if flights are empty but trains have data
+          if (aiFlights.length === 0 && aiTrains.length > 0) {
+            console.log("✅ Smart toggle (pre-fetched): No flights available, switching to trains tab");
+            setSelectedConveyance("Train");
+          }
+
           // Notify parent about AI options loaded
           if (onAiOptionsLoaded) {
             const allAiOptions = [...aiFlights, ...aiTrains];
@@ -2184,6 +2190,12 @@ export default function FlightsWidget({
                 trains: aiTrains,
                 buses: [],
               });
+
+              // Smart toggle: Auto-switch to trains if flights are empty but trains have data
+              if (aiFlights.length === 0 && aiTrains.length > 0) {
+                console.log("✅ Smart toggle: No flights available, switching to trains tab");
+                setSelectedConveyance("Train");
+              }
 
               // Notify parent about AI options loaded
               if (onAiOptionsLoaded) {
