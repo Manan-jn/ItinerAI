@@ -367,6 +367,21 @@ export default function InTripWidget({
     [itineraries]
   );
 
+  // State for editable JSON
+  const [editableEventsJSON, setEditableEventsJSON] = useState<string>("");
+  const [isJSONValid, setIsJSONValid] = useState<boolean>(true);
+
+  // Initialize editable JSON when eventsList changes
+  React.useEffect(() => {
+    if (eventsList && eventsList.length > 0) {
+      setEditableEventsJSON(JSON.stringify(eventsList, null, 2));
+      setIsJSONValid(true);
+    } else {
+      setEditableEventsJSON("[]");
+      setIsJSONValid(true);
+    }
+  }, [eventsList]);
+
   if (!isVisible) return null;
 
   const handleTestClick = () => {
@@ -379,7 +394,7 @@ export default function InTripWidget({
     setCurrentEventIndex(null);
   };
 
-  // Function to process events one by one
+  // Function to process all events in a single payload
   const handleRunEvents = async () => {
     if (!userIdProp || !sessionIdProp) {
       setOverlayMessage("User session not found. Please log in.");
@@ -387,73 +402,90 @@ export default function InTripWidget({
       return;
     }
 
-    if (!eventsList || eventsList.length === 0) {
+    // Parse the edited JSON
+    let eventsToSend: any[];
+    try {
+      eventsToSend = JSON.parse(editableEventsJSON);
+      if (!Array.isArray(eventsToSend)) {
+        setOverlayMessage("Invalid JSON: Events must be an array.");
+        setShowOverlay(true);
+        setIsJSONValid(false);
+        return;
+      }
+      setIsJSONValid(true);
+    } catch (error) {
+      setOverlayMessage("Invalid JSON format. Please check your syntax.");
+      setShowOverlay(true);
+      setIsJSONValid(false);
+      return;
+    }
+
+    if (eventsToSend.length === 0) {
       setOverlayMessage("No events to process.");
       setShowOverlay(true);
       return;
     }
 
     setIsRunning(true);
-    let updatedItineraries = [...processedItineraries];
+    setCurrentEventIndex(0); // Indicate processing started
 
-    // Process each event one by one
-    for (let i = 0; i < eventsList.length; i++) {
-      setCurrentEventIndex(i);
-      const event = eventsList[i];
+    try {
+      console.log(
+        `🔄 Processing ${eventsToSend.length} events in single payload:`,
+        eventsToSend
+      );
 
-      try {
-        console.log(
-          `🔄 Processing event ${i + 1}/${eventsList.length}:`,
-          event
+      // Call the in-trip API with ALL events in a single payload
+      const response = await fetch("/api/in-trip", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: userIdProp,
+          session_id: sessionIdProp,
+          change_of_events: eventsToSend, // Send all events at once
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        console.error(`❌ Events processing failed:`, errorData);
+        setOverlayMessage(
+          `Failed to process events: ${errorData.error || "Unknown error"}`
         );
+        setShowOverlay(true);
+        setIsRunning(false);
+        setCurrentEventIndex(null);
+        return;
+      }
 
-        // Call the in-trip API with the current event
-        const response = await fetch("/api/in-trip", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            user_id: userIdProp,
-            session_id: sessionIdProp,
-            change_of_events: [event], // Send one event at a time
-          }),
-        });
+      const data = await response.json();
+      console.log(`✅ Events response:`, data);
 
-        if (!response.ok) {
-          const errorData = await response.json().catch(() => ({}));
-          console.error(`❌ Event ${i + 1} processing failed:`, errorData);
-          setOverlayMessage(
-            `Failed to process ${event.event_type}: ${
-              errorData.error || "Unknown error"
-            }`
-          );
-          setShowOverlay(true);
-          // Continue with next event
-          continue;
-        }
+      // Extract the actual response from the nested message field
+      const messageData = data.message || data;
+      const responseType = messageData.response_type;
+      const responseMessage = messageData.message;
 
-        const data = await response.json();
-        console.log(`✅ Event ${i + 1} response:`, data);
+      // Always show the message if present
+      if (responseMessage) {
+        setOverlayMessage(responseMessage);
+        setShowOverlay(true);
+      }
 
-        // Extract the actual response from the nested message field
-        const messageData = data.message || data;
-        const responseType = messageData.response_type;
-        const responseMessage = messageData.message;
+      // Handle response based on response_type
+      if (responseType === "itinerary" && messageData.itinerary) {
+        // The itinerary can be an array of updated days
+        const itineraryArray = Array.isArray(messageData.itinerary)
+          ? messageData.itinerary
+          : [messageData.itinerary];
 
-        // Always show the message if present
-        if (responseMessage) {
-          setOverlayMessage(responseMessage);
-          setShowOverlay(true);
-        }
+        const updatedItineraries = [...processedItineraries];
+        const updatedDayNumbers: number[] = [];
 
-        // Handle response based on response_type
-        if (responseType === "itinerary" && messageData.itinerary) {
-          // The itinerary is an array, extract the first item (updated day)
-          const updatedDayData = Array.isArray(messageData.itinerary)
-            ? messageData.itinerary[0]
-            : messageData.itinerary;
-
+        // Update all days that were modified
+        itineraryArray.forEach((updatedDayData: any) => {
           const dayNumber = updatedDayData.day_number || updatedDayData.day;
           if (
             dayNumber &&
@@ -461,48 +493,53 @@ export default function InTripWidget({
             dayNumber <= updatedItineraries.length
           ) {
             updatedItineraries[dayNumber - 1] = updatedDayData;
-            setProcessedItineraries([...updatedItineraries]);
+            updatedDayNumbers.push(dayNumber);
             console.log(`✅ Updated day ${dayNumber} itinerary`);
-
-            // Mark this day as updated (for visual effect - persistent)
-            setUpdatedDays((prev) => new Set(prev).add(dayNumber - 1));
-
-            // Show message if not already shown
-            if (!responseMessage) {
-              setOverlayMessage(
-                `Itinerary updated for Day ${dayNumber} due to ${event.event_type}`
-              );
-              setShowOverlay(true);
-            }
           }
-        } else if (responseType === "text" || responseType === "no_update") {
-          // Message already shown above, but if not present, show default
+        });
+
+        if (updatedDayNumbers.length > 0) {
+          setProcessedItineraries([...updatedItineraries]);
+
+          // Mark all updated days
+          setUpdatedDays((prev) => {
+            const newSet = new Set(prev);
+            updatedDayNumbers.forEach((dayNum) => newSet.add(dayNum - 1));
+            return newSet;
+          });
+
+          // Show message if not already shown
           if (!responseMessage) {
-            const message = messageData.text || "Event processed successfully";
-            setOverlayMessage(message);
+            setOverlayMessage(
+              `Itinerary updated for ${updatedDayNumbers.length} day(s): ${updatedDayNumbers.join(
+                ", "
+              )}`
+            );
             setShowOverlay(true);
           }
         }
-
-        // Wait a bit before processing next event (for UI feedback)
-        await new Promise((resolve) => setTimeout(resolve, 1500));
-      } catch (error) {
-        console.error(`❌ Error processing event ${i + 1}:`, error);
-        setOverlayMessage(
-          `Error processing ${event.event_type}: ${
-            error instanceof Error ? error.message : "Unknown error"
-          }`
-        );
-        setShowOverlay(true);
+      } else if (responseType === "text" || responseType === "no_update") {
+        // Message already shown above, but if not present, show default
+        if (!responseMessage) {
+          const message = messageData.text || "Events processed successfully";
+          setOverlayMessage(message);
+          setShowOverlay(true);
+        }
       }
+    } catch (error) {
+      console.error(`❌ Error processing events:`, error);
+      setOverlayMessage(
+        `Error processing events: ${
+          error instanceof Error ? error.message : "Unknown error"
+        }`
+      );
+      setShowOverlay(true);
+    } finally {
+      // All events processed
+      console.log("✅ All events processed");
+      setCurrentEventIndex(null);
+      setIsRunning(false);
     }
-
-    // All events processed
-    console.log("✅ All events processed");
-    setCurrentEventIndex(null);
-    setIsRunning(false);
-    // setOverlayMessage("All events have been processed successfully!");
-    // setShowOverlay(true);
   };
 
   // Handle chat message submission
@@ -1049,69 +1086,67 @@ export default function InTripWidget({
                 <div className="code-panel-header">
                   <div className="code-panel-header-left">
                     <span className="code-panel-title">Events & Alerts</span>
-                    {eventsList && eventsList.length > 0 && (
+                    {editableEventsJSON && editableEventsJSON !== "[]" && (
                       <span className="code-panel-badge">
-                        {eventsList.length}{" "}
-                        {eventsList.length === 1 ? "Event" : "Events"}
+                        {(() => {
+                          try {
+                            const parsed = JSON.parse(editableEventsJSON);
+                            const count = Array.isArray(parsed) ? parsed.length : 0;
+                            return `${count} ${count === 1 ? "Event" : "Events"}`;
+                          } catch {
+                            return "Invalid";
+                          }
+                        })()}
                       </span>
                     )}
                   </div>
-                  {eventsList && eventsList.length > 0 && (
-                    <span className="code-panel-modified-badge">
-                      ⚠️ Active Alerts
-                    </span>
-                  )}
+                  <div className="code-panel-header-right">
+                    {!isJSONValid && (
+                      <span className="code-panel-error-badge">
+                        ❌ Invalid JSON
+                      </span>
+                    )}
+                    {editableEventsJSON && editableEventsJSON !== "[]" && isJSONValid && (
+                      <span className="code-panel-modified-badge">
+                        ⚠️ Active Alerts
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <div className="code-editor">
-                  <pre className="code-content">
-                    {eventsList && eventsList.length > 0 ? (
-                      <>
-                        {"[\n"}
-                        {eventsList.map((event, index) => {
-                          const isCurrentEvent = currentEventIndex === index;
-                          const isPastEvent =
-                            currentEventIndex !== null &&
-                            index < currentEventIndex;
-                          const isFutureEvent =
-                            currentEventIndex !== null &&
-                            index > currentEventIndex;
-
-                          return (
-                            <span
-                              key={index}
-                              className={`event-item ${
-                                isCurrentEvent
-                                  ? "current-event"
-                                  : isPastEvent
-                                  ? "past-event"
-                                  : isFutureEvent
-                                  ? "future-event"
-                                  : ""
-                              }`}
-                            >
-                              {JSON.stringify(event, null, 2)
-                                .split("\n")
-                                .map((line, lineIndex) => (
-                                  <span key={lineIndex}>
-                                    {"  "}
-                                    {line}
-                                    {"\n"}
-                                  </span>
-                                ))}
-                              {index < eventsList.length - 1 && "  ,\n"}
-                            </span>
-                          );
-                        })}
-                        {"]"}
-                      </>
-                    ) : (
-                      <code>
-                        {
-                          "// No events or alerts detected\n// All schedules are on time\n// Weather conditions are normal"
+                  {editableEventsJSON && editableEventsJSON !== "[]" ? (
+                    <textarea
+                      className={`code-textarea ${!isJSONValid ? "error" : ""}`}
+                      value={editableEventsJSON}
+                      onChange={(e) => {
+                        setEditableEventsJSON(e.target.value);
+                        // Validate JSON on change
+                        try {
+                          const parsed = JSON.parse(e.target.value);
+                          if (Array.isArray(parsed)) {
+                            setIsJSONValid(true);
+                          } else {
+                            setIsJSONValid(false);
+                          }
+                        } catch {
+                          setIsJSONValid(false);
                         }
-                      </code>
-                    )}
-                  </pre>
+                      }}
+                      placeholder="Edit events JSON here..."
+                      spellCheck={false}
+                      disabled={isRunning}
+                    />
+                  ) : (
+                    <div className="code-placeholder">
+                      <pre className="code-content">
+                        <code>
+                          {
+                            "// No events or alerts detected\n// All schedules are on time\n// Weather conditions are normal"
+                          }
+                        </code>
+                      </pre>
+                    </div>
+                  )}
                 </div>
               </div>
             )}
@@ -1358,55 +1393,80 @@ export default function InTripWidget({
         }
 
         .day-tab.updated {
-          background: linear-gradient(
-            135deg,
-            rgba(59, 130, 246, 0.12) 0%,
-            rgba(147, 197, 253, 0.08) 100%
-          );
-          border-color: rgba(59, 130, 246, 0.4);
-          color: #3b82f6;
+          background: rgba(255, 255, 255, 0.9);
+          border: 2px solid #3b82f6;
+          color: #1e40af;
+          font-weight: 700;
           position: relative;
+          box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
         }
 
         .day-tab.updated::before {
           content: "";
           position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 2px;
+          top: -2px;
+          left: -2px;
+          right: -2px;
+          bottom: -2px;
           background: linear-gradient(
-            90deg,
-            rgba(59, 130, 246, 0.6) 0%,
-            rgba(147, 197, 253, 0.8) 50%,
-            rgba(59, 130, 246, 0.6) 100%
+            135deg,
+            #3b82f6 0%,
+            #60a5fa 50%,
+            #3b82f6 100%
           );
-          border-radius: 10px 10px 0 0;
+          border-radius: 10px;
+          z-index: -1;
+          opacity: 0.15;
+        }
+
+        .day-tab.updated:hover {
+          background: rgba(255, 255, 255, 1);
+          border-color: #2563eb;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
         }
 
         .day-tab.updated.active {
           background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-          border-color: transparent;
+          border: 2px solid #2563eb;
           color: white;
+          box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4);
         }
 
         .day-tab.updated.active::before {
-          background: linear-gradient(
-            90deg,
-            rgba(255, 255, 255, 0.4) 0%,
-            rgba(255, 255, 255, 0.6) 50%,
-            rgba(255, 255, 255, 0.4) 100%
-          );
+          opacity: 0;
         }
 
         .update-indicator {
-          display: inline-block;
-          width: 6px;
-          height: 6px;
-          background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 8px;
+          height: 8px;
+          background: #3b82f6;
           border-radius: 50%;
-          margin-left: 4px;
-          box-shadow: 0 0 4px rgba(59, 130, 246, 0.4);
+          margin-left: 6px;
+          box-shadow: 0 0 6px rgba(59, 130, 246, 0.6),
+            0 0 12px rgba(59, 130, 246, 0.4);
+          animation: updatePulse 2s ease-in-out infinite;
+        }
+
+        .day-tab.updated.active .update-indicator {
+          background: #ffffff;
+          box-shadow: 0 0 6px rgba(255, 255, 255, 0.8),
+            0 0 12px rgba(255, 255, 255, 0.6);
+        }
+
+        @keyframes updatePulse {
+          0%,
+          100% {
+            transform: scale(1);
+            opacity: 1;
+          }
+          50% {
+            transform: scale(1.2);
+            opacity: 0.8;
+          }
         }
 
         .day-content {
@@ -1806,6 +1866,12 @@ export default function InTripWidget({
           gap: 12px;
         }
 
+        .code-panel-header-right {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+
         .code-panel-title {
           font-size: 0.875rem;
           font-weight: 700;
@@ -1832,6 +1898,16 @@ export default function InTripWidget({
           animation: pulse 2s ease-in-out infinite;
         }
 
+        .code-panel-error-badge {
+          font-size: 0.6875rem;
+          font-weight: 600;
+          color: #dc2626;
+          background: rgba(239, 68, 68, 0.15);
+          padding: 4px 10px;
+          border-radius: 6px;
+          border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
         @keyframes pulse {
           0%,
           100% {
@@ -1844,8 +1920,47 @@ export default function InTripWidget({
 
         .code-editor {
           flex: 1;
-          overflow: auto;
+          overflow: hidden;
           background: #1e293b;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .code-textarea {
+          flex: 1;
+          width: 100%;
+          background: #1e293b;
+          color: #e2e8f0;
+          border: none;
+          outline: none;
+          padding: 20px;
+          font-family: "Fira Code", "Consolas", "Monaco", monospace;
+          font-size: 0.8125rem;
+          line-height: 1.6;
+          resize: none;
+          overflow: auto;
+          white-space: pre;
+          tab-size: 2;
+        }
+
+        .code-textarea:focus {
+          background: #0f172a;
+          box-shadow: inset 0 0 0 2px rgba(59, 130, 246, 0.3);
+        }
+
+        .code-textarea.error {
+          background: #2d1e1e;
+          box-shadow: inset 0 0 0 2px rgba(239, 68, 68, 0.4);
+        }
+
+        .code-textarea:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+
+        .code-placeholder {
+          flex: 1;
+          overflow: auto;
           padding: 20px;
         }
 

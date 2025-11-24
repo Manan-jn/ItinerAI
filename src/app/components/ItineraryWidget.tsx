@@ -68,8 +68,8 @@ export interface DayItinerary {
   subtitle: string;
   weather: {
     temperature: string;
-    condition: string;
-    icon: string;
+    avg_humidity: number;
+    precipitation: number;
   };
   mapData: {
     avgTravelTime: string;
@@ -287,9 +287,9 @@ const transformSingleDay = (apiDay: any): DayItinerary => {
     subtitle:
       apiDay.summary || apiDay.themes?.join(", ") || "Explore and enjoy",
     weather: {
-      temperature: "25°C",
-      condition: "Sunny",
-      icon: "☀️",
+      temperature: apiDay.weather_forecast?.temperature || "N/A",
+      avg_humidity: apiDay.weather_forecast?.avg_humidity || 0,
+      precipitation: apiDay.weather_forecast?.precipitation || 0,
     },
     mapData: {
       avgTravelTime: travelStops > 0 ? `${travelStops} transfers` : "Local",
@@ -1462,7 +1462,7 @@ export default function ItineraryWidget({
 
                   <div className="relative z-10">
                     {/* Date Badge and Title Row */}
-                    <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-start justify-between mb-2">
                       <div className="flex items-center gap-3">
                         <div className="inline-flex items-center gap-1.5 bg-white/90 backdrop-blur-md rounded-full px-3 py-1 shadow-md border border-purple-200/50">
                           <span className="text-[10px] font-bold text-purple-600">
@@ -1482,6 +1482,35 @@ export default function ItineraryWidget({
                         >
                           {currentDay.title}
                         </h3>
+                      </div>
+
+                      {/* Weather Info - Top Right Corner */}
+                      <div className="flex items-center gap-1.5 flex-wrap justify-end">
+                        {/* Temperature */}
+                        <div className="flex items-center gap-1 bg-gradient-to-r from-orange-50 to-amber-50 backdrop-blur-md rounded-lg px-2.5 py-1.5 border border-orange-200/50 shadow-md hover:shadow-lg transition-shadow">
+                          <span className="text-xs">🌡️</span>
+                          <span className="text-[10px] font-bold text-orange-700">
+                            {currentDay.weather.temperature}°C
+                          </span>
+                        </div>
+                        {/* Humidity */}
+                        {currentDay.weather.avg_humidity > 0 && (
+                          <div className="flex items-center gap-1 bg-gradient-to-r from-cyan-50 to-blue-50 backdrop-blur-md rounded-lg px-2.5 py-1.5 border border-cyan-200/50 shadow-md hover:shadow-lg transition-shadow">
+                            <span className="text-xs">💧</span>
+                            <span className="text-[10px] font-bold text-cyan-700">
+                              {currentDay.weather.avg_humidity}%
+                            </span>
+                          </div>
+                        )}
+                        {/* Precipitation */}
+                        {currentDay.weather.precipitation > 0 && (
+                          <div className="flex items-center gap-1 bg-gradient-to-r from-indigo-50 to-purple-50 backdrop-blur-md rounded-lg px-2.5 py-1.5 border border-indigo-200/50 shadow-md hover:shadow-lg transition-shadow">
+                            <span className="text-xs">🌧️</span>
+                            <span className="text-[10px] font-bold text-indigo-700">
+                              {currentDay.weather.precipitation}mm
+                            </span>
+                          </div>
+                        )}
                       </div>
                     </div>
 
