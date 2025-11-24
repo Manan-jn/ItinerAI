@@ -6,6 +6,8 @@ import { DateSelectorSnippet } from "./DateSelectorSnippet";
 import { ConveyanceSnippet } from "./ConveyanceSnippet";
 import { StaysSnippet } from "./StaysSnippet";
 import { ItinerarySnippet } from "./ItinerarySnippet";
+import { BookingSnippet } from "./BookingSnippet";
+import { PreTripSnippet } from "./PreTripSnippet";
 
 interface ChatMessageProps {
   message: {
@@ -109,6 +111,20 @@ interface ChatMessageProps {
       }>;
       itineraryTripTitle?: string;
       itineraryTotalDays?: number;
+      // Booking snippet metadata
+      isBookingComplete?: boolean;
+      bookingTripTitle?: string;
+      bookingTotalDays?: number;
+      bookingTotalBudget?: number;
+      bookingUserBudget?: number;
+      bookingBudgetBreakdown?: {
+        overall: Partial<Record<string, number>>;
+      };
+      bookingTravelActivitiesCount?: number;
+      // Pre-trip snippet metadata
+      isPreTripReady?: boolean;
+      preTripTripTitle?: string;
+      preTripMarkdownContent?: string;
     };
   };
   currentUser: User | null;
@@ -194,6 +210,20 @@ export function ChatMessage({ message, currentUser }: ChatMessageProps) {
             itineraries={message.metadata.itineraries}
             tripTitle={message.metadata.itineraryTripTitle}
             totalDays={message.metadata.itineraryTotalDays}
+          />
+        ) : message.metadata?.isBookingComplete && message.metadata?.bookingBudgetBreakdown ? (
+          <BookingSnippet
+            tripTitle={message.metadata.bookingTripTitle || "Your Trip"}
+            totalDays={message.metadata.bookingTotalDays || 1}
+            totalBudget={message.metadata.bookingTotalBudget || 0}
+            userBudget={message.metadata.bookingUserBudget}
+            budgetBreakdown={message.metadata.bookingBudgetBreakdown as any}
+            travelActivitiesCount={message.metadata.bookingTravelActivitiesCount || 0}
+          />
+        ) : message.metadata?.isPreTripReady && message.metadata?.preTripMarkdownContent ? (
+          <PreTripSnippet
+            tripTitle={message.metadata.preTripTripTitle || "Your Trip"}
+            markdownContent={message.metadata.preTripMarkdownContent}
           />
         ) : message.metadata?.suggestedTrips ? (
           <SuggestedTripsSnippet trips={message.metadata.suggestedTrips} />

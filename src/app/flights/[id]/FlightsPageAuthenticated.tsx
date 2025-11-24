@@ -2054,6 +2054,115 @@ export default function FlightsPageAuthenticated() {
         return;
       }
 
+      // Calculate budget breakdown from itinerariesGenerated
+      const budgetBreakdown: any = { overall: {} };
+      let totalBudget = 0;
+      let travelActivitiesCount = 0;
+
+      // Get stays pricing from sessionStorage
+      let staysPricing = 0;
+      try {
+        const stayDataKey = `stay_${userId}_${sessionId}`;
+        const storedData = sessionStorage.getItem(stayDataKey);
+        if (storedData) {
+          const stayData = JSON.parse(storedData);
+          if (stayData.total_price) {
+            staysPricing = stayData.total_price;
+          }
+        }
+      } catch (error) {
+        console.error("Error retrieving stays pricing:", error);
+      }
+
+      // Count total "rest" activities to distribute stays pricing
+      let totalRestActivities = 0;
+      itinerariesGenerated.forEach((day: any) => {
+        if (day.schedule && Array.isArray(day.schedule)) {
+          day.schedule.forEach((item: any) => {
+            if (item.activity_type === "rest") {
+              totalRestActivities++;
+            }
+          });
+        }
+      });
+
+      const farePerRest = totalRestActivities > 0 ? staysPricing / totalRestActivities : 0;
+
+      // Calculate budget breakdown
+      itinerariesGenerated.forEach((day: any) => {
+        if (day.schedule && Array.isArray(day.schedule)) {
+          day.schedule.forEach((item: any) => {
+            if (item.fare && item.activity_type) {
+              const activityType = item.activity_type;
+              budgetBreakdown.overall[activityType] = 
+                (budgetBreakdown.overall[activityType] || 0) + item.fare;
+              totalBudget += item.fare;
+            }
+
+            // Add stays pricing for "rest" activities (distributed)
+            if (item.activity_type === "rest" && farePerRest > 0) {
+              budgetBreakdown.overall["rest"] = 
+                (budgetBreakdown.overall["rest"] || 0) + farePerRest;
+              totalBudget += farePerRest;
+            }
+
+            // Count travel activities
+            if (item.activity_type === "travel" && item.conveyance_type !== "walk") {
+              travelActivitiesCount++;
+            }
+          });
+        }
+      });
+
+      // Get user budget from memory
+      let userBudget = null;
+      try {
+        const response = await fetch("/api/memory/get", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            user_id: userId,
+            session_id: sessionId,
+          }),
+        });
+        if (response.ok) {
+          const data = await response.json();
+          if (data.user_profile && data.user_profile.budget) {
+            userBudget = data.user_profile.budget;
+          }
+        }
+      } catch (error) {
+        console.error("Failed to fetch user budget:", error);
+      }
+
+      // Add booking snippet to chat messages
+      const bookingSnippetMessage = {
+        id: Date.now().toString(),
+        content: "All travel bookings have been completed! Here's your trip summary:",
+        role: "assistant" as const,
+        timestamp: new Date(),
+        metadata: {
+          isBookingComplete: true,
+          bookingTripTitle: selectedTrip?.trip_title || "My Trip",
+          bookingTotalDays: selectedTrip?.no_of_days || itinerariesGenerated.length,
+          bookingTotalBudget: totalBudget,
+          bookingUserBudget: userBudget,
+          bookingBudgetBreakdown: budgetBreakdown,
+          bookingTravelActivitiesCount: travelActivitiesCount,
+        },
+      };
+
+      // Add user confirmation message after snippet
+      const userConfirmationMessage = {
+        id: (Date.now() + 1).toString(),
+        content: "All bookings completed successfully! Ready to proceed with the trip planning.",
+        role: "user" as const,
+        timestamp: new Date(),
+      };
+
+      setMessages((prev) => [...prev, bookingSnippetMessage, userConfirmationMessage]);
+      console.log("✅ Booking snippet and user confirmation added to chat");
+
       // Show congratulations loader
       setShowCongratsLoader(true);
 
@@ -2088,6 +2197,33 @@ export default function FlightsPageAuthenticated() {
   // Handler for finishing pre-trip brief
   const handlePreTripFinish = () => {
     console.log("✅ Pre-trip brief finished, showing in-trip widget");
+
+    // Add pre-trip snippet to chat messages
+    if (preTripMarkdown) {
+      const preTripSnippetMessage = {
+        id: Date.now().toString(),
+        content: "Your pre-trip brief is ready! Review important information before your journey:",
+        role: "assistant" as const,
+        timestamp: new Date(),
+        metadata: {
+          isPreTripReady: true,
+          preTripTripTitle: selectedTrip?.trip_title || "My Trip",
+          preTripMarkdownContent: preTripMarkdown,
+        },
+      };
+
+      // Add user confirmation message after snippet
+      const userConfirmationMessage = {
+        id: (Date.now() + 1).toString(),
+        content: "Pre-trip report downloaded and saved. All set for the journey!",
+        role: "user" as const,
+        timestamp: new Date(),
+      };
+
+      setMessages((prev) => [...prev, preTripSnippetMessage, userConfirmationMessage]);
+      console.log("✅ Pre-trip snippet and user confirmation added to chat");
+    }
+
     setShowPreTrip(false);
     handleShowInTrip(true);
   };
