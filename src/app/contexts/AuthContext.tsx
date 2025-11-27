@@ -13,6 +13,7 @@ import {
 } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, googleProvider, db } from "../../../firebase";
+import { clearCustomUserId } from "../utils/sessionManager";
 
 interface AuthContextType {
   currentUser: User | null;
@@ -71,6 +72,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
     // Show onboarding modal for new users
     if (result.user) {
+      // CRITICAL: Clear sessionStorage BEFORE showing onboarding to prevent race condition
+      if (typeof window !== "undefined") {
+        sessionStorage.removeItem("itinerai_session_id");
+        sessionStorage.removeItem("itinerai_user_id");
+        console.log("🧹 Cleared sessionStorage before onboarding (signup)");
+      }
       setShowOnboarding(true);
     }
   }
@@ -84,6 +91,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
       );
 
       if (!hasCompletedOnboarding) {
+        // CRITICAL: Clear sessionStorage BEFORE showing onboarding to prevent race condition
+        if (typeof window !== "undefined") {
+          sessionStorage.removeItem("itinerai_session_id");
+          sessionStorage.removeItem("itinerai_user_id");
+          console.log("🧹 Cleared sessionStorage before onboarding (login)");
+        }
         // User exists but hasn't completed onboarding - show onboarding
         setShowOnboarding(true);
       }
@@ -101,6 +114,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
       );
 
       if (!hasCompletedOnboarding) {
+        // CRITICAL: Clear sessionStorage BEFORE showing onboarding to prevent race condition
+        if (typeof window !== "undefined") {
+          sessionStorage.removeItem("itinerai_session_id");
+          sessionStorage.removeItem("itinerai_user_id");
+          console.log("🧹 Cleared sessionStorage before onboarding (Google login)");
+        }
         // New user - show onboarding
         setShowOnboarding(true);
       }
@@ -110,13 +129,23 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   async function logout() {
-    // Clear guest session if present
+    // Clear all session and storage data
     if (typeof window !== "undefined") {
+      // Clear guest session if present
       const storedGuest = localStorage.getItem("guestUser");
       if (storedGuest) {
         localStorage.removeItem("guestUser");
         setIsGuest(false);
       }
+
+      // Clear custom user ID from localStorage
+      clearCustomUserId();
+
+      // Clear session storage
+      sessionStorage.removeItem("itinerai_session_id");
+      sessionStorage.removeItem("itinerai_user_id");
+
+      console.log("🔄 Cleared all session data on logout");
     }
 
     await signOut(auth);
@@ -196,6 +225,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     setCurrentUser(guestUserMinimal);
     setIsGuest(true);
+    // CRITICAL: Clear sessionStorage BEFORE showing onboarding to prevent race condition
+    if (typeof window !== "undefined") {
+      sessionStorage.removeItem("itinerai_session_id");
+      sessionStorage.removeItem("itinerai_user_id");
+      console.log("🧹 Cleared sessionStorage before onboarding (guest)");
+    }
     // Trigger onboarding for new guest
     setShowOnboarding(true);
   }

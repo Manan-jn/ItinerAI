@@ -5,6 +5,7 @@
 
 const SESSION_ID_KEY = 'itinerai_session_id';
 const USER_ID_KEY = 'itinerai_user_id';
+const CUSTOM_USER_ID_KEY = 'itinerai_custom_user_id'; // NEW: Custom user ID key
 
 /**
  * Generates a random session ID
@@ -57,7 +58,8 @@ export function getSessionId(): string {
 
 /**
  * Gets or creates a user ID
- * - Returns existing user ID if found in sessionStorage
+ * - First checks for custom user ID in localStorage (highest priority)
+ * - Then checks for existing user ID in sessionStorage
  * - Creates new user ID if not found
  */
 export function getUserId(): string {
@@ -67,8 +69,16 @@ export function getUserId(): string {
   }
 
   try {
+    // PRIORITY 1: Check for custom user ID in localStorage
+    const customUserId = localStorage.getItem(CUSTOM_USER_ID_KEY);
+    if (customUserId && customUserId.trim()) {
+      console.log('Using custom user ID:', customUserId);
+      return customUserId.trim();
+    }
+
+    // PRIORITY 2: Check for existing user ID in sessionStorage
     let userId = sessionStorage.getItem(USER_ID_KEY);
-    
+
     if (!userId) {
       userId = generateUserId();
       sessionStorage.setItem(USER_ID_KEY, userId);
@@ -76,7 +86,7 @@ export function getUserId(): string {
     } else {
       console.log('Using existing user ID:', userId);
     }
-    
+
     return userId;
   } catch (error) {
     // Fallback if sessionStorage is not available
@@ -135,11 +145,59 @@ export function regenerateSessionForUser(userId: string): { sessionId: string; u
 /**
  * Gets session info for debugging
  */
-export function getSessionInfo(): { sessionId: string; userId: string; isNewSession: boolean } {
+export function getSessionInfo(): { sessionId: string; userId: string; isNewSession: boolean; isCustomUserId: boolean } {
   const sessionId = getSessionId();
   const userId = getUserId();
-  const isNewSession = typeof window !== 'undefined' ? 
+  const isNewSession = typeof window !== 'undefined' ?
     !sessionStorage.getItem(SESSION_ID_KEY) : true;
-  
-  return { sessionId, userId, isNewSession };
+  const isCustomUserId = typeof window !== 'undefined' ?
+    !!localStorage.getItem(CUSTOM_USER_ID_KEY) : false;
+
+  return { sessionId, userId, isNewSession, isCustomUserId };
+}
+
+/**
+ * Sets a custom user ID in localStorage
+ * This will override the auto-generated user ID
+ * @param customUserId - The custom user ID to set
+ */
+export function setCustomUserId(customUserId: string): void {
+  if (typeof window !== 'undefined') {
+    try {
+      localStorage.setItem(CUSTOM_USER_ID_KEY, customUserId.trim());
+      console.log('Custom user ID set:', customUserId.trim());
+    } catch (error) {
+      console.warn('Could not set custom user ID:', error);
+    }
+  }
+}
+
+/**
+ * Gets the custom user ID if set
+ * @returns Custom user ID or null if not set
+ */
+export function getCustomUserId(): string | null {
+  if (typeof window !== 'undefined') {
+    try {
+      return localStorage.getItem(CUSTOM_USER_ID_KEY);
+    } catch (error) {
+      console.warn('Could not get custom user ID:', error);
+      return null;
+    }
+  }
+  return null;
+}
+
+/**
+ * Clears the custom user ID
+ */
+export function clearCustomUserId(): void {
+  if (typeof window !== 'undefined') {
+    try {
+      localStorage.removeItem(CUSTOM_USER_ID_KEY);
+      console.log('Custom user ID cleared');
+    } catch (error) {
+      console.warn('Could not clear custom user ID:', error);
+    }
+  }
 }

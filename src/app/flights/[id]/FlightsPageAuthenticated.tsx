@@ -3,6 +3,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { MdChat, MdExplore } from "react-icons/md";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../../../firebase";
 import { useAuth } from "../../contexts/AuthContext";
 import SessionDebugFlights from "../../components/SessionDebugFlights";
 import { translateToEnglish } from "../../utils/translateToEnglish";
@@ -353,6 +355,36 @@ export default function FlightsPageAuthenticated() {
     setShowFlashcards,
     flashcardsRef
   );
+
+  // Handle custom user ID set - trigger onboarding flow
+  const handleCustomUserIdSet = (customId: string) => {
+    console.log(`🔧 Custom User ID set in FlightsPageAuthenticated: ${customId}`);
+
+    // CRITICAL: Clear session storage BEFORE resetting state to prevent race condition
+    // This must happen BEFORE setSessionId("") so useSessionManagement doesn't read old session
+    if (typeof window !== "undefined") {
+      sessionStorage.removeItem("itinerai_session_id");
+      sessionStorage.removeItem("itinerai_user_id");
+      console.log("🧹 Cleared sessionStorage before custom user ID onboarding");
+    }
+
+    // Reset session state IMMEDIATELY after clearing sessionStorage
+    // This ensures useSessionManagement won't read stale data
+    setSessionId("");
+    setUserId(customId);
+    setIsFirstMessage(true);
+
+    // Clear any existing chat/trip data
+    setMessages([]);
+    setSelectedTrip(null);
+    setTripSuggestions([]);
+    setOriginalTrips([]);
+
+    // Trigger onboarding modal AFTER clearing storage and resetting state
+    setShowOnboarding(true);
+
+    console.log("✅ Onboarding triggered with custom user ID:", customId);
+  };
 
   // No need for dashboard data here anymore - it's in DashboardData.ts
 
@@ -4027,21 +4059,32 @@ export default function FlightsPageAuthenticated() {
     setIsLoading(true);
 
     try {
-      // Update memory before first message if this is the first message
+      // Update memory before first message only if NOT coming from onboarding
+      // Check if user has completed onboarding by verifying Firestore data
       if (isFirstMessage && currentUser) {
         console.log(
-          "First message detected, updating memory before sending..."
+          "First message detected, checking if memory update needed..."
         );
+
         try {
-          await updateMemoryOnSessionChange(
-            userId,
-            sessionId,
-            currentUser.displayName,
-            currentUser.email
-          );
-          console.log("Memory updated successfully for first message");
+          // Check if this is a fresh session (not from onboarding)
+          const userDoc = await getDoc(doc(db, "users", userId));
+          const needsMemoryUpdate = !userDoc.exists() || !userDoc.data()?.onboardingCompleted;
+
+          if (needsMemoryUpdate) {
+            console.log("User needs memory update (no onboarding data found)");
+            await updateMemoryOnSessionChange(
+              userId,
+              sessionId,
+              currentUser.displayName,
+              currentUser.email
+            );
+            console.log("Memory updated successfully for first message");
+          } else {
+            console.log("Skipping memory update - user already onboarded");
+          }
         } catch (error) {
-          console.error("Failed to update memory for first message:", error);
+          console.error("Failed to check/update memory for first message:", error);
           // Continue with the message even if memory update fails
         }
         setIsFirstMessage(false);
@@ -4735,6 +4778,7 @@ export default function FlightsPageAuthenticated() {
                   }
                 }}
                 onDebugToggle={() => setShowDebug(!showDebug)}
+                onCustomUserIdSet={handleCustomUserIdSet}
               />
 
               {/* Chat Container - Scrollable messages area with fixed input */}
@@ -5008,7 +5052,7 @@ export default function FlightsPageAuthenticated() {
         <OnboardingModalWhite
           isOpen={showOnboarding}
           onClose={() => setShowOnboarding(false)}
-          userId={currentUser.uid}
+          userId={userId || currentUser.uid}
         />
       )}
 

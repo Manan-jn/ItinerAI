@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { User } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
-import { getSessionId } from "../utils/sessionManager";
+import { getSessionId, getCustomUserId } from "../utils/sessionManager";
 
 /**
  * Custom hook for managing session state and operations
@@ -20,31 +20,89 @@ export function useSessionManagement(currentUser: User | null) {
   const [isInitializingSession, setIsInitializingSession] = useState(false);
   const sessionInitRef = useRef<boolean>(false); // Prevent double initialization in dev mode
 
+  // Reset initialization flag when sessionId is cleared (e.g., during onboarding)
+  useEffect(() => {
+    if (!sessionId && sessionInitRef.current) {
+      console.log('🔄 Session ID cleared, resetting initialization flag to allow re-initialization');
+      sessionInitRef.current = false;
+    }
+  }, [sessionId]);
+
   // Initialize session for authenticated user using API
   useEffect(() => {
+    console.log('🔄 useSessionManagement effect running:', {
+      hasCurrentUser: !!currentUser,
+      sessionId: sessionId || 'EMPTY',
+      sessionInitRefCurrent: sessionInitRef.current
+    });
+
     if (currentUser && !sessionId && !sessionInitRef.current) {
       // Only run if we don't have a session yet AND haven't started initialization
+      console.log('✅ Conditions met, initializing session...');
       sessionInitRef.current = true; // Mark as initializing to prevent double calls
 
       const initializeAuthenticatedSession = async () => {
-        const authenticatedUserId = currentUser.uid; // Always use Firebase UID
+        // PRIORITY: Check for custom user ID first
+        const customUserId = getCustomUserId();
+        const authenticatedUserId = customUserId && customUserId.trim()
+          ? customUserId.trim()
+          : currentUser.uid; // Use Firebase UID if no custom ID
+
+        if (customUserId) {
+          console.log('🔧 Using custom user ID for session:', customUserId);
+        }
+
+        // CRITICAL: Double-check sessionStorage wasn't cleared between effect run and now
+        // This prevents race condition where onboarding clears storage after we read it
+        console.log('🔍 Checking sessionStorage for existing session...');
+        const existingSessionId = typeof window !== 'undefined'
+          ? sessionStorage.getItem('itinerai_session_id')
+          : null;
+        console.log('🔍 SessionStorage check result:', existingSessionId || 'NULL/EMPTY');
+
+        // Only use existing session if it's valid and not empty
+        // Empty string means it was cleared (onboarding in progress)
+        if (existingSessionId && existingSessionId.trim()) {
+          console.log('✅ Using existing session from storage:', existingSessionId);
+          setSessionId(existingSessionId);
+          setUserId(authenticatedUserId);
+          setPreviousSessionId(existingSessionId);
+          setIsInitializingSession(false);
+          return;
+        } else if (existingSessionId === '') {
+          console.log('⚠️ SessionStorage was cleared (likely onboarding in progress), will create new session');
+        }
+
+        console.log('⚠️ No session found in sessionStorage, will create new one');
+
 
         setIsInitializingSession(true);
 
         try {
-          // Fetch phone_number from Firestore
+          // Fetch phone_number and onboarding status from Firestore
           let phoneNumber = "";
+          let onboardingCompleted = false;
           try {
             const userDoc = await getDoc(doc(db, "users", authenticatedUserId));
             if (userDoc.exists()) {
-              phoneNumber = userDoc.data()?.phoneNumber || "";
+              const userData = userDoc.data();
+              phoneNumber = userData?.phoneNumber || "";
+              onboardingCompleted = userData?.onboardingCompleted || false;
             }
           } catch (firestoreError) {
             console.warn("⚠️ Could not fetch user data from Firestore:", firestoreError);
           }
 
           if (!phoneNumber) {
-            console.warn("⚠️ No phone number found for user, falling back to local session");
+            console.warn("⚠️ No phone number found for user");
+
+            // If user hasn't completed onboarding, fall back to local session
+            // If they HAVE completed onboarding, something is wrong - still use local session
+            // but log a warning
+            if (onboardingCompleted) {
+              console.error("❌ User completed onboarding but no phone number found!");
+            }
+
             const fallbackSessionId = getSessionId();
             setSessionId(fallbackSessionId);
             setUserId(authenticatedUserId);
@@ -81,6 +139,11 @@ export function useSessionManagement(currentUser: User | null) {
             user_id: sessionData.body.user_id,
             session_id: newSessionId,
           });
+
+          // Store in sessionStorage for reuse
+          if (typeof window !== 'undefined') {
+            sessionStorage.setItem('itinerai_session_id', newSessionId);
+          }
 
           setSessionId(newSessionId);
           setUserId(authenticatedUserId);

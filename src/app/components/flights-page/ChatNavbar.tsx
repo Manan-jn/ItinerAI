@@ -11,6 +11,7 @@ interface ChatNavbarProps {
   setShowProfileDropdown: (show: boolean) => void;
   onSettings: () => void;
   onLogout: () => void;
+  onCustomUserIdSet?: (userId: string) => void; // New callback
   showFlashcards: boolean;
   showFlights: boolean;
   showStays: boolean;
@@ -42,6 +43,7 @@ export function ChatNavbar({
   setShowProfileDropdown,
   onSettings,
   onLogout,
+  onCustomUserIdSet,
   showFlashcards,
   showFlights,
   showStays,
@@ -417,6 +419,7 @@ export function ChatNavbar({
               setShowProfileDropdown={setShowProfileDropdown}
               onSettings={onSettings}
               onLogout={onLogout}
+              onCustomUserIdSet={onCustomUserIdSet}
             />
           </div>
         </div>

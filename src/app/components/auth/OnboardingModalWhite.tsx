@@ -144,11 +144,15 @@ export default function OnboardingModalWhite({
       };
 
       // Save to Firestore with user ID as document ID
+      // IMPORTANT: Wait for Firestore save to complete before proceeding
+      console.log("💾 Saving user data to Firestore...");
       await setDoc(doc(db, "users", userId), userData);
+      console.log("✅ Firestore save completed");
 
       // Ensure a backend session exists before memory update
       let sessionId = "";
       try {
+        console.log("🔄 Creating backend session...");
         const resp = await fetch("/api/session/create", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -157,16 +161,26 @@ export default function OnboardingModalWhite({
         if (resp.ok) {
           const data = await resp.json();
           sessionId = data.body?.session_id || "";
+          console.log("✅ Backend session created:", sessionId);
           // Persist for later use in sessionManager consumers
           if (typeof window !== "undefined" && sessionId) {
+            console.log("📝 Storing session ID in sessionStorage:", sessionId);
             sessionStorage.setItem("itinerai_session_id", sessionId);
+            // Verify it was stored
+            const stored = sessionStorage.getItem("itinerai_session_id");
+            console.log("✅ Session ID stored and verified in sessionStorage:", stored);
+            if (stored !== sessionId) {
+              console.error("❌ CRITICAL: Session ID mismatch after storing!");
+            }
           }
         } else {
           // Fallback to local generation if API fails
+          console.warn("⚠️ Session API failed, using local session");
           sessionId = getSessionId();
         }
       } catch (e) {
         // Fallback if request failed
+        console.error("❌ Session creation error:", e);
         sessionId = getSessionId();
       }
       const memoryUserData = {
@@ -176,9 +190,15 @@ export default function OnboardingModalWhite({
       };
 
       // Call memory API (non-blocking - don't fail onboarding if it fails)
-      updateUserMemory(memoryUserData, userId, sessionId);
+      console.log("📝 Updating memory...");
+      await updateUserMemory(memoryUserData, userId, sessionId);
+      console.log("✅ Memory update completed");
+
+      // IMPORTANT: Small delay to ensure all storage operations complete
+      await new Promise(resolve => setTimeout(resolve, 100));
 
       // Close modal and redirect to flights dashboard
+      console.log("🔄 Redirecting to flights dashboard...");
       onClose();
       router.push(`/flights/${userId}`);
     } catch (error) {
