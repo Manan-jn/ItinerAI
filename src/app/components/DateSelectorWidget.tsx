@@ -6,7 +6,6 @@ import { MdFlight, MdHotel, MdTrain } from "react-icons/md";
 import ItinerAIChatBox from "./ItinerAIChatBox";
 import ChatLoadingIndicator from "./ChatLoadingIndicator";
 import MessageResponseOverlay from "./MessageResponseOverlay";
-import { JourneyLoader } from "./JourneyLoader";
 import { storeSelectedDate } from "../utils/tripStorage";
 import { translateToEnglish } from "../utils/translateToEnglish";
 import { findPlaceByCity } from "../utils/placesData";
@@ -135,7 +134,6 @@ export default function DateSelectorWidget({
   const [isLoadingPrices, setIsLoadingPrices] = useState(false);
   const [lastFetchedMonth, setLastFetchedMonth] = useState<string | null>(null);
   const [apiError, setApiError] = useState<string | null>(null);
-  const [isLoadingContinue, setIsLoadingContinue] = useState(false);
 
   // Travel dates states
   const [travelDatesData, setTravelDatesData] = useState<TravelDate[]>([]);
@@ -909,8 +907,8 @@ export default function DateSelectorWidget({
       return;
     }
 
-    setIsLoadingContinue(true);
-
+    // Don't manage loading state here - let parent handle it
+    // The parent will show JourneyLoader after this callback
     try {
       // Store date in Firestore and update memory API
       if (userId && sessionId) {
@@ -921,15 +919,13 @@ export default function DateSelectorWidget({
         console.warn("Missing userId or sessionId for date storage");
       }
 
-      // Call the callback if provided
+      // Call the callback if provided - parent will handle loading state
       if (onDateSelected) {
         onDateSelected(selectedDate);
       }
     } catch (error) {
       console.error("Error in handleContinueClick:", error);
       alert("Failed to save date selection. Please try again.");
-    } finally {
-      setIsLoadingContinue(false);
     }
   };
 
@@ -1556,14 +1552,14 @@ export default function DateSelectorWidget({
               <div className="absolute bottom-4 right-4 z-20">
                 <button
                   onClick={handleContinueClick}
-                  disabled={!selectedDate || isLoadingContinue}
+                  disabled={!selectedDate}
                   className={`px-6 py-2 rounded-lg font-semibold transition-all duration-200 ${
-                    selectedDate && !isLoadingContinue
+                    selectedDate
                       ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:shadow-lg hover:scale-105 cursor-pointer"
                       : "bg-gray-300 text-gray-500 cursor-not-allowed opacity-50"
                   }`}
                 >
-                  {isLoadingContinue ? "Saving..." : "Continue"}
+                  Continue
                 </button>
               </div>
               {/* Loading overlay */}
@@ -2000,14 +1996,6 @@ export default function DateSelectorWidget({
             </div>
           </div>
         </div>
-
-        {/* Loading Indicator for Continue Action - Using JourneyLoader */}
-        <JourneyLoader
-          isVisible={isLoadingContinue}
-          currentStep="conveyance-finder"
-          fromLocation={fromCity}
-          toLocation={toCity}
-        />
       </div>
     </>
   );
