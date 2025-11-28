@@ -115,7 +115,6 @@ async function fetchMockFlightData(): Promise<FlightData[]> {
       return Array.isArray(data) ? data : [];
     }
   } catch (error) {
-    console.log('Mock data not available, using empty array');
   }
   return [];
 }
@@ -153,15 +152,12 @@ export async function fetchConveyanceData(request: ConveyanceRequest): Promise<F
         return departureCity.includes(reqDepartureCity) || reqDepartureCity.includes(departureCity) ||
                arrivalCity.includes(reqArrivalCity) || reqArrivalCity.includes(arrivalCity);
       });
-      console.log('Filtered data:', JSON.stringify(filteredData, null, 2));
-      console.log('Using mock data:', filteredData.length, 'flights');
       return filteredData;
     }
   } catch (error) {
     console.error('Error fetching conveyance data:', error);
     // Fallback to mock data
     const mockData = await fetchMockFlightData();
-    console.log('Using mock data as fallback:', mockData.length, 'flights');
     return mockData;
   }
 }
@@ -175,7 +171,6 @@ async function fetchMockStayData(): Promise<StayData[]> {
       return Array.isArray(data) ? data : [];
     }
   } catch (error) {
-    console.log('Mock stay data not available, using empty array');
   }
   return [];
 }
@@ -209,15 +204,12 @@ export async function fetchStayData(request: StayRequest): Promise<StayData[]> {
         
         return stayCity.includes(reqCity) || reqCity.includes(stayCity);
       });
-      console.log('Filtered data:', JSON.stringify(filteredData, null, 2));
-      console.log('Using mock stay data:', filteredData.length, 'stays');
       return filteredData;
     }
   } catch (error) {
     console.error('Error fetching stay data:', error);
     // Fallback to mock data
     const mockData = await fetchMockStayData();
-    console.log('Using mock stay data as fallback:', mockData.length, 'stays');
     return mockData;
   }
 }
@@ -255,7 +247,6 @@ export function findCheapestFlightPriceForDate(flights: FlightData[], date: stri
     })
     .filter(price => price !== null && price !== undefined) as number[];
   
-  console.log(`Found ${prices.length} prices for date ${date}, class ${flightClass}:`, prices);
   
   return prices.length > 0 ? Math.min(...prices) : null;
 }
@@ -280,7 +271,6 @@ export function findCheapestTrainPriceForDate(trains: TrainData[], date: string,
     .map(train => train.price[classKey])
     .filter(price => price !== null && price !== undefined) as number[];
   
-  console.log(`Found ${prices.length} train prices for date ${date}, class ${trainClass}:`, prices);
   
   return prices.length > 0 ? Math.min(...prices) : null;
 }
@@ -328,7 +318,6 @@ export function processPriceDataForMonth(
   trainClass: string = 'SL',
   minRating?: number
 ): DatePriceInfo[] {
-  console.log(`Processing price data for ${year}-${month}, flights: ${flights.length}, trains: ${trains.length}, stays: ${stays.length}, flightClass: ${flightClass}, trainClass: ${trainClass}, minRating: ${minRating}`);
 
   const lastDay = new Date(year, month + 1, 0).getDate();
   const priceData: DatePriceInfo[] = [];
@@ -348,7 +337,6 @@ export function processPriceDataForMonth(
     });
   }
 
-  console.log('Processed price data sample:', priceData.slice(0, 5));
   return priceData;
 }
 

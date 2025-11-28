@@ -88,11 +88,6 @@ async function fetchStaysForDay(
   userId: string,
   sessionId: string
 ): Promise<StayAPIResponse> {
-  console.log(`🏨 Pre-fetching stays for Day ${dayNumber}:`, {
-    city,
-    checkInDate,
-    checkOutDate,
-  });
 
   const normalizedCity = normalizeCityName(city);
   const checkInFormatted = formatDateForAPI(checkInDate);
@@ -103,7 +98,6 @@ async function fetchStaysForDay(
   const state = placeData?.state || "Unknown";
   const country = placeData?.country || "India";
 
-  console.log(`🌍 Stay location: ${normalizedCity}, ${state}, ${country}`);
 
   // Calculate duration in days
   const checkIn = new Date(checkInDate);
@@ -175,9 +169,6 @@ async function fetchStaysForDay(
             available_until_date: stay.available_until_date,
           })
         );
-        console.log(
-          `✅ Day ${dayNumber} AI stays: ${result.ai_recommendations.length} properties`
-        );
       }
     } catch (error) {
       console.error(`❌ Error parsing AI stays for Day ${dayNumber}:`, error);
@@ -195,9 +186,6 @@ async function fetchStaysForDay(
           stay_id: `util_stay_${dayNumber}_${index}`,
           ...stay,
         }));
-        console.log(
-          `✅ Day ${dayNumber} Utility stays: ${result.utility_stays.length} properties`
-        );
       }
     } catch (error) {
       console.error(`❌ Error parsing utility stays for Day ${dayNumber}:`, error);
@@ -235,18 +223,11 @@ export async function preFetchStaysData(
 ): Promise<void> {
   const { userId, sessionId, tripDate, dayDetails } = request;
 
-  console.log("🏨 Starting pre-fetch for stays data:", {
-    userId,
-    tripDate,
-    totalDays: dayDetails.length,
-    requiredDays: dayDetails.filter((d) => d.is_required).length,
-  });
 
   // Filter only days that require stays
   const daysRequiringStays = dayDetails.filter((day) => day.is_required);
 
   if (daysRequiringStays.length === 0) {
-    console.log("ℹ️ No days require stays, skipping pre-fetch");
     return;
   }
 
@@ -292,13 +273,11 @@ export async function preFetchStaysData(
         },
       };
 
-      console.log(`📍 Storing stay: ${stayKey}`);
     });
 
     // Store in Firestore
     await storePreFetchedStaysData(userId, preFetchedData);
 
-    console.log("✅ Pre-fetch stays completed and stored successfully");
   } catch (error) {
     console.error("❌ Error during stays pre-fetch:", error);
     throw error;
@@ -326,8 +305,6 @@ async function storePreFetchedStaysData(
       { merge: true }
     );
 
-    console.log("💾 Stored pre-fetched stays data in Firestore for user:", userId);
-    console.log("📊 Total stay locations cached:", Object.keys(data).length);
   } catch (error) {
     console.error("❌ Error storing pre-fetched stays data:", error);
     throw error;
@@ -351,7 +328,6 @@ export async function getPreFetchedStaysData(
   try {
     const stayKey = generateStayKey(city, checkInDate, checkOutDate);
 
-    console.log(`🔍 Retrieving pre-fetched stays data for: ${stayKey}`);
 
     const docRef = doc(db, "pre_fetch_data_conveyance_stays", userId);
     const docSnap = await getDoc(docRef);
@@ -361,16 +337,12 @@ export async function getPreFetchedStaysData(
       const stayData = data.stays_data?.[stayKey];
 
       if (stayData) {
-        console.log(`✅ Found cached stays data for: ${stayKey}`);
         return stayData;
       } else {
-        console.log(`ℹ️ No cached stays data for: ${stayKey}`);
-        console.log("📊 Available stay keys:", Object.keys(data.stays_data || {}));
         return null;
       }
     }
 
-    console.log("ℹ️ No pre-fetched stays data collection found for user:", userId);
     return null;
   } catch (error) {
     console.error("❌ Error retrieving pre-fetched stays data:", error);

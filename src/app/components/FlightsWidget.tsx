@@ -1763,19 +1763,11 @@ export default function FlightsWidget({
 
   // Update cities when initial props change
   useEffect(() => {
-    console.log(
-      "🛫 FlightsWidget received props - From:",
-      initialFromCity,
-      "To:",
-      initialToCity
-    );
     if (initialFromCity) {
-      console.log("🛫 Setting FROM city to:", initialFromCity);
       setFrom(initialFromCity);
       setFromCity(initialFromCity);
     }
     if (initialToCity) {
-      console.log("🛫 Setting TO city to:", initialToCity);
       setTo(initialToCity);
       setToCity(initialToCity);
     }
@@ -1784,12 +1776,6 @@ export default function FlightsWidget({
   // Log when widget becomes visible
   useEffect(() => {
     if (isVisible) {
-      console.log(
-        "🛫 FlightsWidget is now visible. Current cities - From:",
-        from,
-        "To:",
-        to
-      );
     }
   }, [isVisible, from, to]);
 
@@ -1802,9 +1788,6 @@ export default function FlightsWidget({
     ) {
       // Update departure date if it's different from current value
       if (departureDate !== initialDepartureDate) {
-        console.log("🚀 Auto-fill mode enabled - setting departure date...");
-        console.log("📅 Setting departure date to:", initialDepartureDate);
-        console.log("📅 Previous departure date was:", departureDate);
         setDepartureDate(initialDepartureDate);
       }
     }
@@ -1825,15 +1808,9 @@ export default function FlightsWidget({
       departureDate &&
       !showResults
     ) {
-      console.log("✅ All fields ready for auto-search (full auto-fill):", {
-        from,
-        to,
-        departureDate,
-      });
 
       // Trigger search after a short delay
       const timer = setTimeout(async () => {
-        console.log("🔍 Auto-triggering search with pre-filled data...");
         await handleSearch();
       }, 500);
 
@@ -1846,11 +1823,9 @@ export default function FlightsWidget({
   // This allows user to review FROM, TO, and DATE before searching
   // useEffect(() => {
   //   if (isVisible && partialAutoFillMode && from && to && departureDate && !showResults) {
-  //     console.log("✅ All fields ready for auto-search (partial auto-fill):", { from, to, departureDate });
   //
   //     // Trigger search after a short delay
   //     const timer = setTimeout(async () => {
-  //       console.log("🔍 Auto-triggering search with partial auto-fill...");
   //       await handleSearch();
   //     }, 500);
   //
@@ -1975,13 +1950,6 @@ export default function FlightsWidget({
   };
 
   const handleSearch = async () => {
-    console.log("🔍 handleSearch called - Current state:", {
-      from,
-      to,
-      departureDate,
-      fromCity,
-      toCity,
-    });
 
     if (!from || !to || !departureDate) {
       console.error("❌ Missing required fields:", { from, to, departureDate });
@@ -1989,7 +1957,6 @@ export default function FlightsWidget({
       return;
     }
 
-    console.log("✅ All fields present, proceeding with search");
     setIsLoading(true);
     setIsLoadingComplete(false);
     setIsLoadingUtility(true);
@@ -2003,18 +1970,9 @@ export default function FlightsWidget({
       // Prepare date range (from_date and to_date as same date for single day search)
       const dateStr = departureDate; // Already in YYYY-MM-DD format
 
-      console.log("🔍 Fetching conveyance data for:", {
-        from,
-        to,
-        date: dateStr,
-        dayNumber: currentDayNumber,
-      });
 
       // Check for pre-fetched data if userId is available
       if (userId) {
-        console.log(
-          `🔍 Checking for pre-fetched data for route: ${from} → ${to} on ${dateStr}...`
-        );
         const cachedData = await getConveyanceDataForWidget(
           userId,
           from,
@@ -2023,7 +1981,6 @@ export default function FlightsWidget({
         );
 
         if (cachedData) {
-          console.log("✅ Found pre-fetched data! Using cached results.");
 
           // Parse pre-fetched data
           const aiFlights = parseFlightData(cachedData.aiFlights);
@@ -2044,17 +2001,9 @@ export default function FlightsWidget({
           setIsLoading(false);
           setIsLoadingUtility(false);
 
-          console.log("✅ Pre-fetched data loaded:", {
-            aiFlights: aiFlights.length,
-            aiTrains: aiTrains.length,
-            utilFlights: utilFlights.length,
-            utilTrains: utilTrains.length,
-            source: cachedData.isCached ? "cached" : "fresh",
-          });
 
           // Smart toggle: Auto-switch to trains if flights are empty but trains have data
           if (aiFlights.length === 0 && aiTrains.length > 0) {
-            console.log("✅ Smart toggle (pre-fetched): No flights available, switching to trains tab");
             setSelectedConveyance("Train");
           }
 
@@ -2066,9 +2015,6 @@ export default function FlightsWidget({
 
           return; // Exit early, no need to make API calls
         } else {
-          console.log(
-            "ℹ️ No pre-fetched data found, proceeding with API calls..."
-          );
         }
       }
 
@@ -2081,8 +2027,6 @@ export default function FlightsWidget({
       const departureCountry = departurePlace?.country || "India";
       const arrivalCountry = arrivalPlace?.country || "India";
 
-      console.log(`🌍 Departure: ${from}, ${departureCountry}`);
-      console.log(`🌍 Arrival: ${to}, ${arrivalCountry}`);
 
       // Make parallel API calls - each updates state independently as it completes
       // Utility API call for flights
@@ -2105,7 +2049,6 @@ export default function FlightsWidget({
             const flightsData = await response.json();
             if (Array.isArray(flightsData)) {
               const utilFlights = parseUtilityFlightData(flightsData);
-              console.log("✅ Utility flights received:", utilFlights.length);
               setUtilityResults((prev) => ({
                 ...prev,
                 flights: utilFlights,
@@ -2137,7 +2080,6 @@ export default function FlightsWidget({
             const trainsData = await response.json();
             if (Array.isArray(trainsData)) {
               const utilTrains = parseUtilityTrainData(trainsData);
-              console.log("✅ Utility trains received:", utilTrains.length);
               setUtilityResults((prev) => ({
                 ...prev,
                 trains: utilTrains,
@@ -2180,10 +2122,6 @@ export default function FlightsWidget({
                 ? parseTrainData(conveyanceDetails.trains)
                 : [];
 
-              console.log("✅ AI recommendations received:", {
-                flights: aiFlights.length,
-                trains: aiTrains.length,
-              });
 
               setSearchResults({
                 flights: aiFlights,
@@ -2193,7 +2131,6 @@ export default function FlightsWidget({
 
               // Smart toggle: Auto-switch to trains if flights are empty but trains have data
               if (aiFlights.length === 0 && aiTrains.length > 0) {
-                console.log("✅ Smart toggle: No flights available, switching to trains tab");
                 setSelectedConveyance("Train");
               }
 
@@ -2286,7 +2223,6 @@ export default function FlightsWidget({
         is_required: true,
       };
       setSelectedConveyanceData(enriched);
-      console.log("✅ Selected conveyance data:", selectedOption);
     }
   };
 
@@ -2600,10 +2536,6 @@ export default function FlightsWidget({
         <div className="absolute bottom-6 right-6 z-20">
           <button
             onClick={() => {
-              console.log(
-                "🚀 Continue clicked with selected data:",
-                selectedConveyanceData
-              );
               // Pass both the selected conveyance and all AI options
               const allAiOptions = [...searchResults.flights, ...searchResults.trains];
               onContinue(selectedConveyanceData || undefined, allAiOptions);

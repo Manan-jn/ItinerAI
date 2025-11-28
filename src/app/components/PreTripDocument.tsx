@@ -254,12 +254,7 @@ const parseMarkdown = (markdown: string) => {
 export default function PreTripDocument({
   markdownContent,
 }: PreTripDocumentProps) {
-  console.log(
-    "📄 Rendering PDF with markdown content length:",
-    markdownContent.length
-  );
   const elements = parseMarkdown(markdownContent);
-  console.log("📄 Generated", elements.length, "PDF elements");
 
   return (
     <Document>

@@ -84,11 +84,9 @@ export async function storeGeneratedItinerary(
     if (docSnap.exists()) {
       // Update existing document
       await updateDoc(docRef, dataToStore);
-      console.log("✅ Updated generated itinerary in Firestore");
     } else {
       // Create new document
       await setDoc(docRef, dataToStore);
-      console.log("✅ Stored new generated itinerary in Firestore");
     }
   } catch (error) {
     console.error("❌ Error storing generated itinerary:", error);
@@ -123,11 +121,9 @@ export async function storeDayItinerary(
       if (dayIndex >= 0) {
         // Update existing day
         days[dayIndex] = { ...days[dayIndex], ...dayData };
-        console.log(`✅ Updated day ${dayData.day_number} itinerary`);
       } else {
         // Add new day
         days.push(dayData);
-        console.log(`✅ Added day ${dayData.day_number} itinerary`);
       }
 
       // Sort by day number
@@ -145,7 +141,6 @@ export async function storeDayItinerary(
         days: [dayData],
         lastUpdated: new Date().toISOString(),
       });
-      console.log(`✅ Created itinerary with day ${dayData.day_number}`);
     }
   } catch (error) {
     console.error("❌ Error storing day itinerary:", error);
@@ -166,11 +161,9 @@ export async function getGeneratedItinerary(
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      console.log("✅ Retrieved generated itinerary from Firestore");
       return docSnap.data() as StoredItinerary;
     }
 
-    console.log("ℹ️ No generated itinerary found for user");
     return null;
   } catch (error) {
     console.error("❌ Error retrieving generated itinerary:", error);
@@ -226,9 +219,6 @@ export async function buildCompleteItinerary(
       return [];
     }
 
-    console.log(
-      `📦 Building complete itinerary for days 1-${upToDayNumber} with ${itinerariesGenerated.length} generated itineraries`
-    );
 
     for (let dayNum = 1; dayNum <= upToDayNumber; dayNum++) {
       // Get day plan from selectedTrip
@@ -249,9 +239,6 @@ export async function buildCompleteItinerary(
       // Check if this is a newly added day (should only have minimal structure)
       const isNewDay = (tripDayPlan as any).is_new_day === true;
 
-      console.log(
-        `🔍 Building day ${dayNum} - is_new_day: ${isNewDay}, has_generated: ${!!generatedItinerary}`
-      );
 
       let completeDayData: DayItineraryData;
 
@@ -261,9 +248,6 @@ export async function buildCompleteItinerary(
           day_number: dayNum,
           ...generatedItinerary,
         };
-        console.log(
-          `✅ Using generated itinerary for day ${dayNum}`
-        );
       } else if (isNewDay) {
         // CASE: Newly added day - ONLY include day_number, conveyance_details, and stay_details
         completeDayData = {
@@ -276,9 +260,6 @@ export async function buildCompleteItinerary(
             stay_details: { ...tripDayPlan.stay_details },
           }),
         };
-        console.log(
-          `📝 Minimal structure for newly added day ${dayNum} (conveyance + stay only)`
-        );
       } else {
         // CASE: Regular day with user selections - include conveyance, stay, and trip plan info
         completeDayData = {
@@ -298,27 +279,12 @@ export async function buildCompleteItinerary(
             places_to_visit: tripDayPlan.places_to_visit,
           }),
         };
-        console.log(
-          `📝 Regular day ${dayNum} with user selections from selectedTrip`
-        );
       }
 
-      console.log(
-        `📦 Day ${dayNum} complete data includes:`,
-        {
-          has_conveyance: !!completeDayData.conveyance_details,
-          has_stay: !!completeDayData.stay_details,
-          has_schedule: !!(completeDayData as any).schedule,
-          has_title: !!(completeDayData as any).title,
-        }
-      );
 
       completeItinerary.push(completeDayData);
     }
 
-    console.log(
-      `📦 Built complete itinerary with ${completeItinerary.length} days`
-    );
     return completeItinerary;
   } catch (error) {
     console.error("❌ Error building complete itinerary:", error);
@@ -338,7 +304,6 @@ export async function clearGeneratedItinerary(userId: string): Promise<void> {
       days: [],
       lastUpdated: new Date().toISOString(),
     });
-    console.log("✅ Cleared generated itinerary");
   } catch (error) {
     console.error("❌ Error clearing generated itinerary:", error);
     throw error;
@@ -364,8 +329,6 @@ export async function finalizeAndStoreCompleteItinerary(
   itinerariesGenerated: DayItineraryData[]
 ): Promise<void> {
   try {
-    console.log(`📋 Finalizing complete itinerary for user ${userId}`);
-    console.log(`📊 Total days: ${totalDays}, Generated: ${itinerariesGenerated.length}`);
 
     // Sort days by day_number to ensure correct order
     const sortedDays = [...itinerariesGenerated].sort(
@@ -385,8 +348,6 @@ export async function finalizeAndStoreCompleteItinerary(
     const docRef = doc(db, "generated_itineraries", userId);
     await setDoc(docRef, completeItinerary);
 
-    console.log("✅ Successfully finalized and stored complete itinerary");
-    console.log(`📦 Stored ${sortedDays.length} days for trip: ${tripTitle}`);
   } catch (error) {
     console.error("❌ Error finalizing itinerary:", error);
     throw error;

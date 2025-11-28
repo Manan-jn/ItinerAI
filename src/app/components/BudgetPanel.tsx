@@ -47,15 +47,6 @@ export default function BudgetPanel({
   const remainingBudget = userBudget ? userBudget - totalBudget : 0;
 
   // Debug logging
-  console.log("📊 BudgetPanel Data:", {
-    totalBudget,
-    userBudget,
-    budgetUtilization,
-    isOverBudget,
-    remainingBudget,
-    categoriesCount: Object.keys(budgetBreakdown.overall).length,
-    daysCount: Object.keys(budgetBreakdown.dayWise).length,
-  });
 
   // Calculate day-wise totals
   const dayWiseTotals = useMemo(() => {
@@ -68,7 +59,6 @@ export default function BudgetPanel({
         return { day: parseInt(day), total };
       }
     );
-    console.log("📊 Day-wise totals calculated:", totals);
     return totals;
   }, [budgetBreakdown]);
 
@@ -86,7 +76,6 @@ export default function BudgetPanel({
 
   const maxDayAmount = useMemo(() => {
     const max = Math.max(...dayWiseTotals.map((d) => d.total), 1);
-    console.log("📊 Max day amount for scaling:", max);
     return max;
   }, [dayWiseTotals]);
 
@@ -593,9 +582,6 @@ export default function BudgetPanel({
                 {dayWiseTotals.map(({ day, total }) => {
                   const heightPercentage = (total / maxDayAmount) * 100;
                   const displayHeight = Math.max(heightPercentage, 15); // Minimum 15% for visibility
-                  console.log(
-                    `📊 Day ${day} bar height: ${displayHeight}% (value: ₹${total})`
-                  );
                   return (
                     <div key={day} className="day-chart-item">
                       <div className="day-chart-bar-container">

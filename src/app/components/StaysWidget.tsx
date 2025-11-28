@@ -645,17 +645,13 @@ export default function StaysWidget({
 
   // Update city when initial prop changes
   useEffect(() => {
-    console.log("🏨 StaysWidget received props - City:", initialCity, "CheckIn:", initialCheckInDate, "CheckOut:", initialCheckOutDate, "AutoFill:", autoFillMode);
     if (initialCity) {
-      console.log("🏨 Setting city to:", initialCity);
       setCity(initialCity);
     }
     if (initialCheckInDate) {
-      console.log("🏨 Setting check-in date to:", initialCheckInDate);
       setCheckInDate(initialCheckInDate);
     }
     if (initialCheckOutDate) {
-      console.log("🏨 Setting check-out date to:", initialCheckOutDate);
       setCheckOutDate(initialCheckOutDate);
     }
   }, [initialCity, initialCheckInDate, initialCheckOutDate, autoFillMode]);
@@ -663,13 +659,10 @@ export default function StaysWidget({
   // Auto-search when widget becomes visible in auto-fill mode
   useEffect(() => {
     if (isVisible && autoFillMode && !hasAutoSearched && city && checkInDate && checkOutDate && userId) {
-      console.log("🏨 StaysWidget is now visible in AUTO-FILL mode. Auto-triggering search...");
-      console.log("🏨 Search params:", { city, checkInDate, checkOutDate });
       setHasAutoSearched(true);
       // Trigger search automatically
       handleSearch();
     } else if (isVisible && !autoFillMode) {
-      console.log("🏨 StaysWidget is now visible in MANUAL mode. Current city:", city);
     }
   }, [isVisible, autoFillMode, hasAutoSearched, city, checkInDate, checkOutDate, userId]);
 
@@ -703,12 +696,9 @@ export default function StaysWidget({
     try {
       // Check for pre-fetched data if userId is available
       if (userId) {
-        console.log(`🏨 Checking for pre-fetched stays data for: ${city} (${checkInDate} to ${checkOutDate})...`);
         const cachedData = await getPreFetchedStaysData(userId, city, checkInDate, checkOutDate);
 
         if (cachedData) {
-          console.log("✅ Found pre-fetched stays data! Using cached results.");
-          console.log("📊 Cached data structure:", cachedData);
 
           // Transform AI recommendations to StayOption format
           const aiStayOptions: StayOption[] = (cachedData.ai_recommendations || []).map((stay: any, index: number) => ({
@@ -744,7 +734,6 @@ export default function StaysWidget({
             available_until_date: stay.available_until_date,
           }));
 
-          console.log(`📊 Total properties: ${aiStayOptions.length + utilityStayOptions.length} (AI: ${aiStayOptions.length}, Utility: ${utilityStayOptions.length})`);
 
           setSearchResults(aiStayOptions);
           setUtilityStays(utilityStayOptions);
@@ -754,11 +743,6 @@ export default function StaysWidget({
           setIsLoading(false);
           setIsLoadingUtility(false);
 
-          console.log("✅ Pre-fetched stays data loaded:", {
-            aiCount: aiStayOptions.length,
-            utilityCount: utilityStayOptions.length,
-            source: "pre-fetched",
-          });
 
           // Notify parent about AI options loaded
           if (onAiOptionsLoaded) {
@@ -840,7 +824,6 @@ export default function StaysWidget({
                 })
               );
 
-              console.log("✅ AI stays parsed:", aiStayOptions.length);
               setSearchResults(aiStayOptions);
 
               // Notify parent about AI options loaded
@@ -896,7 +879,6 @@ export default function StaysWidget({
                 available_until_date: stay.available_until_date,
               }));
 
-              console.log("✅ Utility stays parsed:", utilityStayOptions.length);
               setUtilityStays(utilityStayOptions);
             }
           }
@@ -943,13 +925,11 @@ export default function StaysWidget({
       };
 
       setSelectedStayData(enrichedStayData);
-      console.log("✅ Selected stay data with pricing:", enrichedStayData);
 
       // Store in sessionStorage for persistence across components
       try {
         const stayDataKey = `stay_${userId}_${sessionId}`;
         sessionStorage.setItem(stayDataKey, JSON.stringify(enrichedStayData));
-        console.log("✅ Stay data stored in sessionStorage");
       } catch (error) {
         console.error("Failed to store stay data:", error);
       }
@@ -1240,7 +1220,6 @@ export default function StaysWidget({
         <div className="absolute bottom-6 right-6 z-20">
           <button
             onClick={() => {
-              console.log("🚀 Continue clicked with selected stay data:", selectedStayData);
               // Pass both the selected stay and all AI options
               onContinue(selectedStayData || undefined, searchResults);
             }}

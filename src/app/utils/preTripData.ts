@@ -63,7 +63,6 @@ export async function getPreTripMarkdown(
       });
 
       // Try to fetch from public folder as fallback
-      console.log("⚠️ Falling back to public folder...");
       const fallbackResponse = await fetch("/pre_trip_markdown.md");
       if (fallbackResponse.ok) {
         return await fallbackResponse.text();
@@ -74,9 +73,6 @@ export async function getPreTripMarkdown(
     }
 
     const data = await response.json();
-    console.log("✅ Pre-trip brief fetched successfully:", {
-      messageLength: data.message?.length || 0,
-    });
 
     // The message field contains the markdown content
     if (data.message && typeof data.message === "string") {

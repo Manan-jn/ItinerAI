@@ -108,10 +108,6 @@ export default function Dashboard() {
       setSessionId(newSessionId);
       setUserId(newUserId);
 
-      console.log("Session initialized:", {
-        sessionId: newSessionId,
-        userId: newUserId,
-      });
     };
 
     initializeSession();
@@ -245,9 +241,6 @@ export default function Dashboard() {
     try {
       // Update memory before first message if this is the first message
       if (isFirstMessage && currentUser) {
-        console.log(
-          "First message detected, updating memory before sending..."
-        );
         try {
           await updateMemoryOnSessionChange(
             userId,
@@ -255,7 +248,6 @@ export default function Dashboard() {
             currentUser.displayName,
             currentUser.email
           );
-          console.log("Memory updated successfully for first message");
         } catch (error) {
           console.error("Failed to update memory for first message:", error);
           // Continue with the message even if memory update fails
@@ -299,7 +291,6 @@ export default function Dashboard() {
 
       // Handle trips data if present
       if (hasTripsData && tripsData && tripsData.length > 0) {
-        console.log("🎉 Trips data received:", tripsData);
         setTripsData(tripsData);
 
         // Show flashcards if not already shown

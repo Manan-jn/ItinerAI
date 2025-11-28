@@ -241,7 +241,6 @@ async function buildCityLookupMap(): Promise<Map<string, string>> {
   });
 
   cityLookupMap = map;
-  console.log(`✅ Built city lookup map with ${map.size} unique cities`);
   return map;
 }
 
@@ -329,7 +328,6 @@ export function normalizeCityNameSync(cityName: string): string {
 export async function preloadCityData(): Promise<void> {
   try {
     await buildCityLookupMap();
-    console.log('✅ City data preloaded and indexed');
   } catch (error) {
     console.error('❌ Failed to preload city data:', error);
   }

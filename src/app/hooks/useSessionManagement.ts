@@ -33,7 +33,6 @@ export function useSessionManagement(currentUser: User | null) {
   // Reset initialization flag when sessionId is cleared (e.g., during onboarding)
   useEffect(() => {
     if (!sessionId && sessionInitRef.current) {
-      console.log('🔄 Session ID cleared, resetting initialization flag to allow re-initialization');
       sessionInitRef.current = false;
     }
   }, [sessionId]);
@@ -49,7 +48,6 @@ export function useSessionManagement(currentUser: User | null) {
       // Only handle storage clearing (not restoration)
       if (!storageSessionId && sessionId) {
         // Storage was cleared but we still have a session ID in state
-        console.log('🔄 Session storage cleared, clearing hook state');
         setSessionId('');
         // Reset init flag to allow re-initialization
         sessionInitRef.current = false;
@@ -62,14 +60,9 @@ export function useSessionManagement(currentUser: User | null) {
     // Listen for custom event from onboarding completion
     // This is the ONLY case where we sync from storage
     const handleSessionUpdate = () => {
-      console.log('🔔 Received session update event from onboarding, syncing...');
       const storageSessionId = sessionStorage.getItem('itinerai_session_id');
 
       if (storageSessionId && storageSessionId !== sessionId) {
-        console.log('🔄 Syncing session after onboarding:', {
-          oldSessionId: sessionId,
-          newSessionId: storageSessionId
-        });
         setSessionId(storageSessionId);
         setPreviousSessionId(storageSessionId);
 
@@ -80,17 +73,11 @@ export function useSessionManagement(currentUser: User | null) {
           : currentUser.uid;
 
         if (correctUserId !== userId) {
-          console.log('🔄 Also syncing user ID:', {
-            oldUserId: userId,
-            newUserId: correctUserId,
-            isCustom: !!customUserId
-          });
           setUserId(correctUserId);
         }
 
         // Mark session as initialized
         if (!sessionInitRef.current) {
-          console.log('🔄 Marking session as initialized after onboarding');
           sessionInitRef.current = true;
         }
       }
@@ -108,15 +95,9 @@ export function useSessionManagement(currentUser: User | null) {
 
   // Initialize session for authenticated user using API
   useEffect(() => {
-    console.log('🔄 useSessionManagement effect running:', {
-      hasCurrentUser: !!currentUser,
-      sessionId: sessionId || 'EMPTY',
-      sessionInitRefCurrent: sessionInitRef.current
-    });
 
     if (currentUser && !sessionId && !sessionInitRef.current) {
       // Only run if we don't have a session yet AND haven't started initialization
-      console.log('✅ Conditions met, initializing session...');
       sessionInitRef.current = true; // Mark as initializing to prevent double calls
 
       const initializeAuthenticatedSession = async () => {
@@ -127,7 +108,6 @@ export function useSessionManagement(currentUser: User | null) {
           : currentUser.uid; // Use Firebase UID if no custom ID
 
         if (customUserId) {
-          console.log('🔧 Using custom user ID for session:', customUserId);
         }
 
         // ═══════════════════════════════════════════════════════════════════
@@ -138,12 +118,10 @@ export function useSessionManagement(currentUser: User | null) {
         // RESULT: /api/session/create will be called to get a new session ID
         // USER ID: Preserved (from localStorage custom ID or Firebase UID)
         // PHONE: Preserved (fetched from Firestore)
-        console.log('🧹 Clearing old session ID to force new session creation...');
         if (typeof window !== 'undefined') {
           sessionStorage.removeItem('itinerai_session_id');
         }
 
-        console.log('🆕 Creating NEW session for chat initialization');
 
         setIsInitializingSession(true);
 
@@ -181,10 +159,6 @@ export function useSessionManagement(currentUser: User | null) {
           }
 
           // Call /api/session/create to get a new session ID
-          console.log(
-            "🔄 Creating new session via API for user:",
-            authenticatedUserId
-          );
 
           const response = await fetch("/api/session/create", {
             method: "POST",
@@ -218,7 +192,6 @@ export function useSessionManagement(currentUser: User | null) {
           // CRITICAL: Update memory with user profile IMMEDIATELY after session creation
           // ═══════════════════════════════════════════════════════════════════
           // This ensures the backend has user context before any chat messages
-          console.log("📝 Updating memory with user profile for new session...");
           try {
             await updateMemoryOnSessionChange(
               authenticatedUserId,
@@ -226,7 +199,6 @@ export function useSessionManagement(currentUser: User | null) {
               currentUser.displayName,
               currentUser.email
             );
-            console.log("✅ Memory updated successfully after session creation");
           } catch (memoryError) {
             console.error("❌ Failed to update memory after session creation:", memoryError);
             // Don't fail session initialization if memory update fails
@@ -238,13 +210,6 @@ export function useSessionManagement(currentUser: User | null) {
           setPreviousSessionId(newSessionId);
           setIsInitializingSession(false);
 
-          console.log("Authenticated flights session initialized:", {
-            sessionId: newSessionId,
-            userId: authenticatedUserId,
-            userEmail: currentUser.email,
-            isAuthenticated: true,
-            memoryUpdated: true,
-          });
         } catch (error) {
           console.error("❌ Error creating session via API:", error);
 
@@ -253,7 +218,6 @@ export function useSessionManagement(currentUser: User | null) {
           const fallbackSessionId = getSessionId();
 
           // Update memory for fallback session too
-          console.log("📝 Updating memory for fallback session...");
           try {
             await updateMemoryOnSessionChange(
               authenticatedUserId,
@@ -261,7 +225,6 @@ export function useSessionManagement(currentUser: User | null) {
               currentUser.displayName,
               currentUser.email
             );
-            console.log("✅ Memory updated for fallback session");
           } catch (memoryError) {
             console.error("❌ Failed to update memory for fallback session:", memoryError);
           }
@@ -271,13 +234,6 @@ export function useSessionManagement(currentUser: User | null) {
           setPreviousSessionId(fallbackSessionId);
           setIsInitializingSession(false);
 
-          console.log("Authenticated flights session initialized (fallback):", {
-            sessionId: fallbackSessionId,
-            userId: authenticatedUserId,
-            userEmail: currentUser.email,
-            isAuthenticated: true,
-            memoryUpdated: true,
-          });
         }
       };
 
@@ -293,10 +249,6 @@ export function useSessionManagement(currentUser: User | null) {
     // If no sessionId provided, call API to create new one
     if (!newSessionId && currentUser) {
       try {
-        console.log(
-          "🔄 Regenerating session via API for user:",
-          currentUser.uid
-        );
 
         // Fetch phone_number from Firestore
         let phoneNumber = "";
@@ -341,7 +293,6 @@ export function useSessionManagement(currentUser: User | null) {
 
     // Update memory for regenerated session
     if (currentUser) {
-      console.log("📝 Updating memory for regenerated session...");
       try {
         await updateMemoryOnSessionChange(
           currentUser.uid,
@@ -349,7 +300,6 @@ export function useSessionManagement(currentUser: User | null) {
           currentUser.displayName,
           currentUser.email
         );
-        console.log("✅ Memory updated for regenerated session");
       } catch (memoryError) {
         console.error("❌ Failed to update memory for regenerated session:", memoryError);
       }
@@ -361,12 +311,6 @@ export function useSessionManagement(currentUser: User | null) {
     setUserId(currentUser?.uid || newUserId);
     setIsFirstMessage(true); // Reset first message flag for new session
 
-    console.log("Authenticated session regenerated:", {
-      sessionId: newSessionId,
-      userId: currentUser?.uid || newUserId,
-      userEmail: currentUser?.email,
-      memoryUpdated: true,
-    });
   };
 
   return {

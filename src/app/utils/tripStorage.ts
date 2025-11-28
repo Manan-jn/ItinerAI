@@ -25,7 +25,6 @@ export async function storeTripInFirestore(
   tripData: TripData
 ): Promise<void> {
   try {
-    console.log("Storing trip in Firestore for user:", userId);
 
     // Store trip data under user's document in a 'selected_trip' field
     const userDocRef = doc(db, "users", userId);
@@ -45,7 +44,6 @@ export async function storeTripInFirestore(
       { merge: true }
     );
 
-    console.log("Trip stored successfully in Firestore");
   } catch (error) {
     console.error("Error storing trip in Firestore:", error);
     throw error;
@@ -58,7 +56,6 @@ export async function storeTripInFirestore(
  */
 export function storeTripInMemory(tripData: TripData): TripData {
   try {
-    console.log("Storing trip in code memory:", tripData);
     // This function returns the trip data to be stored in component state
     return tripData;
   } catch (error) {
@@ -89,7 +86,6 @@ export async function storeSelectedTrip(
       trip_data: tripData,
     };
 
-    console.log("Trip stored in both Firestore and memory:", payload);
     return payload;
   } catch (error) {
     console.error("Error storing selected trip:", error);
@@ -117,7 +113,6 @@ export async function storeSelectedDate(
   selectedDate: Date
 ): Promise<void> {
   try {
-    console.log("Storing selected date for user:", userId, "Date:", selectedDate);
 
     // Store date in Firestore
     const userDocRef = doc(db, "users", userId);
@@ -137,7 +132,6 @@ export async function storeSelectedDate(
       { merge: true }
     );
 
-    console.log("Date stored successfully in Firestore as:", dateString);
 
     // Update memory API with the selected date
     await updateMemoryWithDate(userId, sessionId, dateString);
@@ -204,12 +198,10 @@ export async function getSelectedTripFromFirestore(
     if (userDocSnapshot.exists()) {
       const data = userDocSnapshot.data();
       if (data.selected_trip) {
-        console.log("Retrieved trip from Firestore:", data.selected_trip);
         return data.selected_trip;
       }
     }
 
-    console.log("No selected trip found in Firestore for user:", userId);
     return null;
   } catch (error) {
     console.error("Error retrieving trip from Firestore:", error);

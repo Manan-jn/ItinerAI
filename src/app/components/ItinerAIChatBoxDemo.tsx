@@ -15,7 +15,6 @@ export default function ItinerAIChatBoxDemo() {
 
   const handleSubmit = (theme: string) => (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(`${theme} theme submitted`);
   };
 
   return (

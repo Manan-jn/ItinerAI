@@ -39,7 +39,6 @@ export async function getConveyanceDataForWidget(
     );
 
     if (cachedData) {
-      console.log(`✈️ Using cached conveyance data for ${fromCity} → ${toCity}`);
       return {
         aiFlights: cachedData.ai_recommendations?.flights || [],
         aiTrains: cachedData.ai_recommendations?.trains || [],
@@ -49,7 +48,6 @@ export async function getConveyanceDataForWidget(
       };
     }
 
-    console.log(`ℹ️ No cached conveyance data for ${fromCity} → ${toCity}`);
     return null;
   } catch (error) {
     console.error("❌ Error retrieving conveyance data:", error);
@@ -69,8 +67,6 @@ export async function getAllConveyanceDataForUser(
   try {
     const allData = await getAllPreFetchedConveyanceData(userId);
     if (allData) {
-      console.log(`📊 Retrieved all conveyance data for user ${userId}`);
-      console.log(`📍 Available routes: ${Object.keys(allData).length}`);
       return allData;
     }
     return null;
@@ -111,7 +107,6 @@ export async function getStaysDataForWidget(
     );
 
     if (cachedData) {
-      console.log(`🏨 Using cached stays data for ${city} (${checkInDate} to ${checkOutDate})`);
       return {
         aiStays: cachedData.ai_recommendations || [],
         utilityStays: cachedData.utility_stays || [],
@@ -119,7 +114,6 @@ export async function getStaysDataForWidget(
       };
     }
 
-    console.log(`ℹ️ No cached stays data for ${city} (${checkInDate} to ${checkOutDate})`);
     return null;
   } catch (error) {
     console.error("❌ Error retrieving stays data:", error);
@@ -139,8 +133,6 @@ export async function getAllStaysDataForUser(
   try {
     const allData = await getAllPreFetchedStaysData(userId);
     if (allData) {
-      console.log(`📊 Retrieved all stays data for user ${userId}`);
-      console.log(`🏨 Available locations: ${Object.keys(allData).length}`);
       return allData;
     }
     return null;
@@ -191,7 +183,6 @@ export async function getDayDataForWidget(
   } | null;
   dayNumber: number;
 }> {
-  console.log(`📅 Retrieving data for Day ${dayNumber}`);
 
   const [conveyanceData, staysData] = await Promise.all([
     getConveyanceDataForWidget(userId, fromCity, toCity, travelDate),
@@ -306,10 +297,4 @@ export async function getCacheStatus(userId: string): Promise<{
  */
 export async function logCacheStatus(userId: string): Promise<void> {
   const status = await getCacheStatus(userId);
-  console.log("📊 Cache Status:", {
-    "Conveyance Routes": status.conveyanceRoutes,
-    "Stay Locations": status.stayLocations,
-    "Total Cached Items": status.totalCachedItems,
-    "Last Updated": status.lastUpdated,
-  });
 }

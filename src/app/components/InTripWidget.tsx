@@ -226,7 +226,6 @@ const processItinerariesWithFlightChange = (
       original.arrival_time || original.end_time,
       delayHours
     );
-    console.log("original", original);
     // Step 3: Create the flight schedule change object
     const flightChangeObject = {
       event_type: "FLIGHT_SCHD_CHG",
@@ -244,14 +243,6 @@ const processItinerariesWithFlightChange = (
 
     eventsList.push(flightChangeObject);
 
-    console.log("🔄 Flight schedule change injected:", {
-      day: selectedConveyance.dayIndex + 1,
-      conveyance: original.conveyance_type,
-      flightNumber: original.flight_number,
-      originalDeparture: original.departure_time || original.start_time,
-      updatedDeparture: updatedDepartureTime,
-      delayHours,
-    });
   }
 
   // ========== PART 2: WEATHER CHANGE EVENT ==========
@@ -262,10 +253,6 @@ const processItinerariesWithFlightChange = (
     const selectedDayIndex = middleIndex;
     const selectedDay = itinerariesCopy[selectedDayIndex];
 
-    console.log("🌦️ Selected day for weather change:", {
-      dayIndex: selectedDayIndex,
-      totalDays: itinerariesCopy.length
-    });
 
     // Extract location information from the day's schedule
     let city = "Unknown City";
@@ -318,13 +305,6 @@ const processItinerariesWithFlightChange = (
 
     eventsList.push(weatherChangeObject);
 
-    console.log("🌦️ Weather change injected:", {
-      day: selectedDayIndex + 1,
-      city,
-      country,
-      date: selectedDay.date,
-      condition: randomWeather,
-    });
   }
 
   return { modifiedItineraries: itinerariesCopy, eventsList };
@@ -445,10 +425,6 @@ export default function InTripWidget({
     setCurrentEventIndex(0); // Indicate processing started
 
     try {
-      console.log(
-        `🔄 Processing ${eventsToSend.length} events in single payload:`,
-        eventsToSend
-      );
 
       // Call the in-trip API with ALL events in a single payload
       const response = await fetch("/api/in-trip", {
@@ -509,7 +485,6 @@ export default function InTripWidget({
           ) {
             updatedItineraries[dayNumber - 1] = updatedDayData;
             updatedDayNumbers.push(dayNumber);
-            console.log(`✅ Updated day ${dayNumber} itinerary`);
           }
         });
 
@@ -551,7 +526,6 @@ export default function InTripWidget({
       setShowOverlay(true);
     } finally {
       // All events processed
-      console.log("✅ All events processed");
       setCurrentEventIndex(null);
       setIsRunning(false);
     }
@@ -570,7 +544,6 @@ export default function InTripWidget({
       return;
     }
 
-    console.log(`💬 Chat message submitted: "${message}"`);
     setIsChatLoading(true);
 
     try {
@@ -627,7 +600,6 @@ export default function InTripWidget({
           const updatedItineraries = [...processedItineraries];
           updatedItineraries[dayNumber - 1] = updatedDayData;
           setProcessedItineraries([...updatedItineraries]);
-          console.log(`✅ Updated day ${dayNumber} itinerary from chat`);
 
           // Mark this day as updated (for visual effect)
           setUpdatedDays((prev) => new Set(prev).add(dayNumber - 1));
@@ -649,7 +621,6 @@ export default function InTripWidget({
         }
       }
 
-      console.log("✅ Chat message processed successfully");
     } catch (error) {
       console.error("❌ Error in chat submission:", error);
       setOverlayMessage(

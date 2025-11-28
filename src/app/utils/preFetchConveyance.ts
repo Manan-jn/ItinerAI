@@ -81,11 +81,6 @@ async function fetchConveyanceForDay(
   userId: string,
   sessionId: string
 ): Promise<ConveyanceAPIResponse> {
-  console.log(`🔄 Pre-fetching conveyance for Day ${dayNumber}:`, {
-    fromCity,
-    toCity,
-    travelDate,
-  });
 
   const normalizedFromCity = normalizeCityName(fromCity);
   const normalizedToCity = normalizeCityName(toCity);
@@ -99,8 +94,6 @@ async function fetchConveyanceForDay(
   const departureCountry = departurePlace?.country || "India";
   const arrivalCountry = arrivalPlace?.country || "India";
 
-  console.log(`🌍 Day ${dayNumber} - Departure: ${normalizedFromCity}, ${departureCountry}`);
-  console.log(`🌍 Day ${dayNumber} - Arrival: ${normalizedToCity}, ${arrivalCountry}`);
 
   // Make 3 parallel API calls
   const [aiResponse, utilityFlightsResponse, utilityTrainsResponse] = await Promise.allSettled([
@@ -174,9 +167,6 @@ async function fetchConveyanceForDay(
         const details = aiData.message.conveyances.conveyance_details;
         result.ai_recommendations.flights = details.flights || [];
         result.ai_recommendations.trains = details.trains || [];
-        console.log(
-          `✅ Day ${dayNumber} AI data: ${result.ai_recommendations.flights.length} flights, ${result.ai_recommendations.trains.length} trains`
-        );
       }
     } catch (error) {
       console.error(`❌ Error parsing AI data for Day ${dayNumber}:`, error);
@@ -191,7 +181,6 @@ async function fetchConveyanceForDay(
       const flightsData = await utilityFlightsResponse.value.json();
       if (Array.isArray(flightsData)) {
         result.utility_flights = flightsData;
-        console.log(`✅ Day ${dayNumber} Utility flights: ${flightsData.length}`);
       }
     } catch (error) {
       console.error(`❌ Error parsing utility flights for Day ${dayNumber}:`, error);
@@ -206,7 +195,6 @@ async function fetchConveyanceForDay(
       const trainsData = await utilityTrainsResponse.value.json();
       if (Array.isArray(trainsData)) {
         result.utility_trains = trainsData;
-        console.log(`✅ Day ${dayNumber} Utility trains: ${trainsData.length}`);
       }
     } catch (error) {
       console.error(`❌ Error parsing utility trains for Day ${dayNumber}:`, error);
@@ -239,18 +227,11 @@ function generateRouteKey(fromCity: string, toCity: string, travelDate: string):
 export async function preFetchConveyanceData(request: PreFetchRequest): Promise<void> {
   const { userId, sessionId, tripDate, dayDetails } = request;
 
-  console.log("🚀 Starting pre-fetch for conveyance data:", {
-    userId,
-    tripDate,
-    totalDays: dayDetails.length,
-    requiredDays: dayDetails.filter((d) => d.is_required).length,
-  });
 
   // Filter only days that require conveyance
   const daysRequiringConveyance = dayDetails.filter((day) => day.is_required);
 
   if (daysRequiringConveyance.length === 0) {
-    console.log("ℹ️ No days require conveyance, skipping pre-fetch");
     return;
   }
 
@@ -290,13 +271,11 @@ export async function preFetchConveyanceData(request: PreFetchRequest): Promise<
         },
       } as any;
 
-      console.log(`📍 Storing route: ${routeKey}`);
     });
 
     // Store in Firestore
     await storePreFetchedConveyanceData(userId, preFetchedData);
 
-    console.log("✅ Pre-fetch completed and stored successfully");
   } catch (error) {
     console.error("❌ Error during pre-fetch:", error);
     throw error;
@@ -324,8 +303,6 @@ async function storePreFetchedConveyanceData(
       { merge: true }
     );
 
-    console.log("💾 Stored pre-fetched data in Firestore for user:", userId);
-    console.log("📊 Total routes cached:", Object.keys(data).length);
   } catch (error) {
     console.error("❌ Error storing pre-fetched data:", error);
     throw error;
@@ -349,7 +326,6 @@ export async function getPreFetchedConveyanceData(
   try {
     const routeKey = generateRouteKey(fromCity, toCity, travelDate);
 
-    console.log(`🔍 Retrieving pre-fetched data for route: ${routeKey}`);
 
     const docRef = doc(db, "pre_fetch_data_conveyance_stays", userId);
     const docSnap = await getDoc(docRef);
@@ -359,16 +335,12 @@ export async function getPreFetchedConveyanceData(
       const routeData = data.conveyance_data?.[routeKey];
 
       if (routeData) {
-        console.log(`✅ Found cached data for route: ${routeKey}`);
         return routeData;
       } else {
-        console.log(`ℹ️ No cached data for route: ${routeKey}`);
-        console.log("📊 Available routes:", Object.keys(data.conveyance_data || {}));
         return null;
       }
     }
 
-    console.log("ℹ️ No pre-fetched data collection found for user:", userId);
     return null;
   } catch (error) {
     console.error("❌ Error retrieving pre-fetched data:", error);

@@ -145,9 +145,7 @@ export default function OnboardingModalWhite({
 
       // Save to Firestore with user ID as document ID
       // IMPORTANT: Wait for Firestore save to complete before proceeding
-      console.log("💾 Saving user data to Firestore...");
       await setDoc(doc(db, "users", userId), userData);
-      console.log("✅ Firestore save completed");
 
       // Ensure a backend session exists before memory update
       let sessionId = "";
@@ -164,17 +162,14 @@ export default function OnboardingModalWhite({
           console.log("✅ Backend session created:", sessionId);
           // Persist for later use in sessionManager consumers
           if (typeof window !== "undefined" && sessionId) {
-            console.log("📝 Storing session ID in sessionStorage:", sessionId);
             sessionStorage.setItem("itinerai_session_id", sessionId);
             // Verify it was stored
             const stored = sessionStorage.getItem("itinerai_session_id");
-            console.log("✅ Session ID stored and verified in sessionStorage:", stored);
             if (stored !== sessionId) {
               console.error("❌ CRITICAL: Session ID mismatch after storing!");
             }
 
             // CRITICAL: Notify useSessionManagement hook that session was updated
-            console.log("📢 Dispatching session update event");
             window.dispatchEvent(new Event('sessionUpdated'));
           }
         } else {
@@ -194,15 +189,12 @@ export default function OnboardingModalWhite({
       };
 
       // Call memory API (non-blocking - don't fail onboarding if it fails)
-      console.log("📝 Updating memory...");
       await updateUserMemory(memoryUserData, userId, sessionId);
-      console.log("✅ Memory update completed");
 
       // IMPORTANT: Small delay to ensure all storage operations complete
       await new Promise(resolve => setTimeout(resolve, 100));
 
       // Close modal and redirect to flights dashboard
-      console.log("🔄 Redirecting to flights dashboard...");
       onClose();
       router.push(`/flights/${userId}`);
     } catch (error) {

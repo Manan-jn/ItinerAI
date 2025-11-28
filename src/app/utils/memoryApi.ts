@@ -142,7 +142,6 @@ export async function updateMemoryOnSessionChange(
   email?: string | null
 ): Promise<void> {
   try {
-    console.log('Updating memory for session change:', { userId, sessionId });
     
     // Fetch user data from Firestore
     const userData = await fetchUserDataFromFirestore(userId);
@@ -162,7 +161,6 @@ export async function updateMemoryOnSessionChange(
     // Update memory with existing data
     await updateUserMemory(memoryUserData, userId, sessionId);
     
-    console.log('Memory updated successfully for session change');
     
   } catch (error) {
     console.error('Error updating memory on session change:', error);

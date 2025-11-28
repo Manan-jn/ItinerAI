@@ -44,8 +44,7 @@ export class ClientLogger {
     // Console output in development
     if (process.env.NODE_ENV === 'development') {
       const consoleMethod = level === 'error' ? console.error :
-        level === 'warn' ? console.warn :
-          console.log;
+        level === 'warn' ? console.warn : console.log;
       consoleMethod(`[${level.toUpperCase()}]`, message, metadata || '');
     }
   }
@@ -137,7 +136,6 @@ export class ClientLogger {
       });
 
       this.clearLogs();
-      console.log(`✅ Sent ${logsToSend.length} client logs to Firestore`);
     } catch (error) {
       console.error('Failed to send logs to Firestore:', error);
     }

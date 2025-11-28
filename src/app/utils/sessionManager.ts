@@ -48,9 +48,7 @@ export function getSessionId(): string {
     if (!sessionId) {
       sessionId = generateSessionId();
       sessionStorage.setItem(SESSION_ID_KEY, sessionId);
-      console.log('Generated new session ID:', sessionId);
     } else {
-      console.log('Using existing session ID:', sessionId);
     }
     
     return sessionId;
@@ -77,7 +75,6 @@ export function getUserId(): string {
     // PRIORITY 1: Check for custom user ID in localStorage
     const customUserId = localStorage.getItem(CUSTOM_USER_ID_KEY);
     if (customUserId && customUserId.trim()) {
-      console.log('Using custom user ID:', customUserId);
       return customUserId.trim();
     }
 
@@ -87,9 +84,7 @@ export function getUserId(): string {
     if (!userId) {
       userId = generateUserId();
       sessionStorage.setItem(USER_ID_KEY, userId);
-      console.log('Generated new user ID:', userId);
     } else {
-      console.log('Using existing user ID:', userId);
     }
 
     return userId;
@@ -108,7 +103,6 @@ export function clearSession(): void {
     try {
       sessionStorage.removeItem(SESSION_ID_KEY);
       sessionStorage.removeItem(USER_ID_KEY);
-      console.log('Session cleared');
     } catch (error) {
       console.warn('Could not clear session:', error);
     }
@@ -123,7 +117,6 @@ export function clearSessionIdOnly(): void {
   if (typeof window !== 'undefined') {
     try {
       sessionStorage.removeItem(SESSION_ID_KEY);
-      console.log('Session ID cleared (user ID preserved)');
     } catch (error) {
       console.warn('Could not clear session ID:', error);
     }
@@ -170,7 +163,6 @@ export function setCustomUserId(customUserId: string): void {
   if (typeof window !== 'undefined') {
     try {
       localStorage.setItem(CUSTOM_USER_ID_KEY, customUserId.trim());
-      console.log('Custom user ID set:', customUserId.trim());
     } catch (error) {
       console.warn('Could not set custom user ID:', error);
     }
@@ -200,7 +192,6 @@ export function clearCustomUserId(): void {
   if (typeof window !== 'undefined') {
     try {
       localStorage.removeItem(CUSTOM_USER_ID_KEY);
-      console.log('Custom user ID cleared');
     } catch (error) {
       console.warn('Could not clear custom user ID:', error);
     }

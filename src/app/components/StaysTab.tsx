@@ -655,9 +655,6 @@ export default function StaysTab({
     try {
       // Check for pre-fetched data if userId is available
       if (userId) {
-        console.log(
-          `🏨 Checking for pre-fetched stays data for: ${city} (${checkInDate} to ${checkOutDate})...`
-        );
         const cachedData = await getPreFetchedStaysData(
           userId,
           city,
@@ -666,8 +663,6 @@ export default function StaysTab({
         );
 
         if (cachedData) {
-          console.log("✅ Found pre-fetched stays data! Using cached results.");
-          console.log("📊 Cached data structure:", cachedData);
 
           // Transform AI recommendations to StayOption format
           const aiStayOptions: StayOption[] = (
@@ -707,13 +702,6 @@ export default function StaysTab({
             available_until_date: stay.available_until_date,
           }));
 
-          console.log(
-            `📊 Total properties: ${
-              aiStayOptions.length + utilityStayOptions.length
-            } (AI: ${aiStayOptions.length}, Utility: ${
-              utilityStayOptions.length
-            })`
-          );
 
           setSearchResults(aiStayOptions);
           setUtilityStays(utilityStayOptions);
@@ -721,17 +709,9 @@ export default function StaysTab({
           setIsLoadingComplete(true);
           setIsLoading(false);
 
-          console.log("✅ Pre-fetched stays data loaded:", {
-            aiCount: aiStayOptions.length,
-            utilityCount: utilityStayOptions.length,
-            source: "pre-fetched",
-          });
 
           return; // Exit early, no need to make API calls
         } else {
-          console.log(
-            "ℹ️ No pre-fetched stays data found, proceeding with API call..."
-          );
         }
       }
 
@@ -860,10 +840,6 @@ export default function StaysTab({
         console.error("Utility stay API error:", utilityResponse.reason);
       }
 
-      console.log("Parsed stay options:", {
-        aiStays: aiStayOptions.length,
-        utilityStays: utilityStayOptions.length,
-      });
 
       setSearchResults(aiStayOptions);
       setUtilityStays(utilityStayOptions);
@@ -887,7 +863,6 @@ export default function StaysTab({
 
     if (selectedStay) {
       setSelectedStayData(selectedStay);
-      console.log("✅ Selected stay data:", selectedStay);
     }
   };
 

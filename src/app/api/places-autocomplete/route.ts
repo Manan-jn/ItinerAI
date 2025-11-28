@@ -39,7 +39,6 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    console.log(`Found ${data.predictions?.length || 0} predictions`);
 
     return NextResponse.json({
       predictions: data.predictions || [],

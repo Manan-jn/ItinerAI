@@ -67,7 +67,6 @@ const SessionDebugFlights: React.FC<SessionDebugFlightsProps> = ({
           currentUser.displayName,
           currentUser.email
         );
-        console.log("Memory updated for new session");
       } catch (error) {
         console.error("Failed to update memory for new session:", error);
         // Don't block the session regeneration if memory update fails
@@ -76,7 +75,6 @@ const SessionDebugFlights: React.FC<SessionDebugFlightsProps> = ({
       // Clear chat history when session is regenerated
       if (onClearChatHistory) {
         onClearChatHistory();
-        console.log("Chat history cleared for new session");
       }
 
       // Notify parent component about the session regeneration
@@ -84,11 +82,6 @@ const SessionDebugFlights: React.FC<SessionDebugFlightsProps> = ({
         onSessionRegenerated(newSessionId, userId);
       }
 
-      console.log("Session regenerated for authenticated user:", {
-        newSessionId,
-        userId,
-        userEmail: currentUser.email,
-      });
     } else {
       // For non-authenticated users, clear everything and reload
       clearSession();

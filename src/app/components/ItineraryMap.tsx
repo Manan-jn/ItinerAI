@@ -92,12 +92,8 @@ export default function ItineraryMap({ stops, dayTitle }: ItineraryMapProps) {
       })
       .filter(Boolean);
 
-    console.log(
-      `Found ${coordinates.length} coordinates from ${stops.length} stops`
-    );
 
     if (coordinates.length === 0) {
-      console.log("No coordinates found in stops, using default location");
       return;
     }
 

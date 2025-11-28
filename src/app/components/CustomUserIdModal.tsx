@@ -40,7 +40,6 @@ export function CustomUserIdModal({
       if (typeof window !== "undefined") {
         sessionStorage.removeItem("itinerai_session_id");
         sessionStorage.removeItem("itinerai_user_id");
-        console.log("🔄 Cleared session storage for custom user ID");
       }
 
       onSave(customUserId.trim());
@@ -61,7 +60,6 @@ export function CustomUserIdModal({
       sessionStorage.removeItem("itinerai_session_id");
       sessionStorage.removeItem("itinerai_user_id");
 
-      console.log("🧹 Cleared custom user ID and session data");
     }
 
     // Close modal
@@ -69,7 +67,6 @@ export function CustomUserIdModal({
 
     // Call parent's onClear callback to trigger logout and redirect
     if (onClear) {
-      console.log("🔄 Triggering logout flow after clearing custom user ID");
       onClear();
     } else {
       // Fallback: reload page if no callback provided

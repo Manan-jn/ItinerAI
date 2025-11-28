@@ -55,15 +55,9 @@ export async function translateToEnglish(text: string): Promise<string> {
     // Detect language first
     const detectedLang = await detectLanguage(text);
     
-    console.log("🌐 Language detection:", {
-      text: text.substring(0, 50),
-      detectedLang,
-      seemsEnglish,
-    });
 
     // If already in English, return as is
     if (detectedLang === "en" || seemsEnglish) {
-      console.log("✅ Text is already in English, no translation needed");
       return text;
     }
 
@@ -88,12 +82,6 @@ export async function translateToEnglish(text: string): Promise<string> {
         .map((segment: any) => segment[0])
         .join("");
       
-      console.log("🌐 Translation successful:", {
-        original: text,
-        translated: translatedText,
-        from: detectedLang,
-        to: "en",
-      });
 
       return translatedText;
     }

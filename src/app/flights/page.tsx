@@ -197,11 +197,6 @@ export default function FlightsPage() {
         previousSessionId &&
         previousSessionId !== newSessionId
       ) {
-        console.log("Session changed, updating memory:", {
-          previousSessionId,
-          newSessionId,
-          userId: newUserId,
-        });
 
         try {
           await updateMemoryOnSessionChange(
@@ -210,7 +205,6 @@ export default function FlightsPage() {
             currentUser.displayName,
             currentUser.email
           );
-          console.log("Memory updated for session change");
         } catch (error) {
           console.error("Failed to update memory for session change:", error);
           // Don't block the session initialization if memory update fails
@@ -226,12 +220,6 @@ export default function FlightsPage() {
         setIsFirstMessage(true);
       }
 
-      console.log("Flights session initialized:", {
-        sessionId: newSessionId,
-        userId: newUserId,
-        isAuthenticated: !!currentUser,
-        previousSessionId,
-      });
     };
 
     initializeSession();
@@ -246,10 +234,6 @@ export default function FlightsPage() {
     setUserId(newUserId);
     setIsFirstMessage(true); // Reset first message flag for new session
 
-    console.log("Session regenerated in flights:", {
-      sessionId: newSessionId,
-      userId: newUserId,
-    });
   };
 
   // Handle chat history clearing when session is regenerated
@@ -257,7 +241,6 @@ export default function FlightsPage() {
     setMessages([]);
     setChatInputText("");
     setIsLoading(false);
-    console.log("Chat history cleared");
   };
 
   const handleSwitchToSignup = () => {
@@ -435,9 +418,6 @@ export default function FlightsPage() {
     try {
       // Update memory before first message if this is the first message
       if (isFirstMessage && currentUser) {
-        console.log(
-          "First message detected, updating memory before sending..."
-        );
         try {
           await updateMemoryOnSessionChange(
             userId,
@@ -445,7 +425,6 @@ export default function FlightsPage() {
             currentUser.displayName,
             currentUser.email
           );
-          console.log("Memory updated successfully for first message");
         } catch (error) {
           console.error("Failed to update memory for first message:", error);
           // Continue with the message even if memory update fails
@@ -454,14 +433,9 @@ export default function FlightsPage() {
       }
 
       // Translate input to English before sending to API
-      console.log("🌐 Translating user input to English...");
       const translatedInput = await translateToEnglish(currentInput);
 
       if (translatedInput !== currentInput) {
-        console.log("🌐 Translation applied:", {
-          original: currentInput,
-          translated: translatedInput,
-        });
       }
 
       const data = await makeAPICall(translatedInput);
@@ -483,10 +457,6 @@ export default function FlightsPage() {
           parsedData.response_type === "trip" &&
           parsedData.trip_suggestions
         ) {
-          console.log(
-            "Trip suggestions detected in response:",
-            parsedData.trip_suggestions
-          );
 
           // Show trip loader for 4 seconds
           setShowTripLoader(true);
@@ -500,16 +470,10 @@ export default function FlightsPage() {
             parsedTripSuggestions = parsedData.trip_suggestions.trips;
             shouldShowPlaces = true;
 
-            console.log(
-              `Parsed ${parsedTripSuggestions.length} trip suggestions`
-            );
           }
         }
       } catch (parseError) {
         // If parsing fails, it's just a regular text message
-        console.log(
-          "Message is not JSON or doesn't contain trip suggestions, treating as regular text"
-        );
       }
 
       const assistantMessage = {
@@ -542,7 +506,6 @@ export default function FlightsPage() {
               flashcardsRef.current.clearSelection();
             }
 
-            console.log("Places widget activated with trip suggestions");
           }, 400); // Wait for dissolve animation
         }, 4000); // 4 second loader duration
       } else {
@@ -1395,9 +1358,6 @@ export default function FlightsPage() {
                               }
                             } else {
                               // Turning on places - show loader first
-                              console.log(
-                                "Places toggle: Showing trip loader for 4 seconds"
-                              );
                               setShowTripLoader(true);
                               setIsParsingTrips(true);
                               setShowFlights(false);
@@ -1408,9 +1368,6 @@ export default function FlightsPage() {
                                 setTimeout(() => {
                                   setShowFlashcards(true);
                                   setIsParsingTrips(false);
-                                  console.log(
-                                    "Places toggle: Flashcards activated after 4 second loader"
-                                  );
                                 }, 400);
                               }, 4000);
                             }

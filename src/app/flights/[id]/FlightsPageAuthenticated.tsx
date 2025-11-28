@@ -95,7 +95,6 @@ export default function FlightsPageAuthenticated() {
   // Helper function to auto-collapse sidebar when switching sections/components
   const collapseSidebarIfOpen = () => {
     if (!isSidebarCollapsed) {
-      console.log("🔄 Auto-collapsing sidebar");
       setIsSidebarCollapsed(true);
     }
   };
@@ -267,39 +266,25 @@ export default function FlightsPageAuthenticated() {
     setMessages([]);
     setChatInputText("");
     setIsLoading(false);
-    console.log("Chat history cleared");
   };
 
   // Restore selected trip from Firestore when component mounts or userId changes
   useEffect(() => {
     const restoreSelectedTrip = async () => {
       if (!userId) {
-        console.log("⏳ Waiting for userId to restore trip");
         return;
       }
 
       // Only restore if we don't already have a selected trip
       if (selectedTrip) {
-        console.log(
-          "✅ Selected trip already in memory:",
-          selectedTrip.trip_title
-        );
         return;
       }
 
-      console.log(
-        "🔄 Attempting to restore selected trip from Firestore for user:",
-        userId
-      );
 
       try {
         const restoredTrip = await getSelectedTripFromFirestore(userId);
 
         if (restoredTrip) {
-          console.log(
-            "✅ Successfully restored trip from Firestore:",
-            restoredTrip.trip_title
-          );
           setSelectedTrip(restoredTrip);
 
           // Also restore to originalTrips if it's a trip suggestion format
@@ -307,7 +292,6 @@ export default function FlightsPageAuthenticated() {
             setOriginalTrips([restoredTrip]);
           }
         } else {
-          console.log("ℹ️ No trip found in Firestore to restore");
         }
       } catch (error) {
         console.error("❌ Error restoring trip from Firestore:", error);
@@ -327,13 +311,8 @@ export default function FlightsPageAuthenticated() {
   useEffect(() => {
     if (showPreTrip && !preTripMarkdown && userId && sessionId) {
       const loadMarkdown = async () => {
-        console.log("🔄 Debug toggle: Fetching pre-trip brief with:", {
-          userId,
-          sessionId,
-        });
         const markdown = await getPreTripMarkdown(userId, sessionId);
         setPreTripMarkdown(markdown);
-        console.log("✅ Debug toggle: Pre-trip markdown loaded");
       };
       loadMarkdown();
     }
@@ -355,14 +334,12 @@ export default function FlightsPageAuthenticated() {
 
   // Handle custom user ID set - trigger onboarding flow
   const handleCustomUserIdSet = (customId: string) => {
-    console.log(`🔧 Custom User ID set in FlightsPageAuthenticated: ${customId}`);
 
     // CRITICAL: Clear session storage BEFORE resetting state to prevent race condition
     // This must happen BEFORE setSessionId("") so useSessionManagement doesn't read old session
     if (typeof window !== "undefined") {
       sessionStorage.removeItem("itinerai_session_id");
       sessionStorage.removeItem("itinerai_user_id");
-      console.log("🧹 Cleared sessionStorage before custom user ID onboarding");
     }
 
     // Reset session state IMMEDIATELY after clearing sessionStorage
@@ -380,7 +357,6 @@ export default function FlightsPageAuthenticated() {
     // Trigger onboarding modal AFTER clearing storage and resetting state
     setShowOnboarding(true);
 
-    console.log("✅ Onboarding triggered with custom user ID:", customId);
   };
 
   // No need for dashboard data here anymore - it's in DashboardData.ts
@@ -466,9 +442,6 @@ export default function FlightsPageAuthenticated() {
         setIsParsingTrips(true);
       }
 
-      console.log(
-        `📤 Calling itinerary API for day ${dayNumber} of ${totalDays} days`
-      );
 
       // Build complete itinerary using tripToUse and itinerariesToUse
       const completeItinerary = await buildCompleteItinerary(
@@ -478,15 +451,10 @@ export default function FlightsPageAuthenticated() {
         itinerariesToUse // Pass generated itineraries
       );
 
-      console.log(
-        `📦 Built complete itinerary with ${completeItinerary.length} days for API request`
-      );
-      console.log("📊 Complete itinerary data:", completeItinerary);
 
       // Prepare the message as a string with single-quoted JSON format
       const itineraryMessage = `{'role':'admin','day_number':${dayNumber},'end_day':${totalDays},'query':'recommend the itinerary for day ${dayNumber}'}`;
 
-      console.log("📝 Itinerary message:", itineraryMessage);
 
       // Build request body with complete itinerary
       const requestBody: any = {
@@ -510,11 +478,6 @@ export default function FlightsPageAuthenticated() {
       for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
         try {
           if (attempt > 0) {
-            console.log(
-              `⏳ Retrying itinerary API (attempt ${attempt + 1}/${
-                MAX_RETRIES + 1
-              }) after 5 seconds...`
-            );
 
             // Retry with itinerary generation loader already showing
 
@@ -553,9 +516,6 @@ export default function FlightsPageAuthenticated() {
           }
 
           itineraryResponse = await response.json();
-          console.log(
-            `✅ Itinerary API response received on attempt ${attempt + 1}`
-          );
 
           // Success - break out of retry loop
           break;
@@ -592,7 +552,6 @@ export default function FlightsPageAuthenticated() {
         itineraryResponse.message &&
         typeof itineraryResponse.message === "object"
       ) {
-        console.log("📦 Extracting itinerary from nested message object");
         itineraryPayload = itineraryResponse.message;
       }
 
@@ -603,10 +562,6 @@ export default function FlightsPageAuthenticated() {
         typeof generateResponseMessage === "string" &&
         generateResponseMessage.trim()
       ) {
-        console.log(
-          "📨 Setting overlay message from itinerary generation API:",
-          generateResponseMessage
-        );
         setOverlayMessage(generateResponseMessage);
         setShowOverlay(true);
       }
@@ -620,7 +575,6 @@ export default function FlightsPageAuthenticated() {
         setItineraryData((prevData: any) => {
           if (!prevData || !prevData.itinerary) {
             // No previous data, use new data as-is
-            console.log("✅ Setting initial itinerary data");
             return itineraryPayload;
           }
 
@@ -628,9 +582,6 @@ export default function FlightsPageAuthenticated() {
           const existingDays = prevData.itinerary;
           const newDays = itineraryPayload.itinerary;
 
-          console.log(
-            `🔄 Merging itinerary data: ${existingDays.length} existing + ${newDays.length} new`
-          );
 
           // Create a map of existing days by day_number
           const dayMap = new Map();
@@ -638,7 +589,6 @@ export default function FlightsPageAuthenticated() {
 
           // Update or add new days
           newDays.forEach((day: any) => {
-            console.log(`📝 Updating/Adding day ${day.day_number}`);
             dayMap.set(day.day_number, day);
           });
 
@@ -647,9 +597,6 @@ export default function FlightsPageAuthenticated() {
             (a: any, b: any) => a.day_number - b.day_number
           );
 
-          console.log(
-            `✅ Merged itinerary now has ${mergedDays.length} total day(s)`
-          );
 
           return {
             ...prevData,
@@ -658,15 +605,8 @@ export default function FlightsPageAuthenticated() {
           };
         });
 
-        console.log("✅ Itinerary data stored successfully");
-        console.log(
-          "📊 Itinerary contains",
-          itineraryPayload.itinerary.length,
-          "day(s)"
-        );
 
         // Update itinerariesGenerated with new days
-        console.log("💾 Updating itinerariesGenerated with new days...");
         const updatedItinerariesGenerated = [...itinerariesGenerated];
 
         for (const dayData of itineraryPayload.itinerary) {
@@ -769,10 +709,6 @@ export default function FlightsPageAuthenticated() {
               dayToStore.estimated_total_cost = dayData.estimated_total_cost;
             if (dayData.highlights) dayToStore.highlights = dayData.highlights;
 
-            console.log(
-              `📦 Storing day ${dayData.day_number} with fields:`,
-              Object.keys(dayToStore)
-            );
 
             // Update or add to itinerariesGenerated
             const existingIndex = updatedItinerariesGenerated.findIndex(
@@ -782,15 +718,9 @@ export default function FlightsPageAuthenticated() {
             if (existingIndex !== -1) {
               // Replace existing day
               updatedItinerariesGenerated[existingIndex] = dayToStore;
-              console.log(
-                `✅ Updated day ${dayData.day_number} in itinerariesGenerated`
-              );
             } else {
               // Add new day
               updatedItinerariesGenerated.push(dayToStore);
-              console.log(
-                `✅ Added day ${dayData.day_number} to itinerariesGenerated`
-              );
             }
 
             // Also store in Firestore for backup
@@ -810,9 +740,6 @@ export default function FlightsPageAuthenticated() {
 
         // Update state with all generated itineraries
         setItinerariesGenerated(updatedItinerariesGenerated);
-        console.log(
-          `✅ itinerariesGenerated now has ${updatedItinerariesGenerated.length} day(s)`
-        );
       } else {
         console.warn(
           "⚠️ Unexpected itinerary response format:",
@@ -830,13 +757,9 @@ export default function FlightsPageAuthenticated() {
           setIsParsingTrips(false);
           // Show itinerary widget
           handleShowItinerary(true);
-          console.log("✅ Showing itinerary widget");
 
           // If this is add day flow, navigate to the newly added day
           if (isAddDayFlow) {
-            console.log(
-              `🔍 Setting navigation target to day ${dayNumber} (add day flow)`
-            );
             // Set navigation target after itinerary is shown
             setTimeout(() => {
               setNavigateToDay(dayNumber);
@@ -870,9 +793,6 @@ export default function FlightsPageAuthenticated() {
     }
 
     try {
-      console.log(
-        `📤 Calling itinerary API for INSERT day ${insertDayNumber} with request_type="add"`
-      );
 
       // Show loader
       setIsLoadingItinerary(true);
@@ -895,9 +815,6 @@ export default function FlightsPageAuthenticated() {
 
       // If new day doesn't exist in itinerariesData, create it with minimal structure
       if (!newDayItinerary) {
-        console.log(
-          `📝 Creating new day ${insertDayNumber} with minimal structure`
-        );
         newDayItinerary = {
           day_number: insertDayNumber,
           conveyance_details: { is_required: false },
@@ -917,9 +834,6 @@ export default function FlightsPageAuthenticated() {
         ...itinerariesAfterInsertion,
       ].filter((it) => it !== null && it !== undefined); // Filter out any null/undefined
 
-      console.log(
-        `📊 Insert payload: ${itinerariesBeforeInsertion.length} days before + 1 new day + ${itinerariesAfterInsertion.length} days after = ${currentItineraryForAPI.length} total`
-      );
 
       // Calculate new trip duration
       const newTripDuration =
@@ -940,10 +854,6 @@ export default function FlightsPageAuthenticated() {
         request_type: "add", // IMPORTANT: Use "add" for insert flow
       };
 
-      console.log(
-        "📤 Insert API Request body:",
-        JSON.stringify(requestBody, null, 2)
-      );
 
       // Retry configuration for insert flow
       const MAX_RETRIES = 2; // Up to 3 attempts total (initial + 2 retries)
@@ -955,11 +865,6 @@ export default function FlightsPageAuthenticated() {
       for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
         try {
           if (attempt > 0) {
-            console.log(
-              `⏳ Retrying insert API (attempt ${attempt + 1}/${
-                MAX_RETRIES + 1
-              }) after 5 seconds...`
-            );
 
             // Retry with itinerary generation loader already showing
 
@@ -1000,9 +905,6 @@ export default function FlightsPageAuthenticated() {
           }
 
           itineraryResponse = await response.json();
-          console.log(
-            `✅ Insert API response received on attempt ${attempt + 1}`
-          );
 
           // Success - break out of retry loop
           break;
@@ -1048,10 +950,6 @@ export default function FlightsPageAuthenticated() {
         typeof insertResponseMessage === "string" &&
         insertResponseMessage.trim()
       ) {
-        console.log(
-          "📨 Setting overlay message from insert day API:",
-          insertResponseMessage
-        );
         setOverlayMessage(insertResponseMessage);
         setShowOverlay(true);
       }
@@ -1070,10 +968,6 @@ export default function FlightsPageAuthenticated() {
           const existingDays = prevData.itinerary;
           const newDays = itineraryPayload.itinerary;
 
-          console.log(
-            `🔄 Merging insert response: ${existingDays.length} existing + ${newDays.length} new`
-          );
-          console.log(`📌 Insert day number: ${insertDayNumber}`);
 
           // Build result based on user requirements:
           // 1. Days <= insertDayNumber from response REPLACE existing
@@ -1090,10 +984,8 @@ export default function FlightsPageAuthenticated() {
           // Then, add/replace days from API response
           newDays.forEach((day: any) => {
             if (day.day_number <= insertDayNumber) {
-              console.log(`📝 Replacing day ${day.day_number} (≤ insert day)`);
               dayMap.set(day.day_number, day);
             } else {
-              console.log(`📝 Overriding day ${day.day_number} (> insert day)`);
               dayMap.set(day.day_number, day);
             }
           });
@@ -1105,9 +997,6 @@ export default function FlightsPageAuthenticated() {
             (a: any, b: any) => a.day_number - b.day_number
           );
 
-          console.log(
-            `✅ Merged itinerary after insert has ${mergedDays.length} total day(s)`
-          );
 
           return {
             ...prevData,
@@ -1219,10 +1108,6 @@ export default function FlightsPageAuthenticated() {
             ...dayData, // Include all other fields like schedule, title, summary, etc.
           };
 
-          console.log(
-            `📦 Storing day ${dayData.day_number} with fields:`,
-            Object.keys(dayToStore)
-          );
 
           await storeDayItinerary(
             userId,
@@ -1236,14 +1121,8 @@ export default function FlightsPageAuthenticated() {
           );
           if (existingIndex !== -1) {
             itinerariesData[existingIndex] = completeDayData;
-            console.log(
-              `✅ Updated day ${dayData.day_number} in itinerariesData`
-            );
           } else {
             itinerariesData.push(completeDayData);
-            console.log(
-              `✅ Added day ${dayData.day_number} to itinerariesData`
-            );
           }
         }
 
@@ -1260,9 +1139,6 @@ export default function FlightsPageAuthenticated() {
             // For days > insert day, only keep if in API response
             const shouldKeep = responseDayNumbers.has(it.day_number);
             if (!shouldKeep) {
-              console.log(
-                `🗑️ Removing day ${it.day_number} (> insert day, not in response)`
-              );
             }
             return shouldKeep;
           }
@@ -1272,9 +1148,6 @@ export default function FlightsPageAuthenticated() {
         filteredItineraries.sort((a, b) => a.day_number - b.day_number);
 
         setItinerariesGenerated([...filteredItineraries]);
-        console.log(
-          `✅ itinerariesGenerated updated with ${filteredItineraries.length} days after insert`
-        );
 
         // Update selectedTrip with new total days count
         const updatedTrip = { ...tripData };
@@ -1283,7 +1156,6 @@ export default function FlightsPageAuthenticated() {
           updatedTrip.no_of_days = newTotalDays;
           setSelectedTrip(updatedTrip);
           await storeSelectedTrip(userId, sessionId, updatedTrip);
-          console.log(`✅ Updated totalDays globally to ${newTotalDays}`);
         }
 
         // Remove the inserted day from pending set since it now has data
@@ -1318,9 +1190,6 @@ export default function FlightsPageAuthenticated() {
     }
 
     try {
-      console.log(
-        `📤 Calling itinerary API to DELETE day ${deleteDayNumber} with request_type="remove"`
-      );
 
       // Show loader
       setIsLoadingItinerary(true);
@@ -1337,9 +1206,6 @@ export default function FlightsPageAuthenticated() {
       // Do NOT include the deleted day or any days after it
       const currentItineraryForAPI = [...itinerariesBeforeDeletion];
 
-      console.log(
-        `📊 Delete payload: ${itinerariesBeforeDeletion.length} days before day ${deleteDayNumber} (excluding day ${deleteDayNumber} and all after)`
-      );
 
       // Calculate new trip duration (reduced by number of days deleted)
       const daysDeleted = itinerariesGenerated.filter(
@@ -1347,9 +1213,6 @@ export default function FlightsPageAuthenticated() {
       ).length;
       const newTripDuration = selectedTrip.no_of_days - daysDeleted;
 
-      console.log(
-        `📉 Trip duration: ${selectedTrip.no_of_days} → ${newTripDuration} (deleted ${daysDeleted} days)`
-      );
 
       // Prepare the message
       const itineraryMessage = `{'role':'admin','day_number':${deleteDayNumber},'end_day':${newTripDuration},'query':'removed day ${deleteDayNumber}'}`;
@@ -1366,10 +1229,6 @@ export default function FlightsPageAuthenticated() {
         request_type: "remove", // IMPORTANT: Use "remove" for delete flow
       };
 
-      console.log(
-        "📤 Delete API Request body:",
-        JSON.stringify(requestBody, null, 2)
-      );
 
       const response = await fetch("/api/itinerary", {
         method: "POST",
@@ -1409,10 +1268,6 @@ export default function FlightsPageAuthenticated() {
         typeof deleteResponseMessage === "string" &&
         deleteResponseMessage.trim()
       ) {
-        console.log(
-          "📨 Setting overlay message from delete day API:",
-          deleteResponseMessage
-        );
         setOverlayMessage(deleteResponseMessage);
         setShowOverlay(true);
       }
@@ -1431,10 +1286,6 @@ export default function FlightsPageAuthenticated() {
           const existingDays = prevData.itinerary;
           const newDays = itineraryPayload.itinerary;
 
-          console.log(
-            `🔄 Merging delete response: ${existingDays.length} existing + ${newDays.length} new`
-          );
-          console.log(`📌 Deleted day number: ${deleteDayNumber}`);
 
           // Build result based on user requirements:
           // 1. Days <= deleteDayNumber from response REPLACE existing
@@ -1451,12 +1302,8 @@ export default function FlightsPageAuthenticated() {
           // Then, add/replace days from API response
           newDays.forEach((day: any) => {
             if (day.day_number < deleteDayNumber) {
-              console.log(`📝 Replacing day ${day.day_number} (< deleted day)`);
               dayMap.set(day.day_number, day); // REPLACE
             } else {
-              console.log(
-                `📝 Adding new day ${day.day_number} (> deleted day)`
-              );
               dayMap.set(day.day_number, day); // OVERRIDE/ADD
             }
           });
@@ -1468,9 +1315,6 @@ export default function FlightsPageAuthenticated() {
             (a: any, b: any) => a.day_number - b.day_number
           );
 
-          console.log(
-            `✅ Merged itinerary after delete has ${mergedDays.length} total day(s)`
-          );
 
           return {
             ...prevData,
@@ -1513,9 +1357,6 @@ export default function FlightsPageAuthenticated() {
         updatedItinerariesGenerated.sort((a, b) => a.day_number - b.day_number);
 
         setItinerariesGenerated(updatedItinerariesGenerated);
-        console.log(
-          `✅ itinerariesGenerated updated after delete, now has ${updatedItinerariesGenerated.length} day(s)`
-        );
 
         // Update selectedTrip's no_of_days and day_wise_plan
         if (selectedTrip) {
@@ -1524,11 +1365,6 @@ export default function FlightsPageAuthenticated() {
             (d: any) => d.day_number < deleteDayNumber
           );
 
-          console.log(
-            `📦 Updated day_wise_plan: removed ${
-              selectedTrip.day_wise_plan?.length - updatedDayWisePlan.length
-            } days`
-          );
 
           const updatedTrip = {
             ...selectedTrip,
@@ -1537,13 +1373,11 @@ export default function FlightsPageAuthenticated() {
           };
           setSelectedTrip(updatedTrip);
           await storeSelectedTrip(userId, sessionId, updatedTrip);
-          console.log(`✅ Updated trip duration to ${newTripDuration} days`);
         }
 
         // Navigate to previous day if current day was deleted or after
         if (currentDayNumber >= deleteDayNumber) {
           const newCurrentDay = Math.max(1, deleteDayNumber - 1);
-          console.log(`🔍 Navigating to day ${newCurrentDay} after delete`);
           setTimeout(() => {
             setNavigateToDay(newCurrentDay);
             setTimeout(() => setNavigateToDay(null), 1000);
@@ -1564,7 +1398,6 @@ export default function FlightsPageAuthenticated() {
     setPendingConveyanceDays((prev) => {
       const newSet = new Set(prev);
       newSet.add(dayNumber);
-      console.log(`✅ Added day ${dayNumber} to pending set`);
       return newSet;
     });
   };
@@ -1574,61 +1407,33 @@ export default function FlightsPageAuthenticated() {
     setPendingConveyanceDays((prev) => {
       const newSet = new Set(prev);
       newSet.delete(dayNumber);
-      console.log(`✅ Removed day ${dayNumber} from pending set`);
       return newSet;
     });
   };
 
   // Handler to delete a day (CASE 1: API call)
   const handleDeleteDay = async (dayNumber: number) => {
-    console.log(
-      `\n🔥 ========== CASE 1: API DELETE for Day ${dayNumber} ==========`
-    );
-    console.log(`📍 FlightsPageAuthenticated.handleDeleteDay called`);
-    console.log(
-      `📊 Current itinerariesGenerated:`,
-      itinerariesGenerated.map((it) => `Day ${it.day_number}`).join(", ")
-    );
 
     try {
       // Call the delete API
       console.log(`📤 Calling callItineraryAPIForDelete...`);
       await callItineraryAPIForDelete(dayNumber);
       console.log(`✅ Successfully deleted day ${dayNumber} via API`);
-      console.log(
-        `========== END CASE 1 DELETE for Day ${dayNumber} ==========\n`
-      );
     } catch (error) {
       console.error(`❌ Failed to delete day ${dayNumber}:`, error);
-      console.log(
-        `========== END CASE 1 DELETE (FAILED) for Day ${dayNumber} ==========\n`
-      );
       throw error; // Re-throw to let ItineraryWidget handle the error
     }
   };
 
   // Handler for local delete without API (CASE 2: is_required: false)
   const handleLocalDeleteDay = (dayNumber: number) => {
-    console.log(
-      `\n🔄 ========== CASE 2: LOCAL DELETE for Day ${dayNumber} ==========`
-    );
-    console.log(`📍 FlightsPageAuthenticated.handleLocalDeleteDay called`);
-    console.log(
-      `📊 Current itinerariesGenerated:`,
-      itinerariesGenerated.map((it) => `Day ${it.day_number}`).join(", ")
-    );
-    console.log(`📊 Current trip days: ${selectedTrip?.no_of_days}`);
 
     if (!selectedTrip || !userId || !sessionId) {
       console.error("❌ Missing required data for local delete");
-      console.log(
-        `========== END CASE 2 DELETE (FAILED) for Day ${dayNumber} ==========\n`
-      );
       return;
     }
 
     try {
-      console.log(`🔄 Starting local re-alignment...`);
       // CRITICAL: Update itineraryData first - this drives the UI
       setItineraryData((prevData: any) => {
         if (!prevData || !prevData.itinerary) {
@@ -1636,9 +1441,6 @@ export default function FlightsPageAuthenticated() {
           return prevData;
         }
 
-        console.log(
-          `🔄 Updating itineraryData: removing day ${dayNumber} and re-aligning`
-        );
 
         // Remove deleted day and re-align subsequent days
         const updatedItinerary = prevData.itinerary
@@ -1654,9 +1456,6 @@ export default function FlightsPageAuthenticated() {
           })
           .sort((a: any, b: any) => a.day_number - b.day_number);
 
-        console.log(
-          `✅ itineraryData updated: ${prevData.itinerary.length} → ${updatedItinerary.length} days`
-        );
 
         return {
           ...prevData,
@@ -1679,9 +1478,6 @@ export default function FlightsPageAuthenticated() {
         })
         .sort((a, b) => a.day_number - b.day_number);
 
-      console.log(
-        `📦 Re-aligned ${updatedItineraries.length} itineraries after deleting day ${dayNumber}`
-      );
 
       // Update selectedTrip - remove from day_wise_plan and re-align
       const updatedDayWisePlan = (selectedTrip.day_wise_plan || [])
@@ -1704,9 +1500,6 @@ export default function FlightsPageAuthenticated() {
         day_wise_plan: updatedDayWisePlan,
       };
 
-      console.log(
-        `📦 Updated trip duration from ${selectedTrip.no_of_days} to ${updatedTrip.no_of_days} days`
-      );
 
       // Update states
       setItinerariesGenerated(updatedItineraries);
@@ -1718,44 +1511,23 @@ export default function FlightsPageAuthenticated() {
       if (currentDayNumber >= dayNumber) {
         // User is viewing the deleted day or a day after it
         const newCurrentDay = Math.max(1, dayNumber - 1);
-        console.log(
-          `🔍 Current day ${currentDayNumber} >= deleted day ${dayNumber}. Navigating to day ${newCurrentDay}`
-        );
         setTimeout(() => {
           setNavigateToDay(newCurrentDay);
           setTimeout(() => setNavigateToDay(null), 1000);
         }, 350); // After animation completes
       } else {
-        console.log(
-          `✅ Current day ${currentDayNumber} < deleted day ${dayNumber}. No navigation needed (day will re-render with updated data).`
-        );
       }
 
       // Store updated trip in Firestore
       storeSelectedTrip(userId, sessionId, updatedTrip)
         .then(() => {
-          console.log(
-            `✅ Stored updated trip after local delete of day ${dayNumber}`
-          );
         })
         .catch((error) => {
           console.error("❌ Error storing updated trip:", error);
         });
 
-      console.log(`✅ Local delete completed for day ${dayNumber}`);
-      console.log(
-        `📊 Updated itinerariesGenerated:`,
-        updatedItineraries.map((it) => `Day ${it.day_number}`).join(", ")
-      );
-      console.log(`📊 Updated trip days: ${updatedTrip.no_of_days}`);
-      console.log(
-        `========== END CASE 2 DELETE for Day ${dayNumber} ==========\n`
-      );
     } catch (error) {
       console.error(`❌ Failed to locally delete day ${dayNumber}:`, error);
-      console.log(
-        `========== END CASE 2 DELETE (ERROR) for Day ${dayNumber} ==========\n`
-      );
     }
   };
 
@@ -1764,9 +1536,6 @@ export default function FlightsPageAuthenticated() {
     message: string,
     currentDay: number
   ) => {
-    console.log(
-      `💬 Itinerary chat message submitted: "${message}" for day ${currentDay}`
-    );
 
     if (!selectedTrip || !userId || !sessionId) {
       console.error("❌ Missing required data for chat API call");
@@ -1775,14 +1544,9 @@ export default function FlightsPageAuthenticated() {
 
     try {
       // Translate message to English before sending to API
-      console.log("🌐 Translating itinerary chat message to English...");
       const translatedMessage = await translateToEnglish(message);
 
       if (translatedMessage !== message) {
-        console.log("🌐 Translation applied to itinerary chat:", {
-          original: message,
-          translated: translatedMessage,
-        });
       }
 
       // Build request payload
@@ -1830,17 +1594,6 @@ export default function FlightsPageAuthenticated() {
         typeof responseMessage === "string" &&
         responseMessage.trim()
       ) {
-        console.log(
-          "📨 Setting overlay message from itinerary chat:",
-          responseMessage
-        );
-        console.log("🔍 Current context:", {
-          activeSection,
-          showFlashcards,
-          showItinerary,
-          willShowOverlay:
-            activeSection === "chat" && (showFlashcards || showItinerary),
-        });
         setOverlayMessage(responseMessage);
         setShowOverlay(true);
       }
@@ -1850,9 +1603,6 @@ export default function FlightsPageAuthenticated() {
         itineraryPayload.response_type === "itinerary" &&
         itineraryPayload.itinerary
       ) {
-        console.log(
-          `📦 Processing ${itineraryPayload.itinerary.length} itinerary update(s)`
-        );
 
         // Update itineraryData state - OVERRIDE strategy
         setItineraryData((prevData: any) => {
@@ -1864,9 +1614,6 @@ export default function FlightsPageAuthenticated() {
           const existingDays = prevData.itinerary;
           const newDays = itineraryPayload.itinerary;
 
-          console.log(
-            `🔄 Overriding itineraries: ${newDays.length} updated day(s)`
-          );
 
           // Create a map of existing days
           const dayMap = new Map();
@@ -1874,7 +1621,6 @@ export default function FlightsPageAuthenticated() {
 
           // Override with new days (replace days present in response)
           newDays.forEach((day: any) => {
-            console.log(`📝 Overriding day ${day.day_number}`);
             dayMap.set(day.day_number, day);
           });
 
@@ -1883,9 +1629,6 @@ export default function FlightsPageAuthenticated() {
             (a: any, b: any) => a.day_number - b.day_number
           );
 
-          console.log(
-            `✅ Updated itinerary has ${mergedDays.length} total day(s)`
-          );
 
           return {
             ...prevData,
@@ -1916,15 +1659,9 @@ export default function FlightsPageAuthenticated() {
           if (existingIndex !== -1) {
             // Override existing
             updatedItinerariesGenerated[existingIndex] = dayToStore;
-            console.log(
-              `📝 Overrode day ${dayItinerary.day_number} in itinerariesGenerated`
-            );
           } else {
             // Add new
             updatedItinerariesGenerated.push(dayToStore);
-            console.log(
-              `➕ Added day ${dayItinerary.day_number} to itinerariesGenerated`
-            );
           }
         });
 
@@ -1932,9 +1669,6 @@ export default function FlightsPageAuthenticated() {
         updatedItinerariesGenerated.sort((a, b) => a.day_number - b.day_number);
 
         setItinerariesGenerated(updatedItinerariesGenerated);
-        console.log(
-          `✅ itinerariesGenerated updated, now has ${updatedItinerariesGenerated.length} day(s)`
-        );
 
         // Store updated itineraries in Firestore
         updatedItinerariesGenerated.forEach((dayItinerary: any) => {
@@ -1946,9 +1680,6 @@ export default function FlightsPageAuthenticated() {
           });
         });
 
-        console.log(
-          "✅ Chat message processed successfully - itineraries updated"
-        );
       }
     } catch (error) {
       console.error("❌ Error in chat submission:", error);
@@ -1959,8 +1690,6 @@ export default function FlightsPageAuthenticated() {
   // Handler for Continue to Booking button
   const handleContinueToBooking = async () => {
     try {
-      console.log("📋 Continue to booking clicked");
-      console.log("📊 Itineraries generated:", itinerariesGenerated.length, "days");
 
       if (!userId || !sessionId || !selectedTrip) {
         console.error("❌ Missing required data for finalization");
@@ -2008,14 +1737,12 @@ export default function FlightsPageAuthenticated() {
 
         // Add both messages: assistant first, then user
         setMessages((prev) => [...prev, assistantItineraryMessage, userConfirmMessage]);
-        console.log("✅ Added itinerary snippet to chat messages");
       }
 
       // Show loader
       setShowFinalizeLoader(true);
 
       // STEP 1: Save final itinerary to memory
-      console.log("💾 Saving final itinerary to memory...");
       try {
         const memoryResponse = await fetch("/api/memory", {
           method: "POST",
@@ -2039,7 +1766,6 @@ export default function FlightsPageAuthenticated() {
           // Continue anyway - don't block the flow
         } else {
           const memoryData = await memoryResponse.json();
-          console.log("✅ Itinerary saved to memory successfully:", memoryData);
         }
       } catch (memoryError) {
         console.error("❌ Error saving to memory:", memoryError);
@@ -2056,14 +1782,12 @@ export default function FlightsPageAuthenticated() {
         itinerariesGenerated
       );
 
-      console.log("✅ Itinerary finalized and stored");
 
       // Wait for loader animation (3 seconds)
       setTimeout(() => {
         setShowFinalizeLoader(false);
         setShowItinerary(false);
         handleShowBooking(true);
-        console.log("✅ Switched to booking view");
       }, 3000);
     } catch (error) {
       console.error("❌ Error finalizing itinerary:", error);
@@ -2076,7 +1800,6 @@ export default function FlightsPageAuthenticated() {
   // Handler for Continue from BookingWidget (after all bookings done)
   const handleBookingContinue = async () => {
     try {
-      console.log("🎉 All bookings completed, proceeding to pre-trip brief");
 
       if (!userId || !sessionId) {
         console.error("❌ Missing user data");
@@ -2190,19 +1913,13 @@ export default function FlightsPageAuthenticated() {
       };
 
       setMessages((prev) => [...prev, bookingSnippetMessage, userConfirmationMessage]);
-      console.log("✅ Booking snippet and user confirmation added to chat");
 
       // Show congratulations loader
       setShowCongratsLoader(true);
 
       // Load pre-trip markdown content from backend API
-      console.log("🔄 Fetching pre-trip brief with:", { userId, sessionId });
       const markdown = await getPreTripMarkdown(userId, sessionId);
       setPreTripMarkdown(markdown);
-      console.log("✅ Pre-trip markdown loaded:", {
-        length: markdown.length,
-        preview: markdown.substring(0, 100),
-      });
 
       // Save bookings information to Firestore
       // This would typically update the generated_itineraries document with booking status
@@ -2214,7 +1931,6 @@ export default function FlightsPageAuthenticated() {
         setShowBooking(false);
 
         // Show pre-trip brief instead of redirecting to dashboard
-        console.log("📄 Showing pre-trip brief");
         handleShowPreTrip(true);
       }, 4000);
     } catch (error) {
@@ -2225,7 +1941,6 @@ export default function FlightsPageAuthenticated() {
 
   // Handler for finishing pre-trip brief
   const handlePreTripFinish = () => {
-    console.log("✅ Pre-trip brief finished, showing in-trip widget");
 
     // Add pre-trip snippet to chat messages
     if (preTripMarkdown) {
@@ -2250,7 +1965,6 @@ export default function FlightsPageAuthenticated() {
       };
 
       setMessages((prev) => [...prev, preTripSnippetMessage, userConfirmationMessage]);
-      console.log("✅ Pre-trip snippet and user confirmation added to chat");
     }
 
     setShowPreTrip(false);
@@ -2258,7 +1972,6 @@ export default function FlightsPageAuthenticated() {
   };
 
   const handleInTripFinish = () => {
-    console.log("✅ In-trip widget finished, returning to chat");
     // Smoothly hide the in-trip widget with fade effect
     setShowInTrip(false);
     
@@ -2294,7 +2007,6 @@ export default function FlightsPageAuthenticated() {
       return;
     }
 
-    console.log(`🔍 Checking day ${nextDayNumber} requirements:`, nextDay);
 
     // Update current day number
     setCurrentDayNumber(nextDayNumber);
@@ -2304,7 +2016,6 @@ export default function FlightsPageAuthenticated() {
       nextDay.conveyance_details &&
       nextDay.conveyance_details.is_required === true
     ) {
-      console.log(`✅ Day ${nextDayNumber} requires conveyance`);
 
       // Extract from and to cities
       // IMPROVED: Iterate backward through selectedTrip.day_wise_plan to find the last to_city
@@ -2313,16 +2024,11 @@ export default function FlightsPageAuthenticated() {
       let canAutoFill = true;
 
       // First, try to get fromCity by iterating backward from the current day
-      console.log(
-        `🔍 Looking for last to_city before day ${nextDayNumber} (checking days ${nextDayNumber - 1} to 1)`
-      );
       for (let i = nextDayNumber - 2; i >= 0; i--) {
         const day = selectedTrip.day_wise_plan?.[i];
-        console.log(`   Checking day ${i + 1}:`, day?.conveyance_details);
 
         if (day?.conveyance_details?.to_city) {
           fromCity = day.conveyance_details.to_city;
-          console.log(`🎯 Found last to_city: ${fromCity} from day ${i + 1}`);
           break;
         }
       }
@@ -2330,17 +2036,14 @@ export default function FlightsPageAuthenticated() {
       // Fallback: if no to_city found from backward iteration, use the day's from_city
       if (!fromCity) {
         fromCity = nextDay.conveyance_details.from_city || "";
-        console.log(`🔄 No previous to_city found, using day's from_city: ${fromCity}`);
       }
 
       // Fallback: if still no fromCity, use source_point or default to Mumbai
       if (!fromCity) {
         if (selectedTrip.source_point?.place_name) {
           fromCity = selectedTrip.source_point.place_name;
-          console.log(`🔄 Using source_point as from_city: ${fromCity}`);
         } else {
           fromCity = "Mumbai";
-          console.log("🔄 No from_city found, defaulting to Mumbai");
         }
       }
 
@@ -2355,9 +2058,6 @@ export default function FlightsPageAuthenticated() {
         );
         canAutoFill = false;
       } else {
-        console.log(
-          `✅ Normalized from_city: "${originalFromCity}" → "${fromCity}"`
-        );
       }
 
       // Normalize toCity with fallback detection
@@ -2372,15 +2072,9 @@ export default function FlightsPageAuthenticated() {
           );
           canAutoFill = false;
         } else {
-          console.log(
-            `✅ Normalized to_city: "${originalToCity}" → "${toCity}"`
-          );
         }
       }
 
-      console.log(
-        `🎯 Setting conveyance cities - From: ${fromCity}, To: ${toCity}, Auto-fill: ${canAutoFill}`
-      );
 
       // Calculate departure date for this day
       const tripDate = selectedTrip.trip_date;
@@ -2390,7 +2084,6 @@ export default function FlightsPageAuthenticated() {
         departureDate.setDate(departureDate.getDate() + (nextDayNumber - 1));
         const departureDateStr = departureDate.toISOString().split("T")[0];
 
-        console.log(`📅 Calculated departure date: ${departureDateStr}`);
 
         // Set states for FlightsWidget
         setConveyanceFromCity(fromCity);
@@ -2398,7 +2091,6 @@ export default function FlightsPageAuthenticated() {
         setAutoFillMode(canAutoFill);
         setInitialDepartureDate(departureDateStr);
 
-        console.log("🔄 Closing itinerary and showing loader");
 
         // Close itinerary widget
         setShowItinerary(false);
@@ -2408,17 +2100,12 @@ export default function FlightsPageAuthenticated() {
         setShowJourneyLoader(true);
         setIsParsingTrips(true);
 
-        console.log("⏱️ Starting 4-second timer for loader");
 
         // After 4 seconds, hide loader and show flights widget
         setTimeout(() => {
-          console.log("⏱️ 4 seconds elapsed, hiding loader");
           setShowJourneyLoader(false);
 
           setTimeout(() => {
-            console.log(
-              `✈️ Showing FlightsWidget for day ${nextDayNumber} with cities: ${fromCity} to ${toCity}`
-            );
             setIsParsingTrips(false);
             handleShowFlights(true);
             setShowFlashcards(false);
@@ -2429,7 +2116,6 @@ export default function FlightsPageAuthenticated() {
       }
     } else {
       // No conveyance required, directly call itinerary API
-      console.log(`❌ Day ${nextDayNumber} does not require conveyance`);
       await callItineraryAPI(nextDayNumber, false);
     }
   };
@@ -2441,12 +2127,6 @@ export default function FlightsPageAuthenticated() {
     currentDayNumber: number,
     isInsertFlow: boolean = false // NEW: Flag for insert day flow
   ) => {
-    console.log("➕ handleAddDay called:", {
-      extendTrip,
-      needsConveyance,
-      currentDayNumber,
-      isInsertFlow,
-    });
 
     if (!selectedTrip || !userId || !sessionId) {
       console.error("❌ Missing required data for adding day");
@@ -2457,20 +2137,12 @@ export default function FlightsPageAuthenticated() {
       // Calculate the new day number - insert AFTER the current day
       const newDayNumber = currentDayNumber + 1;
 
-      console.log(
-        `📅 Adding day ${newDayNumber} after current day ${currentDayNumber}`
-      );
 
       // Update trip in Firestore and memory
       let updatedTrip = { ...selectedTrip };
 
       if (extendTrip) {
         // CASE: User wants to extend trip duration
-        console.log(
-          `✅ Extending trip duration from ${updatedTrip.no_of_days} to ${
-            updatedTrip.no_of_days + 1
-          }`
-        );
 
         // Update local state
         updatedTrip.no_of_days = updatedTrip.no_of_days + 1;
@@ -2480,17 +2152,11 @@ export default function FlightsPageAuthenticated() {
       let fromCity = "Unknown"; // Default
 
       // Iterate backwards from currentDayNumber to find the last conveyance with to_city
-      console.log(
-        `🔍 Looking for last to_city before day ${newDayNumber} (checking days 1 to ${currentDayNumber})`
-      );
-      console.log("selectedTripManan manvi before", selectedTrip);
       for (let i = currentDayNumber - 1; i >= 0; i--) {
         const day = selectedTrip.day_wise_plan?.[i];
-        console.log(`   Checking day ${i + 1}:`, day?.conveyance_details);
 
         if (day?.conveyance_details?.to_city) {
           fromCity = day.conveyance_details.to_city;
-          console.log(`🎯 Found last to_city: ${fromCity} from day ${i + 1}`);
           break;
         }
       }
@@ -2498,7 +2164,6 @@ export default function FlightsPageAuthenticated() {
       // If no to_city found, use trip's source_point if available
       if (fromCity === "Mumbai" && selectedTrip.source_point?.place_name) {
         fromCity = selectedTrip.source_point.place_name;
-        console.log(`🎯 Using source_point as from_city: ${fromCity}`);
       }
 
       // Normalize city name and handle special cases
@@ -2510,18 +2175,11 @@ export default function FlightsPageAuthenticated() {
         fromCity.toLowerCase() === "user location" ||
         fromCity.toLowerCase() === "userlocation"
       ) {
-        console.log(
-          `⚠️ Found placeholder value: ${fromCity}, resolving to actual city...`
-        );
         // Try to get from source_point or default to Mumbai
         if (selectedTrip.source_point?.place_name) {
           normalizedFromCity = selectedTrip.source_point.place_name;
-          console.log(`✅ Resolved to source_point: ${normalizedFromCity}`);
         } else {
           normalizedFromCity = "Mumbai";
-          console.log(
-            `⚠️ No source_point found, defaulting to: ${normalizedFromCity}`
-          );
         }
       }
 
@@ -2534,13 +2192,9 @@ export default function FlightsPageAuthenticated() {
           `⚠️ City "${fromCity}" not found in places.json - using capitalized version`
         );
       } else {
-        console.log(
-          `✅ Normalized from_city for new day: "${fromCity}" → "${normalizedFromCity}"`
-        );
       }
 
       fromCity = normalizedFromCity;
-      console.log(`🚗 Final from_city for new day: ${fromCity}`);
 
       // Create empty day structure
       // Mark this as a newly added day (not part of original trip plan)
@@ -2553,8 +2207,6 @@ export default function FlightsPageAuthenticated() {
           to_city: "", // Will be filled by user if conveyance is required
         },
       };
-      console.log("newDayManan", newDay);
-      console.log("updatedTripManan", updatedTrip);
       // Insert the new day at the correct position
       if (!updatedTrip.day_wise_plan) {
         updatedTrip.day_wise_plan = [];
@@ -2562,33 +2214,16 @@ export default function FlightsPageAuthenticated() {
 
       // Insert at position (newDayNumber - 1) to maintain array index = dayNumber - 1
       updatedTrip.day_wise_plan.splice(newDayNumber - 1, 0, newDay);
-      console.log("updatedTripManan after splice", updatedTrip);
       // Re-number all subsequent days
       for (let i = newDayNumber; i < updatedTrip.day_wise_plan.length; i++) {
         updatedTrip.day_wise_plan[i].day_number = i + 1;
       }
-      console.log("updatedTripManan after renumbering", updatedTrip);
-      console.log(
-        `✅ Inserted new day ${newDayNumber} and renumbered subsequent days`
-      );
-      console.log(
-        `📊 Updated day_wise_plan has ${updatedTrip.day_wise_plan.length} days`
-      );
 
       // Also update itinerariesGenerated array - shift subsequent days
-      console.log(
-        "📦 Updating itinerariesGenerated to shift subsequent days..."
-      );
-      console.log("itinerariesGeneratedManan before mapping", itinerariesGenerated);
       const updatedItinerariesGenerated = itinerariesGenerated.map(
         (itinerary) => {
           // If this itinerary is for a day >= newDayNumber, increment its day_number
           if (itinerary.day_number >= newDayNumber) {
-            console.log(
-              `  Shifting day ${itinerary.day_number} → ${
-                itinerary.day_number + 1
-              }`
-            );
             return {
               ...itinerary,
               day_number: itinerary.day_number + 1,
@@ -2597,47 +2232,34 @@ export default function FlightsPageAuthenticated() {
           return itinerary;
         }
       );
-      console.log("updatedItinerariesGeneratedManan after mapping", updatedItinerariesGenerated);
       // Sort by day_number to maintain order after shifting
       updatedItinerariesGenerated.sort((a, b) => a.day_number - b.day_number);
-      console.log("updatedItinerariesGeneratedManan after sorting", updatedItinerariesGenerated);
       // Insert empty placeholder for new day (will be filled after conveyance/stay selection)
       const newDayItinerary = {
         day_number: newDayNumber,
         // Will be populated with conveyance_details and stay_details later
       };
       updatedItinerariesGenerated.splice(newDayNumber - 1, 0, newDayItinerary);
-      console.log("updatedItinerariesGeneratedManan after splicing", updatedItinerariesGenerated);
       setItinerariesGenerated(updatedItinerariesGenerated);
-      console.log(
-        `✅ itinerariesGenerated updated, now has ${updatedItinerariesGenerated.length} day(s)`
-      );
-      console.log("updatedItinerariesGeneratedManan after setting", updatedItinerariesGenerated);
       // Store updated trip in Firestore
       await storeSelectedTrip(userId, sessionId, updatedTrip);
       setSelectedTrip(updatedTrip);
-      console.log(`✅ Added day ${newDayNumber} to trip in Firestore`);
-      console.log("updatedTripManan after storing", updatedTrip);
       if (needsConveyance) {
         // CASE 1: User needs conveyance - redirect to FlightsWidget
-        console.log(`✈️ Redirecting to FlightsWidget for day ${newDayNumber}`);
 
         // Set insert flow flag if this is an insert operation
         if (isInsertFlow) {
-          console.log(`🔄 Setting insert flow flag for day ${newDayNumber}`);
           setIsInsertDayFlow(true);
         }
 
         // Calculate departure date for the new day
         const tripDate = selectedTrip.trip_date;
-        console.log("trip date", tripDate);
         if (tripDate) {
           const baseDate = new Date(tripDate);
           const departureDate = new Date(baseDate);
           departureDate.setDate(departureDate.getDate() + (newDayNumber - 1));
           const departureDateStr = departureDate.toISOString().split("T")[0];
 
-          console.log(`📅 Calculated departure date: ${departureDateStr}`);
 
           // Set current day number
           setCurrentDayNumber(newDayNumber);
@@ -2649,9 +2271,6 @@ export default function FlightsPageAuthenticated() {
           setPartialAutoFillMode(true); // Enable partial auto-fill (FROM and DATE locked, TO selectable)
           setInitialDepartureDate(departureDateStr);
 
-          console.log(
-            "🔄 Closing itinerary and showing loader for add day flow"
-          );
 
           // Close itinerary widget to show FlightsWidget
           setShowItinerary(false);
@@ -2666,7 +2285,6 @@ export default function FlightsPageAuthenticated() {
             setShowJourneyLoader(false);
 
             setTimeout(() => {
-              console.log(`✈️ Showing FlightsWidget for day ${newDayNumber}`);
               setIsParsingTrips(false);
               handleShowFlights(true);
               setShowFlashcards(false);
@@ -2677,15 +2295,9 @@ export default function FlightsPageAuthenticated() {
         }
       } else {
         // CASE 2: No conveyance needed - call itinerary API directly
-        console.log(
-          `📋 No conveyance needed for day ${newDayNumber}, calling itinerary API`
-        );
 
         // Set insert flow flag if this is an insert operation (CRITICAL FIX)
         if (isInsertFlow) {
-          console.log(
-            `🔄 Setting insert flow flag for day ${newDayNumber} (CASE 2)`
-          );
           setIsInsertDayFlow(true);
         }
 
@@ -2701,9 +2313,6 @@ export default function FlightsPageAuthenticated() {
           userId,
           sessionId,
           dayToStore as DayItineraryData
-        );
-        console.log(
-          `✅ Stored day ${newDayNumber} with no conveyance requirement`
         );
 
         // IMPORTANT: Use the updatedItinerariesGenerated array that was created earlier (line 1732)
@@ -2727,9 +2336,6 @@ export default function FlightsPageAuthenticated() {
               is_required: false,
             },
           };
-          console.log(
-            `✅ Updated day ${newDayNumber} placeholder with conveyance/stay details`
-          );
         } else {
           console.error(
             `❌ Day ${newDayNumber} placeholder not found in updatedItinerariesGenerated`
@@ -2739,18 +2345,9 @@ export default function FlightsPageAuthenticated() {
         // Update state again with the complete details
         setItinerariesGenerated(updatedItinerariesGenerated);
 
-        console.log(
-          `📊 updatedItinerariesGenerated has ${updatedItinerariesGenerated.length} days:`,
-          updatedItinerariesGenerated
-            .map((it) => `day ${it.day_number}`)
-            .join(", ")
-        );
 
         // Check if this is insert flow - if so, use request_type="add"
         if (isInsertFlow) {
-          console.log(
-            `🔄 Insert flow detected - calling API with request_type="add"`
-          );
 
           // Set loading state before API call (CRITICAL FIX)
           setIsLoadingItinerary(true);
@@ -2775,14 +2372,6 @@ export default function FlightsPageAuthenticated() {
 
   // Handle date selection from DateSelectorWidget
   const handleDateSelection = async (selectedDate: Date) => {
-    console.log("🎯 handleDateSelection called with date:", selectedDate);
-    console.log("🔍 Current state at entry:");
-    console.log("   - userId:", userId);
-    console.log("   - sessionId:", sessionId);
-    console.log(
-      "   - selectedTrip:",
-      selectedTrip ? `Present (${selectedTrip.trip_title})` : "NULL ❌"
-    );
 
     if (!sessionId || !userId) {
       console.error(
@@ -2794,24 +2383,15 @@ export default function FlightsPageAuthenticated() {
     try {
       // Use formatDateToLocalString for consistent date display (avoids timezone issues)
       const formattedDateForDisplay = formatDateToLocalString(selectedDate);
-      console.log("✅ Date selected:", formattedDateForDisplay);
 
       // If selectedTrip is not in memory, try to restore it from Firestore
       let tripToUse = selectedTrip;
 
       if (tripToUse) {
-        console.log("✅ Trip already in memory:", tripToUse.trip_title);
       } else {
-        console.log(
-          "⚠️ Trip NOT in memory - attempting Firestore restoration..."
-        );
         tripToUse = await getSelectedTripFromFirestore(userId);
 
         if (tripToUse) {
-          console.log(
-            "✅ SUCCESS - Restored trip from Firestore:",
-            tripToUse.trip_title
-          );
           setSelectedTrip(tripToUse); // Update state for future use
         } else {
           console.error(
@@ -2823,7 +2403,6 @@ export default function FlightsPageAuthenticated() {
 
       // If there's a selected trip (either from memory or Firestore), store it with the date
       if (tripToUse) {
-        console.log("Storing trip with selected date:", tripToUse.trip_title);
         // Convert date to strict YYYY-MM-DD format using local timezone (not UTC)
         const dateString = formatDateToLocalString(selectedDate);
 
@@ -2832,20 +2411,6 @@ export default function FlightsPageAuthenticated() {
         // Add trip_date to correctedTrip
         correctedTrip.trip_date = dateString;
 
-        console.log("📋 correctedTrip before source_point update:", {
-          day1_from:
-            correctedTrip.day_wise_plan?.[0]?.conveyance_details?.from_city,
-          day1_to:
-            correctedTrip.day_wise_plan?.[0]?.conveyance_details?.to_city,
-          lastDay_from:
-            correctedTrip.day_wise_plan?.[
-              correctedTrip.day_wise_plan.length - 1
-            ]?.conveyance_details?.from_city,
-          lastDay_to:
-            correctedTrip.day_wise_plan?.[
-              correctedTrip.day_wise_plan.length - 1
-            ]?.conveyance_details?.to_city,
-        });
 
         await storeSelectedTrip(userId, sessionId, correctedTrip);
 
@@ -2901,21 +2466,12 @@ export default function FlightsPageAuthenticated() {
           });
           if (memoryResponse.ok) {
             const memoryData = await memoryResponse.json();
-            console.log("✅ Memory data received:", memoryData);
 
             // Check if source_point exists in the response
             if (memoryData.source_point && memoryData.source_point.place_name) {
-              console.log(
-                "✅ Found source_point:",
-                memoryData.source_point.place_name
-              );
 
               // Add source_point to the trip
               correctedTrip.source_point = memoryData.source_point;
-              console.log(
-                "✅ Adding source_point to correctedTrip:",
-                correctedTrip.source_point
-              );
 
               // Update ONLY Day 1's from_city and last day's to_city
               // DO NOT touch other days or other fields
@@ -2930,12 +2486,6 @@ export default function FlightsPageAuthenticated() {
                   // ONLY update from_city, preserve all other fields
                   firstDay.conveyance_details.from_city =
                     memoryData.source_point.place_name;
-                  console.log(
-                    `🔄 Day 1: Updated ONLY from_city to "${memoryData.source_point.place_name}"`
-                  );
-                  console.log(
-                    `   Day 1 to_city remains: "${firstDay.conveyance_details.to_city}"`
-                  );
                 } else {
                   // Create conveyance_details if it doesn't exist
                   firstDay.conveyance_details = {
@@ -2943,9 +2493,6 @@ export default function FlightsPageAuthenticated() {
                     to_city: firstDay.conveyance_details?.to_city || "",
                     is_required: true,
                   };
-                  console.log(
-                    `🔄 Day 1: Created conveyance_details with from_city "${memoryData.source_point.place_name}"`
-                  );
                 }
 
                 // UPDATE THE LAST DAY TO_CITY TO THE SOURCE POINT (return journey)
@@ -2957,12 +2504,6 @@ export default function FlightsPageAuthenticated() {
                   const originalFromCity = lastDay.conveyance_details.from_city;
                   lastDay.conveyance_details.to_city =
                     memoryData.source_point.place_name;
-                  console.log(
-                    `🔄 Day ${lastDay.day_number}: Updated ONLY to_city to "${memoryData.source_point.place_name}" (return journey)`
-                  );
-                  console.log(
-                    `   Day ${lastDay.day_number} from_city remains: "${originalFromCity}"`
-                  );
                 } else {
                   // Create conveyance_details if it doesn't exist, but preserve from_city if it exists
                   lastDay.conveyance_details = {
@@ -2970,9 +2511,6 @@ export default function FlightsPageAuthenticated() {
                     to_city: memoryData.source_point.place_name,
                     is_required: true,
                   };
-                  console.log(
-                    `🔄 Day ${lastDay.day_number}: Created conveyance_details with to_city "${memoryData.source_point.place_name}"`
-                  );
                 }
               }
 
@@ -2981,11 +2519,7 @@ export default function FlightsPageAuthenticated() {
 
               // Update local state
               setSelectedTrip(correctedTrip);
-              console.log(
-                "✅ Trip updated with source_point and conveyance details"
-              );
             } else {
-              console.log("⚠️ No source_point in memory, using default Mumbai");
               // Default to Mumbai if no source_point
               correctedTrip.source_point = {
                 place_name: "Mumbai",
@@ -3023,9 +2557,6 @@ export default function FlightsPageAuthenticated() {
                   };
                 }
 
-                console.log(
-                  `🔄 Updated first day from_city and last day to_city to Mumbai (default)`
-                );
               }
 
               // Store updated trip with default source_point (trip_date already added above)
@@ -3049,7 +2580,6 @@ export default function FlightsPageAuthenticated() {
         } catch (error) {
           console.error("❌ Error fetching source_point from memory:", error);
           // Default to Mumbai on error
-          console.log("⚠️ Defaulting to Mumbai due to error");
           correctedTrip.source_point = {
             place_name: "Mumbai",
             address: "Mumbai, India",
@@ -3058,7 +2588,6 @@ export default function FlightsPageAuthenticated() {
 
         // Pre-fetch conveyance data for all days that require it
         const dayWisePlan = correctedTrip.day_wise_plan;
-        console.log("🔍 Day-wise plan:", dayWisePlan);
 
         if (dayWisePlan && dayWisePlan.length > 0) {
           // Extract days that require conveyance
@@ -3101,11 +2630,6 @@ export default function FlightsPageAuthenticated() {
 
           // Trigger stays pre-fetch in background (don't await to not block UI)
           // if (stayDetails.length > 0) {
-          //   console.log(
-          //     "🏨 Triggering stays pre-fetch for",
-          //     stayDetails.length,
-          //     "days"
-          //   );
           //   preFetchStaysData({
           //     userId,
           //     sessionId,
@@ -3120,25 +2644,12 @@ export default function FlightsPageAuthenticated() {
         if (dayWisePlan && dayWisePlan.length > 0) {
           const day1 = dayWisePlan[0]; // Day 1 is at index 0
 
-          console.log("🔍 Checking Day 1 conveyance details:", day1);
-          console.log("🔍 Day 1 conveyance_details:", day1.conveyance_details);
-          console.log(
-            "🔍 Day 1 conveyance is_required:",
-            day1.conveyance_details?.is_required
-          );
-          console.log(
-            "🔍 Day 1 conveyance is_required type:",
-            typeof day1.conveyance_details?.is_required
-          );
 
           // Check if conveyance_details exists and is_required is true
           if (
             day1.conveyance_details &&
             day1.conveyance_details.is_required === true
           ) {
-            console.log(
-              "✅✅✅ Day 1 conveyance is required, showing loader and flights"
-            );
 
             // Initialize current day number to 1
             setCurrentDayNumber(1);
@@ -3160,13 +2671,9 @@ export default function FlightsPageAuthenticated() {
                 );
                 canAutoFill = false;
               } else {
-                console.log(
-                  `✅ Normalized from_city: "${originalFromCity}" → "${fromCity}"`
-                );
               }
             } else {
               fromCity = "Mumbai"; // Default if empty
-              console.log("🔄 Empty from_city, defaulting to Mumbai");
             }
 
             if (toCity) {
@@ -3180,20 +2687,9 @@ export default function FlightsPageAuthenticated() {
                 );
                 canAutoFill = false;
               } else {
-                console.log(
-                  `✅ Normalized to_city: "${originalToCity}" → "${toCity}"`
-                );
               }
             }
 
-            console.log(
-              "🎯 Setting conveyance cities - From:",
-              fromCity,
-              "To:",
-              toCity,
-              "Auto-fill enabled:",
-              canAutoFill
-            );
 
             // Set conveyance cities for FlightsWidget
             setConveyanceFromCity(fromCity);
@@ -3202,12 +2698,7 @@ export default function FlightsPageAuthenticated() {
             // Set auto-fill mode based on whether cities were found
             setAutoFillMode(canAutoFill);
             setInitialDepartureDate(dateString); // Use the trip start date
-            console.log(
-              `📅 Set auto-fill mode: ${canAutoFill} with departure date:`,
-              dateString
-            );
 
-            console.log("🔄 Closing date selector and showing loader");
 
             // Close date selector
             setShowDateSelector(false);
@@ -3217,20 +2708,12 @@ export default function FlightsPageAuthenticated() {
             setShowJourneyLoader(true);
             setIsParsingTrips(true);
 
-            console.log("⏱️ Starting 4-second timer for loader");
 
             // After 4 seconds, hide loader and show flights widget
             setTimeout(() => {
-              console.log("⏱️ 4 seconds elapsed, hiding loader");
               setShowJourneyLoader(false);
 
               setTimeout(() => {
-                console.log(
-                  "✈️ Showing FlightsWidget with cities:",
-                  fromCity,
-                  "to",
-                  toCity
-                );
                 setIsParsingTrips(false);
                 handleShowFlights(true);
                 setShowFlashcards(false);
@@ -3241,31 +2724,11 @@ export default function FlightsPageAuthenticated() {
 
             return; // Exit early since we're showing conveyance flow
           } else {
-            console.log("❌❌❌ Day 1 conveyance not required or missing.");
-            console.log(
-              "❌ is_required value:",
-              day1.conveyance_details?.is_required
-            );
-            console.log(
-              "❌ Strict equality check (=== true):",
-              day1.conveyance_details?.is_required === true
-            );
-            console.log(
-              "❌ Loose equality check (== true):",
-              day1.conveyance_details?.is_required == true
-            );
-            console.log(
-              "❌ Full conveyance_details:",
-              JSON.stringify(day1.conveyance_details, null, 2)
-            );
           }
         } else {
-          console.log("❌❌❌ No day_wise_plan found in trip");
-          console.log("❌ dayWisePlan:", dayWisePlan);
         }
       } else {
         // If no trip selected, just store the date
-        console.log("Storing date without trip");
         // Convert date to strict YYYY-MM-DD format
         const dateString = selectedDate.toISOString().split("T")[0];
 
@@ -3286,7 +2749,6 @@ export default function FlightsPageAuthenticated() {
       // Close date selector
       setShowDateSelector(false);
 
-      console.log("Date selection saved successfully");
     } catch (error) {
       console.error("Error storing date selection:", error);
       alert("Failed to save date selection. Please try again.");
@@ -3295,11 +2757,6 @@ export default function FlightsPageAuthenticated() {
 
   // Handle continue action from FlightsWidget with selected conveyance data
   const handleFlightsContinue = async (selectedConveyanceData?: any, aiOptions?: any[]) => {
-    console.log(
-      "🚀 Continue clicked from FlightsWidget with data:",
-      selectedConveyanceData
-    );
-    console.log("📋 AI options received:", aiOptions?.length || 0, "options");
 
     if (!selectedConveyanceData) {
       console.error("❌ No conveyance data selected");
@@ -3314,10 +2771,6 @@ export default function FlightsPageAuthenticated() {
 
     try {
       // Store conveyance temporarily (DO NOT update memory yet)
-      console.log(
-        `💾 Storing conveyance temporarily for day ${currentDayNumber}:`,
-        selectedConveyanceData
-      );
       setTempConveyanceSelection(selectedConveyanceData);
 
       // Skip adding chat message for add day flow (in partial auto-fill mode)
@@ -3380,20 +2833,11 @@ export default function FlightsPageAuthenticated() {
         return;
       }
 
-      console.log(`🔍 Checking if day ${currentDayNumber} requires stay...`);
-      console.log(`🔍 Partial auto-fill mode: ${partialAutoFillMode}`);
 
       // CASE 0: Partial auto-fill mode (Add Day flow) - Route to StaysWidget
       if (partialAutoFillMode) {
-        console.log(
-          `🚀 Partial auto-fill mode detected - routing to StaysWidget for new day ${currentDayNumber}`
-        );
 
         // Store conveyance temporarily for handleStaysContinue
-        console.log(
-          `💾 Storing conveyance temporarily for day ${currentDayNumber}:`,
-          selectedConveyanceData
-        );
         setTempConveyanceSelection(selectedConveyanceData);
 
         // Update the current day with conveyance details
@@ -3433,13 +2877,9 @@ export default function FlightsPageAuthenticated() {
             duration: selectedConveyanceData.duration,
             price: selectedConveyanceData.price,
           };
-          console.log("updatedTrip", updatedTrip);
           // Store updated trip
           await storeSelectedTrip(userId, sessionId, updatedTrip);
           setSelectedTrip(updatedTrip);
-          console.log(
-            `✅ Updated day ${currentDayNumber} with conveyance details`
-          );
         }
 
         // Extract TO city from conveyance selection (prefer enriched value)
@@ -3454,7 +2894,6 @@ export default function FlightsPageAuthenticated() {
           if (stayCity === "Delhi") stayCity = "New Delhi";
         }
 
-        console.log(`🏨 Setting stay city to: ${stayCity}`);
         setStayCity(stayCity);
 
         // Calculate check-in and check-out dates (1 day stay)
@@ -3469,9 +2908,6 @@ export default function FlightsPageAuthenticated() {
           checkOutDate.setDate(checkOutDate.getDate() + 1); // 1 day stay
           const checkOutDateStr = checkOutDate.toISOString().split("T")[0];
 
-          console.log(
-            `📅 Check-in date: ${checkInDateStr}, Check-out date: ${checkOutDateStr}`
-          );
 
           setStayCheckInDate(checkInDateStr);
           setStayCheckOutDate(checkOutDateStr);
@@ -3489,18 +2925,9 @@ export default function FlightsPageAuthenticated() {
             // Update trip again with stay_details
             await storeSelectedTrip(userId, sessionId, updatedTrip);
             setSelectedTrip(updatedTrip);
-            console.log(
-              `✅ Added stay_details structure for day ${currentDayNumber}`
-            );
           }
         }
 
-        console.log(`🏨 Setting auto-fill mode for StaysWidget:`, {
-          stayCity,
-          checkInDate: stayCheckInDate,
-          checkOutDate: stayCheckOutDate,
-          autoFillMode: true,
-        });
 
         // Show stays finder loader
         setCurrentJourneyStep("stays-finder");
@@ -3515,9 +2942,6 @@ export default function FlightsPageAuthenticated() {
           setShowJourneyLoader(false);
 
           setTimeout(() => {
-            console.log(
-              `🏨 Showing StaysWidget for day ${currentDayNumber} in ${stayCity} with auto-fill mode`
-            );
             setIsParsingTrips(false);
             handleShowStays(true);
           }, 700);
@@ -3531,9 +2955,6 @@ export default function FlightsPageAuthenticated() {
         currentDay.stay_details &&
         currentDay.stay_details.is_required === true
       ) {
-        console.log(
-          `✅ Day ${currentDayNumber} requires stay, showing loader...`
-        );
 
         // Update selectedTrip with complete conveyance details
         const updatedTrip = { ...selectedTrip };
@@ -3564,9 +2985,6 @@ export default function FlightsPageAuthenticated() {
           // Store updated trip
           await storeSelectedTrip(userId, sessionId, updatedTrip);
           setSelectedTrip(updatedTrip);
-          console.log(
-            `✅ Updated selectedTrip with conveyance details for day ${currentDayNumber}`
-          );
         }
 
         // Extract city for stay
@@ -3602,9 +3020,6 @@ export default function FlightsPageAuthenticated() {
               : currentDayNumber + 1;
           }
 
-          console.log(
-            `📅 Check-in day: ${checkInDay}, Check-out day: ${checkOutDay}`
-          );
 
           // Calculate actual dates
           const baseDate = new Date(tripDate);
@@ -3616,21 +3031,12 @@ export default function FlightsPageAuthenticated() {
           checkOutDate.setDate(checkOutDate.getDate() + (checkOutDay - 1));
           const checkOutDateStr = checkOutDate.toISOString().split("T")[0];
 
-          console.log(
-            `📅 Check-in date: ${checkInDateStr}, Check-out date: ${checkOutDateStr}`
-          );
 
           setStayCheckInDate(checkInDateStr);
           setStayCheckOutDate(checkOutDateStr);
           setAutoFillStaysMode(true); // Enable auto-fill mode
         }
 
-        console.log(`🏨 Setting auto-fill mode for StaysWidget:`, {
-          stayCity,
-          checkInDate: stayCheckInDate,
-          checkOutDate: stayCheckOutDate,
-          autoFillMode: true,
-        });
 
         // Show stays finder loader
         setCurrentJourneyStep("stays-finder");
@@ -3642,9 +3048,6 @@ export default function FlightsPageAuthenticated() {
           setShowJourneyLoader(false);
 
           setTimeout(() => {
-            console.log(
-              `🏨 Showing StaysWidget for day ${currentDayNumber} in ${stayCity} with auto-fill mode: ${autoFillStaysMode}`
-            );
             setIsParsingTrips(false);
             handleShowStays(true);
           }, 700);
@@ -3654,9 +3057,6 @@ export default function FlightsPageAuthenticated() {
       }
 
       // CASE 2: Current day does NOT require stay - pass conveyance data to itinerary API
-      console.log(
-        `❌ Day ${currentDayNumber} does not require stay - passing conveyance data to itinerary API`
-      );
 
       // Update selectedTrip with complete conveyance details
       const updatedTrip = { ...selectedTrip };
@@ -3687,9 +3087,6 @@ export default function FlightsPageAuthenticated() {
         // Store updated trip
         await storeSelectedTrip(userId, sessionId, updatedTrip);
         setSelectedTrip(updatedTrip);
-        console.log(
-          `✅ Updated selectedTrip with conveyance details for day ${currentDayNumber}`
-        );
       }
 
       // Build current_itinerary for current day with conveyance only
@@ -3710,10 +3107,6 @@ export default function FlightsPageAuthenticated() {
         }),
       };
 
-      console.log(
-        "📤 Building complete day itinerary (conveyance only):",
-        currentItineraryDay
-      );
 
       // Store day itinerary in Firestore
       await storeDayItinerary(
@@ -3721,7 +3114,6 @@ export default function FlightsPageAuthenticated() {
         sessionId,
         currentItineraryDay as DayItineraryData
       );
-      console.log(`✅ Stored day ${currentDayNumber} itinerary in Firestore`);
 
       // Clear temporary conveyance selection
       setTempConveyanceSelection(null);
@@ -3737,11 +3129,6 @@ export default function FlightsPageAuthenticated() {
 
   // Handle continue action from StaysWidget with selected stay data
   const handleStaysContinue = async (selectedStayData?: any, aiOptions?: any[]) => {
-    console.log(
-      "🚀 Continue clicked from StaysWidget with data:",
-      selectedStayData
-    );
-    console.log("🏨 AI stay options received:", aiOptions?.length || 0, "options");
 
     if (!selectedStayData) {
       console.error("❌ No stay data selected");
@@ -3761,11 +3148,6 @@ export default function FlightsPageAuthenticated() {
     }
 
     try {
-      console.log(
-        `💾 Processing day ${currentDayNumber} with conveyance and stay`
-      );
-      console.log(`📦 Temp conveyance:`, tempConveyanceSelection);
-      console.log(`🏨 Stay data:`, selectedStayData);
 
       // Find current day in trip plan
       const currentDay = selectedTrip.day_wise_plan?.find(
@@ -3783,7 +3165,6 @@ export default function FlightsPageAuthenticated() {
       // Check if this is a newly added day (should only have minimal structure)
       const isNewDay = currentDay.is_new_day === true;
 
-      console.log(`🔍 Day ${currentDayNumber} is_new_day flag:`, isNewDay);
 
       // For newly added days, ONLY include day_number, conveyance_details, and stay_details
       // For regular days, include all available information
@@ -3837,19 +3218,9 @@ export default function FlightsPageAuthenticated() {
         if (currentDay.places_to_visit) {
           currentItineraryDay.places_to_visit = currentDay.places_to_visit;
         }
-        console.log(
-          `📝 Including additional fields for existing day ${currentDayNumber}`
-        );
       } else {
-        console.log(
-          `📝 Minimal structure for newly added day ${currentDayNumber} (conveyance + stay only)`
-        );
       }
 
-      console.log(
-        "📤 Building complete day itinerary (conveyance + stay):",
-        currentItineraryDay
-      );
 
       // Store day itinerary in Firestore
       await storeDayItinerary(
@@ -3857,7 +3228,6 @@ export default function FlightsPageAuthenticated() {
         sessionId,
         currentItineraryDay as DayItineraryData
       );
-      console.log(`✅ Stored day ${currentDayNumber} itinerary in Firestore`);
 
       // Update selectedTrip with complete stay details
       const updatedTrip = { ...selectedTrip };
@@ -3873,16 +3243,10 @@ export default function FlightsPageAuthenticated() {
         // Store updated trip
         await storeSelectedTrip(userId, sessionId, updatedTrip);
         setSelectedTrip(updatedTrip);
-        console.log(
-          `✅ Updated selectedTrip with stay details for day ${currentDayNumber}`
-        );
       }
 
       // Update itinerariesGenerated with the new day's conveyance and stay details
       if (isNewDay) {
-        console.log(
-          `📦 Updating itinerariesGenerated for new day ${currentDayNumber}`
-        );
         const updatedItinerariesGenerated = [...itinerariesGenerated];
         const dayIndex = updatedItinerariesGenerated.findIndex(
           (it) => it.day_number === currentDayNumber
@@ -3896,9 +3260,6 @@ export default function FlightsPageAuthenticated() {
             stay_details: currentItineraryDay.stay_details,
           };
           setItinerariesGenerated(updatedItinerariesGenerated);
-          console.log(
-            `✅ Updated itinerariesGenerated for day ${currentDayNumber}`
-          );
         }
       }
 
@@ -3947,7 +3308,6 @@ export default function FlightsPageAuthenticated() {
         // Add both messages: assistant first, then user
         setMessages((prev) => [...prev, assistantStaysMessage, stayMessage]);
       } else {
-        console.log("📝 Skipping chat message for add day flow");
       }
 
       // Clear temporary conveyance selection
@@ -3958,9 +3318,6 @@ export default function FlightsPageAuthenticated() {
 
       // For add day flow, show loader before calling itinerary API
       if (isNewDay) {
-        console.log(
-          `📝 Add day flow - showing loader before itinerary generation`
-        );
 
         // Show itinerary generation loader
         setCurrentJourneyStep("itinerary-generation");
@@ -3984,9 +3341,6 @@ export default function FlightsPageAuthenticated() {
         setTimeout(async () => {
           // Check if this is insert flow (CASE 1)
           if (isInsertDayFlow) {
-            console.log(
-              `📞 Calling INSERT itinerary API for day ${currentDayNumber} (CASE 1: with conveyance)`
-            );
             console.log(`📦 Using request_type="add" with day number shifting`);
             // Call insert API with special logic
             await callItineraryAPIForInsert(
@@ -3995,9 +3349,6 @@ export default function FlightsPageAuthenticated() {
               updatedItinerariesGeneratedForAPI
             );
           } else {
-            console.log(
-              `📞 Calling itinerary API for day ${currentDayNumber} (regular add day flow)`
-            );
             console.log(`📦 Passing updatedTrip and updatedItineraries to API`);
             // Regular add day flow (extend trip)
             await callItineraryAPI(
@@ -4011,9 +3362,6 @@ export default function FlightsPageAuthenticated() {
         }, 500);
       } else {
         // Regular flow (not add day)
-        console.log(
-          `📞 Calling itinerary API for day ${currentDayNumber} (regular flow)`
-        );
         await callItineraryAPI(
           currentDayNumber,
           true,
@@ -4066,19 +3414,13 @@ export default function FlightsPageAuthenticated() {
 
       // Just mark first message as handled
       if (isFirstMessage) {
-        console.log("First message - memory already updated during session initialization");
         setIsFirstMessage(false);
       }
 
       // Translate input to English before sending to API
-      console.log("🌐 Translating user input to English...");
       const translatedInput = await translateToEnglish(currentInput);
 
       if (translatedInput !== currentInput) {
-        console.log("🌐 Translation applied:", {
-          original: currentInput,
-          translated: translatedInput,
-        });
       }
 
       // Check if we should simulate end response for testing
@@ -4136,20 +3478,13 @@ export default function FlightsPageAuthenticated() {
 
           // Safety check - ensure loader stays visible for minimum duration
           setTimeout(() => {
-            console.log("🎯 Safety check: Ensuring loader is still visible");
             if (!showJourneyLoader) {
-              console.log(
-                "🎯 Safety: Loader was hidden prematurely, re-showing"
-              );
               setShowJourneyLoader(true);
             }
           }, 100);
         }
         // Show date recommender loader IMMEDIATELY for ANY end response detected
         else if (isEndResponse) {
-          console.log(
-            "🎯 End response detected - showing date recommender loader immediately"
-          );
           messageContent = "Let's Plan the itinerary in detail";
           console.log("🎯 End response data:", {
             root_response_type: data.response_type,
@@ -4162,13 +3497,7 @@ export default function FlightsPageAuthenticated() {
 
           // Safety check - ensure loader stays visible for minimum duration
           setTimeout(() => {
-            console.log(
-              "🎯 Safety check: Ensuring date recommender loader is still visible"
-            );
             if (!showJourneyLoader) {
-              console.log(
-                "🎯 Safety: Date recommender loader was hidden prematurely, re-showing"
-              );
               setShowJourneyLoader(true);
             }
           }, 100);
@@ -4195,9 +3524,6 @@ export default function FlightsPageAuthenticated() {
         }
         // Case 2: Trip response at root level (new format from temp.json)
         else if (data.response_type === "trip" && data.message) {
-          console.log(
-            "Detected trip response at root level (temp.json format)"
-          );
 
           messageContent =
             (typeof data.message === "object"
@@ -4216,10 +3542,6 @@ export default function FlightsPageAuthenticated() {
             );
             shouldShowPlaces = true;
 
-            console.log(
-              `Parsed ${parsedTripSuggestions.length} trip suggestions from root level (data.message.trips)`
-            );
-            console.log("Validated trip suggestions:", parsedTripSuggestions);
           }
         }
         // Case 3: Response with trip_suggestions wrapper
@@ -4246,17 +3568,12 @@ export default function FlightsPageAuthenticated() {
             );
             shouldShowPlaces = true;
 
-            console.log(
-              `Parsed ${parsedTripSuggestions.length} trip suggestions from trip_suggestions wrapper`
-            );
-            console.log("Validated trip suggestions:", parsedTripSuggestions);
           }
         }
         // Case 4: Response nested under data.message (old format)
         else if (data.message && typeof data.message === "object") {
           const messageData = data.message;
 
-          console.log("Checking nested message format");
 
           if (messageData.response_type === "text" && messageData.message) {
             console.log("Detected text response");
@@ -4278,7 +3595,6 @@ export default function FlightsPageAuthenticated() {
             }
           } else if (messageData.response_type === "trip") {
             console.log("Detected trip response in nested format");
-            console.log("messageData structure:", Object.keys(messageData));
 
             messageContent =
               (typeof messageData.message === "object"
@@ -4288,7 +3604,6 @@ export default function FlightsPageAuthenticated() {
 
             // Case A: trips array directly under messageData (actual current API format)
             if (messageData.trips && Array.isArray(messageData.trips)) {
-              console.log("Found trips array directly under messageData");
               // Store original trips before validation
               setOriginalTrips(cleanupTripData(messageData.trips));
 
@@ -4298,17 +3613,9 @@ export default function FlightsPageAuthenticated() {
               );
               shouldShowPlaces = true;
 
-              console.log(
-                `Parsed ${parsedTripSuggestions.length} trip suggestions from messageData.trips`
-              );
-              console.log("Validated trip suggestions:", parsedTripSuggestions);
             }
             // Case B: trips nested under trip_suggestions (alternative format)
             else if (messageData.trip_suggestions) {
-              console.log(
-                "Trip suggestions detected in response:",
-                messageData.trip_suggestions
-              );
 
               // Extract trip suggestions
               if (
@@ -4326,20 +3633,12 @@ export default function FlightsPageAuthenticated() {
                 );
                 shouldShowPlaces = true;
 
-                console.log(
-                  `Parsed ${parsedTripSuggestions.length} trip suggestions from messageData.trip_suggestions.trips`
-                );
-                console.log(
-                  "Validated trip suggestions:",
-                  parsedTripSuggestions
-                );
               }
             } else {
               console.warn("No trips array found in trip response!");
             }
           } else {
             // Fallback for other response types
-            console.log("Using fallback message content");
             messageContent =
               (typeof messageData.message === "string"
                 ? messageData.message
@@ -4377,20 +3676,6 @@ export default function FlightsPageAuthenticated() {
 
       // Show message in overlay if there's content
       if (messageContent && messageContent.trim()) {
-        console.log(
-          "📨 Setting overlay message from main chat:",
-          messageContent
-        );
-        console.log("🔍 Current context:", {
-          activeSection,
-          showFlashcards,
-          showItinerary,
-          showFlights,
-          showStays,
-          showDateSelector,
-          willShowOverlay:
-            activeSection === "chat" && (showFlashcards || showItinerary),
-        });
         setOverlayMessage(messageContent);
         setShowOverlay(true);
       }
@@ -4406,21 +3691,16 @@ export default function FlightsPageAuthenticated() {
         const loaderStartTime = Date.now();
         const minLoaderDuration = 4000; // Minimum 4 seconds display time
 
-        console.log("🎯 Starting trip loader for 4 seconds minimum");
 
         // If trip suggestions were found, process them
         if (shouldShowPlaces && parsedTripSuggestions.length > 0) {
           // Extract all image URLs from trip suggestions
           const imageUrls = extractImageUrls(parsedTripSuggestions);
-          console.log(`Found ${imageUrls.length} images to download`);
 
           // Download images in the background while showing loader
           const downloadPromise = imageDownloader
             .downloadImages(imageUrls)
             .then((downloadedImages) => {
-              console.log(
-                `Successfully downloaded ${downloadedImages.size} images`
-              );
               return downloadedImages;
             })
             .catch((error) => {
@@ -4431,8 +3711,6 @@ export default function FlightsPageAuthenticated() {
           // Transform the trip data to match FlashcardsWidget's expected format
           const transformedTrips = transformTripData(parsedTripSuggestions);
 
-          console.log("Original trip suggestions:", parsedTripSuggestions);
-          console.log("Transformed trip suggestions:", transformedTrips);
 
           // Wait for both images and minimum loader duration
           Promise.all([
@@ -4444,9 +3722,6 @@ export default function FlightsPageAuthenticated() {
           ]).then(() => {
             setTripSuggestions(transformedTrips);
 
-            console.log(
-              "🎯 Trip loader minimum duration completed, hiding loader"
-            );
 
             // Hide trip loader with dissolving effect and show flashcards
             setTimeout(() => {
@@ -4466,21 +3741,14 @@ export default function FlightsPageAuthenticated() {
                   flashcardsRef.current.clearSelection();
                 }
 
-                console.log("Places widget activated with trip suggestions");
               }, 400); // Wait for dissolve animation
             }, 100); // Small buffer before hiding loader
           });
         } else {
           // Trip response but no valid trip suggestions found
-          console.log(
-            "🎯 Trip response detected but no valid suggestions found"
-          );
 
           // Still show loader for minimum duration, then hide
           setTimeout(() => {
-            console.log(
-              "🎯 Trip loader duration completed, hiding loader (no suggestions)"
-            );
             setShowJourneyLoader(false);
             setIsParsingTrips(false);
           }, minLoaderDuration);
@@ -4498,13 +3766,9 @@ export default function FlightsPageAuthenticated() {
         const loaderStartTime = Date.now();
         const minLoaderDuration = 4000; // Minimum 4 seconds display time
 
-        console.log("🎯 Starting end loader for 4 seconds minimum");
 
         // Wait for minimum loader duration
         setTimeout(() => {
-          console.log(
-            "🎯 End loader minimum duration completed, hiding loader"
-          );
 
           // Hide end loader with dissolving effect and show date selector
           setTimeout(() => {
@@ -4657,22 +3921,15 @@ export default function FlightsPageAuthenticated() {
                 }
                 onBookingToggle={() => {
                   handleShowBooking(!showBooking);
-                  console.log("📝 Booking toggle:", !showBooking);
                 }}
                 onPreTripToggle={() => {
                   handleShowPreTrip(!showPreTrip);
-                  console.log("📄 PreTrip toggle:", !showPreTrip);
                 }}
                 onInTripToggle={() => {
                   handleShowInTrip(!showInTrip);
-                  console.log("🗺️ InTrip toggle:", !showInTrip);
                 }}
                 onTestEndResponseToggle={() => {
                   setTestEndResponse(!testEndResponse);
-                  console.log(
-                    "🧪 Test End Response toggled:",
-                    !testEndResponse
-                  );
                 }}
                 onFlashcardsToggle={() => {
                   if (showFlashcards) {
@@ -4682,9 +3939,6 @@ export default function FlightsPageAuthenticated() {
                       flashcardsRef.current.clearSelection();
                     }
                   } else {
-                    console.log(
-                      "Places toggle: Showing trip suggestion loader for 4 seconds"
-                    );
                     setCurrentJourneyStep("trip-suggestion");
                     setShowJourneyLoader(true);
                     setIsParsingTrips(true);
@@ -4698,9 +3952,6 @@ export default function FlightsPageAuthenticated() {
                       setTimeout(() => {
                         handleShowFlashcards(true);
                         setIsParsingTrips(false);
-                        console.log(
-                          "Places toggle: Flashcards activated after 4 second loader"
-                        );
                       }, 400);
                     }, 4000);
                   }

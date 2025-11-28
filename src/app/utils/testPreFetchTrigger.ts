@@ -131,17 +131,9 @@ export async function testPreFetchConveyance(
   userId: string,
   sessionId: string
 ): Promise<void> {
-  console.log("🧪 TEST PRE-FETCH TRIGGER INITIATED");
-  console.log("═".repeat(60));
 
   const testDate = "2025-12-12"; // Fixed test date: December 12, 2025
 
-  console.log("📋 Test Configuration:");
-  console.log(`  • User ID: ${userId}`);
-  console.log(`  • Session ID: ${sessionId}`);
-  console.log(`  • Test Date: ${testDate}`);
-  console.log(`  • Trip Title: ${TEST_TRIP_DATA.trip_title}`);
-  console.log(`  • Total Days: ${TEST_TRIP_DATA.no_of_days}`);
 
   // Extract days requiring conveyance
   const dayDetails = TEST_TRIP_DATA.day_wise_plan
@@ -155,18 +147,9 @@ export async function testPreFetchConveyance(
 
   const requiredDays = dayDetails.filter((d: any) => d.is_required);
 
-  console.log("\n📊 Days Analysis:");
-  console.log(`  • Total days in plan: ${dayDetails.length}`);
-  console.log(`  • Days requiring conveyance: ${requiredDays.length}`);
-  console.log("\n  Days requiring conveyance:");
   requiredDays.forEach((day: any) => {
-    console.log(
-      `    - Day ${day.day_number}: ${day.from_city} → ${day.to_city}`
-    );
   });
 
-  console.log("\n🚀 Starting parallelized pre-fetch...");
-  console.log("═".repeat(60));
 
   try {
     const startTime = performance.now();
@@ -182,26 +165,14 @@ export async function testPreFetchConveyance(
     const endTime = performance.now();
     const duration = (endTime - startTime) / 1000;
 
-    console.log("═".repeat(60));
-    console.log("✅ PRE-FETCH TEST COMPLETED SUCCESSFULLY");
-    console.log(`⏱️  Total Duration: ${duration.toFixed(2)} seconds`);
-    console.log("\n📍 Next Steps:");
-    console.log("  1. Check Firestore console:");
-    console.log("     Collection: pre_fetch_data_conveyance_stays");
-    console.log(`     Document: ${userId}`);
-    console.log("  2. Verify composite keys are created:");
     requiredDays.forEach((day: any) => {
       const date = new Date("2025-12-12");
       date.setDate(date.getDate() + (day.day_number - 1));
       const dateStr = date.toISOString().split("T")[0];
-      console.log(`     • ${day.from_city}|${day.to_city}|${dateStr}`);
     });
-    console.log("  3. Check browser console for detailed logs");
-    console.log("═".repeat(60));
   } catch (error) {
     console.error("❌ PRE-FETCH TEST FAILED");
     console.error("Error:", error);
-    console.log("═".repeat(60));
     throw error;
   }
 }

@@ -52,7 +52,6 @@ export function useTripHandlers(
     );
 
     if (originalTrip) {
-      console.log("Selected original trip:", originalTrip);
       setSelectedTrip(originalTrip);
       setIsCardManuallySelected(true); // User manually selected this trip
     } else {
@@ -79,13 +78,6 @@ export function useTripHandlers(
 
       // Store the selected trip in Firestore first
       await storeSelectedTrip(userId, sessionId, selectedTrip);
-      console.log(
-        "✅ Trip stored in Firestore successfully:",
-        selectedTrip.trip_title
-      );
-      console.log(
-        "📌 Trip remains in component state for subsequent operations"
-      );
 
       // Send the selected trip to memory API
       const response = await fetch("/api/memory", {

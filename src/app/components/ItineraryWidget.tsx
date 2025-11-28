@@ -33,10 +33,6 @@ const processPhotoUrl = (photoUrl: string | null): string | null => {
       if (photoReference) {
         // Convert to proxy URL with higher resolution for itinerary
         const proxyUrl = `/api/place-photo?photoreference=${photoReference}&maxwidth=800`;
-        console.log("🔄 Converting Google Places photo to proxy URL:", {
-          original: photoUrl.substring(0, 100) + "...",
-          proxy: proxyUrl,
-        });
         return proxyUrl;
       }
     } catch (error) {
@@ -125,9 +121,6 @@ const transformItineraryResponse = (apiResponse: any): ItineraryData | null => {
     return null;
   }
 
-  console.log(
-    `📊 Transforming ${itineraryData.length} day(s) from API response`
-  );
 
   // Process ALL days from the response, not just the first one
   const transformedDays: DayItinerary[] = itineraryData.map((apiDay: any) => {
@@ -379,13 +372,6 @@ const TimelineCard = ({
   const departureTime = stop.departure_time || null;
   const arrivalTime = stop.arrival_time || null;
   const conveyanceType = stop.type || null;
-  console.log("stop121 ", stop);
-  console.log("conveyanceType ", conveyanceType);
-  console.log("activityType ", activityType);
-  console.log("departureTime ", departureTime);
-  console.log("arrivalTime ", arrivalTime);
-  console.log("flightNumber ", flightNumber);
-  console.log("airline ", airline);
   return (
     <div
       className={`timeline-card relative bg-white border border-[#E5E5E5] rounded-xl overflow-hidden cursor-pointer transition-all duration-300 shadow-[0_1px_3px_rgba(0,0,0,0.08)] hover:shadow-[0_4px_6px_rgba(0,0,0,0.1)] hover:-translate-y-0.5 ${
@@ -704,7 +690,6 @@ export default function ItineraryWidget({
         console.log("📊 Transforming API response to display format");
         const transformed = transformItineraryResponse(itineraryResponse);
         if (transformed) {
-          console.log("✅ Successfully transformed itinerary data");
           return transformed;
         }
       }
@@ -735,16 +720,12 @@ export default function ItineraryWidget({
         // Merge with existing itinerary data
         setItineraryData((prevData) => {
           if (!prevData) {
-            console.log("✅ Setting initial itinerary data");
             return transformed;
           }
 
           const existingDays = prevData.days;
           const newDays = transformed.days;
 
-          console.log(
-            `🔄 Merging itinerary: ${existingDays.length} existing days → ${newDays.length} new days`
-          );
 
           // CRITICAL: Detect if this is a deletion scenario
           // If new day count is less than existing, we should REPLACE not merge
@@ -752,9 +733,6 @@ export default function ItineraryWidget({
           const isDeletion = newDays.length < existingDays.length;
 
           if (isDeletion) {
-            console.log(
-              `🗑️ DELETION detected: ${existingDays.length} → ${newDays.length} days. Using REPLACE strategy.`
-            );
 
             // REPLACE: Use only the new days, completely discard existing
             return {
@@ -766,7 +744,6 @@ export default function ItineraryWidget({
           }
 
           // MERGE: For additions/updates, use merge strategy
-          console.log("➕ ADDITION/UPDATE detected. Using MERGE strategy.");
 
           // Create a map of existing days by day number
           const dayMap = new Map<number, DayItinerary>();
@@ -774,7 +751,6 @@ export default function ItineraryWidget({
 
           // Update or add new days (this will replace days with same day number)
           newDays.forEach((day) => {
-            console.log(`📝 Updating/Adding day ${day.day}`);
             dayMap.set(day.day, day);
           });
 
@@ -783,9 +759,6 @@ export default function ItineraryWidget({
             (a, b) => a.day - b.day
           );
 
-          console.log(
-            `✅ Merged itinerary has ${mergedDays.length} total days`
-          );
 
           // Calculate new total_days (max of current length or highest day number)
           const maxDayNumber = Math.max(
@@ -801,7 +774,6 @@ export default function ItineraryWidget({
               mergedDays[mergedDays.length - 1]?.date || prevData.end_date,
           };
         });
-        console.log("✅ Itinerary data updated successfully");
       }
     }
   }, [itineraryResponse]);
@@ -817,9 +789,6 @@ export default function ItineraryWidget({
       if (dayExists) {
         // Convert day number (1-based) to array index (0-based)
         const targetIndex = navigateToDayNumber - 1;
-        console.log(
-          `🔍 Navigating to day ${navigateToDayNumber} (index ${targetIndex})`
-        );
         setCurrentDayIndex(targetIndex);
       } else {
         console.warn(
@@ -874,9 +843,6 @@ export default function ItineraryWidget({
     if (isPendingDay) {
       // For pending days, just navigate to show the pending state
       // DO NOT trigger API call with response_type='generate'
-      console.log(
-        `📌 Day ${dayNumber} is pending - showing pending state without API call`
-      );
       setCurrentDayIndex(dayIndex);
       return;
     }
@@ -889,16 +855,10 @@ export default function ItineraryWidget({
 
     if (selectedDay) {
       // Day data already exists, navigate immediately
-      console.log(
-        `✅ Day ${dayNumber} has data (found by day_number) - navigating`
-      );
       setCurrentDayIndex(dayIndex);
     } else {
       // Day data doesn't exist and it's not pending - need to fetch it
       if (dayNumber <= totalDays && onRequestNextDay) {
-        console.log(
-          `🔄 Requesting itinerary for day ${dayNumber} from slider (response_type='generate')`
-        );
         setLoadingDayIndex(dayIndex);
 
         try {
@@ -916,17 +876,12 @@ export default function ItineraryWidget({
 
   // Handle add day button click (at end)
   const handleAddDayClick = () => {
-    console.log("➕ Add day button clicked");
     setShowExtendTripPopup(true);
   };
 
   // Handle inserting a day after specific index
   const handleInsertDay = (afterDayIndex: number) => {
     const insertDayNumber = afterDayIndex + 2; // Insert after the day at afterDayIndex
-    console.log(
-      `➕ Insert day ${insertDayNumber} after day ${afterDayIndex + 1}`
-    );
-    console.log("itineraryDataManan before", itineraryData);
 
     // STEP 0: Immediately increment insertedDaysCount
     // This ensures DaySlider sees the new total BEFORE async state updates complete
@@ -937,14 +892,10 @@ export default function ItineraryWidget({
       setItineraryData((prevData) => {
         if (!prevData) return prevData;
 
-        console.log(
-          `🔄 Shifting days >= ${insertDayNumber} by +1 in itineraryData`
-        );
 
         // Shift day numbers for all days >= insertDayNumber
         const updatedDays = prevData.days.map((day) => {
           if (day.day >= insertDayNumber) {
-            console.log(`  Shifting day ${day.day} → ${day.day + 1}`);
             return {
               ...day,
               day: day.day + 1,
@@ -956,7 +907,6 @@ export default function ItineraryWidget({
         // Sort by day number to maintain order
         updatedDays.sort((a, b) => a.day - b.day);
 
-        console.log(`✅ Shifted ${updatedDays.length} days in itineraryData`);
 
         return {
           ...prevData,
@@ -965,14 +915,10 @@ export default function ItineraryWidget({
         };
       });
     }
-    console.log("itineraryDataManan after", itineraryData);
 
     // STEP 2: Mark this day as pending in parent's state
-    console.log("onAddPendingDayManan", onAddPendingDay);
-    console.log("insertDayNumberManan", insertDayNumber);
     if (onAddPendingDay) {
       onAddPendingDay(insertDayNumber);
-      console.log(`✅ Added day ${insertDayNumber} to pending set in parent`);
     }
 
     // STEP 3: Navigate to the newly inserted day after a brief delay for animation
@@ -983,7 +929,6 @@ export default function ItineraryWidget({
 
   // Handle adding conveyance to pending day - CASE 1
   const handleAddConveyanceToPendingDay = async (dayNumber: number) => {
-    console.log(`🚗 CASE 1: Adding conveyance for inserted day ${dayNumber}`);
 
     // IMPORTANT: Decrement insertedDaysCount BEFORE calling onAddDay
     // Same logic as handleRemovePendingDay - prevents the glitch where an extra day appears.
@@ -999,15 +944,11 @@ export default function ItineraryWidget({
 
       // NOTE: We DO NOT remove from pending set
       // The pending day will be populated with the API response
-      console.log(
-        `✅ Conveyance flow completed for day ${dayNumber}, keeping pending state`
-      );
     }
   };
 
   // Handle removing pending day - CASE 2 (Skip conveyance, generate itinerary directly)
   const handleRemovePendingDay = async (dayNumber: number) => {
-    console.log(`❌ CASE 2: Skipping conveyance for inserted day ${dayNumber}`);
 
     // IMPORTANT: Decrement insertedDaysCount BEFORE calling onAddDay
     // This prevents the glitch where an extra day appears momentarily.
@@ -1032,32 +973,19 @@ export default function ItineraryWidget({
       // NOTE: We DO NOT remove from pending set here
       // The pending day will be populated with the API response
       // The parent component will handle removing it from pending set after API success
-      console.log(
-        `✅ Day ${dayNumber} added without conveyance, keeping pending state`
-      );
     }
   };
 
   // Handle delete day button click
   const handleDeleteDayClick = (dayNumber: number) => {
-    console.log(
-      `\n🗑️ ========== DELETE DAY ${dayNumber} BUTTON CLICKED ==========`
-    );
-    console.log(
-      `📍 Current day index: ${currentDayIndex}, Current day number: ${currentDayNumber}`
-    );
 
     // Check if day exists in transformed itinerary data
     const dayData = itineraryData?.days.find((day) => day.day === dayNumber);
 
     if (!dayData) {
-      console.log(
-        `⚠️ Day ${dayNumber} has no itinerary data in transformed format, cannot delete`
-      );
       return;
     }
 
-    console.log(`✅ Found day ${dayNumber} in transformed itinerary data`);
 
     // IMPORTANT: We need to check conveyance_details from the ORIGINAL API response
     // The transformed dayData doesn't have conveyance_details
@@ -1081,38 +1009,13 @@ export default function ItineraryWidget({
 
         if (apiDayData) {
           console.log(`✅ Found day ${dayNumber} in API response`);
-          console.log(
-            `📋 API day data:`,
-            JSON.stringify(
-              {
-                day_number: apiDayData.day_number,
-                has_conveyance: !!apiDayData.conveyance_details,
-                conveyance_details: apiDayData.conveyance_details,
-              },
-              null,
-              2
-            )
-          );
 
           if (apiDayData.conveyance_details) {
             hasRequiredConveyance =
               apiDayData.conveyance_details.is_required === true;
-            console.log(
-              `📊 Day ${dayNumber} conveyance check: is_required = ${apiDayData.conveyance_details.is_required}`
-            );
           } else {
-            console.log(
-              `📊 Day ${dayNumber} has NO conveyance_details in API response`
-            );
           }
         } else {
-          console.log(
-            `⚠️ Day ${dayNumber} NOT FOUND in API response by day_number`
-          );
-          console.log(
-            `Available day numbers in API:`,
-            apiItinerary.map((d: any) => d.day_number)
-          );
         }
       } else {
         console.log(`⚠️ API itinerary is not an array or is missing`);
@@ -1123,48 +1026,33 @@ export default function ItineraryWidget({
 
     if (hasRequiredConveyance) {
       // CASE 1: Day with is_required: true - show warning and use API call
-      console.log(`🚨 CASE 1: Day ${dayNumber} has REQUIRED conveyance`);
-      console.log(`   → Showing warning alert`);
       console.log(`   → Will call onDeleteDay (API delete) after confirmation`);
       setDayToDelete(dayNumber);
       setShowDeleteWarning(true);
     } else {
       // CASE 2: Day with is_required: false - local delete with re-alignment
-      console.log(`✅ CASE 2: Day ${dayNumber} has NO required conveyance`);
-      console.log(`   → Calling handleLocalDelete immediately`);
-      console.log(`   → Will call onLocalDeleteDay (local re-alignment)`);
       handleLocalDelete(dayNumber);
     }
 
-    console.log(`========== END DELETE DAY ${dayNumber} ==========\n`);
   };
 
   // Handle local delete for CASE 2 (is_required: false)
   const handleLocalDelete = (dayNumber: number) => {
-    console.log(
-      `\n🔄 ========== LOCAL DELETE CASE 2 for Day ${dayNumber} ==========`
-    );
-    console.log(`🎬 Starting animation...`);
 
     // Set deleting state for animation
     setDeletingDayNumber(dayNumber);
 
     // Wait for animation to complete (300ms), then perform the deletion
     setTimeout(() => {
-      console.log(`⏱️ Animation complete, calling onLocalDeleteDay handler...`);
 
       if (onLocalDeleteDay) {
         onLocalDeleteDay(dayNumber);
-        console.log(`✅ Called parent's onLocalDeleteDay for day ${dayNumber}`);
       } else {
         console.error(`❌ onLocalDeleteDay callback is not defined!`);
       }
 
       // Clear deleting state
       setDeletingDayNumber(null);
-      console.log(
-        `========== END LOCAL DELETE for Day ${dayNumber} ==========\n`
-      );
     }, 300);
   };
 
@@ -1175,9 +1063,6 @@ export default function ItineraryWidget({
       return;
     }
 
-    console.log(
-      `💬 Chat message submitted: "${message}" for day ${currentDayNumber}`
-    );
 
     try {
       // Set loading state
@@ -1192,7 +1077,6 @@ export default function ItineraryWidget({
         setShowUpdateNotification(false);
       }, 3000); // Hide after 3 seconds
 
-      console.log("✅ Chat message processed successfully");
     } catch (error) {
       console.error("❌ Error in chat submission:", error);
       alert("Failed to process your message. Please try again.");
@@ -1205,9 +1089,6 @@ export default function ItineraryWidget({
   // Handle delete warning - Continue
   const handleDeleteContinue = async () => {
     if (dayToDelete !== null && onDeleteDay) {
-      console.log(
-        `🗑️ CASE 1: Continuing with API delete for day ${dayToDelete}`
-      );
       setShowDeleteWarning(false);
 
       try {
@@ -1225,14 +1106,12 @@ export default function ItineraryWidget({
 
   // Handle delete warning - Decline
   const handleDeleteDecline = () => {
-    console.log(`❌ User declined delete for day ${dayToDelete}`);
     setShowDeleteWarning(false);
     setDayToDelete(null);
   };
 
   // Handle extend trip popup - YES
   const handleExtendTripYes = () => {
-    console.log("✅ User wants to extend trip duration");
     setPendingExtendTrip(true);
     setShowExtendTripPopup(false);
     setShowConveyancePopup(true);
@@ -1240,7 +1119,6 @@ export default function ItineraryWidget({
 
   // Handle extend trip popup - NO
   const handleExtendTripNo = () => {
-    console.log("❌ User does not want to extend trip duration");
     setPendingExtendTrip(false);
     setShowExtendTripPopup(false);
     setShowConveyancePopup(true);
@@ -1248,7 +1126,6 @@ export default function ItineraryWidget({
 
   // Handle conveyance requirement popup - YES
   const handleConveyanceYes = async () => {
-    console.log("✅ User needs conveyance for new day");
     setShowConveyancePopup(false);
 
     if (onAddDay) {
@@ -1259,7 +1136,6 @@ export default function ItineraryWidget({
 
   // Handle conveyance requirement popup - NO
   const handleConveyanceNo = async () => {
-    console.log("❌ User does not need conveyance for new day");
     setShowConveyancePopup(false);
 
     if (onAddDay) {
@@ -1552,10 +1428,8 @@ export default function ItineraryWidget({
                   {/* Timeline Container */}
                   <div className="relative">
                     {currentDay.stops.map((stop: any, index) => {
-                      console.log("stop ", stop);
                       const isLast = index === currentDay.stops.length - 1;
                       const activityType = stop.activity_type || "other";
-                      console.log("activityType ", activityType);
                       const imageUrl = stop.image_url || stop.photo_url || null;
 
                       // Get first photo from photos array if available

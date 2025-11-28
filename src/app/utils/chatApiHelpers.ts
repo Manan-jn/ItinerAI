@@ -37,9 +37,6 @@ export function cleanBackticksFromResponse(data: any): any {
       try {
         // First attempt: Direct parse
         const parsed = JSON.parse(cleanedMessage);
-        console.log(
-          "✅ Successfully parsed cleaned message as JSON (direct)"
-        );
         return { ...data, message: parsed };
       } catch (e: any) {
         console.warn(
@@ -72,9 +69,6 @@ export function cleanBackticksFromResponse(data: any): any {
           );
 
           const parsed = JSON.parse(sanitized);
-          console.log(
-            "✅ Successfully parsed cleaned message as JSON (after sanitization)"
-          );
           return { ...data, message: parsed };
         } catch (e2: any) {
           console.warn(
@@ -92,9 +86,6 @@ export function cleanBackticksFromResponse(data: any): any {
               .replace(/\t/g, "\\t");
 
             const parsed = JSON.parse(aggressiveSanitized);
-            console.log(
-              "✅ Successfully parsed cleaned message as JSON (aggressive sanitization)"
-            );
             return { ...data, message: parsed };
           } catch (e3: any) {
             console.error("❌ All JSON parse attempts failed:", e3.message);

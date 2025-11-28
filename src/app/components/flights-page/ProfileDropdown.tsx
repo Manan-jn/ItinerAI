@@ -24,7 +24,6 @@ export function ProfileDropdown({
 
   const handleSaveCustomUserId = (userId: string) => {
     setCustomUserId(userId);
-    console.log(`✅ Custom User ID set to: ${userId}`);
 
     // Notify parent to trigger onboarding flow
     if (onCustomUserIdSet) {

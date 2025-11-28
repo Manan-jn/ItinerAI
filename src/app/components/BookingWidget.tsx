@@ -90,11 +90,6 @@ export default function BookingWidget({
 
   // Fetch user budget from memory AND stays pricing from sessionStorage
   useEffect(() => {
-    console.log("🔄 BookingWidget useEffect triggered:", {
-      isVisible,
-      userId,
-      sessionId,
-    });
 
     const fetchUserBudget = async () => {
       if (!userId || !sessionId) {
@@ -105,7 +100,6 @@ export default function BookingWidget({
         return;
       }
 
-      console.log("📡 Fetching user budget for:", { userId, sessionId });
 
       try {
         const response = await fetch("/api/memory/get", {
@@ -121,7 +115,6 @@ export default function BookingWidget({
           const data = await response.json();
           console.log("💰 User budget API response:", data);
           if (data.user_profile && data.user_profile.budget) {
-            console.log("✅ User budget found:", data.user_profile.budget);
             setUserBudget(data.user_profile.budget);
           } else {
             console.warn("⚠️ User budget not found in response:", data);
@@ -147,23 +140,16 @@ export default function BookingWidget({
         return;
       }
 
-      console.log("🏨 Attempting to get stays pricing from sessionStorage");
 
       try {
         const stayDataKey = `stay_${userId}_${sessionId}`;
         const storedData = sessionStorage.getItem(stayDataKey);
 
-        console.log(`🔍 Looking for stays data with key: ${stayDataKey}`);
 
         if (storedData) {
           const stayData = JSON.parse(storedData);
-          console.log("📦 Found stays data:", stayData);
           if (stayData.total_price) {
             setStaysPricing(stayData.total_price);
-            console.log(
-              "✅ Retrieved stays pricing from sessionStorage:",
-              stayData.total_price
-            );
           } else {
             console.warn("⚠️ Stays data found but no total_price:", stayData);
           }
@@ -179,11 +165,9 @@ export default function BookingWidget({
     };
 
     if (isVisible) {
-      console.log("✅ Widget is visible, fetching data...");
       fetchUserBudget();
       getStaysPricing();
     } else {
-      console.log("❌ Widget is not visible, skipping data fetch");
     }
   }, [userId, sessionId, isVisible]);
 

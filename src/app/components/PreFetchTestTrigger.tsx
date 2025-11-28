@@ -29,14 +29,10 @@ export default function PreFetchTestTrigger() {
       // Use actual user ID and a test session ID
       const testSessionId = `test-session-${Date.now()}`;
 
-      console.log("\n" + "═".repeat(70));
-      console.log("🧪 STARTING PRE-FETCH TEST");
-      console.log("═".repeat(70));
 
       await testPreFetchConveyance(currentUser.uid, testSessionId);
 
       setStatus("success");
-      console.log("\n✅ Test completed successfully!");
     } catch (error) {
       setStatus("error");
       console.error("❌ Test failed:", error);

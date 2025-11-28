@@ -204,10 +204,6 @@ export function TripExpandedView({
   // Get city image from trip_route and convert to proxy URL if needed
   const getCityImage = (cityName: string | null) => {
     if (!cityName || !trip.trip_route) {
-      console.log("getCityImage: No city name or trip_route", {
-        cityName,
-        hasTripRoute: !!trip.trip_route,
-      });
       return null;
     }
 
@@ -224,26 +220,14 @@ export function TripExpandedView({
     });
 
     if (!cityData) {
-      console.log("getCityImage: City not found in trip_route", {
-        cityName,
-        availableCities: trip.trip_route.map((r) => r.place_name),
-      });
       return null;
     }
 
     const photoUrl = cityData?.photos?.[0];
     if (!photoUrl) {
-      console.log("getCityImage: No photos for city", {
-        cityName,
-        cityData: cityData.place_name,
-      });
       return null;
     }
 
-    console.log("getCityImage: Found photo for city", {
-      cityName,
-      photoUrl: photoUrl.substring(0, 80) + "...",
-    });
 
     // Convert Google Places photo URL to proxy URL
     if (photoUrl.includes("maps.googleapis.com/maps/api/place/photo")) {
@@ -252,10 +236,6 @@ export function TripExpandedView({
         const photoReference = urlObj.searchParams.get("photoreference");
         if (photoReference) {
           const proxyUrl = `/api/place-photo?photoreference=${photoReference}&maxwidth=600&maxheight=400`;
-          console.log("getCityImage: Converted to proxy URL", {
-            originalLength: photoUrl.length,
-            proxyUrl,
-          });
           return proxyUrl;
         }
       } catch (error) {
@@ -336,7 +316,6 @@ export function TripExpandedView({
         return newTrip;
       });
 
-      console.log(`✅ Added activity "${placeName}" to Day ${selectedDay}`);
 
       // Clear search
       setSearchQuery("");
@@ -368,7 +347,6 @@ export function TripExpandedView({
       return newTrip;
     });
 
-    console.log(`🗑️ Removed activity from Day ${dayNumber}`);
   };
 
   if (!mounted) return null;

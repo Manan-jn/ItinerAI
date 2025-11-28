@@ -76,7 +76,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
       if (typeof window !== "undefined") {
         sessionStorage.removeItem("itinerai_session_id");
         sessionStorage.removeItem("itinerai_user_id");
-        console.log("🧹 Cleared sessionStorage before onboarding (signup)");
       }
       setShowOnboarding(true);
     }
@@ -95,7 +94,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
         if (typeof window !== "undefined") {
           sessionStorage.removeItem("itinerai_session_id");
           sessionStorage.removeItem("itinerai_user_id");
-          console.log("🧹 Cleared sessionStorage before onboarding (login)");
         }
         // User exists but hasn't completed onboarding - show onboarding
         setShowOnboarding(true);
@@ -118,7 +116,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
         if (typeof window !== "undefined") {
           sessionStorage.removeItem("itinerai_session_id");
           sessionStorage.removeItem("itinerai_user_id");
-          console.log("🧹 Cleared sessionStorage before onboarding (Google login)");
         }
         // New user - show onboarding
         setShowOnboarding(true);
@@ -145,7 +142,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
       sessionStorage.removeItem("itinerai_session_id");
       sessionStorage.removeItem("itinerai_user_id");
 
-      console.log("🔄 Cleared all session data on logout");
     }
 
     await signOut(auth);
@@ -186,7 +182,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
       typeof crypto !== "undefined" && "randomUUID" in crypto
         ? (crypto.randomUUID() as string)
         : `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
-    console.log("uid", uid);
     const guestUserMinimal = {
       uid,
       email: null,
@@ -229,7 +224,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
     if (typeof window !== "undefined") {
       sessionStorage.removeItem("itinerai_session_id");
       sessionStorage.removeItem("itinerai_user_id");
-      console.log("🧹 Cleared sessionStorage before onboarding (guest)");
     }
     // Trigger onboarding for new guest
     setShowOnboarding(true);

@@ -1596,11 +1596,9 @@ export default function ConveyanceTab({
   // This allows user to review FROM, TO, and DATE before searching
   // useEffect(() => {
   //   if (isVisible && partialAutoFillMode && from && to && departureDate && !showResults) {
-  //     console.log("✅ All fields ready for auto-search (partial auto-fill):", { from, to, departureDate });
   //
   //     // Trigger search after a short delay
   //     const timer = setTimeout(async () => {
-  //       console.log("🔍 Auto-triggering search with partial auto-fill...");
   //       await handleSearch();
   //     }, 500);
   //
@@ -1708,13 +1706,6 @@ export default function ConveyanceTab({
   };
 
   const handleSearch = async () => {
-    console.log("🔍 handleSearch called - Current state:", {
-      from,
-      to,
-      departureDate,
-      fromCity,
-      toCity,
-    });
 
     if (!from || !to || !departureDate) {
       console.error("❌ Missing required fields:", { from, to, departureDate });
@@ -1722,7 +1713,6 @@ export default function ConveyanceTab({
       return;
     }
 
-    console.log("✅ All fields present, proceeding with search");
     setIsLoading(true);
     setIsLoadingComplete(false);
     setIsLoadingUtility(true);
@@ -1733,17 +1723,9 @@ export default function ConveyanceTab({
       // Prepare date range (from_date and to_date as same date for single day search)
       const dateStr = departureDate; // Already in YYYY-MM-DD format
 
-    console.log("🔍 Fetching conveyance data for:", {
-      from,
-      to,
-      date: dateStr,
-    });
 
       // Check for pre-fetched data if userId is available
       if (userId) {
-        console.log(
-          `🔍 Checking for pre-fetched data for route: ${from} → ${to} on ${dateStr}...`
-        );
         const cachedData = await getConveyanceDataForWidget(
           userId,
           from,
@@ -1752,7 +1734,6 @@ export default function ConveyanceTab({
         );
 
         if (cachedData) {
-          console.log("✅ Found pre-fetched data! Using cached results.");
 
           // Parse pre-fetched data
           const aiFlights = parseFlightData(cachedData.aiFlights);
@@ -1773,19 +1754,9 @@ export default function ConveyanceTab({
           setIsLoading(false);
           setIsLoadingUtility(false);
 
-          console.log("✅ Pre-fetched data loaded:", {
-            aiFlights: aiFlights.length,
-            aiTrains: aiTrains.length,
-            utilFlights: utilFlights.length,
-            utilTrains: utilTrains.length,
-            source: cachedData.isCached ? "cached" : "fresh",
-          });
 
           return; // Exit early, no need to make API calls
         } else {
-          console.log(
-            "ℹ️ No pre-fetched data found, proceeding with API calls..."
-          );
         }
       }
 
@@ -1798,8 +1769,6 @@ export default function ConveyanceTab({
       const departureCountry = departurePlace?.country || "India";
       const arrivalCountry = arrivalPlace?.country || "India";
 
-      console.log(`🌍 Departure: ${from}, ${departureCountry}`);
-      console.log(`🌍 Arrival: ${to}, ${arrivalCountry}`);
 
       // Make parallel API calls to utility/conveyance for flights and trains
       const [flightsResponse, trainsResponse, aiResponse] =
@@ -1905,15 +1874,7 @@ export default function ConveyanceTab({
         buses: [],
       };
 
-      console.log("✅ AI results:", {
-        flights: aiResults.flights.length,
-        trains: aiResults.trains.length,
-      });
 
-      console.log("✅ Utility results:", {
-        flights: utilResults.flights.length,
-        trains: utilResults.trains.length,
-      });
 
       setSearchResults(aiResults);
       setUtilityResults(utilResults);
@@ -1978,7 +1939,6 @@ export default function ConveyanceTab({
         is_required: true,
       };
       setSelectedConveyanceData(enriched);
-      console.log("✅ Selected conveyance data:", selectedOption);
     }
   };
 

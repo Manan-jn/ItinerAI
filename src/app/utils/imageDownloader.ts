@@ -66,7 +66,6 @@ class ImageDownloader {
 
     try {
       this.downloadQueue.add(processedUrl);
-      // console.log(`Downloading image: ${processedUrl.substring(0, 100)}...`);
 
       const response = await fetch(processedUrl, {
         method: 'GET',
@@ -91,7 +90,6 @@ class ImageDownloader {
       this.cache.set(processedUrl, downloadedImage);
       this.downloadQueue.delete(processedUrl);
 
-      console.log(`Successfully downloaded image: ${processedUrl.substring(0, 100)}...`);
       return objectUrl;
     } catch (error) {
       this.downloadQueue.delete(processedUrl);
@@ -107,7 +105,6 @@ class ImageDownloader {
     const uniqueUrls = [...new Set(urls)]; // Remove duplicates
     const results = new Map<string, string>();
 
-    console.log(`Starting download of ${uniqueUrls.length} images...`);
 
     // Download in batches of 5 to avoid overwhelming the browser
     const batchSize = 5;
@@ -135,7 +132,6 @@ class ImageDownloader {
       }
     }
 
-    console.log(`Downloaded ${results.size} images successfully`);
     return results;
   }
 
@@ -158,7 +154,6 @@ class ImageDownloader {
       URL.revokeObjectURL(image.objectUrl);
     });
     this.cache.clear();
-    console.log('Image cache cleared');
   }
 
   /**

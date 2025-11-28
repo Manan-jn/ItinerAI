@@ -175,30 +175,18 @@ export default function DateSelectorWidget({
   useEffect(() => {
     const fetchMemoryAndPrefill = async () => {
       if (!isVisible || !userId || !sessionId || !selectedTrip) {
-        console.log("📋 DateSelector: Missing required props for auto-fill", {
-          isVisible,
-          userId: !!userId,
-          sessionId: !!sessionId,
-          selectedTrip: !!selectedTrip,
-        });
         return;
       }
 
       // Skip if already auto-filled
       if (isAutoFilled) {
-        console.log("📋 DateSelector: Already auto-filled, skipping");
         return;
       }
 
-      console.log("📋 DateSelector: Starting memory data fetch for auto-fill");
       setIsLoadingMemory(true);
 
       try {
         // Fetch memory data to get source_point
-        console.log("📋 DateSelector: Fetching memory data with:", {
-          userId,
-          sessionId,
-        });
         const memoryResponse = await fetch("/api/memory/get", {
           method: "POST",
           headers: {
@@ -215,17 +203,11 @@ export default function DateSelectorWidget({
 
         if (memoryResponse.ok) {
           const memoryData = await memoryResponse.json();
-          console.log("✅ Memory data received:", memoryData);
 
           // Extract source_point place_name
           if (memoryData.source_point && memoryData.source_point.place_name) {
             extractedFromCity = memoryData.source_point.place_name;
-            console.log(
-              "✅ Extracted from_city from source_point:",
-              extractedFromCity
-            );
           } else {
-            console.log("⚠️ No source_point.place_name found in memory data");
           }
         } else {
           console.warn(
@@ -237,10 +219,6 @@ export default function DateSelectorWidget({
         }
 
         // Extract to_city from selectedTrip with fallback logic
-        console.log(
-          "📋 DateSelector: Extracting to_city from selectedTrip:",
-          selectedTrip
-        );
         
         if (
           selectedTrip.day_wise_plan &&
@@ -292,19 +270,12 @@ export default function DateSelectorWidget({
           const day1 = selectedTrip.day_wise_plan.find(
             (day: any) => day.day_number === 1
           );
-          console.log("📋 DateSelector: Found Day 1:", day1);
 
           if (day1) {
             const day1City = extractCityFromDay(day1);
             if (day1City) {
               extractedToCity = formatCityName(day1City);
-              console.log("✅ Extracted to_city from Day 1:", {
-                source: day1.conveyance_details?.to_city ? "conveyance_details.to_city" : "stay_details.city",
-                raw: day1City,
-                formatted: extractedToCity
-              });
             } else {
-              console.log("⚠️ No valid city found in Day 1, checking other days...");
               
               // Step 2: Fallback - iterate through all days to find earliest city
               const sortedDays = [...selectedTrip.day_wise_plan].sort(
@@ -315,25 +286,16 @@ export default function DateSelectorWidget({
                 const dayCity = extractCityFromDay(day);
                 if (dayCity) {
                   extractedToCity = formatCityName(dayCity);
-                  console.log("✅ Extracted to_city from fallback (Day " + day.day_number + "):", {
-                    day_number: day.day_number,
-                    source: day.conveyance_details?.to_city ? "conveyance_details.to_city" : "stay_details.city",
-                    raw: dayCity,
-                    formatted: extractedToCity
-                  });
                   break; // Found earliest city, break the loop
                 }
               }
               
               if (!extractedToCity) {
-                console.log("⚠️ No valid city found in any day of the trip");
               }
             }
           } else {
-            console.log("⚠️ Day 1 not found in day_wise_plan");
           }
         } else {
-          console.log("⚠️ No day_wise_plan found in selectedTrip");
         }
 
         // Handle city name formatting for from_city
@@ -358,29 +320,21 @@ export default function DateSelectorWidget({
           };
           
           extractedFromCity = formatCityName(extractedFromCity);
-          console.log("✅ Formatted from_city:", extractedFromCity);
         }
 
         // Set the extracted values
         if (extractedFromCity) {
           setFromCity(extractedFromCity);
-          console.log("📍 Set from_city to:", extractedFromCity);
         }
 
         if (extractedToCity) {
           setToCity(extractedToCity);
-          console.log("📍 Set to_city to:", extractedToCity);
         }
 
         // Mark as auto-filled if both cities were extracted
         if (extractedFromCity && extractedToCity) {
           setIsAutoFilled(true);
-          console.log("✅ DateSelector fields auto-filled and locked");
         } else {
-          console.log("⚠️ Could not auto-fill both cities:", {
-            fromCity: extractedFromCity,
-            toCity: extractedToCity,
-          });
         }
       } catch (error) {
         console.error("❌ Error fetching memory data:", error);
@@ -435,9 +389,6 @@ export default function DateSelectorWidget({
 
       // Debug logging for first few dates
       if (day <= 3) {
-        console.log(
-          `Date ${dateString}: flight=${priceInfo?.cheapestFlightPrice}, stay=${priceInfo?.cheapestStayPrice}`
-        );
       }
 
       dates.push({
@@ -580,15 +531,6 @@ export default function DateSelectorWidget({
         StayData[]
       ];
 
-      console.log("Fetched data:", {
-        flights: flights.length,
-        trains: trains.length,
-        stays: stays.length,
-        fromCity,
-        toCity,
-        flightClass,
-        trainClass,
-      });
 
       setFlightData(flights);
       setTrainData(trains);
@@ -614,7 +556,6 @@ export default function DateSelectorWidget({
         minRating
       );
 
-      console.log("Processed prices for month:", processedPrices.slice(0, 5));
 
       setPriceData(processedPrices);
       setLastFetchedMonth(monthKey);
@@ -638,7 +579,6 @@ export default function DateSelectorWidget({
   // Fetch travel dates data for the current month
   const fetchTravelDates = useCallback(async () => {
     if (!userId || !sessionId) {
-      console.log("📅 TravelDates: Missing userId or sessionId");
       return;
     }
 
@@ -646,11 +586,9 @@ export default function DateSelectorWidget({
     const month = currentMonth.getMonth() + 1; // getMonth() returns 0-11, we need 1-12
     const monthKey = `${year}-${month.toString().padStart(2, "0")}`;
 
-    console.log(`📅 TravelDates: fetchTravelDates called for ${monthKey}`);
 
     // Use ref-based lock to prevent concurrent calls
     if (isFetchingTravelDatesRef.current) {
-      console.log("📅 TravelDates: Already fetching, skipping duplicate call");
       return;
     }
 
@@ -660,7 +598,6 @@ export default function DateSelectorWidget({
     setTravelDatesError(null);
 
     try {
-      console.log("📅 TravelDates: Fetching travel dates for month:", monthKey);
 
       const response = await fetch("/api/travel-dates", {
         method: "POST",
@@ -681,27 +618,17 @@ export default function DateSelectorWidget({
       }
 
       const data: TravelDatesResponse = await response.json();
-      console.log("✅ TravelDates: Received travel dates data:", data);
 
       if (data.message) {
         // Extract and display the message if available
         if (data.message.message && data.message.message.trim() !== "") {
           setTravelDatesMessage(data.message.message);
           setShowTravelDatesMessage(true);
-          console.log(
-            "✅ TravelDates: Displaying message:",
-            data.message.message
-          );
         }
 
         // Extract travel dates
         if (data.message.travel_dates) {
           setTravelDatesData(data.message.travel_dates);
-          console.log(
-            "✅ TravelDates: Set travel dates:",
-            data.message.travel_dates.length,
-            "dates"
-          );
         } else {
           console.warn("⚠️ TravelDates: No travel_dates found in response");
           setTravelDatesData([]);
@@ -711,7 +638,6 @@ export default function DateSelectorWidget({
         setTravelDatesData([]);
       }
 
-      console.log(`✅ TravelDates: Successfully fetched data for ${monthKey}`);
     } catch (error) {
       console.error("❌ TravelDates: Error fetching travel dates:", error);
       setTravelDatesError(
@@ -729,12 +655,10 @@ export default function DateSelectorWidget({
   const sendChatMessage = useCallback(
     async (userMessage: string) => {
       if (!userId || !sessionId) {
-        console.log("💬 Chat: Missing userId or sessionId");
         return;
       }
 
       if (!userMessage.trim()) {
-        console.log("💬 Chat: Empty message");
         return;
       }
 
@@ -747,17 +671,11 @@ export default function DateSelectorWidget({
 
       try {
         // Translate message to English before sending to API
-        console.log("🌐 Translating date selector chat message to English...");
         const translatedMessage = await translateToEnglish(userMessage.trim());
 
         if (translatedMessage !== userMessage.trim()) {
-          console.log("🌐 Translation applied to date selector chat:", {
-            original: userMessage.trim(),
-            translated: translatedMessage,
-          });
         }
 
-        console.log("💬 Chat: Sending message:", translatedMessage);
 
         const response = await fetch("/api/travel-dates", {
           method: "POST",
@@ -786,17 +704,11 @@ export default function DateSelectorWidget({
           if (data.message.message && data.message.message.trim() !== "") {
             setTravelDatesMessage(data.message.message);
             setShowTravelDatesMessage(true);
-            console.log("✅ Chat: Displaying message:", data.message.message);
           }
 
           // Extract travel dates
           if (data.message.travel_dates) {
             setTravelDatesData(data.message.travel_dates);
-            console.log(
-              "✅ Chat: Set travel dates:",
-              data.message.travel_dates.length,
-              "dates"
-            );
           } else {
             console.warn("⚠️ Chat: No travel_dates found in response");
             setTravelDatesData([]);
@@ -842,7 +754,6 @@ export default function DateSelectorWidget({
     const sessionIdChanged = prevSessionIdRef.current !== undefined && prevSessionIdRef.current !== sessionId;
 
     if (userIdChanged || sessionIdChanged) {
-      console.log("🔄 User or session changed, resetting travel dates");
       setTravelDatesData([]);
       // Release the lock to allow fresh fetch
       isFetchingTravelDatesRef.current = false;
@@ -861,7 +772,6 @@ export default function DateSelectorWidget({
 
       // Only reset lock if the month actually changed
       if (lastFetchedMonthRef.current !== monthKey) {
-        console.log(`📅 Month changed from ${lastFetchedMonthRef.current} to ${monthKey}, resetting lock`);
         isFetchingTravelDatesRef.current = false;
         lastFetchedMonthRef.current = monthKey;
       }
@@ -912,9 +822,7 @@ export default function DateSelectorWidget({
     try {
       // Store date in Firestore and update memory API
       if (userId && sessionId) {
-        console.log("Storing selected date:", selectedDate);
         await storeSelectedDate(userId, sessionId, selectedDate);
-        console.log("Date stored successfully");
       } else {
         console.warn("Missing userId or sessionId for date storage");
       }
@@ -945,11 +853,6 @@ export default function DateSelectorWidget({
       const tripDuration = selectedTrip?.no_of_days || 6; // Default to 6 if not available
       endDate.setDate(startDate.getDate() + tripDuration - 1); // -1 because start date is day 1
 
-      console.log(`📅 Travel Date ${index + 1}:`, {
-        startDate: travelDate.start_date,
-        tripDuration,
-        calculatedEndDate: endDate.toISOString().split("T")[0],
-      });
 
       // Format dates for display
       const startDay = startDate.getDate();
@@ -1007,11 +910,6 @@ export default function DateSelectorWidget({
     if (card && card.startDate && card.endDate) {
       setHoveredCardId(card.id);
       setHoveredDateRange({
-        startDate: card.startDate,
-        endDate: card.endDate,
-      });
-      console.log("🎯 Card hover:", {
-        cardId: card.id,
         startDate: card.startDate,
         endDate: card.endDate,
       });

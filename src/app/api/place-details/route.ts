@@ -73,7 +73,6 @@ export async function GET(request: NextRequest) {
       ).filter(Boolean) || []
     };
 
-    console.log('Place details fetched:', { name: result.name, type: activityType });
 
     return NextResponse.json(activityData);
   } catch (error) {

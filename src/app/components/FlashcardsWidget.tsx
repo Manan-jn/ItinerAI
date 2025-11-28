@@ -74,7 +74,6 @@ const FlashcardsWidget = forwardRef<FlashcardsWidgetRef, FlashcardsWidgetProps>(
     // Update trips when prop changes (from chat API response)
     useEffect(() => {
       if (trips && trips.length > 0 && JSON.stringify(trips) !== JSON.stringify(tripsState)) {
-        console.log("🔄 Updating flashcards with new trips data:", trips);
 
         // Trigger refresh animation
         setIsRefreshing(true);
@@ -94,7 +93,6 @@ const FlashcardsWidget = forwardRef<FlashcardsWidgetRef, FlashcardsWidgetProps>(
           setCenterExtendedIdx(numClones);
           setSelectedCard(null);
 
-          console.log("✅ Flashcards refreshed successfully");
         }, 300);
       }
     }, [trips]);
@@ -108,14 +106,9 @@ const FlashcardsWidget = forwardRef<FlashcardsWidgetRef, FlashcardsWidgetProps>(
             idx === activeSlide ? updatedTrip : trip
           )
         );
-        console.log(
-          "Trip updated in FlashcardsWidget:",
-          updatedTrip.trip_title
-        );
 
         // Also notify parent component about the update
         if (onTripSelect && activeSlide !== null) {
-          console.log("Notifying parent of trip update via onTripSelect");
           onTripSelect(updatedTrip);
         }
       },
@@ -168,7 +161,6 @@ const FlashcardsWidget = forwardRef<FlashcardsWidgetRef, FlashcardsWidgetProps>(
 
     // Debug: Log the trips data to ensure images are mapped correctly
     React.useEffect(() => {
-      console.log("FlashcardsWidget trips data with images from JSON:");
       tripsState.forEach((trip, index) => {
         // Check both new trip_route structure and legacy day_wise_plan structure
         const rawPhotoFromRoute = trip.trip_route?.[0]?.photos?.[0];
@@ -180,24 +172,6 @@ const FlashcardsWidget = forwardRef<FlashcardsWidgetRef, FlashcardsWidgetProps>(
           rawPhoto &&
           rawPhoto.includes("maps.googleapis.com/maps/api/place/photo");
 
-        console.log(`Trip ${index + 1}: ${trip.trip_title}`);
-        console.log(`  - JSON photo URL: ${rawPhoto || "None"}`);
-        console.log(`  - Is Google Places photo: ${isGooglePlaces}`);
-        console.log(`  - Using image: ${trip.image}`);
-        console.log(
-          `  - Source: ${
-            isFromJson
-              ? isGooglePlaces
-                ? "Google Places API"
-                : "Direct URL"
-              : "Theme fallback"
-          }`
-        );
-        console.log(
-          `  - Themes: ${
-            trip.theme?.join(", ") || trip.themes?.join(", ") || "None"
-          }`
-        );
       });
     }, [tripsState]);
 
@@ -205,19 +179,14 @@ const FlashcardsWidget = forwardRef<FlashcardsWidgetRef, FlashcardsWidgetProps>(
     React.useEffect(() => {
       const preloadAllImages = async () => {
         try {
-          console.log("Starting image preloading...");
           setIsLoadingImages(true);
 
           // Extract all image URLs from final_response.json
           const imageUrls = extractImageUrlsFromPlacesData(finalResponseData);
-          console.log(`Found ${imageUrls.length} images to preload`);
 
           // Preload images in background without UI overlay
           const result = await preloadImages(imageUrls);
 
-          console.log(
-            `Image preloading complete: ${result.successful} successful, ${result.failed} failed`
-          );
           if (result.failed > 0) {
             console.warn("Failed images:", result.errors);
           }
@@ -235,7 +204,6 @@ const FlashcardsWidget = forwardRef<FlashcardsWidgetRef, FlashcardsWidgetProps>(
 
           setCachedImageUrls(imageMap);
           setIsLoadingImages(false);
-          console.log("All images loaded and cached");
         } catch (error) {
           console.error("Error preloading images:", error);
           setIsLoadingImages(false);
@@ -277,13 +245,6 @@ const FlashcardsWidget = forwardRef<FlashcardsWidgetRef, FlashcardsWidgetProps>(
       if (!scrollContainerRef.current || scrollLockRef.current) return;
 
       // Debug logging
-      console.log("scrollByCard called:", {
-        direction: dir,
-        currentIdx: centerExtendedIdx,
-        targetIdx: centerExtendedIdx + dir,
-        numClones,
-        totalCards: extendedTrips.length,
-      });
 
       // Lock scrolling to prevent multiple rapid calls
       scrollLockRef.current = true;
@@ -439,13 +400,6 @@ const FlashcardsWidget = forwardRef<FlashcardsWidgetRef, FlashcardsWidgetProps>(
         const direction = primaryDelta > 0 ? 1 : -1;
 
         // Debug logging
-        console.log("Wheel event:", {
-          deltaX,
-          deltaY,
-          primaryDelta,
-          direction,
-          currentIdx: centerExtendedIdx,
-        });
 
         scrollByCard(direction);
 
@@ -519,12 +473,6 @@ const FlashcardsWidget = forwardRef<FlashcardsWidgetRef, FlashcardsWidgetProps>(
           const direction = deltaX > 0 ? -1 : 1; // Swipe right = go left, swipe left = go right
 
           // Debug logging
-          console.log("Touch swipe:", {
-            deltaX,
-            deltaY,
-            direction,
-            currentIdx: centerExtendedIdx,
-          });
 
           scrollByCard(direction);
         }
