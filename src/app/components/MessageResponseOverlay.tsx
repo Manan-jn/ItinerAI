@@ -9,6 +9,9 @@ export interface MessageResponseOverlayProps {
   onClose?: () => void;
   autoHideDuration?: number; // milliseconds
   source?: string; // Optional: track which component triggered the overlay
+  showConfirmation?: boolean; // Show Yes/No buttons
+  onConfirm?: () => void; // Called when user clicks Yes
+  onReject?: () => void; // Called when user clicks No
 }
 
 export default function MessageResponseOverlay({
@@ -17,6 +20,9 @@ export default function MessageResponseOverlay({
   onClose,
   autoHideDuration = 0, // 0 means no auto-hide
   source = "System",
+  showConfirmation = false,
+  onConfirm,
+  onReject,
 }: MessageResponseOverlayProps) {
   const [isAnimating, setIsAnimating] = useState(false);
   const [displayMessage, setDisplayMessage] = useState<string | null>(null);
@@ -95,6 +101,24 @@ export default function MessageResponseOverlay({
     handleFlyToBell();
   }, [handleFlyToBell]);
 
+  const handleConfirm = useCallback(() => {
+    // Call the confirm callback if provided
+    if (onConfirm) {
+      onConfirm();
+    }
+    // Then close the overlay
+    handleClose();
+  }, [onConfirm, handleClose]);
+
+  const handleReject = useCallback(() => {
+    // Call the reject callback if provided
+    if (onReject) {
+      onReject();
+    }
+    // Then close the overlay
+    handleClose();
+  }, [onReject, handleClose]);
+
   useEffect(() => {
     if (isVisible && message) {
       // Check if this is a new message (different from current displayMessage)
@@ -120,7 +144,8 @@ export default function MessageResponseOverlay({
       }
 
       // Auto-hide if duration is set - only set timer ONCE per message
-      if (autoHideDuration > 0 && !hasSetTimerRef.current) {
+      // Don't auto-hide if confirmation buttons are shown
+      if (autoHideDuration > 0 && !hasSetTimerRef.current && !showConfirmation) {
         // Clear any existing timer first
         if (autoHideTimerRef.current) {
           clearTimeout(autoHideTimerRef.current);
@@ -152,7 +177,7 @@ export default function MessageResponseOverlay({
         ref={overlayRef}
         className={`message-response-overlay ${isAnimating ? "visible" : ""} ${
           isFlyingToBell ? "flying-to-bell" : ""
-        }`}
+        } ${showConfirmation ? "with-confirmation" : ""}`}
         style={
           isFlyingToBell
             ? {
@@ -164,8 +189,52 @@ export default function MessageResponseOverlay({
       >
         <div className="message-content">
           <p className="message-text">{displayMessage}</p>
+
+          {/* Confirmation Buttons - Only shown when showConfirmation is true */}
+          {showConfirmation && (
+            <div className="confirmation-buttons">
+              <button
+                onClick={handleConfirm}
+                className="confirm-button yes-button"
+                aria-label="Confirm changes"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>Yes</span>
+              </button>
+              <button
+                onClick={handleReject}
+                className="confirm-button no-button"
+                aria-label="Reject changes"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                >
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+                <span>No</span>
+              </button>
+            </div>
+          )}
         </div>
-        {onClose && (
+        {onClose && !showConfirmation && (
           <button
             onClick={handleClose}
             className="close-button"
@@ -196,23 +265,23 @@ export default function MessageResponseOverlay({
           min-width: 260px;
           z-index: 10030;
 
-          /* Enhanced Glassmorphic Background - More transparent, more blur */
+          /* Enhanced Glassmorphic Background - Blue gradient theme */
           background: linear-gradient(
             135deg,
-            rgba(255, 255, 255, 0.75) 0%,
-            rgba(255, 255, 255, 0.6) 100%
+            rgba(59, 130, 246, 0.95) 0%,
+            rgba(37, 99, 235, 0.9) 100%
           );
           backdrop-filter: blur(32px) saturate(200%);
           -webkit-backdrop-filter: blur(32px) saturate(200%);
 
-          /* Border & Shadow - More compact, subtle */
+          /* Border & Shadow - Subtle blue theme */
           border-radius: 16px;
-          border: 1px solid rgba(255, 255, 255, 0.6);
+          border: 1px solid rgba(147, 197, 253, 0.3);
           box-shadow:
-            0 6px 24px rgba(0, 0, 0, 0.1),
-            0 2px 6px rgba(0, 0, 0, 0.06),
-            inset 0 1px 0 rgba(255, 255, 255, 0.9),
-            inset 0 -1px 0 rgba(0, 0, 0, 0.03);
+            0 6px 24px rgba(59, 130, 246, 0.4),
+            0 2px 6px rgba(37, 99, 235, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2),
+            inset 0 -1px 0 rgba(0, 0, 0, 0.1);
 
           /* Layout - More compact padding */
           padding: 14px 18px;
@@ -225,6 +294,10 @@ export default function MessageResponseOverlay({
           transform: translateY(-20px) scale(0.95);
           transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
           pointer-events: none;
+        }
+
+        .message-response-overlay.with-confirmation {
+          max-width: 420px;
         }
 
         .message-response-overlay.visible {
@@ -249,14 +322,75 @@ export default function MessageResponseOverlay({
           margin: 0;
           font-size: 14px;
           line-height: 1.4;
-          color: #1d1d1f;
+          color: #ffffff;
           font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
           font-weight: 500;
           letter-spacing: -0.01em;
           word-wrap: break-word;
 
           /* Subtle text shadow for depth */
-          text-shadow: 0 0.5px 1px rgba(255, 255, 255, 0.8);
+          text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .confirmation-buttons {
+          display: flex;
+          gap: 8px;
+          margin-top: 12px;
+        }
+
+        .confirm-button {
+          flex: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+          padding: 8px 16px;
+          border-radius: 10px;
+          font-size: 13px;
+          font-weight: 600;
+          font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+          cursor: pointer;
+          transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+          border: none;
+          outline: none;
+        }
+
+        .yes-button {
+          background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+          color: white;
+          box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);
+        }
+
+        .yes-button:hover {
+          background: linear-gradient(135deg, #059669 0%, #047857 100%);
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+        }
+
+        .yes-button:active {
+          transform: translateY(0);
+          box-shadow: 0 2px 6px rgba(16, 185, 129, 0.2);
+        }
+
+        .no-button {
+          background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+          color: white;
+          box-shadow: 0 2px 8px rgba(239, 68, 68, 0.25);
+        }
+
+        .no-button:hover {
+          background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35);
+        }
+
+        .no-button:active {
+          transform: translateY(0);
+          box-shadow: 0 2px 6px rgba(239, 68, 68, 0.2);
+        }
+
+        .confirm-button svg {
+          flex-shrink: 0;
         }
 
         .flying-to-bell .message-text {
@@ -268,20 +402,20 @@ export default function MessageResponseOverlay({
           width: 24px;
           height: 24px;
           border-radius: 50%;
-          background: rgba(0, 0, 0, 0.04);
+          background: rgba(255, 255, 255, 0.15);
           border: none;
           display: flex;
           align-items: center;
           justify-content: center;
-          color: #1d1d1f;
+          color: #ffffff;
           cursor: pointer;
           transition: all 0.2s ease;
           padding: 0;
         }
 
         .close-button:hover {
-          background: rgba(0, 0, 0, 0.08);
-          color: #1d1d1f;
+          background: rgba(255, 255, 255, 0.25);
+          color: #ffffff;
           transform: scale(1.1);
         }
 

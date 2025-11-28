@@ -336,6 +336,13 @@ export default function InTripWidget({
   // Message overlay state
   const [overlayMessage, setOverlayMessage] = useState<string | null>(null);
   const [showOverlay, setShowOverlay] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+
+  // Pending itinerary update state
+  const [pendingItineraryUpdate, setPendingItineraryUpdate] = useState<{
+    itineraryArray: any[];
+    dayNumbers: number[];
+  } | null>(null);
 
   // Chat state
   const [chatInput, setChatInput] = useState("");
@@ -375,6 +382,48 @@ export default function InTripWidget({
         setIsClosing(false);
       }, 300); // Match animation duration
     }
+  };
+
+  // Handle confirmation of itinerary update
+  const handleConfirmUpdate = () => {
+    if (pendingItineraryUpdate) {
+      const { itineraryArray, dayNumbers } = pendingItineraryUpdate;
+
+      // Apply the pending update
+      const updatedItineraries = [...processedItineraries];
+      itineraryArray.forEach((updatedDayData: any) => {
+        const dayNumber = updatedDayData.day_number || updatedDayData.day;
+        if (
+          dayNumber &&
+          dayNumber > 0 &&
+          dayNumber <= updatedItineraries.length
+        ) {
+          updatedItineraries[dayNumber - 1] = updatedDayData;
+        }
+      });
+
+      setProcessedItineraries([...updatedItineraries]);
+
+      // Mark all updated days
+      setUpdatedDays((prev) => {
+        const newSet = new Set(prev);
+        dayNumbers.forEach((dayNum) => newSet.add(dayNum - 1));
+        return newSet;
+      });
+
+      // Clear pending update
+      setPendingItineraryUpdate(null);
+    }
+
+    // Hide confirmation UI
+    setShowConfirmation(false);
+  };
+
+  // Handle rejection of itinerary update
+  const handleRejectUpdate = () => {
+    // Just clear the pending update without applying it
+    setPendingItineraryUpdate(null);
+    setShowConfirmation(false);
   };
 
   if (!isVisible && !isClosing) return null;
@@ -472,43 +521,42 @@ export default function InTripWidget({
           ? messageData.itinerary
           : [messageData.itinerary];
 
-        const updatedItineraries = [...processedItineraries];
         const updatedDayNumbers: number[] = [];
 
-        // Update all days that were modified
+        // Collect all days that will be modified
         itineraryArray.forEach((updatedDayData: any) => {
           const dayNumber = updatedDayData.day_number || updatedDayData.day;
           if (
             dayNumber &&
             dayNumber > 0 &&
-            dayNumber <= updatedItineraries.length
+            dayNumber <= processedItineraries.length
           ) {
-            updatedItineraries[dayNumber - 1] = updatedDayData;
             updatedDayNumbers.push(dayNumber);
           }
         });
 
         if (updatedDayNumbers.length > 0) {
-          setProcessedItineraries([...updatedItineraries]);
-
-          // Mark all updated days
-          setUpdatedDays((prev) => {
-            const newSet = new Set(prev);
-            updatedDayNumbers.forEach((dayNum) => newSet.add(dayNum - 1));
-            return newSet;
+          // Store the pending update instead of applying immediately
+          setPendingItineraryUpdate({
+            itineraryArray,
+            dayNumbers: updatedDayNumbers,
           });
 
-          // Show message if not already shown
+          // Show confirmation overlay
+          setShowConfirmation(true);
+
+          // Show message if not already shown - otherwise use a default message
           if (!responseMessage) {
             setOverlayMessage(
-              `Itinerary updated for ${updatedDayNumbers.length} day(s): ${updatedDayNumbers.join(
+              `Update itinerary for ${updatedDayNumbers.length} day(s): ${updatedDayNumbers.join(
                 ", "
-              )}`
+              )}?`
             );
-            setShowOverlay(true);
           }
         }
       } else if (responseType === "text" || responseType === "no_update") {
+        // For non-itinerary responses, don't show confirmation
+        setShowConfirmation(false);
         // Message already shown above, but if not present, show default
         if (!responseMessage) {
           const message = messageData.text || "Events processed successfully";
@@ -586,33 +634,47 @@ export default function InTripWidget({
 
       // Handle response based on response_type
       if (responseType === "itinerary" && messageData.itinerary) {
-        // The itinerary is an array, extract the first item (updated day)
-        const updatedDayData = Array.isArray(messageData.itinerary)
-          ? messageData.itinerary[0]
-          : messageData.itinerary;
+        // The itinerary can be an array of updated days
+        const itineraryArray = Array.isArray(messageData.itinerary)
+          ? messageData.itinerary
+          : [messageData.itinerary];
 
-        const dayNumber = updatedDayData.day_number || updatedDayData.day;
-        if (
-          dayNumber &&
-          dayNumber > 0 &&
-          dayNumber <= processedItineraries.length
-        ) {
-          const updatedItineraries = [...processedItineraries];
-          updatedItineraries[dayNumber - 1] = updatedDayData;
-          setProcessedItineraries([...updatedItineraries]);
+        const updatedDayNumbers: number[] = [];
 
-          // Mark this day as updated (for visual effect)
-          setUpdatedDays((prev) => new Set(prev).add(dayNumber - 1));
+        // Collect all days that will be modified
+        itineraryArray.forEach((updatedDayData: any) => {
+          const dayNumber = updatedDayData.day_number || updatedDayData.day;
+          if (
+            dayNumber &&
+            dayNumber > 0 &&
+            dayNumber <= processedItineraries.length
+          ) {
+            updatedDayNumbers.push(dayNumber);
+          }
+        });
 
-          // Show message if not already shown
+        if (updatedDayNumbers.length > 0) {
+          // Store the pending update instead of applying immediately
+          setPendingItineraryUpdate({
+            itineraryArray,
+            dayNumbers: updatedDayNumbers,
+          });
+
+          // Show confirmation overlay
+          setShowConfirmation(true);
+
+          // Show message if not already shown - otherwise use a default message
           if (!responseMessage) {
             setOverlayMessage(
-              `Itinerary updated for Day ${dayNumber} based on your message`
+              `Update itinerary for ${updatedDayNumbers.length} day(s): ${updatedDayNumbers.join(
+                ", "
+              )}?`
             );
-            setShowOverlay(true);
           }
         }
       } else if (responseType === "text" || responseType === "no_update") {
+        // For non-itinerary responses, don't show confirmation
+        setShowConfirmation(false);
         // Message already shown above, but if not present, show default
         if (!responseMessage) {
           const message = messageData.text || "Message processed successfully";
@@ -1195,8 +1257,11 @@ export default function InTripWidget({
         message={overlayMessage}
         isVisible={showOverlay}
         onClose={() => setShowOverlay(false)}
-        autoHideDuration={4000}
+        autoHideDuration={showConfirmation ? 0 : 4000}
         source="In-Trip Assistant"
+        showConfirmation={showConfirmation}
+        onConfirm={handleConfirmUpdate}
+        onReject={handleRejectUpdate}
       />
 
       {/* Chat Loading Indicator - Top Right */}
