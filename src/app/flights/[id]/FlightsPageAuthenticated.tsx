@@ -771,7 +771,7 @@ export default function FlightsPageAuthenticated() {
             }, 100);
           }
         }, 700);
-      }, 4000);
+      }, 1500);
     } catch (error) {
       console.error("❌ Error calling itinerary API:", error);
       setIsLoadingItinerary(false);
@@ -1932,7 +1932,7 @@ export default function FlightsPageAuthenticated() {
 
         // Show pre-trip brief instead of redirecting to dashboard
         handleShowPreTrip(true);
-      }, 4000);
+      }, 1500);
     } catch (error) {
       console.error("❌ Error in booking continuation:", error);
       setShowCongratsLoader(false);
@@ -2112,7 +2112,7 @@ export default function FlightsPageAuthenticated() {
             setShowStays(false);
             setShowDateSelector(false);
           }, 700); // Dissolve duration
-        }, 4000);
+        }, 1500);
       }
     } else {
       // No conveyance required, directly call itinerary API
@@ -2291,7 +2291,7 @@ export default function FlightsPageAuthenticated() {
               setShowStays(false);
               setShowDateSelector(false);
             }, 700);
-          }, 4000);
+          }, 1500);
         }
       } else {
         // CASE 2: No conveyance needed - call itinerary API directly
@@ -2720,7 +2720,7 @@ export default function FlightsPageAuthenticated() {
                 setShowItinerary(false);
                 setShowDateSelector(false);
               }, 700); // Dissolve duration
-            }, 4000);
+            }, 1500);
 
             return; // Exit early since we're showing conveyance flow
           } else {
@@ -2945,7 +2945,7 @@ export default function FlightsPageAuthenticated() {
             setIsParsingTrips(false);
             handleShowStays(true);
           }, 700);
-        }, 4000);
+        }, 1500);
 
         return; // Exit early, show stay widget
       }
@@ -3051,7 +3051,7 @@ export default function FlightsPageAuthenticated() {
             setIsParsingTrips(false);
             handleShowStays(true);
           }, 700);
-        }, 4000);
+        }, 1500);
 
         return; // Exit early, show stay widget
       }
@@ -3689,7 +3689,7 @@ export default function FlightsPageAuthenticated() {
 
       if (detectedTripResponse) {
         const loaderStartTime = Date.now();
-        const minLoaderDuration = 4000; // Minimum 4 seconds display time
+        const minLoaderDuration = 1500; // Minimum 4 seconds display time
 
 
         // If trip suggestions were found, process them
@@ -3764,7 +3764,7 @@ export default function FlightsPageAuthenticated() {
         });
 
         const loaderStartTime = Date.now();
-        const minLoaderDuration = 4000; // Minimum 4 seconds display time
+        const minLoaderDuration = 1500; // Minimum 4 seconds display time
 
 
         // Wait for minimum loader duration
@@ -3953,7 +3953,7 @@ export default function FlightsPageAuthenticated() {
                         handleShowFlashcards(true);
                         setIsParsingTrips(false);
                       }, 400);
-                    }, 4000);
+                    }, 1500);
                   }
                 }}
                 onFlightsToggle={() => {
@@ -4113,7 +4113,7 @@ export default function FlightsPageAuthenticated() {
                       <JourneyLoader
                         isVisible={showJourneyLoader}
                         currentStep={currentJourneyStep}
-                        duration={4000}
+                        duration={1500}
                         fromLocation={conveyanceFromCity}
                         toLocation={conveyanceToCity}
                         cityLocation={stayCity}

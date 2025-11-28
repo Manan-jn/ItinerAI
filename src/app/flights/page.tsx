@@ -507,14 +507,14 @@ export default function FlightsPage() {
             }
 
           }, 400); // Wait for dissolve animation
-        }, 4000); // 4 second loader duration
+        }, 1500); // 4 second loader duration
       } else {
         setTimeout(() => {
           setShowTripLoader(false);
           setTimeout(() => {
             setIsParsingTrips(false);
           }, 400);
-        }, 4000);
+        }, 1500);
       }
     } catch (error) {
       console.error("Error calling API:", error);
@@ -1369,7 +1369,7 @@ export default function FlightsPage() {
                                   setShowFlashcards(true);
                                   setIsParsingTrips(false);
                                 }, 400);
-                              }, 4000);
+                              }, 1500);
                             }
                           }}
                           className={`relative inline-flex h-5 w-9 items-center rounded-full transition-all duration-300 ${
@@ -1549,7 +1549,7 @@ export default function FlightsPage() {
                       {/* Trip Loader */}
                       <TripLoader
                         showTripLoader={showTripLoader}
-                        duration={4000}
+                        duration={1500}
                       />
                       <div className="max-w-4xl mx-auto h-full">
                         {showFlights ? (
