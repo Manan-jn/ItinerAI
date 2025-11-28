@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { getLogger, logBackendRequest, logBackendResponse, logAPIError } from '../../utils/logger';
 
 const BACKEND_API_URL = process.env.BACKEND_API_URL || "http://127.0.0.1:8000";
 
@@ -14,12 +15,42 @@ interface StayRequest {
 }
 
 export async function POST(request: NextRequest) {
+  const startTime = Date.now();
+  let logger: any = null;
+  let userId = 'anonymous';
+  let sessionId = 'unknown';
+
   try {
     const body: StayRequest = await request.json();
+
+    userId = body.user_id;
+    sessionId = body.session_id;
+
+    // Get logger for this user/session
+    logger = getLogger(userId, sessionId);
+
+    // Log incoming request
+    logger.info('Stay API Request', {
+      type: 'api_request',
+      endpoint: '/api/stay',
+      method: 'POST',
+      params: {
+        user_id: body.user_id,
+        session_id: body.session_id,
+        city: body.city,
+        country: body.country,
+        check_in_date: body.check_in_date,
+        check_out_date: body.check_out_date
+      }
+    });
 
     // Validate required fields
     if (!body.user_id || !body.session_id || !body.city || !body.country ||
         !body.check_in_date || !body.check_out_date) {
+      logger.warn('Validation failed: Missing required fields', {
+        received: Object.keys(body),
+        required: ['user_id', 'session_id', 'city', 'country', 'check_in_date', 'check_out_date']
+      });
       return NextResponse.json(
         {
           error: 'Missing required fields',
@@ -30,42 +61,74 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    console.log('Sending stay request to backend:', JSON.stringify(body, null, 2));
+    const backendUrl = `${BACKEND_API_URL}/agents/stay`;
+    const backendRequestBody = body;
 
-    // Forward request to backend /agents/stay endpoint (matching FlightsWidget pattern)
-    const response = await fetch(`${BACKEND_API_URL}/agents/stay`, {
+    // Log backend request
+    logBackendRequest(logger, backendUrl, backendRequestBody);
+
+    // Proxy the request to the FastAPI backend
+    const backendStartTime = Date.now();
+    const response = await fetch(backendUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(body),
+      body: JSON.stringify(backendRequestBody),
     });
 
-    console.log('Backend stay response status:', response.status);
-    
+    const backendDuration = Date.now() - backendStartTime;
+
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('Backend stay error response:', errorText);
+
+      // Log backend error response
+      logBackendResponse(logger, backendUrl, response.status, { error: errorText }, backendDuration);
+
       return NextResponse.json(
-        { 
-          error: 'Backend API error', 
+        {
+          error: 'Backend API error',
           status: response.status,
-          details: errorText 
+          details: errorText
         },
         { status: response.status }
       );
     }
 
     const responseText = await response.text();
-    console.log('Backend stay response text:', responseText);
-    
+
     try {
       const data = JSON.parse(responseText);
+
+      // Log backend success response
+      logBackendResponse(logger, backendUrl, response.status, data, backendDuration);
+
+      const totalDuration = Date.now() - startTime;
+      logger.info('Stay API Response', {
+        type: 'api_response',
+        endpoint: '/api/stay',
+        statusCode: 200,
+        duration: `${totalDuration}ms`,
+        responsePreview: {
+          hasStays: !!data.message?.stays,
+          stayDetailsCount: data.message?.stays?.stay_details?.length || 0,
+          city: data.message?.stays?.city,
+          responseType: data.message?.response_type
+        }
+      });
+
       return NextResponse.json(data);
     } catch (parseError) {
-      console.error('Failed to parse backend response as JSON:', parseError);
+      // Log parse error
+      logAPIError(logger, '/api/stay', 'POST', parseError, {
+        userId,
+        sessionId,
+        responseText: responseText.substring(0, 500),
+        duration: `${Date.now() - startTime}ms`
+      });
+
       return NextResponse.json(
-        { 
+        {
           error: 'Invalid JSON response from backend',
           responseText: responseText.substring(0, 500)
         },
@@ -73,10 +136,29 @@ export async function POST(request: NextRequest) {
       );
     }
   } catch (error) {
-    console.error('Stay API error:', error);
+    // Log error with full context
+    if (logger) {
+      logAPIError(logger, '/api/stay', 'POST', error, {
+        userId,
+        sessionId,
+        duration: `${Date.now() - startTime}ms`
+      });
+    }
+
+    // Provide different error messages based on error type
+    if (error instanceof TypeError && error.message.includes("fetch")) {
+      return NextResponse.json(
+        {
+          error: "Unable to connect to backend service",
+          details: "The backend API is not accessible. Please check if the service is running."
+        },
+        { status: 503 }
+      );
+    }
+
     return NextResponse.json(
-      { 
-        error: 'Failed to fetch stay data from backend', 
+      {
+        error: 'Failed to fetch stay data from backend',
         details: error instanceof Error ? error.message : 'Unknown error'
       },
       { status: 500 }
