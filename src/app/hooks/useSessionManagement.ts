@@ -7,7 +7,14 @@ import { getSessionId, getCustomUserId } from "../utils/sessionManager";
 /**
  * Custom hook for managing session state and operations
  * Handles session initialization, regeneration, and state management
- * 
+ *
+ * IMPORTANT BEHAVIOR (Updated):
+ * - Creates a NEW session ID on every chat component initialization
+ * - User ID is preserved across sessions (from custom ID or Firebase UID)
+ * - Phone number is fetched from Firestore and reused
+ * - Old sessions in sessionStorage are cleared before creating new ones
+ * - Each page load/refresh = new session for fresh conversation context
+ *
  * @param currentUser - Firebase auth user object
  * @returns Session state and handler functions
  */
@@ -28,25 +35,42 @@ export function useSessionManagement(currentUser: User | null) {
     }
   }, [sessionId]);
 
-  // CRITICAL FIX: Sync session state with sessionStorage changes
-  // This handles the case where onboarding creates a new session while the hook
-  // still holds the old session ID in its state
+  // MODIFIED: Limited sync - only handle storage clears and onboarding events
+  // We no longer restore old sessions from storage automatically
   useEffect(() => {
     if (typeof window === 'undefined' || !currentUser) return;
 
     const syncWithStorage = () => {
       const storageSessionId = sessionStorage.getItem('itinerai_session_id');
 
-      // Only update if storage has a different value than our current state
+      // Only handle storage clearing (not restoration)
+      if (!storageSessionId && sessionId) {
+        // Storage was cleared but we still have a session ID in state
+        console.log('🔄 Session storage cleared, clearing hook state');
+        setSessionId('');
+        // Reset init flag to allow re-initialization
+        sessionInitRef.current = false;
+      }
+    };
+
+    // Check immediately
+    syncWithStorage();
+
+    // Listen for custom event from onboarding completion
+    // This is the ONLY case where we sync from storage
+    const handleSessionUpdate = () => {
+      console.log('🔔 Received session update event from onboarding, syncing...');
+      const storageSessionId = sessionStorage.getItem('itinerai_session_id');
+
       if (storageSessionId && storageSessionId !== sessionId) {
-        console.log('🔄 Session ID changed in storage, syncing hook state:', {
+        console.log('🔄 Syncing session after onboarding:', {
           oldSessionId: sessionId,
           newSessionId: storageSessionId
         });
         setSessionId(storageSessionId);
         setPreviousSessionId(storageSessionId);
 
-        // Ensure userId is correct (prefer custom user ID, then Firebase UID)
+        // Ensure userId is correct
         const customUserId = getCustomUserId();
         const correctUserId = customUserId && customUserId.trim()
           ? customUserId.trim()
@@ -61,32 +85,16 @@ export function useSessionManagement(currentUser: User | null) {
           setUserId(correctUserId);
         }
 
-        // Mark session as initialized since we just synced from storage
+        // Mark session as initialized
         if (!sessionInitRef.current) {
-          console.log('🔄 Marking session as initialized after sync');
+          console.log('🔄 Marking session as initialized after onboarding');
           sessionInitRef.current = true;
         }
-      } else if (!storageSessionId && sessionId) {
-        // Storage was cleared but we still have a session ID in state
-        console.log('🔄 Session storage cleared, clearing hook state');
-        setSessionId('');
-        // Reset init flag to allow re-initialization
-        sessionInitRef.current = false;
       }
-    };
-
-    // Check immediately
-    syncWithStorage();
-
-    // Listen for custom event from onboarding completion
-    const handleSessionUpdate = () => {
-      console.log('🔔 Received session update event, syncing...');
-      syncWithStorage();
     };
     window.addEventListener('sessionUpdated', handleSessionUpdate);
 
-    // Set up an interval to check for changes (storage events don't fire in same tab)
-    // Using a longer interval (2s) since we also have the event listener
+    // Set up an interval to check for storage clears only
     const intervalId = setInterval(syncWithStorage, 2000);
 
     return () => {
@@ -119,29 +127,20 @@ export function useSessionManagement(currentUser: User | null) {
           console.log('🔧 Using custom user ID for session:', customUserId);
         }
 
-        // CRITICAL: Double-check sessionStorage wasn't cleared between effect run and now
-        // This prevents race condition where onboarding clears storage after we read it
-        console.log('🔍 Checking sessionStorage for existing session...');
-        const existingSessionId = typeof window !== 'undefined'
-          ? sessionStorage.getItem('itinerai_session_id')
-          : null;
-        console.log('🔍 SessionStorage check result:', existingSessionId || 'NULL/EMPTY');
-
-        // Only use existing session if it's valid and not empty
-        // Empty string means it was cleared (onboarding in progress)
-        if (existingSessionId && existingSessionId.trim()) {
-          console.log('✅ Using existing session from storage:', existingSessionId);
-          setSessionId(existingSessionId);
-          setUserId(authenticatedUserId);
-          setPreviousSessionId(existingSessionId);
-          setIsInitializingSession(false);
-          return;
-        } else if (existingSessionId === '') {
-          console.log('⚠️ SessionStorage was cleared (likely onboarding in progress), will create new session');
+        // ═══════════════════════════════════════════════════════════════════
+        // CRITICAL CHANGE: Always create a NEW session on chat initialization
+        // ═══════════════════════════════════════════════════════════════════
+        // WHY: Each chat session should start fresh with a new session ID
+        // WHAT: Clear any existing session ID from sessionStorage
+        // RESULT: /api/session/create will be called to get a new session ID
+        // USER ID: Preserved (from localStorage custom ID or Firebase UID)
+        // PHONE: Preserved (fetched from Firestore)
+        console.log('🧹 Clearing old session ID to force new session creation...');
+        if (typeof window !== 'undefined') {
+          sessionStorage.removeItem('itinerai_session_id');
         }
 
-        console.log('⚠️ No session found in sessionStorage, will create new one');
-
+        console.log('🆕 Creating NEW session for chat initialization');
 
         setIsInitializingSession(true);
 

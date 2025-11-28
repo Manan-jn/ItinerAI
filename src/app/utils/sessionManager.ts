@@ -1,11 +1,16 @@
 /**
  * Session Management Utility
  * Handles session ID generation and persistence using sessionStorage
+ *
+ * UPDATED BEHAVIOR:
+ * - Session IDs are now created fresh on each chat initialization
+ * - User IDs are preserved across sessions (localStorage for custom, sessionStorage for generated)
+ * - Use clearSessionIdOnly() to clear session while preserving user context
  */
 
 const SESSION_ID_KEY = 'itinerai_session_id';
 const USER_ID_KEY = 'itinerai_user_id';
-const CUSTOM_USER_ID_KEY = 'itinerai_custom_user_id'; // NEW: Custom user ID key
+const CUSTOM_USER_ID_KEY = 'itinerai_custom_user_id'; // Custom user ID key (localStorage)
 
 /**
  * Generates a random session ID
