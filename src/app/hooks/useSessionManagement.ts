@@ -28,6 +28,73 @@ export function useSessionManagement(currentUser: User | null) {
     }
   }, [sessionId]);
 
+  // CRITICAL FIX: Sync session state with sessionStorage changes
+  // This handles the case where onboarding creates a new session while the hook
+  // still holds the old session ID in its state
+  useEffect(() => {
+    if (typeof window === 'undefined' || !currentUser) return;
+
+    const syncWithStorage = () => {
+      const storageSessionId = sessionStorage.getItem('itinerai_session_id');
+
+      // Only update if storage has a different value than our current state
+      if (storageSessionId && storageSessionId !== sessionId) {
+        console.log('🔄 Session ID changed in storage, syncing hook state:', {
+          oldSessionId: sessionId,
+          newSessionId: storageSessionId
+        });
+        setSessionId(storageSessionId);
+        setPreviousSessionId(storageSessionId);
+
+        // Ensure userId is correct (prefer custom user ID, then Firebase UID)
+        const customUserId = getCustomUserId();
+        const correctUserId = customUserId && customUserId.trim()
+          ? customUserId.trim()
+          : currentUser.uid;
+
+        if (correctUserId !== userId) {
+          console.log('🔄 Also syncing user ID:', {
+            oldUserId: userId,
+            newUserId: correctUserId,
+            isCustom: !!customUserId
+          });
+          setUserId(correctUserId);
+        }
+
+        // Mark session as initialized since we just synced from storage
+        if (!sessionInitRef.current) {
+          console.log('🔄 Marking session as initialized after sync');
+          sessionInitRef.current = true;
+        }
+      } else if (!storageSessionId && sessionId) {
+        // Storage was cleared but we still have a session ID in state
+        console.log('🔄 Session storage cleared, clearing hook state');
+        setSessionId('');
+        // Reset init flag to allow re-initialization
+        sessionInitRef.current = false;
+      }
+    };
+
+    // Check immediately
+    syncWithStorage();
+
+    // Listen for custom event from onboarding completion
+    const handleSessionUpdate = () => {
+      console.log('🔔 Received session update event, syncing...');
+      syncWithStorage();
+    };
+    window.addEventListener('sessionUpdated', handleSessionUpdate);
+
+    // Set up an interval to check for changes (storage events don't fire in same tab)
+    // Using a longer interval (2s) since we also have the event listener
+    const intervalId = setInterval(syncWithStorage, 2000);
+
+    return () => {
+      clearInterval(intervalId);
+      window.removeEventListener('sessionUpdated', handleSessionUpdate);
+    };
+  }, [sessionId, userId, currentUser]); // Re-run when these change
+
   // Initialize session for authenticated user using API
   useEffect(() => {
     console.log('🔄 useSessionManagement effect running:', {

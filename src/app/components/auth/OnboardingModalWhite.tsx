@@ -172,6 +172,10 @@ export default function OnboardingModalWhite({
             if (stored !== sessionId) {
               console.error("❌ CRITICAL: Session ID mismatch after storing!");
             }
+
+            // CRITICAL: Notify useSessionManagement hook that session was updated
+            console.log("📢 Dispatching session update event");
+            window.dispatchEvent(new Event('sessionUpdated'));
           }
         } else {
           // Fallback to local generation if API fails
