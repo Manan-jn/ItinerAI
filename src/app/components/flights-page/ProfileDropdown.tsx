@@ -36,6 +36,12 @@ export function ProfileDropdown({
     }
   };
 
+  const handleClearCustomUserId = () => {
+    console.log("🔄 Clear custom user ID requested - triggering logout");
+    // Trigger logout which will clear everything and redirect to login
+    onLogout();
+  };
+
   return (
     <>
       <div className="relative profile-dropdown">
@@ -197,6 +203,7 @@ export function ProfileDropdown({
         isOpen={showCustomUserIdModal}
         onClose={() => setShowCustomUserIdModal(false)}
         onSave={handleSaveCustomUserId}
+        onClear={handleClearCustomUserId}
       />
     </>
   );

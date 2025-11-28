@@ -7,12 +7,14 @@ interface CustomUserIdModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSave: (userId: string) => void;
+  onClear?: () => void; // NEW: Callback for clearing and logging out
 }
 
 export function CustomUserIdModal({
   isOpen,
   onClose,
   onSave,
+  onClear,
 }: CustomUserIdModalProps) {
   const [customUserId, setCustomUserId] = useState("");
   const [currentCustomId, setCurrentCustomId] = useState<string | null>(null);
@@ -47,10 +49,31 @@ export function CustomUserIdModal({
   };
 
   const handleClear = () => {
+    // Clear local state
     setCustomUserId("");
+    setCurrentCustomId(null);
+
     if (typeof window !== "undefined") {
+      // Clear custom user ID from localStorage
       localStorage.removeItem("itinerai_custom_user_id");
-      setCurrentCustomId(null);
+
+      // Clear session storage
+      sessionStorage.removeItem("itinerai_session_id");
+      sessionStorage.removeItem("itinerai_user_id");
+
+      console.log("🧹 Cleared custom user ID and session data");
+    }
+
+    // Close modal
+    onClose();
+
+    // Call parent's onClear callback to trigger logout and redirect
+    if (onClear) {
+      console.log("🔄 Triggering logout flow after clearing custom user ID");
+      onClear();
+    } else {
+      // Fallback: reload page if no callback provided
+      console.warn("⚠️ No onClear callback provided, falling back to page reload");
       alert("Custom User ID cleared. Page will reload to apply changes.");
       window.location.reload();
     }
