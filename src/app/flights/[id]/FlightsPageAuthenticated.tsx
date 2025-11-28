@@ -3,8 +3,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { MdChat, MdExplore } from "react-icons/md";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../../../../firebase";
 import { useAuth } from "../../contexts/AuthContext";
 import SessionDebugFlights from "../../components/SessionDebugFlights";
 import { translateToEnglish } from "../../utils/translateToEnglish";
@@ -24,7 +22,6 @@ import BookingWidget from "../../components/BookingWidget";
 import PreTripWidget from "../../components/PreTripWidget";
 import InTripWidget from "../../components/InTripWidget";
 import { getSessionId } from "../../utils/sessionManager";
-import { updateMemoryOnSessionChange } from "../../utils/memoryApi";
 import {
   storeSelectedTrip,
   getSelectedTripFromFirestore,
@@ -4059,34 +4056,17 @@ export default function FlightsPageAuthenticated() {
     setIsLoading(true);
 
     try {
-      // Update memory before first message only if NOT coming from onboarding
-      // Check if user has completed onboarding by verifying Firestore data
-      if (isFirstMessage && currentUser) {
-        console.log(
-          "First message detected, checking if memory update needed..."
-        );
+      // ═══════════════════════════════════════════════════════════════════
+      // REMOVED: Memory update on first message
+      // ═══════════════════════════════════════════════════════════════════
+      // Memory is now updated IMMEDIATELY after session creation in useSessionManagement hook
+      // No need to update it here on first message - it's already done!
+      // This prevents duplicate memory/add API calls and ensures backend has user context
+      // before the first chat message is sent.
 
-        try {
-          // Check if this is a fresh session (not from onboarding)
-          const userDoc = await getDoc(doc(db, "users", userId));
-          const needsMemoryUpdate = !userDoc.exists() || !userDoc.data()?.onboardingCompleted;
-
-          if (needsMemoryUpdate) {
-            console.log("User needs memory update (no onboarding data found)");
-            await updateMemoryOnSessionChange(
-              userId,
-              sessionId,
-              currentUser.displayName,
-              currentUser.email
-            );
-            console.log("Memory updated successfully for first message");
-          } else {
-            console.log("Skipping memory update - user already onboarded");
-          }
-        } catch (error) {
-          console.error("Failed to check/update memory for first message:", error);
-          // Continue with the message even if memory update fails
-        }
+      // Just mark first message as handled
+      if (isFirstMessage) {
+        console.log("First message - memory already updated during session initialization");
         setIsFirstMessage(false);
       }
 

@@ -3,6 +3,7 @@ import { User } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { getSessionId, getCustomUserId } from "../utils/sessionManager";
+import { updateMemoryOnSessionChange } from "../utils/memoryApi";
 
 /**
  * Custom hook for managing session state and operations
@@ -14,6 +15,8 @@ import { getSessionId, getCustomUserId } from "../utils/sessionManager";
  * - Phone number is fetched from Firestore and reused
  * - Old sessions in sessionStorage are cleared before creating new ones
  * - Each page load/refresh = new session for fresh conversation context
+ * - Memory is updated IMMEDIATELY after session creation (not on first message)
+ * - Chat is ready to use once this hook completes initialization
  *
  * @param currentUser - Firebase auth user object
  * @returns Session state and handler functions
@@ -211,6 +214,25 @@ export function useSessionManagement(currentUser: User | null) {
             sessionStorage.setItem('itinerai_session_id', newSessionId);
           }
 
+          // ═══════════════════════════════════════════════════════════════════
+          // CRITICAL: Update memory with user profile IMMEDIATELY after session creation
+          // ═══════════════════════════════════════════════════════════════════
+          // This ensures the backend has user context before any chat messages
+          console.log("📝 Updating memory with user profile for new session...");
+          try {
+            await updateMemoryOnSessionChange(
+              authenticatedUserId,
+              newSessionId,
+              currentUser.displayName,
+              currentUser.email
+            );
+            console.log("✅ Memory updated successfully after session creation");
+          } catch (memoryError) {
+            console.error("❌ Failed to update memory after session creation:", memoryError);
+            // Don't fail session initialization if memory update fails
+            console.warn("⚠️ Continuing with session initialization despite memory error");
+          }
+
           setSessionId(newSessionId);
           setUserId(authenticatedUserId);
           setPreviousSessionId(newSessionId);
@@ -221,6 +243,7 @@ export function useSessionManagement(currentUser: User | null) {
             userId: authenticatedUserId,
             userEmail: currentUser.email,
             isAuthenticated: true,
+            memoryUpdated: true,
           });
         } catch (error) {
           console.error("❌ Error creating session via API:", error);
@@ -228,6 +251,20 @@ export function useSessionManagement(currentUser: User | null) {
           // Fallback to old method if API fails
           console.warn("⚠️ Falling back to local session generation");
           const fallbackSessionId = getSessionId();
+
+          // Update memory for fallback session too
+          console.log("📝 Updating memory for fallback session...");
+          try {
+            await updateMemoryOnSessionChange(
+              authenticatedUserId,
+              fallbackSessionId,
+              currentUser.displayName,
+              currentUser.email
+            );
+            console.log("✅ Memory updated for fallback session");
+          } catch (memoryError) {
+            console.error("❌ Failed to update memory for fallback session:", memoryError);
+          }
 
           setSessionId(fallbackSessionId);
           setUserId(authenticatedUserId);
@@ -239,6 +276,7 @@ export function useSessionManagement(currentUser: User | null) {
             userId: authenticatedUserId,
             userEmail: currentUser.email,
             isAuthenticated: true,
+            memoryUpdated: true,
           });
         }
       };
@@ -301,6 +339,22 @@ export function useSessionManagement(currentUser: User | null) {
       }
     }
 
+    // Update memory for regenerated session
+    if (currentUser) {
+      console.log("📝 Updating memory for regenerated session...");
+      try {
+        await updateMemoryOnSessionChange(
+          currentUser.uid,
+          newSessionId,
+          currentUser.displayName,
+          currentUser.email
+        );
+        console.log("✅ Memory updated for regenerated session");
+      } catch (memoryError) {
+        console.error("❌ Failed to update memory for regenerated session:", memoryError);
+      }
+    }
+
     setSessionId(newSessionId);
     // For authenticated users, userId should always remain the same (Firebase UID)
     // but we'll update it anyway in case the debug component passes it
@@ -311,6 +365,7 @@ export function useSessionManagement(currentUser: User | null) {
       sessionId: newSessionId,
       userId: currentUser?.uid || newUserId,
       userEmail: currentUser?.email,
+      memoryUpdated: true,
     });
   };
 
