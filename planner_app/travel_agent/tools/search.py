@@ -1,9 +1,11 @@
+from google.genai import types
 from google.adk.agents import LlmAgent, ParallelAgent
 from google.adk.tools.agent_tool import AgentTool
 from google.adk.agents.callback_context import CallbackContext
 from google.adk.tools.google_search_tool import google_search
 from google.genai.types import GenerateContentConfig
-from ..sub_agents.logger import logging_callback
+
+from ..shared_libraries.types import safety_settings, http_options
 
 
 # def _google_search_callback(callback_context: CallbackContext) -> None:
@@ -12,7 +14,7 @@ from ..sub_agents.logger import logging_callback
 #     sources = {}
 #     search_queries = []
 #     id_counter = 1
-    
+
 #     for event in reversed(session.events):
 #         if not (event.grounding_metadata and event.grounding_metadata.grounding_chunks):
 #             continue
@@ -57,7 +59,7 @@ from ..sub_agents.logger import logging_callback
 #                             }
 #                         )
 #         break
-    
+
 #     google_search = {
 #         "search_queries": search_queries,
 #         "data":{
@@ -65,7 +67,7 @@ from ..sub_agents.logger import logging_callback
 #             "sources": sources,
 #         }
 #     }
-    
+
 #     current_state = callback_context.state.get("google_search_detailed", [])
 #     callback_context.state["google_search_detailed"] = current_state + [google_search]
 
@@ -73,23 +75,27 @@ from ..sub_agents.logger import logging_callback
 #     current_state = callback_context.state
 #     response = current_state.get("google_search_summary", "")
 #     print("google_search_summary", response)
-    
+
 #     if current_state.get("google_search_summary"):
 #         current_state["google_search_summary"] = current_state["google_search_summary"] + [response]
 #     else:
 #         current_state["google_search_summary"] = [response]
 
 google_search_agent = LlmAgent(
-        model="gemini-2.5-flash",
-        name="google_search_agent",
-        description="An agent providing Google-search results capability",
-        instruction="""  
+    model="gemini-2.5-flash-lite",
+    name="google_search_agent",
+    description="An agent providing Google-search results capability",
+    instruction="""  
         Answer the user's question directly using `google_search` grounding tool; Provide a brief but concise response. 
         Do not ask the user to check or look up information for themselves, that's your role; do your best to be informative
         
         Always provide the summary in a structured JSON format for others to understand without missing any information in the structured format.
         """,
-        tools=[google_search],
-        include_contents="none",
-        # after_agent_callback=[_google_search_callback]
-    )
+    tools=[google_search],
+    generate_content_config=GenerateContentConfig(
+        temperature=0.3, safety_settings=safety_settings, http_options=http_options,
+        automatic_function_calling=types.AutomaticFunctionCallingConfig(maximum_remote_calls=100)
+    ),
+    include_contents="none",
+    # after_agent_callback=[_google_search_callback]
+)

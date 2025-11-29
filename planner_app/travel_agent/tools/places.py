@@ -1,7 +1,8 @@
 import os
+import asyncio
 import requests
 import dotenv
-from typing import Dict, List, Any
+from typing import Dict, List, Any, Optional
 from google.adk.tools import ToolContext
 from google.adk.agents.callback_context import CallbackContext
 
@@ -60,7 +61,7 @@ class PlacesService:
             }
 
         except requests.exceptions.RequestException as e:
-            return {"error": f"Error fetching place data: {e}"}
+            return {"error": f"Error fetching place data for query: {query}\nError: {e}"}
 
     def get_photo_urls(self, photos: List[Dict[str, Any]], maxwidth: int = 400) -> List[str]:
         """Extracts photo URLs from the 'photos' list."""
@@ -77,38 +78,72 @@ class PlacesService:
 
 places_service = PlacesService()
 
-async def map_helper(data: Any):
-    try:
-        if not (isinstance(data, (dict, list))):
-            return data
-        
-        if isinstance(data, list):
-            # print("data is a list: ", data)
-            for i in range(len(data)):
-                data[i] = await map_helper(data[i])
-        
-        if isinstance(data, dict):
-            # print("data is a dict: ", data)
-            for key, value in data.items():
-                data[key] = await map_helper(value)
-            
-            if data.get("place_name") or data.get("address"):
-                # Check if map_url is empty or None and we have place info to search with
-                if not data.get("map_url", None) or data.get("map_url") == "":
-                    
-                    search_query = ""
-                    if data.get("place_name"):
-                        search_query += data["place_name"]
-                    if data.get("address"):
-                        if search_query:
-                            search_query += ", "
-                        search_query += data["address"]
-                    
-                    if search_query:
-                        response = await places_service.find_place_from_text(search_query)
-                        
+async def map_helper(data: Any, semaphore: Optional[asyncio.Semaphore] = None) -> Any:
+    """
+    Recursively walk `data` (dicts/lists), performing places_service lookup
+    for nodes that have place_name/address and missing map_url. Concurrency:
+    at most 5 concurrent external lookups (controlled by semaphore).
+    """
+    if semaphore is None:
+        # Create top-level semaphore limit (5 concurrent lookups)
+        semaphore = asyncio.Semaphore(10)
 
-                        if "error" not in response:
+    try:
+        # Base case: not a container
+        if not isinstance(data, (dict, list)):
+            return data
+
+        # If list: concurrently process each element
+        if isinstance(data, list):
+            # Create tasks for each element
+            tasks = [asyncio.create_task(map_helper(item, semaphore)) for item in data]
+            results = await asyncio.gather(*tasks, return_exceptions=False)
+            # mutate original list in-place to preserve references
+            for i, r in enumerate(results):
+                data[i] = r
+            return data
+
+        # If dict: concurrently process values first
+        if isinstance(data, dict):
+            # snapshot items to avoid runtime-dict-change issues
+            items = list(data.items())
+            # Prepare tasks for child values
+            tasks = []
+            keys = []
+            for key, value in items:
+                keys.append(key)
+                tasks.append(asyncio.create_task(map_helper(value, semaphore)))
+
+            # Await all child processing concurrently
+            child_results = await asyncio.gather(*tasks, return_exceptions=False)
+            for key, res in zip(keys, child_results):
+                data[key] = res
+
+            # After children processed, check whether we need to call places_service
+            place_name = data.get("place_name")
+            address = data.get("address")
+            map_url = data.get("map_url", None)
+
+            if (place_name or address) and (not map_url or map_url == ""):
+                # Build search query
+                search_query_parts = []
+                if place_name:
+                    search_query_parts.append(str(place_name))
+                if address:
+                    search_query_parts.append(str(address))
+                search_query = ", ".join(search_query_parts).strip()
+
+                if search_query:
+                    logger.info(f"Fetching map URL for place: {search_query}")
+                    try:
+                        # Limit concurrent external calls with semaphore
+                        async with semaphore:
+                            # optionally wrap in asyncio.wait_for(...) to enforce a timeout
+                            response = await places_service.find_place_from_text(search_query)
+
+                        if response is None:
+                            logger.warning(f"No response for: {search_query}")
+                        elif "error" not in response:
                             data["map_url"] = response.get("map_url", "")
                             data["lat"] = response.get("lat", 0.0)
                             data["long"] = response.get("lng", 0.0)
@@ -116,9 +151,13 @@ async def map_helper(data: Any):
                             if "place_id" in response:
                                 data["place_id"] = response["place_id"]
                         else:
-                            print(f"Error finding place: {response['error']}")
-            
-        return data
+                            # Keep the existing behavior for errors
+                            logger.warning(f"Error finding place: {response['error']}")
+                    except Exception as e:
+                        logger.error(f"Error calling places_service for '{search_query}': {e}")
+
+            return data
+
     except Exception as e:
         logger.error(f"Error in map_helper\nError:{str(e)}")
         return data

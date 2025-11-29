@@ -1,15 +1,11 @@
+from google.genai import types
 from google.adk.agents import LlmAgent
-from google.genai.types import GenerateContentConfig
+from google.genai.types import GenerateContentConfig, ThinkingConfig
+from google.adk.planners import BuiltInPlanner
 from google.adk.tools.google_search_tool import google_search
 
 from . import prompt
-from ...tools.places import map_tool
-# from ...shared_libraries import TripSuggestions, POISuggestions
-from ...shared_libraries.callbacks import (
-    logger_before_agent,
-    modify_state_after_agent,
-    modify_output_after_agent,
-)
+from ...shared_libraries.callbacks import *
 from ...shared_libraries.types import safety_settings
 
 trip_agent = LlmAgent(
@@ -28,40 +24,19 @@ trip_agent = LlmAgent(
     </USER_PROFILE>
     
     <CURRENT_DATE_TIME>
-    <current_date_time> {current_date_time?} </current_date_time>
+    <current_datetime> {current_datetime?} </current_datetime>
     </CURRENT_DATE_TIME>
     """,
     output_key="trip_agent",
-    # output_schema = TripSuggestions,
     disallow_transfer_to_parent=True,
     disallow_transfer_to_peers=True,
-    generate_content_config = GenerateContentConfig(
-        # response_mime_type = "application/json",
+    generate_content_config=GenerateContentConfig(
         temperature=0.3,
-        safety_settings=safety_settings
+        safety_settings=safety_settings,
+        automatic_function_calling=types.AutomaticFunctionCallingConfig(
+            maximum_remote_calls=100
+        ),
     ),
-    before_agent_callback=[logger_before_agent],
-    after_agent_callback=[
-        # modify_state_after_agent,
-        # modify_output_after_agent,
-    ],
-    tools = [google_search]
+    planner=BuiltInPlanner(thinking_config=ThinkingConfig(include_thoughts=True)),
+    tools=[google_search],
 )
-
-# poi_agent = LlmAgent(
-#     name="poi_agent",
-#     description="An agent who recommends points of interest to the user",
-#     model="gemini-2.5-pro",
-#     instruction=prompt.POI_AGENT_INSTR,
-#     output_key="points_of_interest",
-#     output_schema=POISuggestions,
-#     disallow_transfer_to_parent=True,
-#     disallow_transfer_to_peers=True,
-#     generate_content_config=GenerateContentConfig(
-#         response_mime_type="application/json"
-#     ),
-#     after_agent_callback=[map_tool],
-    # tools=[
-    #     google_search_agent
-    # ]
-# )

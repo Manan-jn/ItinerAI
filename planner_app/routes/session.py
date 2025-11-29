@@ -1,15 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException
 from starlette.responses import JSONResponse
-from google.adk.events import Event, EventActions
 
 from ..models import SessionManager
 from ..schema.session_schema import CreateSessionSchema, SessionSchema
 from ..common import get_session_manager
-
-import os 
-import sys
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
-from shared.post_processor import merge_dict_intelligently
+from ..controllers.session_controller import create_session_controller
+from ..services.firebase import get_firebase_data
 
 router = APIRouter()
 
@@ -20,7 +16,8 @@ async def create_session(
     session_manager: SessionManager = Depends(get_session_manager),
 ):
     try:
-        session = await session_manager.create_session(request.user_id)
+        # session = await session_manager.create_session(request.user_id)
+        session = await create_session_controller(request, session_manager)
         return JSONResponse(
             status_code=200,
             content={
@@ -35,19 +32,23 @@ async def create_session(
         return JSONResponse(status_code=500, content=str(e))
 
 @router.post("/session/get")
-async def create_session(
+async def get_session(
     request: SessionSchema,
     session_manager: SessionManager = Depends(get_session_manager),
 ):
     try:
-        session = await session_manager.get_session(request.user_id, request.session_id)
+        session = await get_firebase_data("user_creds", request.phone_number)
+        if not len(session):
+            return JSONResponse(status_code=404, content="Session not found")
+        
         return JSONResponse(
             status_code=200,
             content={
                 "message": "Session fetched successfully",
                 "body":{
-                    "user_id": session.user_id,
-                    "session_id": session.id
+                    "user_id": session["user_id"],
+                    "session_id": session["session_id"],
+                    "created_at": session["created_at"],
                 }
             },
         )

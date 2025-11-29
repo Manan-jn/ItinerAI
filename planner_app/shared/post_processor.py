@@ -56,6 +56,6 @@ async def string_to_json(response_text: str) -> Optional[dict]:
         return response_text
     except Exception as e:
         logger.error(
-            f"Error in string_to_json for input: {response_text}\nError: {str(e)}"
+            f"Error in string_to_json for input:\n{response_text}\nError: {str(e)}"
         )
         return response_text

@@ -1,6 +1,7 @@
 import os
 import sys
 import json
+import time
 from google.adk.models import LlmRequest
 from google.adk.agents.callback_context import CallbackContext
 from google.genai import types
@@ -46,6 +47,7 @@ async def logger_before_agent(callback_context: CallbackContext) -> None:
     except Exception as e:
         logger.error(f"Error in logger_before_agent\nError: {str(e)}")
 
+
 async def modify_output_after_agent(
     callback_context: CallbackContext,
 ) -> Optional[types.Content]:
@@ -78,7 +80,9 @@ async def modify_output_after_agent(
         elif agent_name == "itinerary_agent":
             return types.Content(
                 parts=[
-                    types.Part(text=json.dumps(current_state.get("itinerary_suggestions")))
+                    types.Part(
+                        text=json.dumps(current_state.get("itinerary_suggestions"))
+                    )
                 ],
                 role="model",
             )

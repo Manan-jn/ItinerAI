@@ -20,13 +20,10 @@ async def get_memory(
     session_manager: SessionManager = Depends(get_session_manager),
 ):
     try:
-        session = await session_manager.get_session(request.user_id, request.session_id)
-        return JSONResponse(
-            status_code=200,
-            content=session.state,
-        )
+        session_state = await get_memory_controller(request, session_manager)
+        return JSONResponse(status_code=200, content=session_state)
     except Exception as e:
-        return JSONResponse(status_code=500, content=str(e))
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 @router.post("/memory/add")
