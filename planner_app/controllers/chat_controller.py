@@ -18,7 +18,6 @@ from ..travel_agent.tools.places import map_helper
 from ..travel_agent.tools.search import google_search_agent
 from ..travel_agent.tools.maps import google_maps_agent
 from ..services.firebase import get_firebase_data
-from .temp import * 
 
 retry_attempt = ContextVar('retry_attempt', default=1)
 
