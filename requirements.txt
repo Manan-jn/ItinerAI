@@ -1,0 +1,8 @@
+uv
+python-dotenv
+livekit
+livekit-agents
+livekit-plugins-noise-cancellation
+# livekit-plugins-silero
+# livekit-plugins-turn-detector
+livekit-plugins-google
