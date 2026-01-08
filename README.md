@@ -1,8 +1,6 @@
 # ItinerAI - AI-Powered Travel Planning Platform
 
-<div align="center">
-  <img src="public/images/logo.png" alt="ItinerAI Logo" width="200"/>
-  
+<div align="center">  
   **Your AI Travel Companion for Seamless Trip Planning**
   
   [![Next.js](https://img.shields.io/badge/Next.js-15.5.3-black?style=flat&logo=next.js)](https://nextjs.org/)
@@ -11,6 +9,9 @@
   [![Firebase](https://img.shields.io/badge/Firebase-12.4.0-orange?style=flat&logo=firebase)](https://firebase.google.com/)
   [![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.0-38B2AC?style=flat&logo=tailwind-css)](https://tailwindcss.com/)
 </div>
+
+## User Flow Diagram
+![User Flow](https://github.com/user-attachments/assets/99900e3f-7f86-4e59-8861-3533f6073142)
 
 ---
 
