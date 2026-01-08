@@ -13,6 +13,10 @@
 ## User Flow Diagram
 ![User Flow](https://github.com/user-attachments/assets/99900e3f-7f86-4e59-8861-3533f6073142)
 
+
+## Architecture Diagram
+<img width="1558" height="517" alt="Screenshot 2026-01-08 at 8 35 18 PM" src="https://github.com/user-attachments/assets/8f0bcbed-c193-48c3-8c18-a6758d2bd4c4" />
+
 ---
 
 ## 📖 Table of Contents
